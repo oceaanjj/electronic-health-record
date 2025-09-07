@@ -29,9 +29,9 @@
                 <button type="submit" class="btn-login">Sign In</button>
             </form>
 
-            <div class="footer">
+            <div>
                 <!-- picture ng home icon -->
-                <a href="{{ url('/') }}">RETURN HOME</a>
+                <a href="{{ url('/home.blade.php') }}">RETURN HOME</a>
             </div>
         </div>
     </div>

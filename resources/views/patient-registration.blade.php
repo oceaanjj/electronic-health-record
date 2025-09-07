@@ -2,79 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Patient Admission Form</title>
+    <title>Patient Registration</title>
+    <link rel="stylesheet" href="css/patient-registration.css">
 </head>
-<body>
-    <h2>Patient Admission Form</h2>
 
+<body>
+   <div class="header">PATIENT REGISTARTION</div>
+
+  <div class="form-container">
     <form action="#" method="POST">
-        <table border="1" cellpadding="10">
-            <tr>
-                <td>Last Name:</td>
-                <td><input type="text" name="lastname" required></td>
-            </tr>
-            <tr>
-                <td>First Name:</td>
-                <td><input type="text" name="firstname" required></td>
-            </tr>
-            <tr>
-                <td>Middle Name:</td>
-                <td><input type="text" name="middlename"></td>
-            </tr>
-            <tr>
-                <td>Suffix (optional):</td>
-                <td><input type="text" name="suffix"></td>
-            </tr>
-            <tr>
-                <td>Age:</td>
-                <td><input type="number" name="age" min="0"></td>
-            </tr>
-            <tr>
-                <td>Sex:</td>
-                <td>
-                    <select name="sex">
-                        <option value="">Select</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Address:</td>
-                <td><input type="text" name="address" size="40"></td>
-            </tr>
-            <tr>
-                <td>Birthplace:</td>
-                <td><input type="text" name="birthplace"></td>
-            </tr>
-            <tr>
-                <td>Religion:</td>
-                <td><input type="text" name="religion"></td>
-            </tr>
-            <tr>
-                <td>Ethnicity:</td>
-                <td><input type="text" name="ethnicity"></td>
-            </tr>
-            <tr>
-                <td>Chief of Complaint:</td>
-                <td><textarea name="complaint" rows="3" cols="30"></textarea></td>
-            </tr>
-            <tr>
-                <td>Admission Date:</td>
-                <td><input type="date" name="admission_date"></td>
-            </tr>
-            <tr>
-                <td>Room No.:</td>
-                <td><input type="text" name="room_no"></td>
-            </tr>
-            <tr>
-                <td>Bed Number:</td>
-                <td><input type="text" name="bed_no"></td>
-            </tr>
-        </table>
-        <br>
-        <button type="submit">Submit</button>
+      
+      <div class="form-row">        
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Enter patient name">
+          </div>
+            
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" placeholder="Enter age">
+          </div>
+
+          <div class="form-group">
+            <label>Sex</label>
+            <select>
+              <option>Select sex</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+      </div>
+
+      <div class="form-row">
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" placeholder="Enter complete address">
+          </div>
+
+          <div class="form-group">
+            <label>Birth Place</label>
+            <input type="text" placeholder="Enter birth place">
+          </div>
+      </div>
+
+      <div class="form-row">
+          <div class="form-group">
+            <label>Religion</label>
+            <input type="text" placeholder="Enter religion">
+          </div>
+
+          <div class="form-group">
+            <label>Ethnicity</label>
+            <input type="text" placeholder="Enter ethnicity">
+          </div>
+      </div>
+
+      <div class="form-row">
+          <div class="form-group" style="flex: 1;">
+            <label>Chief of Compliants</label>
+            <textarea rows="3" placeholder="Enter chief compliants"></textarea>
+          </div>
+      </div>
+
+      <div class="form-row">
+          <div class="form-group">
+            <label>Admission Date</label>
+            <input type="date">
+          </div>
+          <div class="form-group">
+            <label>Room No.</label>
+            <input type="text" placeholder="Enter room number">
+          </div>
+          <div class="form-group">
+            <label>Bed No.</label>
+            <input type="text" placeholder="Enter bed number">
+          </div>
+      </div>
+
     </form>
+  </div>
+
+  <div class="header">EMERGENCY CONTACT</div>
+      <div class="form-row">        
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Enter name">
+          </div>
+            
+          <div class="form-group">
+            <label>Age</label>
+            <input type="text" placeholder="Enter relationship to patient">
+          </div>
+
+          <div class="form-group">
+            <label>Contact Number</label>
+            <input type="text" placeholder="Enter number">
+          </div>
+
+          <div class="form-group">
+            <label>Date of Admission</label>
+            <input type="date">
+          </div>
+      </div>
 
 </body>
 </html>

@@ -15,4 +15,8 @@ Route::get('/admin-login', function(){
     return view('admin-login');
 });
 
+Route::get("/patient-registration", function(){
+    return view('patient-registration');
+});
+
 

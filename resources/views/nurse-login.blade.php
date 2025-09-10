@@ -32,15 +32,17 @@
                         <br>
                         <input type="password" id="password" placeholder="Enter your password">
 
-                        <a href="#" class="forgot">Forgot password?</a>
+                        <p class="forgot">Forgot password?</p>
 
                         <button type="submit" class="btn-login">Sign In</button>
                     </form>
 
+                    <hr>
                     <div>
                         <!-- picture ng home icon -->
-                        <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon">
-                        <a href="{{ url('/home.blade.php') }}">RETURN HOME</a>
+                        <a href="{{ url('/home.blade.php') }}" class="return-home">
+                            <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon">
+                        RETURN HOME</a>
                     </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nurse Login</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login-style.css') }}">
 </head>
 
 <body class="login-page">
@@ -13,15 +13,22 @@
             <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo">
         </div>
 
+        
+
         <div class="form-section">
-            <p><span>NURSE</span></p>
-            <p><strong>LOG IN</strong></p>
+            <p id="upper-line"></p>
+            <p class="role"> NURSE <strong>LOG IN</strong>
+</p>
+
 
             <form>
                 <label for="nurse_id">Nurse ID / Username</label>
+                <br>
                 <input type="text" id="nurse_id" placeholder="Enter your Nurse ID">
+                <br>
 
                 <label for="password">Password</label>
+                <br>
                 <input type="password" id="password" placeholder="Enter your password">
 
                 <a href="#" class="forgot">Forgot password?</a>

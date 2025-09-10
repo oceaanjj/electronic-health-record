@@ -17,28 +17,31 @@
 
         <div class="form-section">
             <p id="upper-line"></p>
-            <p class="role"> NURSE <strong>LOG IN</strong>
-</p>
+            <div id="form-container">
+                    
+                    <p class="role"> NURSE <strong>LOG IN</strong></p>
 
 
-            <form>
-                <label for="nurse_id">Nurse ID / Username</label>
-                <br>
-                <input type="text" id="nurse_id" placeholder="Enter your Nurse ID">
-                <br>
+                    <form>
+                        <label for="nurse_id">Nurse ID / Username</label>
+                        <br>
+                        <input type="text" id="nurse_id" placeholder="Enter your Nurse ID">
+                        <br>
 
-                <label for="password">Password</label>
-                <br>
-                <input type="password" id="password" placeholder="Enter your password">
+                        <label for="password">Password</label>
+                        <br>
+                        <input type="password" id="password" placeholder="Enter your password">
 
-                <a href="#" class="forgot">Forgot password?</a>
+                        <a href="#" class="forgot">Forgot password?</a>
 
-                <button type="submit" class="btn-login">Sign In</button>
-            </form>
+                        <button type="submit" class="btn-login">Sign In</button>
+                    </form>
 
-            <div>
-                <!-- picture ng home icon -->
-                <a href="{{ url('/home.blade.php') }}">RETURN HOME</a>
+                    <div>
+                        <!-- picture ng home icon -->
+                        <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon">
+                        <a href="{{ url('/home.blade.php') }}">RETURN HOME</a>
+                    </div>
             </div>
         </div>
     </div>

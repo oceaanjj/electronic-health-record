@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return view('home');
+});
 
 Route::get('/nurse-login', function () {
     return view('nurse-login');

@@ -20,10 +20,6 @@ return new class extends Migration
             $table->string('birthplace')->nullable();
             $table->string('religion', 100)->nullable();
             $table->string('ethnicity', 100)->nullable();
-            $table->string('occupation', 100)->nullable();
-            $table->enum('marital_status', ['Single', 'Married', 'Widowed', 'Divorced', 'Separated']);
-            $table->string('spouse')->nullable();
-            $table->integer('no_of_children')->default(0);
             $table->text('chief_complaints')->nullable();
             $table->date('admission_date');
             $table->timestamps();

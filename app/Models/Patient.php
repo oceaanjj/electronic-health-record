@@ -11,8 +11,10 @@
 
 */
 
+
 namespace App\Models;
 
+use App\Http\Controllers\PatientController;
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model

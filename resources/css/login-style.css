@@ -1,7 +1,7 @@
 /*Font Import*/
 @font-face {
   font-family: 'alte-bold';
-  src: url('../font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
+  src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
 }
 
 a {
@@ -20,7 +20,7 @@ hr {
 body.login-page {
     margin: 0;
     padding: 0;
-    background: url('../img/login-bg.png') no-repeat center center fixed;
+    background: url('/public/img/login-bg.png') no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -180,7 +180,7 @@ body.login-page {
 }
 
 .return-home:hover .home-icon {
-    content: url('../img/home-icon-hover.png');
+    content: url('public/img/home-icon-hover.png');
 }
 
 

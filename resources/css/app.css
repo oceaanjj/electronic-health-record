@@ -1,4 +1,8 @@
 @import 'tailwindcss';
+@import './home-style.css';
+@import './login-style.css';
+@import './registration-style.css';
+
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Login</title>
-    <link rel="stylesheet" href="{{ asset('css/login-style.css') }}">
+    @vite(['resources/css/login-style.css'])
 </head>
 
 <body class="login-page">
@@ -20,7 +20,7 @@
             <div id="form-container">
 
                     <p class="role"> DOCTOR <strong>LOG IN</strong></p>
-
+ 
 
                     <form>
                         <label for="doctor_id">Doctor ID / Username</label>

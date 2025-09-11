@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Patient Registration</title>
-    <link rel="stylesheet" href="css/patient-registration.css">
+    @vite(['resources/css/registration-style.css'])
 </head>
 
 <body>

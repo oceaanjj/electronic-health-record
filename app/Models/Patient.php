@@ -15,11 +15,26 @@
 namespace App\Models;
 
 use App\Http\Controllers\PatientController;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
-    //
+    use HasFactory;
+
+    // optional lang to.
+    protected $table = 'patients';
+
+    // basically declaration na itong mga columns nato is puwedeng lagyan ng value
+    protected $fillable = [
+        'name',
+        'age',
+        'sex',
+        'address',
+        'birthplace',
+        'religion',
+        'ethnicity',
+        'chief_complaints',
+        'admission_date',
+    ];
 }
-
-

@@ -23,13 +23,13 @@
 
                 <form method="POST" action="{{ route('nurse.login') }}">
                     @csrf
-                    <label for="nurse_id">Nurse ID / Username</label>
-                    <input type="text" id="nurse_id" name="nurse_id" placeholder="Enter your Nurse ID" value="{{ old('nurse_id') }}">
+                    <label for="name">Nurse ID / Username</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your Nurse ID" value="{{ old('name') }}">
 
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter your password">
 
-                    @error('nurse_id') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('name') <p style="color:red;">{{ $message }}</p> @enderror
                     @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
                     <button type="submit" class="btn-login">Sign In</button>

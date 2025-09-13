@@ -12,16 +12,16 @@ class NurseController extends Controller
     {
         // Validate ng input
         $request->validate([
-            'nurse_id' => 'required|string',
+            'name' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // check if yung nurse_id ba is exists sa database
-        $nurse = NurseModel::where('nurse_id', $request->nurse_id)->first();
+        // check if yung name ba is exists sa database
+        $nurse = NurseModel::where('name', $request->name)->first();
 
         if (!$nurse) {
             return back()->withErrors([
-                'nurse_id' => 'No account exists with this Nurse ID'
+                'name' => 'No account exists with this name'
             ])->withInput();
         }
 

@@ -12,7 +12,6 @@
         <div class="logo-section">
             <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo">
         </div>
-
         
 
         <div class="form-section">
@@ -22,25 +21,24 @@
                     <p class="role"> NURSE <strong>LOG IN</strong></p>
 
 
-                    <form>
-                        <label for="nurse_id">Nurse ID / Username</label>
-                        <br>
-                        <input type="text" id="nurse_id" placeholder="Enter your Nurse ID">
-                        <br>
+                <form method="POST" action="{{ route('nurse.login') }}">
+                    @csrf
+                    <label for="nurse_id">Nurse ID / Username</label>
+                    <input type="text" id="nurse_id" name="nurse_id" placeholder="Enter your Nurse ID" value="{{ old('nurse_id') }}">
 
-                        <label for="password">Password</label>
-                        <br>
-                        <input type="password" id="password" placeholder="Enter your password">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
 
-                        <p class="forgot">Forgot password?</p>
+                    @error('nurse_id') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
-                        <button type="submit" class="btn-login">Sign In</button>
-                    </form>
+                    <button type="submit" class="btn-login">Sign In</button>
+                </form>
 
                     <hr>
                     <div>
                         <!-- picture ng home icon -->
-                        <a href="{{ url('/home.blade.php') }}" class="return-home">
+                        <a href="{{ url('home') }}" class="return-home">
                             <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon">
                         RETURN HOME</a>
                     </div>

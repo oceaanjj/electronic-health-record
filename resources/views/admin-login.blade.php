@@ -22,16 +22,16 @@
 
                     <p class="role"> ADMIN <strong>LOG IN</strong></p>
 
-
-                    <form>
+                    <form method="POST" action="{{ route('admin.login') }}">
+                        @csrf
                         <label for="admin_id">Admin ID / Username</label>
                         <br>
-                        <input type="text" id="nurse_id" placeholder="Enter your Admin ID">
+                        <input type="text" id="admin_id" name="name" placeholder="Enter your Admin ID" value="{{ old('name') }}">
                         <br>
 
                         <label for="password">Password</label>
                         <br>
-                        <input type="password" id="password" placeholder="Enter your password">
+                        <input type="password" id="password" name="password" placeholder="Enter your password">
 
                         <p class="forgot">Forgot password?</p>
 

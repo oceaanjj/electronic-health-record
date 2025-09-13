@@ -20,22 +20,19 @@
             <div id="form-container">
 
                     <p class="role"> DOCTOR <strong>LOG IN</strong></p>
- 
+                 <form method="POST" action="{{ route('doctor.login') }}">
+                    @csrf
+                    <label for="name">Doctor ID / Username</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your Doctor ID" value="{{ old('name') }}">
 
-                    <form>
-                        <label for="doctor_id">Doctor ID / Username</label>
-                        <br>
-                        <input type="text" id="doctor_id" placeholder="Enter your Doctor ID">
-                        <br>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
 
-                        <label for="password">Password</label>
-                        <br>
-                        <input type="password" id="password" placeholder="Enter your password">
+                    @error('name') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
-                        <p class="forgot">Forgot password?</p>
-
-                        <button type="submit" class="btn-login">Sign In</button>
-                    </form>
+                    <button type="submit" class="btn-login">Sign In</button>
+                </form>
 
                     <hr>
                     <div>

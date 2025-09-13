@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EHR System - Pedia Ward</title>
     @vite(['resources/css/home-style.css'])
 </head>
+
 <body>
 
     <header class="header">
@@ -13,7 +15,7 @@
             <img src="img/ehr-logo.png" alt="Hospital Logo">
             <span>ELECTRONIC HEALTH RECORD</span>
         </div>
-        <a href="#" class="login">LOG IN</a>
+        <a href="{{ route('doctor-login') }}" class="login">LOG IN</a>
     </header>
 
     <section class="welcome">
@@ -28,7 +30,7 @@
                 documentation of medical data including patient profiles, vital signs, treatments,
                 and medication records, ensuring accurate and accessible healthcare management.
             </p>
-            <a href="#" class="login">LOG IN</a>
+            <a href="{{ route('nurse-login') }}" class="login">LOG IN</a>
         </div>
         <div class="welcome-image">
             <img src="img/doctor-kids.png" alt="Doctor with Kids">
@@ -49,7 +51,8 @@
                 <img src="img/register.png" alt="Register Icon" class="box-icon">
                 <h3>REGISTER</h3>
                 <p>This is where new patients are registered into the system.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('patients.index') }}">PROCEED <span class="arrow">▶</span></a>
+                </div>
             </div>
 
             <div class="box">
@@ -156,4 +159,5 @@
     </section>
 
 </body>
+
 </html>

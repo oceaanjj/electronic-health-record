@@ -20,7 +20,7 @@
 
                 <p class="role"> ADMIN <strong>LOG IN</strong></p>
 
-                <form action="{{ route('login.authenticate') }}" method="POST">
+                <form action="{{ route('login.authenticate.admin') }}" method="POST">
                     @csrf
                     <label for="admin_id">Admin ID / Username</label>
                     <br>

@@ -20,7 +20,7 @@
 
                 <p class="role"> NURSE <strong>LOG IN</strong></p>
 
-                <form action="{{ route('login.authenticate') }}" method="POST">
+                <form action="{{ route('login.authenticate.nurse') }}" method="POST">
                     @csrf
                     <label for="nurse_id">Nurse ID / Username</label>
                     <input type="text" id="name" name="name" placeholder="Enter your Nurse ID">

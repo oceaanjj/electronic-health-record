@@ -8,14 +8,23 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-//login:
+//login
 Route::prefix('login')->name('login.')->group(function () {
+    //for showing the login forms
     Route::get('/', [LoginController::class, 'showRoleSelectionForm'])->name('index');
     Route::get('/nurse', [LoginController::class, 'showNurseLoginForm'])->name('nurse');
     Route::get('/doctor', [LoginController::class, 'showDoctorLoginForm'])->name('doctor');
     Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
-    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+    //for handling authentication
+    Route::post('/nurse', [LoginController::class, 'authenticateNurse'])->name('authenticate.nurse');
+    Route::post('/doctor', [LoginController::class, 'authenticateDoctor'])->name('authenticate.doctor');
+    Route::post('/admin', [LoginController::class, 'authenticateAdmin'])->name('authenticate.admin');
 });
+
+
+
+
 
 Route::resource('patients', PatientController::class);
 

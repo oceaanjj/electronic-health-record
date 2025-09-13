@@ -20,7 +20,7 @@
 
                 <p class="role"> DOCTOR <strong>LOG IN</strong></p>
 
-                <form action="{{ route('login.authenticate') }}" method="POST">
+                <form action="{{ route('login.authenticate.doctor') }}" method="POST">
                     @csrf
                     <label for="doctor_id">Doctor ID / Username</label>
                     <br>

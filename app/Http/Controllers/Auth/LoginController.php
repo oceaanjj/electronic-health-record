@@ -30,8 +30,7 @@ class LoginController extends Controller
         return view('login.admin-login');
     }
 
-
-    public function authenticate(Request $request): RedirectResponse
+    public function authenticateNurse(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'name' => ['required', 'string'],
@@ -39,20 +38,63 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
             $user = Auth::user();
 
-            switch (strtolower($user->role)) {
-                case 'admin':
-                    return redirect()->route('home')->with('success', 'Admin login successful!');
-                case 'doctor':
-                    return redirect()->route('home')->with('success', 'Doctor login successful!');
-                case 'nurse':
-                    return redirect()->route('home')->with('success', 'Nurse login successful!');
-                default:
-                    Auth::logout();
-                    return redirect()->route('login.index')->withErrors(['name' => 'Unauthorized role.']);
+            if (strtolower($user->role) !== 'nurse') {
+                Auth::logout();
+                return back()->withErrors(['name' => 'Access denied. Only nurses can log in here.']);
             }
+
+            $request->session()->regenerate();
+            return redirect()->route('home')->with('success', 'Nurse login successful!');
+        }
+
+        return back()->withErrors([
+            'name' => 'Invalid login details.',
+        ])->onlyInput('name');
+    }
+
+    public function authenticateDoctor(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'name' => ['required', 'string'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if (strtolower($user->role) !== 'doctor') {
+                Auth::logout();
+                return back()->withErrors(['name' => 'Access denied. Only doctors can log in here.']);
+            }
+
+            $request->session()->regenerate();
+            return redirect()->route('home')->with('success', 'Doctor login successful!');
+        }
+
+        return back()->withErrors([
+            'name' => 'Invalid login details.',
+        ])->onlyInput('name');
+    }
+
+    public function authenticateAdmin(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'name' => ['required', 'string'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if (strtolower($user->role) !== 'admin') {
+                Auth::logout();
+                return back()->withErrors(['name' => 'Access denied. Only admins can log in here.']);
+            }
+
+            $request->session()->regenerate();
+            return redirect()->route('home')->with('success', 'Admin login successful!');
         }
 
         return back()->withErrors([

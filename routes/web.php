@@ -1,42 +1,22 @@
 <?php
 
+use App\Http\Controllers\nurseController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/nurse-login', function () {
-    return view('nurse-login');
-})->name('nurse-login');
 
-Route::get('/doctor-login', function () {
-    return view('doctor-login');
-})->name('doctor-login');
-
-Route::get('/admin-login', function () {
-    return view('admin-login');
-})->name('admin-login');
-
-
-Route::prefix('patients')->name('patients.')->group(function () {
-    Route::get('/', function () {
-        return view('patients.index');
-    })->name('index');
-
-    Route::get('/create', function () {
-        return view('patients.create');
-    })->name('create');
-
-    Route::get('/{patient}', function () {
-        return view('patients.show');
-    })->name('show');
-
-    Route::get('/{patient}/edit', function () {
-        return view('patients.edit');
-    })->name('edit');
+Route::prefix('login')->name('login.')->group(function () {
+    Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
+    Route::get('/nurse', [LoginController::class, 'showNurseLoginForm'])->name('nurse');
+    Route::get('/doctor', [LoginController::class, 'showDoctorLoginForm'])->name('doctor');
+    Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
 });
 
 Route::resource('patients', PatientController::class);
 
+Route::post('/nurse/login', [NurseController::class, 'login'])->name('nurse.login');

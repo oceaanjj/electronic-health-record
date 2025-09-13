@@ -12,10 +12,10 @@
 
     <header class="header">
         <div class="logo">
-            <img src="img/ehr-logo.png" alt="Hospital Logo">
+            <a href="{{ route('home') }}"> <img src="img/ehr-logo.png" alt="Hospital Logo"> </a>
             <span>ELECTRONIC HEALTH RECORD</span>
         </div>
-        <a href="{{ route('doctor-login') }}" class="login">LOG IN</a>
+        <a href="{{ route('login.index') }}" class="login">LOG IN</a>
     </header>
 
     <section class="welcome">
@@ -30,7 +30,7 @@
                 documentation of medical data including patient profiles, vital signs, treatments,
                 and medication records, ensuring accurate and accessible healthcare management.
             </p>
-            <a href="{{ route('nurse-login') }}" class="login">LOG IN</a>
+            <a href="{{ route('login.index') }}" class="login">LOG IN</a>
         </div>
         <div class="welcome-image">
             <img src="img/doctor-kids.png" alt="Doctor with Kids">

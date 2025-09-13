@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nurse Login</title>
+    <title>Doctor Login</title>
     @vite(['resources/css/login-style.css'])
 </head>
 
@@ -20,13 +20,12 @@
             <p id="upper-line"></p>
             <div id="form-container">
 
-                <p class="role"> NURSE <strong>LOG IN</strong></p>
-
+                <p class="role"> DOCTOR <strong>LOG IN</strong></p>
 
                 <form>
-                    <label for="nurse_id">Nurse ID / Username</label>
+                    <label for="doctor_id">Doctor ID / Username</label>
                     <br>
-                    <input type="text" id="nurse_id" placeholder="Enter your Nurse ID">
+                    <input type="text" id="doctor_id" placeholder="Enter your Doctor ID">
                     <br>
 
                     <label for="password">Password</label>

@@ -18,6 +18,14 @@
         <a href="{{ route('login.index') }}" class="login">LOG IN</a>
     </header>
 
+    <!-- test alert -->
+    @if (session('success'))
+        <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
+            {{ session('success') }}
+        </div>
+    @endif
+    <!-- test alert -->
+
     <section class="welcome">
         <div class="welcome-text">
             <h3>WELCOME TO</h3>
@@ -39,6 +47,7 @@
 
     <!-- EHR Components -->
     <section class="ehr-container">
+
         <h2>EHR - COMPONENTS</h2>
         <p>
             Our system offers a set of integrated components that make patient data documentation

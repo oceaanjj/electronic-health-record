@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function showLoginForm()
+    public function showRoleSelectionForm()
     {
         return view('login.index');
     }
+
     public function showNurseLoginForm()
     {
         return view('login.nurse-login');
@@ -28,48 +31,42 @@ class LoginController extends Controller
     }
 
 
-
-    /**
-     * Handle a login request to the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function login(Request $request)
+    public function authenticate(Request $request): RedirectResponse
     {
-        // 1. Validate the user's input
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'name' => ['required', 'string'],
+            'password' => ['required'],
         ]);
 
-        // 2. Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            $user = Auth::user();
 
-            // 3. Redirect the user to their intended location
-            return redirect()->intended('/dashboard');
+            switch (strtolower($user->role)) {
+                case 'admin':
+                    return redirect()->route('home')->with('success', 'Admin login successful!');
+                case 'doctor':
+                    return redirect()->route('home')->with('success', 'Doctor login successful!');
+                case 'nurse':
+                    return redirect()->route('home')->with('success', 'Nurse login successful!');
+                default:
+                    Auth::logout();
+                    return redirect()->route('login.index')->withErrors(['name' => 'Unauthorized role.']);
+            }
         }
 
-        // 4. If authentication fails, redirect back with an error
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            'name' => 'Invalid login details.',
+        ])->onlyInput('name');
     }
 
-    /**
-     * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login.index');
     }
 }

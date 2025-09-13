@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class NurseModel extends Model
 {
-    protected $table = 'nurse_logins';
+    protected $table = 'users';
      protected $fillable = [
-        'nurse_id',
         'name',
         'password',
     ];

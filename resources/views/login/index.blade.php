@@ -29,6 +29,10 @@
                 <br>
 
                 <hr>
+
+                @error('name') <p style="color:red;">{{ $message }}</p> @enderror
+                @error('password') <p style="color:red;">{{ $message }}</p> @enderror
+
                 <div>
                     <!-- picture ng home icon -->
                     <a href="{{ route('home') }}" class="return-home">

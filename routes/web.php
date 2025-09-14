@@ -12,6 +12,9 @@ Route::get('/role', function () {
     return view('role');
 })->name('role');
 
+Route::get('/medical-history', function () {
+    return view('medical-history');
+})->name('medical-history');
 
 
 //login

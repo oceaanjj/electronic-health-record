@@ -20,6 +20,9 @@ Route::get('/physical-exam', function () {
     return view('physical-exam');
 })->name('physical-exam');
 
+Route::get('/vital-signs', function () {
+    return view('vital-signs');
+})->name('vital-signs');
 
 //login
 Route::prefix('login')->name('login.')->group(function () {

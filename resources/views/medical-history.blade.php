@@ -19,7 +19,7 @@
     <table>
 
         <tr>
-          <th rowspan="2" class="present-illness">PRESENT ILLNESS</th>
+          <th rowspan="2" class="title">PRESENT ILLNESS</th>
           <th>NAME</th>
           <th>DESCRIPTION</th>
           <th>MEDICATION</th>
@@ -43,7 +43,7 @@
 
 
         <tr>
-          <th rowspan="2" class="present-illness">PAST MEDICAL / SURGECAL </th>
+          <th rowspan="2" class="title">PAST MEDICAL / SURGICAL</th>
         </tr>
    
         <tr>
@@ -59,7 +59,7 @@
 
 
         <tr>
-          <th rowspan="2" class="present-illness">KNOWN CONDITION OR ALLERGIES</th>
+          <th rowspan="2" class="title">KNOWN CONDITION OR ALLERGIES</th>
         </tr>
    
         <tr>
@@ -74,7 +74,7 @@
         
 
         <tr>
-          <th rowspan="2" class="present-illness">VACCINATION & IMMUNIZATION</th>
+          <th rowspan="2" class="title">VACCINATION & IMMUNIZATION</th>
         </tr>
    
         <tr>
@@ -91,11 +91,11 @@
 
 
         <tr>
-          <th colspan="7" class="present-illness">DEVELOPMENTAL HISTORY</th>
+          <th colspan="7" class="title">DEVELOPMENTAL HISTORY</th>
         </tr>
 
         <tr>
-          <th rowspan="2" class="present-illness">GROSS MOTOR</th>
+          <th rowspan="2" class="title">GROSS MOTOR</th>
           <td colspan="6">FINDINGS</td>
         </tr>
    
@@ -104,7 +104,56 @@
         </tr>
 
 
+
+        <tr>
+          <th rowspan="2" class="title">FINE MOTOR</th>
+          <td colspan="6">FINDINGS</td>
+        </tr>
+   
+        <tr>
+          <td colspan="6"><textarea placeholder="Enter Fine Motor findings"></textarea></td>
+        </tr>
+
+
+        <tr>
+          <th rowspan="2" class="title">LANGUAGE</th>
+          <td colspan="6">FINDINGS</td>
+        </tr>
+   
+        <tr>
+          <td colspan="6"><textarea placeholder="Enter Language findings"></textarea></td>
+        </tr>
+
+
+        <tr>
+          <th rowspan="2" class="title">COGNITIVE</th>
+          <td colspan="6">FINDINGS</td>
+        </tr>
+   
+        <tr>
+          <td colspan="6"><textarea placeholder="Enter Cognitive findings"></textarea></td>
+        </tr>
+
+
+        <tr>
+          <th rowspan="2" class="title">SOCIAL</th>
+          <td colspan="6">FINDINGS</td>
+        </tr>
+   
+        <tr>
+          <td colspan="6"><textarea placeholder="Enter Social findings"></textarea></td>
+        </tr>
+
+        
+
+
     </table>
   </div>
+
+    <div class="btn">
+        <button type="submit">Submit</button>
+    </div>
+
+
 </body>
 </html>

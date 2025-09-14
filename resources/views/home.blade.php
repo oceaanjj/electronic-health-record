@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EHR System - Pedia Ward</title>
-    @vite(['./resources/css/home-style.css'])
+    @vite(['resources/css/home-style.css'])
 </head>
 
 <body>
@@ -88,42 +88,46 @@ use Illuminate\Support\Facades\Auth;
                 <img src="img/medical-history.png" alt="History Icon" class="box-icon">
                 <h3>MEDICAL HISTORY</h3>
                 <p>Document past illnesses, surgeries, allergies, and family medical background.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('medical-history') }}">PROCEED <span class="arrow">▶</span></a>
+                </div>
             </div>
 
             <div class="box">
                 <img src="img/physical-exam.png" alt="Exam Icon" class="box-icon">
                 <h3>PHYSICAL EXAM</h3>
                 <p>Record findings from clinical examinations and physical assessments.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('physical-exam') }}">PROCEED <span class="arrow">▶</span></a>
+                </div>
             </div>
 
             <div class="box">
                 <img src="img/vital-signs.png" alt="Vitals Icon" class="box-icon">
                 <h3>VITAL SIGNS</h3>
                 <p>Track and update measurements such as temperature, blood pressure, pulse, and respiration.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('vital-signs') }}">PROCEED <span class="arrow">▶</span></a></div>
             </div>
 
             <div class="box">
                 <img src="img/intake-and-output.png" alt="Intake Icon" class="box-icon">
                 <h3>INTAKE AND OUTPUT</h3>
                 <p>Monitor and log a patient’s fluid intake and output for accurate care management.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('intake-and-output') }}">PROCEED <span class="arrow">▶</span></a>
+                </div>
             </div>
 
             <div class="box">
                 <img src="img/activities-of-daily-living.png" alt="ADL Icon" class="box-icon">
                 <h3>ACTIVITIES OF DAILY LIVING</h3>
                 <p>Assess a patient’s ability to perform daily tasks such as eating, bathing, and mobility.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('act-of-daily-living') }}">PROCEED <span
+                            class="arrow">▶</span></a></div>
             </div>
 
             <div class="box">
                 <img src="img/lab-values.png" alt="Lab Icon" class="box-icon">
                 <h3>LAB VALUES</h3>
                 <p>Record laboratory test results and integrate findings into the patient’s medical record.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('lab-values') }}">PROCEED <span class="arrow">▶</span></a></div>
             </div>
 
             <div class="box">
@@ -138,7 +142,8 @@ use Illuminate\Support\Facades\Auth;
                 <img src="img/iv-and-lines.png" alt="IVs & Lines icon" class="box-icon">
                 <h3>IV's & LINES</h3>
                 <p>Manage intravenous lines, infusions, and related treatments.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('ivs-and-lines') }}">PROCEED <span class="arrow">▶</span></a>
+                </div>
             </div>
 
             <div class="box">

@@ -12,7 +12,7 @@ class LoginController extends Controller
 {
     public function showRoleSelectionForm()
     {
-        return view('login.index');
+        return view('role');
     }
 
     public function showNurseLoginForm()

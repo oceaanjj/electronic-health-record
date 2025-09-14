@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Patient Illness Record</title>
+  <title>Patient Medical History</title>
     @vite(['./resources/css/medical-history-style.css'])
 </head>
 
@@ -143,9 +143,6 @@
         <tr>
           <td colspan="6"><textarea placeholder="Enter Social findings"></textarea></td>
         </tr>
-
-        
-
 
     </table>
   </div>

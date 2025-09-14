@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EHR System - Pedia Ward</title>
     @vite(['resources/css/home-style.css'])
 </head>
+
 <body>
 
     <header class="header">
         <div class="logo">
-            <img src="img/ehr-logo.png" alt="Hospital Logo">
+            <a href="{{ route('home') }}"> <img src="img/ehr-logo.png" alt="Hospital Logo"> </a>
             <span>ELECTRONIC HEALTH RECORD</span>
         </div>
-        <a href="#" class="login">LOG IN</a>
+        <a href="{{ route('login.index') }}" class="login">LOG IN</a>
     </header>
+
+    <!-- test alert -->
+    @if (session('success'))
+        <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
+            {{ session('success') }}
+        </div>
+    @endif
+    <!-- test alert -->
 
     <section class="welcome">
         <div class="welcome-text">
@@ -28,7 +38,7 @@
                 documentation of medical data including patient profiles, vital signs, treatments,
                 and medication records, ensuring accurate and accessible healthcare management.
             </p>
-            <a href="#" class="login">LOG IN</a>
+            <a href="{{ route('login.index') }}" class="login">LOG IN</a>
         </div>
         <div class="welcome-image">
             <img src="img/doctor-kids.png" alt="Doctor with Kids">
@@ -37,6 +47,7 @@
 
     <!-- EHR Components -->
     <section class="ehr-container">
+
         <h2>EHR - COMPONENTS</h2>
         <p>
             Our system offers a set of integrated components that make patient data documentation
@@ -49,7 +60,8 @@
                 <img src="img/register.png" alt="Register Icon" class="box-icon">
                 <h3>REGISTER</h3>
                 <p>This is where new patients are registered into the system.</p>
-                <div class="proceed"><a href="#">PROCEED <span class="arrow">▶</span></a></div>
+                <div class="proceed"><a href="{{ route('patients.index') }}">PROCEED <span class="arrow">▶</span></a>
+                </div>
             </div>
 
             <div class="box">
@@ -156,4 +168,5 @@
     </section>
 
 </body>
+
 </html>

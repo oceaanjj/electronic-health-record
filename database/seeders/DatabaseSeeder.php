@@ -17,5 +17,12 @@ class DatabaseSeeder extends Seeder
     {
         //Generate 20 patients
         Patient::factory(20)->create();
+
+
+        //Generate test users
+        $this->call([
+            UserSeeder::class,
+        ]);
+
     }
 }

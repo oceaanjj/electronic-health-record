@@ -4,30 +4,23 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::view('/', 'home')->name('home');
 
-Route::get('/role', function () {
-    return view('role');
-})->name('role');
+$views = [
+    'role',
+    'medical-history',
+    'physical-exam',
+    'vital-signs',
+    'intake-and-output',
+    'act-of-daily-living',
+    'lab-values',
+    'diagnostics',
+    'ivs-and-lines',
+];
 
-Route::get('/medical-history', function () {
-    return view('medical-history');
-})->name('medical-history');
-
-Route::get('/physical-exam', function () {
-    return view('physical-exam');
-})->name('physical-exam');
-
-Route::get('/vital-signs', function () {
-    return view('vital-signs');
-})->name('vital-signs');
-
-
-Route::get('/intake-and-output', function () {
-    return view('intake-and-output');
-})->name('intake-and-output');
+foreach ($views as $view) {
+    Route::view("/{$view}", $view)->name($view);
+}
 
 //login
 Route::prefix('login')->name('login.')->group(function () {

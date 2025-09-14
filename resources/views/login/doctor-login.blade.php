@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Login</title>
-    @vite(['resources/css/login-style.css'])
+    @vite(['./resources/css/login-style.css'])
 </head>
 
 <body class="login-page">

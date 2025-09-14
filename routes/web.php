@@ -8,6 +8,12 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/role', function () {
+    return view('role');
+})->name('role');
+
+
+
 //login
 Route::prefix('login')->name('login.')->group(function () {
     //for showing the login forms
@@ -21,6 +27,8 @@ Route::prefix('login')->name('login.')->group(function () {
     Route::post('/doctor', [LoginController::class, 'authenticateDoctor'])->name('authenticate.doctor');
     Route::post('/admin', [LoginController::class, 'authenticateAdmin'])->name('authenticate.admin');
 });
+
+
 
 
 

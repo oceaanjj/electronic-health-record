@@ -16,6 +16,10 @@ Route::get('/medical-history', function () {
     return view('medical-history');
 })->name('medical-history');
 
+Route::get('/physical-exam', function () {
+    return view('physical-exam');
+})->name('physical-exam');
+
 
 //login
 Route::prefix('login')->name('login.')->group(function () {

@@ -24,6 +24,11 @@ Route::get('/vital-signs', function () {
     return view('vital-signs');
 })->name('vital-signs');
 
+
+Route::get('/intake-and-output', function () {
+    return view('intake-and-output');
+})->name('intake-and-output');
+
 //login
 Route::prefix('login')->name('login.')->group(function () {
     //for showing the login forms

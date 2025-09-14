@@ -4,9 +4,23 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::view('/', 'home')->name('home');
+
+$views = [
+    'role',
+    'medical-history',
+    'physical-exam',
+    'vital-signs',
+    'intake-and-output',
+    'act-of-daily-living',
+    'lab-values',
+    'diagnostics',
+    'ivs-and-lines',
+];
+
+foreach ($views as $view) {
+    Route::view("/{$view}", $view)->name($view);
+}
 
 //login
 Route::prefix('login')->name('login.')->group(function () {
@@ -23,6 +37,8 @@ Route::prefix('login')->name('login.')->group(function () {
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
 
 
 

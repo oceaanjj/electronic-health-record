@@ -22,7 +22,7 @@
 
                 <form action="{{ route('login.authenticate.doctor') }}" method="POST">
                     @csrf
-                    <label for="doctor_id">Doctor ID / Username</label>
+                    <label for="doctor_id">Name / Email</label>
                     <br>
                     <input type="text" name="name" placeholder="Enter your Doctor ID">
                     <br>

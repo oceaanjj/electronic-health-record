@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Vital Signs</title>
-    @vite(['./resources/css/vital-signs-style.css'])
+    @vite(['resources/css/vital-signs-style.css'])
 </head>
 
 <body>

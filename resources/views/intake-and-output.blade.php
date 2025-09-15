@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Intake and Output</title>
-    @vite(['./resources/css/intake-and-output-style.css'])
+    @vite(['resources/css/intake-and-output-style.css'])
 </head>
 
 <body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Medical History</title>
-    @vite(['./resources/css/medical-history-style.css'])
+    @vite(['resources/css/medical-history-style.css'])
 </head>
 
 <body>

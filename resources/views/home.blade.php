@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EHR System - Pedia Ward</title>
-    @vite(['./resources/css/home-style.css'])
+    @vite(['resources/css/home-style.css'])
 </head>
 
 <body>

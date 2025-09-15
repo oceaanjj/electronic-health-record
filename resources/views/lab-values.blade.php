@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Lab Values</title>
-  @vite(['./resources/css/#.css'])
+  @vite(['resources/css/#.css'])
 </head>
 
 <body>

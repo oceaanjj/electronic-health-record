@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Electronic Health Record - Login Role</title>
-  @vite(['./resources/css/role-style.css'])
+  @vite(['resources/css/role-style.css'])
 </head>
 <body>
 

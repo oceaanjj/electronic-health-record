@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Physical Exam</title>
-    @vite(['./resources/css/physical-exam-style.css'])
+    @vite(['resources/css/physical-exam-style.css'])
 </head>
 
 <body>

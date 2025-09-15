@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
@@ -22,7 +23,7 @@ foreach ($views as $view) {
     Route::view("/{$view}", $view)->name($view);
 }
 
-//login
+//Login
 Route::prefix('login')->name('login.')->group(function () {
     //for showing the login forms
     Route::get('/', [LoginController::class, 'showRoleSelectionForm'])->name('index');
@@ -36,6 +37,13 @@ Route::prefix('login')->name('login.')->group(function () {
     Route::post('/admin', [LoginController::class, 'authenticateAdmin'])->name('authenticate.admin');
 });
 
+//Register
+Route::prefix('register')->group(function () {
+    Route::get('/', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/', [RegisterController::class, 'register'])->name('register.attempt');
+});
+
+//Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 

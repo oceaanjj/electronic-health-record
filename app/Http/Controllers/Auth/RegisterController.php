@@ -12,7 +12,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         //BRYAN: Keith need din ito baguhin to the front-end routes for registration 
-        return view('auth.register');
+        return view('register');
     }
 
     public function register(Request $request)
@@ -32,6 +32,6 @@ class RegisterController extends Controller
 
         //BRYAN: Keith yung laman ng 'login' need din palitan  since there is different blade file for each login based role but this shit is working
         //bali need sa 'login' is yung login page na ginawa ni Rex
-        // return redirect()->route('login')->with('success', 'User registered successfully!');
+        return redirect()->route('login.index')->with('success', 'User registered successfully!');
     }
 }

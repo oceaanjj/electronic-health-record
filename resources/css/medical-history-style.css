@@ -1,0 +1,64 @@
+
+body {
+  background: #1A6A24;
+  margin: 0;
+  padding: 20px;
+  color: #000;
+}
+
+.container {
+  background: #fffbe6;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.header {
+  margin-bottom: 10px;
+  font-weight: bold;
+  background: #1A6A24;
+  color: #fff;
+  padding: 8px;
+}
+
+.header label {
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fffbe6;
+}
+
+th, td {
+  border: 2px solid #EDB62C;
+  padding: 8px;
+  vertical-align: top;
+}
+
+th {
+  background: #1A6A24;
+  color: #fff;
+  text-align: center;
+}
+
+.title {
+  width: 120px;
+  
+  text-orientation: mixed;
+  background: #1A6A24;
+  color: white;
+  font-weight: bold;
+}
+
+textarea, input {
+  width: 100%;
+  height: 60px;        
+  border: none;
+  background: transparent;
+  resize: none;       
+  overflow-y: auto;   
+  padding: 4px;
+  box-sizing: border-box;
+}
+

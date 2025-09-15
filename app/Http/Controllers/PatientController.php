@@ -92,4 +92,28 @@ class PatientController extends Controller
 
         return redirect()->route('patients.index')->with('success', 'Patient deleted successfully');
     }
+
+
+    /* TODO
+    [x] Get the input from front
+    [x] Search by ID
+    []  Search by Name *Not yet done
+    [x] use get to select all rows
+
+
+    */
+    public function search(Request $request)
+
+    {
+        $id = $request->input('input'); // the input from the search bar
+
+        $patients = Patient::query()
+            ->when($id, function ($q) use ($id) {
+                $q->where('patient_id', $id);
+            })
+            ->get();
+
+        //show results: Keith pa fix nalang kung where yung patient search result 
+        // return view('patients.search-results', compact('patients', 'id'));
+    }
 }

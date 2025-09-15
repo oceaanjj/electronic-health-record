@@ -11,17 +11,34 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medical_history', function (Blueprint $table) {
-            $table->bigInt('medical_history_id')->primary();            
-            $table->id();
+        Schema::create('medical_history', function (Blueprint $table) {    
+            $table->id('medical_id');
+            $table->unsignedBigInteger('id');
+
+            $table->enum('type', [
+            'present_illness',
+            'past_medical_surgical',
+            'allergies',
+            'vaccination'
+             ]);
             $table->string('condition_name')->nullable();
-            $table->text('condition_description')->nullable();
-            $table->string('medication_name')->nullable();
-            $table->string('medication_dosage')->nullable();
-            $table->string('side_effects')->nullable();
-            $table->text('medication_comments')->nullable();
+            $table->text('description')->nullable();
+            $table->text('medication')->nullable();
+            $table->text('dosage')->nullable();
+            $table->text('side_effect')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
-    });
+        });
+
+        Schema::create('developmental_history', function (Blueprint $table) {         
+            $table->unsignedBigInteger('id');
+            $table->text('gross_motor')->nullable();
+            $table->text('fine_motor')->nullable();
+            $table->text('language')->nullable();
+            $table->text('cognitive')->nullable();
+            $table->text('social')->nullable();
+            $table->timestamps();
+            });
     }
 
     /**

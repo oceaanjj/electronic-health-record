@@ -33,9 +33,7 @@ Route::prefix('login')->name('login.')->group(function () {
     Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
 
     //for handling authentication
-    Route::post('/nurse', [LoginController::class, 'authenticateNurse'])->name('authenticate.nurse');
-    Route::post('/doctor', [LoginController::class, 'authenticateDoctor'])->name('authenticate.doctor');
-    Route::post('/admin', [LoginController::class, 'authenticateAdmin'])->name('authenticate.admin');
+    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 });
 
 //Register

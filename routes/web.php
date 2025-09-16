@@ -52,6 +52,14 @@ Route::prefix('physical-exam')->group(function () {
     Route::post('/', [PhysicalExamController::class, 'store'])->name('physical-exam.store');
 });
 
+//search:
+Route::prefix('patients')->name('patients.')->group(function () {
+    Route::get('/search', function () {
+        return view('patients.search');
+    })->name('search');
+
+    Route::get('/search-results', [PatientController::class, 'search'])->name('search-results');
+});
 
 Route::resource('patients', PatientController::class);
 

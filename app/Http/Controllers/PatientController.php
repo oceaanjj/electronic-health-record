@@ -113,6 +113,9 @@ class PatientController extends Controller
             ->get();
 
         //show results: Keith pa fix nalang kung where yung patient search result 
-        // return view('patients.search-results', compact('patients', 'id'));
+
+        return view('patients.search', compact('patients', 'id'));
     }
+
+
 }

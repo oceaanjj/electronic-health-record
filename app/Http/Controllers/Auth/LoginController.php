@@ -45,7 +45,7 @@ class LoginController extends Controller
 
             if (strtolower($user->role) === $expectedRole) {
                 $request->session()->regenerate();
-                return redirect()->route('home')->with('success', ucfirst($expectedRole) . ' login successful!');
+                return redirect()->route('home')->with('success', ucfirst($expectedRole) . ' ' . Auth::user()->username . ' login successful !');
             }
 
             Auth::logout();

@@ -86,6 +86,12 @@
       </a>
 
     </div>
+
+    @if (session('success'))
+      <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
+        {{ session('success') }}
+      </div>
+    @endif
   </main>
 
 </body>

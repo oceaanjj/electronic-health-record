@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Activities of daily living</title>
-    @vite(['./resources/css/#.css'])
+<<<<<<< HEAD
+    @vite(['resources/css/#.css'])
+=======
+    @vite(['./resources/css/act-of-daily-living.css'])
+>>>>>>> fb9bfa54b07a5bd3ad40c06dfd34fc7e0d04f8e6
 </head>
 
 <body>
@@ -16,7 +20,7 @@
             </select>
         </div>
 
-        <div>
+        <div class="section-bar">
             <label for="day">DAY NO :</label>
             <select id="day" name="day">
                 <option value="">-- Select number --</option>
@@ -83,13 +87,9 @@
         </table>
     </div>
 
-    <div class="btn">
-        <button type="submit">Submit</button>
-    </div>
-
-
-    <div class="cdss-btn">
-        <a href="#" class="btn">CDSS</a>
+        <div class="buttons">
+            <a href="#" class="btn">CDSS</a>
+        <button  class="btn"type="submit">Submit</button>
     </div>
     
 </body>

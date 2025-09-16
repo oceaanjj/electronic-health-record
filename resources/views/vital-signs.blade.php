@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Vital Signs</title>
-    @vite(['./resources/css/vital-signs-style.css'])
+    @vite(['resources/css/vital-signs-style.css'])
 </head>
 
 <body>
@@ -16,13 +16,12 @@
             </select>
         </div>
 
-        <div>
+        <div class="section-bar">
             <label for="day">DAY NO :</label>
             <select id="day" name="day">
                 <option value="">-- Select number --</option>
                 <option value="1">1</option>
             </select>
-
             <label for="date">DATE :</label>
             <input type="date" id="date" name="date">
         </div>
@@ -137,14 +136,12 @@
         </table>
     </div>
 
-    <div class="btn">
-        <button type="submit">Submit</button>
-    </div>
-
-
-    <div class="cdss-btn">
+    <div class="buttons">
+        <button  class="btn"type="submit">Submit</button>
         <a href="#" class="btn">CDSS</a>
     </div>
+
+
     
 </body>
 </html>

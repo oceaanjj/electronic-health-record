@@ -20,15 +20,16 @@
 
                 <p class="role"> NURSE <strong>LOG IN</strong></p>
 
-                <form action="{{ route('login.authenticate.nurse') }}" method="POST">
+                <form action="{{ route('login.authenticate') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="role" value="nurse">
                     <label for="nurse_id">Nurse ID / Username</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your Nurse ID">
+                    <input type="text" id="username" name="username" placeholder="Enter your Nurse ID">
 
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter your password">
 
-                    @error('name') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('username') <p style="color:red;">{{ $message }}</p> @enderror
                     @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
                     <button type="submit" class="btn-login">Sign In</button>

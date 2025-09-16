@@ -19,6 +19,9 @@ $views = [
     'lab-values',
     'diagnostics',
     'ivs-and-lines',
+    'medication-administration',
+    'medication-reconciliation',
+    'discharge-planning',
 
 ];
 

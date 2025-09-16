@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\PhysicalExam;
 use App\Models\CdssPhysicalExam;
 use Illuminate\Http\Request;
+use App\Models\Patient;
 
 class PhysicalExamController extends Controller
 {
@@ -45,5 +46,10 @@ class PhysicalExamController extends Controller
 
 
 
+    }
+     public function show()
+    {
+        $patients = Patient::all();
+        return view('physical-exam', compact('patients'));
     }
 }

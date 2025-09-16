@@ -63,4 +63,11 @@ Route::prefix('patients')->name('patients.')->group(function () {
 
 Route::resource('patients', PatientController::class);
 
-Route::post('/medical-history/store', [MedicalController::class, 'store'])->name('medical-history.store');
+Route::post('/medical/store', [MedicalController::class, 'store'])->name('medical.store');
+Route::post('/present-illness', [MedicalController::class, 'storePresentIllness'])->name('present.store');
+Route::post('/past-medical', [MedicalController::class, 'storePastMedicalSurgical'])->name('past.store');
+Route::post('/allergies', [MedicalController::class, 'storeAllergies'])->name('allergy.store');
+Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
+Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
+
+

@@ -92,4 +92,5 @@ class PatientController extends Controller
 
         return redirect()->route('patients.index')->with('success', 'Patient deleted successfully');
     }
+
 }

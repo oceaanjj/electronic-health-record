@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PhysicalExamController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -47,8 +48,11 @@ Route::prefix('register')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-
-
+//Physical Exam:
+Route::prefix('physical-exam')->group(function () {
+    Route::get('/', [PhysicalExamController::class, 'show'])->name('physical-exam.show');
+    Route::post('/', [PhysicalExamController::class, 'store'])->name('physical-exam.store');
+});
 
 
 Route::resource('patients', PatientController::class);

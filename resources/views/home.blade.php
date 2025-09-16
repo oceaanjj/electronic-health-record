@@ -67,7 +67,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>REGISTER</h3>
                 <p>This is where new patients are registered into the system.</p>
                 <div class="proceed">
-                    <a href="{{ route('patients.index') }}">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('patients.create') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 
@@ -85,7 +85,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>DEMOGRAPHIC PROFILE</h3>
                 <p>Store and manage patient information.</p>
                 <div class="proceed">
-                    <a href="#">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('patients.index') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 
@@ -103,7 +103,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>PHYSICAL EXAM</h3>
                 <p>Record findings from clinical examinations and physical assessments.</p>
                 <div class="proceed">
-                    <a href="{{ route('physical-exam') }}">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{  route('physical-exam.show') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 

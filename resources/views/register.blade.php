@@ -24,9 +24,9 @@
                     @csrf
 
                     <div>
-                        <label for="name">Name</label>
+                        <label for="name">Username</label>
                         <br>
-                        <input type="text" name="name" id="name" placeholder="Enter name" value="{{ old('name') }}"
+                        <input type="text" name="username" id="username" placeholder="Enter name" value="{{ old('username') }}"
                             required>
                         @error('name')
                             <p style="color:red;">{{ $message }}</p>

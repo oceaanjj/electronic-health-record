@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Electronic Health Record - Login Role</title>
   @vite(['resources/css/role-style.css'])
 </head>
+
 <body>
 
 
@@ -20,7 +22,7 @@
     <h1 class="heading">WHICH ONE ARE YOU?</h1>
 
     <div class="role-container">
-      
+
       <!-- NURSE'-->
       <div class="role">
         <div class="icon">
@@ -28,7 +30,7 @@
         </div>
         <h2>NURSE</h2>
         <p>Access patient care records, update vital signs, and manage daily care activities.</p>
-        <button class="btn">Login as Nurse</button>
+        <a href="{{ route('login.nurse') }}"> <button class="btn">Login as Nurse</button></a>
       </div>
 
       <!-- DOCTOR -->
@@ -38,7 +40,7 @@
         </div>
         <h2>DOCTOR</h2>
         <p>Complete view access to medical records and nursing ADPIE.</p>
-        <button class="btn">Login as Doctor</button>
+        <a href="{{ route('login.doctor') }}"> <button class="btn">Login as Doctor</button></a>
       </div>
 
       <!-- ADMIN -->
@@ -48,11 +50,12 @@
         </div>
         <h2>ADMIN</h2>
         <p>Access patient care records, update vital signs, and manage daily care activities.</p>
-        <button class="btn">Login as Admin</button>
+        <a href="{{ route('login.admin') }}"> <button class="btn">Login as Admin</button></a>
       </div>
 
     </div>
   </main>
 
 </body>
+
 </html>

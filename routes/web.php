@@ -36,6 +36,7 @@ Route::prefix('login')->name('login.')->group(function () {
     Route::post('/admin', [LoginController::class, 'authenticateAdmin'])->name('authenticate.admin');
 });
 
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 

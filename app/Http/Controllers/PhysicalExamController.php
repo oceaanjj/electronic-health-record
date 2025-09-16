@@ -2,50 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Patient;
+
+use App\Models\PhysicalExam;
+use App\Models\CdssPhysicalExam;
 use Illuminate\Http\Request;
 
 class PhysicalExamController extends Controller
 {
-    // SHOW PHYSICAL EXAM FORM
-    public function show()
-    {
-        $patients = Patient::all();
-        return view('physical-exam', compact('patients'));
-    }
 
-    // STORE PHYSICAL EXAM DATA
+    // TODO:
+    //store it
+    // call the cdss method and pass the $physicalExam data
     public function store(Request $request)
     {
-        $patientInfo = $request->input('patient_info'); //Patient id and name
-
-        $parts = explode('|', $patientInfo); //String -> Array
-
-        $request->merge([
-            'patient_id' => $parts[0] ?? null,
-            'patient_name' => $parts[1] ?? null,
+        $data = $request->validate([
+            'patient_id' => 'required|exists:patients,id',
+            'general_appearance' => 'nullable|string',
+            'skin_condition' => 'nullable|string',
+            'eye_condition' => 'nullable|string',
+            'oral_condition' => 'nullable|string',
+            'cardiovascular' => 'nullable|string',
+            'abdomen_condition' => 'nullable|string',
+            'extremities' => 'nullable|string',
+            'neurological' => 'nullable|string',
         ]);
 
-        try {
-            $validatedData = $request->validate([
-                'patient_id' => 'required|exists:patients,id',
-                'patient_name' => 'required|exists:patients,name',
-                'general_appearance_findings' => 'required|string',
-                'skin_findings' => 'required|string',
-                'eyes_findings' => 'required|string',
-                'oral_cavity_findings' => 'required|string',
-                'cardiovascular_findings' => 'required|string',
-                'abdomen_findings' => 'required|string',
-                'extremities_findings' => 'required|string',
-                'neurological_findings' => 'required|string',
-            ]);
+        $physicalExam = PhysicalExam::create($data);
 
-            $request->session()->put('physical_exam_data', $validatedData);
+        // call the cdss method here and pass the $physicalExam data
+        $this->runCdssAnalysis($physicalExam);
 
-            return redirect()->route('physical-exam.show')->with('success', 'Physical exam data stored temporarily.')->with('physical_exam_data', $validatedData);
+        // where itll go after storing
+        return redirect()->route('physical_exams.index')->with('success', 'Physical exam registered successfully');
+    }
 
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()->withErrors($e->validator)->withInput();
-        }
+    private function runCdssAnalysis($physicalExam)
+    {
+        // Build the if/else logic para sa cdss analysis
+        // [] If else sa bawat condition from general appearance to neurological (long ass shit)
+        // [] store it sa db
+        // [] return a view or redirect it
+
+
+
     }
 }

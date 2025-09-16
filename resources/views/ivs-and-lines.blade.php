@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Activities of daily living</title>
-    @vite(['./resources/css/#.css'])
+    @vite(['./resources/css/ivs-and-lines.css'])
 </head>
 
 <body>
@@ -38,9 +38,9 @@
                    
         </table>
     </div>
-
-    <div class="btn">
-        <button type="submit">Submit</button>
+  
+    <div class="buttons">
+        <button class="btn"type="submit">Submit</button>
     </div>
 
     

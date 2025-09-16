@@ -1,9 +1,10 @@
-/* General Page Style */
+
 body {
   background: #1A6A24;
   margin: 0;
   padding: 20px;
   color: #000;
+  font-family: Arial, sans-serif;
 }
 
 .container {
@@ -66,13 +67,12 @@ body {
       padding: 6px;
       border: 1px solid #EDB62C;
       border-radius: 4px;
-      text-align: center;
       background: #fffdf5;
       font-size: 13px;
+      text-align: center;
       width: 200px;
     }
 
-/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -94,11 +94,11 @@ th {
   font-weight: bold;
 }
 
-.time {
+.title {
   background: #1A6A24;
   color: #fff;
   font-weight: bold;
-  width: 100px;
+  width: 180px;
 }
 
 input {
@@ -110,12 +110,11 @@ input {
   box-sizing: border-box;
 }
 
-/* Buttons */
 .buttons {
   display: flex;
-  gap: 100px;          /* space between buttons */
-  margin-top: 15px;
-  margin-left: 920px;
+  gap: 30px;         
+  margin-top: 10px;
+  justify-content: flex-end;
 }
 
 .buttons .btn {

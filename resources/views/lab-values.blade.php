@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Patient Lab Values</title>
-  @vite(['./resources/css/#.css'])
+  @vite(['./resources/css/lab-values.css'])
 </head>
 
 <body>
@@ -125,12 +125,9 @@
         </table>
     </div>
 
-    <div class="btn">
-        <button type="submit">Submit</button>
-    </div>
-
-    <div class="cdss-btn">
-        <a href="#" class="btn">CDSS</a>
+    <div class="buttons">
+            <a href="#" class="btn">CDSS</a>
+        <button  class="btn"type="submit">Submit</button>
     </div>
 </body>
 </html>

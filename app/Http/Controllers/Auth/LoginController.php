@@ -33,7 +33,7 @@ class LoginController extends Controller
     public function authenticateNurse(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'name' => ['required', 'string'],
+            'username' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
@@ -42,7 +42,7 @@ class LoginController extends Controller
 
             if (strtolower($user->role) !== 'nurse') {
                 Auth::logout();
-                return back()->withErrors(['name' => 'Access denied. Only nurses can log in here.']);
+                return back()->withErrors(['username' => 'Access denied. Only nurses can log in here.']);
             }
 
             $request->session()->regenerate();
@@ -50,14 +50,14 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'name' => 'Invalid login details.',
-        ])->onlyInput('name');
+            'userusername' => 'Invalid login details.',
+        ])->onlyInput('username');
     }
 
     public function authenticateDoctor(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'name' => ['required', 'string'],
+            'userusername' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
@@ -66,7 +66,7 @@ class LoginController extends Controller
 
             if (strtolower($user->role) !== 'doctor') {
                 Auth::logout();
-                return back()->withErrors(['name' => 'Access denied. Only doctors can log in here.']);
+                return back()->withErrors(['username' => 'Access denied. Only doctors can log in here.']);
             }
 
             $request->session()->regenerate();
@@ -74,14 +74,14 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'name' => 'Invalid login details.',
-        ])->onlyInput('name');
+            'username' => 'Invalid login details.',
+        ])->onlyInput('username');
     }
 
     public function authenticateAdmin(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'name' => ['required', 'string'],
+            'username' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
@@ -90,7 +90,7 @@ class LoginController extends Controller
 
             if (strtolower($user->role) !== 'admin') {
                 Auth::logout();
-                return back()->withErrors(['name' => 'Access denied. Only admins can log in here.']);
+                return back()->withErrors(['username' => 'Access denied. Only admins can log in here.']);
             }
 
             $request->session()->regenerate();
@@ -98,8 +98,8 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'name' => 'Invalid login details.',
-        ])->onlyInput('name');
+            'username' => 'Invalid login details.',
+        ])->onlyInput('username');
     }
 
 

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -45,3 +45,4 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('patients', PatientController::class);
 
+Route::post('/medical-history/store', [MedicalController::class, 'store'])->name('medical-history.store');

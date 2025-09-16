@@ -16,7 +16,7 @@
             </select>
         </div>
 
-        <div>
+        <div class="section-bar">
             <label for="day">DAY NO :</label>
             <select id="day" name="day">
                 <option value="">-- Select number --</option>
@@ -46,17 +46,20 @@
         </table>
     </div>
 
-    <div class="btn">
-        <button type="submit">Submit</button>
+    <div class="buttons">
+
+    <div class="button-col"></div>
+
+     <div class="button-col">
+        <a href="#" class="btn">Calculate fluid balance</a>
     </div>
 
-
-    <div class="cdss-btn">
+    <div class="button-col">
         <a href="#" class="btn">CDSS</a>
     </div>
 
-    <div class="calculate-btn">
-        <a href="#" class="btn">Calculate fluid balance</a>
+    <div class="button-col">
+        <button class="btn" type="submit">Submit</button>
     </div>
     
 </body>

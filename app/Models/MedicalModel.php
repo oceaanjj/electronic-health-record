@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MedicalHistory extends Model
+class MedicalModel extends Model
 {
     protected $table = 'medical_history';
     protected $fillable = [
         'condition_name',
-        'condition_description',
-        'medication_name',
-        'medication_dosage',
-        'side_effects',
-        'medication_comments',
+        'description',
+        'medication',
+        'dosage',
+        'side_effect',
+        'comment',
     ];
 }
 

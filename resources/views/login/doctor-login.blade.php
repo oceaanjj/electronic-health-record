@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Login</title>
-    @vite(['./resources/css/login-style.css'])
+    @vite(['resources/css/login-style.css'])
 </head>
 
 <body class="login-page">
@@ -22,7 +22,7 @@
 
                 <form action="{{ route('login.authenticate.doctor') }}" method="POST">
                     @csrf
-                    <label for="doctor_id">Doctor ID / Username</label>
+                    <label for="doctor_id">Name / Email</label>
                     <br>
                     <input type="text" name="name" placeholder="Enter your Doctor ID">
                     <br>

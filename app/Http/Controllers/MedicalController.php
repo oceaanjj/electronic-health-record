@@ -2,35 +2,72 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\MedicalHistory;
+use App\Models\MedicalModel;
 use App\Models\DevelopmentalHistory;
 
 class MedicalHistoryController extends Controller
 {
-    public function store(Request $request)
+    public function storePresentIllness(Request $request)
     {
-        $medical = new MedicalHistory();
-        $medical->patient_id = 1; 
-        $medical->condition_name = $request->condition_name;
-        $medical->condition_description = $request->condition_description;
-        $medical->medication_name = $request->medication_name;
-        $medical->medication_dosage = $request->medication_dosage;
-        $medical->side_effects = $request->side_effects;
-        $medical->medication_comments = $request->medication_comments;
-        $medical->save();
+        MedicalModel::create([
+            'type' => 'present_illness',
+            'condition_name' => $request->condition_name,
+            'description' => $request->description,
+            'medication' => $request->medication,
+            'dosage' => $request->dosage,
+            'side_effect' => $request->side_effect,
+            'comment' => $request->comment,
+        ]);
 
-        $dev = new DevelopmentalHistory();
-        $dev->patient_id = 1;
-        $dev->gross_motor = $request->gross_motor;
-        $dev->fine_motor = $request->fine_motor;
-        $dev->language = $request->language;
-        $dev->cognitive = $request->cognitive;
-        $dev->social = $request->social;
-        $dev->save();
+        return back()->with('success', 'Present illness saved!');
+    }
 
-        return back()->with('success', 'Medical history saved successfully!');
+    public function storePastMedicalSurgical(Request $request)
+    {
+        MedicalModel::create([
+            'type' => 'past_medical_surgical',
+            'condition_name' => $request->condition_name,
+            'description' => $request->description,
+            'medication' => $request->medication,
+            'dosage' => $request->dosage,
+            'side_effect' => $request->side_effect,
+            'comment' => $request->comment,
+        ]);
+
+        return back()->with('success', 'Past Medical / Surgical saved!');
+    }
+
+    public function storeAllergies(Request $request)
+    {
+        MedicalModel::create([
+            'type' => 'allergies',
+            'condition_name' => $request->condition_name,
+            'description' => $request->description,
+            'medication' => $request->medication,
+            'dosage' => $request->dosage,
+            'side_effect' => $request->side_effect,
+            'comment' => $request->comment,
+        ]);
+
+        return back()->with('success', 'Allergies saved!');
+    }
+
+    public function storeVaccination(Request $request)
+    {
+        MedicalModel::create([
+            'type' => 'vaccination',
+            'condition_name' => $request->condition_name,
+            'description' => $request->description,
+            'medication' => $request->medication,
+            'dosage' => $request->dosage,
+            'side_effect' => $request->side_effect,
+            'comment' => $request->comment,
+        ]);
+
+        return back()->with('success', 'Vaccination saved!');
     }
 }
+
 
 
 ?>

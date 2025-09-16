@@ -1,0 +1,132 @@
+
+body {
+  background: #1A6A24;   /* page background */
+  margin: 0;
+  padding: 20px;
+  color: #000;
+}
+
+
+.container {
+  background: #fffbe6;   /* light cream */
+  padding: 15px;
+  border-radius: 5px;
+  border: 3px solid #1A6A24;
+  margin-bottom: 20px;
+}
+
+.header {
+  margin-bottom: 15px;
+  font-weight: bold;
+  background: #1A6A24;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 100%;
+}
+
+    .header select{
+      padding: 6px;
+      border: 1px solid #EDB62C;
+      border-radius: 4px;
+      text-align: center;
+      background: #fffdf5;
+      font-size: 13px;
+      width: 200px;
+    }
+
+    .header label {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+.section-bar {
+  margin-bottom: 15px;
+  font-weight: bold;
+  background: #1A6A24;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 100%;
+}
+
+    .section-bar label {
+      margin-right: 6px;
+      font-size: 16px;
+      
+    }
+
+    .section-bar select,
+    .section-bar input[type="date"] {
+      padding: 6px;
+      border: 1px solid #EDB62C;
+      border-radius: 4px;
+      background: #fffdf5;
+      font-size: 13px;
+      text-align: center;
+      width: 200px;
+    }
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fffbe6;
+  margin-top: 15px;
+}
+
+    th, td {
+      border: 2px solid #EDB62C;
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    th.title {
+      background: #1A6A24;
+      color: #fff;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #EDB62C;
+      border-radius: 4px;
+      background: #fffdf5;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+
+.buttons {
+  display: flex;
+}
+
+    .buttons .button-col {
+      flex: 1; 
+      display: flex;
+      justify-content: center;
+    }
+
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  background: #EDB62C;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+

@@ -8,6 +8,9 @@
 
 <body>
   <div class="container">
+
+    {{-- <form action="{{ route('medical.store') }}" method="POST"> --}}
+      @csrf
     <div class="header">
       <label for="patient">PATIENT NAME :</label>
       <select id="patient" name="patient">
@@ -26,69 +29,51 @@
           <th>DOSAGE</th>
           <th>SIDE EFFECT</th>
           <th>COMMENT</th>
-          
         </tr>
-   
-        <tr>
-          <td><input type="text" placeholder="Enter Illness Name"></td>
-          <td><textarea placeholder="Enter Description"></textarea></td>
-          <td><textarea placeholder="Enter Medication"></textarea></td>
-          <td><textarea placeholder="Enter Dosage"></textarea></td>
-          <td><textarea placeholder="Enter Side Effect"></textarea></td>
-          <td><textarea placeholder="Enter Comment"></textarea></td>
+         <tr>
+          <td><input type="text" name="condition_name" placeholder="Enter Illness Name"></td>
+          <td><textarea name="condition_description" placeholder="Enter Description"></textarea></td>
+          <td><textarea name="medication_name" placeholder="Enter Medication"></textarea></td>
+          <td><textarea name="medication_dosage" placeholder="Enter Dosage"></textarea></td>
+          <td><textarea name="side_effects" placeholder="Enter Side Effect"></textarea></td>
+          <td><textarea name="medication_comments" placeholder="Enter Comment"></textarea></td>
         </tr>
-
-
-
-
 
         <tr>
           <th rowspan="2" class="title">PAST MEDICAL / SURGICAL</th>
         </tr>
-   
-        <tr>
-          <td><input type="text" placeholder="Enter Illness Name"></td>
-          <td><textarea placeholder="Enter Description"></textarea></td>
-          <td><textarea placeholder="Enter Medication"></textarea></td>
-          <td><textarea placeholder="Enter Dosage"></textarea></td>
-          <td><textarea placeholder="Enter Side Effect"></textarea></td>
-          <td><textarea placeholder="Enter Comment"></textarea></td>
+         <tr>
+          <td><input type="text" name="condition_name" placeholder="Enter Illness Name"></td>
+          <td><textarea name="condition_description" placeholder="Enter Description"></textarea></td>
+          <td><textarea name="medication_name" placeholder="Enter Medication"></textarea></td>
+          <td><textarea name="medication_dosage" placeholder="Enter Dosage"></textarea></td>
+          <td><textarea name="side_effects" placeholder="Enter Side Effect"></textarea></td>
+          <td><textarea name="medication_comments" placeholder="Enter Comment"></textarea></td>
         </tr>
-
-
-
 
         <tr>
           <th rowspan="2" class="title">KNOWN CONDITION OR ALLERGIES</th>
         </tr>
-   
         <tr>
-          <td><input type="text" placeholder="Enter Illness Name"></td>
-          <td><textarea placeholder="Enter Description"></textarea></td>
-          <td><textarea placeholder="Enter Medication"></textarea></td>
-          <td><textarea placeholder="Enter Dosage"></textarea></td>
-          <td><textarea placeholder="Enter Side Effect"></textarea></td>
-          <td><textarea placeholder="Enter Comment"></textarea></td>
+          <td><input type="text" name="condition_name" placeholder="Enter Illness Name"></td>
+          <td><textarea name="condition_description" placeholder="Enter Description"></textarea></td>
+          <td><textarea name="medication_name" placeholder="Enter Medication"></textarea></td>
+          <td><textarea name="medication_dosage" placeholder="Enter Dosage"></textarea></td>
+          <td><textarea name="side_effects" placeholder="Enter Side Effect"></textarea></td>
+          <td><textarea name="medication_comments" placeholder="Enter Comment"></textarea></td>
         </tr>
-
-        
 
         <tr>
           <th rowspan="2" class="title">VACCINATION & IMMUNIZATION</th>
         </tr>
-   
-        <tr>
-          <td><input type="text" placeholder="Enter Illness Name"></td>
-          <td><textarea placeholder="Enter Description"></textarea></td>
-          <td><textarea placeholder="Enter Medication"></textarea></td>
-          <td><textarea placeholder="Enter Dosage"></textarea></td>
-          <td><textarea placeholder="Enter Side Effect"></textarea></td>
-          <td><textarea placeholder="Enter Comment"></textarea></td>
+         <tr>
+          <td><input type="text" name="condition_name" placeholder="Enter Illness Name"></td>
+          <td><textarea name="condition_description" placeholder="Enter Description"></textarea></td>
+          <td><textarea name="medication_name" placeholder="Enter Medication"></textarea></td>
+          <td><textarea name="medication_dosage" placeholder="Enter Dosage"></textarea></td>
+          <td><textarea name="side_effects" placeholder="Enter Side Effect"></textarea></td>
+          <td><textarea name="medication_comments" placeholder="Enter Comment"></textarea></td>
         </tr>
-
-
-
-
 
         <tr>
           <th colspan="7" class="title">DEVELOPMENTAL HISTORY</th>
@@ -103,8 +88,6 @@
           <td colspan="6"><textarea placeholder="Enter Gross Motor findings"></textarea></td>
         </tr>
 
-
-
         <tr>
           <th rowspan="2" class="title">FINE MOTOR</th>
           <td colspan="6">FINDINGS</td>
@@ -113,7 +96,6 @@
         <tr>
           <td colspan="6"><textarea placeholder="Enter Fine Motor findings"></textarea></td>
         </tr>
-
 
         <tr>
           <th rowspan="2" class="title">LANGUAGE</th>
@@ -151,6 +133,6 @@
         <button type="submit">Submit</button>
     </div>
 
-
+</form>
 </body>
 </html>

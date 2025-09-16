@@ -11,8 +11,6 @@
 
 */
 
-
-
 namespace App\Models;
 
 use App\Http\Controllers\PatientController;

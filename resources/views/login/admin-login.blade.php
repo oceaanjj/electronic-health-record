@@ -20,11 +20,12 @@
 
                 <p class="role"> ADMIN <strong>LOG IN</strong></p>
 
-                <form action="{{ route('login.authenticate.admin') }}" method="POST">
+                <form action="{{  route('login.authenticate')  }}" method="POST">
                     @csrf
+                    <input type="hidden" name="role" value="admin">
                     <label for="admin_id">Admin ID / Username</label>
                     <br>
-                    <input type="text" name="name" placeholder="Enter your Admin ID">
+                    <input type="text" name="username" placeholder="Enter your Admin ID">
                     <br>
 
                     <label for="password">Password</label>
@@ -33,7 +34,7 @@
 
                     <p class="forgot">Forgot password?</p>
 
-                    @error('name') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('username') <p style="color:red;">{{ $message }}</p> @enderror
                     @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
                     <button type="submit" class="btn-login">Sign In</button>

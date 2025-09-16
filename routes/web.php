@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 
 $views = [
+    'sidebar',
     'role',
     'medical-history',
     'physical-exam',
@@ -16,6 +17,7 @@ $views = [
     'lab-values',
     'diagnostics',
     'ivs-and-lines',
+
 ];
 
 foreach ($views as $view) {

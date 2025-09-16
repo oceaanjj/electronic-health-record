@@ -20,11 +20,12 @@
 
                 <p class="role"> DOCTOR <strong>LOG IN</strong></p>
 
-                <form action="{{ route('login.authenticate.doctor') }}" method="POST">
+                <form action="{{ route('login.authenticate') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="role" value="doctor">
                     <label for="doctor_id">Name / Email</label>
                     <br>
-                    <input type="text" name="name" placeholder="Enter your Doctor ID">
+                    <input type="text" name="username" placeholder="Enter your Doctor ID">
                     <br>
 
                     <label for="password">Password</label>
@@ -33,7 +34,7 @@
 
                     <p class="forgot">Forgot password?</p>
 
-                    @error('name') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('username') <p style="color:red;">{{ $message }}</p> @enderror
                     @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
                     <button type="submit" class="btn-login">Sign In</button>

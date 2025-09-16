@@ -1,7 +1,9 @@
 <?php
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PhysicalExamController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
@@ -22,7 +24,7 @@ foreach ($views as $view) {
     Route::view("/{$view}", $view)->name($view);
 }
 
-//login
+//Login
 Route::prefix('login')->name('login.')->group(function () {
     //for showing the login forms
     Route::get('/', [LoginController::class, 'showRoleSelectionForm'])->name('index');
@@ -31,17 +33,33 @@ Route::prefix('login')->name('login.')->group(function () {
     Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
 
     //for handling authentication
-    Route::post('/nurse', [LoginController::class, 'authenticateNurse'])->name('authenticate.nurse');
-    Route::post('/doctor', [LoginController::class, 'authenticateDoctor'])->name('authenticate.doctor');
-    Route::post('/admin', [LoginController::class, 'authenticateAdmin'])->name('authenticate.admin');
+    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 });
 
+//Register
+Route::prefix('register')->group(function () {
+    Route::get('/', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/', [RegisterController::class, 'register'])->name('register.attempt');
+});
+
+//Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
+//Physical Exam:
+Route::prefix('physical-exam')->group(function () {
+    Route::get('/', [PhysicalExamController::class, 'show'])->name('physical-exam.show');
+    Route::post('/', [PhysicalExamController::class, 'store'])->name('physical-exam.store');
+});
 
+//search:
+Route::prefix('patients')->name('patients.')->group(function () {
+    Route::get('/search', function () {
+        return view('patients.search');
+    })->name('search');
 
-
+    Route::get('/search-results', [PatientController::class, 'search'])->name('search-results');
+});
 
 Route::resource('patients', PatientController::class);
 

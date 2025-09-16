@@ -2,9 +2,15 @@
 <html lang="en">
 
 <head>
+<<<<<<< HEAD
+  <meta charset="UTF-8">
+  <title>Patient Physical Exam</title>
+    @vite(['resources/css/physical-exam-style.css'])
+=======
     <meta charset="UTF-8">
     <title>Physical Exam</title>
     @vite(['./resources/css/physical-exam-style.css'])
+>>>>>>> 6860ae3c640c235da509dc7b018a6fbac136bb3a
 </head>
 
 <body>

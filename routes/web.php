@@ -41,7 +41,6 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Patients & Physical Exam
-Route::resource('patients', PatientController::class);
 
 Route::prefix('patients')->name('patients.')->group(function () {
     Route::get('/search', function () {
@@ -54,6 +53,9 @@ Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
     Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
     Route::post('/', [PhysicalExamController::class, 'store'])->name('store');
 });
+
+Route::resource('patients', PatientController::class);
+
 
 // More routes:
 Route::post('/medical/store', [MedicalController::class, 'store'])->name('medical.store');

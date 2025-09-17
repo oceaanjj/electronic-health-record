@@ -76,7 +76,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>SEARCH PATIENT</h3>
                 <p>For viewing and finding existing patients and records to continue documentation.</p>
                 <div class="proceed">
-                    <a href="#">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('patients.search') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 

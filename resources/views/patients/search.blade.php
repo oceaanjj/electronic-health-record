@@ -13,7 +13,7 @@
         <button type="submit">Search</button>
     </form>
 
-    @if (isset($_GET['input']))
+    @if (request()->filled('input'))
         @if ($patients->isNotEmpty())
             @php $patient = $patients->first(); @endphp
             <h2>Search Result</h2>
@@ -36,6 +36,8 @@
         @else
             <p>No patient found with that ID.</p>
         @endif
+    @else
+        <p>Please enter an id</p>
     @endif
 </body>
 

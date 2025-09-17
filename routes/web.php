@@ -22,7 +22,6 @@ $views = [
     'medication-administration',
     'medication-reconciliation',
     'discharge-planning',
-
 ];
 
 foreach ($views as $view) {

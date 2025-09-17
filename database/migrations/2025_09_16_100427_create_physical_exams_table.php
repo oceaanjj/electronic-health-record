@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,13 +13,17 @@ return new class extends Migration
         Schema::create('physical_exams', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd
             $table->string('general_appearance')->nullable();
             $table->string('skin_condition')->nullable();
             $table->string('eye_condition')->nullable();
             $table->string('oral_condition')->nullable();
             $table->string('cardiovascular')->nullable();
-            $table->string('abdomen_condition')->nullable(); 
-            $table->string('extremities')->nullable(); 
+            $table->string('abdomen_condition')->nullable();
+            $table->string('extremities')->nullable();
             $table->string('neurological')->nullable();
             $table->timestamps();
         });

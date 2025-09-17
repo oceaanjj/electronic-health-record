@@ -1,13 +1,15 @@
 {{-- edit or update clients details --}}
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Edit Patient</title>
 </head>
+
 <body>
     <h1>Edit Patient</h1>
 
-    <form action="{{ route('patients.update', $patient->id) }}" method="POST">
+    <form action="{{ route('patients.update', $patient->patient_id) }}" method="POST">
         @csrf
         @method('PUT')
         Name: <input type="text" name="name" value="{{ $patient->name }}"><br>
@@ -27,4 +29,5 @@
         <button type="submit">Update</button>
     </form>
 </body>
+
 </html>

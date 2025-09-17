@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\PhysicalExam;
 use App\Models\CdssPhysicalExam;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
+
 class PhysicalExamController extends Controller
 {
+<<<<<<< HEAD
      public function show()
+=======
+    public function show()
+>>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd
     {
         $patients = Patient::all();
         return view('physical-exam', compact('patients'));
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd
 
     // TODO:
     //store it
@@ -22,7 +30,7 @@ class PhysicalExamController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'patient_id' => 'required|exists:patients,id',
+            'patient_id' => 'required|exists:patients,patient_id',
             'general_appearance' => 'nullable|string',
             'skin_condition' => 'nullable|string',
             'eye_condition' => 'nullable|string',
@@ -39,7 +47,7 @@ class PhysicalExamController extends Controller
         $this->runCdssAnalysis($physicalExam);
 
         // where itll go after storing
-        return redirect()->route('physical_exams.index')->with('success', 'Physical exam registered successfully');
+        return redirect()->route('physical-exam.index')->with('success', 'Physical exam registered successfully');
     }
 
     private function runCdssAnalysis($physicalExam)
@@ -120,6 +128,10 @@ class PhysicalExamController extends Controller
 
 
     }
+<<<<<<< HEAD
 }
 
 
+=======
+}
+>>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd

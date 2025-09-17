@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <title>Patient Lab Values</title>
   @vite(['resources/css/#.css'])
+=======
+    <meta charset="UTF-8">
+    <title>Patient Lab Values</title>
+    @vite(['./resources/css/lab-values.css'])
+    <meta charset="UTF-8">
+    <title>Patient Lab Values</title>
+    @vite(['./resources/css/lab-values.css'])
+>>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd
 </head>
 
 <body>
@@ -126,8 +136,9 @@
     </div>
 
     <div class="buttons">
-            <a href="#" class="btn">CDSS</a>
-        <button  class="btn"type="submit">Submit</button>
+        <a href="#" class="btn">CDSS</a>
+        <button class="btn" type="submit">Submit</button>
     </div>
 </body>
+
 </html>

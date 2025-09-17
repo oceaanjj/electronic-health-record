@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +17,7 @@ return new class extends Migration
             $table->text('alerts')->nullable();
             $table->enum('risk_level', ['low', 'moderate', 'high', 'critical'])->default('low');
             $table->boolean('requires_immediate_attention')->default(false);
-            $table->string('abnormal_findings')->nullable(); 
+            $table->string('abnormal_findings')->nullable();
             //rules for the cdsss
             $table->string('triggered_rules')->nullable();
             $table->timestamps();

@@ -1,4 +1,3 @@
-{{-- search --}}
 <!DOCTYPE html>
 <html>
 
@@ -10,31 +9,35 @@
     <h1>Search Patient</h1>
 
     <form action="{{ route('patients.search-results') }}" method="GET">
-        <input type="text" name="input" placeholder="Search patient by id">
+        <input type="text" name="input" placeholder="Search patient by id" value="{{ request('input') }}">
         <button type="submit">Search</button>
     </form>
 
-    @if ($patients->isNotEmpty())
-        <?php    $patient = $patients->first(); ?>
-        <h2>Search Result</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ $patient->id }}</td>
-                    <td>{{ $patient->name }}</td>
-                    <td>{{ $patient->age }}</td>
-                </tr>
-            </tbody>
-        </table>
+    @if (request()->filled('input'))
+        @if ($patients->isNotEmpty())
+            @php $patient = $patients->first(); @endphp
+            <h2>Search Result</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ $patient->patient_id }}</td>
+                        <td>{{ $patient->name }}</td>
+                        <td>{{ $patient->age }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        @else
+            <p>No patient found with that ID.</p>
+        @endif
     @else
-        <p>No patient found with that ID.</p>
+        <p>Please enter an id</p>
     @endif
 </body>
 

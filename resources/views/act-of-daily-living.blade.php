@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Patient Activities of daily living</title>
+    <meta charset="UTF-8">
+    <title>Patient Activities of daily living</title>
+    <meta charset="UTF-8">
+    <title>Patient Activities of daily living</title>
     @vite(['./resources/css/act-of-daily-living.css'])
 </head>
 
@@ -29,64 +32,65 @@
 
 
         <table>
-                    <tr>
-                        <th class="title">CATEGORY</th>
-                        <th class="title">ASSESSMENT</th>
-                        <th class="title">ALERTS</th>
-                    </tr>
+            <tr>
+                <th class="title">CATEGORY</th>
+                <th class="title">ASSESSMENT</th>
+                <th class="title">ALERTS</th>
+            </tr>
 
-                    <tr>
-                        <th class="title">MOBILITY</th>
-                        <td><input type="text" placeholder="mobility"></td>
-                        <td><input type="text" placeholder="alerts"></td>
-                    </tr>
-                    
-                    <tr>
-                        <th class="title">HYGIENE</th>
-                        <td><input type="text" placeholder="hygiene"></td>
-                        <td><input type="text" placeholder="alerts"></td>
-                    </tr>
+            <tr>
+                <th class="title">MOBILITY</th>
+                <td><input type="text" placeholder="mobility"></td>
+                <td><input type="text" placeholder="alerts"></td>
+            </tr>
 
-                    <tr>
-                        <th class="title">TOILETING</th>
-                        <td><input type="text" placeholder="toileting"></td>
-                        <td><input type="text" placeholder="alerts"></td>
-                    </tr>
+            <tr>
+                <th class="title">HYGIENE</th>
+                <td><input type="text" placeholder="hygiene"></td>
+                <td><input type="text" placeholder="alerts"></td>
+            </tr>
 
-                    <tr>
-                        <th class="title">FEEDING</th>
-                        <td><input type="text" placeholder="feeding"></td>
-                        <td><input type="text" placeholder="alerts"></td>
-                    </tr>
+            <tr>
+                <th class="title">TOILETING</th>
+                <td><input type="text" placeholder="toileting"></td>
+                <td><input type="text" placeholder="alerts"></td>
+            </tr>
 
-                    <tr>
-                        <th class="title">HYDRATION</th>
-                        <td><input type="text" placeholder="hydration"></td>
-                        <td><input type="text" placeholder="alerts"></td>
-                    </tr>
+            <tr>
+                <th class="title">FEEDING</th>
+                <td><input type="text" placeholder="feeding"></td>
+                <td><input type="text" placeholder="alerts"></td>
+            </tr>
 
-                    <tr>
-                        <th class="title">SLEEP PATTERN</th>
-                        <td><input type="text" placeholder="sleep pattern"></td>
-                        <td><input type="text" placeholder="alerts"></td>
-                    </tr>
+            <tr>
+                <th class="title">HYDRATION</th>
+                <td><input type="text" placeholder="hydration"></td>
+                <td><input type="text" placeholder="alerts"></td>
+            </tr>
 
-                    <tr>
-                        <th class="title">PAIN LEVEL</th>
-                        <td><input type="text" placeholder="pain level"></td>
-                        <td><input type="text" placeholder="alerts"></td>
-                    </tr>
+            <tr>
+                <th class="title">SLEEP PATTERN</th>
+                <td><input type="text" placeholder="sleep pattern"></td>
+                <td><input type="text" placeholder="alerts"></td>
+            </tr>
+
+            <tr>
+                <th class="title">PAIN LEVEL</th>
+                <td><input type="text" placeholder="pain level"></td>
+                <td><input type="text" placeholder="alerts"></td>
+            </tr>
 
 
-                  
-                   
+
+
         </table>
     </div>
 
-        <div class="buttons">
-            <a href="#" class="btn">CDSS</a>
-        <button  class="btn"type="submit">Submit</button>
+    <div class="buttons">
+        <a href="#" class="btn">CDSS</a>
+        <button class="btn" type="submit">Submit</button>
     </div>
-    
+
 </body>
+
 </html>

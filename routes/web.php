@@ -12,6 +12,7 @@ Route::view('/', 'home')->name('home');
 
 // Static Views
 $views = [
+    'sidebar',
     'role',
     'medical-history',
     'physical-exam',
@@ -21,6 +22,9 @@ $views = [
     'lab-values',
     'diagnostics',
     'ivs-and-lines',
+    'medication-administration',
+    'medication-reconciliation',
+    'discharge-planning',
 ];
 
 foreach ($views as $view) {

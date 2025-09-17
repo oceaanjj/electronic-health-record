@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Patient Activities of daily living</title>
+    <title>Patient Ivs and Lines</title>
     @vite(['./resources/css/ivs-and-lines.css'])
 </head>
 

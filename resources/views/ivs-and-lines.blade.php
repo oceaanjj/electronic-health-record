@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Patient Activities of daily living</title>
-<<<<<<< HEAD
-    @vite(['resources/css/#.css'])
-=======
+    <meta charset="UTF-8">
+    <title>Patient Activities of daily living</title>
     @vite(['./resources/css/ivs-and-lines.css'])
->>>>>>> fb9bfa54b07a5bd3ad40c06dfd34fc7e0d04f8e6
 </head>
 
 <body>
@@ -22,31 +19,32 @@
 
 
         <table>
-                    <tr>
-                        <th class="title">IV FLUID</th>
-                        <th class="title">RATE</th>
-                        <th class="title">SITE</th>
-                        <th class="title">STATUS</th>
-                    </tr>
+            <tr>
+                <th class="title">IV FLUID</th>
+                <th class="title">RATE</th>
+                <th class="title">SITE</th>
+                <th class="title">STATUS</th>
+            </tr>
 
-                    <tr>
-                        <td><input type="text" placeholder="iv fluid"></td>
-                        <td><input type="text" placeholder="rate"></td>
-                        <td><input type="text" placeholder="site"></td>
-                        <td><input type="text" placeholder="status"></td>
-                    </tr>
-        
+            <tr>
+                <td><input type="text" placeholder="iv fluid"></td>
+                <td><input type="text" placeholder="rate"></td>
+                <td><input type="text" placeholder="site"></td>
+                <td><input type="text" placeholder="status"></td>
+            </tr>
 
 
-                  
-                   
+
+
+
         </table>
     </div>
-  
+
     <div class="buttons">
-        <button class="btn"type="submit">Submit</button>
+        <button class="btn" type="submit">Submit</button>
     </div>
 
-    
+
 </body>
+
 </html>

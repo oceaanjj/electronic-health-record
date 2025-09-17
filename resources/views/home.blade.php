@@ -103,7 +103,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>PHYSICAL EXAM</h3>
                 <p>Record findings from clinical examinations and physical assessments.</p>
                 <div class="proceed">
-                    <a href="{{  route('physical-exam.show') }}">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{  route('physical-exam.index') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 

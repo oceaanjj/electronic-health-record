@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Patient Lab Values</title>
-<<<<<<< HEAD
-  @vite(['resources/css/#.css'])
-=======
-  @vite(['./resources/css/lab-values.css'])
->>>>>>> fb9bfa54b07a5bd3ad40c06dfd34fc7e0d04f8e6
+    <meta charset="UTF-8">
+    <title>Patient Lab Values</title>
+    @vite(['./resources/css/lab-values.css'])
 </head>
 
 <body>
@@ -130,8 +127,9 @@
     </div>
 
     <div class="buttons">
-            <a href="#" class="btn">CDSS</a>
-        <button  class="btn"type="submit">Submit</button>
+        <a href="#" class="btn">CDSS</a>
+        <button class="btn" type="submit">Submit</button>
     </div>
 </body>
+
 </html>

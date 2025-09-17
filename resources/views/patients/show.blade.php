@@ -2,9 +2,11 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Patient Details</title>
 </head>
+
 <body>
     <h1>{{ $patient->name }}</h1>
     <p>Age: {{ $patient->age }}</p>
@@ -18,4 +20,5 @@
 
     <a href="{{ route('patients.index') }}">Back</a>
 </body>
+
 </html>

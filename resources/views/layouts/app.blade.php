@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'EHR')</title>
     @vite('resources/css/app.css')
+    @stack('styles')
 </head>
 <body class="bg-gray-100">
 
@@ -12,10 +13,10 @@
 <div id="main" class="transition-transform duration-300 ease-in-out">
     
     <div class="flex flex-col min-h-screen">
-        {{-- HEADER --}}
+
         @include('components.header')
 
-        {{-- CONTENT --}}
+     
         <main class="flex-1">
             @yield('content')
         </main>

@@ -87,8 +87,8 @@
                 @endsection
                 
 
-                @push('styles')
-    @vite(['resources/css/vital-signs-style.css'])
-@endpush
+            @push('styles')
+                    @vite(['resources/css/act-of-daily-living.css'])
+            @endpush
           
           

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Patient Ivs and Lines</title>
-    @vite(['./resources/css/ivs-and-lines.css'])
-</head>
+@extends('layouts.app')
 
-<body>
+@section('title', 'Patient Vital Signs')
+
+@section('content')
+
+
     <div class="container">
         <div class="header">
             <label for="patient">PATIENT NAME :</label>
@@ -35,8 +33,6 @@
 
 
 
-
-
         </table>
     </div>
 
@@ -45,6 +41,10 @@
     </div>
 
 
-</body>
+@endsection
 
-</html>
+            @push('styles')
+                    @vite(['resources/css/ivs-and-lines.css'])
+            @endpush
+
+

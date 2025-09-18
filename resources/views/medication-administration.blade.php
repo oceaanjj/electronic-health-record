@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Patient Medical Administration</title>
-    @vite(['./resources/css/medication-administration.css'])
-</head>
+@extends('layouts.app')
+
+@section('title', 'Patient Vital Signs')
+
+@section('content')
 
 <body>
     <div class="container">
@@ -64,7 +62,8 @@
     <div class="buttons">
         <button class="btn"type="submit">Submit</button>
     </div>
+@endsection
 
-    
-</body>
-</html>
+            @push('styles')
+                    @vite(['resources/css/medication-administration.css'])
+            @endpush

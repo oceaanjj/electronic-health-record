@@ -12,7 +12,7 @@ Route::view('/', 'home')->name('home');
 
 // Static Views
 $views = [
-    'sidebar',
+    'testing-sidebar',
     'role',
     'medical-history',
     'physical-exam',

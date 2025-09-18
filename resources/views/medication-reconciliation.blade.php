@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Patient Medication reconciliation</title>
-    @vite(['./resources/css/medication-reconciliation.css'])
-</head>
+@extends('layouts.app')
 
-<body>
+@section('title', 'Patient Vital Signs')
+
+@section('content')
     <div class="container">
         <div class="header">
             <label for="patient">PATIENT NAME :</label>
@@ -40,7 +36,7 @@
                 </tr>
               </table>
             </div>
-<br>
+            <br>
             <div class="section">
               <table>
         <tr>
@@ -64,7 +60,7 @@
                 </tr>
               </table>
             </div>
-<br>
+            <br>
             <div class="section">
               <table>
         <tr>
@@ -94,6 +90,8 @@
         <button class="btn"type="submit">Submit</button>
     </div>
 
-    
-</body>
-</html>
+@endsection
+
+            @push('styles')
+                    @vite(['resources/css/medication-reconciliation.css'])
+            @endpush

@@ -5,6 +5,8 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhysicalExamController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Home Page
@@ -29,6 +31,8 @@ $views = [
 foreach ($views as $view) {
     Route::view("/{$view}", $view)->name($view);
 }
+
+
 
 // Authentication Routes
 Route::prefix('login')->name('login.')->group(function () {
@@ -67,4 +71,3 @@ Route::post('/past-medical', [MedicalController::class, 'storePastMedicalSurgica
 Route::post('/allergies', [MedicalController::class, 'storeAllergies'])->name('allergy.store');
 Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
 Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
-

@@ -1,7 +1,7 @@
 <header class="flex items-center justify-between bg-ehr shadow px-6 py-4">
     <div class="flex items-center space-x-4">
 
-        <button onclick="openNav()" class="text-white text-2xl font-bold focus:outline-none">
+        <button onclick="openNav()" class="text-white text-2xl font-bold focus:outline-none cursor-pointer">
             ☰
         </button>
 
@@ -12,8 +12,4 @@
         </a>
     </div>
 
-
-    <a href="{{ route('login.index') }}" class="text-white font-semibold hover:underline">
-        LOG IN
-    </a>
 </header>

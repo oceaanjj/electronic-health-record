@@ -1,4 +1,6 @@
+
 @extends('layouts.app')
+
 
 @section('title', 'Patient Vital Signs')
 
@@ -24,6 +26,7 @@
                 </div>
 
 
+
                 <table>
                             <tr>
                                 <th class="title">ORAL INTAKE (mL)</th>
@@ -31,6 +34,24 @@
                                 <th class="title">URINE OUTPUT (mL)</th>
                                 <th class="title">Alerts</th>
                             </tr>
+
+        <table>
+            <tr>
+                <th class="title">ORAL INTAKE (mL)</th>
+                <th class="title">IV FLUIDS (mL)</th>
+                <th class="title">URINE OUTPUT (mL)</th>
+                <th class="title">Alerts</th>
+            </tr>
+
+            <tr>
+                <td><input type="text" name="oral intake" placeholder="Oral Intake"></td>
+                <td><input type="text" name="iv fluids" placeholder="IV Fluids"></td>
+                <td><input type="text" name="urine output" placeholder="Urine Output"></td>
+                <td><input type="text" name="alerts" placeholder="Alerts"></td>
+            </tr>
+
+        </table>
+    </div>
 
                             <tr>
                                 <td><input type="text" name="oral intake" placeholder="Oral Intake"></td>
@@ -41,6 +62,7 @@
                         
                 </table>
             </div>
+
 
             <div class="buttons">
 
@@ -62,3 +84,5 @@
             @push('styles')
                     @vite(['resources/css/intake-and-output-style.css'])
             @endpush
+
+

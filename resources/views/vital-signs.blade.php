@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title', 'Patient Vital Signs')

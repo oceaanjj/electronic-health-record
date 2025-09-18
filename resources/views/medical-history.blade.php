@@ -1,4 +1,5 @@
 
+
 @extends('layouts.app')
 
 @section('title', 'Patient Vital Signs')
@@ -110,8 +111,10 @@
           </div>
         </form>
       </div>
+
 @endsection
 
             @push('styles')
                     @vite(['resources/css/medical-history-style.css'])
             @endpush
+

@@ -90,5 +90,4 @@
             @push('styles')
                     @vite(['resources/css/act-of-daily-living.css'])
             @endpush
-          
-          
+         

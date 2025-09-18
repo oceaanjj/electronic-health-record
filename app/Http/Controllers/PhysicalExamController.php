@@ -35,7 +35,7 @@ class PhysicalExamController extends Controller
 
         $physicalExam = PhysicalExam::create($data);
 
-        // Run CDSS and redirect with results (simple)
+        // Run CDSS and redirect with results
         list($cdssPerSection, $alerts) = $this->runCdssAnalysis($physicalExam);
 
         return redirect()->route('physical-exam.index')
@@ -136,83 +136,9 @@ class PhysicalExamController extends Controller
             }
         }
 
-        // cardiovascular
-        $cv = strtolower((string) ($physicalExam->cardiovascular ?? ''));
-        if ($cv !== '') {
-            if (strpos($cv, 'cyanosis') !== false) {
-                $cdss['cardiovascular'] = 'Immediate referral to pediatric cardiology';
-            } elseif (strpos($cv, 'brady') !== false) {
-                $cdss['cardiovascular'] = 'Check oxygen saturation, order ECG';
-            } elseif (strpos($cv, 'tachy') !== false) {
-                $cdss['cardiovascular'] = 'Check temperature, hydration status, CBC';
-            } elseif (strpos($cv, 'murmur') !== false) {
-                $cdss['cardiovascular'] = 'Refer to pediatric cardiology, consider echocardiogram';
-            } elseif (strpos($cv, 'normal') !== false) {
-                $cdss['cardiovascular'] = 'No action needed';
-            } else {
-                $cdss['cardiovascular'] = 'Further evaluation required';
-            }
-        }
+       
 
-        // abdomen
-        $abd = strtolower((string) ($physicalExam->abdomen_condition ?? ''));
-        if ($abd !== '') {
-            if (strpos($abd, 'guard') !== false || strpos($abd, 'rebound') !== false) {
-                $cdss['abdomen'] = 'Urgent surgical evaluation';
-            } elseif (strpos($abd, 'distend') !== false) {
-                $cdss['abdomen'] = 'Evaluate for obstruction; imaging as indicated';
-            } elseif (strpos($abd, 'tender') !== false) {
-                $cdss['abdomen'] = 'Assess for peritonitis; consider ultrasound/labs';
-            } elseif (strpos($abd, 'mass') !== false) {
-                $cdss['abdomen'] = 'Order abdominal ultrasound; refer accordingly';
-            } elseif (strpos($abd, 'normal') !== false) {
-                $cdss['abdomen'] = 'No action needed';
-            } else {
-                $cdss['abdomen'] = 'Further evaluation required';
-            }
-        }
-
-        // extremities
-        $ext = strtolower((string) ($physicalExam->extremities ?? ''));
-        if ($ext !== '') {
-            if (strpos($ext, 'cyanosis') !== false) {
-                $cdss['extremities'] = 'Immediate oxygen assessment, cardiology/pulmonology consult';
-            } elseif (strpos($ext, 'deform') !== false) {
-                $cdss['extremities'] = 'X-ray, orthopedic consult';
-            } elseif (strpos($ext, 'swelling') !== false || strpos($ext, 'edema') !== false) {
-                $cdss['extremities'] = 'Check for kidney or cardiac issues';
-            } elseif (strpos($ext, 'weak') !== false) {
-                $cdss['extremities'] = 'Neurological evaluation, consider physiotherapy';
-            } elseif (strpos($ext, 'pallor') !== false) {
-                $cdss['extremities'] = 'Check CBC, consider hematology referral';
-            } elseif (strpos($ext, 'normal') !== false) {
-                $cdss['extremities'] = 'No immediate action needed';
-            } else {
-                $cdss['extremities'] = 'Further evaluation required';
-            }
-        }
-
-        // neurological
-        $neuro = strtolower((string) ($physicalExam->neurological ?? ''));
-        if ($neuro !== '') {
-            if (strpos($neuro, 'seiz') !== false) {
-                $cdss['neurological'] = 'Refer to pediatric neurology, consider EEG';
-            } elseif (strpos($neuro, 'weak') !== false) {
-                $cdss['neurological'] = 'Order neurological exam / imaging';
-            } elseif (strpos($neuro, 'tremor') !== false) {
-                $cdss['neurological'] = 'Neurology consult, assess medications and metabolic causes';
-            } elseif (strpos($neuro, 'hyperton') !== false) {
-                $cdss['neurological'] = 'Neurology / physiotherapy consult';
-            } elseif (strpos($neuro, 'hypoton') !== false) {
-                $cdss['neurological'] = 'Neurological and physiotherapy assessment';
-            } elseif (strpos($neuro, 'normal') !== false) {
-                $cdss['neurological'] = 'No immediate action needed';
-            } else {
-                $cdss['neurological'] = 'Further evaluation required';
-            }
-        }
-
-        // Build combined alerts string (simple, no advanced functions)
+        // combine
         $alerts = '';
         foreach ($cdss as $msg) {
             if (!empty($msg)) {
@@ -226,7 +152,7 @@ class PhysicalExamController extends Controller
             $alerts = 'No significant findings';
         }
 
-        // Store combined CDSS alerts in DB
+        // Store cdss
         CdssPhysicalExam::create([
             'physical_exam_id' => $physicalExam->id,
             'patient_id'       => $physicalExam->patient_id,

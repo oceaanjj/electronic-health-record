@@ -198,3 +198,8 @@
 
 </html>
 @endsection
+
+
+            @push('styles')
+                    @vite(['resources/css/physical-exam-style.css'])
+            @endpush

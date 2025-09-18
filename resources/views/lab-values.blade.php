@@ -3,15 +3,6 @@
 @section('title', 'Patient Vital Signs')
 
 @section('content')
-    <!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="UTF-8">
-            <title>Patient Lab Values</title>
-            @vite(['./resources/css/lab-values.css'])
-            </head>
-
-            <body>
                 <div class="container">
                     <div class="header">
                         <label for="patient">PATIENT NAME :</label>
@@ -134,6 +125,8 @@
                         <a href="#" class="btn">CDSS</a>
                     <button  class="btn"type="submit">Submit</button>
                 </div>
-            </body>
-            </html>
 @endsection
+
+            @push('styles')
+                    @vite(['resources/css/lab-values.css'])
+            @endpush

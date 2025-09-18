@@ -3,15 +3,6 @@
 @section('title', 'Patient Vital Signs')
 
 @section('content')
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-        <meta charset="UTF-8">
-        <title>Patient Intake and Output</title>
-            @vite(['resources/css/intake-and-output-style.css'])
-        </head>
-
-        <body>
             <div class="container">
                 <div class="header">
                     <label for="patient">PATIENT NAME :</label>
@@ -66,7 +57,8 @@
             <div class="button-col">
                 <button class="btn" type="submit">Submit</button>
             </div>
-            
-        </body>
-        </html>
 @endsection
+
+            @push('styles')
+                    @vite(['resources/css/intake-and-output-style.css'])
+            @endpush

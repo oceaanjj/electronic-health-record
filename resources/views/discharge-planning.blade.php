@@ -4,15 +4,6 @@
 
 @section('content')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Patients discharge planning</title>
-    @vite(['./resources/css/discharge-planning.css'])
-</head>
-<body>
-
     <div class="container">
         <div class="header">
             <label for="patient">PATIENT NAME :</label>
@@ -86,7 +77,8 @@
       <div class="buttons">
         <button class="btn"type="submit">Submit</button>
     </div>
-
-</body>
-</html>
 @endsection
+
+            @push('styles')
+                    @vite(['resources/css/discharge-planning.css'])
+            @endpush

@@ -4,15 +4,6 @@
 
 @section('content')
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Patient Medical Administration</title>
-    @vite(['./resources/css/medication-administration.css'])
-</head>
-
 <body>
     <div class="container">
         <div class="header">
@@ -71,9 +62,8 @@
     <div class="buttons">
         <button class="btn"type="submit">Submit</button>
     </div>
-
-    
-</body>
-</html>
-
 @endsection
+
+            @push('styles')
+                    @vite(['resources/css/medication-administration.css'])
+            @endpush

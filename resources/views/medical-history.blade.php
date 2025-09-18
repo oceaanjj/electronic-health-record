@@ -4,14 +4,6 @@
 @section('title', 'Patient Vital Signs')
 
 @section('content')
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <title>Patient Medical History</title>
-      @vite(['resources/css/medical-history-style.css'])
-    </head>
-
     <body>
       <div class="container">
 
@@ -118,6 +110,8 @@
           </div>
         </form>
       </div>
-    </body>
-    </html>
 @endsection
+
+            @push('styles')
+                    @vite(['resources/css/medical-history-style.css'])
+            @endpush

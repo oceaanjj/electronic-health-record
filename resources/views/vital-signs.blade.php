@@ -140,5 +140,5 @@
 
 
             @push('styles')
-                @vite(['resources/css/vital-signs.css'])
+                @vite(['resources/css/vital-signs-style.css'])
             @endpush

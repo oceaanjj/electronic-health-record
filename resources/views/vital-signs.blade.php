@@ -3,7 +3,6 @@
 @section('title', 'Patient Vital Signs')
 
 @section('content')
-<div>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -151,6 +150,5 @@
     
 </body>
 </html>
-</div>
 @endsection
 

@@ -36,7 +36,7 @@ class PhysicalExam extends Model
     }
 
     //relationship sa cdss physical exam table
-    public function cdss()
+    public function cdssAssessment()
     {
         return $this->hasOne(CdssPhysicalExam::class);
     }

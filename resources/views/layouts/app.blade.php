@@ -7,33 +7,37 @@
 </head>
 <body class="bg-gray-100">
 
-    <span class="p-4 cursor-pointer bg-ehr text-white" onclick="openNav()">☰</span>
+  @include('components.sidebar')
 
-    <!-- trying include... connecting side bar (copy pasting the code from sidebar.blade.php) -->
-    @include('components.sidebar')
+<div id="main" class="transition-transform duration-300 ease-in-out">
+    
+    <div class="flex flex-col min-h-screen">
+        {{-- HEADER --}}
+        @include('components.header')
 
-
-    <div id="main" class="p-6 transition-transform duration-300 ease-in-out">
-        <!-- naglalagay ng content from other views file -->
-        <!-- NOTE : dito yung main pages natin -->
-        @yield('content')
+        {{-- CONTENT --}}
+        <main class="flex-1">
+            @yield('content')
+        </main>
     </div>
 
-      <script>
-          function openNav() {
+</div>
+
+
+
+    <script>
+        function openNav() {
             document.getElementById("mySidenav").classList.remove("-translate-x-full");
             document.getElementById("mySidenav").classList.add("translate-x-0");
+            document.getElementById("main").classList.add("translate-x-75");
+        }
 
-            document.getElementById("main").classList.add("translate-x-75"); 
-          }
-
-          function closeNav() {
+        function closeNav() {
             document.getElementById("mySidenav").classList.remove("translate-x-0");
             document.getElementById("mySidenav").classList.add("-translate-x-full");
-
-            document.getElementById("main").classList.remove("translate-x-75"); 
-          }
-      </script>
+            document.getElementById("main").classList.remove("translate-x-75");
+        }
+    </script>
 
 </body>
 </html>

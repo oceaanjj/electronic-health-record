@@ -1,3 +1,10 @@
+@extends('layouts.app')
+
+@section('title', 'Patient Vital Signs')
+
+@section('content')
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,3 +71,5 @@
     
 </body>
 </html>
+
+@endsection

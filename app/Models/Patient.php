@@ -22,6 +22,8 @@ class Patient extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'patient_id';
+
     // optional lang to.
     protected $table = 'patients';
 

@@ -1,3 +1,9 @@
+
+<!-- 
+    IGNOREEEEE !!
+    NOTE : for jovilyn.... this is for registering user
+ -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,8 +32,8 @@
                     <div>
                         <label for="name">Username</label>
                         <br>
-                        <input type="text" name="username" id="username" placeholder="Enter name" value="{{ old('username') }}"
-                            required>
+                        <input type="text" name="username" id="username" placeholder="Enter name"
+                            value="{{ old('username') }}" required>
                         @error('name')
                             <p style="color:red;">{{ $message }}</p>
                         @enderror

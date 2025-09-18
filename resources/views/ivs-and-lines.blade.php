@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<<<<<<< HEAD
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <title>Patient Activities of daily living</title>
-<<<<<<< HEAD
     @vite(['resources/css/#.css'])
 =======
+    <meta charset="UTF-8">
+    <title>Patient Ivs and Lines</title>
     @vite(['./resources/css/ivs-and-lines.css'])
->>>>>>> fb9bfa54b07a5bd3ad40c06dfd34fc7e0d04f8e6
+>>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd
 </head>
+=======
+@extends('layouts.app')
 
-<body>
+@section('title', 'Patient Vital Signs')
+
+@section('content')
+
+>>>>>>> a215d4e4a71cc5a74ec66d012de3f03ea7c80e63
+
     <div class="container">
         <div class="header">
             <label for="patient">PATIENT NAME :</label>
@@ -22,31 +31,34 @@
 
 
         <table>
-                    <tr>
-                        <th class="title">IV FLUID</th>
-                        <th class="title">RATE</th>
-                        <th class="title">SITE</th>
-                        <th class="title">STATUS</th>
-                    </tr>
+            <tr>
+                <th class="title">IV FLUID</th>
+                <th class="title">RATE</th>
+                <th class="title">SITE</th>
+                <th class="title">STATUS</th>
+            </tr>
 
-                    <tr>
-                        <td><input type="text" placeholder="iv fluid"></td>
-                        <td><input type="text" placeholder="rate"></td>
-                        <td><input type="text" placeholder="site"></td>
-                        <td><input type="text" placeholder="status"></td>
-                    </tr>
-        
+            <tr>
+                <td><input type="text" placeholder="iv fluid"></td>
+                <td><input type="text" placeholder="rate"></td>
+                <td><input type="text" placeholder="site"></td>
+                <td><input type="text" placeholder="status"></td>
+            </tr>
 
 
-                  
-                   
+
         </table>
     </div>
-  
+
     <div class="buttons">
-        <button class="btn"type="submit">Submit</button>
+        <button class="btn" type="submit">Submit</button>
     </div>
 
-    
-</body>
-</html>
+
+@endsection
+
+            @push('styles')
+                    @vite(['resources/css/ivs-and-lines.css'])
+            @endpush
+
+

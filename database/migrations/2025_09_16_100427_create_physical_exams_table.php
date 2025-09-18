@@ -13,10 +13,6 @@ return new class extends Migration {
         Schema::create('physical_exams', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
-<<<<<<< HEAD
-=======
-
->>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd
             $table->string('general_appearance')->nullable();
             $table->string('skin_condition')->nullable();
             $table->string('eye_condition')->nullable();

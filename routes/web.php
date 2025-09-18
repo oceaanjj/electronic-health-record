@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 
 $views = [
-    'sidebar',
+    'testing-sidebar',
     'role',
     'medical-history',
     'physical-exam',

@@ -3,15 +3,6 @@
 @section('title', 'Patient Vital Signs')
 
 @section('content')
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="UTF-8">
-            <title>Patient Activities of daily living</title>
-                @vite(['./resources/css/act-of-daily-living.css'])
-            </head>
-
-            <body>
                 <div class="container">
                     <div class="header">
                         <label for="patient">PATIENT NAME :</label>
@@ -92,7 +83,12 @@
                         <a href="#" class="btn">CDSS</a>
                     <button  class="btn"type="submit">Submit</button>
                 </div>
+
+                @endsection
                 
-            </body>
-            </html>
-@endsection
+
+                @push('styles')
+    @vite(['resources/css/vital-signs-style.css'])
+@endpush
+          
+          

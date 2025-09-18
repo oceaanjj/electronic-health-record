@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class PhysicalExamController extends Controller
 {
-     public function show()
+    public function show()
     {
         $patients = Patient::all();
         return view('physical-exam', compact('patients'));
@@ -35,252 +35,204 @@ class PhysicalExamController extends Controller
 
         $physicalExam = PhysicalExam::create($data);
 
-        // call the cdss method here and pass the $physicalExam data
-        $this->runCdssAnalysis($physicalExam);
+        // Run CDSS and redirect with results (simple)
+        list($cdssPerSection, $alerts) = $this->runCdssAnalysis($physicalExam);
 
-        // where itll go after storing
-        return redirect()->route('physical-exam.index')->with('success', 'Physical exam registered successfully');
+        return redirect()->route('physical-exam.index')
+            ->with('success', 'Physical exam registered successfully')
+            ->with('cdss_alerts', $alerts)
+            ->with('cdss', $cdssPerSection)
+            ->withInput();
     }
 
     private function runCdssAnalysis($physicalExam)
     {
-        // Build the if/else logic para sa cdss analysis
-        // [] If else sa bawat condition from general appearance to neurological (long ass shit)
-        // [] store it sa db
-        // [] return a view or redirect it
-        $assessment = [];
-        $recommendations = [];
+        $cdss = [
+            'general_appearance' => null,
+            'skin' => null,
+            'eyes' => null,
+            'oral' => null,
+            'cardiovascular' => null,
+            'abdomen' => null,
+            'extremities' => null,
+            'neurological' => null,
+        ];
 
-        // General Appearance Analysis
-        if ($physicalExam->general_appearance === 'pale') {
-            $assessment['general_appearance'] = 'Possible anemia';
-            $recommendations[] = 'Order CBC test';
-            $severity = 'moderate';
-        } else if ($physicalExam->general_appearance === 'ill-looking') {
-            $assessment['general_appearance'] = 'Possible infection or systemic illness';
-            $recommendations[] = 'Recommend full physical workup';
-            $severity = 'moderate';
-        } else if ($physicalExam->general_appearance === 'dehydrated') {
-            $assessment['general_appearance'] = 'Possible dehydration';
-            $recommendations[] = 'Start oral/IV rehydration therapy';
-            $severity = 'moderate';
-        } else if ($physicalExam->general_appearance === 'lethargic') {
-            $assessment['general_appearance'] = 'Possible CNS involvement or severe infection';
-            $recommendations[] = 'Neurological exam, rule out meningitis/encephalitis';
-            $severity = 'severe';
-        } else if ($physicalExam->general_appearance === 'well') {
-            $assessment['general_appearance'] = 'Normal finding';
-            $recommendations[] = 'No immediate action needed';
-            $severity = 'low';
-        } else {
-            $assessment['general_appearance'] = 'Unspecified/Unknown condition';
-            $recommendations[] = 'Further evaluation required';
-            $severity = 'moderate';
+        // general appearance
+        $ga = strtolower((string) ($physicalExam->general_appearance ?? ''));
+        if ($ga !== '') {
+            if (strpos($ga, 'weak') !== false) {
+                $cdss['general_appearance'] = 'Monitor for fatigue';
+            } elseif (strpos($ga, 'dehydrat') !== false) {
+                $cdss['general_appearance'] = 'Start oral/IV rehydration therapy';
+            } elseif (strpos($ga, 'pale') !== false) {
+                $cdss['general_appearance'] = 'Order CBC test';
+            } elseif (strpos($ga, 'letharg') !== false) {
+                $cdss['general_appearance'] = 'Neurological exam, rule out meningitis/encephalitis';
+            } elseif (strpos($ga, 'ill') !== false) {
+                $cdss['general_appearance'] = 'Recommend full physical workup';
+            } else {
+                $cdss['general_appearance'] = 'Further evaluation required';
+            }
         }
 
-         // Skin
-        if ($physicalExam->skin_condition === 'rashes') {
-        $assessment['skin'] = 'Possible allergic reaction';
-        $recommendations[] = 'Check allergy history, prescribe antihistamine';
-        $severity = 'moderate';
-        } else if ($physicalExam->skin_condition === 'pallor') {
-            $assessment['skin'] = 'Possible anemia';
-            $recommendations[] = 'Order CBC test to confirm anemia';
-            $severity = 'moderate';
-        } else if ($physicalExam->skin_condition === 'jaundice') {
-            $assessment['skin'] = 'Possible liver disease or hemolysis';
-            $recommendations[] = 'Order liver function test, bilirubin levels';
-            $severity = 'severe';
-        } else if ($physicalExam->skin_condition === 'cyanosis') {
-            $assessment['skin'] = 'Possible hypoxia';
-            $recommendations[] = 'Check oxygen saturation, consider urgent referral';
-            $severity = 'severe';
-        } else if ($physicalExam->skin_condition === 'normal') {
-            $assessment['skin'] = 'Normal finding';
-            $recommendations[] = 'No action needed';
-            $severity = 'mild';
-        } else {
-            $assessment['skin'] = 'Unspecified/Unknown condition';
-            $recommendations[] = 'Further evaluation required';
-            $severity = 'mild';
+        // skin
+        $skin = strtolower((string) ($physicalExam->skin_condition ?? ''));
+        if ($skin !== '') {
+            if (strpos($skin, 'petech') !== false) {
+                $cdss['skin'] = 'Risk for bleeding';
+            } elseif (strpos($skin, 'cyanosis') !== false) {
+                $cdss['skin'] = 'Check oxygen saturation, consider urgent referral';
+            } elseif (strpos($skin, 'jaundice') !== false) {
+                $cdss['skin'] = 'Order liver function test, bilirubin levels';
+            } elseif (strpos($skin, 'rash') !== false || strpos($skin, 'rashes') !== false) {
+                $cdss['skin'] = 'Check allergy history, prescribe antihistamine';
+            } elseif (strpos($skin, 'flushed') !== false) {
+                $cdss['skin'] = 'Assess for fever or inflammation';
+            } elseif (strpos($skin, 'warm') !== false) {
+                $cdss['skin'] = 'Monitor temperature';
+            } elseif (strpos($skin, 'pallor') !== false) {
+                $cdss['skin'] = 'Order CBC test to confirm anemia';
+            } elseif (strpos($skin, 'normal') !== false) {
+                $cdss['skin'] = 'No action needed';
+            } else {
+                $cdss['skin'] = 'Further evaluation required';
+            }
         }
 
-    //  Eyes
-        if ($physicalExam->eye_condition === 'redness') {
-        $assessment['eyes'] = 'Possible conjunctivitis or infection';
-        $recommendations[] = 'Recommend ophthalmology consult, eye drops if needed';
-        $severity = 'moderate';
-        } else if ($physicalExam->eye_condition === 'discharge') {
-            $assessment['eyes'] = 'Possible bacterial or viral infection';
-            $recommendations[] = 'Swab if purulent, hygiene advice, possible antibiotics';
-            $severity = 'moderate';
-        } else if ($physicalExam->eye_condition === 'strabismus') {
-            $assessment['eyes'] = 'Possible eye muscle imbalance';
-            $recommendations[] = 'Refer to ophthalmology for further evaluation';
-            $severity = 'moderate';
-        } else if ($physicalExam->eye_condition === 'vision_loss') {
-            $assessment['eyes'] = 'Possible severe eye pathology';
-            $recommendations[] = 'Urgent ophthalmology referral';
-            $severity = 'severe';
-        } else if ($physicalExam->eye_condition === 'normal') {
-            $assessment['eyes'] = 'Normal finding';
-            $recommendations[] = 'No action needed';
-            $severity = 'mild';
-        } else {
-            $assessment['eyes'] = 'Unspecified/Unknown condition';
-            $recommendations[] = 'Further evaluation required';
-            $severity = 'mild';
+        // eyes
+        $eyes = strtolower((string) ($physicalExam->eye_condition ?? ''));
+        if ($eyes !== '') {
+            if (strpos($eyes, 'vision') !== false && strpos($eyes, 'loss') !== false) {
+                $cdss['eyes'] = 'Urgent ophthalmology referral';
+            } elseif (strpos($eyes, 'discharge') !== false) {
+                $cdss['eyes'] = 'Swab if purulent, hygiene advice, possible antibiotics';
+            } elseif (strpos($eyes, 'red') !== false || strpos($eyes, 'redness') !== false) {
+                $cdss['eyes'] = 'Recommend ophthalmology consult, eye drops if needed';
+            } elseif (strpos($eyes, 'strabismus') !== false) {
+                $cdss['eyes'] = 'Refer to ophthalmology for further evaluation';
+            } elseif (strpos($eyes, 'normal') !== false) {
+                $cdss['eyes'] = 'No action needed';
+            } else {
+                $cdss['eyes'] = 'Further evaluation required';
+            }
         }
 
-    //  Oral Cavity
-        if ($physicalExam->oral_condition === 'lesion') {
-        $assessment['oral_cavity'] = 'Possible oral lesion';
-        $recommendations[] = 'Advise dental or ENT check-up';
-        $severity = 'mild';
-        } else if ($physicalExam->oral_condition === 'ulcer') {
-            $assessment['oral_cavity'] = 'Possible stomatitis or viral infection (e.g. HFMD)';
-            $recommendations[] = 'Supportive care, check hydration, refer if severe';
-            $severity = 'moderate';
-        } else if ($physicalExam->oral_condition === 'swelling') {
-            $assessment['oral_cavity'] = 'Possible infection or abscess';
-            $recommendations[] = 'ENT/dental referral, possible antibiotics';
-            $severity = 'moderate';
-        } else if ($physicalExam->oral_condition === 'bleeding_gums') {
-            $assessment['oral_cavity'] = 'Possible gingivitis or bleeding disorder';
-            $recommendations[] = 'Order CBC, check platelets, dental referral';
-            $severity = 'moderate';
-        } else if ($physicalExam->oral_condition === 'normal') {
-            $assessment['oral_cavity'] = 'Normal finding';
-            $recommendations[] = 'No action needed';
-            $severity = 'mild';
-        } else {
-            $assessment['oral_cavity'] = 'Unspecified/Unknown condition';
-            $recommendations[] = 'Further evaluation required';
-            $severity = 'mild';
+        // oral cavity
+        $oral = strtolower((string) ($physicalExam->oral_condition ?? ''));
+        if ($oral !== '') {
+            if (strpos($oral, 'bleeding') !== false || strpos($oral, 'bleeding_gums') !== false || (strpos($oral, 'gum') !== false && strpos($oral, 'bleed') !== false)) {
+                $cdss['oral'] = 'Order CBC, check platelets, dental referral';
+            } elseif (strpos($oral, 'swell') !== false) {
+                $cdss['oral'] = 'ENT/dental referral, possible antibiotics';
+            } elseif (strpos($oral, 'ulcer') !== false) {
+                $cdss['oral'] = 'Supportive care, check hydration, refer if severe';
+            } elseif (strpos($oral, 'lesion') !== false) {
+                $cdss['oral'] = 'Advise dental or ENT check-up';
+            } elseif (strpos($oral, 'normal') !== false) {
+                $cdss['oral'] = 'No action needed';
+            } else {
+                $cdss['oral'] = 'Further evaluation required';
+            }
         }
 
-    //  Cardiovascular
-        if ($physicalExam->cardiovascular === 'murmur') {
-        $assessment['cardiovascular'] = 'Possible congenital heart disease';
-        $recommendations[] = 'Refer to pediatric cardiology, consider echocardiogram';
-        $severity = 'moderate';
-        } 
-        else if ($physicalExam->cardiovascular === 'tachycardia') {
-            $assessment['cardiovascular'] = 'Possible fever, dehydration, anemia, or sepsis';
-            $recommendations[] = 'Check temperature, hydration status, CBC';
-            $severity = 'moderate';
-        } 
-        else if ($physicalExam->cardiovascular === 'bradycardia') {
-            $assessment['cardiovascular'] = 'Possible hypoxia or congenital heart block';
-            $recommendations[] = 'Check oxygen saturation, order ECG';
-            $severity = 'severe';
-        } 
-        else if ($physicalExam->cardiovascular === 'cyanosis') {
-            $assessment['cardiovascular'] = 'Possible congenital heart disease (cyanotic type)';
-            $recommendations[] = 'Immediate referral to pediatric cardiology';
-            $severity = 'severe';
-        } 
-        else if ($physicalExam->cardiovascular === 'normal') {
-            $assessment['cardiovascular'] = 'No abnormal cardiovascular findings';
-            $recommendations[] = 'Continue routine monitoring';
-            $severity = 'mild';
-        }
-    //  Abdomen
-        if ($physicalExam->oral_condition === 'lesion') {
-        $assessment['oral_cavity'] = 'Possible oral lesion';
-        $recommendations[] = 'Advise dental or ENT check-up';
-        $severity = 'mild';
-        } else if ($physicalExam->oral_condition === 'ulcer') {
-            $assessment['oral_cavity'] = 'Possible stomatitis or viral infection (e.g. HFMD)';
-            $recommendations[] = 'Supportive care, check hydration, refer if severe';
-            $severity = 'moderate';
-        } else if ($physicalExam->oral_condition === 'swelling') {
-            $assessment['oral_cavity'] = 'Possible infection or abscess';
-            $recommendations[] = 'ENT/dental referral, possible antibiotics';
-            $severity = 'moderate';
-        } else if ($physicalExam->oral_condition === 'bleeding_gums') {
-            $assessment['oral_cavity'] = 'Possible gingivitis or bleeding disorder';
-            $recommendations[] = 'Order CBC, check platelets, dental referral';
-            $severity = 'moderate';
-        } else if ($physicalExam->oral_condition === 'normal') {
-            $assessment['oral_cavity'] = 'Normal finding';
-            $recommendations[] = 'No action needed';
-            $severity = 'mild';
-        } else {
-            $assessment['oral_cavity'] = 'Unspecified/Unknown condition';
-            $recommendations[] = 'Further evaluation required';
-            $severity = 'mild';
+        // cardiovascular
+        $cv = strtolower((string) ($physicalExam->cardiovascular ?? ''));
+        if ($cv !== '') {
+            if (strpos($cv, 'cyanosis') !== false) {
+                $cdss['cardiovascular'] = 'Immediate referral to pediatric cardiology';
+            } elseif (strpos($cv, 'brady') !== false) {
+                $cdss['cardiovascular'] = 'Check oxygen saturation, order ECG';
+            } elseif (strpos($cv, 'tachy') !== false) {
+                $cdss['cardiovascular'] = 'Check temperature, hydration status, CBC';
+            } elseif (strpos($cv, 'murmur') !== false) {
+                $cdss['cardiovascular'] = 'Refer to pediatric cardiology, consider echocardiogram';
+            } elseif (strpos($cv, 'normal') !== false) {
+                $cdss['cardiovascular'] = 'No action needed';
+            } else {
+                $cdss['cardiovascular'] = 'Further evaluation required';
+            }
         }
 
-    //  Extremities
-        if ($physicalExam->extremities === 'swelling') {
-            $assessment['extremities'] = 'Possible edema';
-            $recommendations[] = 'Check for kidney or cardiac issues';
-            $severity = 'moderate';
-        } else if ($physicalExam->extremities === 'weakness') {
-            $assessment['extremities'] = 'Possible neuromuscular problem';
-            $recommendations[] = 'Neurological evaluation, consider physiotherapy';
-            $severity = 'moderate';
-        } else if ($physicalExam->extremities === 'deformity') {
-            $assessment['extremities'] = 'Possible fracture or congenital deformity';
-            $recommendations[] = 'X-ray, orthopedic consult';
-            $severity = 'severe';
-        } else if ($physicalExam->extremities === 'pallor') {
-            $assessment['extremities'] = 'Possible anemia';
-            $recommendations[] = 'Check CBC, consider hematology referral';
-            $severity = 'moderate';
-        } else if ($physicalExam->extremities === 'cyanosis') {
-            $assessment['extremities'] = 'Possible hypoxia or cardiac/pulmonary issue';
-            $recommendations[] = 'Immediate oxygen assessment, cardiology/pulmonology consult';
-            $severity = 'severe';
-        } else {
-            $assessment['extremities'] = 'Normal findings';
-            $recommendations[] = 'No immediate action needed';
-            $severity = 'low';
+        // abdomen
+        $abd = strtolower((string) ($physicalExam->abdomen_condition ?? ''));
+        if ($abd !== '') {
+            if (strpos($abd, 'guard') !== false || strpos($abd, 'rebound') !== false) {
+                $cdss['abdomen'] = 'Urgent surgical evaluation';
+            } elseif (strpos($abd, 'distend') !== false) {
+                $cdss['abdomen'] = 'Evaluate for obstruction; imaging as indicated';
+            } elseif (strpos($abd, 'tender') !== false) {
+                $cdss['abdomen'] = 'Assess for peritonitis; consider ultrasound/labs';
+            } elseif (strpos($abd, 'mass') !== false) {
+                $cdss['abdomen'] = 'Order abdominal ultrasound; refer accordingly';
+            } elseif (strpos($abd, 'normal') !== false) {
+                $cdss['abdomen'] = 'No action needed';
+            } else {
+                $cdss['abdomen'] = 'Further evaluation required';
+            }
         }
 
-    //  Neurological
-        if ($physicalExam->neurological === 'weakness') {
-        $assessment['neurological'] = 'Possible neurological deficit';
-        $recommendations[] = 'Order neurological exam / imaging';
-        $severity = 'severe';
-        } else if ($physicalExam->neurological === 'seizures') {
-            $assessment['neurological'] = 'Possible seizure disorder';
-            $recommendations[] = 'Refer to pediatric neurology, consider EEG';
-            $severity = 'severe';
-        } else if ($physicalExam->neurological === 'tremors') {
-            $assessment['neurological'] = 'Possible movement disorder';
-            $recommendations[] = 'Neurology consult, assess medications and metabolic causes';
-            $severity = 'moderate';
-        } else if ($physicalExam->neurological === 'hypotonia') {
-            $assessment['neurological'] = 'Possible muscle tone abnormality';
-            $recommendations[] = 'Neurological and physiotherapy assessment';
-            $severity = 'moderate';
-        } else if ($physicalExam->neurological === 'hypertonia') {
-            $assessment['neurological'] = 'Possible spasticity';
-            $recommendations[] = 'Neurology / physiotherapy consult';
-            $severity = 'moderate';
-        } else {
-            $assessment['neurological'] = 'Normal findings';
-            $recommendations[] = 'No immediate action needed';
-            $severity = 'low';
+        // extremities
+        $ext = strtolower((string) ($physicalExam->extremities ?? ''));
+        if ($ext !== '') {
+            if (strpos($ext, 'cyanosis') !== false) {
+                $cdss['extremities'] = 'Immediate oxygen assessment, cardiology/pulmonology consult';
+            } elseif (strpos($ext, 'deform') !== false) {
+                $cdss['extremities'] = 'X-ray, orthopedic consult';
+            } elseif (strpos($ext, 'swelling') !== false || strpos($ext, 'edema') !== false) {
+                $cdss['extremities'] = 'Check for kidney or cardiac issues';
+            } elseif (strpos($ext, 'weak') !== false) {
+                $cdss['extremities'] = 'Neurological evaluation, consider physiotherapy';
+            } elseif (strpos($ext, 'pallor') !== false) {
+                $cdss['extremities'] = 'Check CBC, consider hematology referral';
+            } elseif (strpos($ext, 'normal') !== false) {
+                $cdss['extremities'] = 'No immediate action needed';
+            } else {
+                $cdss['extremities'] = 'Further evaluation required';
+            }
         }
-   $recommendationText = !empty($recommendations)
-    ? implode('; ', $recommendations)
-    : 'No significant findings';
 
+        // neurological
+        $neuro = strtolower((string) ($physicalExam->neurological ?? ''));
+        if ($neuro !== '') {
+            if (strpos($neuro, 'seiz') !== false) {
+                $cdss['neurological'] = 'Refer to pediatric neurology, consider EEG';
+            } elseif (strpos($neuro, 'weak') !== false) {
+                $cdss['neurological'] = 'Order neurological exam / imaging';
+            } elseif (strpos($neuro, 'tremor') !== false) {
+                $cdss['neurological'] = 'Neurology consult, assess medications and metabolic causes';
+            } elseif (strpos($neuro, 'hyperton') !== false) {
+                $cdss['neurological'] = 'Neurology / physiotherapy consult';
+            } elseif (strpos($neuro, 'hypoton') !== false) {
+                $cdss['neurological'] = 'Neurological and physiotherapy assessment';
+            } elseif (strpos($neuro, 'normal') !== false) {
+                $cdss['neurological'] = 'No immediate action needed';
+            } else {
+                $cdss['neurological'] = 'Further evaluation required';
+            }
+        }
 
-    foreach ($assessment as $part => $finding) {
+        // Build combined alerts string (simple, no advanced functions)
+        $alerts = '';
+        foreach ($cdss as $msg) {
+            if (!empty($msg)) {
+                if ($alerts !== '') {
+                    $alerts .= '; ';
+                }
+                $alerts .= $msg;
+            }
+        }
+        if ($alerts === '') {
+            $alerts = 'No significant findings';
+        }
+
+        // Store combined CDSS alerts in DB
         CdssPhysicalExam::create([
-            'physical_exam_id'              => $physicalExam->id,
-            'patient_id'                    => $physicalExam->patient_id,
-            'alerts'                        => $finding, 
-            'risk_level'                    => $severity, 
-            'requires_immediate_attention'  => ($severity === 'severe') ? true : false,
-            'abnormal_findings'             => $finding, 
-            'triggered_rules'               => $part,  
+            'physical_exam_id' => $physicalExam->id,
+            'patient_id'       => $physicalExam->patient_id,
+            'alerts'           => $alerts,
         ]);
+
+        return [$cdss, $alerts];
     }
 }
-}
-

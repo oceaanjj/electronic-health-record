@@ -12,7 +12,6 @@ Route::view('/', 'home')->name('home');
 
 // Static Views
 $views = [
-    'testing-sidebar',
     'role',
     'medical-history',
     'physical-exam',
@@ -24,7 +23,7 @@ $views = [
     'ivs-and-lines',
     'medication-administration',
     'medication-reconciliation',
-    'discharge-planning',
+    'discharge-planning'
 ];
 
 foreach ($views as $view) {
@@ -68,3 +67,4 @@ Route::post('/past-medical', [MedicalController::class, 'storePastMedicalSurgica
 Route::post('/allergies', [MedicalController::class, 'storeAllergies'])->name('allergy.store');
 Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
 Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
+

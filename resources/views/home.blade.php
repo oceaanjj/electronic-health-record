@@ -167,7 +167,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>MEDICAL ADMINISTRATION</h3>
                 <p>Track prescribed medicines and record their administration schedules.</p>
                 <div class="proceed">
-                    <a href="#">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('medication-administration') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 
@@ -176,7 +176,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>MEDICAL RECONCILIATION</h3>
                 <p>Compare medications to ensure accuracy and prevent duplication or errors.</p>
                 <div class="proceed">
-                    <a href="#">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('medication-reconciliation') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 
@@ -185,7 +185,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>DISCHARGE PLANNING</h3>
                 <p>Plan and document the patient’s care instructions upon discharge.</p>
                 <div class="proceed">
-                    <a href="#">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('discharge-planning') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 

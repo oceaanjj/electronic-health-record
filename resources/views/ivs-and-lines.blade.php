@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 
+<<<<<<< HEAD
 <head>
 <<<<<<< HEAD
   <meta charset="UTF-8">
@@ -12,8 +11,15 @@
     @vite(['./resources/css/ivs-and-lines.css'])
 >>>>>>> cb933bfbd68b5b8f8556ba958f5f0b37559020cd
 </head>
+=======
+@extends('layouts.app')
 
-<body>
+@section('title', 'Patient Vital Signs')
+
+@section('content')
+
+>>>>>>> a215d4e4a71cc5a74ec66d012de3f03ea7c80e63
+
     <div class="container">
         <div class="header">
             <label for="patient">PATIENT NAME :</label>
@@ -41,8 +47,6 @@
 
 
 
-
-
         </table>
     </div>
 
@@ -51,6 +55,10 @@
     </div>
 
 
-</body>
+@endsection
 
-</html>
+            @push('styles')
+                    @vite(['resources/css/ivs-and-lines.css'])
+            @endpush
+
+

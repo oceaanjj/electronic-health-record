@@ -68,9 +68,3 @@ Route::post('/allergies', [MedicalController::class, 'storeAllergies'])->name('a
 Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
 Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
 
-
-// Show the physical exam form
-Route::get('/physical-exam', [PhysicalExamController::class, 'show'])->name('physical-exam.show');
-
-// Store the submitted physical exam
-Route::post('/physical-exam', [PhysicalExamController::class, 'store'])->name('physical-exam.store');

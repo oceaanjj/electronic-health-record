@@ -8,6 +8,7 @@ use App\Models\PastMedicalSurgical;
 use App\Models\Allergy;
 use App\Models\Vaccination;
 use App\Models\DevelopmentalHistory;
+use App\Models\Patient;
 
 class MedicalController extends Controller
 {
@@ -77,5 +78,11 @@ class MedicalController extends Controller
         }
 
         return back()->with('success', 'Medical history saved successfully!');
+    }
+
+    public function show()
+    {
+        $patients = Patient::all();
+        return view('medical-history', compact('patients'));
     }
 }

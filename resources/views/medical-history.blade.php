@@ -6,20 +6,26 @@
 
 @section('content')
     <body>
-      <div class="container">
 
         {{-- FORM --}}
         <form action="{{ route('medical.store') }}" method="POST">
           @csrf
 
-          <div class="header">
-            <label for="patient">PATIENT NAME :</label>
-            <select id="patient" name="patient_id">
-              <option value="">-- Select Patient --</option>
-              <option value="1">Jovilyn Esquerra</option>
-              <option value="2">Althea Pascua</option>
-            </select>
-          </div>
+          <div class="container">
+            <div class="header">
+                <label for="patient_id">PATIENT NAME :</label>
+
+                {{-- Patient Name DROPDOWN --}}
+                <select id="patient_info" name="patient_id">
+                    <option value="" {{ old('patient_info') == '' ? 'selected' : '' }}>-- Select Patient --</option>
+                    @foreach ($patients as $patient)
+                        <option value="{{ $patient->patient_id }}" {{ old('patient_info') == $patient->patient_id ? 'selected' : '' }}>
+                            {{ $patient->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
           <table>
             {{-- PRESENT ILLNESS --}}

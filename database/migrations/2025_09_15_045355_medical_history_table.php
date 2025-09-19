@@ -71,7 +71,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medical_history');
         Schema::dropIfExists('developmental_history');
+        Schema::dropIfExists('vaccination');
+        Schema::dropIfExists('allergies');
+        Schema::dropIfExists('past_medical_surgical');
+        Schema::dropIfExists('present_illness');
+
     }
 };

@@ -25,14 +25,17 @@ $views = [
     'ivs-and-lines',
     'medication-administration',
     'medication-reconciliation',
-    'discharge-planning'
+    'discharge-planning',
 ];
 
 foreach ($views as $view) {
     Route::view("/{$view}", $view)->name($view);
 }
 
-
+// Route::get('/header', function () {
+//     return view('components.header'); })->name('header');
+// Route::get('/sidebar', function () {
+//     return view('components.sidebar'); })->name('sidebar');
 
 // Authentication Routes
 Route::prefix('login')->name('login.')->group(function () {

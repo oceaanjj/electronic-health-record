@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #1A6A24;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header (patient name) */
+h1 {
+    background: #1A6A24; /* Dark green */
+    color: #fff;
+    padding: 15px 20px;
+    margin: 0;
+    text-align: center;
+    border-bottom: 3px solid #d4af37; /* Gold */
+    font-size: 22px;
+    letter-spacing: 0.5px;
+}
+
+/* Card container */
+.details-container {
+    max-width: 600px;
+    margin: 10px auto;
+    background: #fff;
+    border: 2px solid #EDB62C;
+    border-radius: 10px;
+    padding: 20px 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* Details as a table */
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.details-table tr {
+    border-bottom: 1px solid #eee;
+}
+
+.details-table tr:last-child {
+    border-bottom: none;
+}
+
+.details-table th,
+.details-table td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Labels */
+.details-table th {
+    width: 30%;
+    background: #f9faf9;
+    color: #166534;
+    font-weight: bold;
+    border-right: 2px solid #EDB62C;
+}
+
+/* Values */
+.details-table td {
+    color: #333;
+}
+
+/* Zebra stripe */
+.details-table tr:nth-child(even) td {
+    background: #fafafa;
+}
+
+/* Back button */
+.details-container a {
+    display: inline-block;
+    margin-top: 25px;
+    background: #1A6A24;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 2px solid #d4af37;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.details-container a:hover {
+    background: #1A6A24;
+    border-color: #EDB62C;
+}

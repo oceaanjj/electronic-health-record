@@ -30,6 +30,10 @@ class PastMedicalSurgical extends Model
         'side_effect',
         'comment'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
 
 class Allergy extends Model
@@ -44,6 +48,10 @@ class Allergy extends Model
         'side_effect',
         'comment'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
 
 class Vaccination extends Model
@@ -57,6 +65,10 @@ class Vaccination extends Model
         'side_effect',
         'comment'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
 
 class DevelopmentalHistory extends Model
@@ -69,4 +81,9 @@ class DevelopmentalHistory extends Model
         'cognitive',
         'social'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
+

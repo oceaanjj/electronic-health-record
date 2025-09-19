@@ -4,18 +4,6 @@
 
 @section('content')
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Patient Physical Exam</title>
-    @vite(['resources/css/physical-exam-style.css'])
-</head>
-
-<body>
-
     <form action="{{ route('physical-exam.store') }}" method="POST">
         @csrf
 
@@ -48,27 +36,37 @@
                         placeholder="Enter General Appearance findings">{{ old('general_appearance') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="general_appearance_alerts" placeholder="alerts">
+                    @if (session('cdss.general_appearance'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.general_appearance') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <th class="system">SKIN</th>
                 <td>
-                    <textarea name="skin_condition"
-                        placeholder="Enter Skin findings">{{ old('skin_condition') }}</textarea>
+                    <textarea name="skin_condition" placeholder="Enter Skin findings">{{ old('skin_condition') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="skin_alerts" placeholder="alerts" value="{{ old('skin_alerts') }}">
+                    @if (session('cdss.skin'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.skin') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <th class="system">EYES</th>
                 <td>
-                    <textarea name="eye_condition"
-                        placeholder="Enter Eyes findings">{{ old('eye_condition') }}</textarea>
+                    <textarea name="eye_condition" placeholder="Enter Eyes findings">{{ old('eye_condition') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="eyes_alerts" placeholder="alerts" value="{{ old('eyes_alerts') }}">
+                    @if (session('cdss.eyes'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.eyes') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -78,8 +76,11 @@
                         placeholder="Enter Oral Cavity findings">{{ old('oral_condition') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="oral_cavity_alerts" placeholder="alerts"
-                        value="{{ old('oral_cavity_alerts') }}">
+                    @if (session('cdss.oral'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.oral') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -89,8 +90,11 @@
                         placeholder="Enter Cardiovascular findings">{{ old('cardiovascular') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="cardiovascular_alerts" placeholder="alerts"
-                        value="{{ old('cardiovascular_alerts') }}">
+                    @if (session('cdss.cardiovascular'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.cardiovascular') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -100,7 +104,11 @@
                         placeholder="Enter Abdomen findings">{{ old('abdomen_condition') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="abdomen_alerts" placeholder="alerts" value="{{ old('abdomen_alerts') }}">
+                    @if (session('cdss.abdomen'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.abdomen') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -110,8 +118,11 @@
                         placeholder="Enter Extremities findings">{{ old('extremities') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="extremities_alerts" placeholder="alerts"
-                        value="{{ old('extremities_alerts') }}">
+                    @if (session('cdss.extremities'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.extremities') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -121,8 +132,11 @@
                         placeholder="Enter Neurological findings">{{ old('neurological') }}</textarea>
                 </td>
                 <td>
-                    <input type="text" name="neurological_alerts" placeholder="alerts"
-                        value="{{ old('neurological_alerts') }}">
+                    @if (session('cdss.neurological'))
+                        <div class="alert-box">
+                            <span class="alert-message">{{ session('cdss.neurological') }}</span>
+                        </div>
+                    @endif
                 </td>
             </tr>
         </table>
@@ -151,24 +165,11 @@
         <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
             {{ session('success') }}
         </div>
-        <!-- <div style="background-color: wheat; padding:1rem; text-align:center; margin:1rem;">
-                            @if (session('physical_exam_data'))
-                                <h3>TEMPORARY: Submitted Physical Exam Data:</h3>
-                                <ul>
-                                    @foreach(session('physical_exam_data') as $key => $value)
-                                        <strong>{{ ucwords(str_replace('_', ' ', $key)) }}:</strong> {{ $value }}<br>
-                                    @endforeach
-                                </ul>
-                            @endif
-                        </div> -->
     @endif
 
-</body>
-
-</html>
 @endsection
 
 
-            @push('styles')
-                    @vite(['resources/css/physical-exam-style.css'])
-            @endpush
+@push('styles')
+    @vite(['resources/css/physical-exam-style.css'])
+@endpush

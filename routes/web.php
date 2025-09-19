@@ -5,6 +5,8 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhysicalExamController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Home Page
@@ -29,6 +31,8 @@ $views = [
 foreach ($views as $view) {
     Route::view("/{$view}", $view)->name($view);
 }
+
+
 
 // Authentication Routes
 Route::prefix('login')->name('login.')->group(function () {

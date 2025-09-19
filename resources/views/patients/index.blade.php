@@ -7,7 +7,7 @@
 @vite(['resources/css/index-style.css'])
 
 @section('content')
-        <div class="header">
+    <div class="header">
         <h4>PATIENT LIST</h4>
     </div>
 
@@ -23,6 +23,7 @@
         <table class="ehr-table">
             <thead>
                 <tr>
+                    <th>Patient ID</th>
                     <th>Name</th>
                     <th>Age</th>
                     <th>Sex</th>
@@ -32,6 +33,7 @@
             <tbody>
                 @foreach($patients as $patient)
                     <tr>
+                        <td>{{ $patient->patient_id }}</td>
                         <td>
                             <a href="{{ route('patients.show', $patient->patient_id) }}">
                                 {{ $patient->name }}

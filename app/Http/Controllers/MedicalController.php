@@ -76,6 +76,7 @@ class MedicalController extends Controller
         // Developmental History
         if ($request->has('gross_motor')) {
             DevelopmentalHistory::create([
+                 'patient_id' => $request->patient_id,               
                 'gross_motor' => $request->gross_motor,
                 'fine_motor' => $request->fine_motor,
                 'language' => $request->language,

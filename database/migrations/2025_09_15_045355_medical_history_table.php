@@ -60,7 +60,8 @@ return new class extends Migration
         $table->timestamps();
     });
 
-        Schema::create('developmental_history', function (Blueprint $table) {   
+        Schema::create('developmental_history', function (Blueprint $table) {  
+            $table->id('development_id'); 
             $table->foreignId('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');      
             $table->text('gross_motor')->nullable();
             $table->text('fine_motor')->nullable();

@@ -153,14 +153,14 @@ class PhysicalExamController extends Controller
                 $cdss['oral'] = 'Teething - reassure parents, supportive care (cold teether, analgesics if needed)';
             } elseif (strpos($oral, 'aphthous') !== false || strpos($oral, 'canker sore') !== false) {
                 $cdss['oral'] = 'Aphthous ulcers - supportive care, hydration, monitor for recurrence';
-            }elseif (strpos($oral, 'normal') !== false) {
+            } elseif (strpos($oral, 'normal') !== false) {
                 $cdss['oral'] = 'No action needed';
             } else {
                 $cdss['oral'] = 'Further evaluation required';
             }
         }
 
-        $cardiovascular = strtolower((string) ($physicalExam->cardiovascular_condition ?? ''));
+        $cardiovascular = strtolower((string) ($physicalExam->cardiovascular ?? ''));
         if ($cardiovascular !== '') {
             if (strpos($cardiovascular, 'murmur') !== false) {
                 $cdss['cardiovascular'] = 'Echocardiogram, cardiology referral';
@@ -173,13 +173,13 @@ class PhysicalExamController extends Controller
             } elseif (strpos($cardiovascular, 'bounding pulses') !== false) {
                 $cdss['cardiovascular'] = 'Consider PDA or hyperdynamic circulation';
             } elseif (strpos($cardiovascular, 'weak pulses') !== false || strpos($cardiovascular, 'diminished pulses') !== false) {
-                $cdss['cardiovascular'] = 'Rule out coarctation of aorta, shock, sepsis'; 
+                $cdss['cardiovascular'] = 'Rule out coarctation of aorta, shock, sepsis';
             } elseif (strpos($cardiovascular, 'normal') !== false) {
-                $cdss['cardiovascular'] = 'No action needed';   
+                $cdss['cardiovascular'] = 'No action needed';
             } else {
                 $cdss['cardiovascular'] = 'Further evaluation required';
             }
-        }   
+        }
 
         $abdomen = strtolower((string) ($physicalExam->abdomen_condition ?? ''));
         if ($abdomen !== '') {
@@ -188,7 +188,7 @@ class PhysicalExamController extends Controller
             } elseif (strpos($abdomen, 'distend') !== false) {
                 $cdss['abdomen'] = 'Check for bowel obstruction, consider imaging';
             } elseif (strpos($abdomen, 'mass') !== false) {
-                $cdss['abdomen'] = 'Urgent imaging, surgical consult';     
+                $cdss['abdomen'] = 'Urgent imaging, surgical consult';
             } elseif (strpos($abdomen, 'guarding') !== false || strpos($abdomen, 'rebound') !== false) {
                 $cdss['abdomen'] = 'Urgent surgical consult';
             } elseif (strpos($abdomen, 'normal') !== false) {
@@ -198,7 +198,7 @@ class PhysicalExamController extends Controller
             }
         }
 
-        $extremities = strtolower((string) ($physicalExam->extremities_condition ?? ''));
+        $extremities = strtolower((string) ($physicalExam->extremities ?? ''));
         if ($extremities !== '') {
             if (strpos($extremities, 'edema') !== false) {
                 $cdss['extremities'] = 'Check cardiac/renal function, consider diuretics';
@@ -227,7 +227,7 @@ class PhysicalExamController extends Controller
             }
         }
 
-        $neurological = strtolower((string) ($physicalExam->neurological_condition ?? ''));
+        $neurological = strtolower((string) ($physicalExam->neurological ?? ''));
         if ($neurological !== '') {
             if (strpos($neurological, 'weak') !== false || strpos($neurological, 'paralysis') !== false) {
                 $cdss['neurological'] = 'Urgent neuroimaging, neurology consult';
@@ -248,7 +248,7 @@ class PhysicalExamController extends Controller
             } elseif (strpos($neurological, 'normal') !== false) {
                 $cdss['neurological'] = 'No action needed';
             } else {
-                $cdss['neurological'] = 'Further evaluation required';  
+                $cdss['neurological'] = 'Further evaluation required';
             }
         }
 
@@ -269,8 +269,8 @@ class PhysicalExamController extends Controller
         // Store cdss
         CdssPhysicalExam::create([
             'physical_exam_id' => $physicalExam->id,
-            'patient_id'       => $physicalExam->patient_id,
-            'alerts'           => $alerts,
+            'patient_id' => $physicalExam->patient_id,
+            'alerts' => $alerts,
         ]);
 
         return [$cdss, $alerts];

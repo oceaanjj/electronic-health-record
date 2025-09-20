@@ -198,6 +198,15 @@ use Illuminate\Support\Facades\Auth;
                 </div>
             </div>
 
+            <div class="box">
+                <img src="img/tasks.png" alt="Task Management Icon" class="box-icon">
+                <h3>TASK MANAGEMENT</h3>
+                <p>Track and manage clinical and administrative tasks with progress monitoring.</p>
+                <div class="proceed">
+                    <a href="{{ route('tasks.dashboard') }}">PROCEED <span class="arrow">▶</span></a>
+                </div>
+            </div>
+
 
         </div>
     </section>

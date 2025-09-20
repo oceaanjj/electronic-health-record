@@ -222,8 +222,12 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+        ];
     }
+
     private function analyzeSkin($findings)
     {
         foreach ($this->skinRules as $rule) {
@@ -234,8 +238,13 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
     }
+
     private function analyzeEye($findings)
     {
         foreach ($this->eyeRules as $rule) {
@@ -246,8 +255,13 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
     }
+
     private function analyzeOral($findings)
     {
         foreach ($this->oralRules as $rule) {
@@ -258,8 +272,13 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
     }
+
     private function analyzeCardiovascular($findings)
     {
         foreach ($this->cardiovascularRules as $rule) {
@@ -270,8 +289,13 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
     }
+
     private function analyzeAbdomen($findings)
     {
         foreach ($this->abdomenRules as $rule) {
@@ -282,8 +306,13 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
     }
+
     private function analyzeExtremities($findings)
     {
         foreach ($this->extremitiesRules as $rule) {
@@ -294,8 +323,12 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+        ];
     }
+
     private function analyzeNeurological($findings)
     {
         foreach ($this->neurologicalRules as $rule) {
@@ -306,9 +339,11 @@ class PhysicalExamCdssService
                 ];
             }
         }
-        return null;
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+        ];
     }
-
 
     // Helper method for keyword matching
     private function matchesKeywords($text, $keywords)

@@ -50,9 +50,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>
@@ -76,9 +76,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>
@@ -102,9 +102,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>
@@ -129,9 +129,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>
@@ -156,9 +156,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>
@@ -183,9 +183,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>
@@ -209,9 +209,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>
@@ -235,9 +235,9 @@
                         @endphp
                         <div class="alert-box {{ $color }}">
                             <span class="alert-message">{{ $alertData['alert'] }}</span>
-                            @if ($alertData['severity'] !== 'NONE')
+                            <!-- @if ($alertData['severity'] !== 'NONE')
                                 <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span>
-                            @endif
+                            @endif -->
                         </div>
                     @endif
                 </td>

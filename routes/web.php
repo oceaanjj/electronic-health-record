@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Home Page and Authentication Routes
-Route::view('/', 'home')->name('home');
+Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
 
 // This is the dedicated route for the 'auth' middleware to redirect to.
 Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');

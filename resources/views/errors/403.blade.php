@@ -8,8 +8,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
+            background-color: #1a5e23;
+            color: #e5e5e5ff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,8 +21,6 @@
         .container {
             padding: 20px;
             border-radius: 8px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -37,15 +35,18 @@
         }
 
         a {
-            color: #007bff;
+            color: #ffe100ff;
             text-decoration: none;
             font-weight: bold;
         }
 
         a:hover {
+            color: #ffe100ff;
+
             text-decoration: underline;
         }
     </style>
+
 </head>
 
 <body>

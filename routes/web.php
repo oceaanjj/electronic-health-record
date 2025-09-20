@@ -30,13 +30,11 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 
 // Doctor Home Page
-// Now uses 'auth' middleware to handle unauthenticated redirects.
 Route::get('/doctor', [HomeController::class, 'doctorHome'])
     ->name('doctor-home')
     ->middleware(['auth', 'can:access-doctor-page']);
 
 // Admin Home Page
-// Now uses 'auth' middleware to handle unauthenticated redirects.
 Route::get('/admin', [HomeController::class, 'adminHome'])
     ->name('admin-home')
     ->middleware(['auth', 'can:access-admin-page']);
@@ -45,8 +43,6 @@ Route::get('/admin', [HomeController::class, 'adminHome'])
 // -----------------------------------------------------------
 // Protected Routes for Nurse
 // -----------------------------------------------------------
-// Each route explicitly defines its middleware to ensure the 'auth' check occurs first.
-// If the user is not authenticated, they will be redirected to 'login'.
 Route::get('/nurse', [HomeController::class, 'nurseHome'])
     ->name('nurse-home')
     ->middleware(['auth', 'can:is-nurse']);

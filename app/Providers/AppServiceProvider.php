@@ -31,12 +31,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('access-admin-page', function (User $user) {
+        Gate::define('is-admin', function (User $user) {
             return $user->role === 'Admin';
         });
 
         // Define the Gate for doctor access (for consistency)
-        Gate::define('access-doctor-page', function (User $user) {
+        Gate::define('is-doctor', function (User $user) {
             return $user->role === 'Doctor';
         });
 

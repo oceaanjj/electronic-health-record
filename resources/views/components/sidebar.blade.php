@@ -77,7 +77,7 @@
         </li>
 
         <li>
-            <a href="{{ route('act-of-daily-living') }}"
+            <a href="{{ route('adl.show') }}"
                 class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
                 <img src="./img/sidebar/activities-of-daily-living.png" alt="ADL Icon" class="w-6 h-6">
                 <span>Activities of Daily Living</span>

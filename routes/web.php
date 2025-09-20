@@ -1,12 +1,16 @@
 <?php
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhysicalExamController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActOfDailyLivingController;
+
+
 
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
@@ -90,4 +94,13 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/allergies', [MedicalController::class, 'storeAllergies'])->name('allergy.store');
     Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
     Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
+
+    //Activities of Daily Living (ADL)
+    Route::prefix('adl')->name('adl.')->group(function () {
+        Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
+        Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
+        Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
+    });
+
+
 });

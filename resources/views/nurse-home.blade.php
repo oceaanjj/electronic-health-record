@@ -138,7 +138,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>ACTIVITIES OF DAILY LIVING</h3>
                 <p>Assess a patient’s ability to perform daily tasks such as eating, bathing, and mobility.</p>
                 <div class="proceed">
-                    <a href="{{ route('act-of-daily-living') }}">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('adl.show') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 

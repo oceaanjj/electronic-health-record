@@ -12,7 +12,7 @@ class LoginController extends Controller
 {
     public function showRoleSelectionForm()
     {
-        return view('login.role');
+        return view('home');
     }
 
     public function showNurseLoginForm()
@@ -31,10 +31,14 @@ class LoginController extends Controller
     }
 
 
+    // app/Http/Controllers/Auth/LoginController.php
+
+    // ... other methods
+
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'username' => ['required', 'string', 'max:255', 'exists:users,username'],
+            'username' => ['required', 'string', 'max:255'],
             'password' => ['required'],
         ]);
 
@@ -45,11 +49,22 @@ class LoginController extends Controller
 
             if (strtolower($user->role) === $expectedRole) {
                 $request->session()->regenerate();
-                return redirect()->route('home')->with('success', ucfirst($expectedRole) . ' ' . Auth::user()->username . ' login successful !');
+
+                switch ($user->role) {
+                    case 'Nurse': // Correct case
+                        return redirect()->route('nurse-home')->with('success', 'Nurse ' . $user->username . ' login successful!');
+                    case 'Doctor': // Correct case
+                        return redirect()->route('doctor-home')->with('success', 'Doctor ' . $user->username . ' login successful!');
+                    case 'Admin': // Correct case
+                        return redirect()->route('admin-home')->with('success', 'Admin ' . $user->username . ' login successful!');
+                    default:
+                        // Fallback for any other role
+                        return redirect()->route('home')->with('success', $user->username . ' FAILED!');
+                }
             }
 
             Auth::logout();
-            return back()->withErrors(['username' => "Access denied. Only " . $expectedRole . "s can log in here."])
+            return back()->withErrors(['username' => 'Access denied. You are not a ' . ucfirst($expectedRole) . '.'])
                 ->onlyInput('username');
         }
 
@@ -57,12 +72,14 @@ class LoginController extends Controller
     }
 
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
+
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
-        return redirect()->route('login.index');
+        return redirect('/')->with('success', 'Logout successful!');
     }
 }

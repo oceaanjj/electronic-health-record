@@ -21,7 +21,7 @@
     <ul class="mt-7 space-y-0.9 px-0 list-none text-white">
 
         <li>
-            <a href="{{ route('home') }}"
+            <a href="{{ route('nurse-home') }}"
                 class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
                 <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-6 h-6">
                 <span>Home</span>

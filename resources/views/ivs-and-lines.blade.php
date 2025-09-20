@@ -13,15 +13,31 @@
 @section('content')
 
 
-    <div class="container">
-        <div class="header">
-            <label for="patient">PATIENT NAME :</label>
-            <select id="patient" name="patient">
-                <option value="">-- Select Patient --</option>
-                <option value="Althea Pascua">Jovilyn Esquerra</option>
-            </select>
-        </div>
+    <form action="{{ route('ivs-and-lines.store') }}" method="POST">
+      @csrf
 
+      <div class="container">
+        <div class="header">
+          <label for="patient_id">PATIENT NAME :</label>
+
+          {{-- Patient Name DROPDOWN --}}
+          <select id="patient_info" name="patient_id">
+            <option value="" {{ old('patient_id') == '' ? 'selected' : '' }}>-- Select Patient --</option>
+            @foreach ($patients as $patient)
+              <option value="{{ $patient->patient_id }}" {{ old('patient_id') == $patient->patient_id ? 'selected' : '' }}>
+                {{ $patient->name }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+
+      @if(session('error'))
+      <div
+        style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('error') }}
+      </div>
+    @endif
 
         <table>
             <tr>
@@ -32,22 +48,23 @@
             </tr>
 
             <tr>
-                <td><input type="text" placeholder="iv fluid"></td>
-                <td><input type="text" placeholder="rate"></td>
-                <td><input type="text" placeholder="site"></td>
-                <td><input type="text" placeholder="status"></td>
+                <td><input type="text" name="iv_fluid" placeholder="iv fluid" required></td>
+                <td><input type="text" name="rate" placeholder="rate" required></td>
+                <td><input type="text" name="site" placeholder="site" required></td>
+                <td><input type="text" name="status" placeholder="status" required></td>
             </tr>
 
 
+</table>
 
-        </table>
-    </div>
 
     <div class="buttons">
         <button class="btn" type="submit">Submit</button>
     </div>
-
-
+ </div>
+</form>
+       
+    
 @endsection
 
 @push('styles')

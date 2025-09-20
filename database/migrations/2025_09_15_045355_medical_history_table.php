@@ -14,6 +14,7 @@ return new class extends Migration
 
     Schema::create('present_illness', function (Blueprint $table) {    
         $table->id('medical_id');
+        $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
         $table->string('condition_name')->nullable();
         $table->text('description')->nullable();
         $table->text('medication')->nullable();
@@ -25,6 +26,7 @@ return new class extends Migration
 
     Schema::create('past_medical_surgical', function (Blueprint $table) {    
         $table->id('medical_id');
+        $table->foreignId('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');
         $table->string('condition_name')->nullable();
         $table->text('description')->nullable();
         $table->text('medication')->nullable();
@@ -36,6 +38,7 @@ return new class extends Migration
 
     Schema::create('allergies', function (Blueprint $table) {    
         $table->id('medical_id');
+        $table->foreignId('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');
         $table->string('condition_name')->nullable();
         $table->text('description')->nullable();
         $table->text('medication')->nullable();
@@ -47,6 +50,7 @@ return new class extends Migration
 
     Schema::create('vaccination', function (Blueprint $table) {    
         $table->id('medical_id');
+        $table->foreignId('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');
         $table->string('condition_name')->nullable();
         $table->text('description')->nullable();
         $table->text('medication')->nullable();
@@ -56,7 +60,9 @@ return new class extends Migration
         $table->timestamps();
     });
 
-        Schema::create('developmental_history', function (Blueprint $table) {         
+        Schema::create('developmental_history', function (Blueprint $table) {  
+            $table->id('development_id'); 
+            $table->foreignId('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');      
             $table->text('gross_motor')->nullable();
             $table->text('fine_motor')->nullable();
             $table->text('language')->nullable();
@@ -71,7 +77,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medical_history');
         Schema::dropIfExists('developmental_history');
+        Schema::dropIfExists('vaccination');
+        Schema::dropIfExists('allergies');
+        Schema::dropIfExists('past_medical_surgical');
+        Schema::dropIfExists('present_illness');
+
     }
 };

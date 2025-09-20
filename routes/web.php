@@ -5,6 +5,8 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhysicalExamController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Home Page
@@ -23,12 +25,17 @@ $views = [
     'ivs-and-lines',
     'medication-administration',
     'medication-reconciliation',
-    'discharge-planning'
+    'discharge-planning',
 ];
 
 foreach ($views as $view) {
     Route::view("/{$view}", $view)->name($view);
 }
+
+// Route::get('/header', function () {
+//     return view('components.header'); })->name('header');
+// Route::get('/sidebar', function () {
+//     return view('components.sidebar'); })->name('sidebar');
 
 // Authentication Routes
 Route::prefix('login')->name('login.')->group(function () {
@@ -55,12 +62,14 @@ Route::prefix('patients')->name('patients.')->group(function () {
 Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
     Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
     Route::post('/', [PhysicalExamController::class, 'store'])->name('store');
+    Route::post('/cdss', [PhysicalExamController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
 });
 
 Route::resource('patients', PatientController::class);
 
 
 // More routes:
+Route::get('/medical-history', [MedicalController::class, 'show'])->name('medical-history');
 Route::post('/medical/store', [MedicalController::class, 'store'])->name('medical.store');
 Route::post('/present-illness', [MedicalController::class, 'storePresentIllness'])->name('present.store');
 Route::post('/past-medical', [MedicalController::class, 'storePastMedicalSurgical'])->name('past.store');

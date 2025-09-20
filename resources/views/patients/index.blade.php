@@ -1,38 +1,57 @@
 {{-- show all patients --}}
 
-<!DOCTYPE html>
-<html>
+@extends('layouts.app')
 
-<head>
-    <title>Patients</title>
-</head>
+@section('title', 'Patients List')
 
-<body>
-    <h1>Patients List</h1>
+@vite(['resources/css/index-style.css'])
 
-    <a href="{{ route('patients.create') }}">Add New Patient</a>
+@section('content')
+    <div class="header">
+        <h4>PATIENT LIST</h4>
+    </div>
+
+    <div class="actions">
+        <a href="{{ route('patients.create') }}" class="btn-add">+ Add New Patient</a>
+    </div>
 
     @if(session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
+        <p class="success-msg">{{ session('success') }}</p>
     @endif
 
-    <ul>
-        @foreach($patients as $patient)
-            <li>
-                <a href="{{ route('patients.show', $patient->patient_id) }}">
-                    {{ $patient->name }} ({{ $patient->age }} years old)
-                </a>
-                |
-                <a href="{{ route('patients.edit', $patient->patient_id) }}">Edit</a>
-                |
-                <form action="{{ route('patients.destroy', $patient->patient_id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-</body>
-
-</html>
+    <div class="table-container">
+        <table class="ehr-table">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($patients as $patient)
+                    <tr>
+                        <td>{{ $patient->patient_id }}</td>
+                        <td>
+                            <a href="{{ route('patients.show', $patient->patient_id) }}">
+                                {{ $patient->name }}
+                            </a>
+                        </td>
+                        <td>{{ $patient->age }}</td>
+                        <td>{{ $patient->sex }}</td>
+                        <td>
+                            <a href="{{ route('patients.edit', $patient->patient_id) }}" class="btn-edit">Edit</a>
+                            <form action="{{ route('patients.destroy', $patient->patient_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endsection

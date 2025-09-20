@@ -8,9 +8,17 @@ use App\Models\PastMedicalSurgical;
 use App\Models\Allergy;
 use App\Models\Vaccination;
 use App\Models\DevelopmentalHistory;
+use App\Models\Patient;
 
 class MedicalController extends Controller
 {
+
+    public function show()
+    {
+        $patients = Patient::all();
+        return view('medical-history', compact('patients'));
+    }
+
     public function store(Request $request)
     {
         // Present Illness
@@ -68,6 +76,7 @@ class MedicalController extends Controller
         // Developmental History
         if ($request->has('gross_motor')) {
             DevelopmentalHistory::create([
+                 'patient_id' => $request->patient_id,               
                 'gross_motor' => $request->gross_motor,
                 'fine_motor' => $request->fine_motor,
                 'language' => $request->language,
@@ -78,4 +87,6 @@ class MedicalController extends Controller
 
         return back()->with('success', 'Medical history saved successfully!');
     }
+
+
 }

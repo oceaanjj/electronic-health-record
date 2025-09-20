@@ -44,6 +44,7 @@ class PhysicalExamController extends Controller
             ->withInput();
     }
 
+
     public function generatedCdssAlerts(Request $request)
     {
         $data = $request->validate([
@@ -57,14 +58,12 @@ class PhysicalExamController extends Controller
             'extremities' => 'nullable|string',
             'neurological' => 'nullable|string',
         ]);
-
+        //call service
         $cdssService = new PhysicalExamCdssService();
+      //call the function
         $alerts = $cdssService->analyzeFindings($data);
-        $patients = Patient::all(); // For the dropdown
-
-        // Flash input to session so old() helper works
+          $patients = Patient::all();
         $request->flash();
-
         return view('physical-exam', [
             'patients' => $patients,
             'alerts' => $alerts,

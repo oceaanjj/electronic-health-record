@@ -1,0 +1,132 @@
+/* Reset */
+* {
+    margin: 5px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Page Background */
+body {
+    background-color: #1A6A24; /* Dark Green */
+    color: white;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    font-size: 22px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #ffffff;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 3px solid #EDB62C;
+    border-radius: 4px;
+}
+
+/* Form Container */
+.form-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    border: 2px solid #EDB62C;
+    margin-bottom: 30px;
+    color: black;
+}
+
+/* Form Layout */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+/* Form Group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #1A6A24;
+}
+
+
+/* Inputs */
+input, select, textarea {
+    padding: 10px;
+    border: 1px solid #EDB62C;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #fff;
+    color: #000;
+    transition: 0.2s;
+}
+
+/* Hover & Focus */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border: 2px solid #1A6A24;
+    box-shadow: 0px 0px 5px rgba(26,106,36,0.5);
+}
+
+/* Buttons */
+button, .clear-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #fff;
+    border: 2px solid #EDB62C;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+}
+
+button:hover, .clear-btn:hover {
+    background: #14501b;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border: 2px solid #EDB62C;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+thead {
+    background: #1A6A24;
+    color: #fff;
+}
+
+thead th {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 2px solid #EDB62C;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: #111;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}

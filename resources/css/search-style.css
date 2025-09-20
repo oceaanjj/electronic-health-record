@@ -1,0 +1,112 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Page Background */
+body {
+    background: #1A6A24;
+    color: white;
+    padding: 30px;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+/* Search Form */
+form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+
+form input[type="text"] {
+    padding: 10px;
+    width: 280px;
+    border: 2px solid #EDB62C;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    color: #000;
+}
+
+form input[type="text"]:focus {
+    border-color: #1A6A24;
+    box-shadow: 0px 0px 6px rgba(237,182,44,0.8);
+}
+
+form button {
+    padding: 10px 20px;
+    background: #EDB62C;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #1A6A24;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+form button:hover {
+    background: #c9981f;
+}
+
+/* Results Section */
+h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #EDB62C;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    color: #000;
+    align-items: center;
+    border: 2px solid #EDB62C;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background: #1A6A24;
+    color: #fff;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #EDB62C;
+    font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tbody tr:hover {
+    background: #fff4d1;
+}
+
+/* Messages */
+p {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 16px;
+    color: #EDB62C;
+    font-weight: bold;
+}

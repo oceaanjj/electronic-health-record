@@ -1,24 +1,54 @@
-{{-- show specific patient --}}
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html>
+@section('title', 'Patient Details')
 
-<head>
-    <title>Patient Details</title>
-</head>
+@push('styles')
+    @vite(['resources/css/show-style.css'])
+@endpush
 
-<body>
-    <h1>{{ $patient->name }}</h1>
-    <p>Age: {{ $patient->age }}</p>
-    <p>Sex: {{ $patient->sex }}</p>
-    <p>Address: {{ $patient->address }}</p>
-    <p>Birthplace: {{ $patient->birthplace }}</p>
-    <p>Religion: {{ $patient->religion }}</p>
-    <p>Ethnicity: {{ $patient->ethnicity }}</p>
-    <p>Chief Complaints: {{ $patient->chief_complaints }}</p>
-    <p>Admission Date: {{ $patient->admission_date }}</p>
+@section('content')
+<div class="header">
+        <h4>{{ $patient->name }}</h4>
+    </div>
 
-    <a href="{{ route('patients.index') }}">Back</a>
-</body>
+        <div class="details-container">
+    <table class="details-table">
+        <tr>
+            <th>Age:</th>
+            <td>{{ $patient->age }}</td>
+        </tr>
+        <tr>
+            <th>Sex:</th>
+            <td>{{ $patient->sex }}</td>
+        </tr>
+        <tr>
+            <th>Address:</th>
+            <td>{{ $patient->address }}</td>
+        </tr>
+        <tr>
+            <th>Birthplace:</th>
+            <td>{{ $patient->birthplace }}</td>
+        </tr>
+        <tr>
+            <th>Religion:</th>
+            <td>{{ $patient->religion }}</td>
+        </tr>
+        <tr>
+            <th>Ethnicity:</th>
+            <td>{{ $patient->ethnicity }}</td>
+        </tr>
+        <tr>
+            <th>Chief Complaints:</th>
+            <td>{{ $patient->chief_complaints }}</td>
+        </tr>
+        <tr>
+            <th>Admission Date:</th>
+            <td>{{ $patient->admission_date }}</td>
+        </tr>
+    </table>
 
-</html>
+    <a href="{{ route('patients.index') }}">← Back</a>
+</div>
+
+
+@endsection

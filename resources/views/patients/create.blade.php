@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Patient Registration</title>
-    @vite(['resources/css/registration-style.css'])
+@extends('layouts.app')
+
+@section('title', 'Patient Vital Signs')
+
+@section('content')
+
 </head>
 {{-- wala pa palang columns for room number, bed number, and emergency contacts --}}
 <body>
@@ -83,8 +83,9 @@ as well as adding the names of each input so that they know where theyll be goin
 
         </form>
     </div>
-
+    
     <div class="header">EMERGENCY CONTACT</div>
+    <div class="form-container">
     <div class="form-row">
         <div class="form-group">
             <label>Name</label>
@@ -106,5 +107,9 @@ as well as adding the names of each input so that they know where theyll be goin
             <input type="date">
         </div>
     </div>
-</body>
-</html>
+
+@endsection
+
+            @push('styles')
+                    @vite(['resources/css/registration-style.css'])
+            @endpush

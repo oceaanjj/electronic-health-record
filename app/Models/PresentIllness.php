@@ -8,7 +8,7 @@ class PresentIllness extends Model
 {
     protected $table = 'present_illness';
     protected $fillable = [
-
+        'patient_id',
         'condition_name',
         'description',
         'medication',
@@ -22,7 +22,7 @@ class PastMedicalSurgical extends Model
 {
     protected $table = 'past_medical_surgical';
     protected $fillable = [
-
+        'patient_id',
         'condition_name',
         'description',
         'medication',
@@ -30,13 +30,17 @@ class PastMedicalSurgical extends Model
         'side_effect',
         'comment'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
 
 class Allergy extends Model
 {
     protected $table = 'allergies';
     protected $fillable = [
-
+        'patient_id',
         'condition_name',
         'description',
         'medication',
@@ -44,12 +48,17 @@ class Allergy extends Model
         'side_effect',
         'comment'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
 
 class Vaccination extends Model
 {
     protected $table = 'vaccination';
     protected $fillable = [
+        'patient_id',
         'condition_name',
         'description',
         'medication',
@@ -57,16 +66,26 @@ class Vaccination extends Model
         'side_effect',
         'comment'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
 
 class DevelopmentalHistory extends Model
 {
     protected $table = 'developmental_history';
     protected $fillable = [
+        'patient_id',
         'gross_motor',
         'fine_motor',
         'language',
         'cognitive',
         'social'
     ];
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
+

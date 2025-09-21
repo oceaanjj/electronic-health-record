@@ -10,6 +10,7 @@ use App\Http\Controllers\PhysicalExamController;
 use App\Http\Controllers\ActOfDailyLivingController;
 use App\Http\Controllers\IvsAndLineController;
 use App\Http\Controllers\MedReconciliationController;
+use App\Http\Controllers\DischargePlanningController;
 
 
 
@@ -126,3 +127,6 @@ Route::post('/medication-reconciliation', [MedReconciliationController::class, '
 Route::post('/current_medication', [MedReconciliationController::class, 'storeMedicalReconciliation'])->name('current-medication.store');
 Route::post('/home_medication', [MedReconciliationController::class, 'storeHomeMedication'])->name('home-medication.store');
 Route::post('/changes_in_medication', [MedReconciliationController::class, 'storeChangesInMedication'])->name('changes-in-medication.store');   
+
+Route::get('/discharge-planning', [DischargePlanningController::class, 'show'])->name('discharge-planning');
+Route::post('/discharge-planning', [DischargePlanningController::class, 'store'])->name('discharge-planning.store');

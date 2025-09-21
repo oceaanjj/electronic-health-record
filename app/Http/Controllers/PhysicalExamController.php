@@ -7,21 +7,29 @@ use App\Models\PhysicalExam;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
-
 class PhysicalExamController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         $patients = Patient::all();
 
-        // pang debug lang to, --IGNORE NIYO LANG-- 
-        // if ($patients->isEmpty()) {
-        //     dd('No patients found in database');
-        // } else {
-        //     dd('Patients found:', $patients->toArray());
-        // }
+        $physicalExam = null;
 
-        return view('physical-exam', compact('patients'));
+        $patientId = $request->get('patient_id');
+
+        if ($patientId) {
+            // Find the physical exam data for the selected patient
+            $physicalExam = PhysicalExam::where('patient_id', $patientId)->first();
+
+            // Flash (show to the form if there is a value)
+            if ($physicalExam) {
+                // If a record is found, we can flash it to the session
+                // so the old() helper can pick it up.
+                $request->session()->flash('old', $physicalExam->toArray());
+            }
+        }
+        //$physicalExam = data from the table 
+        return view('physical-exam', compact('patients', 'physicalExam'));
     }
 
     public function store(Request $request)
@@ -38,7 +46,17 @@ class PhysicalExamController extends Controller
             'neurological' => 'nullable|string',
         ]);
 
-        $physicalExam = PhysicalExam::create($data);
+        $existingExam = PhysicalExam::where('patient_id', $data['patient_id'])->first();
+
+        if ($existingExam) {
+            // If it exists, update the record
+            $existingExam->update($data);
+            $message = 'Physical exam data updated successfully!';
+        } else {
+            // Otherwise, create a new record
+            PhysicalExam::create($data);
+            $message = 'Physical exam data saved successfully!';
+        }
 
         // Run the CDSS analysis after storing the data
         $cdssService = new PhysicalExamCdssService();
@@ -52,10 +70,11 @@ class PhysicalExamController extends Controller
             }
         }
 
-        return redirect()->route('physical-exam.index')
+        // Redirect back with the input, alerts, and a success message
+        return redirect()->route('physical-exam.index', ['patient_id' => $data['patient_id']])
             ->withInput()
             ->with('cdss', $formattedAlerts)
-            ->with('success', 'Physical exam data saved successfully!');
+            ->with('success', $message);
     }
 
 
@@ -85,7 +104,7 @@ class PhysicalExamController extends Controller
         }
 
         return redirect()->route('physical-exam.index')
-            ->withInput()
+            ->withInput($data)
             ->with('cdss', $formattedAlerts)
             ->with('success', 'CDSS analysis run successfully!');
     }

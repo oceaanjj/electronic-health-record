@@ -80,11 +80,19 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     Route::resource('patients', PatientController::class);
 
+    //
+
+
+
+    // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
         Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
         Route::post('/', [PhysicalExamController::class, 'store'])->name('store');
         Route::post('/cdss', [PhysicalExamController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
     });
+
+
+
 
     // Medical History Store Routes
     Route::get('/medical-history', [MedicalController::class, 'show'])->name('medical-history');

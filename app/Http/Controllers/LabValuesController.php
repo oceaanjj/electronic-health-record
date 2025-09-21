@@ -2,127 +2,150 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LabValuesCdssService;
 use App\Models\LabValues;
 use App\Models\Patient;
-use App\Services\LabValueCdssService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class LabValuesController extends Controller
 {
     /**
-     * Display the lab values form.
+     * Display the lab values form for a specific patient.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function show(Request $request)
     {
-        $patients = Patient::orderBy('name')->get();
-        $labValues = null;
+        $patients = Patient::all();
 
-        // This is only for the initial GET request
+        $labValue = null;
+
         $patientId = $request->get('patient_id');
-        $recordDate = $request->get('record_date');
 
-        if ($patientId && $recordDate) {
-            $labValues = LabValues::where('patient_id', $patientId)
-                ->where('record_date', $recordDate)
-                ->first();
+        if ($patientId) {
+            // Find the lab value data for the selected patient
+            $labValue = LabValues::where('patient_id', $patientId)->first();
+
+            // Flash the data to the session so the form can be pre-filled
+            if ($labValue) {
+                $request->session()->flash('old', $labValue->toArray());
+            }
         }
 
-        return view('lab-values', compact('patients', 'labValues', 'patientId', 'recordDate'));
+        return view('lab-values', compact('patients', 'labValue'));
     }
 
     /**
-     * Handle the patient/date filter submission (POST request).
-     */
-    public function filter(Request $request)
-    {
-        $patientId = $request->input('patient_id');
-        $recordDate = $request->input('record_date');
-
-        $patients = Patient::orderBy('name')->get();
-        $labValues = null;
-
-        if ($patientId && $recordDate) {
-            $labValues = LabValues::where('patient_id', $patientId)
-                ->where('record_date', $recordDate)
-                ->first();
-        }
-
-        return view('lab-values', compact('patients', 'labValues'))
-            ->with('patientId', $patientId)
-            ->with('recordDate', $recordDate);
-    }
-
-    /**
-     * Store or update lab values.
+     * Store or update the lab values data.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'record_date' => 'required|date',
-            'lab_tests' => 'array',
-            'lab_tests.*.result' => 'nullable|string|max:255',
-            'lab_tests.*.normal_range' => 'nullable|string|max:255',
+        $data = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'wbc_result' => 'nullable|numeric',
+            'wbc_normal_range' => 'nullable|string',
+            'rbc_result' => 'nullable|numeric',
+            'rbc_normal_range' => 'nullable|string',
+            'hgb_result' => 'nullable|numeric',
+            'hgb_normal_range' => 'nullable|string',
+            'hct_result' => 'nullable|numeric',
+            'hct_normal_range' => 'nullable|string',
+            'platelets_result' => 'nullable|numeric',
+            'platelets_normal_range' => 'nullable|string',
+            'mcv_result' => 'nullable|numeric',
+            'mcv_normal_range' => 'nullable|string',
+            'mch_result' => 'nullable|numeric',
+            'mch_normal_range' => 'nullable|string',
+            'mchc_result' => 'nullable|numeric',
+            'mchc_normal_range' => 'nullable|string',
+            'rdw_result' => 'nullable|numeric',
+            'rdw_normal_range' => 'nullable|string',
+            'neutrophils_result' => 'nullable|numeric',
+            'neutrophils_normal_range' => 'nullable|string',
+            'lymphocytes_result' => 'nullable|numeric',
+            'lymphocytes_normal_range' => 'nullable|string',
+            'monocytes_result' => 'nullable|numeric',
+            'monocytes_normal_range' => 'nullable|string',
+            'eosinophils_result' => 'nullable|numeric',
+            'eosinophils_normal_range' => 'nullable|string',
+            'basophils_result' => 'nullable|numeric',
+            'basophils_normal_range' => 'nullable|string',
         ]);
 
-        $patientId = $validatedData['patient_id'];
-        $recordDate = $validatedData['record_date'];
+        $existingLabValue = LabValues::where('patient_id', $data['patient_id'])->first();
 
-        $labData = [
-            'patient_id' => $patientId,
-            'record_date' => $recordDate,
-        ];
-
-        // Prepare data for the model from the lab_tests array
-        foreach ($validatedData['lab_tests'] as $key => $values) {
-            $labData[$key . '_result'] = $values['result'] ?? null;
-            $labData[$key . '_normal_range'] = $values['normal_range'] ?? null;
+        if ($existingLabValue) {
+            // If the record exists, update it
+            $existingLabValue->update($data);
+            $message = 'Lab values data updated successfully!';
+        } else {
+            // Otherwise, create a new record
+            LabValues::create($data);
+            $message = 'Lab values data saved successfully!';
         }
 
-        DB::beginTransaction();
-        try {
-            $existingLabValues = LabValues::where('patient_id', $patientId)
-                ->where('record_date', $recordDate)
-                ->first();
+        // Run the CDSS analysis after storing the data
+        $cdssService = new LabValuesCdssService();
+        $alerts = $cdssService->analyzeLabValues($data);
 
-            if ($existingLabValues) {
-                $existingLabValues->update($labData);
-                $message = 'Lab values updated successfully!';
-            } else {
-                LabValues::create($labData);
-                $message = 'Lab values saved successfully!';
-            }
-            DB::commit();
-
-            return redirect()->route('lab-values.index', [
-                'patient_id' => $patientId,
-                'record_date' => $recordDate
-            ])->with('success', $message);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred while saving the data. Please try again.']);
-        }
+        // Redirect back with the input, alerts, and a success message
+        return redirect()->route('lab-values.index', ['patient_id' => $data['patient_id']])
+            ->withInput()
+            ->with('cdss', $alerts)
+            ->with('success', $message);
     }
 
     /**
-     * Run CDSS analysis on lab values.
+     * Run CDSS analysis without saving the data.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function runCdssAnalysis(Request $request)
     {
-        $validatedData = $request->validate([
-            'lab_tests' => 'array',
-            'lab_tests.*.result' => 'nullable|string|max:255',
+        $data = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'wbc_result' => 'nullable|numeric',
+            'wbc_normal_range' => 'nullable|string',
+            'rbc_result' => 'nullable|numeric',
+            'rbc_normal_range' => 'nullable|string',
+            'hgb_result' => 'nullable|numeric',
+            'hgb_normal_range' => 'nullable|string',
+            'hct_result' => 'nullable|numeric',
+            'hct_normal_range' => 'nullable|string',
+            'platelets_result' => 'nullable|numeric',
+            'platelets_normal_range' => 'nullable|string',
+            'mcv_result' => 'nullable|numeric',
+            'mcv_normal_range' => 'nullable|string',
+            'mch_result' => 'nullable|numeric',
+            'mch_normal_range' => 'nullable|string',
+            'mchc_result' => 'nullable|numeric',
+            'mchc_normal_range' => 'nullable|string',
+            'rdw_result' => 'nullable|numeric',
+            'rdw_normal_range' => 'nullable|string',
+            'neutrophils_result' => 'nullable|numeric',
+            'neutrophils_normal_range' => 'nullable|string',
+            'lymphocytes_result' => 'nullable|numeric',
+            'lymphocytes_normal_range' => 'nullable|string',
+            'monocytes_result' => 'nullable|numeric',
+            'monocytes_normal_range' => 'nullable|string',
+            'eosinophils_result' => 'nullable|numeric',
+            'eosinophils_normal_range' => 'nullable|string',
+            'basophils_result' => 'nullable|numeric',
+            'basophils_normal_range' => 'nullable|string',
         ]);
 
-        $cdssService = new LabValueCdssService();
+        // Call the CDSS service
+        $cdssService = new LabValuesCdssService();
+        $alerts = $cdssService->analyzeLabValues($data);
 
-        // Extract only the result values for the CDSS service
-        $results = array_column($validatedData['lab_tests'], 'result', 'lab_test_key');
-
-        $alerts = $cdssService->analyzeValues($results);
-
-        return redirect()->back()->withInput($request->all())->with('cdss', $alerts);
+        return redirect()->route('lab-values.index')
+            ->withInput($data)
+            ->with('cdss', $alerts)
+            ->with('success', 'CDSS analysis run successfully!');
     }
 }

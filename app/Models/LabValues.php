@@ -9,10 +9,20 @@ class LabValues extends Model
 {
     use HasFactory;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'lab_values';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'patient_id',
-        'record_date',
         'wbc_result',
         'wbc_normal_range',
         'rbc_result',
@@ -43,7 +53,9 @@ class LabValues extends Model
         'basophils_normal_range',
     ];
 
-
+    /**
+     * Get the patient that owns the lab values.
+     */
     public function patient()
     {
         return $this->belongsTo(Patient::class);

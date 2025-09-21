@@ -111,11 +111,11 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
     });
 
-    // Lab Values
-    Route::get('/lab-values', [LabValuesController::class, 'index'])->name('lab-values.index');
+    // Lab Values Routes
+    Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
     Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
-    Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.run-cdss-analysis');
-    Route::post('/lab-values/run', [LabValuesController::class, 'filter'])->name('lab-values.filter');
+    Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.cdss');
+
 
 
 });

@@ -12,8 +12,7 @@ return new class extends Migration {
     {
         Schema::create('lab_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
-            $table->date('record_date');
+            $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
 
             // Lab test results and normal ranges
             $table->string('wbc_result')->nullable();
@@ -48,7 +47,7 @@ return new class extends Migration {
             $table->timestamps();
 
             // Ensure a patient can only have one lab record for a specific date
-            $table->unique(['patient_id', 'record_date']);
+            // $table->unique(['patient_id', 'record_date']);
         });
     }
 

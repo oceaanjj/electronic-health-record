@@ -12,6 +12,18 @@
 
 @section('content')
 
+    @if(session('error'))
+      <div
+        style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('error') }}
+      </div>
+    @endif
+
+    @if (session('success'))
+    <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+    @endif
 
     <form action="{{ route('ivs-and-lines.store') }}" method="POST">
       @csrf
@@ -32,12 +44,7 @@
         </div>
       </div>
 
-      @if(session('error'))
-      <div
-        style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-        {{ session('error') }}
-      </div>
-    @endif
+
 
         <table>
             <tr>
@@ -48,10 +55,11 @@
             </tr>
 
             <tr>
-                <td><input type="text" name="iv_fluid" placeholder="iv fluid" required></td>
-                <td><input type="text" name="rate" placeholder="rate" required></td>
-                <td><input type="text" name="site" placeholder="site" required></td>
-                <td><input type="text" name="status" placeholder="status" required></td>
+                
+                <td><input type="text" name="iv_fluid" placeholder="iv fluid" ></td>
+                <td><input type="text" name="rate" placeholder="rate" ></td>
+                <td><input type="text" name="site" placeholder="site" ></td>
+                <td><input type="text" name="status" placeholder="status" ></td>
             </tr>
 
 

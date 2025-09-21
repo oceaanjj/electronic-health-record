@@ -18,13 +18,16 @@ class IvsAndLineController extends Controller
     public function store(Request $request)
     {
         try {
-        if ($request->validate)([
-            'patient_id' => 'required|exists:patients,id',
-            'iv_fluid' => 'nullable|string',
-            'rate' => 'nullable|string',
-            'site' => 'nullable|string',
-            'status' => 'nullable|string',
-        ]);
+
+         if ($request->has('present_condition_name')) {
+                IvsAndLine::create([
+                    'patient_id' => $request->patient_id,
+                    'iv_fluid' => $request->iv_fluid,
+                    'rate' => $request->present_description,
+                    'site' => $request->present_medication,
+                    'status' => $request->present_dosage,
+                ]);
+            }
 
         IvsAndLine::create($request->all());
 
@@ -33,7 +36,7 @@ class IvsAndLineController extends Controller
             } catch (Throwable $e) {
             // Check for the specific 'patient_id' cannot be null error
             if (str_contains($e->getMessage(), '1048 Column \'patient_id\' cannot be null')) {
-                return back()->with('error', 'Please select a patient before saving the medical history.');
+                return back()->with('error', 'Please select a patient before submitting the IVs and Lines record.');
             }
 
             // Check for any general database integrity constraint violation

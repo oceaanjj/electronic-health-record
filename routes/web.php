@@ -4,21 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
-
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhysicalExamController;
-<<<<<<< HEAD
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\IvsAndLineController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MedReconciliationController;
-=======
 use App\Http\Controllers\ActOfDailyLivingController;
->>>>>>> 794f6ff88c25f2aebafa26f41c0a19b817bc3c7a
+use App\Http\Controllers\IvsAndLineController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MedReconciliationController;
 
 
 
@@ -114,7 +106,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
 
 });
-<<<<<<< HEAD
 
 Route::resource('patients', PatientController::class);
 
@@ -136,5 +127,3 @@ Route::post('/medication-reconciliation', [MedReconciliationController::class, '
 Route::post('/current_medication', [MedReconciliationController::class, 'storeMedicalReconciliation'])->name('current-medication.store');
 Route::post('/home_medication', [MedReconciliationController::class, 'storeHomeMedication'])->name('home-medication.store');
 Route::post('/changes_in_medication', [MedReconciliationController::class, 'storeChangesInMedication'])->name('changes-in-medication.store');   
-=======
->>>>>>> 794f6ff88c25f2aebafa26f41c0a19b817bc3c7a

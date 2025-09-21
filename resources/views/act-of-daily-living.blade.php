@@ -4,8 +4,8 @@
 
 @section('content')
 
-<!-- ALERT MESSAGE -->
-   @if ($errors->any())
+    <!-- ALERT MESSAGE -->
+    @if ($errors->any())
         <div style="color:red; margin-bottom:5px; padding:5px;">
             <h5 style="margin-bottom: 10px;">Errors:</h5>
             <ul>
@@ -22,37 +22,56 @@
         </div>
     @endif
 
-    <!-- The form tag wraps the entire section to handle submission -->
-    <form id="adl-form" method="POST" action="{{ route('adl.store') }}">
-        @csrf
+    <div class="container">
+        <div class="header">
+            <label for="patient_id">PATIENT NAME :</label>
 
-        <div class="container">
-            <div class="header">
+            {{-- PATIENT DROPDOWN AND DATE FORM (TO GET DATA FROM PATIENT & DATE--}}
+            <form action="{{ route('adl.show') }}" method="GET" id="patient-select-form">
                 <label for="patient_id">PATIENT NAME :</label>
-
-                {{-- Patient Name DROPDOWN --}}
-                <select id="patient_info" name="patient_id">
-                    <option value="" {{ old('patient_id') == '' ? 'selected' : '' }}>-- Select Patient --</option>
+                <select id="patient_info" name="patient_id"
+                    onchange="document.getElementById('patient-select-form').submit()">
+                    <option value="" @if(request()->query('patient_id') == '') selected @endif>-- Select Patient --</option>
                     @foreach ($patients as $patient)
-                        <option value="{{ $patient->patient_id }}" {{ old('patient_id') == $patient->patient_id ? 'selected' : '' }}>
+                        <option value="{{ $patient->patient_id }}" @if(request()->query('patient_id') == $patient->patient_id)
+                        selected @endif>
                             {{ $patient->name }}
                         </option>
                     @endforeach
                 </select>
-            </div>
+
+                <!-- DATE -->
+                <label for="date">DATE :</label>
+                <input type="date" id="date_selector" name="date" value="{{ request()->query('date') }}"
+                    onchange="document.getElementById('patient-select-form').submit()">
+            </form>
         </div>
+    </div>
+
+
+
+
+
+    {{-- MAIN FORM--}}
+    <form id="adl-form" method="POST" action="{{ route('adl.store') }}">
+        @csrf
+        {{-- Hidden P_ID AND DATE --}}
+        <input type="hidden" name="patient_id" value="{{ request()->query('patient_id') }}">
+        <input type="hidden" name="date" value="{{ request()->query('date') }}">
+
+        <!-- DAY -->
         <div class="section-bar">
             <label for="day">DAY NO :</label>
             <select id="day" name="day_no">
                 <option value="">-- Select number --</option>
                 @for ($i = 1; $i <= 30; $i++)
-                    <option value="{{ $i }}" {{ old('day_no') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                    <option value="{{ $i }}" @if(old('day_no', $adlData->day_no ?? '') == $i) selected @endif>
+                        {{ $i }}
+                    </option>
                 @endfor
             </select>
-
-            <label for="date">DATE :</label>
-            <input type="date" id="date" name="date" value="{{ old('date') }}">
         </div>
+
 
         <table>
             <tr>
@@ -63,7 +82,10 @@
 
             <tr>
                 <th class="title">MOBILITY</th>
-                <td><input type="text" name="mobility_assessment" placeholder="mobility" value="{{ old('mobility_assessment') }}"></td>
+                <td>
+                    <input type="text" name="mobility_assessment" placeholder="mobility"
+                        value="{{ old('mobility_assessment', $adlData->mobility_assessment ?? '') }}">
+                </td>
                 <td>
                     @error('mobility_assessment')
                         <div class="alert-box alert-red">
@@ -85,7 +107,10 @@
 
             <tr>
                 <th class="title">HYGIENE</th>
-                <td><input type="text" name="hygiene_assessment" placeholder="hygiene" value="{{ old('hygiene_assessment') }}"></td>
+                <td>
+                    <input type="text" name="hygiene_assessment" placeholder="hygiene"
+                        value="{{ old('hygiene_assessment', $adlData->hygiene_assessment ?? '') }}">
+                </td>
                 <td>
                     @error('hygiene_assessment')
                         <div class="alert-box alert-red">
@@ -107,7 +132,10 @@
 
             <tr>
                 <th class="title">TOILETING</th>
-                <td><input type="text" name="toileting_assessment" placeholder="toileting" value="{{ old('toileting_assessment') }}"></td>
+                <td>
+                    <input type="text" name="toileting_assessment" placeholder="toileting"
+                        value="{{ old('toileting_assessment', $adlData->toileting_assessment ?? '') }}">
+                </td>
                 <td>
                     @error('toileting_assessment')
                         <div class="alert-box alert-red">
@@ -129,7 +157,10 @@
 
             <tr>
                 <th class="title">FEEDING</th>
-                <td><input type="text" name="feeding_assessment" placeholder="feeding" value="{{ old('feeding_assessment') }}"></td>
+                <td>
+                    <input type="text" name="feeding_assessment" placeholder="feeding"
+                        value="{{ old('feeding_assessment', $adlData->feeding_assessment ?? '') }}">
+                </td>
                 <td>
                     @error('feeding_assessment')
                         <div class="alert-box alert-red">
@@ -151,7 +182,10 @@
 
             <tr>
                 <th class="title">HYDRATION</th>
-                <td><input type="text" name="hydration_assessment" placeholder="hydration" value="{{ old('hydration_assessment') }}"></td>
+                <td>
+                    <input type="text" name="hydration_assessment" placeholder="hydration"
+                        value="{{ old('hydration_assessment', $adlData->hydration_assessment ?? '') }}">
+                </td>
                 <td>
                     @error('hydration_assessment')
                         <div class="alert-box alert-red">
@@ -173,7 +207,10 @@
 
             <tr>
                 <th class="title">SLEEP PATTERN</th>
-                <td><input type="text" name="sleep_pattern_assessment" placeholder="sleep pattern" value="{{ old('sleep_pattern_assessment') }}"></td>
+                <td>
+                    <input type="text" name="sleep_pattern_assessment" placeholder="sleep pattern"
+                        value="{{ old('sleep_pattern_assessment', $adlData->sleep_pattern_assessment ?? '') }}">
+                </td>
                 <td>
                     @error('sleep_pattern_assessment')
                         <div class="alert-box alert-red">
@@ -195,7 +232,10 @@
 
             <tr>
                 <th class="title">PAIN LEVEL</th>
-                <td><input type="text" name="pain_level_assessment" placeholder="pain level" value="{{ old('pain_level_assessment') }}"></td>
+                <td>
+                    <input type="text" name="pain_level_assessment" placeholder="pain level"
+                        value="{{ old('pain_level_assessment', $adlData->pain_level_assessment ?? '') }}">
+                </td>
                 <td>
                     @error('pain_level_assessment')
                         <div class="alert-box alert-red">
@@ -216,12 +256,10 @@
         </table>
 
         <div class="buttons">
-            <button type="submit" class="btn" formaction="{{ route('adl.runCdssAnalysis') }}">CDSS</button>
+            <!-- <button type="submit" class="btn" formaction="{{ route('adl.runCdssAnalysis') }}">CDSS</button> -->
             <button class="btn" type="submit">Submit</button>
         </div>
     </form>
-
- 
 @endsection
 
 @push('styles')

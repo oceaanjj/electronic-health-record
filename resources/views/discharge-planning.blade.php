@@ -59,7 +59,7 @@
         </tr>
         <tr>
           <td class="criteria">Manage Fever Effectively</td>
-          <td><textarea name="criteria_manageFever"></textarea></td>
+          <td><textarea name="criteria_manageFever2"></textarea></td>
         </tr>
       </table>
     </div>

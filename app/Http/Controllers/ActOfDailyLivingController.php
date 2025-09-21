@@ -2,26 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Patient;
 use App\Models\ActOfDailyLiving;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Services\AdlCdssService;
+use Illuminate\Validation\Rule;
+
 class ActOfDailyLivingController extends Controller
 {
-    // Display the form for the Activities of Daily Living.
-    public function show()
+
+    public function show(Request $request)
     {
         $patients = Patient::all();
-        return view('act-of-daily-living', compact('patients'));
+        $patientId = $request->query('patient_id');
+        $adlData = null;
+
+        if ($patientId) {
+            $adlData = ActOfDailyLiving::where('patient_id', $patientId)->first();
+        }
+
+        return view('act-of-daily-living', [
+            'patients' => $patients,
+            'adlData' => $adlData,
+        ]);
     }
 
-    // Store a new Activities of Daily Living record.
+
     public function store(Request $request)
     {
-        // Validate the incoming request data
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|min:1',
+            'day_no' => 'required|integer|between:1,30',
             'date' => 'required|date',
             'mobility_assessment' => 'nullable|string',
             'hygiene_assessment' => 'nullable|string',
@@ -32,49 +43,61 @@ class ActOfDailyLivingController extends Controller
             'pain_level_assessment' => 'nullable|string',
         ]);
 
-        // Create the new Activities of Daily Living record in the database
-        $adl = ActOfDailyLiving::create($validatedData);
+        //  Check for an existing ADL record.
+        $adl = ActOfDailyLiving::where('patient_id', $validatedData['patient_id'])->first();
 
         // Filter out any null or empty assessment fields before running the CDSS analysis.
         // This ensures the CDSS service only analyzes fields that were actually filled in.
-        $dataForAnalysis = array_filter($validatedData);
+        $filteredData = array_filter($validatedData);
 
-        // Run the CDSS analysis on the findings
+        if ($adl) {
+            // If an ADL record exists, update it.
+            $adl->update($validatedData);
+            $message = 'ADL data updated successfully!';
+        } else {
+            // If no record exists, create a new one.
+            ActOfDailyLiving::create($validatedData);
+            $message = 'ADL data created successfully!';
+        }
+
         $cdssService = new AdlCdssService();
-        $alerts = $cdssService->analyzeFindings($dataForAnalysis);
+        $alerts = $cdssService->analyzeFindings($filteredData);
 
-        // Redirect back to the form with success message and alerts
-        return redirect()->route('adl.show')
-            ->withInput()
+
+        return redirect()->route('adl.show', ['patient_id' => $validatedData['patient_id']])
             ->with('cdss', $alerts)
-            ->with('success', 'Activities of daily living data saved successfully!');
+            ->with('success', $message);
     }
 
-    // Run CDSS analysis on findings without storing the data.
+
+
     public function runCdssAnalysis(Request $request)
     {
-        // Define the list of fields to validate and analyze
-        $assessmentFields = [
-            'mobility_assessment',
-            'hygiene_assessment',
-            'toileting_assessment',
-            'feeding_assessment',
-            'hydration_assessment',
-            'sleep_pattern_assessment',
-            'pain_level_assessment'
-        ];
+        $patientId = $request->input('patient_id');
 
-        // Prepare the data for analysis from the request.
-        // We use array_filter to remove any fields that are null or empty.
-        $dataForAnalysis = array_filter($request->only($assessmentFields));
+        $validatedData = $request->validate([
+            'patient_id' => ['required', 'string', Rule::exists('patients', 'patient_id')],
+            'day_no' => 'required|integer|between:1,30',
+            'date' => 'required|date',
+            'mobility_assessment' => 'nullable|string',
+            'hygiene_assessment' => 'nullable|string',
+            'toileting_assessment' => 'nullable|string',
+            'feeding_assessment' => 'nullable|string',
+            'hydration_assessment' => 'nullable|string',
+            'sleep_pattern_assessment' => 'nullable|string',
+            'pain_level_assessment' => 'nullable|string',
+        ]);
 
-        // Call the CDSS service
-        $cdssService = new AdlCdssService();
-        $alerts = $cdssService->analyzeFindings($dataForAnalysis);
+        // //Check for existing record and create or update it.
+        // $adl = ActOfDailyLiving::updateOrCreate(
+        //     ['patient_id' => $patientId],
+        //     $validatedData
+        // );
 
-        // Redirect back to the form with the alerts
-        return redirect()->route('adl.show')
-            ->withInput()
-            ->with('cdss', $alerts);
+        // $cdssService = new AdlCdssService();
+        // $analysisResults = $cdssService->analyzeFindings($adl->toArray());
+
+        return redirect()->route('adl.show', ['patient_id' => $patientId])
+            ->with('success', 'CDSS Analysis complete!');
     }
 }

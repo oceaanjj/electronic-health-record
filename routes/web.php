@@ -13,7 +13,6 @@ use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
 
 
-
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
 

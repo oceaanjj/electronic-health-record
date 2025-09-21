@@ -5,25 +5,30 @@ namespace App\Services;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
 
-class AdlCdssService
+class CdssService
 {
-
     const CRITICAL = 'critical';
     const WARNING = 'warning';
     const INFO = 'info';
     const NONE = 'none';
 
-    private $rules;
+    private $rules = [];
+    private $rulesDirectoryName;
 
-    public function __construct()
+    /**
+     * @param string $rulesDirectoryName The name of the subdirectory within storage/app/private
+     * where the YAML rules files are located.
+     */
+    public function __construct(string $rulesDirectoryName)
     {
+        $this->rulesDirectoryName = $rulesDirectoryName;
         $this->loadRules();
     }
 
-    //  Loads the CDSS rules from multiple external YAML files in a directory.
+    // Loads the CDSS rules from multiple external YAML files in a specific directory.
     private function loadRules()
     {
-        $rulesDirectory = storage_path('app/private/adl_rules');
+        $rulesDirectory = storage_path('app/private/' . $this->rulesDirectoryName);
 
         if (!File::isDirectory($rulesDirectory)) {
             $this->rules = [];
@@ -50,26 +55,21 @@ class AdlCdssService
         $this->rules = $allRules;
     }
 
-
-
-    public function analyzeFindings($findingsData)
+    /**
+     * Analyzes a set of patient findings against the loaded rules.
+     * The method is now dynamic and checks every key in the provided data.
+     *
+     * @param array $findingsData An associative array of patient findings (e.g., ['mobility_assessment' => '...']).
+     * @return array An associative array of alerts, keyed by the finding name.
+     */
+    public function analyzeFindings(array $findingsData)
     {
         $alerts = [];
-        $keysToAnalyze = [
-            'mobility_assessment',
-            'hygiene_assessment',
-            'toileting_assessment',
-            'feeding_assessment',
-            'hydration_assessment',
-            'sleep_pattern_assessment',
-            'pain_level_assessment',
-        ];
-
-        foreach ($keysToAnalyze as $key) {
-            $finding = $this->sanitizeString($findingsData[$key] ?? '');
+        foreach ($findingsData as $key => $finding) {
+            $sanitizedFinding = $this->sanitizeString($finding ?? '');
             $ruleSet = $this->rules[$key] ?? [];
 
-            $alert = $this->runAnalysis($finding, $ruleSet);
+            $alert = $this->runAnalysis($sanitizedFinding, $ruleSet);
 
             if ($alert) {
                 $alerts[$key] = $alert;
@@ -79,12 +79,15 @@ class AdlCdssService
         return $alerts;
     }
 
-
-    // Helper method to run analysis for a specific finding.
-
+    /**
+     * Helper method to run analysis for a specific finding.
+     *
+     * @param string $finding The patient finding to analyze.
+     * @param array $rules The ruleset for the specific finding.
+     * @return array|null An alert array with 'alert' and 'severity' keys, or null if no rule matches.
+     */
     private function runAnalysis($finding, $rules)
     {
-        // The finding is already sanitized. If it's empty, we don't need to check rules.
         if (empty($finding)) {
             return null; // Return null if the input is empty
         }
@@ -103,11 +106,13 @@ class AdlCdssService
         ];
     }
 
-
-
-
-    // Helper method for case-insensitive keyword matching.
-
+    /**
+     * Helper method for case-insensitive keyword matching.
+     *
+     * @param string $text The text to check for keywords.
+     * @param array $keywords An array of keywords to search for.
+     * @return bool True if a keyword is found, false otherwise.
+     */
     private function matchesKeywords($text, $keywords)
     {
         $text = strtolower($text);
@@ -119,10 +124,12 @@ class AdlCdssService
         return false;
     }
 
-
-
-    // Sanitizes a string by removing leading/trailing whitespace and newlines.
-
+    /**
+     * Sanitizes a string by removing leading/trailing whitespace and newlines.
+     *
+     * @param string $text The text to sanitize.
+     * @return string The sanitized string.
+     */
     private function sanitizeString($text)
     {
         return trim($text);

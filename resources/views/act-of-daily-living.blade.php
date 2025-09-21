@@ -25,9 +25,12 @@
     <div class="container">
         <div class="header">
             <label for="patient_id">PATIENT NAME :</label>
-            {{-- Form to load patient data on dropdown change --}}
+
+            {{-- PATIENT DROPDOWN AND DATE FORM (TO GET DATA FROM PATIENT & DATE--}}
             <form action="{{ route('adl.show') }}" method="GET" id="patient-select-form">
-                <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                <label for="patient_id">PATIENT NAME :</label>
+                <select id="patient_info" name="patient_id"
+                    onchange="document.getElementById('patient-select-form').submit()">
                     <option value="" @if(request()->query('patient_id') == '') selected @endif>-- Select Patient --</option>
                     @foreach ($patients as $patient)
                         <option value="{{ $patient->patient_id }}" @if(request()->query('patient_id') == $patient->patient_id)
@@ -36,31 +39,39 @@
                         </option>
                     @endforeach
                 </select>
+
+                <!-- DATE -->
+                <label for="date">DATE :</label>
+                <input type="date" id="date_selector" name="date" value="{{ request()->query('date') }}"
+                    onchange="document.getElementById('patient-select-form').submit()">
             </form>
         </div>
     </div>
 
-    {{-- This form handles both saving/updating the data and running the CDSS analysis. --}}
+
+
+
+
+    {{-- MAIN FORM--}}
     <form id="adl-form" method="POST" action="{{ route('adl.store') }}">
         @csrf
-
-        {{-- Hidden input for the patient ID to be passed with the form --}}
+        {{-- Hidden P_ID AND DATE --}}
         <input type="hidden" name="patient_id" value="{{ request()->query('patient_id') }}">
+        <input type="hidden" name="date" value="{{ request()->query('date') }}">
 
+        <!-- DAY -->
         <div class="section-bar">
             <label for="day">DAY NO :</label>
             <select id="day" name="day_no">
                 <option value="">-- Select number --</option>
                 @for ($i = 1; $i <= 30; $i++)
-                    <option value="{{ $i }}" @if(old('day_no') == $i) selected @endif>
+                    <option value="{{ $i }}" @if(old('day_no', $adlData->day_no ?? '') == $i) selected @endif>
                         {{ $i }}
                     </option>
                 @endfor
             </select>
-
-            <label for="date">DATE :</label>
-            <input type="date" id="date" name="date" value="{{ old('date', $adlData->date ?? '') }}">
         </div>
+
 
         <table>
             <tr>

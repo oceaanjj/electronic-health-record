@@ -13,16 +13,17 @@ class PhysicalExamController extends Controller
     public function show()
     {
         $patients = Patient::all();
-        
+
         // pang debug lang to, --IGNORE NIYO LANG-- 
         // if ($patients->isEmpty()) {
         //     dd('No patients found in database');
         // } else {
         //     dd('Patients found:', $patients->toArray());
         // }
-        
+
         return view('physical-exam', compact('patients'));
     }
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -39,13 +40,26 @@ class PhysicalExamController extends Controller
 
         $physicalExam = PhysicalExam::create($data);
 
+        // Run the CDSS analysis after storing the data
+        $cdssService = new PhysicalExamCdssService();
+        $alerts = $cdssService->analyzeFindings($data);
+
+        $formattedAlerts = [];
+        foreach ($alerts as $key => $value) {
+            if (is_array($value)) {
+                $newKey = str_replace(['_alerts'], '', $key);
+                $formattedAlerts[$newKey] = $value;
+            }
+        }
+
         return redirect()->route('physical-exam.index')
-            ->with('success', 'Physical exam registered successfully')
-            ->withInput();
+            ->withInput()
+            ->with('cdss', $formattedAlerts)
+            ->with('success', 'Physical exam data saved successfully!');
     }
 
 
-    public function generatedCdssAlerts(Request $request)
+    public function runCdssAnalysis(Request $request)
     {
         $data = $request->validate([
             'patient_id' => 'nullable|exists:patients,patient_id',
@@ -58,15 +72,21 @@ class PhysicalExamController extends Controller
             'extremities' => 'nullable|string',
             'neurological' => 'nullable|string',
         ]);
-        //call service
+
+        // Call the CDSS service
         $cdssService = new PhysicalExamCdssService();
-      //call the function
         $alerts = $cdssService->analyzeFindings($data);
-          $patients = Patient::all();
-        $request->flash();
-        return view('physical-exam', [
-            'patients' => $patients,
-            'alerts' => $alerts,
-        ]);
+
+        // Reformat the alert array to match the view's expected keys
+        $formattedAlerts = [];
+        foreach ($alerts as $key => $value) {
+            $newKey = str_replace(['_alerts'], '', $key);
+            $formattedAlerts[$newKey] = $value;
+        }
+
+        return redirect()->route('physical-exam.index')
+            ->withInput()
+            ->with('cdss', $formattedAlerts)
+            ->with('success', 'CDSS analysis run successfully!');
     }
 }

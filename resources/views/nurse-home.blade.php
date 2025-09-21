@@ -147,7 +147,7 @@ use Illuminate\Support\Facades\Auth;
                 <h3>LAB VALUES</h3>
                 <p>Record laboratory test results and integrate findings into the patient’s medical record.</p>
                 <div class="proceed">
-                    <a href="{{ route('lab-values') }}">PROCEED <span class="arrow">▶</span></a>
+                    <a href="{{ route('lab-values.index') }}">PROCEED <span class="arrow">▶</span></a>
                 </div>
             </div>
 

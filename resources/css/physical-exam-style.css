@@ -104,12 +104,6 @@ input {
     margin-top: 12px;
 }
 
-.alert-box {
-    width: 35rem;
-    height: 60px;
-    overflow: auto;
-}
-
 .alert-red {
     color: red;
 }

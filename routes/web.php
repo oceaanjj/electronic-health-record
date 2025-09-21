@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\LabValuesController;
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhysicalExamController;
@@ -109,6 +110,12 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
         Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
     });
+
+    // Lab Values
+    Route::get('/lab-values', [LabValuesController::class, 'index'])->name('lab-values.index');
+    Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
+    Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.run-cdss-analysis');
+    Route::post('/lab-values/run', [LabValuesController::class, 'filter'])->name('lab-values.filter');
 
 
 });

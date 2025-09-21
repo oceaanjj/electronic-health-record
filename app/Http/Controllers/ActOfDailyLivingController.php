@@ -55,7 +55,8 @@ class ActOfDailyLivingController extends Controller
 
         $filteredData = array_filter($validatedData);
 
-        $cdssService = new CdssService('adl_rules'); //<-- Rules folder name (storage>app>private> *here* )
+        $cdssService = new CdssService('adl_rules'); //<-- Rules folder name storage>app>private> *here* 
+
         $alerts = $cdssService->analyzeFindings($filteredData);
 
         return redirect()->route('adl.show', [

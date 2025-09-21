@@ -266,8 +266,8 @@
         </table>
 
         <div class="btn">
-            <button type="submit">Submit</button>
-            <button type="submit" class="btn" formaction="{{ route('physical-exam.runCdssAnalysis') }}">CDSS</button>
+            <button type="submit" class="btn">Submit</button>
+            <button type="button" class="btn">CDSS</button>
         </div>
 
     </form>

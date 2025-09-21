@@ -26,8 +26,9 @@
         <div class="header">
             <label for="patient_id">PATIENT NAME :</label>
 
-            {{-- PATIENT DROPDOWN AND DATE FORM (TO GET DATA FROM PATIENT & DATE--}}
+            {{-- PATIENT DROPDOWN AND DATE FORM (TO GET DATA FROM PATIENT & DATE --}}
             <form action="{{ route('adl.show') }}" method="GET" id="patient-select-form">
+
                 <label for="patient_id">PATIENT NAME :</label>
                 <select id="patient_info" name="patient_id"
                     onchange="document.getElementById('patient-select-form').submit()">
@@ -49,13 +50,11 @@
     </div>
 
 
-
-
-
-    {{-- MAIN FORM--}}
+    {{-- MAIN FORM (sumbit) --}}
     <form id="adl-form" method="POST" action="{{ route('adl.store') }}">
         @csrf
-        {{-- Hidden P_ID AND DATE --}}
+
+        {{-- Hidden PATIENT_ID AND DATE --}}
         <input type="hidden" name="patient_id" value="{{ request()->query('patient_id') }}">
         <input type="hidden" name="date" value="{{ request()->query('date') }}">
 
@@ -256,7 +255,7 @@
         </table>
 
         <div class="buttons">
-            <!-- <button type="submit" class="btn" formaction="{{ route('adl.runCdssAnalysis') }}">CDSS</button> -->
+            <button class="btn" type="button">CDSS</button>
             <button class="btn" type="submit">Submit</button>
         </div>
     </form>

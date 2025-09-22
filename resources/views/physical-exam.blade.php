@@ -4,24 +4,52 @@
 
 @section('content')
 
-    <form action="{{ route('physical-exam.store') }}" method="POST">
-        @csrf
+    <!-- ALERT MESSAGE -->
 
-        <div class="container">
-            <div class="header">
-                <label for="patient_id">PATIENT NAME :</label>
+    @if ($errors->any())
+        <div style="color:red; margin-bottom:5px padding:5px;">
+            <h5 style="margin-bottom: 10px;">Errors:</h5>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-                {{-- Patient Name DROPDOWN --}}
-                <select id="patient_info" name="patient_id">
-                    <option value="" {{ old('patient_info') == '' ? 'selected' : '' }}>-- Select Patient --</option>
+    @if (session('success'))
+        <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- Updated PATIENT DROP-DOWN FORM --}}
+
+    <div class="container">
+        <div class="header">
+            <label for="patient_info">PATIENT NAME :</label>
+            <form action="{{ route('physical-exam.index') }}" method="GET" id="patient-select-form">
+                <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                    <option value="" @if(request()->query('patient_id') == '') selected @endif>-- Select Patient --
+                    </option>
                     @foreach ($patients as $patient)
-                        <option value="{{ $patient->patient_id }}" {{ old('patient_info') == $patient->patient_id ? 'selected' : '' }}>
+                        <option value="{{ $patient->patient_id }}" @if(request()->query('patient_id') == $patient->patient_id)
+                        selected @endif>
                             {{ $patient->name }}
                         </option>
                     @endforeach
                 </select>
-            </div>
+            </form>
         </div>
+    </div>
+
+    {{-- This form handles both saving/updating the data and running the CDSS analysis. --}}
+
+    <form action="{{ route('physical-exam.store') }}" method="POST">
+        @csrf
+
+        {{-- Hidden input for the patient ID to be passed with the form --}}
+        <input type="hidden" name="patient_id" value="{{ request()->query('patient_id') }}">
 
         <table>
             <tr>
@@ -33,25 +61,48 @@
                 <th class="system">GENERAL APPEARANCE</th>
                 <td>
                     <textarea name="general_appearance"
-                        placeholder="Enter General Appearance findings">{{ old('general_appearance') }}</textarea>
+                        placeholder="Enter GENERAL APPEARANCE findings">{{ old('general_appearance', $physicalExam->general_appearance ?? '') }}</textarea>
                 </td>
-                <td>
-                    @if (session('cdss.general_appearance'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.general_appearance') }}</span>
+                <td class="alert-box">
+                    @error('general_appearance')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
                         </div>
+                    @enderror
+
+                    @if (session('cdss.general_appearance'))
+                        @php
+                            $alertData = session('cdss.general_appearance');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
                     @endif
                 </td>
             </tr>
             <tr>
                 <th class="system">SKIN</th>
                 <td>
-                    <textarea name="skin_condition" placeholder="Enter Skin findings">{{ old('skin_condition') }}</textarea>
+                    <textarea name="skin_condition"
+                        placeholder="Enter SKIN findings">{{ old('skin_condition', $physicalExam->skin_condition ?? '') }}</textarea>
                 </td>
-                <td>
+                <td class="alert-box">
+                    @error('skin_condition')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
+                        </div>
+                    @enderror
+
                     @if (session('cdss.skin'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.skin') }}</span>
+                        @php
+                            $alertData = session('cdss.skin');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+
                         </div>
                     @endif
                 </td>
@@ -59,12 +110,25 @@
             <tr>
                 <th class="system">EYES</th>
                 <td>
-                    <textarea name="eye_condition" placeholder="Enter Eyes findings">{{ old('eye_condition') }}</textarea>
+                    <textarea name="eye_condition"
+                        placeholder="Enter EYES findings">{{ old('eye_condition', $physicalExam->eye_condition ?? '') }}</textarea>
                 </td>
-                <td>
+                <td class="alert-box">
+                    @error('eye_condition')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
+                        </div>
+                    @enderror
+
                     @if (session('cdss.eyes'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.eyes') }}</span>
+                        @php
+                            $alertData = session('cdss.eyes');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+
                         </div>
                     @endif
                 </td>
@@ -73,12 +137,24 @@
                 <th class="system">ORAL CAVITY</th>
                 <td>
                     <textarea name="oral_condition"
-                        placeholder="Enter Oral Cavity findings">{{ old('oral_condition') }}</textarea>
+                        placeholder="Enter ORAL CAVITY findings">{{ old('oral_condition', $physicalExam->oral_condition ?? '') }}</textarea>
                 </td>
-                <td>
+                <td class="alert-box">
+                    @error('oral_condition')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
+                        </div>
+                    @enderror
+
                     @if (session('cdss.oral'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.oral') }}</span>
+                        @php
+                            $alertData = session('cdss.oral');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+
                         </div>
                     @endif
                 </td>
@@ -87,12 +163,24 @@
                 <th class="system">CARDIOVASCULAR</th>
                 <td>
                     <textarea name="cardiovascular"
-                        placeholder="Enter Cardiovascular findings">{{ old('cardiovascular') }}</textarea>
+                        placeholder="Enter CARDIOVASCULAR findings">{{ old('cardiovascular', $physicalExam->cardiovascular ?? '') }}</textarea>
                 </td>
-                <td>
+                <td class="alert-box">
+                    @error('cardiovascular')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
+                        </div>
+                    @enderror
+
                     @if (session('cdss.cardiovascular'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.cardiovascular') }}</span>
+                        @php
+                            $alertData = session('cdss.cardiovascular');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+
                         </div>
                     @endif
                 </td>
@@ -101,12 +189,24 @@
                 <th class="system">ABDOMEN</th>
                 <td>
                     <textarea name="abdomen_condition"
-                        placeholder="Enter Abdomen findings">{{ old('abdomen_condition') }}</textarea>
+                        placeholder="Enter ABDOMEN findings">{{ old('abdomen_condition', $physicalExam->abdomen_condition ?? '') }}</textarea>
                 </td>
-                <td>
+                <td class="alert-box">
+                    @error('abdomen_condition')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
+                        </div>
+                    @enderror
+
                     @if (session('cdss.abdomen'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.abdomen') }}</span>
+                        @php
+                            $alertData = session('cdss.abdomen');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+
                         </div>
                     @endif
                 </td>
@@ -115,12 +215,24 @@
                 <th class="system">EXTREMITIES</th>
                 <td>
                     <textarea name="extremities"
-                        placeholder="Enter Extremities findings">{{ old('extremities') }}</textarea>
+                        placeholder="Enter EXTREMITIES findings">{{ old('extremities', $physicalExam->extremities ?? '') }}</textarea>
                 </td>
-                <td>
+                <td class="alert-box">
+                    @error('extremities')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
+                        </div>
+                    @enderror
+
                     @if (session('cdss.extremities'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.extremities') }}</span>
+                        @php
+                            $alertData = session('cdss.extremities');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+
                         </div>
                     @endif
                 </td>
@@ -129,12 +241,24 @@
                 <th class="system">NEUROLOGICAL</th>
                 <td>
                     <textarea name="neurological"
-                        placeholder="Enter Neurological findings">{{ old('neurological') }}</textarea>
+                        placeholder="Enter NEUROLOGICAL findings">{{ old('neurological', $physicalExam->neurological ?? '') }}</textarea>
                 </td>
-                <td>
+                <td class="alert-box">
+                    @error('neurological')
+                        <div class="alert-box alert-red">
+                            <span class="alert-message">{{ $message }}</span>
+                        </div>
+                    @enderror
+
                     @if (session('cdss.neurological'))
-                        <div class="alert-box">
-                            <span class="alert-message">{{ session('cdss.neurological') }}</span>
+                        @php
+                            $alertData = session('cdss.neurological');
+                            $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
+                        @endphp
+                        <div class="alert-box {{ $color }}">
+                            <span class="alert-message">{{ $alertData['alert'] }}</span>
+                            <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+
                         </div>
                     @endif
                 </td>
@@ -143,32 +267,12 @@
 
         <div class="btn">
             <button type="submit">Submit</button>
+            <button type="submit" class="btn" formaction="{{ route('physical-exam.runCdssAnalysis') }}">CDSS</button>
         </div>
 
-        @if ($errors->any())
-            <div style="color:red; margin-bottom:5px padding:5px;">
-                <h5 style="margin-bottom: 10px;">Errors:</h5>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
     </form>
 
-    <div class="cdss-btn">
-        <a href="#" class="btn">CDSS</a>
-    </div>
-
-    @if (session('success'))
-        <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
-            {{ session('success') }}
-        </div>
-    @endif
-
 @endsection
-
 
 @push('styles')
     @vite(['resources/css/physical-exam-style.css'])

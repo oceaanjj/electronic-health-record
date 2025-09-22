@@ -5,8 +5,8 @@
             ☰
         </button>
 
-       
-        <a href="{{ route('home') }}" class="flex items-center space-x-2">
+
+        <a href="{{ route('nurse-home') }}" class="flex items-center space-x-2">
             <img src="{{ asset('img/ehr-logo.png') }}" alt="Hospital Logo" class="h-10">
             <span class="text-lg font-bold text-white">ELECTRONIC HEALTH RECORD</span>
         </a>

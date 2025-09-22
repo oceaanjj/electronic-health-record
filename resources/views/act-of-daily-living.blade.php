@@ -1,14 +1,5 @@
 @extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Patient Activities of daily living</title>
-    <meta charset="UTF-8">
-    <title>Patient Activities of daily living</title>
-    <meta charset="UTF-8">
-    <title>Patient Activities of daily living</title>
-    @vite(['./resources/css/act-of-daily-living.css'])
-</head>
 @section('title', 'Patient Vital Signs')
 
 @section('content')

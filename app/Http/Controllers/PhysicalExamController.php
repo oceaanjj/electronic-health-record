@@ -13,14 +13,14 @@ class PhysicalExamController extends Controller
     public function show()
     {
         $patients = Patient::all();
-        
+
         // pang debug lang to, --IGNORE NIYO LANG-- 
         // if ($patients->isEmpty()) {
         //     dd('No patients found in database');
         // } else {
         //     dd('Patients found:', $patients->toArray());
         // }
-        
+
         return view('physical-exam', compact('patients'));
     }
     public function store(Request $request)
@@ -37,11 +37,41 @@ class PhysicalExamController extends Controller
             'neurological' => 'nullable|string',
         ]);
 
-        $physicalExam = PhysicalExam::create($data);
+        // call cdss
+        $cdssService = new PhysicalExamCdssService();
+        $alerts = $cdssService->analyzeFindings($data);
+
+        PhysicalExam::create([
+            'patient_id' => $data['patient_id'],
+            'general_appearance' => $data['general_appearance'],
+            'skin_condition' => $data['skin_condition'],
+            'eye_condition' => $data['eye_condition'],
+            'oral_condition' => $data['oral_condition'],
+            'cardiovascular' => $data['cardiovascular'],
+            'abdomen_condition' => $data['abdomen_condition'],
+            'extremities' => $data['extremities'],
+            'neurological' => $data['neurological'],
+            // Store alerts
+            'general_appearance_alert' => $alerts['general_appearance_alerts'] ?? null,
+            'skin_alert' => $alerts['skin_alerts'] ?? null,
+            'eye_alert' => $alerts['eye_alerts'] ?? null,
+            'oral_alert' => $alerts['oral_alerts'] ?? null,
+            'cardiovascular_alert' => $alerts['cardiovascular_alerts'] ?? null,
+            'abdomen_alert' => $alerts['abdomen_alerts'] ?? null,
+            'extremities_alert' => $alerts['extremities_alerts'] ?? null,
+            'neurological_alert' => $alerts['neurological_alerts'] ?? null,
+        ]);
 
         return redirect()->route('physical-exam.index')
             ->with('success', 'Physical exam registered successfully')
             ->withInput();
+    }
+
+    public function showPatientExams($id)
+    {
+        $patient = Patient::findOrFail($id);
+        $physicalExams = $patient->physicalExams;
+        return view('patient-physical-exams', compact('patient', 'physicalExams'));
     }
 
 
@@ -58,11 +88,9 @@ class PhysicalExamController extends Controller
             'extremities' => 'nullable|string',
             'neurological' => 'nullable|string',
         ]);
-        //call service
         $cdssService = new PhysicalExamCdssService();
-      //call the function
         $alerts = $cdssService->analyzeFindings($data);
-          $patients = Patient::all();
+        $patients = Patient::all();
         $request->flash();
         return view('physical-exam', [
             'patients' => $patients,

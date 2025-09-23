@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MedicalController;
@@ -33,11 +35,22 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Protected Routes for Admin
 //-------------------------------------------------------------
 Route::middleware(['auth', 'can:is-admin'])->group(function () {
+    // Admin Dashboard
     Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin-home');
+
+    // Register users (doctor/nurse only)
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register.attempt');
-});
 
+    // View Audit Logs
+    Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit.index');
+
+    // Change user roles
+Route::patch('/users/{id}/role', [UserController::class, 'updateRole'])->name('users.role.update');
+
+
+    // No delete routes!
+});
 
 //-------------------------------------------------------------
 // Protected Routes for Doctor

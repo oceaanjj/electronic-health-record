@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,6 +43,7 @@ class HomeController extends Controller
 
     public function adminHome()
     {
-        return view('admin-home');
+                $users = User::all();
+        return view('admin.home', compact('users'));
     }
 }

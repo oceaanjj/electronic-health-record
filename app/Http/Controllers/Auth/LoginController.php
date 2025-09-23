@@ -10,30 +10,63 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
+
+    protected function redirectToRoleBasedDashboard()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'Nurse':
+                    return redirect()->route('nurse-home');
+                case 'Doctor':
+                    return redirect()->route('doctor-home');
+                case 'Admin':
+                    return redirect()->route('admin-home');
+                default:
+                    return redirect()->route('home');
+            }
+        }
+        return null; // Return null if not authenticated
+    }
+
     public function showRoleSelectionForm()
     {
+        $redirect = $this->redirectToRoleBasedDashboard();
+        if ($redirect) {
+            return $redirect;
+        }
         return view('home');
     }
 
     public function showNurseLoginForm()
     {
+        $redirect = $this->redirectToRoleBasedDashboard();
+        if ($redirect) {
+            return $redirect;
+        }
         return view('login.nurse-login');
     }
 
     public function showDoctorLoginForm()
     {
+        $redirect = $this->redirectToRoleBasedDashboard();
+        if ($redirect) {
+            return $redirect;
+        }
         return view('login.doctor-login');
     }
 
     public function showAdminLoginForm()
     {
+        $redirect = $this->redirectToRoleBasedDashboard();
+        if ($redirect) {
+            return $redirect;
+        }
         return view('login.admin-login');
     }
 
 
-    // app/Http/Controllers/Auth/LoginController.php
-
-    // ... other methods
 
     public function authenticate(Request $request): RedirectResponse
     {
@@ -51,14 +84,13 @@ class LoginController extends Controller
                 $request->session()->regenerate();
 
                 switch ($user->role) {
-                    case 'Nurse': // Correct case
+                    case 'Nurse':
                         return redirect()->route('nurse-home')->with('success', 'Nurse ' . $user->username . ' login successful!');
-                    case 'Doctor': // Correct case
+                    case 'Doctor':
                         return redirect()->route('doctor-home')->with('success', 'Doctor ' . $user->username . ' login successful!');
-                    case 'Admin': // Correct case
+                    case 'Admin':
                         return redirect()->route('admin-home')->with('success', 'Admin ' . $user->username . ' login successful!');
                     default:
-                        // Fallback for any other role
                         return redirect()->route('home')->with('success', $user->username . ' FAILED!');
                 }
             }

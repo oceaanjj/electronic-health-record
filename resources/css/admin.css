@@ -1,0 +1,111 @@
+/* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1A6A24;
+    margin: 0;
+    padding: 20px;
+}
+
+.header {
+  background: #1a5e23;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+}
+
+        .header .logo {
+          display: flex;
+          align-items: center;
+          font-weight: bold;
+          font-size: 18px;
+        }
+
+        .header .logo img {
+          height: 40px;
+          margin-right: 10px;
+        }
+
+        .header .login {
+          color: #fff;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+/* Headings */
+
+
+h1 {
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 30px;
+    border: solid #EDB62C;
+    width: 300px;
+}
+
+/* Success message */
+div[style*="color:green;"] {
+    background: #d4edda;
+    color: #1A6A24 !important;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Navigation links */
+.btn{
+    background-color: #1A6A24;
+    border: solid #EDB62C;
+    font-weight: bold ;
+    padding: 10px 20px;
+  
+}
+.btn:hover {
+    background-color: #EDB62C;
+    border-color: #EDB62C;
+    color: #1A6A24;
+    transition: 0.3s;
+}
+
+/* Table styling */
+table {
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 100%;
+    margin-bottom: 40px;
+
+    
+}
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+table th {
+    background-color: #1A6A24;
+    color: #fff;
+}
+
+/* Form styling */
+form {
+    margin: 0;
+}
+select {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+button {
+   background-color: #1A6A24;
+    border: solid #EDB62C;
+    font-weight: bold ;
+    padding: 10px 20px;
+}
+button:hover {
+    background-color: #1e8449;
+}

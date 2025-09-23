@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+
     public function handleHomeRedirect()
     {
         if (Auth::check()) {
@@ -20,28 +22,30 @@ class HomeController extends Controller
                 case 'Admin':
                     return redirect()->route('admin-home');
                 default:
-                    // If the user has an unrecognized role, log them out and redirect to home
                     Auth::logout();
                     return redirect()->route('home');
             }
         }
 
-        // If not logged in, show the default home view
         return view('home');
     }
+
 
     public function nurseHome()
     {
         return view('nurse-home');
     }
 
+
     public function doctorHome()
     {
         return view('doctor-home');
     }
 
+
     public function adminHome()
     {
-        return view('admin-home');
+        $users = User::all();
+        return view('admin.home', compact('users'));
     }
 }

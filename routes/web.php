@@ -10,6 +10,9 @@ use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhysicalExamController;
 use App\Http\Controllers\ActOfDailyLivingController;
+use App\Http\Controllers\IvsAndLineController;
+use App\Http\Controllers\MedReconciliationController;
+use App\Http\Controllers\DischargePlanningController;
 
 
 
@@ -81,10 +84,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     Route::resource('patients', PatientController::class);
 
-    //
-
-
-
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
         Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
@@ -118,4 +117,22 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
 
 
+
+    // More routes:
+    Route::get('/ivs-and-lines', [IvsAndLineController::class, 'show'])->name('ivs-and-lines');
+    Route::post('/ivs-and-lines', [IvsAndLineController::class, 'store'])->name('ivs-and-lines.store');
+
+    Route::get('/medication-reconciliation', [MedReconciliationController::class, 'show'])->name('medication-reconciliation');
+    Route::post('/medication-reconciliation', [MedReconciliationController::class, 'store'])->name('medreconciliation.store');
+    Route::post('/current_medication', [MedReconciliationController::class, 'storeMedicalReconciliation'])->name('current-medication.store');
+    Route::post('/home_medication', [MedReconciliationController::class, 'storeHomeMedication'])->name('home-medication.store');
+    Route::post('/changes_in_medication', [MedReconciliationController::class, 'storeChangesInMedication'])->name('changes-in-medication.store');
+
+    Route::get('/discharge-planning', [DischargePlanningController::class, 'show'])->name('discharge-planning');
+    Route::post('/discharge-planning', [DischargePlanningController::class, 'store'])->name('discharge-planning.store');
+
+
+    // Add more routes for role: nurse here
+
 });
+

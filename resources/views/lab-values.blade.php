@@ -1,11 +1,4 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Patient Lab Values</title>
-    @vite(['./resources/css/lab-values.css'])
-    <meta charset="UTF-8">
-    <title>Patient Lab Values</title>
-    @vite(['./resources/css/lab-values.css'])
-</head>
+
 @extends('layouts.app')
 
 @section('title', 'Patient Vital Signs')

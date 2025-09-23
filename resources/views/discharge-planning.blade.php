@@ -4,14 +4,37 @@
 
 @section('content')
 
-    <div class="container">
+    @if(session('error'))
+      <div
+        style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('error') }}
+      </div>
+    @endif
+
+    @if (session('success'))
+    <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    <form action="{{ route('discharge-planning.store') }}" method="POST">
+      @csrf
+
+      <div class="container">
         <div class="header">
-            <label for="patient">PATIENT NAME :</label>
-            <select id="patient" name="patient">
-                <option value="">-- Select Patient --</option>
-                <option value="Althea Pascua">Jovilyn Esquerra</option>
-            </select>
+          <label for="patient_id">PATIENT NAME :</label>
+
+          {{-- Patient Name DROPDOWN --}}
+          <select id="patient_info" name="patient_id">
+            <option value="" {{ old('patient_id') == '' ? 'selected' : '' }}>-- Select Patient --</option>
+            @foreach ($patients as $patient)
+              <option value="{{ $patient->patient_id }}" {{ old('patient_id') == $patient->patient_id ? 'selected' : '' }}>
+                {{ $patient->name }}
+              </option>
+            @endforeach
+          </select>
         </div>
+      </div>
 
     <div class="section">
       <table>
@@ -36,7 +59,7 @@
         </tr>
         <tr>
           <td class="criteria">Manage Fever Effectively</td>
-          <td><textarea name="criteria_manageFever"></textarea></td>
+          <td><textarea name="criteria_manageFever2"></textarea></td>
         </tr>
       </table>
     </div>
@@ -77,6 +100,8 @@
       <div class="buttons">
         <button class="btn"type="submit">Submit</button>
     </div>
+
+    </form>
 @endsection
 
             @push('styles')

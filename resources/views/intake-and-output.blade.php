@@ -45,12 +45,6 @@
         </table>
     </div>
 
-    <tr>
-        <td><input type="text" name="oral intake" placeholder="Oral Intake"></td>
-        <td><input type="text" name="iv fluids" placeholder="IV Fluids"></td>
-        <td><input type="text" name="urine output" placeholder="Urine Output"></td>
-        <td><input type="text" name="alerts" placeholder="Alerts"></td>
-    </tr>
     <div class="buttons">
 
         <div class="button-col"></div>

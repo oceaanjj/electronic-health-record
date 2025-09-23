@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
+
 @section('title', 'Patient Activities of Daily Living')
+
 
 @section('content')
 

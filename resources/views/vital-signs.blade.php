@@ -55,18 +55,18 @@
 
 
             <!-- <div class="section-bar">
-                                            <label for="day">DAY NO :</label>
-                                            <select id="day" name="day_no">
-                                                <option value="">-- Select number --</option>
-                                                @for ($i = 1; $i <= 30; $i++)
-                                                    {{-- Use the first entry to determine the day_no if data exists --}}
-                                                    <option value="{{ $i }}" @if(old('day_no', optional($vitalsData->first())->day_no) == $i) selected @endif>
-                                                        {{ $i }}
-                                                    </option>
+                                                    <label for="day">DAY NO :</label>
+                                                    <select id="day" name="day_no">
+                                                        <option value="">-- Select number --</option>
+                                                        @for ($i = 1; $i <= 30; $i++)
+                                                            {{-- Use the first entry to determine the day_no if data exists --}}
+                                                            <option value="{{ $i }}" @if(old('day_no', optional($vitalsData->first())->day_no) == $i) selected @endif>
+                                                                {{ $i }}
+                                                            </option>
 
-                                                @endfor
-                                            </select>
-                                        </div> -->
+                                                        @endfor
+                                                    </select>
+                                                </div> -->
 
             <table>
                 <tr>
@@ -132,8 +132,8 @@
     </div>
 
     <div class="buttons">
-        <button class="btn" type="button" onclick="document.getElementById('vitals-form').submit();">Submit</button>
         <button class="btn">CDSS</button>
+        <button class="btn" type="button" onclick="document.getElementById('vitals-form').submit();">Submit</button>
     </div>
 @endsection
 

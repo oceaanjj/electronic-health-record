@@ -1,12 +1,12 @@
-<head>
+<!-- <head>
     <meta charset="UTF-8">
     <title>Physical Exam</title>
     @vite(['./resources/css/lab-values.css'])
-</head>
+</head> -->
 
 @extends('layouts.app')
 
-@section('title', 'Patient Vital Signs')
+@section('title', 'Physical Exam')
 
 @section('content')
 

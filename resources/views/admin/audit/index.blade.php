@@ -31,6 +31,7 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+
                     <th>Audit ID</th>
                     <th>User</th>
                     <th>User Role</th>
@@ -38,6 +39,7 @@
                     <th>Action</th>
                     <th>Details</th>
                     <th>Created At</th>
+
                 </tr>
             </thead>
             <tbody>

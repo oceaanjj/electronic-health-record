@@ -11,7 +11,7 @@ use App\Http\Controllers\ActOfDailyLivingController;
 use App\Http\Controllers\IvsAndLineController;
 use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
-
+use App\Http\Controllers\VitalSignsController;
 
 
 // Home Page and Authentication Routes
@@ -130,3 +130,6 @@ Route::post('/changes_in_medication', [MedReconciliationController::class, 'stor
 
 Route::get('/discharge-planning', [DischargePlanningController::class, 'show'])->name('discharge-planning');
 Route::post('/discharge-planning', [DischargePlanningController::class, 'store'])->name('discharge-planning.store');
+
+Route::get('/vital-signs', [VitalSignsController::class, 'show'])->name('vital-signs.show');
+Route::post('/vital-signs', [VitalSignsController::class, 'store'])->name('vital-signs');

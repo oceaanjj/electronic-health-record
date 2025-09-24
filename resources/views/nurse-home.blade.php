@@ -74,90 +74,90 @@ use Illuminate\Support\Facades\Auth;
                 <img src="img/register.png" alt="Register Icon" class="box-icon">
                 <h3>REGISTER</h3>
                 <p>This is where new patients are registered into the system.</p>
-                <div class="proceed">
-                    <a href="{{ route('patients.create') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('patients.create') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/search-patient.png" alt="Search Icon" class="box-icon">
                 <h3>SEARCH PATIENT</h3>
                 <p>For viewing and finding existing patients and records to continue documentation.</p>
-                <div class="proceed">
-                    <a href="{{ route('patients.search') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('patients.search') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/demographic-profile.png" alt="Demographic Icon" class="box-icon">
                 <h3>DEMOGRAPHIC PROFILE</h3>
                 <p>Store and manage patient information.</p>
-                <div class="proceed">
-                    <a href="{{ route('patients.index') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('patients.index') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/medical-history.png" alt="History Icon" class="box-icon">
                 <h3>MEDICAL HISTORY</h3>
                 <p>Document past illnesses, surgeries, allergies, and family medical background.</p>
-                <div class="proceed">
-                    <a href="{{ route('medical-history') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('medical-history') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/physical-exam.png" alt="Exam Icon" class="box-icon">
                 <h3>PHYSICAL EXAM</h3>
                 <p>Record findings from clinical examinations and physical assessments.</p>
-                <div class="proceed">
-                    <a href="{{  route('physical-exam.index') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('physical-exam.index') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/vital-signs.png" alt="Vitals Icon" class="box-icon">
                 <h3>VITAL SIGNS</h3>
                 <p>Track and update measurements such as temperature, blood pressure, pulse, and respiration.</p>
-                <div class="proceed">
-                    <a href="{{ route('vital-signs') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('vital-signs.show') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/intake-and-output.png" alt="Intake Icon" class="box-icon">
                 <h3>INTAKE AND OUTPUT</h3>
                 <p>Monitor and log a patient’s fluid intake and output for accurate care management.</p>
-                <div class="proceed">
-                    <a href="{{ route('intake-and-output') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('intake-and-output') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/activities-of-daily-living.png" alt="ADL Icon" class="box-icon">
                 <h3>ACTIVITIES OF DAILY LIVING</h3>
                 <p>Assess a patient’s ability to perform daily tasks such as eating, bathing, and mobility.</p>
-                <div class="proceed">
-                    <a href="{{ route('adl.show') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('adl.show') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/lab-values.png" alt="Lab Icon" class="box-icon">
                 <h3>LAB VALUES</h3>
                 <p>Record laboratory test results and integrate findings into the patient’s medical record.</p>
-                <div class="proceed">
-                    <a href="{{ route('lab-values.index') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('lab-values.index') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/diagnostics.png" alt="Diagnostics Icon" class="box-icon">
                 <h3>DIAGNOSTICS</h3>
                 <p>Document diagnostic procedures and results such as imaging, scans, and other tests.</p>
-                <div class="proceed">
-                    <a href="#">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="#">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
 
@@ -165,49 +165,48 @@ use Illuminate\Support\Facades\Auth;
                 <img src="img/iv-and-lines.png" alt="IVs & Lines icon" class="box-icon">
                 <h3>IV's & LINES</h3>
                 <p>Manage intravenous lines, infusions, and related treatments.</p>
-                <div class="proceed">
-                    <a href="{{ route('ivs-and-lines') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('ivs-and-lines') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/med-admini.png" alt="Medical administration icon" class="box-icon">
                 <h3>MEDICAL ADMINISTRATION</h3>
                 <p>Track prescribed medicines and record their administration schedules.</p>
-                <div class="proceed">
-                    <a href="{{ route('medication-administration') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('medication-administration') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/med-recon.png" alt="Medical reconciliation" class="box-icon">
                 <h3>MEDICAL RECONCILIATION</h3>
                 <p>Compare medications to ensure accuracy and prevent duplication or errors.</p>
-                <div class="proceed">
-                    <a href="{{ route('medication-reconciliation') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('medication-reconciliation') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/discharge-planning.png" alt="Discharge Icon" class="box-icon">
                 <h3>DISCHARGE PLANNING</h3>
                 <p>Plan and document the patient’s care instructions upon discharge.</p>
-                <div class="proceed">
-                    <a href="{{ route('discharge-planning') }}">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="{{ route('discharge-planning') }}">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
             <div class="box">
                 <img src="img/about.png" alt="about icon" class="box-icon">
                 <h3>ABOUT</h3>
                 <p>Provides system information, purpose, and guidelines for users.</p>
-                <div class="proceed">
-                    <a href="#">PROCEED <span class="arrow">▶</span></a>
-                </div>
+                <a class="proceed" href="#">
+                    <div>PROCEED <span class="arrow">▶</span></div>
+                </a>
             </div>
 
 
-        </div>
     </section>
 
 </body>

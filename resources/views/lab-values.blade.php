@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Patient Vital Signs')
+@section('title', 'Patient Lab Values')
 
 @section('content')
-
 
     <div class="container">
         <div class="header">
             <label for="patient_info">PATIENT NAME :</label>
-            <form action="{{ route('lab-values.index') }}" method="GET" id="patient-select-form">
+            <form action="{{ route('lab-values.select') }}" method="POST" id="patient-select-form">
+                @csrf
                 <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                    <option value="" @if(request()->query('patient_id') == '') selected @endif>-- Select Patient --
-                    </option>
+                    <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
                     @foreach ($patients as $patient)
-                        <option value="{{ $patient->patient_id }}" @if(request()->query('patient_id') == $patient->patient_id)
+                        <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
                         selected @endif>
                             {{ $patient->name }}
                         </option>
@@ -22,11 +21,10 @@
             </form>
         </div>
 
-
         <form action="{{ route('lab-values.store') }}" method="POST">
             @csrf
 
-            <input type="hidden" name="patient_id" value="{{ request()->query('patient_id') }}">
+            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
             <table>
                 <tr>

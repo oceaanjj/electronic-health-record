@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>Patient Lab Values</title>
+    <title>Physical Exam</title>
     @vite(['./resources/css/lab-values.css'])
 </head>
 
@@ -10,18 +10,18 @@
 
 @section('content')
 
-
     {{-- PATIENT DROP-DOWN FORM --}}
 
     <div class="container">
         <div class="header">
             <label for="patient_info">PATIENT NAME :</label>
-            <form action="{{ route('physical-exam.index') }}" method="GET" id="patient-select-form">
+            <form action="{{ route('physical-exam.select') }}" method="POST" id="patient-select-form">
+                @csrf
                 <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                    <option value="" @if(request()->query('patient_id') == '') selected @endif>-- Select Patient --
+                    <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --
                     </option>
                     @foreach ($patients as $patient)
-                        <option value="{{ $patient->patient_id }}" @if(request()->query('patient_id') == $patient->patient_id)
+                        <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
                         selected @endif>
                             {{ $patient->name }}
                         </option>
@@ -34,7 +34,7 @@
             @csrf
 
             {{-- Hidden input for the patient ID to be passed with the form --}}
-            <input type="hidden" name="patient_id" value="{{ request()->query('patient_id') }}">
+            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
             <table>
                 <tr>
@@ -63,6 +63,7 @@
                             <div class="alert-box {{ $color }}">
                                 <span class="alert-message">{{ $alertData['alert'] }}</span>
                                 <!-- @if ($alertData['severity'] !== 'NONE') <span class="alert-severity"><b>({{ $alertData['severity'] }})</b></span> @endif -->
+                            </div>
                         @endif
                     </td>
                 </tr>
@@ -251,7 +252,7 @@
             </table>
     </div>
 
-    <div class="btn">
+    <div class="buttons">
         <button type="submit" class="btn">Submit</button>
         <button type="button" class="btn">CDSS</button>
     </div>

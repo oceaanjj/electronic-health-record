@@ -32,7 +32,7 @@ class AuditLog extends Model
         'user_role',
         'action',
         'details',
-        'ip_address',
+        // 'ip_address',
     ];
 
     /**

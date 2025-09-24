@@ -1,167 +1,155 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #fff;
-  margin: 0;
-  padding: 0;
+    font-family: Arial, sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 0;
 }
 
 .header {
-  background: #1a5e23;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 30px;
+    background: #1a5e23;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
 }
 
-        .header .logo {
-          display: flex;
-          align-items: center;
-          font-weight: bold;
-          font-size: 18px;
-        }
+.header .logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+}
 
-        .header .logo img {
-          height: 40px;
-          margin-right: 10px;
-        }
+.header .logo img {
+    height: 40px;
+    margin-right: 10px;
+}
 
-        .header .login {
-          color: #fff;
-          text-decoration: none;
-          font-weight: bold;
-        }
+.header .login {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
 
 .welcome {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
 }
 
-        .welcome-text {
-          max-width: 50%;
-        }
+.welcome-text {
+    max-width: 50%;
+}
 
-        .welcome-text h3 {
-          font-size: 14px;
-          font-weight: bold;
-          color: #333;
-        }
+.welcome-text h3 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
 
-        .welcome-text h1 {
-          font-size: 32px;
-          font-weight: bold;
-          margin: 10px 0;
-        }
+.welcome-text h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 10px 0;
+}
 
-        .highlight {
-          color: #d4a017;
-        }
+.highlight {
+    color: #d4a017;
+}
 
-        .welcome-text p {
-          font-size: 14px;
-          color: #444;
-          margin-bottom: 20px;
-        }
+.welcome-text p {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 20px;
+}
 
-        .welcome .login {
-          display: inline-block;
-          background: #1a5e23;
-          color: #fff;
-          padding: 10px 20px;
-          border-radius: 4px;
-          text-decoration: none;
-          font-weight: bold;
-        }
+.welcome .login {
+    display: inline-block;
+    background: #1a5e23;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-        .welcome-image img {
-          max-width: 400px;
-          border-radius: 8px;
-        }
+.welcome-image img {
+    max-width: 400px;
+    border-radius: 8px;
+}
 
 .ehr-container {
-  text-align: center;
-  padding: 40px 20px;
+    text-align: center;
+    padding: 40px 20px;
 }
 
-        .ehr-container h2 {
-          font-size: 24px;
-          font-weight: bold;
-          margin-bottom: 10px;
-        }
+.ehr-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-        .ehr-container p {
-          max-width: 700px;
-          margin: 0 auto 30px;
-          color: #333;
-          font-size: 14px;
-        }
+.ehr-container p {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    color: #333;
+    font-size: 14px;
+}
 
 .boxes {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 25px;
-  max-width: 1400px;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-          .box{
-            background: #fff;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 320px;
-          }
+.box {
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 320px;
+}
 
-                .box-icon {
-                  width: 60px;
-                  height: 60px;
-                  margin: 25px auto 15px;
-                }
+.box-icon {
+    width: 60px;
+    height: 60px;
+    margin: 25px auto 15px;
+}
 
-                .box h3 {
-                  font-size: 16px;
-                  font-weight: bold;
-                  margin: 10px 0 5px;
-                  color: #000;
-                  text-transform: uppercase;
-                }
+.box h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    color: #000;
+    text-transform: uppercase;
+}
 
-                .box p {
-                  font-size: 14px;
-                  color: #333;
-                  padding: 0 15px;
-                  flex-grow: 1;
-                }
+.box p {
+    font-size: 14px;
+    color: #333;
+    padding: 0 15px;
+    flex-grow: 1;
+}
 
 .proceed {
-  background: #f9c600;
-  padding: 12px;
-  text-align: left;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
 }
 
-          .proceed a {
-            text-decoration: none;
-            color: #000;
-            font-weight: bold;
-            font-size: 14px;
-          }
+.proceed {
+    background: #f9c600;
+    padding: 12px;
+    text-align: left;
+}
 
-          .proceed .arrow {
-            float: right;
-          }
-
-          .proceed a {
-            text-decoration: none;
-            color: #000;
-            font-weight: bold;
-            font-size: 14px;
-          }
-
-          .proceed .arrow {
-            float: right;
-          }
-
+.proceed .arrow {
+    float: right;
+}

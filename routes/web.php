@@ -15,7 +15,7 @@ use App\Http\Controllers\ActOfDailyLivingController;
 use App\Http\Controllers\IvsAndLineController;
 use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
-
+use App\Http\Controllers\VitalSignsController;
 
 
 // Home Page and Authentication Routes
@@ -103,6 +103,8 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
         Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
+        // New route to handle patient selection via POST
+        Route::post('/select', [PhysicalExamController::class, 'selectPatient'])->name('select');
         Route::post('/', [PhysicalExamController::class, 'store'])->name('store');
         Route::post('/cdss', [PhysicalExamController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
     });
@@ -118,37 +120,81 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/allergies', [MedicalController::class, 'storeAllergies'])->name('allergy.store');
     Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
     Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
+    Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
+
+
+    // //Activities of Daily Living (ADL)
+    // Route::prefix('adl')->name('adl.')->group(function () {
+    //     Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
+    //     Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
+    //     Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
+
+    //     Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
+
+    // });
+
+    // Lab Values Routes
+    Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
+    Route::post('/lab-values/select', [LabValuesController::class, 'selectPatient'])->name('lab-values.select');
+    Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
+    Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.cdss');
+
+    // IVS AND LINES:
+    Route::get('/ivs-and-lines', [IvsAndLineController::class, 'show'])->name('ivs-and-lines');
+    Route::post('/ivs-and-lines/select', [IvsAndLineController::class, 'selectPatient'])->name('ivs-and-lines.select');
+    Route::post('/ivs-and-lines', [IvsAndLineController::class, 'store'])->name('ivs-and-lines.store');
+
+
+    // MEDICAL RECONCILIATION:
+    Route::get('/medication-reconciliation', [MedReconciliationController::class, 'show'])->name('medication-reconciliation');
+    Route::post('/medication-reconciliation/select', [MedReconciliationController::class, 'selectPatient'])->name('medreconciliation.select');
+    Route::post('/medication-reconciliation', [MedReconciliationController::class, 'store'])->name('medreconciliation.store');
+
+
+    // DISCHARGE PLANNING::
+    Route::get('/discharge-planning', [DischargePlanningController::class, 'show'])->name('discharge-planning');
+    Route::post('/discharge-planning', [DischargePlanningController::class, 'store'])->name('discharge-planning.store');
+    Route::post('/discharge-planning/select', [DischargePlanningController::class, 'selectPatient'])->name('discharge-planning.select');
+
 
     //Activities of Daily Living (ADL)
     Route::prefix('adl')->name('adl.')->group(function () {
         Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
         Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
         Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
+
+        Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
+
     });
 
-    // Lab Values Routes
-    Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
-    Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
-    Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.cdss');
+    // //VITAL SIGNS:
+    // Route::get('/vital-signs', [VitalSignsController::class, 'show'])->name('vital-signs.show');
+
+    // Route::post('/vital-signs', [VitalSignsController::class, 'store'])->name('vital-signs');
+
+    // Route::post('/vital-signs/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('vital-signs.select');
+
+    // Route::post('/vital-signs/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('vital-signs.cdss');
+
+
+    Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
+
+        Route::get('/', [VitalSignsController::class, 'show'])->name('show');
+
+        Route::post('/', [VitalSignsController::class, 'store'])->name('store');
+
+        Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
+
+        Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
+
+    });
+
+    // Add more routes for role: NURSE here
 
 
 
 
-    // More routes:
-    Route::get('/ivs-and-lines', [IvsAndLineController::class, 'show'])->name('ivs-and-lines');
-    Route::post('/ivs-and-lines', [IvsAndLineController::class, 'store'])->name('ivs-and-lines.store');
-
-    Route::get('/medication-reconciliation', [MedReconciliationController::class, 'show'])->name('medication-reconciliation');
-    Route::post('/medication-reconciliation', [MedReconciliationController::class, 'store'])->name('medreconciliation.store');
-    Route::post('/current_medication', [MedReconciliationController::class, 'storeMedicalReconciliation'])->name('current-medication.store');
-    Route::post('/home_medication', [MedReconciliationController::class, 'storeHomeMedication'])->name('home-medication.store');
-    Route::post('/changes_in_medication', [MedReconciliationController::class, 'storeChangesInMedication'])->name('changes-in-medication.store');
-
-    Route::get('/discharge-planning', [DischargePlanningController::class, 'show'])->name('discharge-planning');
-    Route::post('/discharge-planning', [DischargePlanningController::class, 'store'])->name('discharge-planning.store');
-
-
-    // Add more routes for role: nurse here
 
 });
+
 

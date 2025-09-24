@@ -12,25 +12,26 @@
             <label for="patient_id">PATIENT NAME :</label>
 
             {{-- PATIENT DROPDOWN AND DATE FORM (TO GET DATA FROM PATIENT & DATE --}}
-            <form action="{{ route('adl.show') }}" method="GET" id="patient-select-form">
-
+            <form action="{{ route('adl.select') }}" method="POST" id="patient-select-form"
+                class="flex items-center space-x-4">
+                @csrf
                 <label for="patient_id">PATIENT NAME :</label>
-                <select id="patient_info" name="patient_id"
-                    onchange="document.getElementById('patient-select-form').submit()">
-                    <option value="" @if(request()->query('patient_id') == '') selected @endif>-- Select Patient --</option>
+                <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                    <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
                     @foreach ($patients as $patient)
-                        <option value="{{ $patient->patient_id }}" @if(request()->query('patient_id') == $patient->patient_id)
+                        <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
                         selected @endif>
                             {{ $patient->name }}
                         </option>
                     @endforeach
-                </select>
 
-                <!-- DATE -->
-                <label for="date">DATE :</label>
-                <input type="date" id="date_selector" name="date" value="{{ request()->query('date') }}"
-                    onchange="document.getElementById('patient-select-form').submit()">
+                    <!-- DATE -->
+                    <label class="date" for="date">DATE :</label>
+                    <input class="date" type="date" id="date_selector" name="date" value="{{ session('selected_date') }}"
+                        onchange="this.form.submit()">
+                </select>
             </form>
+
         </div>
 
         {{-- MAIN FORM (sumbit) --}}
@@ -38,8 +39,9 @@
             @csrf
 
             {{-- Hidden PATIENT_ID AND DATE --}}
-            <input type="hidden" name="patient_id" value="{{ request()->query('patient_id') }}">
-            <input type="hidden" name="date" value="{{ request()->query('date') }}">
+            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+            <input type="hidden" name="date" value="{{ session('selected_date') }}">
+
 
             <!-- DAY -->
             <div class="section-bar">

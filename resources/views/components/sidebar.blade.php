@@ -61,7 +61,7 @@
         </li>
 
         <li>
-            <a href="{{ route('vital-signs') }}"
+            <a href="{{ route('vital-signs.show') }}"
                 class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
                 <img src="./img/sidebar/vital-signs.png" alt="Vitals Icon" class="w-6 h-6">
                 <span>Vital Signs</span>

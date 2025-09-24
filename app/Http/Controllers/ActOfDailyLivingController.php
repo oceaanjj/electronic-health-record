@@ -12,26 +12,32 @@ use Illuminate\Support\Facades\Auth;
 class ActOfDailyLivingController extends Controller
 {
 
+    public function selectPatientAndDate(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $date = $request->input('date');
+
+        // Store the selected patient's ID and date in the session
+        $request->session()->put('selected_patient_id', $patientId);
+        $request->session()->put('selected_date', $date);
+
+        // Redirect back to the main ADL page
+        return redirect()->route('adl.show');
+    }
+
+
     public function show(Request $request)
     {
-        // Fetch all patients for the dropdown menu.
         $patients = Patient::all();
-        $patientId = $request->query('patient_id');
-        $date = $request->query('date');
         $adlData = null;
+
+        $patientId = $request->session()->get('selected_patient_id');
+        $date = $request->session()->get('selected_date');
 
         if ($patientId && $date) {
             $adlData = ActOfDailyLiving::where('patient_id', $patientId)
                 ->where('date', $date)
                 ->first();
-
-            // if ($adlData) {
-            //     AuditLogController::log(
-            //         'ADL Record Viewed',
-            //         'User ' . Auth::user()->username . ' viewed an ADL record.',
-            //         ['patient_id' => $patientId, 'date' => $date]
-            //     );
-            // }
         }
 
         return view('act-of-daily-living', [
@@ -67,7 +73,7 @@ class ActOfDailyLivingController extends Controller
             // Add audit log for update
             AuditLogController::log(
                 'ADL Record Updated',
-                'User ' . Auth::user()->username . ' updated an ADL record.',
+                'User ' . Auth::user()->username . ' updated an existing ADL record.',
                 ['patient_id' => $validatedData['patient_id']]
             );
 
@@ -89,10 +95,9 @@ class ActOfDailyLivingController extends Controller
 
         $alerts = $cdssService->analyzeFindings($filteredData);
 
-        return redirect()->route('adl.show', [
-            'patient_id' => $validatedData['patient_id'],
-            'date' => $validatedData['date']
-        ])->with('cdss', $alerts)->with('success', $message);
+        return redirect()->route('adl.show')
+            ->with('cdss', $alerts)
+            ->with('success', $message);
     }
 
 

@@ -11,39 +11,28 @@ use Illuminate\Support\Facades\Auth;
 
 class LabValuesController extends Controller
 {
-    /**
-     * Display the lab values form for a specific patient.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\View\View
-     */
+    public function selectPatient(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $request->session()->put('selected_patient_id', $patientId);
+        return redirect()->route('lab-values.index');
+    }
+
     public function show(Request $request)
     {
         $patients = Patient::all();
-
+        $selectedPatient = null;
         $labValue = null;
-
-        $patientId = $request->get('patient_id');
-
+        $patientId = $request->session()->get('selected_patient_id');
         if ($patientId) {
-            // Find the lab value data for the selected patient
-            $labValue = LabValues::where('patient_id', $patientId)->first();
-
-            // Flash the data to the session so the form can be pre-filled
-            if ($labValue) {
-                $request->session()->flash('old', $labValue->toArray());
+            $selectedPatient = Patient::find($patientId);
+            if ($selectedPatient) {
+                $labValue = LabValues::where('patient_id', $patientId)->first();
             }
         }
-
-        return view('lab-values', compact('patients', 'labValue'));
+        return view('lab-values', compact('patients', 'selectedPatient', 'labValue'));
     }
 
-    /**
-     * Store or update the lab values data.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -77,49 +66,29 @@ class LabValuesController extends Controller
             'basophils_result' => 'nullable|numeric',
             'basophils_normal_range' => 'nullable|string',
         ]);
-
         $existingLabValue = LabValues::where('patient_id', $data['patient_id'])->first();
-
         if ($existingLabValue) {
-            // If the record exists, update it
             $existingLabValue->update($data);
             $message = 'Lab values data updated successfully!';
-
-            // audit log
             AuditLogController::log(
                 'Lab Values Updated',
-                'User ' . Auth::user()->username . ' updated an Lab Values record.',
+                'User ' . Auth::user()->username . ' updated an existing Lab Values record.',
                 ['patient_id' => $data['patient_id']]
             );
         } else {
-            // Otherwise, create a new record
             LabValues::create($data);
             $message = 'Lab values data saved successfully!';
-
             AuditLogController::log(
                 'Lab Values created',
-                'User ' . Auth::user()->username . ' created an Lab Values record.',
+                'User ' . Auth::user()->username . ' created a new Lab Values record.',
                 ['patient_id' => $data['patient_id']]
             );
         }
-
-        // Run the CDSS analysis after storing the data
         $cdssService = new LabValuesCdssService();
         $alerts = $cdssService->analyzeLabValues($data);
-
-        // Redirect back with the input, alerts, and a success message
-        return redirect()->route('lab-values.index', ['patient_id' => $data['patient_id']])
-            ->withInput()
-            ->with('cdss', $alerts)
-            ->with('success', $message);
+        return redirect()->route('lab-values.index')->withInput()->with('cdss', $alerts)->with('success', $message);
     }
 
-    /**
-     * Run CDSS analysis without saving the data.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function runCdssAnalysis(Request $request)
     {
         $data = $request->validate([
@@ -153,14 +122,8 @@ class LabValuesController extends Controller
             'basophils_result' => 'nullable|numeric',
             'basophils_normal_range' => 'nullable|string',
         ]);
-
-        // Call the CDSS service
         $cdssService = new LabValuesCdssService();
         $alerts = $cdssService->analyzeLabValues($data);
-
-        return redirect()->route('lab-values.index')
-            ->withInput($data)
-            ->with('cdss', $alerts)
-            ->with('success', 'CDSS analysis run successfully!');
+        return redirect()->route('lab-values.index')->withInput($data)->with('cdss', $alerts)->with('success', 'CDSS analysis run successfully!');
     }
 }

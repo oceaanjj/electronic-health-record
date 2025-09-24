@@ -30,7 +30,7 @@
                     <th>Audit ID</th>
                     <th>User</th>
                     <th>User Role</th>
-                    <th>IP Address</th>
+                    <!-- <th>IP Address</th> -->
                     <th>Action</th>
                     <th>Details</th>
                     <th>Created At</th>
@@ -42,22 +42,21 @@
                         <td>{{ $log->id }}</td>
                         <td>{{ $log->user_name ?? 'System' }}</td>
                         <td>{{ $log->user_role ?? 'N/A' }}</td>
-                        <td>{{ $log->ip_address ?? 'N/A' }}</td>
+                        <!-- <td>{{ $log->ip_address ?? 'N/A' }}</td> -->
                         <td>{{ $log->action }}</td>
                         <td>
-                            {{-- Decode and display the JSON data nicely --}}
                             @if($log->details)
-                                @php
-                                    $details = json_decode($log->details, true);
-                                @endphp
+                                @php $details = json_decode($log->details, true); @endphp
                                 @if(is_array($details))
                                     {{ $details['details'] ?? 'No primary details provided.' }}
                                     @if(count($details) > 1)
                                         <ul>
                                             @foreach($details as $key => $value)
                                                 @if($key !== 'details')
-                                                    <li><strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
-                                                        {{ is_array($value) ? json_encode($value) : $value }}</li>
+                                                    <li>
+                                                        <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
+                                                        {{ is_array($value) ? json_encode($value) : $value }}
+                                                    </li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -73,10 +72,10 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center">No audit logs found.</td>
-                    </tr>
+                        <td colspan="6" class="text-center">No audit logs found.</td>
                 @endforelse
             </tbody>
+
         </table>
 
         <div class="mt-3">

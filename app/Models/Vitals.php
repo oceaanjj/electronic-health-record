@@ -9,19 +9,23 @@ class Vitals extends Model
 {
     use HasFactory;
 
-
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'vital_signs';
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
-
     protected $fillable = [
         'patient_id',
-        'day_no',
         'date',
+        'time',
+        'day_no',
         'temperature',
         'hr',
         'rr',
@@ -29,8 +33,11 @@ class Vitals extends Model
         'spo2',
     ];
 
+    /**
+     * Get the patient that owns the vital sign record.
+     */
     public function patient()
     {
-        return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
+        return $this->belongsTo(Patient::class);
     }
 }

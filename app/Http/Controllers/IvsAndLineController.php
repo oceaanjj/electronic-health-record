@@ -11,49 +11,63 @@ use Illuminate\Support\Facades\Auth;
 
 class IvsAndLineController extends Controller
 {
-    public function show()
+    public function selectPatient(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $request->session()->put('selected_patient_id', $patientId);
+        return redirect()->route('ivs-and-lines');
+    }
+
+    public function show(Request $request)
     {
         $patients = Patient::all();
-        return view('ivs-and-lines', compact('patients'));
+        $selectedPatient = null;
+        $ivsAndLineRecord = null;
+        $patientId = $request->session()->get('selected_patient_id');
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
+            if ($selectedPatient) {
+                $ivsAndLineRecord = IvsAndLine::where('patient_id', $patientId)->first();
+            }
+        }
+        return view('ivs-and-lines', compact('patients', 'selectedPatient', 'ivsAndLineRecord'));
     }
 
     public function store(Request $request)
     {
-        try {
-
-            if ($request->has('present_condition_name')) {
-                IvsAndLine::create([
-                    'patient_id' => $request->patient_id,
-                    'iv_fluid' => $request->iv_fluid,
-                    'rate' => $request->present_description,
-                    'site' => $request->present_medication,
-                    'status' => $request->present_dosage,
-                ]);
-            }
-
-            IvsAndLine::create($request->all());
-
-            AuditLogController::log(
-                'IVs & Lines created',
-                'User ' . Auth::user()->username . ' created an IVs & Lines record.',
-                ['patient_id' => $request['patient_id']]
-            );
-
-            return redirect()->back()->with('success', 'IVs and Lines record saved successfully.');
-
-        } catch (Throwable $e) {
-            // Check for the specific 'patient_id' cannot be null error
-            if (str_contains($e->getMessage(), '1048 Column \'patient_id\' cannot be null')) {
-                return back()->with('error', 'Please select a patient before submitting the IVs and Lines record.');
-            }
-
-            // Check for any general database integrity constraint violation
-            if ($e instanceof \Illuminate\Database\QueryException && str_contains($e->getCode(), '23000')) {
-                return back()->with('error', 'There was a problem saving your data due to missing or invalid information. Please check your inputs and try again.');
-            }
-
-            // For any other unexpected errors, provide a generic message
-            return back()->with('error', 'An unexpected error occurred while saving the IVs and Lines record. Please try again or contact support.');
+        if (!$request->has('patient_id')) {
+            return back()->with('error', 'No patient selected.');
         }
+
+        $data = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'iv_fluid' => 'nullable|string',
+            'rate' => 'nullable|string',
+            'site' => 'nullable|string',
+            'status' => 'nullable|string',
+        ]);
+
+        $username = Auth::user() ? Auth::user()->username : 'Guest';
+        $existingRecord = IvsAndLine::where('patient_id', $data['patient_id'])->first();
+
+        if ($existingRecord) {
+            $existingRecord->update($data);
+            $message = 'IVs and Lines record updated successfully.';
+            AuditLogController::log(
+                'IVs and Lines Record Updated',
+                'User ' . $username . ' updated an existing IVs and Lines record.',
+                ['patient_id' => $data['patient_id']]
+            );
+        } else {
+            IvsAndLine::create($data);
+            $message = 'IVs and Lines record created successfully.';
+            AuditLogController::log(
+                'IVs and Lines Record Created',
+                'User ' . $username . ' created a new IVs and Lines record.',
+                ['patient_id' => $data['patient_id']]
+            );
+        }
+
+        return redirect()->back()->with('success', $message);
     }
 }

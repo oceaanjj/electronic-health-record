@@ -6,6 +6,8 @@ use App\Models\ActOfDailyLiving;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Services\CdssService;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class ActOfDailyLivingController extends Controller
 {
@@ -22,6 +24,14 @@ class ActOfDailyLivingController extends Controller
             $adlData = ActOfDailyLiving::where('patient_id', $patientId)
                 ->where('date', $date)
                 ->first();
+
+            // if ($adlData) {
+            //     AuditLogController::log(
+            //         'ADL Record Viewed',
+            //         'User ' . Auth::user()->username . ' viewed an ADL record.',
+            //         ['patient_id' => $patientId, 'date' => $date]
+            //     );
+            // }
         }
 
         return view('act-of-daily-living', [
@@ -46,16 +56,36 @@ class ActOfDailyLivingController extends Controller
             'pain_level_assessment' => 'nullable|string',
         ]);
 
-        ActOfDailyLiving::updateOrCreate(
-            ['patient_id' => $validatedData['patient_id'], 'date' => $validatedData['date']],
-            $validatedData
-        );
+        $existingAdl = ActOfDailyLiving::where('patient_id', $validatedData['patient_id'])
+            ->where('date', $validatedData['date'])
+            ->first();
 
-        $message = 'ADL data saved successfully!';
+        if ($existingAdl) {
+            // If it exists, update the record
+            $existingAdl->update($validatedData);
+            $message = 'ADL data updated successfully!';
+            // Add audit log for update
+            AuditLogController::log(
+                'ADL Record Updated',
+                'User ' . Auth::user()->username . ' updated an ADL record.',
+                ['patient_id' => $validatedData['patient_id']]
+            );
+
+        } else {
+            // Otherwise, create a new record
+            ActOfDailyLiving::create($validatedData);
+            $message = 'ADL data saved successfully!';
+            // Add audit log for creation
+            AuditLogController::log(
+                'ADL Record Created',
+                'User ' . Auth::user()->username . ' created a new ADL record.',
+                ['patient_id' => $validatedData['patient_id']]
+            );
+        }
 
         $filteredData = array_filter($validatedData);
 
-        $cdssService = new CdssService('adl_rules'); //<-- Rules folder name storage>app>private> *here* 
+        $cdssService = new CdssService('adl_rules');
 
         $alerts = $cdssService->analyzeFindings($filteredData);
 

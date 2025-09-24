@@ -6,20 +6,22 @@ use App\Models\IvsAndLine;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Throwable;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class IvsAndLineController extends Controller
 {
-         public function show()
+    public function show()
     {
         $patients = Patient::all();
         return view('ivs-and-lines', compact('patients'));
     }
-    
+
     public function store(Request $request)
     {
         try {
 
-         if ($request->has('present_condition_name')) {
+            if ($request->has('present_condition_name')) {
                 IvsAndLine::create([
                     'patient_id' => $request->patient_id,
                     'iv_fluid' => $request->iv_fluid,
@@ -29,11 +31,17 @@ class IvsAndLineController extends Controller
                 ]);
             }
 
-        IvsAndLine::create($request->all());
+            IvsAndLine::create($request->all());
 
-        return redirect()->back()->with('success', 'IVs and Lines record saved successfully.');
-    
-            } catch (Throwable $e) {
+            AuditLogController::log(
+                'IVs & Lines created',
+                'User ' . Auth::user()->username . ' created an IVs & Lines record.',
+                ['patient_id' => $request['patient_id']]
+            );
+
+            return redirect()->back()->with('success', 'IVs and Lines record saved successfully.');
+
+        } catch (Throwable $e) {
             // Check for the specific 'patient_id' cannot be null error
             if (str_contains($e->getMessage(), '1048 Column \'patient_id\' cannot be null')) {
                 return back()->with('error', 'Please select a patient before submitting the IVs and Lines record.');

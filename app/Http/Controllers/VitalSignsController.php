@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\Vitals;
 use App\Services\CdssService;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class VitalSignsController extends Controller
 {
-    
+
     public function show(Request $request)
     {
         // Fetch all patients for the dropdown menu.
@@ -83,6 +85,12 @@ class VitalSignsController extends Controller
 
         $cdssService = new CdssService('vital_signs_rules');
         $analysisResults = $cdssService->analyzeFindings($vitalSigns->toArray());
+
+        // AuditLogController::log(
+        //     'Physical Exam Created',
+        //     'User ' . Auth::user()->username . ' created a new Vital Signs record.',
+        //     ['patient_id' => $validatedData['patient_id']]
+        // );
 
         return redirect()->route('vital_signs.show', [
             'patient_id' => $validatedData['patient_id'],

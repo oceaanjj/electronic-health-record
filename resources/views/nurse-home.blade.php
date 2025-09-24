@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\Auth;
                 documentation of medical data including patient profiles, vital signs, treatments,
                 and medication records, ensuring accurate and accessible healthcare management.
             </p>
-            <a href="#" class="login">LOG IN</a>
+            <!-- <a href="#" class="login">LOG IN</a> -->
         </div>
         <div class="welcome-image">
             <img src="img/doctor-kids.png" alt="Doctor with Kids">

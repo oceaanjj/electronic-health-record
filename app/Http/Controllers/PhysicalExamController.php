@@ -6,6 +6,8 @@ use App\Services\PhysicalExamCdssService;
 use App\Models\PhysicalExam;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class PhysicalExamController extends Controller
 {
@@ -21,10 +23,9 @@ class PhysicalExamController extends Controller
             // Find the physical exam data for the selected patient
             $physicalExam = PhysicalExam::where('patient_id', $patientId)->first();
 
-            // Flash (show to the form if there is a value)
+
             if ($physicalExam) {
-                // If a record is found, we can flash it to the session
-                // so the old() helper can pick it up.
+
                 $request->session()->flash('old', $physicalExam->toArray());
             }
         }
@@ -52,10 +53,23 @@ class PhysicalExamController extends Controller
             // If it exists, update the record
             $existingExam->update($data);
             $message = 'Physical exam data updated successfully!';
+            // Add audit log for update
+            AuditLogController::log(
+                'Physical Exam Updated',
+                'User ' . Auth::user()->username . ' updated an Physical Exam record.',
+                ['patient_id' => $data['patient_id']]
+            );
+
         } else {
             // Otherwise, create a new record
             PhysicalExam::create($data);
             $message = 'Physical exam data saved successfully!';
+            // Add audit log for creation
+            AuditLogController::log(
+                'Physical Exam Created',
+                'User ' . Auth::user()->username . ' created an new Physical Exam record.',
+                ['patient_id' => $data['patient_id']]
+            );
         }
 
         // Run the CDSS analysis after storing the data

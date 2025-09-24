@@ -1,28 +1,52 @@
 @import "tailwindcss";
-
+@import "bootstrap";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-
 @theme {
-  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 
-  --color-ehr: #1A6A24; 
+    --color-ehr: #1a6a24;
 }
 
-@import './home-style.css';
-@import './login-style.css';
-@import './registration-style.css';
+@import "./home-style.css";
+@import "./login-style.css";
+@import "./registration-style.css";
 
+/* alerts */
+.alert {
+    position: fixed;
+    top: 7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    z-index: 1050;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
 
+/* This class applies the pop-up animation */
+.popup-alert {
+    animation: popUp 0.2s ease-out;
+}
 
-
-
-
-
-
-
+@keyframes popUp {
+    0% {
+        transform: scale(0.8) translateX(-50%);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.01) translateX(-50%);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) translateX(-50%);
+        opacity: 1;
+    }
+}

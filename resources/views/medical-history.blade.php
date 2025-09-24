@@ -6,13 +6,7 @@
 
   <body>
 
-    {{-- Display error message if it exists in the session --}}
-    @if(session('error'))
-      <div
-        style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-        {{ session('error') }}
-      </div>
-    @endif
+
 
     {{-- FORM --}}
     <form action="{{ route('medical.store') }}" method="POST">

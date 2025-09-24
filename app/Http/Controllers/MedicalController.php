@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\PresentIllness;
 use App\Models\PastMedicalSurgical;
 use App\Models\Allergy;
 use App\Models\Vaccination;
 use App\Models\DevelopmentalHistory;
 use App\Models\Patient;
+use App\Http\Controllers\AuditLogController;
 use Throwable;
 
 class MedicalController extends Controller
@@ -23,6 +25,8 @@ class MedicalController extends Controller
     public function store(Request $request)
     {
         try {
+            $user = Auth::user();
+
             // Present Illness
             if ($request->has('present_condition_name')) {
                 PresentIllness::create([
@@ -34,6 +38,12 @@ class MedicalController extends Controller
                     'side_effect' => $request->present_side_effect,
                     'comment' => $request->present_comment,
                 ]);
+
+                // AuditLogController::log(
+                //     'Present Illness Added',
+                //     "User {$user->username} added a new present illness record.",
+                //     ['patient_id' => $request->patient_id]
+                // );
             }
 
             // Past Medical / Surgical
@@ -47,6 +57,12 @@ class MedicalController extends Controller
                     'side_effect' => $request->past_side_effect,
                     'comment' => $request->past_comment,
                 ]);
+
+                // AuditLogController::log(
+                //     'Past Medical/Surgical Added',
+                //     "User {$user->username} added a new past medical/surgical record.",
+                //     ['patient_id' => $request->patient_id]
+                // );
             }
 
             // Allergies
@@ -60,6 +76,12 @@ class MedicalController extends Controller
                     'side_effect' => $request->allergy_side_effect,
                     'comment' => $request->allergy_comment,
                 ]);
+
+                // AuditLogController::log(
+                //     'Allergy Added',
+                //     "User {$user->username} added a new allergy record.",
+                //     ['patient_id' => $request->patient_id]
+                // );
             }
 
             // Vaccination
@@ -73,6 +95,12 @@ class MedicalController extends Controller
                     'side_effect' => $request->vaccine_side_effect,
                     'comment' => $request->vaccine_comment,
                 ]);
+
+                // AuditLogController::log(
+                //     'Vaccination Added',
+                //     "User {$user->username} added a new vaccination record.",
+                //     ['patient_id' => $request->patient_id]
+                // );
             }
 
             // Developmental History
@@ -85,7 +113,19 @@ class MedicalController extends Controller
                     'cognitive' => $request->cognitive,
                     'social' => $request->social,
                 ]);
+
+                // AuditLogController::log(
+                //     'Developmental History Added',
+                //     "User {$user->username} added a new developmental history record.",
+                //     ['patient_id' => $request->patient_id]
+                // );
             }
+
+            AuditLogController::log(
+                'Medical History',
+                "User {$user->username} added a new medical history record.",
+                ['patient_id' => $request->patient_id]
+            );
 
             return back()->with('success', 'Medical history saved successfully!');
 

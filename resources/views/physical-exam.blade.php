@@ -10,24 +10,6 @@
 
 @section('content')
 
-    <!-- ALERT MESSAGE -->
-
-    @if ($errors->any())
-        <div style="color:red; margin-bottom:5px padding:5px;">
-            <h5 style="margin-bottom: 10px;">Errors:</h5>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    @if (session('success'))
-        <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
-            {{ session('success') }}
-        </div>
-    @endif
 
     {{-- PATIENT DROP-DOWN FORM --}}
 

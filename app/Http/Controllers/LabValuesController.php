@@ -6,6 +6,8 @@ use App\Services\LabValuesCdssService;
 use App\Models\LabValues;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class LabValuesController extends Controller
 {
@@ -82,10 +84,23 @@ class LabValuesController extends Controller
             // If the record exists, update it
             $existingLabValue->update($data);
             $message = 'Lab values data updated successfully!';
+
+            // audit log
+            AuditLogController::log(
+                'Lab Values Updated',
+                'User ' . Auth::user()->username . ' updated an Lab Values record.',
+                ['patient_id' => $data['patient_id']]
+            );
         } else {
             // Otherwise, create a new record
             LabValues::create($data);
             $message = 'Lab values data saved successfully!';
+
+            AuditLogController::log(
+                'Lab Values created',
+                'User ' . Auth::user()->username . ' created an Lab Values record.',
+                ['patient_id' => $data['patient_id']]
+            );
         }
 
         // Run the CDSS analysis after storing the data

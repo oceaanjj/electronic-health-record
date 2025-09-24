@@ -1,3 +1,9 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Medical History</title>
+    @vite(['./resources/css/lab-values.css'])
+</head>
+
 @extends('layouts.app')
 
 @section('title', 'Patient Medical History')
@@ -123,9 +129,11 @@
                 </tr>
             </table>
 
-            <div class="btn">
-                <button type="submit">Submit</button>
+            <div class="buttons">
+                <button type="submit" class="btn">Submit</button>
             </div>
+
+
         </form>
 
     </body>

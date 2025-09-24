@@ -12,6 +12,7 @@
             <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
                 class="flex items-center space-x-4">
                 @csrf
+
                 <label for="patient_id">PATIENT NAME :</label>
                 <select id="patient_info" name="patient_id" onchange="this.form.submit()">
                     <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
@@ -21,16 +22,27 @@
                             {{ $patient->name }}
                         </option>
                     @endforeach
+                </select>
 
-                    <!-- DATE -->
-                    <label class="date" for="date">DATE :</label>
-                    <input class="date" type="date" id="date_selector" name="date" value="{{ session('selected_date') }}"
-                        onchange="this.form.submit()">
+                <!-- DATE -->
+                <label for="date">DATE :</label>
+                <input class="date" type="date" id="date_selector" name="date" value="{{ session('selected_date') }}"
+                    onchange="this.form.submit()">
+
+                <!-- DAY NO -->
+                <label for="day_no">DAY NO :</label>
+                <select id="day_no" name="day_no" onchange="this.form.submit()">
+                    <option value="">-- Select number --</option>
+                    @for ($i = 1; $i <= 30; $i++)
+                        <option value="{{ $i }}" @if(session('selected_day_no') == $i) selected @endif>
+                            {{ $i }}
+                        </option>
+                    @endfor
                 </select>
             </form>
 
-        </div>
 
+        </div>
 
         {{-- MAIN FORM (submit) --}}
         <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
@@ -39,20 +51,22 @@
             {{-- Hidden PATIENT_ID AND DATE from session --}}
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
             <input type="hidden" name="date" value="{{ session('selected_date') }}">
+            <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
 
-            <div class="section-bar">
-                <label for="day">DAY NO :</label>
-                <select id="day" name="day_no">
-                    <option value="">-- Select number --</option>
-                    @for ($i = 1; $i <= 30; $i++)
-                        {{-- Use the first entry to determine the day_no if data exists --}}
-                        <option value="{{ $i }}" @if(old('day_no', optional($vitalsData->first())->day_no) == $i) selected @endif>
-                            {{ $i }}
-                        </option>
 
-                    @endfor
-                </select>
-            </div>
+            <!-- <div class="section-bar">
+                                            <label for="day">DAY NO :</label>
+                                            <select id="day" name="day_no">
+                                                <option value="">-- Select number --</option>
+                                                @for ($i = 1; $i <= 30; $i++)
+                                                    {{-- Use the first entry to determine the day_no if data exists --}}
+                                                    <option value="{{ $i }}" @if(old('day_no', optional($vitalsData->first())->day_no) == $i) selected @endif>
+                                                        {{ $i }}
+                                                    </option>
+
+                                                @endfor
+                                            </select>
+                                        </div> -->
 
             <table>
                 <tr>

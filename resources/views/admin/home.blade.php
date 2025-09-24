@@ -1,6 +1,9 @@
+@vite(['resources/css/bootstrap.css', 'resources/js/app.js'])
+
 @extends('layouts.app')
 
 @section('content')
+
     <h1>Admin Dashboard</h1>
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

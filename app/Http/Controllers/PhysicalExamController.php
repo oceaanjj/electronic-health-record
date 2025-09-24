@@ -18,7 +18,6 @@ class PhysicalExamController extends Controller
 
         $request->session()->put('selected_patient_id', $patientId);
 
-        // Redirect back to the main physical exam page without the ID in the URL
         return redirect()->route('physical-exam.index');
     }
 
@@ -46,6 +45,15 @@ class PhysicalExamController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+        ], [
+            'patient_id.required' => 'Please choose a patient first.',
+            'patient_id.exists' => 'Please choose a patient first.',
+        ]);
+
+
         $data = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
             'general_appearance' => 'nullable|string',

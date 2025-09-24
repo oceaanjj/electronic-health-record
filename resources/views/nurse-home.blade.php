@@ -1,7 +1,5 @@
 <?php
-
 use Illuminate\Support\Facades\Auth;
-
 ?>
 
 <!DOCTYPE html>
@@ -14,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
     @vite(['resources/css/home-style.css'])
 </head>
 
-<body>
 
+<body>
     <header class="header">
         <div class="logo">
             <a href="{{ route('home') }}"> <img src="img/ehr-logo.png" alt="Hospital Logo"> </a>
@@ -28,17 +26,28 @@ use Illuminate\Support\Facades\Auth;
         <a href="#" class="login" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             LOG OUT
         </a>
-
-
     </header>
 
-    <!-- test alert -->
+
+    <!-- Alerts -->
+    @vite(['resources/js/app.js'])
+
     @if (session('success'))
-        <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
+        <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert" role="alert"
+            id="success-alert">
             {{ session('success') }}
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
         </div>
     @endif
-    <!-- test alert -->
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert" role="alert"
+            id="error-alert">
+            {{ session('error') }}
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+        </div>
+    @endif
+
+
 
     <section class="welcome">
         <div class="welcome-text">

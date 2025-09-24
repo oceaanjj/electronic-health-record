@@ -59,13 +59,15 @@ class MedicalController extends Controller
         $createdFlag = false;
         $updatedFlag = false;
 
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+        ], [
+            'patient_id.required' => 'Please choose a patient first.',
+            'patient_id.exists' => 'The selected patient is invalid.',
+        ]);
+
         try {
             $username = Auth::user() ? Auth::user()->username : 'Guest';
-
-            if (!$request->has('patient_id')) {
-                return back()->with('error', 'No patient selected.');
-            }
-
             if ($request->has('present_condition_name')) {
                 $data = [
                     'patient_id' => $request->patient_id,

@@ -46,6 +46,15 @@ class DischargePlanningController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+        ], [
+            'patient_id.required' => 'Please choose a patient first.',
+            'patient_id.exists' => 'Please choose a patient first.',
+        ]);
+
+
         $data = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
             'criteria_feverRes' => 'nullable|string',

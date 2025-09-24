@@ -1,6 +1,10 @@
+@vite(['resources/css/bootstrap.css', 'resources/js/app.js'])
+
 @extends('layouts.app')
 
 @section('content')
+
+
     <div class="container">
 
         {{-- Search and Filter Form --}}

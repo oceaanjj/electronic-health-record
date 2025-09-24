@@ -40,7 +40,6 @@
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
                     role="alert" id="error-alert">
-                    <h5>Errors:</h5>
                     <ul class="mb-0">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>

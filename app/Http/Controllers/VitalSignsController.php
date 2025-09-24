@@ -16,9 +16,11 @@ class VitalSignsController extends Controller
     {
         $patientId = $request->input('patient_id');
         $date = $request->input('date');
+        $dayNo = $request->input('day_no');
 
         $request->session()->put('selected_patient_id', $patientId);
         $request->session()->put('selected_date', $date);
+        $request->session()->put('selected_day_no', $dayNo);
 
         return redirect()->route('vital-signs.show');
     }
@@ -30,11 +32,12 @@ class VitalSignsController extends Controller
 
         $patientId = $request->session()->get('selected_patient_id');
         $date = $request->session()->get('selected_date');
+        $dayNo = $request->session()->get('selected_day_no');
 
-        if ($patientId && $date) {
-            // Load all vitals for patient + date and key by H:i (no seconds)
+        if ($patientId && $date && $dayNo) {
             $vitals = Vitals::where('patient_id', $patientId)
                 ->where('date', $date)
+                ->where('day_no', $dayNo)
                 ->get();
 
             $vitalsData = $vitals->keyBy(function ($item) {
@@ -42,11 +45,25 @@ class VitalSignsController extends Controller
             });
         }
 
-        return view('vital-signs', compact('patients', 'vitalsData'));
+        return view('vital-signs', [
+            'patients' => $patients,
+            'vitalsData' => $vitalsData,
+            'selectedDate' => $date,
+            'selectedDayNo' => $dayNo,
+        ]);
     }
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+        ], [
+            'patient_id.required' => 'Please choose a patient first.',
+            'patient_id.exists' => 'Please choose a patient first.',
+        ]);
+
+
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
             'date' => 'required|date',

@@ -26,7 +26,6 @@
 
 
 
-    {{-- para sa side bar ito, mag slide yung sidebar and yung main content is sasama sa pag-usog --}}
     <script>
         function openNav() {
             document.getElementById("mySidenav").classList.remove("-translate-x-full");

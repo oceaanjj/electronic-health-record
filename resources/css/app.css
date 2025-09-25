@@ -6,17 +6,38 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@font-face {
+  font-family: 'Alte Haas Grotesk Bold';
+  src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+
+  font-family: 'Creato Display Bold';
+  src: url('/public/font/creato_display/CreatoDisplay-Bold.otf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+
+  font-family: 'Creato Display Black';
+  src: url('/public/font/creato_display/CreatoDisplay-Black.otf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 @theme {
     --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 
     --color-ehr: #1a6a24;
+    --color-yellow: #FDE050;
+    --color-dark-yellow: #F3B809;
+    --color-red: 	#ec0000;
+    --color-dark-red: #8E1600;
+    --font-alte: 'Alte Haas Grotesk Bold', arial;
+    --font-creato-bold: 'Creato Display Bold', arial;
+    --font-creato-black: 'Creato Display Black', arial;
 }
 
-@import "./home-style.css";
-@import "./login-style.css";
-@import "./registration-style.css";
 
 /* alerts */
 .alert {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Models\Vitals;
 use Illuminate\Http\Request;
-use app\Services\CdssService;
+use App\Services\CdssService;
 use App\Services\VitalCdssService;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class VitalSignsController extends Controller
         $date = $request->session()->get('selected_date');
         $dayNo = $request->session()->get('selected_day_no');
 
-        if ($patientId && $date) {
+        if ($patientId && $date && $dayNo) {
             $vitals = Vitals::where('patient_id', $patientId)
                 ->where('date', $date)
                 ->where('day_no', $dayNo)
@@ -56,15 +56,6 @@ class VitalSignsController extends Controller
 
     public function store(Request $request)
     {
-
-        $request->validate([
-            'patient_id' => 'required|exists:patients,patient_id',
-        ], [
-            'patient_id.required' => 'Please choose a patient first.',
-            'patient_id.exists' => 'Please choose a patient first.',
-        ]);
-
-
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
             'date' => 'required|date',
@@ -91,7 +82,7 @@ class VitalSignsController extends Controller
                     [
                         'patient_id' => $validatedData['patient_id'],
                         'date' => $validatedData['date'],
-                        'day_no' => $validatedData['day_no'], // Corrected: Include day_no in the lookup
+                        'day_no' => $validatedData['day_no'],
                         'time' => $dbTime,
                     ],
                     $vitalsForTime
@@ -122,93 +113,6 @@ class VitalSignsController extends Controller
         $message = $anyCreated ? 'Vital Signs data saved successfully.' 
             : ($anyUpdated ? 'Vital Signs data updated successfully.' 
             : 'No changes made.');
-        return redirect()->route('vital-signs.show')->with('success', $message);
-    }
-
-    public function runCdssAnalysis(Request $request)
-    {
-        $validatedData = $request->validate([
-            'patient_id' => 'required|exists:patients,patient_id',
-            'date' => 'required|date',
-            'day_no' => 'required|integer|between:1,30',
-        ]);
-
-        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
-
-        foreach ($times as $time) {
-            $dbTime = Carbon::createFromFormat('H:i', $time)->format('H:i:s');
-
-            $vitalsForTime = [
-                'temperature' => $request->input("temperature_{$time}"),
-                'hr' => $request->input("hr_{$time}"),
-                'rr' => $request->input("rr_{$time}"),
-                'bp' => $request->input("bp_{$time}"),
-                'spo2' => $request->input("spo2_{$time}"),
-            ];
-
-            if (count(array_filter($vitalsForTime)) > 0) {
-                $vitalRecord = Vitals::updateOrCreate(
-                    [
-                        'patient_id' => $validatedData['patient_id'],
-                        'date' => $validatedData['date'],
-                        'day_no' => $validatedData['day_no'],
-                        'time' => $dbTime,
-                    ],
-                    $vitalsForTime
-                );
-
-                if ($vitalRecord->wasRecentlyCreated) {
-                    AuditLogController::log(
-                        'Vital Signs Record Created (CDSS)',
-                        'User ' . Auth::user()->username . " created a new Vital Signs record via CDSS.",
-                        ['patient_id' => $validatedData['patient_id'], 'date' => $validatedData['date'], 'time' => $dbTime]
-                    );
-                } elseif ($vitalRecord->wasChanged()) {
-                    AuditLogController::log(
-                        'Vital Signs Record Updated (CDSS)',
-                        'User ' . Auth::user()->username . " updated a Vital Signs record via CDSS.",
-                        ['patient_id' => $validatedData['patient_id'], 'date' => $validatedData['date'], 'time' => $dbTime]
-                    );
-                }
-            }
-        }
-
-        $cdssService = new CdssService('vitals_rules');
-        $allAlerts = [];
-        $severityOrder = ['CRITICAL' => 1, 'WARNING' => 2];
-
-        foreach ($times as $time) {
-            $vitalsForTime = [
-                'temperature' => $request->input("temperature_{$time}"),
-                'hr' => $request->input("hr_{$time}"),
-                'rr' => $request->input("rr_{$time}"),
-                'bp' => $request->input("bp_{$time}"),
-                'spo2' => $request->input("spo2_{$time}"),
-            ];
-
-            $filteredData = array_filter($vitalsForTime, fn($value) => !is_null($value) && $value !== '');
-
-            if (!empty($filteredData)) {
-                $analysisResults = $cdssService->analyzeFindings($filteredData);
-
-                if (!empty($analysisResults)) {
-                    $mostSevereAlert = null;
-                    $highestSeverity = 99;
-
-                    foreach ($analysisResults as $alert) {
-                        $currentSeverity = $severityOrder[$alert['severity']] ?? 99;
-                        if ($currentSeverity < $highestSeverity) {
-                            $highestSeverity = $currentSeverity;
-                            $mostSevereAlert = $alert;
-                        }
-                    }
-
-                    if ($mostSevereAlert) {
-                        $allAlerts[$time] = $mostSevereAlert;
-                    }
-                }
-            }
-        }
 
         return redirect()->route('vital-signs.show')
             ->with('success', $message)

@@ -8,7 +8,7 @@
         <div class="header">
             <label for="patient_id">PATIENT NAME :</label>
 
-            {{-- PATIENT DROPDOWN AND DATE FORM (TO GET DATA FROM PATIENT & DATE --}}
+            {{-- PATIENT DROPDOWN AND DATE FORM --}}
             <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
                 class="flex items-center space-x-4">
                 @csrf
@@ -45,11 +45,9 @@
                 <select id="day" name="day_no">
                     <option value="">-- Select number --</option>
                     @for ($i = 1; $i <= 30; $i++)
-                        {{-- Use the first entry to determine the day_no if data exists --}}
                         <option value="{{ $i }}" @if(old('day_no', optional($vitalsData->first())->day_no) == $i) selected @endif>
                             {{ $i }}
                         </option>
-
                     @endfor
                 </select>
             </div>
@@ -67,11 +65,18 @@
 
                 @php
                     $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+                    $severityOrder = ['CRITICAL' => 1, 'WARNING' => 2, 'INFO' => 3, 'NONE' => 4];
                 @endphp
 
                 @foreach ($times as $time)
                     @php
-                        $vitalsRecord = $vitalsData->get($time); // keys are normalized to H:i by controller
+                        $vitalsRecord = $vitalsData->get($time);
+
+                        // Kunin ang alerts from session at piliin ang pinaka-severe
+                        $alerts = session("cdss.$time") ?? [];
+                        $mostSevere = collect($alerts)
+                            ->sortBy(fn($a) => $severityOrder[$a['severity']] ?? 4)
+                            ->first();
                     @endphp
                     <tr>
                         <th class="time">{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</th>
@@ -96,23 +101,19 @@
                                 value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}">
                         </td>
                         <td>
-                            @if (session('cdss.' . $time . '.alert'))
+                            @if ($mostSevere)
                                 @php
-                                    $alertData = session('cdss.' . $time);
-                                    $color = $alertData['severity'] === 'CRITICAL'
-                                        ? 'alert-red'
-                                        : ($alertData['severity'] === 'WARNING' ? 'alert-orange' : 'alert-green');
+                                    $color = $mostSevere['severity'] === 'CRITICAL' ? 'red'
+                                        : ($mostSevere['severity'] === 'WARNING' ? 'orange'
+                                        : ($mostSevere['severity'] === 'INFO' ? 'blue' : 'green'));
                                 @endphp
-                                <div class="alert-box {{ $color }}">
-                                    <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                </div>
+                                <span style="color: {{ $color }}">
+                                    {{ $mostSevere['alert'] }}
+                                </span>
                             @endif
                         </td>
                     </tr>
                 @endforeach
-
-
-
             </table>
         </form>
     </div>

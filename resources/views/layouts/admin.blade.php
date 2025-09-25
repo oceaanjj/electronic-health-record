@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'EHR')</title>
-    <!-- @vite('resources/css/app.css') -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/app.css')
     @stack('styles')
 </head>
 
 <body class="bg-gray-100">
 
-    @include('components.sidebar')
+    @include('components.admin-sidebar')
 
     <div id="main" class="transition-transform duration-300 ease-in-out">
 

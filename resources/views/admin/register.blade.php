@@ -1,7 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
 
 @section('content')
-    <h1>Register New User</h1>
+
+    <h1 class="register">Register New User</h1>
 
     @if ($errors->any())
         <div style="color:red;">
@@ -43,7 +45,7 @@
         <button type="submit">Register User</button>
     </form>
 
-    <a href="{{ route('admin-home') }}">Back to Dashboard</a>
+    <a class="back" href="{{ route('admin-home') }}">Back to Dashboard</a>
 @endsection
 @push('styles')
     @vite(['resources/css/admin-register.css'])

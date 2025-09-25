@@ -6,7 +6,7 @@
 
 @extends('layouts.app')
 
-@section('title', 'Patient Vital Signs')
+@section('title', 'Physical Exam')
 
 @section('content')
 
@@ -253,7 +253,7 @@
     </div>
 
     <div class="buttons">
-        <button type="submit" class="btn">Submit</button>
+        <button type=" submit" class="btn">Submit</button>
         <button type="button" class="btn">CDSS</button>
     </div>
 

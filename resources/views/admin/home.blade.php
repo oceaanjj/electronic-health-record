@@ -1,6 +1,9 @@
-@extends('layouts.app')
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+
+@extends('layouts.admin')
 
 @section('content')
+
     <h1>Admin Dashboard</h1>
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -17,7 +20,8 @@
             <th>Role</th>
             <th>Change Role</th>
         </tr>
-        @foreach(\App\Models\User::all() as $user)
+        {{-- @foreach(\App\Models\User::all() as $user) --}}
+        @foreach(\App\Models\User::where('role', '!=', 'admin')->get() as $user)
             <tr>
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>

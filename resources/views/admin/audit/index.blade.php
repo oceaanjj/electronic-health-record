@@ -1,6 +1,10 @@
-@extends('layouts.app')
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+
+@extends('layouts.admin')
 
 @section('content')
+
+
     <div class="container">
 
         {{-- Search and Filter Form --}}
@@ -14,11 +18,11 @@
             <div class="d-flex align-items-center">
                 <span class="me-2">Sort by Date:</span>
                 <a href="{{ route('audit.index', array_merge(request()->query(), ['sort_by' => 'created_at', 'sort_direction' => 'asc'])) }}"
-                    class="btn btn-outline-secondary btn-sm me-1">
+                    class="btn btn-outline-secondary btn-sm me-1 sort-text">
                     Oldest First
                 </a>
                 <a href="{{ route('audit.index', array_merge(request()->query(), ['sort_by' => 'created_at', 'sort_direction' => 'desc'])) }}"
-                    class="btn btn-outline-secondary btn-sm">
+                    class="btn btn-outline-secondary btn-sm sort-text">
                     Newest First
                 </a>
             </div>
@@ -27,13 +31,15 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+
                     <th>Audit ID</th>
                     <th>User</th>
                     <th>User Role</th>
                     <!-- <th>IP Address</th> -->
                     <th>Action</th>
                     <th>Details</th>
-                    <th>Created At</th>
+                    <th>Date | Time</th>
+
                 </tr>
             </thead>
             <tbody>

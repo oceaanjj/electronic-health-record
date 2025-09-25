@@ -169,30 +169,24 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     // //VITAL SIGNS:
     // Route::get('/vital-signs', [VitalSignsController::class, 'show'])->name('vital-signs.show');
-
     // Route::post('/vital-signs', [VitalSignsController::class, 'store'])->name('vital-signs');
-
     // Route::post('/vital-signs/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('vital-signs.select');
-
     // Route::post('/vital-signs/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('vital-signs.cdss');
 
-
+    //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
-
         Route::get('/', [VitalSignsController::class, 'show'])->name('show');
-
         Route::post('/', [VitalSignsController::class, 'store'])->name('store');
-
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-
         Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
 
     });
 
+
+
+
+
     // Add more routes for role: NURSE here
-
-
-
 
 
 });

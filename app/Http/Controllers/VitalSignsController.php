@@ -92,7 +92,7 @@ class VitalSignsController extends Controller
                     [
                         'patient_id' => $validatedData['patient_id'],
                         'date' => $validatedData['date'],
-                        'day_no' => $validatedData['day_no'],
+                        'day_no' => $validatedData['day_no'], // Corrected: Include day_no in the lookup
                         'time' => $dbTime,
                     ],
                     $vitalsForTime

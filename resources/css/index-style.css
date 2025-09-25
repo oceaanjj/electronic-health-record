@@ -16,7 +16,7 @@ h1 {
 }
 
 .header {
-    background: #1A6A24; /* dark green */
+    background: #1a6a24; /* dark green */
     color: #fff;
     padding: 15px 25px;
     border-bottom: 3px solid #d4af37; /* gold */
@@ -68,10 +68,10 @@ h1 {
     background: white;
     border: 2px solid #d4af37; /* Gold border */
     overflow: hidden;
-
 }
 
-.ehr-table th, .ehr-table td {
+.ehr-table th,
+.ehr-table td {
     padding: 14px;
     text-align: center;
     border-bottom: 1px solid #d4af37;
@@ -94,7 +94,8 @@ h1 {
 }
 
 /* Action buttons */
-.btn-edit, .btn-delete {
+.btn-edit,
+.btn-delete {
     padding: 6px 14px;
     margin: 2px;
     border-radius: 4px;

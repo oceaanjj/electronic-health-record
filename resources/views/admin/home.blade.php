@@ -1,6 +1,6 @@
-@vite(['resources/css/bootstrap.css', 'resources/js/app.js'])
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -20,7 +20,8 @@
             <th>Role</th>
             <th>Change Role</th>
         </tr>
-        @foreach(\App\Models\User::all() as $user)
+        {{-- @foreach(\App\Models\User::all() as $user) --}}
+        @foreach(\App\Models\User::where('role', '!=', 'admin')->get() as $user)
             <tr>
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>

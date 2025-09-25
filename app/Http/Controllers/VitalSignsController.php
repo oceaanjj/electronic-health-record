@@ -92,9 +92,10 @@ class VitalSignsController extends Controller
                     [
                         'patient_id' => $validatedData['patient_id'],
                         'date' => $validatedData['date'],
+                        'day_no' => $validatedData['day_no'],
                         'time' => $dbTime,
                     ],
-                    array_merge($vitalsForTime, ['day_no' => $validatedData['day_no']])
+                    $vitalsForTime
                 );
 
                 if ($vitalRecord->wasRecentlyCreated) {
@@ -146,9 +147,10 @@ class VitalSignsController extends Controller
                     [
                         'patient_id' => $validatedData['patient_id'],
                         'date' => $validatedData['date'],
+                        'day_no' => $validatedData['day_no'],
                         'time' => $dbTime,
                     ],
-                    array_merge($vitalsForTime, ['day_no' => $validatedData['day_no']])
+                    $vitalsForTime
                 );
 
                 if ($vitalRecord->wasRecentlyCreated) {
@@ -167,7 +169,6 @@ class VitalSignsController extends Controller
             }
         }
 
-        // Run CDSS Alerts (analyze the posted values — this uses the posted format)
         $cdssService = new CdssService('vitals_rules');
         $allAlerts = [];
         $severityOrder = ['CRITICAL' => 1, 'WARNING' => 2];
@@ -199,7 +200,6 @@ class VitalSignsController extends Controller
                     }
 
                     if ($mostSevereAlert) {
-                        // key alerts by H:i to match Blade times (06:00 etc.)
                         $allAlerts[$time] = $mostSevereAlert;
                     }
                 }

@@ -55,18 +55,18 @@
 
 
             <!-- <div class="section-bar">
-                                                    <label for="day">DAY NO :</label>
-                                                    <select id="day" name="day_no">
-                                                        <option value="">-- Select number --</option>
-                                                        @for ($i = 1; $i <= 30; $i++)
-                                                            {{-- Use the first entry to determine the day_no if data exists --}}
-                                                            <option value="{{ $i }}" @if(old('day_no', optional($vitalsData->first())->day_no) == $i) selected @endif>
-                                                                {{ $i }}
-                                                            </option>
+                                                                                                            <label for="day">DAY NO :</label>
+                                                                                                            <select id="day" name="day_no">
+                                                                                                                <option value="">-- Select number --</option>
+                                                                                                                @for ($i = 1; $i <= 30; $i++)
+                                                                                                                    {{-- Use the first entry to determine the day_no if data exists --}}
+                                                                                                                    <option value="{{ $i }}" @if(old('day_no', optional($vitalsData->first())->day_no) == $i) selected @endif>
+                                                                                                                        {{ $i }}
+                                                                                                                    </option>
 
-                                                        @endfor
-                                                    </select>
-                                                </div> -->
+                                                                                                                @endfor
+                                                                                                            </select>
+                                                                                                        </div> -->
 
             <table>
                 <tr>
@@ -85,29 +85,26 @@
 
                 @foreach ($times as $time)
                     @php
-                        $vitalsRecord = $vitalsData->get($time); // keys are normalized to H:i by controller
+                        $vitalsRecord = $vitalsData->get($time);
                     @endphp
                     <tr>
                         <th class="time">{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</th>
                         <td>
                             <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
-                                value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}">
+                                value="{{ optional($vitalsRecord)->temperature }}">
                         </td>
                         <td>
-                            <input type="text" name="hr_{{ $time }}" placeholder="HR"
-                                value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}">
+                            <input type="text" name="hr_{{ $time }}" placeholder="HR" value="{{ optional($vitalsRecord)->hr }}">
                         </td>
                         <td>
-                            <input type="text" name="rr_{{ $time }}" placeholder="RR"
-                                value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}">
+                            <input type="text" name="rr_{{ $time }}" placeholder="RR" value="{{ optional($vitalsRecord)->rr }}">
                         </td>
                         <td>
-                            <input type="text" name="bp_{{ $time }}" placeholder="BP"
-                                value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}">
+                            <input type="text" name="bp_{{ $time }}" placeholder="BP" value="{{ optional($vitalsRecord)->bp }}">
                         </td>
                         <td>
                             <input type="text" name="spo2_{{ $time }}" placeholder="SpO2"
-                                value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}">
+                                value="{{ optional($vitalsRecord)->spo2 }}">
                         </td>
                         <td>
                             @if (session('cdss.' . $time . '.alert'))

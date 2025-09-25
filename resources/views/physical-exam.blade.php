@@ -1,8 +1,8 @@
-<!-- <head>
+<head>
     <meta charset="UTF-8">
     <title>Physical Exam</title>
     @vite(['./resources/css/lab-values.css'])
-</head> -->
+</head>
 
 @extends('layouts.app')
 
@@ -253,7 +253,7 @@
     </div>
 
     <div class="buttons">
-        <button type="submit" class="btn">Submit</button>
+        <button type=" submit" class="btn">Submit</button>
         <button type="button" class="btn">CDSS</button>
     </div>
 

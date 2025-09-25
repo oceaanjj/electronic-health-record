@@ -1,3 +1,4 @@
+{{-- sidebar, para tawagin nalang sa mga main pages --}}
 <div id="mySidenav"
     class="fixed top-0 left-0 h-full w-75 bg-ehr z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
 

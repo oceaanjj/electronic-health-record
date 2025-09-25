@@ -1,3 +1,6 @@
+
+{{-- header, para tawagin nalang sa mga main pages --}}
+
 <header class="flex items-center justify-between bg-ehr shadow px-6 py-4">
     <div class="flex items-center space-x-4">
 

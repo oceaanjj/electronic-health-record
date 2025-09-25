@@ -1,0 +1,90 @@
+/* Container Styling */
+
+/* Page Title */
+h1 {
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 30px;
+    border-bottom: solid #edb62c;
+    width: 200px;
+}
+
+/* Table Styling */
+.table {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.table thead {
+    background-color: #1a6a24;
+    color: #fff;
+    text-align: center;
+}
+
+.table thead th {
+    font-weight: bold;
+    padding: 12px;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+    background-color: #edb62c;
+    color: #1a6a24;
+    transition: 0.3s;
+}
+
+.table td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Empty Row Styling */
+.table td[colspan="5"] {
+    color: #666;
+    font-style: italic;
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: #1a6a24;
+    border: 1px solid #1a6a24;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #1a6a24;
+    border-color: #1a6a24;
+    color: #fff;
+}
+
+.pagination .page-link:hover {
+    background-color: #edb62c;
+    color: #1a6a24;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #1a6a24;
+    border: solid #edb62c;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #edb62c;
+    border-color: #edb62c;
+    color: #1a6a24;
+    transition: 0.3s;
+}
+
+.sort-text {
+    color: white;
+    border-color: white;
+}

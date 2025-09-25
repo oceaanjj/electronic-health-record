@@ -5,11 +5,34 @@
             ☰
         </button>
 
+        @php
+            $user = Auth::user();
 
-        <a href="{{ route('nurse-home') }}" class="flex items-center space-x-2">
+            if (!$user) {
+                $homeRoute = 'login';
+            } else {
+                switch ($user->role) {
+                    case 'Admin':
+                        $homeRoute = 'admin-home';
+                        break;
+                    case 'Nurse':
+                        $homeRoute = 'nurse-home';
+                        break;
+                    case 'Doctor':
+                        $homeRoute = 'doctor-home';
+                        break;
+                    default:
+                        $homeRoute = 'login';
+                }
+            }
+        @endphp
+
+        <a href="{{ route($homeRoute) }}" class="flex items-center space-x-2">
             <img src="{{ asset('img/ehr-logo.png') }}" alt="Hospital Logo" class="h-10">
             <span class="text-lg font-bold text-white">ELECTRONIC HEALTH RECORD</span>
+
         </a>
+
     </div>
 
 </header>

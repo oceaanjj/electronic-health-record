@@ -7,33 +7,62 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Controllers\AuditLogController; // Import the AuditLogController
 
 class LoginController extends Controller
 {
+    /**
+     * Redirects authenticated users to their home dashboard.
+     * This is called by the route and ensures a logged-in user never sees the login page.
+     */
+    protected function redirectToRoleBasedDashboard()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'Nurse':
+                    return redirect()->route('nurse-home');
+                case 'Doctor':
+                    return redirect()->route('doctor-home');
+                case 'Admin':
+                    return redirect()->route('admin-home');
+            }
+        }
+        return null;
+    }
+
     public function showRoleSelectionForm()
     {
+        if ($response = $this->redirectToRoleBasedDashboard()) {
+            return $response;
+        }
         return view('home');
     }
 
     public function showNurseLoginForm()
     {
+        if ($response = $this->redirectToRoleBasedDashboard()) {
+            return $response;
+        }
         return view('login.nurse-login');
     }
 
     public function showDoctorLoginForm()
     {
+        if ($response = $this->redirectToRoleBasedDashboard()) {
+            return $response;
+        }
         return view('login.doctor-login');
     }
 
     public function showAdminLoginForm()
     {
+        if ($response = $this->redirectToRoleBasedDashboard()) {
+            return $response;
+        }
         return view('login.admin-login');
     }
-
-
-    // app/Http/Controllers/Auth/LoginController.php
-
-    // ... other methods
 
     public function authenticate(Request $request): RedirectResponse
     {
@@ -49,17 +78,19 @@ class LoginController extends Controller
 
             if (strtolower($user->role) === $expectedRole) {
                 $request->session()->regenerate();
+                // Log the successful login action with user details
+                AuditLogController::log('Login Successful', 'User logged in to the system.', ['user_role' => $user->role]);
 
                 switch ($user->role) {
-                    case 'Nurse': // Correct case
+                    case 'Nurse':
                         return redirect()->route('nurse-home')->with('success', 'Nurse ' . $user->username . ' login successful!');
-                    case 'Doctor': // Correct case
+                    case 'Doctor':
                         return redirect()->route('doctor-home')->with('success', 'Doctor ' . $user->username . ' login successful!');
-                    case 'Admin': // Correct case
+                    case 'Admin':
                         return redirect()->route('admin-home')->with('success', 'Admin ' . $user->username . ' login successful!');
                     default:
-                        // Fallback for any other role
-                        return redirect()->route('home')->with('success', $user->username . ' FAILED!');
+                        Auth::logout();
+                        return redirect()->route('home')->withErrors(['username' => 'Access denied. Unrecognized role.']);
                 }
             }
 
@@ -71,13 +102,15 @@ class LoginController extends Controller
         return back()->withErrors(['username' => 'Invalid login details.'])->onlyInput('username');
     }
 
-
     public function logout(Request $request): RedirectResponse
     {
+        // Log the logout action before logging out
+        if (Auth::check()) {
+            AuditLogController::log('Logout', 'User logged out of the system.');
+        }
+
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/')->with('success', 'Logout successful!');

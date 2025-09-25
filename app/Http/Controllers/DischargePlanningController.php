@@ -6,72 +6,94 @@ use Illuminate\Http\Request;
 use App\Models\DischargePlan;
 use App\Models\Patient;
 use Throwable;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class DischargePlanningController extends Controller
 {
-    /**
-     * Display the Discharge Planning form and optionally populate it with patient data.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
-     */
+
+    public function selectPatient(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $request->session()->put('selected_patient_id', $patientId);
+        return redirect()->route('discharge-planning')->with('selected_patient_id', $patientId);
+    }
+
     public function show(Request $request)
     {
         $patients = Patient::all();
         $selectedPatient = null;
         $dischargePlan = null;
 
-        // Check if a patient ID is selected from the dropdown
-        if ($request->has('patient_id')) {
-            $patientId = $request->input('patient_id');
-            $selectedPatient = Patient::find($patientId);
+        // Get the patient_id from the session, not the GET request
+        $patientId = $request->session()->get('selected_patient_id');
 
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
             if ($selectedPatient) {
-                // Fetch the discharge planning record for the selected patient
                 $dischargePlan = DischargePlan::where('patient_id', $patientId)->first();
+            }
+            if ($dischargePlan) {
+                $request->session()->flash('old', $dischargePlan->toArray());
             }
         }
 
-        // Pass all necessary data to the view
         return view('discharge-planning', compact('patients', 'selectedPatient', 'dischargePlan'));
     }
 
-    /**
-     * Store a new or update an existing Discharge Planning record.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function store(Request $request)
     {
-        try {
-            // Check if patient_id is present and not null
-            if (empty($request->patient_id)) {
-                return back()->with('error', 'Please select a patient before saving the discharge planning record.');
-            }
 
-            // The updateOrCreate method will either find the record for the patient
-            // and update it, or create a new one if it doesn't exist.
-            DischargePlan::updateOrCreate(
-                ['patient_id' => $request->patient_id],
-                [
-                    'criteria_feverRes' => $request->criteria_feverRes,
-                    'criteria_patientCount' => $request->criteria_patientCount,
-                    'criteria_manageFever' => $request->criteria_manageFever,
-                    'criteria_manageFever2' => $request->criteria_manageFever2,
-                    'instruction_med' => $request->instruction_med,
-                    'instruction_appointment' => $request->instruction_appointment,
-                    'instruction_fluidIntake' => $request->instruction_fluidIntake,
-                    'instruction_exposure' => $request->instruction_exposure,
-                    'instruction_complications' => $request->instruction_complications,
-                ]
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+        ], [
+            'patient_id.required' => 'Please choose a patient first.',
+            'patient_id.exists' => 'Please choose a patient first.',
+        ]);
+
+
+        $data = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'criteria_feverRes' => 'nullable|string',
+            'criteria_patientCount' => 'nullable|string',
+            'criteria_manageFever' => 'nullable|string',
+            'criteria_manageFever2' => 'nullable|string',
+            'instruction_med' => 'nullable|string',
+            'instruction_appointment' => 'nullable|string',
+            'instruction_fluidIntake' => 'nullable|string',
+            'instruction_exposure' => 'nullable|string',
+            'instruction_complications' => 'nullable|string',
+        ]);
+
+        $existingPlan = DischargePlan::where('patient_id', $data['patient_id'])->first();
+
+        if ($existingPlan) {
+            $existingPlan->update($data);
+            $message = 'Discharge Planning record updated successfully!';
+
+            //  audit log for update
+            AuditLogController::log(
+                'Discharge Plan Updated',
+                'User ' . Auth::user()->username . ' updated an existing Discharge Plan record.',
+                ['patient_id' => $data['patient_id']]
             );
 
-            return redirect()->back()->with('success', 'Discharge Planning record saved successfully.');
+        } else {
+            DischargePlan::create($data);
+            $message = 'Discharge Planning record created successfully.';
 
-        } catch (Throwable $e) {
-            // General error handling
-            return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());
+            // audit log for creation
+            AuditLogController::log(
+                'Discharge Plan Created',
+                'User ' . Auth::user()->username . ' created a new Discharge Plan record.',
+                ['patient_id' => $data['patient_id']]
+            );
         }
+
+
+        return redirect()->route('discharge-planning')
+            ->withInput($data)
+            ->with('success', $message);
     }
 }

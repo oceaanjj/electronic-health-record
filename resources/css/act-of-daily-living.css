@@ -61,7 +61,7 @@ body {
 }
 
 .section-bar select,
-.section-bar input[type="date"] {
+.date {
     padding: 6px;
     border: 1px solid #edb62c;
     border-radius: 4px;

@@ -1,131 +1,90 @@
-
 @extends('layouts.app')
 
-@section('title', 'Patient Vital Signs')
+@section('title', 'Patient Lab Values')
 
 @section('content')
+
     <div class="container">
         <div class="header">
-            <label for="patient">PATIENT NAME :</label>
-            <select id="patient" name="patient">
-                <option value="">-- Select Patient --</option>
-                <option value="Althea Pascua">Althea Pascua</option>
-                <option value="Jovilyn Esquerra">Jovilyn Esquerra</option>
-            </select>
+            <label for="patient_info">PATIENT NAME :</label>
+            <form action="{{ route('lab-values.select') }}" method="POST" id="patient-select-form">
+                @csrf
+                <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                    <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
+                    @foreach ($patients as $patient)
+                        <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
+                        selected @endif>
+                            {{ $patient->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
         </div>
 
-        <table>
-            <tr>
-                <th class="title">LAB TEST</th>
-                <th class="title">RESULT</th>
-                <th class="title">PEDIATRIC NORMAL RANGE</th>
-                <th class="title">ALERTS</th>
-            </tr>
+        <form action="{{ route('lab-values.store') }}" method="POST">
+            @csrf
 
-            <tr>
-                <th class="title">WBC (×10⁹/L)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
+            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
-            <tr>
-                <th class="title">RBC (×10¹²/L)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
+            <table>
+                <tr>
+                    <th class="title">LAB TEST</th>
+                    <th class="title">RESULT</th>
+                    <th class="title">PEDIATRIC NORMAL RANGE</th>
+                    <th class="title">ALERTS</th>
+                </tr>
 
-            <tr>
-                <th class="title">Hgb (g/dL)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
+                @php
+                    $labTests = [
+                        'WBC (×10⁹/L)' => 'wbc',
+                        'RBC (×10¹²/L)' => 'rbc',
+                        'Hgb (g/dL)' => 'hgb',
+                        'Hct (%)' => 'hct',
+                        'Platelets (×10⁹/L)' => 'platelets',
+                        'MCV (fL)' => 'mcv',
+                        'MCH (pg)' => 'mch',
+                        'MCHC (g/dL)' => 'mchc',
+                        'RDW (%)' => 'rdw',
+                        'Neutrophils (%)' => 'neutrophils',
+                        'Lymphocytes (%)' => 'lymphocytes',
+                        'Monocytes (%)' => 'monocytes',
+                        'Eosinophils (%)' => 'eosinophils',
+                        'Basophils (%)' => 'basophils',
+                    ];
+                @endphp
 
-            <tr>
-                <th class="title">Hct (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Platelets (×10⁹/L)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">MCV (fL)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">MCH (pg)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">MCHC (g/dL)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">RDW (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Neutrophils (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Lymphocytes (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Monocytes (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Eosinophils (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Basophils (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-        </table>
+                @foreach ($labTests as $label => $name)
+                    <tr>
+                        <th class="title">{{ $label }}</th>
+                        <td>
+                            <input type="text" name="{{ $name }}_result" placeholder="result"
+                                value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}">
+                        </td>
+                        <td>
+                            <input type="text" name="{{ $name }}_normal_range" placeholder="normal range"
+                                value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}">
+                        </td>
+                        <td>
+                            @if (session('cdss') && isset(session('cdss')[$name . '_alerts']))
+                                <div class="text-red-500 text-sm mt-1">
+                                    @foreach (session('cdss')[$name . '_alerts'] as $alert)
+                                        <p>{{ $alert }}</p>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
     </div>
 
     <div class="buttons">
-        <a href="#" class="btn">CDSS</a>
+        <button class="btn" type="button">CDSS</button>
         <button class="btn" type="submit">Submit</button>
     </div>
+
+    </form>
+
 @endsection
 
 @push('styles')

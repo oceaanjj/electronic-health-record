@@ -4,59 +4,55 @@
 
 @section('content')
 
-    {{-- Validation error messages --}}
-    @if ($errors->any())
-        <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <div class="container">
+        <div class="header">
+            <label for="patient_id">PATIENT NAME :</label>
 
-    {{-- Error message from controller catch block --}}
-    @if (session('error'))
-        <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-            {{ session('error') }}
-        </div>
-    @endif
+            {{-- PATIENT DROPDOWN AND DATE FORM --}}
+            <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
+                class="flex items-center space-x-4">
+                @csrf
 
-    {{-- Success message from controller --}}
-    @if (session('success'))
-        <div style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <form action="{{ route('vital-signs') }}" method="POST">
-        @csrf
-        <div class="container">
-            <div class="header">
-                <label for="patient">PATIENT NAME :</label>
-                <select id="patient" name="patient_id">
-                    <option value="">-- Select Patient --</option>
-                    @foreach($patients as $patient)
-                        {{-- The value of this option is the patient's database ID --}}
-                        <option value="{{ $patient->patient_id }}">{{ $patient->name }}</option>
+                <label for="patient_id">PATIENT NAME :</label>
+                <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                    <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
+                    @foreach ($patients as $patient)
+                        <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
+                        selected @endif>
+                            {{ $patient->name }}
+                        </option>
                     @endforeach
                 </select>
-                @error('patient_id')
-                    <span style="color: #e3342f; font-size: 0.8em; margin-top: 5px;">{{ $message }}</span>
-                @enderror
-            </div>
 
-            <div class="section-bar">
-                <label for="day">DAY NO :</label>
-                <select id="day" name="day">
+                <!-- DATE -->
+                <label for="date">DATE :</label>
+                <input class="date" type="date" id="date_selector" name="date" value="{{ session('selected_date') }}"
+                    onchange="this.form.submit()">
+
+                <!-- DAY NO -->
+                <label for="day_no">DAY NO :</label>
+                <select id="day_no" name="day_no" onchange="this.form.submit()">
                     <option value="">-- Select number --</option>
-                    @for($i = 1; $i <= 30; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                    @for ($i = 1; $i <= 30; $i++)
+                        <option value="{{ $i }}" @if(session('selected_day_no') == $i) selected @endif>
+                            {{ $i }}
+                        </option>
                     @endfor
                 </select>
-                <label for="date">DATE :</label>
-                <input type="date" id="date" name="date">
-            </div>
+            </form>
+
+
+        </div>
+
+        {{-- MAIN FORM (submit) --}}
+        <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
+            @csrf
+
+            {{-- Hidden PATIENT_ID AND DATE from session --}}
+            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+            <input type="hidden" name="date" value="{{ session('selected_date') }}">
+            <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
+
 
             <table>
                 <tr>
@@ -69,89 +65,64 @@
                     <th class="title">Alerts</th>
                 </tr>
 
-                <tr>
-                    <th class="time">6:00 AM</th>
-                    <td><input type="text" name="temperature_06:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_06:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_06:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_06:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_06:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_06:00" placeholder="alerts"></td>
-                </tr>
-                <tr>
-                    <th class="time">8:00 AM</th>
-                    <td><input type="text" name="temperature_08:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_08:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_08:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_08:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_08:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_08:00" placeholder="alerts"></td>
-                </tr>
-                <tr>
-                    <th class="time">12:00 PM</th>
-                    <td><input type="text" name="temperature_12:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_12:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_12:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_12:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_12:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_12:00" placeholder="alerts"></td>
-                </tr>
-                <tr>
-                    <th class="time">2:00 PM</th>
-                    <td><input type="text" name="temperature_14:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_14:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_14:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_14:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_14:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_14:00" placeholder="alerts"></td>
-                </tr>
-                <tr>
-                    <th class="time">6:00 PM</th>
-                    <td><input type="text" name="temperature_18:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_18:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_18:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_18:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_18:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_18:00" placeholder="alerts"></td>
-                </tr>
-                <tr>
-                    <th class="time">8:00 PM</th>
-                    <td><input type="text" name="temperature_20:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_20:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_20:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_20:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_20:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_20:00" placeholder="alerts"></td>
-                </tr>
-                <tr>
-                    <th class="time">12:00 AM</th>
-                    <td><input type="text" name="temperature_00:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_00:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_00:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_00:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_00:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_00:00" placeholder="alerts"></td>
-                </tr>
-                <tr>
-                    <th class="time">2:00 AM</th>
-                    <td><input type="text" name="temperature_02:00" placeholder="temperature"></td>
-                    <td><input type="text" name="hr_02:00" placeholder="HR"></td>
-                    <td><input type="text" name="rr_02:00" placeholder="RR"></td>
-                    <td><input type="text" name="bp_02:00" placeholder="BP"></td>
-                    <td><input type="text" name="spo2_02:00" placeholder="SpO2"></td>
-                    <td><input type="text" name="alerts_02:00" placeholder="alerts"></td>
-                </tr>
-            </table>
-        </div>
+                @php
+                    $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+                    $severityOrder = ['CRITICAL' => 1, 'WARNING' => 2, 'INFO' => 3, 'NONE' => 4];
+                @endphp
 
-        <div class="buttons">
-            <button class="btn" type="submit">Submit</button>
-            <a href="#" class="btn">CDSS</a>
-        </div>
-    </form>
+                @foreach ($times as $time)
+                    @php
+                        $vitalsRecord = $vitalsData->get($time);
+
+                        // Kunin ang alerts from session at piliin ang pinaka-severe
+                        $alerts = session("cdss.$time") ?? [];
+                        $mostSevere = collect($alerts)
+                            ->sortBy(fn($a) => $severityOrder[$a['severity']] ?? 4)
+                            ->first();
+                    @endphp
+                    <tr>
+                        <th class="time">{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</th>
+                        <td>
+                            <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
+                                value="{{ optional($vitalsRecord)->temperature }}">
+                        </td>
+                        <td>
+                            <input type="text" name="hr_{{ $time }}" placeholder="HR" value="{{ optional($vitalsRecord)->hr }}">
+                        </td>
+                        <td>
+                            <input type="text" name="rr_{{ $time }}" placeholder="RR" value="{{ optional($vitalsRecord)->rr }}">
+                        </td>
+                        <td>
+                            <input type="text" name="bp_{{ $time }}" placeholder="BP" value="{{ optional($vitalsRecord)->bp }}">
+                        </td>
+                        <td>
+                            <input type="text" name="spo2_{{ $time }}" placeholder="SpO2"
+                                value="{{ optional($vitalsRecord)->spo2 }}">
+                        </td>
+                        <td>
+                            @if ($mostSevere)
+                                @php
+                                    $color = $mostSevere['severity'] === 'CRITICAL' ? 'red'
+                                        : ($mostSevere['severity'] === 'WARNING' ? 'orange'
+                                        : ($mostSevere['severity'] === 'INFO' ? 'blue' : 'green'));
+                                @endphp
+                                <span style="color: {{ $color }}">
+                                    {{ $mostSevere['alert'] }}
+                                </span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        </form>
+    </div>
+
+    <div class="buttons">
+        <button class="btn">CDSS</button>
+        <button class="btn" type="button" onclick="document.getElementById('vitals-form').submit();">Submit</button>
+    </div>
 @endsection
 
-
 @push('styles')
-    @vite(['resources/css/vital-signs-style.css'])
+    @vite(['resources/css/vital-signs-style.css', 'resources/css/act-of-daily-living.css'])
 @endpush

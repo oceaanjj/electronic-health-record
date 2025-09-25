@@ -1,0 +1,106 @@
+/* General page styling */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a6a24;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* Heading */
+h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* Error messages */
+div[style*="color:red;"] {
+    background: #f8d7da;
+    color: #842029 !important;
+    border: 1px solid #f5c2c7;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Form container */
+form {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+}
+
+/* Form groups */
+form div {
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #1a6a24;
+}
+
+/* Inputs and selects */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+input:focus,
+select:focus {
+    border-color: #1a6a24;
+    outline: none;
+    box-shadow: 0 0 5px rgba(26, 106, 36, 0.3);
+}
+
+/* Submit button */
+button {
+    background-color: #1a6a24;
+    color: #fff;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+button:hover {
+    background-color: #14531b;
+    transform: scale(1.05);
+}
+
+.back {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #d4a322;
+    transition: background 0.3s, color 0.3s;
+}
+.back:hover {
+    background: #d59a05;
+    color: #fff;
+}
+
+.register {
+    text-align: center;
+    font-weight: bold;
+    margin: auto;
+    padding: 10px;
+    font-size: 1.4rem;
+}

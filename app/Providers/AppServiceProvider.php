@@ -12,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * The policy mappings for the application.
      *
-     * @var arraya
+     * @var array
      */
     protected $policies = [
         User::class => UserPolicy::class,
@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+    
 
     /**
      * Bootstrap any application services.

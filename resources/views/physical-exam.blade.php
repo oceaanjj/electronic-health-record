@@ -6,6 +6,7 @@
 
     <!-- ALERT MESSAGE -->
 
+
     @if ($errors->any())
         <div style="color:red; margin-bottom:5px padding:5px;">
             <h5 style="margin-bottom: 10px;">Errors:</h5>
@@ -22,6 +23,7 @@
             {{ session('success') }}
         </div>
     @endif
+    
 
     {{-- Updated PATIENT DROP-DOWN FORM --}}
 

@@ -1,39 +1,50 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html
+    <head>
+        <title>Patient Vital Signs</title>
+        @vite(['./resources/css/vital-signs-style.css'])
 
-@section('title', 'Patient Vital Signs')
+    </head>
 
-@section('content')
+    <body>
 
-    {{-- Validation error messages --}}
-    @if ($errors->any())
-        <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
-            <ul>
-                @foreach ($errors->all() as $error)
+   
+        <!-- Validation error messages -->
+        @if ($errors->any())
+            <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                <ul>
+                    @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
     @endif
 
-    {{-- Error message from controller catch block --}}
+    <!-- Error message from controller catch block -->
     @if (session('error'))
         <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
             {{ session('error') }}
         </div>
     @endif
 
-    {{-- Success message from controller --}}
+    <!-- Success message from controller -->
     @if (session('success'))
         <div style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
             {{ session('success') }}
         </div>
     @endif
+    
+    
+
+
+
+    <div class="form-group">
 
     <form action="{{ route('vital-signs') }}" method="POST">
         @csrf
         <div class="container">
             <div class="header">
-                <label for="patient">PATIENT NAME :</label>
+                <label class="text-ehr" for="patient">PATIENT NAME :</label>
                 <select id="patient" name="patient_id">
                     <option value="">-- Select Patient --</option>
                     @foreach($patients as $patient)
@@ -149,9 +160,8 @@
             <a href="#" class="btn">CDSS</a>
         </div>
     </form>
-@endsection
+</html>
 
 
-@push('styles')
-    @vite(['resources/css/vital-signs-style.css'])
-@endpush
+
+

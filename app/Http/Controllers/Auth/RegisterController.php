@@ -19,25 +19,25 @@ class RegisterController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'role'     => 'required|in:doctor,nurse',
+            'role' => 'required|in:doctor,nurse',
         ]);
 
         // Create user
         $user = User::create([
-            'username'   => $request->username,
-            'email'      => $request->email,
-            'password'   => bcrypt($request->password),
-            'role'  => $request->role,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
         ]);
 
-        // Create audit log
-        AuditLog::create([
-            'id' => Auth::id(),
-            'action'  => 'Registered new user',
-            'details' => "User: {$user->username} | Role: {$user->role_name}",
-        ]);
+        // // Create audit log
+        // AuditLog::create([
+        //     'id' => Auth::id(),
+        //     'action'  => 'Registered new user',
+        //     'details' => "User: {$user->username} | Role: {$user->role_name}",
+        // ]);
 
         return redirect()->route('admin-home')->with('success', 'User registered successfully!');
     }

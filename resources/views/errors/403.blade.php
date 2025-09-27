@@ -5,56 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>403 Forbidden</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a5e23;
-            color: #e5e5e5ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-
-        .container {
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            color: #dc3545;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            font-size: 1.25rem;
-            margin-top: 0;
-        }
-
-        a {
-            color: #ffe100ff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            color: #ffe100ff;
-
-            text-decoration: underline;
-        }
-    </style>
+    @vite(['./resources/css/app.css'])
 
 </head>
 
-<body>
-    <div class="container">
-        <h1>403 Forbidden</h1>
-        <p>You do not have permission to access this page.</p>
-        <p>Please check your credentials or contact the administrator.</p>
-        <a href="{{ route('home') }}">Return to Home Page</a>
+<body class="bg-white flex-1">
+    <div class="flex flex-row items-center justify-center min-h-screen space-y-6 gap-30">
+        <div>
+            <img class="w-120 h-auto" src="img/others/403error.png" alt="403 Forbidden">
+        </div>
+
+        <div>
+            <p class="text-[220px] text-dark-red font-creato-black leading-none text-center">403</p>
+            <p class="text-[60px] text-dark-red font-creato-black leading-none pb-10 text-center">Forbidden</p>
+            <p class="text-[18px] font-creato-bold text-center leading-7">You do not have permission to access this page.</p>
+            <p class="text-[18px] font-creato-bold text-center leading-7">Please check your credentials or contact the administrator.</p>
+
+            <div class="mt-4 flex justify-center">
+                <a href="{{ route('home') }}"
+                class="font-creato-bold text-[15px] text-white px-6 py-3 bg-ehr rounded-full shadow-md
+                     hover:bg-dark-yellow hover:font-creato-bold hover:text-ehr hover:shadow-lg transition ease-in-out duration-200">
+                    RETURN TO HOME PAGE
+                </a>
+            </div>
+
+        </div>
     </div>
 </body>
 

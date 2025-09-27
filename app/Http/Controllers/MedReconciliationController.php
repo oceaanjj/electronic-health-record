@@ -7,16 +7,20 @@ use App\Models\HomeMedication;
 use App\Models\ChangesInMedication;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class MedReconciliationController extends Controller
 {
-    /**
-     * Display the Medication Reconciliation form and optionally populate it with patient data.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
-     */
+
+    public function selectPatient(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $request->session()->put('selected_patient_id', $patientId);
+        return redirect()->route('medication-reconciliation');
+    }
+
     public function show(Request $request)
     {
         $patients = Patient::all();
@@ -25,11 +29,11 @@ class MedReconciliationController extends Controller
         $homeMedication = null;
         $changesInMedication = null;
 
-        // Check if a patient ID is selected from the dropdown
-        if ($request->has('patient_id')) {
-            $patientId = $request->input('patient_id');
-            $selectedPatient = Patient::find($patientId);
+        // Get the patient ID from the session
+        $patientId = $request->session()->get('selected_patient_id');
 
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
             if ($selectedPatient) {
                 // Fetch the medical records for the selected patient
                 $currentMedication = MedicalReconciliation::where('patient_id', $patientId)->first();
@@ -41,65 +45,120 @@ class MedReconciliationController extends Controller
         // Pass all necessary data to the view
         return view('medication-reconciliation', compact('patients', 'selectedPatient', 'currentMedication', 'homeMedication', 'changesInMedication'));
     }
-    
-    /**
-     * Store a new or update an existing Medication Reconciliation record.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
+
     public function store(Request $request)
     {
-        try {
-            // Check if patient_id is present and not null
-            if (empty($request->patient_id)) {
-                return back()->with('error', 'Please select a patient before saving the medication reconciliation record.');
-            }
 
-            // Update or create the record for "Patient's Current Medication"
-            MedicalReconciliation::updateOrCreate(
-                ['patient_id' => $request->patient_id],
-                [
-                    'current_med' => $request->current_med,
-                    'current_dose' => $request->current_dose,
-                    'current_route' => $request->current_route,
-                    'current_frequency' => $request->current_frequency,
-                    'current_indication' => $request->current_indication,
-                    'current_text' => $request->current_text,
-                ]
-            );
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+        ], [
+            'patient_id.required' => 'Please choose a patient first.',
+            'patient_id.exists' => 'Please choose a patient first.',
+        ]);
 
-            // Update or create the record for "Patient's Home Medication"
-            HomeMedication::updateOrCreate(
-                ['patient_id' => $request->patient_id],
-                [
-                    'home_med' => $request->home_med,
-                    'home_dose' => $request->home_dose,
-                    'home_route' => $request->home_route,
-                    'home_frequency' => $request->home_frequency,
-                    'home_indication' => $request->home_indication,
-                    'home_text' => $request->home_text,
-                ]
-            );
 
-            // Update or create the record for "Changes in Medication During Hospitalization"
-            ChangesInMedication::updateOrCreate(
-                ['patient_id' => $request->patient_id],
-                [
-                    'change_med' => $request->change_med,
-                    'change_dose' => $request->change_dose,
-                    'change_route' => $request->change_route,
-                    'change_frequency' => $request->change_frequency,
-                    'change_indication' => $request->change_indication,
-                    'change_text' => $request->change_text,
-                ]
-            );
-
-            return redirect()->back()->with('success', 'Medication Reconciliation record saved successfully.');
-
-        } catch (Throwable $e) {
-            // General error handling
-            return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());
+        if (!$request->has('patient_id')) {
+            return back()->with('error', 'No patient selected.');
         }
+
+        $data = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'current_med' => 'nullable|string',
+            'current_dose' => 'nullable|string',
+            'current_route' => 'nullable|string',
+            'current_frequency' => 'nullable|string',
+            'current_indication' => 'nullable|string',
+            'current_text' => 'nullable|string',
+            'home_med' => 'nullable|string',
+            'home_dose' => 'nullable|string',
+            'home_route' => 'nullable|string',
+            'home_frequency' => 'nullable|string',
+            'home_indication' => 'nullable|string',
+            'home_text' => 'nullable|string',
+            'change_med' => 'nullable|string',
+            'change_dose' => 'nullable|string',
+            'change_route' => 'nullable|string',
+            'change_frequency' => 'nullable|string',
+            'change_indication' => 'nullable|string',
+            'change_text' => 'nullable|string',
+        ]);
+
+        $patientId = $data['patient_id'];
+        $username = Auth::user() ? Auth::user()->username : 'Guest';
+
+        $created = false;
+        $updated = false;
+
+        // Handle Patient's Current Medication
+        $currentMed = MedicalReconciliation::updateOrCreate(['patient_id' => $patientId], $request->only([
+            'current_med',
+            'current_dose',
+            'current_route',
+            'current_frequency',
+            'current_indication',
+            'current_text',
+        ]));
+        if ($currentMed->wasRecentlyCreated) {
+            $created = true;
+        } else {
+            $updated = true;
+        }
+
+        // Handle Patient's Home Medication
+        $homeMed = HomeMedication::updateOrCreate(['patient_id' => $patientId], $request->only([
+            'home_med',
+            'home_dose',
+            'home_route',
+            'home_frequency',
+            'home_indication',
+            'home_text',
+        ]));
+        if ($homeMed->wasRecentlyCreated) {
+            $created = true;
+        } elseif ($homeMed->wasChanged()) {
+            $updated = true;
+        }
+
+        // Handle Changes in Medication During Hospitalization
+        $changesInMed = ChangesInMedication::updateOrCreate(['patient_id' => $patientId], $request->only([
+            'change_med',
+            'change_dose',
+            'change_route',
+            'change_frequency',
+            'change_indication',
+            'change_text',
+        ]));
+        if ($changesInMed->wasRecentlyCreated) {
+            $created = true;
+        } elseif ($changesInMed->wasChanged()) {
+            $updated = true;
+        }
+
+        // Audit log and alert message
+        $message = '';
+        $alert = '';
+        $action = '';
+        if ($created) {
+            $message = 'created a new Medication Reconciliation record.';
+            $alert = 'Medication Reconciliation data saved successfully!';
+            $action = 'Created';
+        } elseif ($updated) {
+            $message = 'updated an existing Medication Reconciliation record.';
+            $alert = 'Medication Reconciliation data updated successfully!';
+            $action = 'Updated';
+        }
+
+        if ($message) {
+            AuditLogController::log(
+                'Medication Reconciliation ' . $action,
+                'User ' . $username . ' ' . $message,
+                ['patient_id' => $patientId]
+            );
+        }
+
+        return redirect()->route('medication-reconciliation')
+            ->with('success', $alert);
+
     }
 }

@@ -1,6 +1,5 @@
 /* Container Styling */
 
-
 /* Page Title */
 h1 {
     color: #fff;
@@ -8,9 +7,8 @@ h1 {
     margin-bottom: 20px;
     text-align: center;
     font-size: 30px;
-    border: solid #EDB62C;
+    border-bottom: solid #edb62c;
     width: 200px;
-
 }
 
 /* Table Styling */
@@ -22,7 +20,7 @@ h1 {
 }
 
 .table thead {
-    background-color: #1A6A24;
+    background-color: #1a6a24;
     color: #fff;
     text-align: center;
 }
@@ -37,8 +35,8 @@ h1 {
 }
 
 .table tbody tr:hover {
-    background-color: #EDB62C;
-    color: #1A6A24;
+    background-color: #edb62c;
+    color: #1a6a24;
     transition: 0.3s;
 }
 
@@ -56,32 +54,37 @@ h1 {
 
 /* Pagination */
 .pagination .page-link {
-    color: #1A6A24;
-    border: 1px solid #1A6A24;
+    color: #1a6a24;
+    border: 1px solid #1a6a24;
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #1A6A24;
-    border-color: #1A6A24;
+    background-color: #1a6a24;
+    border-color: #1a6a24;
     color: #fff;
 }
 
 .pagination .page-link:hover {
-    background-color: #EDB62C;
-    color: #1A6A24;
+    background-color: #edb62c;
+    color: #1a6a24;
 }
 
 /* Buttons */
-.btn-primary  {
-    background-color: #1A6A24;
-    border: solid #EDB62C;
-    font-weight: bold ;
+.btn-primary {
+    background-color: #1a6a24;
+    border: solid #edb62c;
+    font-weight: bold;
     padding: 10px 20px;
 }
 
 .btn-primary:hover {
-    background-color: #EDB62C;
-    border-color: #EDB62C;
-    color: #1A6A24;
+    background-color: #edb62c;
+    border-color: #edb62c;
+    color: #1a6a24;
     transition: 0.3s;
+}
+
+.sort-text {
+    color: white;
+    border-color: white;
 }

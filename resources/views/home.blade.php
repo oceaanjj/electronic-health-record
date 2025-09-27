@@ -7,6 +7,24 @@
   @vite('resources/css/app.css')
 </head>
 
+<!-- Alerts -->
+@vite(['resources/js/app.js'])
+
+@if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert" role="alert"
+    id="success-alert">
+    {{ session('success') }}
+    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+  </div>
+@endif
+@if (session('error'))
+  <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert" role="alert"
+    id="error-alert">
+    {{ session('error') }}
+    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+  </div>
+@endif
+
 <body class="font-sans bg-white text-gray-900">
 
   <!-- NAVBAR -->
@@ -87,11 +105,7 @@
 
     </div>
 
-    @if (session('success'))
-      <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
-        {{ session('success') }}
-      </div>
-    @endif
+
   </main>
 
 </body>

@@ -57,7 +57,6 @@ class ChangesInMedication extends Model
         'change_dose',
         'change_route',
         'change_frequency',
-        'change_indication',
         'change_text',
     ];
     

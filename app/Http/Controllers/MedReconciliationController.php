@@ -80,7 +80,6 @@ class MedReconciliationController extends Controller
             'change_dose' => 'nullable|string',
             'change_route' => 'nullable|string',
             'change_frequency' => 'nullable|string',
-            'change_indication' => 'nullable|string',
             'change_text' => 'nullable|string',
         ]);
 
@@ -126,7 +125,6 @@ class MedReconciliationController extends Controller
             'change_dose',
             'change_route',
             'change_frequency',
-            'change_indication',
             'change_text',
         ]));
         if ($changesInMed->wasRecentlyCreated) {

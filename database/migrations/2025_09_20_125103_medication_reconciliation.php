@@ -42,7 +42,6 @@ return new class extends Migration
             $table->string('change_dose')->nullable();
             $table->string('change_route')->nullable();
             $table->string('change_frequency')->nullable();
-            $table->string('change_indication')->nullable();
             $table->string('change_text')->nullable();
             $table->timestamps();
         });

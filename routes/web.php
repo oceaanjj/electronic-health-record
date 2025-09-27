@@ -173,15 +173,15 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     // Route::post('/vital-signs/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('vital-signs.select');
     // Route::post('/vital-signs/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('vital-signs.cdss');
 
-    //VITAL SIGNS:
-    Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
-        Route::get('/', [VitalSignsController::class, 'show'])->name('show');
-        Route::post('/', [VitalSignsController::class, 'store'])->name('store');
-        Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-        Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
-   Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
+//     //VITAL SIGNS:
+//     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
+//         Route::get('/', [VitalSignsController::class, 'show'])->name('show');
+//         Route::post('/', [VitalSignsController::class, 'store'])->name('store');
+//         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
+//         Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
+//    Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
 
-    });
+//     });
 
 
 

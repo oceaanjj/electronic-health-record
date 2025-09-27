@@ -33,9 +33,6 @@ class Vitals extends Model
         'spo2',
     ];
 
-    /**
-     * Get the patient that owns the vital sign record.
-     */
     public function patient()
     {
         return $this->belongsTo(Patient::class);

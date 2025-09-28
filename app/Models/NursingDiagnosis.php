@@ -8,6 +8,7 @@ class NursingDiagnosis extends Model
 {
     protected $fillable = [
         'physical_exam_id',
+        'intake_and_output_id',
         'diagnosis',
         'planning',
         'intervention',
@@ -18,4 +19,8 @@ class NursingDiagnosis extends Model
     {
         return $this->belongsTo(PhysicalExam::class);
     }
-}
+    public function intakeAndOutput()
+    {
+        return $this->belongsTo(IntakeAndOutput::class);
+    }
+} 

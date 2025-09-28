@@ -36,7 +36,7 @@ class PhysicalExam extends Model
         return $this->belongsTo(Patient::class);
     }
     //connection to nursing diagnosis table
-    public function nursingDiagnoses()
+    public function nursingDiagnosis()
     {
         return $this->hasMany(NursingDiagnosis::class);
     }

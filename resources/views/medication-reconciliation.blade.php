@@ -116,8 +116,8 @@
               value="{{ $changesInMedication->change_route ?? '' }}"></td>
           <td><input type="text" name="change_frequency" placeholder="Frequency"
               value="{{ $changesInMedication->change_frequency ?? '' }}"></td>
-          <td><input type="text" name="change_indication" placeholder="Indication"
-              value="{{ $changesInMedication->change_indication ?? '' }}"></td>
+          <td><input type="text" name="change_text" placeholder="Indication"
+              value="{{ $changesInMedication->change_text ?? '' }}"></td>
         </tr>
       </table>
     </div>

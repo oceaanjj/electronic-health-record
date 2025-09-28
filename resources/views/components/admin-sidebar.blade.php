@@ -37,10 +37,10 @@
         </li>
 
         <li>
-            <a href="{{ route('register') }}"
+            <a href="{{ route('users') }}"
                 class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
                 <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-6 h-6">
-                <span>Register User</span>
+                <span>Users</span>
             </a>
         </li>
 
@@ -51,7 +51,7 @@
             <a href="#" class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer text-center"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-6 h-6">
-                <span>LOGOUT</span>
+                <span>Log Out</span>
             </a>
         </li>
 

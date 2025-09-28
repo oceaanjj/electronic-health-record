@@ -43,6 +43,12 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // Admin Dashboard
     Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin-home');
 
+
+
+
+Route::get('/users', [UserController::class, 'index'])->name('users');
+
+
     // Register users (doctor/nurse only)
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register.attempt');

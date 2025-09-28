@@ -1,106 +1,96 @@
-/* General page styling */
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #1a6a24;
-    margin: 0;
-    padding: 20px;
+/* --- Page Title --- */
+.register {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 2rem 0 1.5rem;
+    color: #1a5e23;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- Form Container --- */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Labels --- */
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
     color: #333;
+    font-size: 0.95rem;
 }
 
-/* Heading */
-h1 {
-    color: white;
-    margin-bottom: 20px;
+/* --- Inputs & Select --- */
+form input,
+form select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* Error messages */
-div[style*="color:red;"] {
+form input:focus,
+form select:focus {
+    border-color: #1a5e23;
+    box-shadow: 0 0 0 3px rgba(26, 94, 35, 0.2);
+    outline: none;
+}
+
+/* --- Submit Button --- */
+form button {
+    display: block;
+    width: 100%;
+    background: #1a5e23;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+form button:hover {
+    background: #166d1e;
+}
+
+/* --- Error Messages --- */
+div[style*="color:red"] {
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+    padding: 1rem;
     background: #f8d7da;
     color: #842029 !important;
     border: 1px solid #f5c2c7;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
 }
 
-/* Form container */
-form {
-    background: #fff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    margin: auto;
-}
-
-/* Form groups */
-form div {
-    margin-bottom: 15px;
-}
-
-/* Labels */
-label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #1a6a24;
-}
-
-/* Inputs and selects */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border 0.3s;
-}
-input:focus,
-select:focus {
-    border-color: #1a6a24;
-    outline: none;
-    box-shadow: 0 0 5px rgba(26, 106, 36, 0.3);
-}
-
-/* Submit button */
-button {
-    background-color: #1a6a24;
-    color: #fff;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s, transform 0.2s;
-}
-button:hover {
-    background-color: #14531b;
-    transform: scale(1.05);
-}
-
+/* --- Back Link --- */
 .back {
-    display: inline-block;
-    margin-top: 15px;
-    text-decoration: none;
-    color: white;
+    display: block;
+    width: fit-content;
+    margin: 1.5rem auto;
+    padding: 10px 18px;
+    background: #d4a017;
+    color: #fff !important;
     font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 6px;
-    background: #d4a322;
-    transition: background 0.3s, color 0.3s;
-}
-.back:hover {
-    background: #d59a05;
-    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s ease-in-out;
 }
 
-.register {
-    text-align: center;
-    font-weight: bold;
-    margin: auto;
-    padding: 10px;
-    font-size: 1.4rem;
+.back:hover {
+    background: #b68a12;
 }

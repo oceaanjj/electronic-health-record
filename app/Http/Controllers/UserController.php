@@ -32,4 +32,13 @@ class UserController extends Controller
         return redirect()->route('admin-home')->with('success', 'User role updated successfully!');
     }
 
+     public function index()
+    {
+        // Fetch all users except admin
+        $users = User::where('role', '!=', 'admin')->get();
+
+        // Pass users to your blade file
+        return view('admin.users', compact('users'));
+    }
+
 }

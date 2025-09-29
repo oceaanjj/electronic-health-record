@@ -10,6 +10,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\PhysicalExamCdssService;
 
 class PhysicalExam extends Model
 {
@@ -29,13 +30,19 @@ class PhysicalExam extends Model
         'neurological',
     ];
 
-    //relationship sa patient table
+    // Relationship sa patient table
     public function patient()
     {
         return $this->belongsTo(Patient::class);
     }
 
-    // //relationship sa cdss physical exam table
+    // Connection to nursing diagnosis table
+    public function nursingDiagnosis()
+    {
+        return $this->hasMany(NursingDiagnosis::class);
+    }
+
+    // Relationship sa CDSS physical exam table (optional for later use)
     // public function cdssAssessment()
     // {
     //     return $this->hasOne(CdssPhysicalExam::class);

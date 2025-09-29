@@ -11,20 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class PhysicalExamController extends Controller
 {
-
     public function selectPatient(Request $request)
     {
         $patientId = $request->input('patient_id');
-
         $request->session()->put('selected_patient_id', $patientId);
 
         return redirect()->route('physical-exam.index');
     }
 
-
     public function show(Request $request)
     {
         $patients = Patient::all();
+        // pang debug lang to, --IGNORE NIYO LANG-- 
+        // if ($patients->isEmpty()) {
+        //     dd('No patients found in database');
+        // } else {
+        //     dd('Patients found:', $patients->toArray());
+        // }
         $selectedPatient = null;
         $physicalExam = null;
 
@@ -42,17 +45,14 @@ class PhysicalExamController extends Controller
         return view('physical-exam', compact('patients', 'selectedPatient', 'physicalExam'));
     }
 
-
     public function store(Request $request)
     {
-
         $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
         ], [
             'patient_id.required' => 'Please choose a patient first.',
             'patient_id.exists' => 'Please choose a patient first.',
         ]);
-
 
         $data = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
@@ -73,20 +73,44 @@ class PhysicalExamController extends Controller
             $message = 'Physical exam data updated successfully!';
             AuditLogController::log(
                 'Physical Exam Updated',
-                'User ' . Auth::user()->username . ' Updated an existing Physical Exam record.',
+                'User ' . Auth::user()->username . ' updated an existing Physical Exam record.',
                 ['patient_id' => $data['patient_id']]
             );
         } else {
-            PhysicalExam::create($data);
+            // call cdss
+            $cdssService = new PhysicalExamCdssService();
+            $alerts = $cdssService->analyzeFindings($data);
+
+            PhysicalExam::create([
+                'patient_id' => $data['patient_id'],
+                'general_appearance' => $data['general_appearance'],
+                'skin_condition' => $data['skin_condition'],
+                'eye_condition' => $data['eye_condition'],
+                'oral_condition' => $data['oral_condition'],
+                'cardiovascular' => $data['cardiovascular'],
+                'abdomen_condition' => $data['abdomen_condition'],
+                'extremities' => $data['extremities'],
+                'neurological' => $data['neurological'],
+                // Store alerts
+                'general_appearance_alert' => $alerts['general_appearance_alerts'] ?? null,
+                'skin_alert' => $alerts['skin_alerts'] ?? null,
+                'eye_alert' => $alerts['eye_alerts'] ?? null,
+                'oral_alert' => $alerts['oral_alerts'] ?? null,
+                'cardiovascular_alert' => $alerts['cardiovascular_alerts'] ?? null,
+                'abdomen_alert' => $alerts['abdomen_alerts'] ?? null,
+                'extremities_alert' => $alerts['extremities_alerts'] ?? null,
+                'neurological_alert' => $alerts['neurological_alerts'] ?? null,
+            ]);
+
             $message = 'Physical exam data saved successfully!';
             AuditLogController::log(
                 'Physical Exam Created',
-                'User ' . Auth::user()->username . ' Created a new Physical Exam record.',
+                'User ' . Auth::user()->username . ' created a new Physical Exam record.',
                 ['patient_id' => $data['patient_id']]
             );
         }
 
-        // Run the CDSS analysis after storing the data
+        // Run CDSS analysis after storing
         $cdssService = new PhysicalExamCdssService();
         $alerts = $cdssService->analyzeFindings($data);
 
@@ -98,11 +122,17 @@ class PhysicalExamController extends Controller
             }
         }
 
-        // Redirect without the patient_id in the URL.
         return redirect()->route('physical-exam.index')
             ->withInput()
             ->with('cdss', $formattedAlerts)
             ->with('success', $message);
+    }
+
+    public function showPatientExams($id)
+    {
+        $patient = Patient::findOrFail($id);
+        $physicalExams = $patient->physicalExams;
+        return view('patient-physical-exams', compact('patient', 'physicalExams'));
     }
 
     /**
@@ -131,7 +161,6 @@ class PhysicalExamController extends Controller
             $formattedAlerts[$newKey] = $value;
         }
 
-        // Redirect without the patient_id in the URL.
         return redirect()->route('physical-exam.index')
             ->withInput($data)
             ->with('cdss', $formattedAlerts)

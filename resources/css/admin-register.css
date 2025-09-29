@@ -1,0 +1,96 @@
+/* --- Page Title --- */
+.register {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 2rem 0 1.5rem;
+    color: #1a5e23;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- Form Container --- */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Labels --- */
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+/* --- Inputs & Select --- */
+form input,
+form select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+form input:focus,
+form select:focus {
+    border-color: #1a5e23;
+    box-shadow: 0 0 0 3px rgba(26, 94, 35, 0.2);
+    outline: none;
+}
+
+/* --- Submit Button --- */
+form button {
+    display: block;
+    width: 100%;
+    background: #1a5e23;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+form button:hover {
+    background: #166d1e;
+}
+
+/* --- Error Messages --- */
+div[style*="color:red"] {
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+    padding: 1rem;
+    background: #f8d7da;
+    color: #842029 !important;
+    border: 1px solid #f5c2c7;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* --- Back Link --- */
+.back {
+    display: block;
+    width: fit-content;
+    margin: 1.5rem auto;
+    padding: 10px 18px;
+    background: #d4a017;
+    color: #fff !important;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s ease-in-out;
+}
+
+.back:hover {
+    background: #b68a12;
+}

@@ -1,25 +1,29 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Patient Lab Values</title>
-    @vite(['./resources/css/lab-values.css'])
-    <meta charset="UTF-8">
-    <title>Patient Lab Values</title>
-    @vite(['./resources/css/lab-values.css'])
-</head>
 @extends('layouts.app')
 
-@section('title', 'Patient Vital Signs')
+@section('title', 'Patient Lab Values')
 
 @section('content')
-    <div class="container">
-        <div class="header">
-            <label for="patient">PATIENT NAME :</label>
-            <select id="patient" name="patient">
-                <option value="">-- Select Patient --</option>
-                <option value="Althea Pascua">Althea Pascua</option>
-                <option value="Jovilyn Esquerra">Jovilyn Esquerra</option>
+
+<div class="container">
+    <div class="header">
+        <label for="patient_info">PATIENT NAME :</label>
+        <form action="{{ route('lab-values.select') }}" method="POST" id="patient-select-form">
+            @csrf
+            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
+                @foreach ($patients as $patient)
+                    <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id) selected @endif>
+                        {{ $patient->name }}
+                    </option>
+                @endforeach
             </select>
-        </div>
+        </form>
+    </div>
+
+    <form action="{{ route('lab-values.store') }}" method="POST">
+        @csrf
+
+        <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
         <table>
             <tr>
@@ -29,110 +33,67 @@
                 <th class="title">ALERTS</th>
             </tr>
 
-            <tr>
-                <th class="title">WBC (×10⁹/L)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
+            @php
+                $labTests = [
+                    'WBC (×10⁹/L)' => 'wbc',
+                    'RBC (×10¹²/L)' => 'rbc',
+                    'Hgb (g/dL)' => 'hgb',
+                    'Hct (%)' => 'hct',
+                    'Platelets (×10⁹/L)' => 'platelets',
+                    'MCV (fL)' => 'mcv',
+                    'MCH (pg)' => 'mch',
+                    'MCHC (g/dL)' => 'mchc',
+                    'RDW (%)' => 'rdw',
+                    'Neutrophils (%)' => 'neutrophils',
+                    'Lymphocytes (%)' => 'lymphocytes',
+                    'Monocytes (%)' => 'monocytes',
+                    'Eosinophils (%)' => 'eosinophils',
+                    'Basophils (%)' => 'basophils',
+                ];
+            @endphp
 
-            <tr>
-                <th class="title">RBC (×10¹²/L)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Hgb (g/dL)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Hct (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Platelets (×10⁹/L)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">MCV (fL)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">MCH (pg)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">MCHC (g/dL)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">RDW (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Neutrophils (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Lymphocytes (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Monocytes (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Eosinophils (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
-
-            <tr>
-                <th class="title">Basophils (%)</th>
-                <td><input type="text" placeholder="result"></td>
-                <td><input type="text" placeholder="normal range"></td>
-                <td><input type="text" placeholder="alerts"></td>
-            </tr>
+            @foreach ($labTests as $label => $name)
+                <tr>
+                    <th class="title">{{ $label }}</th>
+                    <td>
+                        <input type="number" step="any" name="{{ $name }}_result" placeholder="result"
+                            value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}">
+                    </td>
+                    <td>
+                        <input type="text" name="{{ $name }}_normal_range" placeholder="normal range"
+                            value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}">
+                    </td>
+                    <td>
+                        @if (session('alerts') && isset(session('alerts')[$name . '_alerts']))
+                            @foreach (session('alerts')[$name . '_alerts'] as $alert)
+                                @php
+                                    $color = 'text-gray-600';
+                                        if (str_contains(strtolower($alert), 'critical')) {
+                                            $color = 'text-red-600 font-bold'; 
+                                        } elseif (str_contains(strtolower($alert), 'high') || str_contains(strtolower($alert), 'low')) {
+                                            $color = 'text-orange-500'; 
+                                        } elseif (str_contains(strtolower($alert), 'normal')) {
+                                            $color = 'text-green-600'; 
+                                        } else {
+                                            $color = 'text-blue-500'; 
+                                        }
+                                    @endphp
+                                <p class="{{ $color }}">{{ $alert }}</p>
+                            @endforeach
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
         </table>
-    </div>
+</div>
 
-    <div class="buttons">
-        <a href="#" class="btn">CDSS</a>
-        <button class="btn" type="submit">Submit</button>
-    </div>
+<div class="buttons">
+    <button class="btn" type="button">CDSS</button>
+    <button class="btn" type="submit">Submit</button>
+</div>
+
+</form>
+
 @endsection
 
 @push('styles')

@@ -30,18 +30,19 @@ class PhysicalExam extends Model
         'neurological',
     ];
 
-    //relationship sa patient table
+    // Relationship sa patient table
     public function patient()
     {
         return $this->belongsTo(Patient::class);
     }
-    //connection to nursing diagnosis table
+
+    // Connection to nursing diagnosis table
     public function nursingDiagnosis()
     {
         return $this->hasMany(NursingDiagnosis::class);
     }
 
-    //relationship sa cdss physical exam table
+    // Relationship sa CDSS physical exam table (optional for later use)
     // public function cdssAssessment()
     // {
     //     return $this->hasOne(CdssPhysicalExam::class);

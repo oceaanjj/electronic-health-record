@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    protected $fillable = ['username', 'email', 'password', 'role'];
 
-    protected $fillable = [
-        'username',
-        'email',
-        'password',
-        'role',
-    ];
+    public function auditLogs()
+    {
+        return $this->hasMany(AuditLog::class, 'user_id');
+    }
 }
+

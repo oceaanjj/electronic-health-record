@@ -3,35 +3,42 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Models\AuditLog;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     public function showRegistrationForm()
     {
-        //BRYAN: Keith need din ito baguhin to the front-end routes for registration 
-        return view('register');
+        return view('admin.register', ['roles' => ['doctor', 'nurse']]);
     }
 
     public function register(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:Admin,Doctor,Nurse',
-        ]);
-        $user = User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']), // <-- important
-            'role' => $data['role'],
+            'role' => 'required|in:doctor,nurse',
         ]);
 
-        //BRYAN: Keith yung laman ng 'login' need din palitan  since there is different blade file for each login based role but this shit is working
-        //bali need sa 'login' is yung login page na ginawa ni Rex
-        return redirect()->route('login.index')->with('success', 'User registered successfully!');
+        // Create user
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+        ]);
+
+        // // Create audit log
+        // AuditLog::create([
+        //     'id' => Auth::id(),
+        //     'action'  => 'Registered new user',
+        //     'details' => "User: {$user->username} | Role: {$user->role_name}",
+        // ]);
+
+        return redirect()->route('admin-home')->with('success', 'User registered successfully!');
     }
 }

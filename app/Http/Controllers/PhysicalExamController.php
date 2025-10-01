@@ -12,29 +12,57 @@ use Illuminate\Support\Facades\Auth;
 class PhysicalExamController extends Controller
 {
 
+    /**
+     * The function `selectPatient` sets the selected patient ID in the session and redirects to the
+     * physical exam index page.
+     * 
+     * Args:
+     *   request (Request): The `Request` parameter in the `selectPatient` function is an instance of
+     * the `Illuminate\Http\Request` class in Laravel. It represents an HTTP request and allows you to
+     * access input data, files, cookies, and more from the request.
+     * 
+     * Returns:
+     *   The code is returning a redirect response to the 'physical-exam.index' route after setting the
+     * 'selected_patient_id' session variable with the value of 'patient_id' obtained from the request
+     * input.
+     */
     public function selectPatient(Request $request)
     {
         $patientId = $request->input('patient_id');
-
+        //  (to show on selected patient as session on all components)
         $request->session()->put('selected_patient_id', $patientId);
 
         return redirect()->route('physical-exam.index');
     }
 
 
+    /**
+     * This show function retrieves patient and physical exam data based on a selected patient ID stored
+     * in the session and passes it to a view for display.
+     * 
+     * Args:
+     *   request (Request): The `show` function in the code snippet is a controller method that
+     * retrieves information about patients and their physical exams to display on a view. Here's a
+     * breakdown of the parameters used in the function:
+     * 
+     * Returns:
+     *   The `show` function is returning a view called 'physical-exam' with the variables ``,
+     * ``, and `` passed to the view using the `compact` function. The
+     * `` variable contains all the Patient records, the `` variable contains
+     * the Patient record based on the selected patient ID stored in the session, and the
+     * `` variable
+     */
     public function show(Request $request)
     {
         $patients = Patient::all();
         $selectedPatient = null;
         $physicalExam = null;
 
-        // Get the patient ID from the session instead of the query string
         $patientId = $request->session()->get('selected_patient_id');
 
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
             if ($selectedPatient) {
-                // Find the physical exam data for the selected patient
                 $physicalExam = PhysicalExam::where('patient_id', $patientId)->first();
             }
         }
@@ -43,6 +71,19 @@ class PhysicalExamController extends Controller
     }
 
 
+    /**
+     * The function `store` in this PHP code snippet handles storing and updating physical exam data for
+     * patients, logging the actions, running a CDSS service for analysis, and redirecting back to the
+     * physical exam index page.
+     * 
+     * Args:
+     *   request (Request): The `store` function you provided is responsible for storing physical exam
+     * data for a patient. Let's break down the key points of this function:
+     * 
+     * Returns:
+     *   The `store` function is returning a redirect response to the `physical-exam.index` route. It
+     * includes the following data:
+     */
     public function store(Request $request)
     {
 
@@ -86,7 +127,7 @@ class PhysicalExamController extends Controller
             );
         }
 
-        // Run the CDSS analysis after storing the data
+        // Run the CDSS service after storing the data
         $cdssService = new PhysicalExamCdssService();
         $alerts = $cdssService->analyzeFindings($data);
 
@@ -105,9 +146,8 @@ class PhysicalExamController extends Controller
             ->with('success', $message);
     }
 
-    /**
-     * Runs CDSS analysis on findings.
-     */
+
+    //RUN CDSS (IGNORE)
     public function runCdssAnalysis(Request $request)
     {
         $data = $request->validate([

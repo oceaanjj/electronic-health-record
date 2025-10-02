@@ -19,9 +19,13 @@ class PhysicalExamController extends Controller
         return redirect()->route('physical-exam.index');
     }
 
+
     public function show(Request $request)
     {
-        $patients = Patient::all();
+        // $patients = Patient::all();
+        $patients = Auth::user()->patients;
+
+
         // pang debug lang to, --IGNORE NIYO LANG-- 
         // if ($patients->isEmpty()) {
         //     dd('No patients found in database');
@@ -37,6 +41,11 @@ class PhysicalExamController extends Controller
             $selectedPatient = Patient::find($patientId);
             if ($selectedPatient) {
                 $physicalExam = PhysicalExam::where('patient_id', $patientId)->first();
+            } else {
+                //
+                $request->session()->forget('selected_patient_id');
+                return redirect()->route('physical-exam.index')
+                    ->with('error', 'Selected patient is not associated with your account.');
             }
         }
 
@@ -51,6 +60,21 @@ class PhysicalExamController extends Controller
             'patient_id.required' => 'Please choose a patient first.',
             'patient_id.exists' => 'Please choose a patient first.',
         ]);
+
+
+        //****
+        $user_id = Auth::id();
+        $patient = Patient::where('patient_id', $request->patient_id)
+            ->where('user_id', $user_id)
+            ->first();
+        if (!$patient) {
+            return back()->with('error', 'Unauthorized patient access.');
+        }
+
+        if (!$request->has('patient_id')) {
+            return back()->with('error', 'No patient selected.');
+        }
+        //****
 
         $data = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',

@@ -14,22 +14,33 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PatientController extends Controller
 {
+
+    public function patients(): HasMany
+    {
+        return $this->hasMany(Patient::class, 'user_id', 'id');
+    }
+
+
     // Show lahat ng patient
     public function index()
     {
-        $patients = Patient::all();
+        $patients = Auth::user()->patients()->get();
         return view('patients.index', compact('patients'));
     }
 
     // Show specific patient
     public function show($id)
     {
-        $patient = Patient::findOrFail($id);
+        // $patient = Patient::findOrFail($id);
+        $patient = Auth::user()->patients()->findOrFail($id);
+
         // Log patient viewing
         AuditLogController::log('Patient Viewed', 'User ' . Auth::user()->username . ' viewed patient record.', ['patient_id' => $patient->patient_id]);
+
         return view('patients.show', compact('patient'));
     }
 
@@ -53,6 +64,10 @@ class PatientController extends Controller
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
         ]);
+
+        //*
+        $data['user_id'] = Auth::id();
+
 
         $patient = Patient::create($data);
 
@@ -121,7 +136,8 @@ class PatientController extends Controller
     {
         $id = $request->input('input'); // the input from the search bar
 
-        $patients = Patient::query()
+        // $patients = Patient::query()
+        $patients = Auth::user()->patients()
             ->when($id, function ($q) use ($id) {
                 $q->where('patient_id', $id);
             })

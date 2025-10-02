@@ -19,37 +19,6 @@
             @include('components.header')
 
 
-            <!-- alerts -->
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                    role="alert" id="success-alert">
-                    {{ session('success') }}
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                    role="alert" id="error-alert">
-                    {{ session('error') }}
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-                </div>
-            @endif
-
-            @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                    role="alert" id="error-alert">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-                </div>
-            @endif
-
-
-
             <main class="flex-1">
                 @yield('content')
             </main>

@@ -21,6 +21,11 @@ return new class extends Migration {
             $table->string('ethnicity', 100)->nullable();
             $table->text('chief_complaints')->nullable();
             $table->date('admission_date');
+
+            //
+            $table->foreignId('user_id')->constrained()->after('admission_date');
+
+
             $table->timestamps();
         });
     }

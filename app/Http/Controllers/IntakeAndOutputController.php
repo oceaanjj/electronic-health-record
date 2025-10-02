@@ -59,7 +59,9 @@ class IntakeAndOutputController extends Controller
 
     public function show(Request $request)
     {
-        $patients = Patient::all();
+        // $patients = Patient::all();
+
+        $patients = Auth::user()->patients;
         $ioData = null;
 
         $patientId = $request->session()->get('selected_patient_id');
@@ -89,6 +91,21 @@ class IntakeAndOutputController extends Controller
             'patient_id.required' => 'Please choose a patient first.',
             'patient_id.exists' => 'Please choose a patient first.',
         ]);
+
+        //****
+        $user_id = Auth::id();
+        $patient = Patient::where('patient_id', $request->patient_id)
+            ->where('user_id', $user_id)
+            ->first();
+        if (!$patient) {
+            return back()->with('error', 'Unauthorized patient access.');
+        }
+
+        if (!$request->has('patient_id')) {
+            return back()->with('error', 'No patient selected.');
+        }
+        //****
+
 
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',

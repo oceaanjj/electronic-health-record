@@ -28,7 +28,9 @@ class VitalSignsController extends Controller
 
     public function show(Request $request)
     {
-        $patients = Patient::all();
+        // $patients = Patient::all();
+        $patients = Auth::user()->patients;
+
         $vitalsData = collect();
 
         $patientId = $request->session()->get('selected_patient_id');
@@ -46,6 +48,7 @@ class VitalSignsController extends Controller
             });
         }
 
+
         return view('vital-signs', [
             'patients' => $patients,
             'vitalsData' => $vitalsData,
@@ -61,6 +64,20 @@ class VitalSignsController extends Controller
             'date' => 'required|date',
             'day_no' => 'required|integer|between:1,30',
         ]);
+
+        //****
+        $user_id = Auth::id();
+        $patient = Patient::where('patient_id', $request->patient_id)
+            ->where('user_id', $user_id)
+            ->first();
+        if (!$patient) {
+            return back()->with('error', 'Unauthorized patient access.');
+        }
+
+        if (!$request->has('patient_id')) {
+            return back()->with('error', 'No patient selected.');
+        }
+        //****
 
         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
         $anyCreated = false;
@@ -110,9 +127,9 @@ class VitalSignsController extends Controller
         $cdssService = new VitalCdssService();
         $allAlerts = $cdssService->analyzeVitals($request->all());
 
-        $message = $anyCreated ? 'Vital Signs data saved successfully.' 
-            : ($anyUpdated ? 'Vital Signs data updated successfully.' 
-            : 'No changes made.');
+        $message = $anyCreated ? 'Vital Signs data saved successfully.'
+            : ($anyUpdated ? 'Vital Signs data updated successfully.'
+                : 'No changes made.');
 
         return redirect()->route('vital-signs.show')
             ->with('success', $message)

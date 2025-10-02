@@ -17,7 +17,6 @@ use App\Http\Controllers\PatientController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Patient extends Model
 {
     use HasFactory;
@@ -38,5 +37,14 @@ class Patient extends Model
         'ethnicity',
         'chief_complaints',
         'admission_date',
+
+        'user_id',
     ];
+
+
+    public function nurse()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 }

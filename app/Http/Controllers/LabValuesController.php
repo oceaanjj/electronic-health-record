@@ -20,7 +20,10 @@ class LabValuesController extends Controller
 
     public function show(Request $request)
     {
-        $patients = Patient::all();
+
+        // $patients = Patient::all();
+        $patients = Auth::user()->patients;
+
         $selectedPatient = null;
         $labValue = null;
         $alerts = [];
@@ -49,6 +52,21 @@ class LabValuesController extends Controller
             'patient_id.required' => 'Please choose a patient first.',
             'patient_id.exists' => 'Please choose a patient first.',
         ]);
+
+
+        //****
+        $user_id = Auth::id();
+        $patient = Patient::where('patient_id', $request->patient_id)
+            ->where('user_id', $user_id)
+            ->first();
+        if (!$patient) {
+            return back()->with('error', 'Unauthorized patient access.');
+        }
+
+        if (!$request->has('patient_id')) {
+            return back()->with('error', 'No patient selected.');
+        }
+        //****
 
         $data = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
@@ -107,7 +125,7 @@ class LabValuesController extends Controller
 
         // Run CDSS after save
         $cdssService = new LabValuesCdssService();
-        $alerts = $this->runLabCdss((object)$data, $cdssService, 'child');
+        $alerts = $this->runLabCdss((object) $data, $cdssService, 'child');
 
         return redirect()->route('lab-values.index')
             ->withInput()

@@ -17,5 +17,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(AuditLog::class, 'user_id');
     }
+
+
+
+    public function patients(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Patient::class, 'user_id', 'id');
+    }
 }
 

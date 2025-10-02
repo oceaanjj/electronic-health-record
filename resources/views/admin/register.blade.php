@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 
-
 @section('content')
 
     <h1 class="register">Register New User</h1>

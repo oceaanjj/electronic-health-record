@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Search Patient')
+
 @vite(['resources/css/search-style.css'])
 @section('content')
 
@@ -10,7 +11,6 @@
         </div>
 
         <form action="{{ route('patients.search-results') }}" method="GET">
-            {{-- 💡 UPDATED PLACEHOLDER to reflect search capabilities --}}
             <input type="text" name="input" placeholder="Search by ID or Patient Name" value="{{ request('input') }}">
             <button type="submit">Search</button>
         </form>
@@ -31,7 +31,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- 💡 Iterate over all matching patients, not just the first one --}}
                         @foreach ($patients as $patient)
                             <tr>
                                 <td>{{ $patient->patient_id }}</td>

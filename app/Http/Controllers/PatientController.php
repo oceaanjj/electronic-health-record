@@ -134,21 +134,29 @@ class PatientController extends Controller
     */
     public function search(Request $request)
     {
-        $id = $request->input('input'); // the input from the search bar
+        // Retrieve the input and trim any whitespace
+        $search_term = trim($request->input('input'));
+        // $user_id = Auth::id(); // Get the ID of the authenticated user
 
-        // $patients = Patient::query()
-        $patients = Auth::user()->patients()
-            ->when($id, function ($q) use ($id) {
-                $q->where('patient_id', $id);
-            })
-            ->get();
+        $patients_query = Auth::user()->patients();
 
-        // Log patient search
-        AuditLogController::log('Patient Searched', 'User ' . Auth::user()->username . ' searched for a patient with ID: ' . $id, ['search_term' => $id]);
+        if (!empty($search_term)) {
+            $patients_query->where(function ($query) use ($search_term) {
+                // 1. Search by exact patient_id
+                $query->where('patient_id', $search_term)
+                    // 2. Search by partial name match (case-insensitive)
+                    ->orWhere('name', 'LIKE', '%' . $search_term . '%');
+            });
+        }
+
+        $patients = $patients_query->get();
 
 
-        //show results: Keith pa fix nalang kung where yung patient search result
 
-        return view('patients.search', compact('patients', 'id'));
+        // Return the view. Using $search_term is better for view clarity.
+        return view('patients.search', [
+            'patients' => $patients,
+            'input' => $search_term
+        ]);
     }
 }

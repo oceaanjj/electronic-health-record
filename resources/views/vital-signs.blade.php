@@ -6,7 +6,6 @@
 
     <div class="container">
         <div class="header">
-            <label for="patient_id">PATIENT NAME :</label>
 
             {{-- PATIENT DROPDOWN AND DATE FORM --}}
             <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
@@ -104,7 +103,7 @@
                                 @php
                                     $color = $mostSevere['severity'] === 'CRITICAL' ? 'red'
                                         : ($mostSevere['severity'] === 'WARNING' ? 'orange'
-                                        : ($mostSevere['severity'] === 'INFO' ? 'blue' : 'green'));
+                                            : ($mostSevere['severity'] === 'INFO' ? 'blue' : 'green'));
                                 @endphp
                                 <span style="color: {{ $color }}">
                                     {{ $mostSevere['alert'] }}

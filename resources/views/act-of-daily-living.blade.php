@@ -1,13 +1,10 @@
 @extends('layouts.app')
-
 @section('title', 'Patient Activities of Daily Living')
-
 @section('content')
 
 
     <div class="container">
         <div class="header">
-            <label for="patient_id">PATIENT NAME :</label>
 
             {{-- PATIENT DROPDOWN AND DATE FORM (TO GET DATA FROM PATIENT & DATE --}}
             <form action="{{ route('adl.select') }}" method="POST" id="patient-select-form"
@@ -53,21 +50,6 @@
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
             <input type="hidden" name="date" value="{{ session('selected_date') }}">
             <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
-
-
-            <!-- DAY -->
-            <!-- <div class="section-bar">
-                                            <label for="day">DAY NO :</label>
-                                            <select id="day" name="day_no">
-                                                <option value="">-- Select number --</option>
-                                                @for ($i = 1; $i <= 30; $i++)
-                                                    <option value="{{ $i }}" @if(old('day_no', $adlData->day_no ?? '') == $i) selected @endif>
-                                                        {{ $i }}
-                                                    </option>
-                                                @endfor
-                                            </select>
-                                        </div> -->
-
 
             <table>
                 <tr>

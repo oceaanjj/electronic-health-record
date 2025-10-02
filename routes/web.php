@@ -16,6 +16,7 @@ use App\Http\Controllers\IvsAndLineController;
 use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
+use App\Http\Controllers\IntakeAndOutputController;
 
 
 // Home Page and Authentication Routes
@@ -46,7 +47,7 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
 
 
 
-Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::get('/users', [UserController::class, 'index'])->name('users');
 
 
     // Register users (doctor/nurse only)
@@ -82,7 +83,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         'medical-history',
         'physical-exam' => 'physical-exam.index',
         'vital-signs',
-        'intake-and-output',
+        // 'intake-and-output',
         'act-of-daily-living',
         'lab-values',
         'ivs-and-lines',
@@ -116,8 +117,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     });
 
 
-
-
     // Medical History Store Routes
     Route::get('/medical-history', [MedicalController::class, 'show'])->name('medical-history');
     Route::post('/medical/store', [MedicalController::class, 'store'])->name('medical.store');
@@ -128,16 +127,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
     Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
 
-
-    // //Activities of Daily Living (ADL)
-    // Route::prefix('adl')->name('adl.')->group(function () {
-    //     Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
-    //     Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
-    //     Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-
-    //     Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
-
-    // });
 
     // Lab Values Routes
     Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
@@ -173,11 +162,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     });
 
-    // //VITAL SIGNS:
-    // Route::get('/vital-signs', [VitalSignsController::class, 'show'])->name('vital-signs.show');
-    // Route::post('/vital-signs', [VitalSignsController::class, 'store'])->name('vital-signs');
-    // Route::post('/vital-signs/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('vital-signs.select');
-    // Route::post('/vital-signs/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('vital-signs.cdss');
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
@@ -185,12 +169,14 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/', [VitalSignsController::class, 'store'])->name('store');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
         Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
-   Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
+        Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
 
     });
 
-
-
+    //Intake and Output
+    Route::get('/intake-and-output', [IntakeAndOutputController::class, 'show'])->name('io.show');
+    Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
+    Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
 
 
     // Add more routes for role: NURSE here

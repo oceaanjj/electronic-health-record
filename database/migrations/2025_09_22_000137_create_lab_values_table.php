@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
 
-            // Lab test results and normal ranges
             $table->string('wbc_result')->nullable();
             $table->string('wbc_normal_range')->nullable();
             $table->string('rbc_result')->nullable();

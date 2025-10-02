@@ -5,9 +5,8 @@
 @section('content')
 
 
-    <div class="container">
         <div class="header">
-            <h4>SEARCH PATIENT</h4>
+            SEARCH PATIENT
         </div>
 
         <form action="{{ route('patients.search-results') }}" method="GET">

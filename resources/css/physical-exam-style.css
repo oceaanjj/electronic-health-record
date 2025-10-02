@@ -1,36 +1,44 @@
+/* Reset */
+* {
+    margin: 5px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Page Background */
 body {
-    background: #1a6a24;
-    margin: 0;
+    background-color: #1A6A24; /* Dark Green */
+    color: white;
     padding: 20px;
-    color: #000;
 }
 
-.container {
-    background: #fffbe6;
-    padding: 15px;
-    border-radius: 5px;
-    border: 3px solid #1a6a24;
-}
-
+/* Header */
 .header {
-    margin-bottom: 15px;
-    font-weight: bold;
-    background: #1a6a24;
-    color: #fff;
-    padding: 10px;
     font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #ffffff;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 3px solid #EDB62C;
+    border-radius: 4px;
 }
 
-.header label {
-    margin-right: 8px;
+select{
+    padding: 10px;
+    border: 1px solid #EDB62C;
+    border-radius: 4px;
     font-size: 14px;
+    background: #fff;
+    color: #000;
+    transition: 0.2s;
+    text-align: center;
 }
+
 
 table {
-    width: 100%;
+    width: 99%;
     border-collapse: collapse;
     background: #fffbe6;
     margin-bottom: 20px;
@@ -68,18 +76,15 @@ th.title {
     padding: 8px;
 }
 
-textarea,
-input {
-    width: 100%;
-    height: 60px;
-    border: none;
-    background: transparent;
-    resize: none;
-    overflow-y: auto;
-    padding: 6px;
-    box-sizing: border-box;
-    font-size: 13px;
-    font-family: Arial, sans-serif;
+textarea, input {
+  width: 100%;
+  height: 60px;        
+  border: none;
+  background: transparent;
+  resize: none;       
+  overflow-y: auto;   
+  padding: 4px;
+  box-sizing: border-box;
 }
 
 .btn button,
@@ -115,3 +120,24 @@ input {
 .alert-green {
     color: green;
 }
+
+button, .clear-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #fff;
+    border: 2px solid #EDB62C;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+}
+
+button:hover, .clear-btn:hover {
+    background: #14501b;
+}
+
+

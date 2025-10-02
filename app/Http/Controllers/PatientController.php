@@ -145,7 +145,7 @@ class PatientController extends Controller
                 // 1. Search by exact patient_id
                 $query->where('patient_id', $search_term)
                     // 2. Search by partial name match (case-insensitive)
-                    ->orWhere('name', 'LIKE', '%' . $search_term . '%');
+                    ->orWhere('name', 'LIKE', $search_term . '%');
             });
         }
 

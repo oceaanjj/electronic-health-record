@@ -20,7 +20,6 @@
 
             @if ($patients->isNotEmpty())
 
-                {{-- Show a table header for multiple results --}}
                 <table>
                     <thead>
                         <tr>

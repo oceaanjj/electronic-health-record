@@ -109,9 +109,19 @@ class IntakeAndOutputController extends Controller
         if ($existingIo) {
             $existingIo->update($validatedData);
             $message = 'Intake and Output data updated successfully!';
+            AuditLogController::log(
+                'Intake-and-Output Record Updated',
+                'User ' . Auth::user()->username . ' updated an existing IO record.',
+                ['patient_id' => $validatedData['patient_id']]
+            );
         } else {
             IntakeAndOutput::create($validatedData);
             $message = 'Intake and Output data saved successfully!';
+            AuditLogController::log(
+                'Intake-and-Output Record Created',
+                'User ' . Auth::user()->username . ' created a new IO record.',
+                ['patient_id' => $validatedData['patient_id']]
+            );
         }
 
         return redirect()->route('io.show')

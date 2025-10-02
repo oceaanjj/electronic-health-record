@@ -86,7 +86,7 @@ class ActOfDailyLivingController extends Controller
             AuditLogController::log(
                 'ADL Record Updated',
                 'User ' . Auth::user()->username . ' updated an existing ADL record.',
-                ['patient_id' => $validatedData['patient_id'], 'day_no' => $validatedData['day_no']]
+                ['patient_id' => $validatedData['patient_id']]
             );
         } else {
             ActOfDailyLiving::create($validatedData);
@@ -95,7 +95,7 @@ class ActOfDailyLivingController extends Controller
             AuditLogController::log(
                 'ADL Record Created',
                 'User ' . Auth::user()->username . ' created a new ADL record.',
-                ['patient_id' => $validatedData['patient_id'], 'day_no' => $validatedData['day_no']]
+                ['patient_id' => $validatedData['patient_id']]
             );
         }
 

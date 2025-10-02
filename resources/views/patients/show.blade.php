@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="header">
-        <h4>{{ $patient->name }}</h4>
+        PATIENT NAME: {{ $patient->name }}
     </div>
 
         <div class="details-container">
@@ -47,7 +47,7 @@
         </tr>
     </table>
 
-    <a href="{{ route('patients.index') }}">← Back</a>
+    <a href="{{ route('patients.index') }}">Back</a>
 </div>
 
 

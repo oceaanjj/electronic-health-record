@@ -31,10 +31,21 @@ body {
       padding: 6px;
       border: 1px solid #EDB62C;
       border-radius: 4px;
-      text-align: center;
       background: #fffdf5;
       font-size: 13px;
+      text-align: center;
       width: 200px;
+    }
+
+    .header .date{
+            padding: 6px;
+      border: 1px solid #EDB62C;
+      border-radius: 4px;
+      background: #fffdf5;
+      font-size: 13px;
+      text-align: center;
+      width: 200px;
+      align-items: center;
     }
 
     .header label {
@@ -44,7 +55,7 @@ body {
 
 
 table {
-  width: 99%;
+  width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
   background: #fffbe6;
@@ -55,6 +66,7 @@ th, td {
   padding: 8px;
   text-align: center;
   vertical-align: middle;
+  color: #000;
 }
 
 /* Table Headers */
@@ -71,7 +83,7 @@ th {
   width: 180px;
 }
 
-input {
+input, textarea {
   width: 100%;
   padding: 6px;
   border: none;

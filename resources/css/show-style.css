@@ -1,20 +1,27 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #1A6A24;
-    margin: 0;
+/* Reset */
+* {
+    margin: 5px;
     padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Header (patient name) */
-h1 {
-    background: #1A6A24; /* Dark green */
-    color: #fff;
-    padding: 15px 20px;
-    margin: 0;
-    text-align: center;
-    border-bottom: 3px solid #d4af37; /* Gold */
+/* Page Background */
+body {
+    background-color: #1A6A24; /* Dark Green */
+    color: white;
+    padding: 20px;
+}
+
+.header {
     font-size: 22px;
-    letter-spacing: 0.5px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #ffffff;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 3px solid #EDB62C;
+    border-radius: 4px;
 }
 
 /* Card container */
@@ -85,4 +92,23 @@ h1 {
 .details-container a:hover {
     background: #1A6A24;
     border-color: #EDB62C;
+}
+
+button, .clear-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #fff;
+    border: 2px solid #EDB62C;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+}
+
+button:hover, .clear-btn:hover {
+    background: #14501b;
 }

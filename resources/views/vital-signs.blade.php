@@ -4,13 +4,12 @@
 
 @section('content')
 
-    <div class="container">
         <div class="header">
             <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
                 class="flex items-center space-x-4">
                 @csrf
 
-                <label for="patient_id">PATIENT NAME :</label>
+                <label for="patient_id" style="color: white;">PATIENT NAME :</label>
                 <select id="patient_info" name="patient_id" onchange="this.form.submit()">
                     <option value="" {{ old('patient_id', session('selected_patient_id')) == '' ? 'selected' : '' }}>-- Select
                         Patient --</option>
@@ -21,11 +20,11 @@
                     @endforeach
                 </select>
 
-                <label for="date">DATE :</label>
+                <label for="date" style="color: white;">DATE :</label>
                 <input class="date" type="date" id="date_selector" name="date"
                     value="{{ old('date', session('selected_date')) }}" onchange="this.form.submit()">
 
-                <label for="day_no">DAY NO :</label>
+                <label for="day_no" style="color: white;">DAY NO :</label>
                 <select id="day_no" name="day_no" onchange="this.form.submit()">
                     <option value="">-- Select number --</option>
                     @for ($i = 1; $i <= 30; $i++)

@@ -14,9 +14,8 @@
 
         <form action="{{ route('ivs-and-lines.select') }}" method="POST">
             @csrf
-            <div class="container">
                 <div class="header">
-                    <label for="patient_id">PATIENT NAME :</label>
+                    <label for="patient_id" style="color: white;">PATIENT NAME :</label>
                     <select id="patient_info" name="patient_id" onchange="this.form.submit()">
                         <option value="">-- Select Patient --</option>
                         @foreach ($patients as $patient)
@@ -26,7 +25,6 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
         </form>
 
         <form action="{{ route('ivs-and-lines.store') }}" method="POST">

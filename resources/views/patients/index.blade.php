@@ -4,11 +4,11 @@
 
 @section('title', 'Patients List')
 
-@vite(['resources/css/index-style.css'])
 
 @section('content')
-    <div class="header">
-        <h4>PATIENT LIST</h4>
+
+<body>
+    <div class="header">PATIENT LIST
     </div>
 
     <div class="actions">
@@ -55,3 +55,7 @@
         </table>
     </div>
 @endsection
+
+        @push('styles')
+            @vite(['resources/css/index-style.css'])
+        @endpush

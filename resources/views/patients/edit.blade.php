@@ -3,13 +3,11 @@
 
 @section('title', 'Edit Patient')
 
-@push('styles')
-    @vite(['resources/css/edit-style.css'])
-@endpush
-
 @section('content')
+
+<body>
     <div class="header">
-        <h4>Edit Patient</h4>
+        EDIT PATIENT
     </div>
 
     <div class="form-container">
@@ -66,10 +64,17 @@
                 <textarea name="chief_complaints">{{ $patient->chief_complaints }}</textarea>
             </div>
 
-
-            <div class="form-group full-width">
+             <div class="btnn">
+            <button type="button" class="btn-submit" onclick="window.history.back()">Back</button>
+             </div>
+             
+            <div class="btnn">
                 <button type="submit" class="btn-submit">Update</button>
             </div>
         </form>
     </div>
 @endsection
+
+@push('styles')
+    @vite(['resources/css/edit-style.css'])
+@endpush

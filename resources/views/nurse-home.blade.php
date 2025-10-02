@@ -137,7 +137,7 @@ use Illuminate\Support\Facades\Auth;
                 <img src="img/intake-and-output.png" alt="Intake Icon" class="box-icon">
                 <h3>INTAKE AND OUTPUT</h3>
                 <p>Monitor and log a patient’s fluid intake and output for accurate care management.</p>
-                <a class="proceed" href="{{ route('intake-and-output') }}">
+                <a class="proceed" href="{{ route('io.show') }}">
                     <div>PROCEED <span class="arrow">▶</span></div>
                 </a>
             </div>

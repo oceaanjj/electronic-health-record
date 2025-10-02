@@ -14,22 +14,33 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PatientController extends Controller
 {
+
+    public function patients(): HasMany
+    {
+        return $this->hasMany(Patient::class, 'user_id', 'id');
+    }
+
+
     // Show lahat ng patient
     public function index()
     {
-        $patients = Patient::all();
+        $patients = Auth::user()->patients()->get();
         return view('patients.index', compact('patients'));
     }
 
     // Show specific patient
     public function show($id)
     {
-        $patient = Patient::findOrFail($id);
+        // $patient = Patient::findOrFail($id);
+        $patient = Auth::user()->patients()->findOrFail($id);
+
         // Log patient viewing
         AuditLogController::log('Patient Viewed', 'User ' . Auth::user()->username . ' viewed patient record.', ['patient_id' => $patient->patient_id]);
+
         return view('patients.show', compact('patient'));
     }
 
@@ -53,6 +64,10 @@ class PatientController extends Controller
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
         ]);
+
+        //*
+        $data['user_id'] = Auth::id();
+
 
         $patient = Patient::create($data);
 
@@ -119,20 +134,29 @@ class PatientController extends Controller
     */
     public function search(Request $request)
     {
-        $id = $request->input('input'); // the input from the search bar
+        // Retrieve the input and trim any whitespace
+        $search_term = trim($request->input('input'));
+        // $user_id = Auth::id(); // Get the ID of the authenticated user
 
-        $patients = Patient::query()
-            ->when($id, function ($q) use ($id) {
-                $q->where('patient_id', $id);
-            })
-            ->get();
+        $patients_query = Auth::user()->patients();
 
-        // Log patient search
-        AuditLogController::log('Patient Searched', 'User ' . Auth::user()->username . ' searched for a patient with ID: ' . $id, ['search_term' => $id]);
+        if (!empty($search_term)) {
+            $patients_query->where(function ($query) use ($search_term) {
+                // 1. Search by exact patient_id
+                $query->where('patient_id', $search_term)
+                    // 2. Search by partial name match (case-insensitive)
+                    ->orWhere('name', 'LIKE', $search_term . '%');
+            });
+        }
+
+        $patients = $patients_query->get();
 
 
-        //show results: Keith pa fix nalang kung where yung patient search result
 
-        return view('patients.search', compact('patients', 'id'));
+        // Return the view. Using $search_term is better for view clarity.
+        return view('patients.search', [
+            'patients' => $patients,
+            'input' => $search_term
+        ]);
     }
 }

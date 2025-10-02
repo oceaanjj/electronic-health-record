@@ -7,20 +7,23 @@
 @source '../**/*.js';
 
 @font-face {
-  font-family: 'Alte Haas Grotesk Bold';
-  src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: "Alte Haas Grotesk Bold";
+    src: url("/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
 
-  font-family: 'Creato Display Bold';
-  src: url('/public/font/creato_display/CreatoDisplay-Bold.otf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: "Creato Display Bold";
+    src: url("/public/font/creato_display/CreatoDisplay-Bold.otf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
 
-  font-family: 'Creato Display Black';
-  src: url('/public/font/creato_display/CreatoDisplay-Black.otf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: "Creato Display Black";
+    src: url("/public/font/creato_display/CreatoDisplay-Black.otf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
 }
 
 @theme {
@@ -29,15 +32,14 @@
         "Noto Color Emoji";
 
     --color-ehr: #1a6a24;
-    --color-yellow: #FDE050;
-    --color-dark-yellow: #F3B809;
-    --color-red: 	#ec0000;
-    --color-dark-red: #8E1600;
-    --font-alte: 'Alte Haas Grotesk Bold', arial;
-    --font-creato-bold: 'Creato Display Bold', arial;
-    --font-creato-black: 'Creato Display Black', arial;
+    --color-yellow: #fde050;
+    --color-dark-yellow: #f3b809;
+    --color-red: #ec0000;
+    --color-dark-red: #8e1600;
+    --font-alte: "Alte Haas Grotesk Bold", arial;
+    --font-creato-bold: "Creato Display Bold", arial;
+    --font-creato-black: "Creato Display Black", arial;
 }
-
 
 /* alerts */
 .alert {
@@ -54,8 +56,10 @@
     font-size: 1rem;
     line-height: 1.5;
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-}
 
+    opacity: 1;
+    transition: opacity 0.6s ease;
+}
 /* Variants */
 .alert-primary {
     color: #084298;

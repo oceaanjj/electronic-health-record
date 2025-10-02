@@ -25,11 +25,11 @@ class ActOfDailyLivingController extends Controller
         return redirect()->route('adl.show');
     }
 
-
-
     public function show(Request $request)
     {
-        $patients = Patient::all();
+        // $patients = Patient::all();
+        $patients = Auth::user()->patients;
+
         $adlData = null;
 
         $patientId = $request->session()->get('selected_patient_id');
@@ -52,8 +52,6 @@ class ActOfDailyLivingController extends Controller
     }
 
 
-
-
     public function store(Request $request)
     {
         $request->validate([
@@ -62,6 +60,20 @@ class ActOfDailyLivingController extends Controller
             'patient_id.required' => 'Please choose a patient first.',
             'patient_id.exists' => 'Please choose a patient first.',
         ]);
+
+        //****
+        $user_id = Auth::id();
+        $patient = Patient::where('patient_id', $request->patient_id)
+            ->where('user_id', $user_id)
+            ->first();
+        if (!$patient) {
+            return back()->with('error', 'Unauthorized patient access.');
+        }
+
+        if (!$request->has('patient_id')) {
+            return back()->with('error', 'No patient selected.');
+        }
+        //****
 
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
@@ -88,7 +100,7 @@ class ActOfDailyLivingController extends Controller
             AuditLogController::log(
                 'ADL Record Updated',
                 'User ' . Auth::user()->username . ' updated an existing ADL record.',
-                ['patient_id' => $validatedData['patient_id'], 'day_no' => $validatedData['day_no']]
+                ['patient_id' => $validatedData['patient_id']]
             );
         } else {
             ActOfDailyLiving::create($validatedData);
@@ -97,7 +109,7 @@ class ActOfDailyLivingController extends Controller
             AuditLogController::log(
                 'ADL Record Created',
                 'User ' . Auth::user()->username . ' created a new ADL record.',
-                ['patient_id' => $validatedData['patient_id'], 'day_no' => $validatedData['day_no']]
+                ['patient_id' => $validatedData['patient_id']]
             );
         }
 

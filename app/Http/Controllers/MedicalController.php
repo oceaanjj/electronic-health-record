@@ -26,7 +26,9 @@ class MedicalController extends Controller
 
     public function show(Request $request)
     {
-        $patients = Patient::all();
+        // $patients = Patient::all();
+        $patients = Auth::user()->patients;
+
         $selectedPatient = null;
         $presentIllness = null;
         $pastMedicalSurgical = null;
@@ -47,6 +49,11 @@ class MedicalController extends Controller
                 $allergy = Allergy::where('patient_id', $patientId)->first();
                 $vaccination = Vaccination::where('patient_id', $patientId)->first();
                 $developmentalHistory = DevelopmentalHistory::where('patient_id', $patientId)->first();
+            } else {
+                // If patient not found in nurse's list, clear session and redirect
+                $request->session()->forget('selected_patient_id');
+                return redirect()->route('medical-history')
+                    ->with('error', 'Selected patient is not associated with your account.');
             }
         }
 
@@ -70,9 +77,18 @@ class MedicalController extends Controller
         try {
             $username = Auth::user() ? Auth::user()->username : 'Guest';
 
+            $user_id = Auth::id();
+            $patient = Patient::where('patient_id', $request->patient_id)
+                ->where('user_id', $user_id)
+                ->first();
+            if (!$patient) {
+                return back()->with('error', 'Unauthorized patient access.');
+            }
+
             if (!$request->has('patient_id')) {
                 return back()->with('error', 'No patient selected.');
             }
+
 
             if ($request->has('present_condition_name')) {
                 $data = [

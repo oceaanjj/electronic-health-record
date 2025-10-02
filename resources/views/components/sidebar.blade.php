@@ -69,7 +69,7 @@
         </li>
 
         <li>
-            <a href="{{ route('intake-and-output') }}"
+            <a href="{{ route('io.show') }}"
                 class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
                 <img src="./img/sidebar/intake-and-output.png" alt="Intake Icon" class="w-6 h-6">
                 <span>Intake and Output</span>

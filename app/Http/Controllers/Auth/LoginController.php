@@ -83,11 +83,11 @@ class LoginController extends Controller
 
                 switch ($user->role) {
                     case 'Nurse':
-                        return redirect()->route('nurse-home')->with('success', 'Nurse ' . $user->username . ' login successful!');
+                        return redirect()->route('nurse-home');
                     case 'Doctor':
-                        return redirect()->route('doctor-home')->with('success', 'Doctor ' . $user->username . ' login successful!');
+                        return redirect()->route('doctor-home');
                     case 'Admin':
-                        return redirect()->route('admin-home')->with('success', 'Admin ' . $user->username . ' login successful!');
+                        return redirect()->route('admin-home');
                     default:
                         Auth::logout();
                         return redirect()->route('home')->withErrors(['username' => 'Access denied. Unrecognized role.']);
@@ -113,6 +113,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Logout successful!');
+        return redirect('/');
     }
+
 }

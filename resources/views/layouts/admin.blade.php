@@ -41,6 +41,7 @@
             document.getElementById("main").classList.remove("translate-x-75");
         }
     </script>
+@stack('scripts')
 
 </body>
 

@@ -19,6 +19,10 @@ use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
 
 
+
+
+
+
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
 
@@ -53,6 +57,12 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // Register users (doctor/nurse only)
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register.attempt');
+
+
+
+Route::get('/check-username', [RegisterController::class, 'checkUsername'])->name('check.username');
+Route::get('/check-email', [RegisterController::class, 'checkEmail'])->name('check.email');
+
 
     // View Audit Logs
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit.index');

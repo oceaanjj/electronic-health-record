@@ -1,9 +1,3 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Discharge Planning</title>
-    @vite(['./resources/css/lab-values.css'])
-</head>
-
 @extends('layouts.app')
 
 @section('title', 'Patient Discharge Planning')
@@ -14,7 +8,7 @@
 
     <div class="container">
         <div class="header">
-            <label for="patient_info">PATIENT NAME :</label>
+            <label for="patient_info" style="color: white;">PATIENT NAME :</label>
             <form action="{{ route('discharge-planning.select') }}" method="POST" id="patient-select-form">
                 @csrf
                 <select id="patient_info" name="patient_id" onchange="this.form.submit()">

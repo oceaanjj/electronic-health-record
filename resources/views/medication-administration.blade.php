@@ -1,3 +1,5 @@
+
+
 @extends('layouts.app')
 
 @section('title', 'Patient Vital Signs')
@@ -7,17 +9,17 @@
 <body>
     <div class="container">
         <div class="header">
-            <label for="patient">PATIENT NAME :</label>
+            <label for="patient" style="color: white;">PATIENT NAME :</label>
             <select id="patient" name="patient">
                 <option value="">-- Select Patient --</option>
                 <option value="Althea Pascua">Jovilyn Esquerra</option>
             </select>
+                <label for="date" style="color: white;">DATE :</label>
+                <input class="date" type="date" id="date_selector" name="date" value="{{ session('selected_date') }}"
+                    onchange="this.form.submit()">
         </div>
 
-        <div class="section-bar">
-            <label for="date">DATE :</label>
-            <input type="date" id="date" name="date">
-        </div>
+        
 
 
         <table>

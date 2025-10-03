@@ -1,8 +1,4 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Physical Exam</title>
-    @vite(['./resources/css/lab-values.css'])
-</head>
+
 
 @extends('layouts.app')
 
@@ -11,24 +7,23 @@
 @section('content')
 
     {{-- PATIENT DROP-DOWN FORM --}}
+<body>
+        <form action="{{ route('physical-exam.select') }}" method="POST">
+            @csrf
+            <div class="header">
+                    <label for="patient_id" style="color: white;">PATIENT NAME :</label>
+                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                        <option value="">-- Select Patient --</option>
+                        @foreach ($patients as $patient)
+                            <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
+                                {{ $patient->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+        </form>
 
-    <div class="container">
-        <div class="header">
-            <label for="patient_info">PATIENT NAME :</label>
-            <form action="{{ route('physical-exam.select') }}" method="POST" id="patient-select-form">
-                @csrf
-                <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                    <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --
-                    </option>
-                    @foreach ($patients as $patient)
-                        <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
-                        selected @endif>
-                            {{ $patient->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </form>
-        </div>
 
         <form action="{{ route('physical-exam.store') }}" method="POST">
             @csrf

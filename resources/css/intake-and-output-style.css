@@ -1,41 +1,49 @@
+/* Reset */
+* {
+    margin: 5px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
+/* Page Background */
 body {
-  background: #1A6A24;   /* page background */
-  margin: 0;
-  padding: 20px;
-  color: #000;
+    background-color: #1A6A24; /* Dark Green */
+    color: white;
+    padding: 20px;
 }
 
-
-.container {
-  background: #fffbe6;   /* light cream */
-  padding: 15px;
-  border-radius: 5px;
-  border: 3px solid #1A6A24;
-  margin-bottom: 20px;
-}
-
+/* Header */
 .header {
-  margin-bottom: 15px;
-  font-weight: bold;
-  background: #1A6A24;
-  color: #fff;
-  padding: 10px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  max-width: 100%;
+    font-size: 22px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #000000;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 3px solid #EDB62C;
+    border-radius: 4px;
 }
 
     .header select{
       padding: 6px;
       border: 1px solid #EDB62C;
       border-radius: 4px;
-      text-align: center;
       background: #fffdf5;
       font-size: 13px;
+      text-align: center;
       width: 200px;
+    }
+
+    .header .date{
+            padding: 6px;
+      border: 1px solid #EDB62C;
+      border-radius: 4px;
+      background: #fffdf5;
+      font-size: 13px;
+      text-align: center;
+      width: 200px;
+      align-items: center;
     }
 
     .header label {
@@ -43,39 +51,9 @@ body {
       font-size: 16px;
     }
 
-.section-bar {
-  margin-bottom: 15px;
-  font-weight: bold;
-  background: #1A6A24;
-  color: #fff;
-  padding: 10px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  max-width: 100%;
-}
-
-    .section-bar label {
-      margin-right: 6px;
-      font-size: 16px;
-      
-    }
-
-    .section-bar select,
-    .section-bar input[type="date"] {
-      padding: 6px;
-      border: 1px solid #EDB62C;
-      border-radius: 4px;
-      background: #fffdf5;
-      font-size: 13px;
-      text-align: center;
-      width: 200px;
-    }
-
 
 table {
-  width: 100%;
+  width: 99%;
   border-collapse: collapse;
   background: #fffbe6;
   margin-top: 15px;
@@ -103,6 +81,7 @@ table {
       background: #fffdf5;
       font-size: 13px;
       box-sizing: border-box;
+      color: #000000;
     }
 
 .buttons {
@@ -129,4 +108,24 @@ table {
     .btn:hover {
       opacity: 0.9;
     }
+
+
+button, .clear-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #fff;
+    border: 2px solid #EDB62C;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+}
+
+button:hover, .clear-btn:hover {
+    background: #14501b;
+}
 

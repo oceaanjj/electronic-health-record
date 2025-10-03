@@ -14,9 +14,8 @@
 
         <form action="{{ route('medical-history.select') }}" method="POST">
             @csrf
-            <div class="container">
-                <div class="header">
-                    <label for="patient_id">PATIENT NAME :</label>
+            <div class="header">
+                    <label for="patient_id" style="color: white;">PATIENT NAME :</label>
                     <select id="patient_info" name="patient_id" onchange="this.form.submit()">
                         <option value="">-- Select Patient --</option>
                         @foreach ($patients as $patient)
@@ -26,7 +25,7 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
+                
         </form>
 
 
@@ -129,9 +128,12 @@
                 </tr>
             </table>
 
+        </div>
+
             <div class="buttons">
                 <button type="submit" class="btn">Submit</button>
             </div>
+
 
 
         </form>

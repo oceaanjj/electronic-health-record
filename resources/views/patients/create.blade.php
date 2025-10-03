@@ -4,7 +4,6 @@
 
 @section('content')
 
-    </head>
     {{-- wala pa palang columns for room number, bed number, and emergency contacts --}}
 
     <body>

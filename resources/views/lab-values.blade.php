@@ -4,9 +4,8 @@
 
 @section('content')
 
-<div class="container">
     <div class="header">
-        <label for="patient_info">PATIENT NAME :</label>
+        <label for="patient_info" style="color: white;">PATIENT NAME :</label>
         <form action="{{ route('lab-values.select') }}" method="POST" id="patient-select-form">
             @csrf
             <select id="patient_info" name="patient_id" onchange="this.form.submit()">

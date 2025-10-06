@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'EHR')</title>
-    <!-- @vite('resources/css/app.css') -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('styles')
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Health Record</title>
+    @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-white overflow-x-hidden">
 
+    {{-- Sidebar --}}
     @include('components.sidebar')
 
+    {{--  
     <div id="main" class="transition-transform duration-300 ease-in-out">
 
         <div class="flex flex-col min-h-screen">
@@ -56,24 +56,43 @@
             </main>
         </div>
 
+        
+
+    </div>
+    --}}
+
+    {{-- Main Content --}}
+    <div id="main" class="transition-all duration-300 ease-in-out">
+        {{-- Header --}}
+        @include('components.header')
+
+        {{-- Page Content --}}
+        <main class="transition-all duration-300 ease-in-out">
+            @yield('content')
+        </main>
     </div>
 
-
-
+    {{-- Sidebar Animation --}}
     <script>
         function openNav() {
-            document.getElementById("mySidenav").classList.remove("-translate-x-full");
-            document.getElementById("mySidenav").classList.add("translate-x-0");
-            document.getElementById("main").classList.add("translate-x-75");
+            const sidebar = document.getElementById("mySidenav");
+            const main = document.getElementById("main");
+
+            sidebar.classList.remove("-translate-x-full");
+            main.classList.add("ml-[260px]"); 
         }
 
         function closeNav() {
-            document.getElementById("mySidenav").classList.remove("translate-x-0");
-            document.getElementById("mySidenav").classList.add("-translate-x-full");
-            document.getElementById("main").classList.remove("translate-x-75");
+            const sidebar = document.getElementById("mySidenav");
+            const main = document.getElementById("main");
+
+            sidebar.classList.add("-translate-x-full");
+            main.classList.remove("ml-[260px]");
         }
     </script>
 
 </body>
-
 </html>
+
+
+

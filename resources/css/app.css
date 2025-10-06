@@ -24,6 +24,12 @@
         format("truetype");
     font-weight: bold;
     font-style: normal;
+    
+    font-family: "Trajan Pro";
+    src: url("/public/font/trajan-pro/TrajanPro-Bold.otf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
 }
 
 @theme {
@@ -31,14 +37,14 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 
-    --color-ehr: #1a6a24;
-    --color-yellow: #fde050;
-    --color-dark-yellow: #f3b809;
-    --color-red: #ec0000;
-    --color-dark-red: #8e1600;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-yellow: #EEAA00;
+    --color-dark-green: #1A6A24;
     --font-alte: "Alte Haas Grotesk Bold", arial;
     --font-creato-bold: "Creato Display Bold", arial;
     --font-creato-black: "Creato Display Black", arial;
+    --font-trajan-bold: "Trajan Pro", serif;
 }
 
 /* alerts */

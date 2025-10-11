@@ -2,6 +2,16 @@
      class="fixed top-0 left-0 h-full w-[260px] shadow-xl bg-ehr z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
 
 
+    <button id="arrowBtn"
+    onclick="closeNav()" 
+        class="hidden absolute top-1/2 -right-5 transform -translate-y-1/2 
+            bg-white border border-gray-300 rounded-full 
+            w-10 h-15 flex items-center justify-center gap-2 
+            shadow hover:bg-yellow hover:scale-105 transition-all duration-300 ease-in-out">
+        <span class="text-dark-green text-lg font-bold">&lt;</span>
+    </button>
+
+
 
 
     <ul class="mt-[140px] text-dark-green text-[13px] font-creato-black pr-[10px] pl-[10px]">

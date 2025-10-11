@@ -15,9 +15,8 @@
         alt="Bottom left design"
         class="absolute bottom-0 left-0 w-[320px] object-contain opacity-90 select-none pointer-events-none"
     >
-
-    
 </div>
 
 
+  
 @endsection

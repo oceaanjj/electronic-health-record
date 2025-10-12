@@ -4,17 +4,11 @@
     NOTE : for jovilyn.... this is for registering user
  -->
 
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
-    @vite(['./resources/css/login-style.css'])
-</head>
+@section('title', 'Patient Vital Signs')
 
-<body class="login-page">
+@section('content')
     <div class="login-container">
         <div class="logo-section">
             <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo">
@@ -97,6 +91,5 @@
             </div>
         </div>
     </div>
-</body>
 
-</html>
+@endsection

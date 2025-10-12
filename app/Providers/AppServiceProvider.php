@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Policies\UserPolicy;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,14 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('is-nurse', function (User $user) {
             return $user->role === 'Nurse';
         });
+
+        if (app()->environment('local') && !Auth::check()) {
+            //  Replace 3 with the ID of any user you want to use for testing
+            // 1 = Admin
+            // 2 = Doctor
+            // 3 = Nurse
+            Auth::loginUsingId(3);
+        }
 
 
     }

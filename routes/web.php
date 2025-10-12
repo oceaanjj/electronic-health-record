@@ -49,8 +49,6 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin-home');
 
 
-
-
     Route::get('/users', [UserController::class, 'index'])->name('users');
 
 
@@ -60,8 +58,8 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
 
 
 
-Route::get('/check-username', [RegisterController::class, 'checkUsername'])->name('check.username');
-Route::get('/check-email', [RegisterController::class, 'checkEmail'])->name('check.email');
+    Route::get('/check-username', [RegisterController::class, 'checkUsername'])->name('check.username');
+    Route::get('/check-email', [RegisterController::class, 'checkEmail'])->name('check.email');
 
 
     // View Audit Logs

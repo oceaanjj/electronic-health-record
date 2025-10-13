@@ -90,6 +90,8 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         'medication-administration',
         'medication-reconciliation',
         'discharge-planning',
+        //paki ayos to keith nag 404 not found hindi ko maayos css
+        'developmental-history', 
     ];
 
     foreach ($nurseViews as $uri => $name) {

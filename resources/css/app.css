@@ -87,7 +87,6 @@
         outline: none;
         resize: none;
         color: var(--color-brown);
-        height: 200px;
         width: 100%;
         padding: 20px;  
         box-sizing: border-box;
@@ -124,7 +123,7 @@
         border-color: var(--color-line-brown);
         border: 2px solid var(--color-line-brown);
         font-family: var(--font-typewriter);
-        font-size: 11px;
+        font-size: 12px;
     }
     
 }

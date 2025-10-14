@@ -66,7 +66,8 @@
     --}}
 
     {{-- Main Content --}}
-        <div id="main" class="relative min-h-screen bg-white overflow-hidden transition-all duration-300 ease-in-out">
+        <div id="main" class="relative h-screen overflow-y-auto overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
+
     
             <img 
                 src="{{ asset('img/bg-design-right.png') }}" 
@@ -86,7 +87,8 @@
                 
 
                 {{-- content ng page --}}
-                <main class="transition-all duration-300 ease-in-out">
+                <main class="pt-[120px] transition-all duration-300 ease-in-out">
+
                     @yield('content')
                 </main>
             </div>

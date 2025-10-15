@@ -24,6 +24,18 @@
         format("truetype");
     font-weight: bold;
     font-style: normal;
+    
+    font-family: "Trajan Pro";
+    src: url("/public/font/trajan-pro/TrajanPro-Bold.otf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
+
+    font-family: "typewriter";
+    src: url("/public/font/jmh_typewriter/JMH\ Typewriter-Bold.otf")
+        format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @theme {
@@ -31,15 +43,92 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 
-    --color-ehr: #1a6a24;
-    --color-yellow: #fde050;
-    --color-dark-yellow: #f3b809;
-    --color-red: #ec0000;
-    --color-dark-red: #8e1600;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-yellow: #EEAA00;
+    --color-dark-green: #1A6A24;
+    --color-beige: #FFF6CF;
+    --color-light-beige: #FFFCED;
+    --color-yellow-light: #EDB62C;
+    --color-brown: #744B13;
+    --color-line-brown: #C18B04;
+
+    
     --font-alte: "Alte Haas Grotesk Bold", arial;
     --font-creato-bold: "Creato Display Bold", arial;
     --font-creato-black: "Creato Display Black", arial;
+    --font-trajan-bold: "Trajan Pro", serif;
+    --font-typewriter: "typewriter", monospace;
+    
+    --radius-oval: 50%;
 }
+
+
+@layer components {
+    .notepad-lines {
+        background-color: var(--color-beige);
+        background-image: 
+            repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 19px,
+                rgba(116, 75, 19, 0.2) 20px
+            );
+
+        line-height: 20px;
+        background-size: 100% 20px;
+        background-attachment: local;
+
+        background-repeat: repeat;
+        background-origin: content-box;
+        background-clip: content-box, border-box;
+
+        border: none;
+        outline: none;
+        resize: none;
+        color: var(--color-brown);
+        width: 100%;
+        padding: 20px;  
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    .notepad-lines::-webkit-scrollbar {
+        width: 8px;
+        cursor: pointer;
+    }
+
+    .notepad-lines::-webkit-scrollbar-track {
+        background: var(--color-light-beige);
+    }
+
+    .notepad-lines::-webkit-scrollbar-thumb {
+        background-color: rgba(116, 75, 19, 0.4); 
+        border-radius: 10px;
+        cursor: grab;
+    }
+
+    .notepad-lines::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(116, 75, 19, 0.7);
+        cursor: grabbing;
+    }
+
+    textarea.notepad-lines {
+    font-family: inherit;
+    }
+
+
+    td {
+        background-color: var(--color-beige);
+        border-color: var(--color-line-brown);
+        border: 2px solid var(--color-line-brown);
+        font-family: var(--font-typewriter);
+        font-size: 12px;
+    }
+    
+}
+
+
 
 /* alerts */
 .alert {

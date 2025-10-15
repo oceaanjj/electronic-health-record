@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'EHR')</title>
-    <!-- @vite('resources/css/app.css') -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('styles')
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Health Record</title>
+    @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-white overflow-x-hidden">
 
+    {{-- Sidebar --}}
     @include('components.sidebar')
+    
+    {{-- Header --}}
 
+    @include('components.header')
+
+    {{--  
     <div id="main" class="transition-transform duration-300 ease-in-out">
 
         <div class="flex flex-col min-h-screen">
@@ -56,24 +60,71 @@
             </main>
         </div>
 
-    </div>
+        
 
+    </div>
+    --}}
+
+    {{-- Main Content --}}
+        <div id="main" class="relative h-screen overflow-y-auto overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
+
+    
+            <img 
+                src="{{ asset('img/bg-design-right.png') }}" 
+                alt="Top right design"
+                class="absolute top-[120px] right-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0"
+            >
+            <img 
+                src="{{ asset('img/bg-design-left.png') }}" 
+                alt="Bottom left design"
+                class="absolute bottom-0 left-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0"
+            >
+
+            
+
+            <div class="relative z-10">
+             
+                
+
+                {{-- content ng page --}}
+                <main class="pt-[120px] transition-all duration-300 ease-in-out">
+
+                    @yield('content')
+                </main>
+            </div>
+        </div>
 
 
     <script>
         function openNav() {
-            document.getElementById("mySidenav").classList.remove("-translate-x-full");
-            document.getElementById("mySidenav").classList.add("translate-x-0");
-            document.getElementById("main").classList.add("translate-x-75");
+            const sidebar = document.getElementById("mySidenav");
+            const main = document.getElementById("main");
+            const arrow = document.getElementById("arrowBtn");
+
+            sidebar.classList.remove("-translate-x-full");
+            main.classList.add("ml-[260px]"); 
+            arrow.classList.replace("-right-24", "-right-10");
+            arrow.classList.remove("hidden");
+
         }
 
         function closeNav() {
-            document.getElementById("mySidenav").classList.remove("translate-x-0");
-            document.getElementById("mySidenav").classList.add("-translate-x-full");
-            document.getElementById("main").classList.remove("translate-x-75");
+            const sidebar = document.getElementById("mySidenav");
+            const main = document.getElementById("main");
+            const arrow = document.getElementById("arrowBtn");
+
+            sidebar.classList.add("-translate-x-full");
+            main.classList.remove("ml-[260px]");
+            arrow.classList.replace("-right-10", "-right-24");
+
+            setTimeout(() => {
+            arrowBtn.classList.add("hidden");
+        }, 0);
         }
     </script>
 
 </body>
-
 </html>
+
+
+

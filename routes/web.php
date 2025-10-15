@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
@@ -18,16 +19,8 @@ use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
 
-
-
-
-
-
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
-
-
-
 
 Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');
 
@@ -48,26 +41,20 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // Admin Dashboard
     Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin-home');
 
-
     Route::get('/users', [UserController::class, 'index'])->name('users');
-
 
     // Register users (doctor/nurse only)
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register.attempt');
 
-
-
     Route::get('/check-username', [RegisterController::class, 'checkUsername'])->name('check.username');
     Route::get('/check-email', [RegisterController::class, 'checkEmail'])->name('check.email');
-
 
     // View Audit Logs
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit.index');
 
     // Change user roles
     Route::patch('/users/{id}/role', [UserController::class, 'updateRole'])->name('users.role.update');
-
 
     // No delete routes!
 });
@@ -98,6 +85,8 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         'medication-administration',
         'medication-reconciliation',
         'discharge-planning',
+        //paki ayos to keith nag 404 not found hindi ko maayos css
+        'developmental-history',
     ];
 
     foreach ($nurseViews as $uri => $name) {
@@ -124,7 +113,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/cdss', [PhysicalExamController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
     });
 
-
     // Medical History Store Routes
     Route::get('/medical-history', [MedicalController::class, 'show'])->name('medical-history');
     Route::post('/medical/store', [MedicalController::class, 'store'])->name('medical.store');
@@ -134,7 +122,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
     Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
     Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
-
 
     // Lab Values Routes
     Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
@@ -147,29 +134,23 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/ivs-and-lines/select', [IvsAndLineController::class, 'selectPatient'])->name('ivs-and-lines.select');
     Route::post('/ivs-and-lines', [IvsAndLineController::class, 'store'])->name('ivs-and-lines.store');
 
-
     // MEDICAL RECONCILIATION:
     Route::get('/medication-reconciliation', [MedReconciliationController::class, 'show'])->name('medication-reconciliation');
     Route::post('/medication-reconciliation/select', [MedReconciliationController::class, 'selectPatient'])->name('medreconciliation.select');
     Route::post('/medication-reconciliation', [MedReconciliationController::class, 'store'])->name('medreconciliation.store');
-
 
     // DISCHARGE PLANNING::
     Route::get('/discharge-planning', [DischargePlanningController::class, 'show'])->name('discharge-planning');
     Route::post('/discharge-planning', [DischargePlanningController::class, 'store'])->name('discharge-planning.store');
     Route::post('/discharge-planning/select', [DischargePlanningController::class, 'selectPatient'])->name('discharge-planning.select');
 
-
     //Activities of Daily Living (ADL)
     Route::prefix('adl')->name('adl.')->group(function () {
         Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
         Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
         Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-
         Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
-
     });
-
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
@@ -178,7 +159,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
         Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
-
     });
 
     //Intake and Output
@@ -186,10 +166,33 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
 
+    // ---------------
+    // ADPIE Routes
+    // -----------------
+    Route::prefix('adpie')->name('adpie.')->group(function () {
+        $adpieCategories = [
+            'adl',
+            'intake-output',
+            'lab-values',
+            'physical-exam',
+            'vital-signs'
+        ];
 
-    // Add more routes for role: NURSE here
+        $adpiePages = [
+            'diagnosis',
+            'evaluation',
+            'interventions',
+            'planning'
+        ];
 
-
+        foreach ($adpieCategories as $category) {
+            Route::prefix($category)->name("{$category}.")->group(function () use ($adpiePages, $category) {
+                foreach ($adpiePages as $page) {
+                    // /adpie/adl/diagnosis which shows view('adpie.adl.diagnosis')
+                    // and has the name adpie.adl.diagnosis
+                    Route::view("/{$page}", "adpie.{$category}.{$page}")->name($page);
+                }
+            });
+        }
+    });
 });
-
-

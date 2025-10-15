@@ -1,5 +1,3 @@
-
-
 @extends('layouts.app')
 
 @section('title', 'Physical Exam')
@@ -31,17 +29,23 @@
             {{-- Hidden input for the patient ID to be passed with the form --}}
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
+
+        <center>
             <table>
                 <tr>
-                    <th class="title">SYSTEM</th>
-                    <th class="title">FINDINGS</th>
-                    <th class="title">ALERTS</th>
+                    <th class="bg-dark-green text-white rounded-tl-lg">SYSTEM</th>
+                    <th class="bg-dark-green text-white">FINDINGS</th>
+                    <th class="bg-dark-green text-white rounded-tr-lg">ALERTS</th>
                 </tr>
+
+                {{-- GENERAL APPEARANCE --}}
                 <tr>
-                    <th class="system">GENERAL APPEARANCE</th>
+                    <th class="bg-yellow-light text-brown">GENERAL APPEARANCE</th>
                     <td>
-                        <textarea name="general_appearance"
-                            placeholder="Enter GENERAL APPEARANCE findings">{{ old('general_appearance', $physicalExam->general_appearance ?? '') }}</textarea>
+                        <textarea name="general_appearance" class="notepad-lines"
+                            placeholder="Enter GENERAL APPEARANCE findings">
+                            {{ old('general_appearance', $physicalExam->general_appearance ?? '') }}
+                        </textarea>
                     </td>
                     <td class="alert-box">
                         @error('general_appearance')
@@ -62,11 +66,15 @@
                         @endif
                     </td>
                 </tr>
+
+
+                {{-- SKIN --}}
                 <tr>
-                    <th class="system">SKIN</th>
+                    <th class="bg-yellow-light text-brown">SKIN</th>
                     <td>
-                        <textarea name="skin_condition"
-                            placeholder="Enter SKIN findings">{{ old('skin_condition', $physicalExam->skin_condition ?? '') }}</textarea>
+                        <textarea name="skin_condition" class="notepad-lines"
+                            placeholder="Enter SKIN findings">{{ old('skin_condition', $physicalExam->skin_condition ?? '') }}
+                        </textarea>
                     </td>
                     <td class="alert-box">
                         @error('skin_condition')
@@ -88,10 +96,12 @@
                         @endif
                     </td>
                 </tr>
+
+                {{-- EYES --}}
                 <tr>
-                    <th class="system">EYES</th>
+                    <th class="bg-yellow-light text-brown">EYES</th>
                     <td>
-                        <textarea name="eye_condition"
+                        <textarea name="eye_condition" class="notepad-lines"
                             placeholder="Enter EYES findings">{{ old('eye_condition', $physicalExam->eye_condition ?? '') }}</textarea>
                     </td>
                     <td class="alert-box">
@@ -114,10 +124,12 @@
                         @endif
                     </td>
                 </tr>
+
+                {{-- ORAL CAVITY --}}
                 <tr>
-                    <th class="system">ORAL CAVITY</th>
+                    <th class="bg-yellow-light text-brown">ORAL CAVITY</th>
                     <td>
-                        <textarea name="oral_condition"
+                        <textarea name="oral_condition" class="notepad-lines"
                             placeholder="Enter ORAL CAVITY findings">{{ old('oral_condition', $physicalExam->oral_condition ?? '') }}</textarea>
                     </td>
                     <td class="alert-box">
@@ -140,10 +152,12 @@
                         @endif
                     </td>
                 </tr>
+
+                {{-- CARDIOVASCULAR --}}
                 <tr>
-                    <th class="system">CARDIOVASCULAR</th>
+                    <th class="bg-yellow-light text-brown">CARDIOVASCULAR</th>
                     <td>
-                        <textarea name="cardiovascular"
+                        <textarea name="cardiovascular" class="notepad-lines"
                             placeholder="Enter CARDIOVASCULAR findings">{{ old('cardiovascular', $physicalExam->cardiovascular ?? '') }}</textarea>
                     </td>
                     <td class="alert-box">
@@ -167,9 +181,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="system">ABDOMEN</th>
+                    <th class="bg-yellow-light text-brown">ABDOMEN</th>
                     <td>
-                        <textarea name="abdomen_condition"
+                        <textarea name="abdomen_condition" class="notepad-lines"
                             placeholder="Enter ABDOMEN findings">{{ old('abdomen_condition', $physicalExam->abdomen_condition ?? '') }}</textarea>
                     </td>
                     <td class="alert-box">
@@ -193,9 +207,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="system">EXTREMITIES</th>
+                    <th class="bg-yellow-light text-brown">EXTREMITIES</th>
                     <td>
-                        <textarea name="extremities"
+                        <textarea name="extremities" class="notepad-lines"
                             placeholder="Enter EXTREMITIES findings">{{ old('extremities', $physicalExam->extremities ?? '') }}</textarea>
                     </td>
                     <td class="alert-box">
@@ -219,9 +233,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="system">NEUROLOGICAL</th>
+                    <th class="bg-yellow-light text-brown">NEUROLOGICAL</th>
                     <td>
-                        <textarea name="neurological"
+                        <textarea name="neurological" class="notepad-lines"
                             placeholder="Enter NEUROLOGICAL findings">{{ old('neurological', $physicalExam->neurological ?? '') }}</textarea>
                     </td>
                     <td class="alert-box">
@@ -245,6 +259,7 @@
                     </td>
                 </tr>
             </table>
+        </center>
     </div>
 
     <div class="buttons">

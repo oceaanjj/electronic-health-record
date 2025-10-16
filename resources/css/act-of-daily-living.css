@@ -8,7 +8,7 @@
 
 /* Page Background */
 body {
-    background-color: #1A6A24; /* Dark Green */
+    background-color: #1a6a24; /* Dark Green */
     color: white;
     padding: 20px;
 }
@@ -17,11 +17,11 @@ body {
 .header {
     font-size: 22px;
     font-weight: bold;
-    background: #1A6A24;
+    background: #1a6a24;
     color: #000000;
     padding: 12px;
     margin-bottom: 20px;
-    border: 3px solid #EDB62C;
+    border: 3px solid #edb62c;
     border-radius: 4px;
 }
 
@@ -99,6 +99,7 @@ th {
 }
 
 input {
+    color: black;
     width: 100%;
     padding: 6px;
     border: none;
@@ -140,14 +141,14 @@ input {
     color: green;
 }
 
-
-button, .clear-btn {
+button,
+.clear-btn {
     padding: 12px 20px;
     font-size: 14px;
     font-weight: bold;
-    background: #1A6A24;
+    background: #1a6a24;
     color: #fff;
-    border: 2px solid #EDB62C;
+    border: 2px solid #edb62c;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
@@ -156,6 +157,7 @@ button, .clear-btn {
     display: inline;
 }
 
-button:hover, .clear-btn:hover {
+button:hover,
+.clear-btn:hover {
     background: #14501b;
 }

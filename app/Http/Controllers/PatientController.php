@@ -152,8 +152,6 @@ class PatientController extends Controller
         $patients = $patients_query->get();
 
 
-
-        // Return the view. Using $search_term is better for view clarity.
         return view('patients.search', [
             'patients' => $patients,
             'input' => $search_term

@@ -7,7 +7,6 @@ use App\Policies\UserPolicy;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
-    
+
 
     /**
      * Bootstrap any application services.
@@ -47,6 +46,8 @@ class AppServiceProvider extends ServiceProvider
             return $user->role === 'Nurse';
         });
 
+
+        //auto login
         if (app()->environment('local') && !Auth::check()) {
             //  Replace 3 with the ID of any user you want to use for testing
             // 1 = Admin
@@ -54,7 +55,6 @@ class AppServiceProvider extends ServiceProvider
             // 3 = Nurse
             Auth::loginUsingId(3);
         }
-
 
     }
 }

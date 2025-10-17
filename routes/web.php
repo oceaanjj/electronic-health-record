@@ -18,6 +18,31 @@ use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
+// In routes/web.php
+// In routes/web.php
+// routes/web.php
+
+// ... your existing routes
+
+// Nursing Diagnosis Multi-Step Form Routes
+Route::prefix('nursing-diagnosis/{physicalExamId}')->name('nursing-diagnosis.')->group(function () {
+    // Step 1: Diagnosis
+    Route::get('/create-step-1', [\App\Http\Controllers\NursingDiagnosisController::class, 'createStep1'])->name('create-step-1');
+    Route::post('/store-step-1', [\App\Http\Controllers\NursingDiagnosisController::class, 'storeStep1'])->name('store-step-1');
+
+    // Step 2: Planning
+    Route::get('/create-step-2', [\App\Http\Controllers\NursingDiagnosisController::class, 'createStep2'])->name('create-step-2');
+    Route::post('/store-step-2', [\App\Http\Controllers\NursingDiagnosisController::class, 'storeStep2'])->name('store-step-2');
+
+    // Step 3: Intervention
+    Route::get('/create-step-3', [\App\Http\Controllers\NursingDiagnosisController::class, 'createStep3'])->name('create-step-3');
+    Route::post('/store-step-3', [\App\Http\Controllers\NursingDiagnosisController::class, 'storeStep3'])->name('store-step-3');
+    
+    // Step 4: Evaluation & Final Store
+    Route::get('/create-step-4', [\App\Http\Controllers\NursingDiagnosisController::class, 'createStep4'])->name('create-step-4');
+    Route::post('/store', [\App\Http\Controllers\NursingDiagnosisController::class, 'store'])->name('store'); // The final store method
+});
+
 
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');

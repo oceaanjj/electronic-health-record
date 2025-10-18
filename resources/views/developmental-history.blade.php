@@ -25,11 +25,16 @@
         <!-- <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}"> -->
 
         <center>
+            <p class="mb-1 w-[72%] flex justify-center bg-dark-green text-white rounded-lg">DEVELOPMENTAL HISTORY </p>
+        </center>
+        
+
+        <center>
             {{-- DEVELOPMENTAL HISTORY --}}
             <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
-                <tr>
-                    <th colspan="6" class="bg-dark-green text-white rounded-lg">DEVELOPMENTAL HISTORY </th>
-                </tr>
+            
+            
+                
 
                 {{-- GROSS MOTOR --}}
                 <tr>
@@ -112,7 +117,9 @@
                 <tr>
                     <td class="rounded-br-lg">
                         <textarea class="notepad-lines h-[100px]"
-                            name="social">{{ $developmentalHistory->social ?? '' }}</textarea>
+                            name="social"
+                            placeholder="Type here..."
+                            >{{ $developmentalHistory->social ?? '' }}</textarea>
                     </td>
                 </tr>
             </table>

@@ -125,6 +125,12 @@
         font-family: var(--font-typewriter);
         font-size: 12px;
     }
+
+    .pe {
+        font-family: var(--font-typewriter);
+    }
+
+    
     
 }
 

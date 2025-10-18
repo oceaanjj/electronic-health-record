@@ -60,10 +60,18 @@ class HomeController extends Controller
 
     public function nurseHome(Request $request)
     {
-        $allKeysToClear = array_merge(...array_values($this->NurseSessionKeyMap));
-        $request->session()->forget($allKeysToClear);
-        return view('nurse-home');
+// Your existing session clearing logic
+    $allKeysToClear = array_merge(...array_values($this->NurseSessionKeyMap));
+    $request->session()->forget($allKeysToClear);
+
+    // --- MOVE THE CODE HERE ---
+    // Fetch all patients assigned to the currently logged-in nurse.
+    $patients = Auth::user()->patients;
+
+    // Pass the list of patients to the view.
+    return view('nurse-home', ['patients' => $patients]);
     }
+    
 
     public function doctorHome()
     {

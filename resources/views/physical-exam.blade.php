@@ -262,12 +262,19 @@
         </center>
     </div>
 
-    <div class="buttons">
-        <button type=" submit" class="btn">Submit</button>
-        <button type="button" class="btn">CDSS</button>
-    </div>
+   
+<div class="buttons">
+    {{-- These buttons submit the form to save or run analysis --}}
+    <button type="submit" name="action" value="submit" class="btn">Submit</button>
+    @if ($physicalExam)
+    <a href="{{ route('nursing-diagnosis.create-step-1', ['physicalExamId' => $physicalExam->id]) }}" class="btn">CDSS</a>
+@endif
+</div>
+
+</form>
 
     </form>
+    
 
 @endsection
 

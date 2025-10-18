@@ -1,40 +1,51 @@
 @extends('layouts.app')
 
-@section('title', 'Nursing Planning')
+@section('title', 'Nursing Diagnosis - Step 2')
 
 @section('content')
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {{-- Header --}}
+            <div class="text-center mb-4">
+                <h2>Nursing Diagnosis Process (Step 2 of 4)</h2>
+                 {{-- ✅ FIX: Check if $selectedPatient exists before using it --}}
+                @if ($selectedPatient)
+                    <p class="text-muted">Patient: <strong>{{ $selectedPatient->name }}</strong></p>
+                @else
+                    <p class="text-danger"><strong>Error: Patient data not found for this exam.</strong></p>
+                @endif
+            </div>
 
-<body>
-    {{-- PATIENT DROP-DOWN (to maintain context) --}}
-    <div class="header">
-        <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-        <select id="patient_info" name="patient_id" disabled>
-            <option>{{ $selectedPatient->name ?? 'No Patient Selected' }}</option>
-        </select>
-    </div>
-
-    {{-- Main Content --}}
-    <div class="nursing-container">
-        <div class="nursing-sidebar">
-            <h2>PLANNING</h2>
-        </div>
-        <div class="nursing-main-content">
-            <form action="{{ route('nursing-diagnosis.store-step-2', ['physicalExamId' => $physicalExam->id]) }}" method="POST" class="nursing-form-area">
-                @csrf
-                <textarea name="planning" placeholder="Enter planning details here...">{{ session('nursing_diagnosis.planning') }}</textarea>
-                
-                <div class="nursing-button-container">
-                    <div>
-                        <a href="{{ route('nursing-diagnosis.create-step-1', ['physicalExamId' => $physicalExam->id]) }}" class="nursing-btn">GO BACK</a>
-                    </div>
-                    <div class="nursing-right-buttons">
-                        <button type="submit" class="nursing-btn">SUBMIT</button>
-                        <button type="submit" class="nursing-btn">PROCEED TO INTERVENTION</button>
-                    </div>
+            {{-- Recommendation Box --}}
+            @if (!empty($recommendation) && isset($recommendation['planning']))
+                <div class="alert alert-info shadow-sm">
+                    <h5 class="alert-heading">💡 Recommended Planning</h5>
+                    <p>{{ $recommendation['planning'] }}</p>
                 </div>
-            </form>
+            @endif
+
+            {{-- Form --}}
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">2. Planning</h4>
+                    <p>Establish goals and desired outcomes.</p>
+                    <form action="{{ route('nursing-diagnosis.store-step-2', ['physicalExamId' => $physicalExam->id]) }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <textarea name="planning" class="form-control @error('planning') is-invalid @enderror" rows="5" placeholder="Enter the care plan..." required>{{ old('planning', session('nursing_diagnosis.planning') ?? ($recommendation['planning'] ?? '')) }}</textarea>
+                             @error('planning')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('nursing-diagnosis.create-step-1', ['physicalExamId' => $physicalExam->id]) }}" class="btn btn-secondary">← Back: Diagnosis</a>
+                            <button type="submit" class="btn btn-primary">Next: Intervention →</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</body>
+</div>
 @endsection
-

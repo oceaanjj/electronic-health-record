@@ -164,7 +164,7 @@ use Illuminate\Support\Facades\Auth;
                 <img src="img/diagnostics.png" alt="Diagnostics Icon" class="box-icon">
                 <h3>DIAGNOSTICS</h3>
                 <p>Document diagnostic procedures and results such as imaging, scans, and other tests.</p>
-                <a class="proceed" href="#">
+                <a class="proceed" href="{{ route('diagnostic.index') }}">
                     <div>PROCEED <span class="arrow">▶</span></div>
                 </a>
             </div>

@@ -18,13 +18,20 @@ use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
-// In routes/web.php
-// In routes/web.php
-// routes/web.php
+
+
+use App\Http\Controllers\DiagnosticController;
+
+// Route to show the diagnostics page (with or without a selected patient)
+Route::get('/diagnostic', [DiagnosticController::class, 'index'])->name('diagnostic.index');
+
+// Route to handle the UPDATE form submission for a SPECIFIC patient
+// Make sure to use your patient's primary key name ('patient_id')
+Route::put('/patients/{patient:patient_id}/diagnostic', [DiagnosticController::class, 'update'])->name('diagnostics.update');
 
 // ... your existing routes
 
-// Nursing Diagnosis Multi-Step Form Routes
+// dpie routes 
 Route::prefix('nursing-diagnosis/{physicalExamId}')->name('nursing-diagnosis.')->group(function () {
     // Step 1: Diagnosis
     Route::get('/create-step-1', [\App\Http\Controllers\NursingDiagnosisController::class, 'createStep1'])->name('create-step-1');

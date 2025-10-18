@@ -1,41 +1,51 @@
 @extends('layouts.app')
 
-@section('title', 'Nursing Intervention')
+@section('title', 'Nursing Diagnosis - Step 4')
 
 @section('content')
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {{-- Header --}}
+            <div class="text-center mb-4">
+                <h2>Nursing Diagnosis Process (Step 4 of 4)</h2>
+                 {{-- ✅ FIX: Check if $selectedPatient exists before using it --}}
+                @if ($selectedPatient)
+                    <p class="text-muted">Patient: <strong>{{ $selectedPatient->name }}</strong></p>
+                @else
+                    <p class="text-danger"><strong>Error: Patient data not found for this exam.</strong></p>
+                @endif
+            </div>
 
-<body>
-    {{-- PATIENT DROP-DOWN (to maintain context) --}}
-    <div class="header">
-        <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-        <select id="patient_info" name="patient_id" disabled>
-            <option>{{ $selectedPatient->name ?? 'No Patient Selected' }}</option>
-        </select>
-    </div>
-
-    {{-- Main Content --}}
-    <div class="nursing-container">
-        <div class="nursing-sidebar">
-            <h2>INTERVENTION</h2>
-        </div>
-        <div class="nursing-main-content">
-            <form action="{{ route('nursing-diagnosis.store-step-3', ['physicalExamId' => $physicalExam->id]) }}" method="POST" class="nursing-form-area">
-                @csrf
-                <textarea name="intervention" placeholder="Enter intervention details here...">{{ session('nursing_diagnosis.intervention') }}</textarea>
-                
-                <div class="nursing-button-container">
-                    <div>
-                        <a href="{{ route('nursing-diagnosis.create-step-2', ['physicalExamId' => $physicalExam->id]) }}" class="nursing-btn">GO BACK</a>
-                    </div>
-                    <div class="nursing-right-buttons">
-                        <button type="submit" class="nursing-btn">SUBMIT</button>
-                        <button type="submit" class="nursing-btn">PROCEED TO EVALUATION</button>
-                    </div>
+            {{-- Recommendation Box --}}
+            @if (!empty($recommendation) && isset($recommendation['evaluation']))
+                <div class="alert alert-info shadow-sm">
+                    <h5 class="alert-heading">💡 Recommended Evaluation</h5>
+                    <p>{{ $recommendation['evaluation'] }}</p>
                 </div>
-            </form>
+            @endif
+
+            {{-- Form --}}
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">4. Evaluation</h4>
+                    <p>Assess the patient's response to the interventions.</p>
+                    <form action="{{ route('nursing-diagnosis.store', ['physicalExamId' => $physicalExam->id]) }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <textarea name="evaluation" class="form-control @error('evaluation') is-invalid @enderror" rows="5" placeholder="Enter the evaluation..." required>{{ old('evaluation', session('nursing_diagnosis.evaluation') ?? ($recommendation['evaluation'] ?? '')) }}</textarea>
+                             @error('evaluation')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('nursing-diagnosis.create-step-3', ['physicalExamId' => $physicalExam->id]) }}" class="btn btn-secondary">← Back: Intervention</a>
+                            <button type="submit" class="btn btn-success">✓ Save Complete Diagnosis</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-</body>
+</div>
 @endsection
-
-

@@ -4,39 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Models\NursingDiagnosis;
 use App\Models\PhysicalExam;
-use App\Models\Patient;
+use App\Services\PhysicalNursingDiagnosisService; // Service for recommendations
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NursingDiagnosisController extends Controller
 {
+    protected $nursingDiagnosisService;
+
     /**
-     * Step 1: Show the Diagnosis form.
+     * Inject the service via the constructor.
+     */
+    public function __construct(PhysicalNursingDiagnosisService $nursingDiagnosisService)
+    {
+        $this->nursingDiagnosisService = $nursingDiagnosisService;
+    }
+
+    /**
+     * Step 1: Show the Diagnosis form & generate a recommendation.
      */
     public function createStep1(Request $request, $physicalExamId)
     {
         $physicalExam = PhysicalExam::findOrFail($physicalExamId);
-        $selectedPatient = $physicalExam->patient;
-        $patients = Auth::user()->patients;
 
-        // Forget old session data if starting fresh
-        if (!$request->session()->has('nursing_diagnosis')) {
-             $request->session()->forget('nursing_diagnosis');
+        // Generate a new recommendation based on the physical exam.
+        $recommendation = $this->nursingDiagnosisService->generateDPIE($physicalExam);
+
+        // Store the full recommendation in the session to use in subsequent steps.
+        if (!empty($recommendation)) {
+            $request->session()->put('nursing_diagnosis_recommendation', $recommendation);
+        } else {
+            // Clear any old recommendation if no new one is found.
+            $request->session()->forget('nursing_diagnosis_recommendation');
         }
 
-        return view('nursing-diagnosis.diagnosis', compact('physicalExam', 'selectedPatient', 'patients'));
+        return view('nursing-diagnosis.diagnosis', [
+            'physicalExam' => $physicalExam,
+            'selectedPatient' => $physicalExam->patient,
+            'recommendation' => $recommendation, // Pass to the view
+        ]);
     }
 
     /**
-     * Step 1: Store Diagnosis data in session and move to next step.
+     * Store Diagnosis data in session and move to the next step.
      */
     public function storeStep1(Request $request, $physicalExamId)
     {
-        $validatedData = $request->validate(['diagnosis' => 'nullable|string']);
-        
-        // Store in session
+        $validatedData = $request->validate(['diagnosis' => 'required|string']);
         $request->session()->put('nursing_diagnosis.diagnosis', $validatedData['diagnosis']);
-
         return redirect()->route('nursing-diagnosis.create-step-2', ['physicalExamId' => $physicalExamId]);
     }
 
@@ -45,17 +60,19 @@ class NursingDiagnosisController extends Controller
      */
     public function createStep2($physicalExamId)
     {
-        $physicalExam = PhysicalExam::findOrFail($physicalExamId);
-        $selectedPatient = $physicalExam->patient;
-        return view('nursing-diagnosis.planning', compact('physicalExam', 'selectedPatient'));
+        return view('nursing-diagnosis.planning', [
+            'physicalExam' => PhysicalExam::findOrFail($physicalExamId),
+            'selectedPatient' => PhysicalExam::findOrFail($physicalExamId)->patient,
+            'recommendation' => session('nursing_diagnosis_recommendation', []), // Get recommendation from session
+        ]);
     }
 
     /**
-     * Step 2: Store Planning data in session.
+     * Store Planning data in session and move to the next step.
      */
     public function storeStep2(Request $request, $physicalExamId)
     {
-        $validatedData = $request->validate(['planning' => 'nullable|string']);
+        $validatedData = $request->validate(['planning' => 'required|string']);
         $request->session()->put('nursing_diagnosis.planning', $validatedData['planning']);
         return redirect()->route('nursing-diagnosis.create-step-3', ['physicalExamId' => $physicalExamId]);
     }
@@ -65,17 +82,19 @@ class NursingDiagnosisController extends Controller
      */
     public function createStep3($physicalExamId)
     {
-        $physicalExam = PhysicalExam::findOrFail($physicalExamId);
-        $selectedPatient = $physicalExam->patient;
-        return view('nursing-diagnosis.intervention', compact('physicalExam', 'selectedPatient'));
+        return view('nursing-diagnosis.intervention', [
+            'physicalExam' => PhysicalExam::findOrFail($physicalExamId),
+            'selectedPatient' => PhysicalExam::findOrFail($physicalExamId)->patient,
+            'recommendation' => session('nursing_diagnosis_recommendation', []), // Get recommendation from session
+        ]);
     }
 
     /**
-     * Step 3: Store Intervention data in session.
+     * Store Intervention data in session and move to the next step.
      */
     public function storeStep3(Request $request, $physicalExamId)
     {
-        $validatedData = $request->validate(['intervention' => 'nullable|string']);
+        $validatedData = $request->validate(['intervention' => 'required|string']);
         $request->session()->put('nursing_diagnosis.intervention', $validatedData['intervention']);
         return redirect()->route('nursing-diagnosis.create-step-4', ['physicalExamId' => $physicalExamId]);
     }
@@ -85,39 +104,37 @@ class NursingDiagnosisController extends Controller
      */
     public function createStep4($physicalExamId)
     {
-        $physicalExam = PhysicalExam::findOrFail($physicalExamId);
-        $selectedPatient = $physicalExam->patient;
-        return view('nursing-diagnosis.evaluation', compact('physicalExam', 'selectedPatient'));
+        return view('nursing-diagnosis.evaluation', [
+            'physicalExam' => PhysicalExam::findOrFail($physicalExamId),
+            'selectedPatient' => PhysicalExam::findOrFail($physicalExamId)->patient,
+            'recommendation' => session('nursing_diagnosis_recommendation', []), // Get recommendation from session
+        ]);
     }
 
     /**
-     * Final Step: Store all session data into the database.
+     * Final Step: Validate the last input and store all session data into the database.
      */
     public function store(Request $request, $physicalExamId)
     {
-        // Add the final step's data to the session
-        $validatedData = $request->validate(['evaluation' => 'nullable|string']);
-        $request->session()->put('nursing_diagnosis.evaluation', $validatedData['evaluation']);
-        
-        // Retrieve all data from session
-        $data = $request->session()->get('nursing_diagnosis');
+        // Validate the final step's data.
+        $validatedData = $request->validate(['evaluation' => 'required|string']);
 
-        // Add the physical_exam_id
+        // Retrieve all data from the session.
+        $data = $request->session()->get('nursing_diagnosis', []);
+        
+        // Add the final piece of data.
+        $data['evaluation'] = $validatedData['evaluation'];
+
+        // Add the foreign key for the relationship.
         $data['physical_exam_id'] = $physicalExamId;
 
-        // Create the record
-        NursingDiagnosis::create([
-            'physical_exam_id' => $data['physical_exam_id'],
-            'diagnosis' => $data['diagnosis'] ?? '',
-            'planning' => $data['planning'] ?? '',
-            'intervention' => $data['intervention'] ?? '',
-            'evaluation' => $data['evaluation'] ?? '',
-        ]);
+        // Create the record in the database.
+        NursingDiagnosis::create($data);
 
-        // Clear the session data
-        $request->session()->forget('nursing_diagnosis');
+        // Clear the session data for the next entry.
+        $request->session()->forget(['nursing_diagnosis', 'nursing_diagnosis_recommendation']);
 
-        // Redirect with success message
+        // Redirect with a success message.
         return redirect()->route('physical-exam.index')->with('success', 'Nursing diagnosis saved successfully!');
     }
 }

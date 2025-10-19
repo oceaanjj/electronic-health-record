@@ -6,13 +6,17 @@
 
     <form action="{{ route('medical-history.select') }}" method="POST">
         @csrf
-        <div class="header">
-            <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                <option value="">-- Select Patient --</option>
-
-            </select>
-        </div>
+            <div class="header">
+                    <label for="patient_id" style="color: white;">PATIENT NAME :</label>
+                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                        <option value="">-- Select Patient --</option>
+                        @foreach ($patients as $patient)
+                            <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
+                                {{ $patient->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
     </form>
 
@@ -22,7 +26,7 @@
         @csrf
 
         {{-- Hidden input to send the selected patient's ID with the POST request --}}
-        <!-- <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}"> -->
+        <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
 
         <center>
             <p class="mb-1 w-[72%] flex justify-center bg-dark-green text-white rounded-lg">DEVELOPMENTAL HISTORY </p>
@@ -130,12 +134,12 @@
 
 
 
-
+        <div class="buttons">
+            <button type="submit" class="btn">Submit</button>
+        </div>
     </form>
 
-    <div class="buttons">
-        <button type="submit" class="btn">Submit</button>
-    </div>
+
 
 
 @endsection

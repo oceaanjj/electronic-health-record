@@ -34,7 +34,7 @@
         <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
 
         <div class="section">
-            <table>
+            <table class="w-[72%]">
                 <tr>
                     <th colspan="2">Discharge Planning</th>
                 </tr>

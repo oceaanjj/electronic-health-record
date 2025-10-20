@@ -9,20 +9,46 @@
         <form action="{{ route('adl.select') }}" method="POST" id="patient-select-form" class="flex items-center space-x-4">
             @csrf
 
-            <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
-                @foreach ($patients as $patient)
-                    <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
-                    selected @endif>
-                        {{ $patient->name }}
-                    </option>
-                @endforeach
-            </select>
+            <!-- <label for="patient_id" style="color: white;">PATIENT NAME :</label>
+                                                                                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                                                                                        <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
+                                                                                        @foreach ($patients as $patient)
+                                                                                            <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
+                                                                                            selected @endif>
+                                                                                                {{ $patient->name }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select> -->
+
+            {{-- This is the new searchable dropdown structure --}}
+            <label for="patient_search_input" style="color: white;">PATIENT NAME :</label>
+
+            <div class="searchable-dropdown">
+                {{-- This is the text input the user interacts with --}}
+                <input type="text" id="patient_search_input" placeholder="-- Select or type to search --"
+                    value="{{ $selectedPatient ? $selectedPatient->name : '' }}" autocomplete="off">
+
+                {{-- This container will hold the list of selectable patients --}}
+                <div id="patient_options_container">
+                    @foreach ($patients as $patient)
+                        <div class="option" data-value="{{ $patient->patient_id }}">
+                            {{ $patient->name }}
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- This crucial hidden input stores the selected patient_id for form submission --}}
+            <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
+
+
 
             <!-- DATE -->
             <label for="date" style="color: white;">DATE :</label>
-            <input class="date" type="date" id="date_selector" name="date" value="{{ session('selected_date') }}"
+
+            {{-- new date --}}
+            <input class="date" type="date" id="date_selector" name="date"
+                value="{{ session('selected_date') ?? ($selectedPatient ? $selectedPatient->admission_date : now()->format('Y-m-d')) }}"
                 onchange="this.form.submit()">
 
             <!-- DAY NO -->
@@ -45,7 +71,7 @@
         @csrf
 
         {{-- Hidden PATIENT_ID AND DATE --}}
-        <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+        <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
         <input type="hidden" name="date" value="{{ session('selected_date') }}">
         <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
 
@@ -241,4 +267,9 @@
 
 @push('styles')
     @vite('resources/css/act-of-daily-living.css')
+@endpush
+
+
+@push('scripts')
+    @vite('resources/js/search.js')
 @endpush

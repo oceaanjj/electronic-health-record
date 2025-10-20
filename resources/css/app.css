@@ -135,7 +135,25 @@
         font-family: var(--font-typewriter);
     }
 
-    
+
+    .button-default {
+        @apply w-[120px] border-2 rounded-full py-2 px-4 font-creato-bold transition-all duration-300;
+        border-color: var(--color-dark-green);
+        color: var(--color-dark-green);
+        background-color: transparent;
+        box-shadow: 0 0 0 rgba(0, 128, 0, 0); 
+        font-family: var(--font-creato-bold);
+    }
+
+
+    .button-default:hover {
+        @apply w-[120px] bg-gradient-to-b from-button-light-green via-button-middle-green to-button-green text-white border-2 border-button-green font-creato-bold;
+        box-shadow: 0 0 15px var(--color-dark-green), 0 0 30px rgba(0, 255, 0, 0.5);
+        background-position: bottom;
+        transform: scale(1.03);
+        font-family: var(--font-creato-bold);
+    } 
+
     
 }
 

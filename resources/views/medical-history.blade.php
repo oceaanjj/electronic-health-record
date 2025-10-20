@@ -164,7 +164,7 @@
                 </table>
              </center>
 
-            <center>
+        <center>
             <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                 {{-- VACCINATION --}}
                 <tr>
@@ -190,9 +190,20 @@
                     <td><textarea class="notepad-lines h-[200px]" name="vaccine_comment" placeholder="Type here...">{{ $vaccination->comment ?? '' }}</textarea></td>
                 </tr> 
             </table>
-            </center>
 
-        </div>
+            
+         
+        </center>
+
+                <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
+
+                        {{-- paasyos ako ng routing here, dapat mapupunta sa developmental history --}}
+                        <a href="{{ route('developmental-history') }}">
+                            <button class="button-default">NEXT</button>
+                        </a>
+                    </div>
+
+                </div>
 
         
         

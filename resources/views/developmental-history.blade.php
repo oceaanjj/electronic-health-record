@@ -128,7 +128,7 @@
         </center>
 
 
-            <div class="w-[72%] mx-auto flex justify-end mt-4 mb-30 space-x-4">
+            <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
                 {{-- paayos ako ng routing here, dapat babalik sa medical history --}}
                 <a href="{{ route('medical-history') }}">
                     <button type="button" class="button-default">BACK</button>

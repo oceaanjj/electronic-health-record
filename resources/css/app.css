@@ -55,6 +55,7 @@
     --color-button-green: #03582c;
     --color-button-middle-green: #379f35;
     --color-button-light-green: #acf858;
+    --color-button-default-green: #E5FFE9;
 
 
 
@@ -140,19 +141,49 @@
         @apply w-[120px] border-2 rounded-full py-2 px-4 font-creato-bold transition-all duration-300;
         border-color: var(--color-dark-green);
         color: var(--color-dark-green);
-        background-color: transparent;
+        background-color: var(--color-button-default-green);
         box-shadow: 0 0 0 rgba(0, 128, 0, 0); 
-        font-family: var(--font-creato-bold);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
     }
 
 
+    .button-default::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        var(--color-button-light-green),
+        var(--color-button-middle-green),
+        var(--color-button-green)
+    );
+    transform: translateY(-100%); 
+    transition: transform 0.35s ease-out;
+    z-index: -1;
+    }
+
+    .button-default:hover::before {
+    transform: translateY(0); 
+    }
+
     .button-default:hover {
-        @apply w-[120px] bg-gradient-to-b from-button-light-green via-button-middle-green to-button-green text-white border-2 border-button-green font-creato-bold;
-        box-shadow: 0 0 15px var(--color-dark-green), 0 0 30px rgba(0, 255, 0, 0.5);
-        background-position: bottom;
-        transform: scale(1.03);
-        font-family: var(--font-creato-bold);
-    } 
+    color: white;
+    border-color: var(--color-button-green);
+    transform: scale(1.03);
+    box-shadow: 0 0 10px var(--color-dark-green), 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .button-default:active {
+    transform: scale(0.97) translateY(2px); 
+    box-shadow: 0 2px 5px rgba(0, 128, 0, 0.4) inset; 
+    transition: transform 0.1s ease-in; 
+    }
+
+
+
+
 
     
 }

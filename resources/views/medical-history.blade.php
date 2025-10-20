@@ -199,7 +199,7 @@
 
         <div class="buttons">
             <a href="developmental-history.blade.php">
-                <button type="submit" class="btn">Submit</button>
+                <button class="bg-gradient-to-b from-button-light-green via-button-middle-green to-button-green text-white py-2 px-4 rounded-full">NEXT</button>
             </a>
         </div>
 

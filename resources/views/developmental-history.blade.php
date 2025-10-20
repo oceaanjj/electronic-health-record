@@ -123,19 +123,27 @@
                     </td>
                 </tr>
             </table>
+
+            
         </center>
 
+
+            <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
+                {{-- paayos ako ng routing here, dapat babalik sa medical history --}}
+                <a href="{{ route('medical-history') }}">
+                    <button type="button" class="button-default">BACK</button>
+                </a>
+
+                {{-- mapupunta na dapat sa database lahat ng input sa medical history & developmental history --}}
+                <button type="submit" class="button-default">SUBMIT</button>
+            </div>
         </div>
-
-
-
 
 
     </form>
 
-    <div class="buttons">
-        <button type="submit" class="btn">Submit</button>
-    </div>
+
+    
 
 
 @endsection

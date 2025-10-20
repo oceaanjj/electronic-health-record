@@ -10,22 +10,22 @@
             @csrf
 
             <!-- <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-                                                                                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                                                                                        <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
-                                                                                        @foreach ($patients as $patient)
-                                                                                            <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
-                                                                                            selected @endif>
-                                                                                                {{ $patient->name }}
-                                                                                            </option>
-                                                                                        @endforeach
-                                                                                    </select> -->
+                                                                                                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                                                                                                        <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
+                                                                                                        @foreach ($patients as $patient)
+                                                                                                            <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
+                                                                                                            selected @endif>
+                                                                                                                {{ $patient->name }}
+                                                                                                            </option>
+                                                                                                        @endforeach
+                                                                                                    </select> -->
 
-            {{-- This is the new searchable dropdown structure --}}
+            {{-- NEW PATIENT DROPDWON --}}
             <label for="patient_search_input" style="color: white;">PATIENT NAME :</label>
 
             <div class="searchable-dropdown">
                 {{-- This is the text input the user interacts with --}}
-                <input type="text" id="patient_search_input" placeholder="-- Select or type to search --"
+                <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
                     value="{{ $selectedPatient ? $selectedPatient->name : '' }}" autocomplete="off">
 
                 {{-- This container will hold the list of selectable patients --}}

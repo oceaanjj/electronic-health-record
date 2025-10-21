@@ -9,26 +9,28 @@
         <form action="{{ route('adl.select') }}" method="POST" id="patient-select-form" class="flex items-center space-x-4">
             @csrf
 
-            <!-- <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-                                                                                                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                                                                                                        <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
-                                                                                                        @foreach ($patients as $patient)
-                                                                                                            <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
-                                                                                                            selected @endif>
-                                                                                                                {{ $patient->name }}
-                                                                                                            </option>
-                                                                                                        @endforeach
-                                                                                                    </select> -->
+            <!-- OLD PATIENT DROPDWON -->
 
-            {{-- NEW PATIENT DROPDWON --}}
+            <!-- <label for="patient_id" style="color: white;">PATIENT NAME :</label>
+        <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+          <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
+         @foreach ($patients as $patient)
+         <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
+        selected @endif>
+        {{ $patient->name }}
+        </option>
+         @endforeach
+        </select> -->
+
+            <!-- NEW PATIENT DROPDWON -->
             <label for="patient_search_input" style="color: white;">PATIENT NAME :</label>
 
             <div class="searchable-dropdown">
-                {{-- This is the text input the user interacts with --}}
+                <!-- This is the text input the user interacts with  -->
                 <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
                     value="{{ $selectedPatient ? $selectedPatient->name : '' }}" autocomplete="off">
 
-                {{-- This container will hold the list of selectable patients --}}
+                <!-- This container will hold the list of selectable patients  -->
                 <div id="patient_options_container">
                     @foreach ($patients as $patient)
                         <div class="option" data-value="{{ $patient->patient_id }}">
@@ -38,9 +40,8 @@
                 </div>
             </div>
 
-            {{-- This crucial hidden input stores the selected patient_id for form submission --}}
+            <!-- new  -->
             <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
-
 
 
             <!-- DATE -->

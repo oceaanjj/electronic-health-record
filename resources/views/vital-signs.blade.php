@@ -8,7 +8,6 @@
         <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
             class="flex items-center space-x-4">
             @csrf
-
             <label for="patient_id" style="color: white;">PATIENT NAME :</label>
             <select id="patient_info" name="patient_id" onchange="this.form.submit()">
                 <option value="" {{ old('patient_id', session('selected_patient_id')) == '' ? 'selected' : '' }}>-- Select
@@ -19,11 +18,9 @@
                     </option>
                 @endforeach
             </select>
-
             <label for="date" style="color: white;">DATE :</label>
             <input class="date" type="date" id="date_selector" name="date"
                 value="{{ old('date', session('selected_date')) }}" onchange="this.form.submit()">
-
             <label for="day_no" style="color: white;">DAY NO :</label>
             <select id="day_no" name="day_no" onchange="this.form.submit()">
                 <option value="">-- Select number --</option>
@@ -56,51 +53,65 @@
 
             @php
                 $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
-                $severityOrder = ['CRITICAL' => 1, 'WARNING' => 2, 'INFO' => 3, 'NONE' => 4];
             @endphp
 
             @foreach ($times as $time)
                 @php
                     $vitalsRecord = $vitalsData->get($time);
-                    $alerts = session("cdss.$time") ?? [];
-                    $mostSevere = collect($alerts)
-                        ->sortBy(fn($a) => $severityOrder[$a['severity']] ?? 4)
-                        ->first();
                 @endphp
                 <tr>
                     <th class="time">{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</th>
                     <td>
                         <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
-                            value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}">
+                            value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
+                            class="vital-input" data-param="temperature" data-time="{{ $time }}">
                     </td>
                     <td>
                         <input type="text" name="hr_{{ $time }}" placeholder="HR"
-                            value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}">
+                            value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
+                            class="vital-input" data-param="hr" data-time="{{ $time }}">
                     </td>
                     <td>
                         <input type="text" name="rr_{{ $time }}" placeholder="RR"
-                            value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}">
+                            value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
+                            class="vital-input" data-param="rr" data-time="{{ $time }}">
                     </td>
                     <td>
                         <input type="text" name="bp_{{ $time }}" placeholder="BP"
-                            value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}">
+                            value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
+                            class="vital-input" data-param="bp" data-time="{{ $time }}">
                     </td>
                     <td>
                         <input type="text" name="spo2_{{ $time }}" placeholder="SpO2"
-                            value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}">
+                            value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
+                            class="vital-input" data-param="spo2" data-time="{{ $time }}">
                     </td>
-                    <td>
-                        @if ($mostSevere)
+                    <td class="alert-cell" data-time="{{ $time }}">
+                        @if (optional($vitalsRecord)->alerts)
                             @php
-                                $color = $mostSevere['severity'] === 'CRITICAL' ? 'red'
-                                    : ($mostSevere['severity'] === 'WARNING' ? 'orange'
-                                        : ($mostSevere['severity'] === 'INFO' ? 'blue' : 'green'));
+                                $severity = optional($vitalsRecord)->news_severity ?? 'NONE';
+                                $color = $severity === 'CRITICAL' ? 'red'
+                                        : ($severity === 'WARNING' ? 'orange'
+                                        : ($severity === 'INFO' ? 'blue' 
+                                        : ($severity === 'NONE' ? 'green' : 'black')));
+                                
+                                $alerts = explode('; ', $vitalsRecord->alerts);
                             @endphp
-                            <span style="color: {{ $color }}">
-                                {{ $mostSevere['alert'] }}
-                            </span>
+                            
+                            @if ($severity !== 'NONE') 
+                                <ul style="margin: 0; padding-left: 15px; color: {{ $color }}; text-align: left;">
+                                    @foreach($alerts as $alert)
+                                        <li><span style="font-weight: bold; font-size: 0.9em;">{{ $alert }}</span></li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <span style="color: {{ $color }}; font-size: 0.9em;">
+                                    {{ $vitalsRecord->alerts }}
+                                </span>
+                            @endif
                         @endif
                     </td>
+
                 </tr>
             @endforeach
         </table>
@@ -116,3 +127,4 @@
 @push('styles')
     @vite(['resources/css/vital-signs-style.css', 'resources/css/act-of-daily-living.css'])
 @endpush
+

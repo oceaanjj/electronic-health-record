@@ -122,6 +122,9 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
     Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
     Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
+   //Developmental History
+    Route::get('/developmental-history', [MedicalController::class, 'showDevelopmentalHistory'])->name('developmental-history');
+    Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
 
     // Lab Values Routes
     Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
@@ -159,6 +162,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
         Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
+        Route::post('/check', [VitalSignsController::class, 'checkVitals'])->name('check');
     });
 
     //Intake and Output

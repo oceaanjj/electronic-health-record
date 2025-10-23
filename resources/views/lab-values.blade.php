@@ -12,7 +12,7 @@
                 <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
                 @foreach ($patients as $patient)
                     <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id) selected @endif>
-                        {{ $patient->name }}
+                    {{ $patient->name }}
                     </option>
                 @endforeach
             </select>
@@ -47,7 +47,7 @@
                     'Lymphocytes (%)' => 'lymphocytes',
                     'Monocytes (%)' => 'monocytes',
                     'Eosinophils (%)' => 'eosinophils',
-                    'Basophils (%)' => 'basophils',
+                    'Basophils (%)' => 'basophils'
                 ];
             @endphp
 
@@ -63,38 +63,41 @@
                             value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}">
                     </td>
                     <td>
-                        @if (session('alerts') && isset(session('alerts')[$name . '_alerts']))
-                            @foreach (session('alerts')[$name . '_alerts'] as $alert)
-                                @php
-                                    $color = 'text-gray-600';
-                                        if (str_contains(strtolower($alert), 'critical')) {
-                                            $color = 'text-red-600 font-bold'; 
-                                        } elseif (str_contains(strtolower($alert), 'high') || str_contains(strtolower($alert), 'low')) {
-                                            $color = 'text-orange-500'; 
-                                        } elseif (str_contains(strtolower($alert), 'normal')) {
-                                            $color = 'text-green-600'; 
-                                        } else {
-                                            $color = 'text-blue-500'; 
-                                        }
-                                    @endphp
-                                <p class="{{ $color }}">{{ $alert }}</p>
-                            @endforeach
-                        @endif
+                            @if (session('alerts') && isset(session('alerts')[$name . '_alerts']))
+                                @foreach (session('alerts')[$name . '_alerts'] as $alertData)
+                                    @php
+                                        $alertText = $alertData['text'];
+                        $severity = $alertData['severity'];
+                        $color = 'text-gray-600'; // Default
+                            if ($severity === \App\Services\LabValuesCdssService::CRITICAL) {
+                                $color = 'text-red-600 font-bold';
+                            } elseif ($severity === \App\Services\LabValuesCdssService::WARNING) {
+                                $color = 'text-orange-500';
+                            } elseif ($severity === \App\Services\LabValuesCdssService::INFO) {
+                                $color = 'text-blue-500';
+                            } elseif ($severity === \App\Services\LabValuesCdssService::NONE) {
+                                $color = 'text-green-600';
+                            }
+                                @endphp
+                            <p class="{{ $color }}">{{ $alertText }}</p>
+                                    @endforeach
+                                @endif
                     </td>
                 </tr>
             @endforeach
         </table>
 </div>
 
-<div class="buttons">
-    <button class="btn" type="button">CDSS</button>
-    <button class="btn" type="submit">Submit</button>
-</div>
+            <div class="buttons">
+                <button class="btn" type="button">CDSS</button>
+                <button class="btn" type="submit">Submit</button>
+            </div>
 
-</form>
+            </form>
 
 @endsection
 
 @push('styles')
-    @vite(['resources/css/lab-values.css'])
+    @vite(['resources/css/lab-values.css'])
 @endpush
+

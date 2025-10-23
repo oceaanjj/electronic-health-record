@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Models\Vitals;
 use Illuminate\Http\Request;
-use App\Services\CdssService;
-use App\Services\VitalCdssService;
+use App\Services\VitalCdssService; 
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -28,9 +27,7 @@ class VitalSignsController extends Controller
 
     public function show(Request $request)
     {
-        // $patients = Patient::all();
         $patients = Auth::user()->patients;
-
         $vitalsData = collect();
 
         $patientId = $request->session()->get('selected_patient_id');
@@ -48,7 +45,6 @@ class VitalSignsController extends Controller
             });
         }
 
-
         return view('vital-signs', [
             'patients' => $patients,
             'vitalsData' => $vitalsData,
@@ -65,23 +61,16 @@ class VitalSignsController extends Controller
             'day_no' => 'required|integer|between:1,30',
         ]);
 
-        //****
         $user_id = Auth::id();
         $patient = Patient::where('patient_id', $request->patient_id)
             ->where('user_id', $user_id)
             ->first();
-        if (!$patient) {
-            return back()->with('error', 'Unauthorized patient access.');
-        }
-
-        if (!$request->has('patient_id')) {
-            return back()->with('error', 'No patient selected.');
-        }
-        //****
+        if (!$patient) return back()->with('error', 'Unauthorized patient access.');
 
         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
         $anyCreated = false;
         $anyUpdated = false;
+        $cdssService = new VitalCdssService(); 
 
         foreach ($times as $time) {
             $dbTime = Carbon::createFromFormat('H:i', $time)->format('H:i:s');
@@ -94,7 +83,13 @@ class VitalSignsController extends Controller
                 'spo2' => $request->input("spo2_{$time}"),
             ];
 
-            if (count(array_filter($vitalsForTime)) > 0) {
+            $hasData = count(array_filter($vitalsForTime, fn($v) => $v !== null && $v !== '')) > 0;
+
+            if ($hasData) {
+                $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsForTime);
+                $vitalsForTime['alerts'] = $alertResult['alert']; 
+                $vitalsForTime['news_severity'] = $alertResult['severity'];
+                
                 $vitalRecord = Vitals::updateOrCreate(
                     [
                         'patient_id' => $validatedData['patient_id'],
@@ -104,8 +99,8 @@ class VitalSignsController extends Controller
                     ],
                     $vitalsForTime
                 );
-
-                if ($vitalRecord->wasRecentlyCreated) {
+                
+                 if ($vitalRecord->wasRecentlyCreated) {
                     AuditLogController::log(
                         'Vital Signs Record Created',
                         'User ' . Auth::user()->username . " created a new Vital Signs record",
@@ -123,16 +118,27 @@ class VitalSignsController extends Controller
             }
         }
 
-        // ✅ Run CDSS alerts right after saving
-        $cdssService = new VitalCdssService();
-        $allAlerts = $cdssService->analyzeVitals($request->all());
-
         $message = $anyCreated ? 'Vital Signs data saved successfully.'
-            : ($anyUpdated ? 'Vital Signs data updated successfully.'
-                : 'No changes made.');
+            : ($anyUpdated ? 'Vital Signs data updated successfully.' : 'No changes made.');
 
         return redirect()->route('vital-signs.show')
-            ->with('success', $message)
-            ->with('cdss', $allAlerts);
+            ->with('success', $message);
+    }
+
+    public function checkVitals(Request $request)
+    {
+        $param = $request->input('param');
+        $value = $request->input('value');
+
+        if (!$param) {
+            return response()->json(['alert' => '', 'severity' => 'NONE']);
+        }
+
+        $cdssService = new VitalCdssService();
+        $result = $cdssService->getAlertForVital($param, $value);
+
+        $result['severity'] = strtoupper($result['severity']);
+
+        return response()->json($result);
     }
 }

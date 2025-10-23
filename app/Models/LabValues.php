@@ -51,6 +51,7 @@ class LabValues extends Model
         'eosinophils_normal_range',
         'basophils_result',
         'basophils_normal_range',
+        'alerts',
     ];
 
     /**

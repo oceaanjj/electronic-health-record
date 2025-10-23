@@ -9,10 +9,6 @@ class VitalCdssService
     const INFO = 'INFO';
     const NONE = 'NONE';
 
-    // =========================================================================
-    // PINALAWAK NA RULES (EXPANDED RULES)
-    // =========================================================================
-
     private $temperatureRules = [
         ['min' => null, 'max' => 35.0, 'alert' => 'Severe Hypothermia', 'severity' => self::CRITICAL],
         ['min' => 35.1, 'max' => 36.0, 'alert' => 'Low Temp', 'severity' => self::INFO],
@@ -61,9 +57,6 @@ class VitalCdssService
         self::NONE => 4,
     ];
 
-    /**
-     * Parses BP input
-     */
     private function parseBp($value)
     {
         if (is_numeric($value)) return (float)$value;
@@ -73,9 +66,6 @@ class VitalCdssService
         return null;
     }
 
-    /**
-     * Gets the ruleset for a specific vital type.
-     */
     private function getRulesForType($type)
     {
         return match ($type) {
@@ -88,9 +78,6 @@ class VitalCdssService
         };
     }
 
-    /**
-     * Finds the matching rule for ONE vital (para sa real-time check)
-     */
     public function getAlertForVital($param, $value)
     {
         if ($value === null || $value === '') {
@@ -132,16 +119,9 @@ class VitalCdssService
         return ['alert' => 'Out of range', 'severity' => self::WARNING];
     }
     
-    /**
-     * =========================================================================
-     * BAGO: Gumagawa ng SUMMARY ng alerts (Request 1 & 2)
-     * =========================================================================
-     */
     public function analyzeVitalsForAlerts(array $vitals)
     {
         $allAlerts = [];
-
-        // 1. Kolektahin lahat ng non-normal alerts
         foreach ($vitals as $type => $value) {
             if ($value === null || $value === '') continue;
 
@@ -152,27 +132,23 @@ class VitalCdssService
             }
         }
 
-        // 2. Kung walang alert, stable ang pasyente
         if (empty($allAlerts)) {
             return ['alert' => 'Vitals stable.', 'severity' => self::NONE];
         }
 
-        // 3. I-sort para makuha ang pinaka-malalang severity
         usort($allAlerts, function ($a, $b) {
             return $this->severityMap[$a['severity']] <=> $this->severityMap[$b['severity']];
         });
         
-        $highestSeverity = $allAlerts[0]['severity']; // Pinaka-una (pinaka-malala)
+        $highestSeverity = $allAlerts[0]['severity']; 
 
-        // 4. Kunin lahat ng alert text
         $alertStrings = array_map(fn($alert) => $alert['alert'], $allAlerts);
 
-        // 5. Pagsamahin sa isang summary string
+
         $summary = implode('; ', $alertStrings);
 
-        // 6. Ibalik ang summary at ang pinakamatas na severity
         return [
-            'alert' => $summary, // Ito ang summary string
+            'alert' => $summary, 
             'severity' => $highestSeverity
         ];
     }

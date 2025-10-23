@@ -4,20 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('intake_and_outputs', function (Blueprint $table) {
+        Schema::create('diagnostic_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
-            $table->integer('day_no')->nullable();
-            $table->date('date')->nullable();
-            $table->integer('oral_intake_ml')->nullable();
-            $table->integer('iv_fluids_ml')->nullable();
-            $table->integer('urine_output_ml')->nullable();
+            $table->enum('image_type', ['xray', 'ultrasound', 'ct_scan_mri', 'echocardiogram']);
+            $table->string('storage/app/public/diagnostic_images'); 
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('intake_and_outputs');
+        Schema::dropIfExists('diagnostic_images');
     }
 };

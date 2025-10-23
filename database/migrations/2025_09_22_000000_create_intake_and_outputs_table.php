@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('intake_and_outputs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
+            $table->date('date');
+            $table->integer('day_no');
             $table->integer('oral_intake')->nullable();
             $table->integer('iv_fluids_volume')->nullable();
             $table->string('iv_fluids_type')->nullable();

@@ -1,97 +1,84 @@
 <?php
+
 namespace App\Services;
 
 class VitalCdssService
 {
     const CRITICAL = 'CRITICAL';
     const WARNING = 'WARNING';
-    const INFO = 'info';
+    const INFO = 'INFO';
     const NONE = 'NONE';
 
+    // =========================================================================
+    // PINALAWAK NA RULES (EXPANDED RULES)
+    // =========================================================================
+
     private $temperatureRules = [
-        ['min' => 40, 'max' => null, 'alert' => 'Hyperpyrexia: Immediate intervention required!', 'severity' => self::CRITICAL],
-        ['min' => 38, 'max' => 39.9, 'alert' => 'Fever: Monitor closely.', 'severity' => self::WARNING],
-        ['min' => 36, 'max' => 37.9, 'alert' => 'Normal temperature.', 'severity' => self::NONE],
-        ['min' => 37, 'max' => 37.5, 'alert' => 'Slightly elevated temperature.', 'severity' => self::WARNING],
-        ['min' => null, 'max' => 35.9, 'alert' => 'Hypothermia: Immediate warming required!', 'severity' => self::CRITICAL],
+        ['min' => null, 'max' => 35.0, 'alert' => 'Severe Hypothermia', 'severity' => self::CRITICAL],
+        ['min' => 35.1, 'max' => 36.0, 'alert' => 'Low Temp', 'severity' => self::INFO],
+        ['min' => 36.1, 'max' => 38.0, 'alert' => 'Normal Temp', 'severity' => self::NONE],
+        ['min' => 38.1, 'max' => 39.0, 'alert' => 'Mild Fever', 'severity' => self::INFO],
+        ['min' => 39.1, 'max' => null, 'alert' => 'High Fever (Risk of infection)', 'severity' => self::WARNING],
     ];
 
     private $hrRules = [
-        ['min' => 180, 'max' => null, 'alert' => 'Severe tachycardia: Immediate intervention required!', 'severity' => self::CRITICAL],
-        ['min' => 150, 'max' => 179, 'alert' => 'Tachycardia: Urgent evaluation needed.', 'severity' => self::CRITICAL],
-        ['min' => 130, 'max' => 149, 'alert' => 'High heart rate: Monitor closely.', 'severity' => self::WARNING],
-        ['min' => 101, 'max' => 129, 'alert' => 'Mildly elevated heart rate.', 'severity' => self::INFO],
-        ['min' => 60, 'max' => 100, 'alert' => 'Normal heart rate.', 'severity' => self::NONE],
-        ['min' => 50, 'max' => 59, 'alert' => 'Slightly low heart rate.', 'severity' => self::INFO],
-        ['min' => 30, 'max' => 49, 'alert' => 'Bradycardia: Monitor patient closely.', 'severity' => self::WARNING],
-        ['min' => null, 'max' => 29, 'alert' => 'Severe bradycardia: Immediate intervention required!', 'severity' => self::CRITICAL],
+        ['min' => null, 'max' => 40,   'alert' => 'Severe Bradycardia (Risk of syncope)', 'severity' => self::CRITICAL],
+        ['min' => 41,   'max' => 50,   'alert' => 'Bradycardia', 'severity' => self::INFO],
+        ['min' => 51,   'max' => 90,   'alert' => 'Normal HR', 'severity' => self::NONE],
+        ['min' => 91,   'max' => 110,  'alert' => 'Mild Tachycardia (Check for pain/fever)', 'severity' => self::INFO],
+        ['min' => 111,  'max' => 130,  'alert' => 'Tachycardia (Check for dehydration/infection)', 'severity' => self::WARNING],
+        ['min' => 131,  'max' => null, 'alert' => 'Severe Tachycardia (Risk of shock)', 'severity' => self::CRITICAL],
     ];
 
     private $rrRules = [
-        ['min' => 40, 'max' => null, 'alert' => 'Severe tachypnea: Immediate intervention required!', 'severity' => self::CRITICAL],
-        ['min' => 30, 'max' => 39, 'alert' => 'Tachypnea: Urgent evaluation needed.', 'severity' => self::CRITICAL],
-        ['min' => 25, 'max' => 29, 'alert' => 'Slightly elevated respiratory rate.', 'severity' => self::WARNING],
-        ['min' => 20, 'max' => 24, 'alert' => 'Mildly elevated respiratory rate.', 'severity' => self::INFO],
-        ['min' => 12, 'max' => 19, 'alert' => 'Normal respiratory rate.', 'severity' => self::NONE],
-        ['min' => 10, 'max' => 11, 'alert' => 'Slightly low respiratory rate.', 'severity' => self::INFO],
-        ['min' => 6, 'max' => 9, 'alert' => 'Bradypnea: Monitor closely.', 'severity' => self::WARNING],
-        ['min' => null, 'max' => 5, 'alert' => 'Severe bradypnea: Immediate intervention required!', 'severity' => self::CRITICAL],
+        ['min' => null, 'max' => 8,    'alert' => 'Severe Bradypnea (Risk of resp. arrest)', 'severity' => self::CRITICAL],
+        ['min' => 9,    'max' => 11,   'alert' => 'Bradypnea', 'severity' => self::INFO],
+        ['min' => 12,   'max' => 20,   'alert' => 'Normal Respiration', 'severity' => self::NONE],
+        ['min' => 21,   'max' => 24,   'alert' => 'Tachypnea (Possible resp. distress)', 'severity' => self::WARNING],
+        ['min' => 25,   'max' => null, 'alert' => 'Severe Tachypnea (Risk of resp. failure)', 'severity' => self::CRITICAL],
     ];
 
-    private $bpRules = [
-        ['min' => null, 'max' => 69, 'alert' => 'Severe hypotension: Immediate intervention required!', 'severity' => self::CRITICAL],
-        ['min' => 70, 'max' => 89, 'alert' => 'Hypotension: Check for shock.', 'severity' => self::CRITICAL],
-        ['min' => 90, 'max' => 99, 'alert' => 'Low-normal BP: Monitor patient closely.', 'severity' => self::INFO],
-        ['min' => 100, 'max' => 119, 'alert' => 'Normal BP.', 'severity' => self::NONE],
-        ['min' => 120, 'max' => 129, 'alert' => 'Prehypertension: Monitor patient.', 'severity' => self::WARNING],
-        ['min' => 130, 'max' => 139, 'alert' => 'Borderline high BP: Consider lifestyle measures.', 'severity' => self::INFO],
-        ['min' => 140, 'max' => 159, 'alert' => 'Hypertension: Evaluate and monitor.', 'severity' => self::WARNING],
-        ['min' => 160, 'max' => null, 'alert' => 'Severe hypertension: Immediate medical attention required!', 'severity' => self::CRITICAL],
+    private $bpRules = [ // Systolic BP
+        ['min' => null, 'max' => 90,   'alert' => 'Hypotension (Risk of shock)', 'severity' => self::CRITICAL],
+        ['min' => 91,   'max' => 100,  'alert' => 'Low BP (Monitor)', 'severity' => self::WARNING],
+        ['min' => 101,  'max' => 110,  'alert' => 'Low-Normal BP', 'severity' => self::INFO],
+        ['min' => 111,  'max' => 139,  'alert' => 'Normal BP', 'severity' => self::NONE],
+        ['min' => 140,  'max' => 159,  'alert' => 'Hypertension', 'severity' => self::WARNING],
+        ['min' => 160,  'max' => null, 'alert' => 'Severe Hypertension (Risk of stroke)', 'severity' => self::CRITICAL],
     ];
 
     private $spo2Rules = [
-        ['min' => 97, 'max' => null, 'alert' => 'Normal SpO₂.', 'severity' => self::NONE],
-        ['min' => 95, 'max' => 96, 'alert' => 'Slightly low SpO₂: Monitor patient.', 'severity' => self::INFO],
-        ['min' => 90, 'max' => 94, 'alert' => 'Mild hypoxia: Give supplemental oxygen if needed.', 'severity' => self::WARNING],
-        ['min' => 85, 'max' => 89, 'alert' => 'Moderate hypoxia: Start oxygen therapy and monitor closely.', 'severity' => self::CRITICAL],
-        ['min' => null, 'max' => 84, 'alert' => 'Severe hypoxia: Immediate oxygen therapy required!', 'severity' => self::CRITICAL],
+        ['min' => null, 'max' => 91,   'alert' => 'Severe Hypoxemia (Apply O2)', 'severity' => self::CRITICAL],
+        ['min' => 92,   'max' => 93,   'alert' => 'Moderate Hypoxemia', 'severity' => self::WARNING],
+        ['min' => 94,   'max' => 95,   'alert' => 'Mild Hypoxemia', 'severity' => self::INFO],
+        ['min' => 96,   'max' => null, 'alert' => 'Normal O2', 'severity' => self::NONE],
+    ];
+    
+    private $severityMap = [
+        self::CRITICAL => 1,
+        self::WARNING => 2,
+        self::INFO => 3,
+        self::NONE => 4,
     ];
 
     /**
-     * Analyze the vitals and return alerts
+     * Parses BP input
      */
-    public function analyzeVitals(array $vitals)
+    private function parseBp($value)
     {
-        $alerts = [];
-
-        foreach ($vitals as $key => $value) {
-            // Extract time and vital type from the input name
-            if (preg_match('/^(temperature|hr|rr|bp|spo2)_(\d{2}:\d{2})$/', $key, $matches)) {
-                $type = $matches[1];
-                $time = $matches[2];
-
-                if ($value === null || $value === '') continue;
-
-                $ruleSet = $this->getRulesForType($type);
-
-                foreach ($ruleSet as $rule) {
-                    if (($rule['min'] === null || $value >= $rule['min']) && ($rule['max'] === null || $value <= $rule['max'])) {
-                        $alerts[$time][] = [
-                            'alert' => $rule['alert'],
-                            'severity' => $rule['severity'],
-                        ];
-                        break; // stop at first matching rule
-                    }
-                }
-            }
+        if (is_numeric($value)) return (float)$value;
+        if (is_string($value) && preg_match('/(\d{2,3})[\/, \-]?(\d{2,3})?/', $value, $matches)) {
+            return (float)$matches[1]; 
         }
-
-        return $alerts;
+        return null;
     }
 
+    /**
+     * Gets the ruleset for a specific vital type.
+     */
     private function getRulesForType($type)
     {
-        return match($type) {
+        return match ($type) {
             'temperature' => $this->temperatureRules,
             'hr' => $this->hrRules,
             'rr' => $this->rrRules,
@@ -99,5 +86,94 @@ class VitalCdssService
             'spo2' => $this->spo2Rules,
             default => [],
         };
+    }
+
+    /**
+     * Finds the matching rule for ONE vital (para sa real-time check)
+     */
+    public function getAlertForVital($param, $value)
+    {
+        if ($value === null || $value === '') {
+            return ['alert' => '', 'severity' => self::NONE];
+        }
+
+        $numericValue = null;
+        $rules = [];
+
+        switch ($param) {
+            case 'temperature':
+            case 'hr':
+            case 'rr':
+            case 'spo2':
+                $rules = $this->getRulesForType($param);
+                $numericValue = (float)$value;
+                break;
+            case 'bp':
+                $rules = $this->bpRules;
+                $numericValue = $this->parseBp($value);
+                if ($numericValue === null && $value !== '') {
+                    return ['alert' => 'Invalid BP', 'severity' => self::WARNING];
+                }
+                break;
+            default:
+                 return ['alert' => '', 'severity' => self::NONE];
+        }
+
+        if ($numericValue !== null) {
+            foreach ($rules as $rule) {
+                $minOk = is_null($rule['min']) || $numericValue >= $rule['min'];
+                $maxOk = is_null($rule['max']) || $numericValue <= $rule['max'];
+                if ($minOk && $maxOk) {
+                    return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
+                }
+            }
+        }
+        
+        return ['alert' => 'Out of range', 'severity' => self::WARNING];
+    }
+    
+    /**
+     * =========================================================================
+     * BAGO: Gumagawa ng SUMMARY ng alerts (Request 1 & 2)
+     * =========================================================================
+     */
+    public function analyzeVitalsForAlerts(array $vitals)
+    {
+        $allAlerts = [];
+
+        // 1. Kolektahin lahat ng non-normal alerts
+        foreach ($vitals as $type => $value) {
+            if ($value === null || $value === '') continue;
+
+            $result = $this->getAlertForVital($type, $value);
+            
+            if ($result['severity'] !== self::NONE) {
+                $allAlerts[] = $result;
+            }
+        }
+
+        // 2. Kung walang alert, stable ang pasyente
+        if (empty($allAlerts)) {
+            return ['alert' => 'Vitals stable.', 'severity' => self::NONE];
+        }
+
+        // 3. I-sort para makuha ang pinaka-malalang severity
+        usort($allAlerts, function ($a, $b) {
+            return $this->severityMap[$a['severity']] <=> $this->severityMap[$b['severity']];
+        });
+        
+        $highestSeverity = $allAlerts[0]['severity']; // Pinaka-una (pinaka-malala)
+
+        // 4. Kunin lahat ng alert text
+        $alertStrings = array_map(fn($alert) => $alert['alert'], $allAlerts);
+
+        // 5. Pagsamahin sa isang summary string
+        $summary = implode('; ', $alertStrings);
+
+        // 6. Ibalik ang summary at ang pinakamatas na severity
+        return [
+            'alert' => $summary, // Ito ang summary string
+            'severity' => $highestSeverity
+        ];
     }
 }

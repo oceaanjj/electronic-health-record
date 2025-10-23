@@ -31,6 +31,7 @@ class Vitals extends Model
         'rr',
         'bp',
         'spo2',
+        'alerts',
     ];
 
     public function patient()

@@ -169,11 +169,9 @@
 @endsection
 
 @push('styles')
-    @vite(['resources/css/physical-exam-style.css', 'resources/css/searchable-dropdown.css'])
+    @vite('resources/css/physical-exam-style.css')
 @endpush
 
 @push('scripts')
-    @vite('resources/js/alert.js')
-    @vite('resources/js/patient-loader.js')
-    @vite('resources/js/searchable-dropdown.js') {{-- Add the new JS file --}}
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
 @endpush

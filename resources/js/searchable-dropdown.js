@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const selectOption = (option) => {
         const patientId = option.getAttribute("data-value");
-        const patientName = option.textContent || option.innerText;
+        const patientName = (option.textContent || option.innerText).trim();
 
         // Set the UI values
         searchInput.value = patientName;

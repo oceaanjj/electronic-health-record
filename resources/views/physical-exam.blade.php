@@ -11,13 +11,13 @@
 
             {{-- This is the text input the user interacts with --}}
             <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
-                value="{{ $selectedPatient->name ?? '' }}" autocomplete="off">
+                value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off">
 
             {{-- This container will hold the list of selectable patients --}}
             <div id="patient_options_container">
                 @foreach ($patients as $patient)
                     <div class="option" data-value="{{ $patient->patient_id }}">
-                        {{ $patient->name }}
+                        {{ trim($patient->name) }}
                     </div>
                 @endforeach
             </div>

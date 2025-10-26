@@ -20,33 +20,37 @@
     </div>
 
     <div id="form-content-container">
-
         @if (!session('selected_patient_id'))
             <div class="form-overlay">
                 <span>Please select a patient to input</span>
             </div>
         @endif
 
-        {{-- DATE AND DAY SELECTOR --}}
-        {{-- Added data-select-url and removed onchange attributes --}}
+        <!-- DATE AND DAY SELECTOR -->
+        <!-- Added data-select-url and removed onchange attributes  -->
         <form action="{{ route('adl.select-date-day') }}" method="POST" id="date-day-select-form"
-            class="flex items-center space-x-4" data-select-url="{{ route('adl.select-date-day') }}">
+            class="flex items-center space-x-4" style="margin-left: 15rem; margin-top: 1rem;"
+            data-select-url="{{ route('adl.select-date-day') }}">
             @csrf
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
-            <label for="date" style="color: white;">DATE :</label>
-            <input class="date" type="date" id="date_selector" name="date"
-                value="{{ session('selected_date') ?? ($selectedPatient && $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d')) }}">
+            <!-- date -->
+            <div>
+                <label for="date" style="color: white;">DATE :</label>
+                <input class="date" type="date" id="date_selector" name="date"
+                    value="{{ session('selected_date') ?? ($selectedPatient && $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d')) }}">
+            </div>
 
-            <label for="day_no" style="color: white;">DAY NO :</label>
-            <select id="day_no" name="day_no">
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
-                    <option value="{{ $i }}" @if(session('selected_day_no') == $i) selected @endif>
-                        {{ $i }}
-                    </option>
-                @endfor
-            </select>
+            <!-- day -->
+            <div><label for="day_no" style="color: white;">DAY NO :</label>
+                <select id="day_no" name="day_no">
+                    @for ($i = 1; $i <= 30; $i++)
+                        <option value="{{ $i }}" @if(session('selected_day_no') == $i) selected @endif>
+                            {{ $i }}
+                        </option>
+                    @endfor
+                </select>
+            </div>
         </form>
 
         {{-- Main ADL form --}}

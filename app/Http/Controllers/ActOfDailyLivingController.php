@@ -18,16 +18,36 @@ class ActOfDailyLivingController extends Controller
     public function selectPatient(Request $request)
     {
         $patientId = $request->input('patient_id');
-        $request->session()->put('selected_patient_id', $patientId);
-
-        // Clear old date/day to use the new patient's defaults
-        $request->session()->forget(['selected_date', 'selected_day_no']);
-
-        // Fetch all data needed to render the full view for the AJAX response
-        $patients = Auth::user()->patients;
+        $patients = Auth::user()->patients; // Needed for re-rendering the dropdown
         $selectedPatient = Patient::find($patientId);
-        $adlData = null; // Reset ADL data for the newly selected patient
+        $adlData = null;
 
+        if ($selectedPatient) {
+            // Set the new patient ID in the session
+            $request->session()->put('selected_patient_id', $patientId);
+
+            // --- MODIFIED LOGIC ---
+            // 1. Default to the patient's admission date and Day 1
+            $defaultDate = $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d');
+            $defaultDayNo = 1;
+
+            // 2. Store these new defaults in the session so the view uses them
+            $request->session()->put('selected_date', $defaultDate);
+            $request->session()->put('selected_day_no', $defaultDayNo);
+
+            // 3. Attempt to fetch the ADL record for these new defaults
+            $adlData = ActOfDailyLiving::where('patient_id', $patientId)
+                ->where('date', $defaultDate)
+                ->where('day_no', $defaultDayNo)
+                ->first();
+            // --- END MODIFIED LOGIC ---
+
+        } else {
+            // If for some reason the patient isn't found, clear the session
+            $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+        }
+
+        // This view is returned via AJAX. The JS will extract the #form-content-container
         return view('act-of-daily-living', [
             'patients' => $patients,
             'adlData' => $adlData,

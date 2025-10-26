@@ -20,26 +20,45 @@ class PhysicalExamCdssService
     }
 
     /**
-     * Loads rules from a single YAML file.
+     * Loads and correctly merges all YAML rule files from the physical_exam directory.
      */
     private function loadRules()
     {
         $this->rules = [];
-        $rulesFile = storage_path('app/private/physical_exam/physical_exam.yaml'); // Path to your single file
+        $rulesDirectory = storage_path('app/private/physical_exam'); // Path to your directory
 
-        if (!File::exists($rulesFile)) {
-            error_log("CDSS rules file not found at: " . $rulesFile);
+        if (!File::isDirectory($rulesDirectory)) {
+            error_log("CDSS rules directory not found at: " . $rulesDirectory);
             return;
         }
 
-        try {
-            // Parses the entire YAML file into the rules property.
-            $this->rules = Yaml::parseFile($rulesFile);
-        } catch (\Exception $e) {
-            // Log an error if the YAML file is invalid and cannot be parsed.
-            error_log("Failed to parse YAML file: " . $rulesFile . " - " . $e->getMessage());
+        $allRules = [];
+        $files = File::files($rulesDirectory);
+
+        foreach ($files as $file) {
+            // Process only files with .yaml or .yml extensions
+            if (in_array($file->getExtension(), ['yaml', 'yml'])) {
+                try {
+                    $parsedYaml = Yaml::parseFile($file->getPathname());
+                    if (is_array($parsedYaml)) {
+                        // This loop correctly merges rule categories from different files.
+                        // For example, if two files define rules for 'skin_condition',
+                        // they will be merged into a single list.
+                        foreach ($parsedYaml as $key => $value) {
+                            if (!isset($allRules[$key])) {
+                                $allRules[$key] = [];
+                            }
+                            $allRules[$key] = array_merge($allRules[$key], $value);
+                        }
+                    }
+                } catch (\Exception $e) {
+                    error_log("Failed to parse YAML file: " . $file->getPathname() . " - " . $e->getMessage());
+                }
+            }
         }
+        $this->rules = $allRules;
     }
+
 
     /**
      * Analyzes all the assessment fields from the physical exam form data.
@@ -51,7 +70,7 @@ class PhysicalExamCdssService
     {
         $alerts = [];
         // These keys MUST match the 'name' attributes of the textareas in your form
-        // and the top-level keys in your YAML file.
+        // and the top-level keys in your YAML files.
         $keysToAnalyze = [
             'general_appearance',
             'skin_condition',

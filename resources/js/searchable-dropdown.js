@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const filterAndShowOptions = () => {
         const filter = searchInput.value.toLowerCase();
 
-        // **MODIFIED PART**
         // This loop now shows every option that matches the filter,
         // without limiting it to the first 10.
         options.forEach((option) => {

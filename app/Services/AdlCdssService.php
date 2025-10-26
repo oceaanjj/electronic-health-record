@@ -139,7 +139,7 @@ class AdlCdssService
 
         // If no rules matched at all, return a default "Normal Findings" alert.
         if (empty($matchedRules)) {
-            return ['alert' => 'Normal Findings', 'severity' => self::NONE];
+            return ['alert' => 'No Findings', 'severity' => self::NONE];
         }
 
         // 3. Severity-First Prioritization

@@ -97,6 +97,16 @@ class PhysicalExamCdssService
         return $alerts;
     }
 
+    public function analyzeSingleFinding($fieldName, $findingText)
+    {
+        // Find the rules for the specific field.
+        $ruleSet = $this->rules[$fieldName] ?? [];
+
+        // Run the existing analysis logic on the single piece of data.
+        return $this->runAnalysis($findingText, $ruleSet);
+    }
+
+
     /**
      * Turns a string into an array of clean, unique words for matching.
      *
@@ -170,7 +180,7 @@ class PhysicalExamCdssService
 
         // If no rules matched at all, return a default "Normal Findings" alert.
         if (empty($matchedRules)) {
-            return ['alert' => 'Normal Findings', 'severity' => self::NONE];
+            return ['alert' => 'No Findings', 'severity' => self::NONE];
         }
 
         // --- Severity-First Prioritization ---

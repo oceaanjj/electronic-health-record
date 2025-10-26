@@ -157,6 +157,25 @@ class PhysicalExamController extends Controller
     //     return view('patient-physical-exams', compact('patient', 'physicalExams'));
     // }
 
+
+    //----- new for instant alerts
+    public function runSingleCdssAnalysis(Request $request)
+    {
+        $data = $request->validate([
+            'fieldName' => 'required|string',
+            'finding' => 'nullable|string',
+        ]);
+
+        $cdssService = new PhysicalExamCdssService();
+
+        // Call the new service method to analyze just one field
+        $alert = $cdssService->analyzeSingleFinding($data['fieldName'], $data['finding'] ?? '');
+
+        // Return the result as a JSON response
+        return response()->json($alert);
+    }
+
+
     /**
      * Runs CDSS analysis on findings.
      */

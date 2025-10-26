@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electronic Health Record</title>
     @vite('resources/css/app.css')
+
+    <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- !important for instant alerts-->
 </head>
 
 <body class="bg-white overflow-x-hidden">
@@ -14,17 +16,12 @@
     @include('components.sidebar')
 
     {{-- Header --}}
-
     @include('components.header')
 
     {{--
     <div id="main" class="transition-transform duration-300 ease-in-out">
-
         <div class="flex flex-col min-h-screen">
-
             @include('components.header')
-
-
             <!-- alerts -->
             @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert"
@@ -53,16 +50,10 @@
                 <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
             </div>
             @endif
-
-
-
             <main class="flex-1">
                 @yield('content')
             </main>
         </div>
-
-
-
     </div>
     --}}
 

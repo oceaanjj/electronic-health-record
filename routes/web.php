@@ -107,10 +107,11 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
         Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
-        // New route to handle patient selection via POST
         Route::post('/select', [PhysicalExamController::class, 'selectPatient'])->name('select');
         Route::post('/', [PhysicalExamController::class, 'store'])->name('store');
         Route::post('/cdss', [PhysicalExamController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
+        // New route for real-time, single-field analysis
+        Route::post('/analyze-field', [PhysicalExamController::class, 'runSingleCdssAnalysis'])->name('analyze-field');
     });
 
     // Medical History Store Routes

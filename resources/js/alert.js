@@ -1,20 +1,13 @@
 /**
  * How it works:
- * 1. It finds any <form> on the page with the class "cdss-form".
- * 2. It reads the analysis URL from a 'data-analyze-url' attribute.
- * 3. It finds all <textarea> or <input> with class "cdss-input".
- * 4. ON PAGE LOAD, it checks all inputs and runs analysis on any that already have data.
- * 5. WHEN TYPING, it sends the data to the URL to get a real-time alert.
- * 6. It displays the returned alert in the corresponding element.
+ * ... (same as before) ...
+ * * MODIFICATION: The initializeCdssForForm function is attached to the 'window'
+ * object so that other scripts (like patient-loader.js) can call it
+ * after replacing page content.
  */
-document.addEventListener("DOMContentLoaded", () => {
-    const cdssForms = document.querySelectorAll(".cdss-form");
-    cdssForms.forEach((form) => {
-        initializeCdssForForm(form);
-    });
-});
 
-function initializeCdssForForm(form) {
+// Make this function globally accessible
+window.initializeCdssForForm = function (form) {
     const analyzeUrl = form.dataset.analyzeUrl;
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
@@ -33,17 +26,14 @@ function initializeCdssForForm(form) {
 
     // --- Analyze Pre-filled Data on Load ---
     inputs.forEach((input) => {
-        // Check if the input has a value when the page loads
         if (input.value.trim() !== "") {
             const fieldName = input.dataset.fieldName;
             const finding = input.value;
-            // Run analysis immediately for this pre-filled field
             analyzeField(fieldName, finding, analyzeUrl, csrfToken);
         }
     });
-    // ---
 
-    // This part handles the real-time analysis while typing (remains the same)
+    // --- Analyze on Type ---
     inputs.forEach((input) => {
         input.addEventListener("input", (e) => {
             clearTimeout(debounceTimer);
@@ -57,7 +47,16 @@ function initializeCdssForForm(form) {
             }, 500);
         });
     });
-}
+};
+
+// This runs on the initial page load
+document.addEventListener("DOMContentLoaded", () => {
+    const cdssForms = document.querySelectorAll(".cdss-form");
+    cdssForms.forEach((form) => {
+        // Call the global function
+        window.initializeCdssForForm(form);
+    });
+});
 
 async function analyzeField(fieldName, finding, url, token) {
     const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);

@@ -66,9 +66,9 @@ document.addEventListener("patient:selected", async (event) => {
                 window.initializeCdssForForm(newCdssForm);
             }
 
-            // 3. Re-initialize the Date/Day selectors for the new content
-            if (typeof window.initializeDateDaySelector === "function") {
-                window.initializeDateDaySelector();
+            // MODIFIED: 3. Re-initialize the Date/Day loader for the new content
+            if (typeof window.initializeDateDayLoader === "function") {
+                window.initializeDateDayLoader();
             }
         } else {
             throw new Error(

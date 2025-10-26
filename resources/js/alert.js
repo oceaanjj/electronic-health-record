@@ -89,13 +89,13 @@ function displayAlert(alertCell, alertData) {
     alertCell.innerHTML = ""; // Clear previous alert
 
     if (alertData && alertData.alert) {
-        let colorClass = "alert-green"; // Default for INFO or NONE
+        let colorClass = "alert-green"; // Default for NONE
         if (alertData.severity === "CRITICAL") {
             colorClass = "alert-red";
         } else if (alertData.severity === "WARNING") {
             colorClass = "alert-orange";
         } else if (alertData.severity === "INFO") {
-            colorClass = "alert-orange";
+            colorClass = "alert-green";
         }
 
         // show alert

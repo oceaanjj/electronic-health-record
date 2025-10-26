@@ -150,8 +150,13 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
         Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
         Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-        Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
+        // Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
+
+        Route::post('/select-patient', [ActOfDailyLivingController::class, 'selectPatient'])->name('select');
+        Route::post('/select-date-day', [ActOfDailyLivingController::class, 'selectDateAndDay'])->name('select-date-day');
+        Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
     });
+
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {

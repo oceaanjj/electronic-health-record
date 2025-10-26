@@ -1,5 +1,10 @@
+// resources/js/search.js
+
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("patient-select-form");
+    const dropdownContainer = document.querySelector(".searchable-dropdown");
+    if (!dropdownContainer) return; // Exit if the component isn't on the page
+
+    // Find the elements needed for the dropdown to function
     const searchInput = document.getElementById("patient_search_input");
     const hiddenInput = document.getElementById("patient_id_hidden");
     const optionsContainer = document.getElementById(
@@ -7,73 +12,70 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     const options = optionsContainer.querySelectorAll(".option");
 
+    // Get the parent form that needs to be submitted on selection
+    const selectionForm = document.getElementById("patient-select-form");
+
     // Initially hide the options list
     optionsContainer.style.display = "none";
 
-    // Reusable function to filter and display options with a limit
+    // This function filters the patient list based on user input
     const filterAndShowOptions = () => {
-        const filter = searchInput.value.toLowerCase();
-        let visibleCount = 0;
-
+        const filter = searchInput.value.toLowerCase().trim();
         options.forEach((option) => {
-            const text = (option.textContent || option.innerText).toLowerCase();
-
-            if (text.includes(filter) && visibleCount < 10) {
-                option.style.display = "block";
-                visibleCount++;
-            } else {
-                // Hide if it doesn't match OR if the limit of 10 is reached
-                option.style.display = "none";
-            }
+            const text = (option.textContent || option.innerText)
+                .toLowerCase()
+                .trim();
+            option.style.display = text.includes(filter) ? "block" : "none";
         });
     };
 
-    //Show and filter the options list on focus
+    // Show options on focus
     searchInput.addEventListener("focus", () => {
-        filterAndShowOptions(); // Run the filter immediately on click
+        filterAndShowOptions();
         optionsContainer.style.display = "block";
     });
 
-    //Filter the options list as the user types
-    searchInput.addEventListener("keyup", () => {
-        filterAndShowOptions(); // Re-run the filter on every key press
-    });
+    // Filter as user types
+    searchInput.addEventListener("keyup", filterAndShowOptions);
 
-    //Enter
+    // --- This is the key function ---
+    const selectOption = (option) => {
+        const patientId = option.getAttribute("data-value");
+        const patientName = (option.textContent || option.innerText).trim();
+
+        // 1. Set the values of the inputs
+        searchInput.value = patientName;
+        hiddenInput.value = patientId;
+        optionsContainer.style.display = "none";
+
+        // 2. Submit the form to reload the page with the selected patient
+        if (selectionForm) {
+            selectionForm.submit();
+        }
+    };
+
+    // Handle selection when pressing "Enter"
     searchInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
-            // Prevent the default form submission behavior
-            event.preventDefault();
-
-            // Find the first option that is currently visible
+            event.preventDefault(); // Prevent default form submission
             const firstVisibleOption = optionsContainer.querySelector(
                 '.option[style*="block"]'
             );
-
-            // If a visible option exists, trigger a click on it
             if (firstVisibleOption) {
-                firstVisibleOption.click();
+                selectOption(firstVisibleOption);
             }
         }
     });
 
-    //Handle what happens when a user clicks a patient from the list
+    // Handle selection on click
     options.forEach((option) => {
         option.addEventListener("click", () => {
-            // Set the search box text to the patient's name
-            searchInput.value = option.textContent || option.innerText;
-            // Set the hidden input's value to the patient's ID
-            hiddenInput.value = option.getAttribute("data-value");
-            // Hide the options list
-            optionsContainer.style.display = "none";
-            // Submit the form to update the page
-            form.submit();
+            selectOption(option);
         });
     });
 
-    //Hide the options list if the user clicks anywhere else on the page
+    // Hide dropdown if user clicks away
     document.addEventListener("click", (event) => {
-        // Check if the click was outside of our dropdown component
         if (!event.target.closest(".searchable-dropdown")) {
             optionsContainer.style.display = "none";
         }

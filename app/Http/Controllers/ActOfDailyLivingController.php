@@ -11,34 +11,48 @@ use Illuminate\Support\Facades\Auth;
 
 class ActOfDailyLivingController extends Controller
 {
-
-    public function selectPatientAndDate(Request $request)
+    /**
+     * Handles the AJAX request when a patient is selected from the dropdown.
+     * It returns the full view, and patient-loader.js will extract the needed content.
+     */
+    public function selectPatient(Request $request)
     {
-        $newPatientId = $request->input('patient_id');
-        $currentPatientId = $request->session()->get('selected_patient_id');
-        $date = $request->input('date');
-        $dayNo = $request->input('day_no');
+        $patientId = $request->input('patient_id');
+        $request->session()->put('selected_patient_id', $patientId);
 
-        // Always update the patient and day number in the session
-        $request->session()->put('selected_patient_id', $newPatientId);
-        $request->session()->put('selected_day_no', $dayNo);
+        // Clear old date/day to use the new patient's defaults
+        $request->session()->forget(['selected_date', 'selected_day_no']);
 
-        // If the patient has been changed, we must clear the old date from the session.
-        // This forces the view to use the new patient's admission_date as the default.
-        // Otherwise (if patient is the same), we update the session with the date from the form.
-        if ($newPatientId != $currentPatientId) {
-            $request->session()->forget('selected_date');
-        } else {
-            $request->session()->put('selected_date', $date);
-        }
+        // Fetch all data needed to render the full view for the AJAX response
+        $patients = Auth::user()->patients;
+        $selectedPatient = Patient::find($patientId);
+        $adlData = null; // Reset ADL data for the newly selected patient
+
+        return view('act-of-daily-living', [
+            'patients' => $patients,
+            'adlData' => $adlData,
+            'selectedPatient' => $selectedPatient,
+        ]);
+    }
+
+    /**
+     * Handles form submission from date/day changes for a full page reload.
+     */
+    public function selectDateAndDay(Request $request)
+    {
+        $request->session()->put('selected_patient_id', $request->input('patient_id'));
+        $request->session()->put('selected_date', $request->input('date'));
+        $request->session()->put('selected_day_no', $request->input('day_no'));
 
         return redirect()->route('adl.show');
     }
+
+    /**
+     * Displays the initial page or the page after a date/day change.
+     */
     public function show(Request $request)
     {
-        // $patients = Patient::all();
         $patients = Auth::user()->patients;
-
         $adlData = null;
         $selectedPatient = null;
 
@@ -47,10 +61,8 @@ class ActOfDailyLivingController extends Controller
         $dayNo = $request->session()->get('selected_day_no');
 
         if ($patientId) {
-            // Find the full patient model using the ID from the session
             $selectedPatient = Patient::find($patientId);
-
-            if ($date && $dayNo) {
+            if ($selectedPatient && $date && $dayNo) {
                 $adlData = ActOfDailyLiving::where('patient_id', $patientId)
                     ->where('date', $date)
                     ->where('day_no', $dayNo)
@@ -61,13 +73,29 @@ class ActOfDailyLivingController extends Controller
         return view('act-of-daily-living', [
             'patients' => $patients,
             'adlData' => $adlData,
-            'selectedDate' => $date,
-            'selectedDayNo' => $dayNo,
-            'selectedPatient' => $selectedPatient,//
+            'selectedPatient' => $selectedPatient,
         ]);
     }
 
+    /**
+     * New method for real-time CDSS analysis of a single field, called by alert.js.
+     */
+    public function analyzeField(Request $request)
+    {
+        $data = $request->validate([
+            'fieldName' => 'required|string',
+            'finding' => 'nullable|string',
+        ]);
 
+        $cdssService = new CdssService('adl_rules');
+
+        // This method should exist in your CdssService to analyze one field
+        $alert = $cdssService->analyzeSingleFinding($data['fieldName'], $data['finding'] ?? '');
+
+        return response()->json($alert);
+    }
+
+    //-----------------OLD---------------
     public function store(Request $request)
     {
         $request->validate([
@@ -170,4 +198,8 @@ class ActOfDailyLivingController extends Controller
         ])->with('cdss', $analysisResults)
             ->with('success', 'CDSS Analysis complete!');
     }
+    //-----------------OLD---------------
+
 }
+
+

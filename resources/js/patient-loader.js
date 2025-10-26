@@ -65,6 +65,11 @@ document.addEventListener("patient:selected", async (event) => {
             ) {
                 window.initializeCdssForForm(newCdssForm);
             }
+
+            // 3. Re-initialize the Date/Day selectors for the new content
+            if (typeof window.initializeDateDaySelector === "function") {
+                window.initializeDateDaySelector();
+            }
         } else {
             throw new Error(
                 "Could not find '#form-content-container' in response."

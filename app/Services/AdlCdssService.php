@@ -78,6 +78,18 @@ class AdlCdssService
         return $alerts;
     }
 
+    //---------------------
+    public function analyzeSingleFinding($fieldName, $findingText)
+    {
+        // Find the rules for the specific field.
+        $ruleSet = $this->rules[$fieldName] ?? [];
+
+        // Run the existing analysis logic on the single piece of data.
+        return $this->runAnalysis($findingText, $ruleSet);
+    }
+    //---------------------
+
+
     // Turns a string into an array of clean, unique words.
     private function sanitizeAndSplit($text)
     {

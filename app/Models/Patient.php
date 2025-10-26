@@ -40,7 +40,9 @@ class Patient extends Model
 
         'user_id',
     ];
-
+    protected $casts = [
+        'admission_date' => 'datetime',
+    ];
 
     public function nurse()
     {

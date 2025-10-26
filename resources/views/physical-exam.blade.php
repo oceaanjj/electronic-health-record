@@ -2,25 +2,37 @@
 @section('title', 'Physical Exam')
 @section('content')
 
-    {{-- PATIENT DROP-DOWN (NO LONGER A FORM) --}}
-    <div class="header">
-        <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-        {{-- 1. Add class, data-select-url, and remove onchange --}}
-        <select id="patient_info" name="patient_id" class="patient-select-dropdown"
-            data-select-url="{{ route('physical-exam.select') }}">
-            <option value="">-- Select Patient --</option>
-            @foreach ($patients as $patient)
-                <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
-                    {{ $patient->name }}
-                </option>
-            @endforeach
-        </select>
+    {{-- NEW SEARCHABLE PATIENT DROPDOWN --}}
+    <div class="header" style="margin-left:15rem;">
+        <label for="patient_search_input" style="color: white;">PATIENT NAME :</label>
+
+        {{-- The data-select-url attribute is crucial for patient-loader.js --}}
+        <div class="searchable-dropdown" data-select-url="{{ route('physical-exam.select') }}">
+
+            {{-- This is the text input the user interacts with --}}
+            <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
+                value="{{ $selectedPatient->name ?? '' }}" autocomplete="off">
+
+            {{-- This container will hold the list of selectable patients --}}
+            <div id="patient_options_container">
+                @foreach ($patients as $patient)
+                    <div class="option" data-value="{{ $patient->patient_id }}">
+                        {{ $patient->name }}
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- This hidden input will hold the selected patient's ID for the main form --}}
+        <input type="hidden" name="patient_id_for_form" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
     </div>
+    {{-- NEW SEARCHABLE PATIENT DROPDOWN --}}
+
 
     <div id="form-content-container">
         {{-- DISABLED input overlay --}}
         @if (!session('selected_patient_id'))
-            <div class="form-overlay">
+            <div class="form-overlay" style="margin-left:15rem;">
                 <span>Please select a patient to input</span> {{-- message --}}
             </div>
         @endif
@@ -50,15 +62,7 @@
                                     placeholder="Enter GENERAL APPEARANCE findings">{{ old('general_appearance', $physicalExam->general_appearance ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="general_appearance">
-                                @if (session('cdss.general'))
-                                    @php
-                                        $alertData = session('cdss.general');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -71,15 +75,7 @@
                                     placeholder="Enter SKIN findings">{{ old('skin_condition', $physicalExam->skin_condition ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="skin_condition">
-                                @if (session('cdss.skin'))
-                                    @php
-                                        $alertData = session('cdss.skin');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -92,15 +88,7 @@
                                     placeholder="Enter EYES findings">{{ old('eye_condition', $physicalExam->eye_condition ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="eye_condition">
-                                @if (session('cdss.eye'))
-                                    @php
-                                        $alertData = session('cdss.eye');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -113,15 +101,7 @@
                                     placeholder="Enter ORAL CAVITY findings">{{ old('oral_condition', $physicalExam->oral_condition ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="oral_condition">
-                                @if (session('cdss.oral'))
-                                    @php
-                                        $alertData = session('cdss.oral');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -134,15 +114,7 @@
                                     placeholder="Enter CARDIOVASCULAR findings">{{ old('cardiovascular', $physicalExam->cardiovascular ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="cardiovascular">
-                                @if (session('cdss.cardiovascular'))
-                                    @php
-                                        $alertData = session('cdss.cardiovascular');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -155,15 +127,7 @@
                                     placeholder="Enter ABDOMEN findings">{{ old('abdomen_condition', $physicalExam->abdomen_condition ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="abdomen_condition">
-                                @if (session('cdss.abdomen'))
-                                    @php
-                                        $alertData = session('cdss.abdomen');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -175,15 +139,7 @@
                                     placeholder="Enter EXTREMITIES findings">{{ old('extremities', $physicalExam->extremities ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="extremities">
-                                @if (session('cdss.extremities'))
-                                    @php
-                                        $alertData = session('cdss.extremities');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -196,15 +152,7 @@
                                     placeholder="Enter NEUROLOGICAL findings">{{ old('neurological', $physicalExam->neurological ?? '') }}</textarea>
                             </td>
                             <td class="alert-box" data-alert-for="neurological">
-                                @if (session('cdss.neurological'))
-                                    @php
-                                        $alertData = session('cdss.neurological');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}">
-                                        <span class="alert-message">{{ $alertData['alert'] }}</span>
-                                    </div>
-                                @endif
+                                {{-- Alert content will be dynamically loaded --}}
                             </td>
                         </tr>
 
@@ -217,14 +165,15 @@
                 </div>
             </fieldset>
         </form>
-
+    </div>
 @endsection
 
-    @push('styles')
-        @vite(['resources/css/physical-exam-style.css'])
-    @endpush
+@push('styles')
+    @vite(['resources/css/physical-exam-style.css', 'resources/css/searchable-dropdown.css'])
+@endpush
 
-    @push('scripts')
-        @vite('resources/js/alert.js')
-        @vite('resources/js/patient-loader.js')
-    @endpush
+@push('scripts')
+    @vite('resources/js/alert.js')
+    @vite('resources/js/patient-loader.js')
+    @vite('resources/js/searchable-dropdown.js') {{-- Add the new JS file --}}
+@endpush

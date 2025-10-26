@@ -4,7 +4,7 @@
 
     {{-- NEW SEARCHABLE PATIENT DROPDOWN --}}
     <div class="header" style="margin-left:15rem;">
-        <label for="patient_search_input" style="color: white;">PATIENT NAME :</label>
+        <label for="patient_search_input">PATIENT NAME :</label>
 
         {{-- The data-select-url attribute is crucial for patient-loader.js --}}
         <div class="searchable-dropdown" data-select-url="{{ route('physical-exam.select') }}">

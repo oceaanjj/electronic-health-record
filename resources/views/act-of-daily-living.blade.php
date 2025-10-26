@@ -3,8 +3,8 @@
 @section('content')
 
     {{-- NEW SEARCHABLE PATIENT DROPDOWN --}}
-    <div class="header" style="margin-left:15rem;">
-        <label for="patient_search_input" style="color: white;">PATIENT NAME :</label>
+    <div class="header">
+        <label for="patient_search_input">PATIENT NAME :</label>
         <div class="searchable-dropdown" data-select-url="{{ route('adl.select') }}">
             <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
                 value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off">
@@ -19,19 +19,18 @@
         <input type="hidden" name="patient_id_for_form" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
     </div>
 
-    {{-- This container's content will be dynamically replaced --}}
     <div id="form-content-container">
 
         @if (!session('selected_patient_id'))
-            <div class="form-overlay" style="margin-left:15rem;">
+            <div class="form-overlay">
                 <span>Please select a patient to input</span>
             </div>
         @endif
 
-        {{-- MODIFIED: Added data-select-url and removed onchange attributes --}}
+        {{-- DATE AND DAY SELECTOR --}}
+        {{-- Added data-select-url and removed onchange attributes --}}
         <form action="{{ route('adl.select-date-day') }}" method="POST" id="date-day-select-form"
-            class="flex items-center space-x-4" style="margin-left: 15rem; margin-top: 1rem;"
-            data-select-url="{{ route('adl.select-date-day') }}">
+            class="flex items-center space-x-4" data-select-url="{{ route('adl.select-date-day') }}">
             @csrf
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
@@ -50,7 +49,7 @@
             </select>
         </form>
 
-        {{-- Main ADL form (No changes needed here) --}}
+        {{-- Main ADL form --}}
         <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"
             data-analyze-url="{{ route('adl.analyze-field') }}">
             @csrf
@@ -60,7 +59,6 @@
             <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
-                {{-- Table content remains the same --}}
                 <center>
                     <table>
                         <tr>

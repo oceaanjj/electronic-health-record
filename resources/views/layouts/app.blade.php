@@ -66,7 +66,7 @@
     --}}
 
     {{-- Main Content --}}
-        <div id="main" class="relative h-screen overflow-y-auto overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
+        <div id="main" class="relative min-h-screen overflow-y-auto overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
 
     
             <img 
@@ -87,12 +87,17 @@
                 
 
                 {{-- content ng page --}}
-                <main class="pt-[120px] transition-all duration-300 ease-in-out">
+                <main class="pt-[120px] pb-0transition-all duration-300 ease-in-out">
 
                     @yield('content')
                 </main>
             </div>
         </div>
+
+
+
+
+
 
 
     <script>

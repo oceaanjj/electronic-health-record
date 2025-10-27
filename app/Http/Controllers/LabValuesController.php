@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Services\LabValuesCdssService;
+use Illuminate\Support\Facades\Log;
+use App\Services\LabValuesCdssService; 
 use App\Models\LabValues;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon; 
 
 class LabValuesController extends Controller
 {
@@ -15,29 +16,32 @@ class LabValuesController extends Controller
     {
         $patientId = $request->input('patient_id');
         $request->session()->put('selected_patient_id', $patientId);
-        return redirect()->route('lab-values.index');
+        return redirect()->route('lab-values.index'); 
     }
 
     public function show(Request $request)
     {
-
-        // $patients = Patient::all();
         $patients = Auth::user()->patients;
-
         $selectedPatient = null;
         $labValue = null;
         $alerts = [];
         $patientId = $request->session()->get('selected_patient_id');
 
         if ($patientId) {
-            $selectedPatient = Patient::find($patientId);
+            $selectedPatient = Auth::user()->patients()->find($patientId);
+
             if ($selectedPatient) {
                 $labValue = LabValues::where('patient_id', $patientId)->first();
 
+                $ageGroup = $this->getAgeGroup($selectedPatient);
+
                 if ($labValue) {
                     $cdssService = new LabValuesCdssService();
-                    $alerts = $this->runLabCdss($labValue, $cdssService, 'child'); // default = child
+                    $alerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
                 }
+            } else {
+                 $request->session()->forget('selected_patient_id');
+                 return redirect()->route('lab-values.index')->with('error', 'Selected patient not found or not authorized.');
             }
         }
 
@@ -46,32 +50,20 @@ class LabValuesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+         $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
         ], [
             'patient_id.required' => 'Please choose a patient first.',
             'patient_id.exists' => 'Please choose a patient first.',
         ]);
 
-
-        //****
-        $user_id = Auth::id();
-        $patient = Patient::where('patient_id', $request->patient_id)
-            ->where('user_id', $user_id)
-            ->first();
+        $patient = Auth::user()->patients()->find($request->patient_id);
         if (!$patient) {
-            return back()->with('error', 'Unauthorized patient access.');
+            return back()->with('error', 'Unauthorized patient access or patient not found.');
         }
-
-        if (!$request->has('patient_id')) {
-            return back()->with('error', 'No patient selected.');
-        }
-        //****
 
         $data = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-
-            // numeric only
             'wbc_result' => 'nullable|numeric',
             'rbc_result' => 'nullable|numeric',
             'hgb_result' => 'nullable|numeric',
@@ -87,21 +79,20 @@ class LabValuesController extends Controller
             'eosinophils_result' => 'nullable|numeric',
             'basophils_result' => 'nullable|numeric',
 
-            // normal ranges (string)
-            'wbc_normal_range' => 'nullable|string',
-            'rbc_normal_range' => 'nullable|string',
-            'hgb_normal_range' => 'nullable|string',
-            'hct_normal_range' => 'nullable|string',
-            'platelets_normal_range' => 'nullable|string',
-            'mcv_normal_range' => 'nullable|string',
-            'mch_normal_range' => 'nullable|string',
-            'mchc_normal_range' => 'nullable|string',
-            'rdw_normal_range' => 'nullable|string',
-            'neutrophils_normal_range' => 'nullable|string',
-            'lymphocytes_normal_range' => 'nullable|string',
-            'monocytes_normal_range' => 'nullable|string',
-            'eosinophils_normal_range' => 'nullable|string',
-            'basophils_normal_range' => 'nullable|string',
+            'wbc_normal_range' => 'nullable|string|max:50',
+            'rbc_normal_range' => 'nullable|string|max:50',
+            'hgb_normal_range' => 'nullable|string|max:50',
+            'hct_normal_range' => 'nullable|string|max:50',
+            'platelets_normal_range' => 'nullable|string|max:50',
+            'mcv_normal_range' => 'nullable|string|max:50',
+            'mch_normal_range' => 'nullable|string|max:50',
+            'mchc_normal_range' => 'nullable|string|max:50',
+            'rdw_normal_range' => 'nullable|string|max:50',
+            'neutrophils_normal_range' => 'nullable|string|max:50',
+            'lymphocytes_normal_range' => 'nullable|string|max:50',
+            'monocytes_normal_range' => 'nullable|string|max:50',
+            'eosinophils_normal_range' => 'nullable|string|max:50',
+            'basophils_normal_range' => 'nullable|string|max:50',
         ]);
 
         $existingLabValue = LabValues::where('patient_id', $data['patient_id'])->first();
@@ -123,12 +114,13 @@ class LabValuesController extends Controller
             );
         }
 
-        // Run CDSS after save
+        $ageGroup = $this->getAgeGroup($patient);
         $cdssService = new LabValuesCdssService();
-        $alerts = $this->runLabCdss((object) $data, $cdssService, 'child');
+        $alerts = $this->runLabCdss((object) $data, $cdssService, $ageGroup);
 
-        return redirect()->route('lab-values.index')
-            ->withInput()
+        $request->session()->put('selected_patient_id', $data['patient_id']);
+
+        return redirect()->route('lab-values.index') 
             ->with('alerts', $alerts)
             ->with('success', $message);
     }
@@ -136,7 +128,6 @@ class LabValuesController extends Controller
     private function runLabCdss($labValue, $cdssService, $ageGroup)
     {
         $alerts = [];
-
         $lab = [
             'wbc' => 'wbc_result',
             'rbc' => 'rbc_result',
@@ -155,12 +146,83 @@ class LabValuesController extends Controller
         ];
 
         foreach ($lab as $param => $field) {
-            if ($labValue->$field !== null) {
-                $alerts[$param . '_alerts'][] =
-                    $cdssService->checkLabResult($param, $labValue->$field, $ageGroup)['alert'];
+            if (property_exists($labValue, $field) && $labValue->$field !== null) {
+                 $result = $cdssService->checkLabResult($param, $labValue->$field, $ageGroup);
+                 if ($result['severity'] !== LabValuesCdssService::NONE) {
+                    $alerts[$param . '_alerts'][] = [
+                        'text' => $result['alert'],
+                        'severity' => $result['severity'],
+                    ];
+                 } else {
+                     $alerts[$param . '_alerts'][] = [
+                        'text' => $result['alert'], 
+                        'severity' => $result['severity'], 
+                    ];
+                 }
             }
         }
-
         return $alerts;
+    }
+
+    /**
+     * Converts a patient's date_of_birth into the correct age group string.
+     * Ito ang mas preferred na method.
+     *
+     * @param \App\Models\Patient $patient
+     * @return string
+     */
+    private function getAgeGroup(Patient $patient): string
+    {
+        if (empty($patient->date_of_birth)) {
+            return $this->getAgeGroupFromInteger($patient->age ?? 0);
+        }
+
+        try {
+            $dob = Carbon::parse($patient->date_of_birth);
+            $now = Carbon::now();
+
+            $ageInDays = $dob->diffInDays($now);
+            $ageInMonths = $dob->diffInMonths($now);
+            $ageInYears = $dob->diffInYears($now);
+
+            if ($ageInDays <= 30) {
+                return 'neonate';
+            }
+            if ($ageInMonths < 24) {
+                return 'infant';
+            }
+            if ($ageInYears < 12) {
+                return 'child';
+            }
+            if ($ageInYears <= 18) {
+                return 'adolescent';
+            }
+            return 'adult'; 
+
+        } catch (\Exception $e) {
+            Log::error("Error parsing date_of_birth for patient ID {$patient->patient_id}: " . $e->getMessage());
+            return $this->getAgeGroupFromInteger($patient->age ?? 0);
+        }
+    }
+
+    /**
+     * Fallback function using an integer 'age' column (less accurate).
+     */
+    private function getAgeGroupFromInteger(int $ageInYears): string
+    {
+         if ($ageInYears === 0) {
+             Log::warning("Cannot accurately determine age group for patient with age 0 years. Assuming 'infant'.");
+             return 'infant';
+         }
+        if ($ageInYears < 2) {
+            return 'infant';
+        }
+        if ($ageInYears < 12) { 
+            return 'child';
+        }
+        if ($ageInYears <= 18) { 
+            return 'adolescent';
+        }
+        return 'adult'; 
     }
 }

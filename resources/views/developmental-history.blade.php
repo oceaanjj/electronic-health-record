@@ -6,13 +6,17 @@
 
     <form action="{{ route('medical-history.select') }}" method="POST">
         @csrf
-        <div class="header">
-            <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                <option value="">-- Select Patient --</option>
-
-            </select>
-        </div>
+            <div class="header">
+                    <label for="patient_id" style="color: white;">PATIENT NAME :</label>
+                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                        <option value="">-- Select Patient --</option>
+                        @foreach ($patients as $patient)
+                            <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
+                                {{ $patient->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
     </form>
 
@@ -22,14 +26,19 @@
         @csrf
 
         {{-- Hidden input to send the selected patient's ID with the POST request --}}
-        <!-- <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}"> -->
+        <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+
+        <center>
+            <p class="mb-1 w-[72%] flex justify-center bg-dark-green text-white rounded-lg">DEVELOPMENTAL HISTORY </p>
+        </center>
+        
 
         <center>
             {{-- DEVELOPMENTAL HISTORY --}}
             <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
-                <tr>
-                    <th colspan="6" class="bg-dark-green text-white rounded-lg">DEVELOPMENTAL HISTORY </th>
-                </tr>
+            
+            
+                
 
                 {{-- GROSS MOTOR --}}
                 <tr>
@@ -112,23 +121,37 @@
                 <tr>
                     <td class="rounded-br-lg">
                         <textarea class="notepad-lines h-[100px]"
-                            name="social">{{ $developmentalHistory->social ?? '' }}</textarea>
+                            name="social"
+                            placeholder="Type here..."
+                            >{{ $developmentalHistory->social ?? '' }}</textarea>
                     </td>
                 </tr>
             </table>
+
+            
         </center>
 
+
+            <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
+                {{-- paayos ako ng routing here, dapat babalik sa medical history --}}
+                <a href="{{ route('medical-history') }}">
+                    <button type="button" class="button-default">BACK</button>
+                </a>
+
+                {{-- mapupunta na dapat sa database lahat ng input sa medical history & developmental history --}}
+                <button type="submit" class="button-default">SUBMIT</button>
+            </div>
         </div>
 
 
 
 
-
+        <div class="buttons">
+            <button type="submit" class="btn">Submit</button>
+        </div>
     </form>
 
-    <div class="buttons">
-        <button type="submit" class="btn">Submit</button>
-    </div>
+
 
 
 @endsection

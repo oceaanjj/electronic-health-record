@@ -42,7 +42,7 @@ return new class extends Migration {
             $table->string('eosinophils_normal_range')->nullable();
             $table->string('basophils_result')->nullable();
             $table->string('basophils_normal_range')->nullable();
-
+            $table->string('alerts')->nullable();
             $table->timestamps();
 
             // Ensure a patient can only have one lab record for a specific date

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class PhysicalExamCdssService
+class OG_PE
 {
     // Gagamit tayo ng severity levels for alerts, based on tis severity kung ano yung irereturn
     const CRITICAL = 'critical';

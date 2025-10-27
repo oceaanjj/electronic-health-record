@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electronic Health Record</title>
     @vite('resources/css/app.css')
+
+    <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- !important for instant alerts-->
 </head>
 
 <body class="bg-white overflow-x-hidden">
 
     {{-- Sidebar --}}
     @include('components.sidebar')
-    
-    {{-- Header --}}
 
+    {{-- Header --}}
     @include('components.header')
 
 
     {{--  
     <div id="main" class="transition-transform duration-300 ease-in-out">
-
         <div class="flex flex-col min-h-screen">
-
             @include('components.header')
-
-
             <!-- alerts -->
             @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                    role="alert" id="success-alert">
-                    {{ session('success') }}
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-                </div>
+            <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert"
+                role="alert" id="success-alert">
+                {{ session('success') }}
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+            </div>
             @endif
 
             @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                    role="alert" id="error-alert">
-                    {{ session('error') }}
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
+                role="alert" id="error-alert">
+                {{ session('error') }}
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+            </div>
             @endif
 
             @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                    role="alert" id="error-alert">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
+                role="alert" id="error-alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+            </div>
             @endif
-
-
-
             <main class="flex-1">
                 @yield('content')
             </main>
@@ -131,7 +126,7 @@
             const arrow = document.getElementById("arrowBtn");
 
             sidebar.classList.remove("-translate-x-full");
-            main.classList.add("ml-[260px]"); 
+            main.classList.add("ml-[260px]");
             arrow.classList.replace("-right-24", "-right-10");
             arrow.classList.remove("hidden");
 
@@ -152,13 +147,14 @@
             localStorage.setItem("sidebarOpen", "false");
 
             setTimeout(() => {
-            arrowBtn.classList.add("hidden");
-        }, 0);
+                arrowBtn.classList.add("hidden");
+            }, 0);
         }
     </script>
 
+    <!-- !important -->
+    @stack('scripts')
+
 </body>
+
 </html>
-
-
-

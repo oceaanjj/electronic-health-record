@@ -1,0 +1,33 @@
+abdomen_condition:
+  - keywords:
+      ["rebound tenderness", "guarding", "rigidity", "board-like abdomen"]
+    alert: "Rebound tenderness, guarding, and rigidity are signs of peritonitis, indicating inflammation of the abdominal lining. This is a surgical emergency."
+    severity: "critical"
+  - keywords:
+      ["right lower quadrant pain", "RLQ pain", "McBurney's point tenderness"]
+    alert: "Pain migrating to and localizing in the right lower quadrant is the classic presentation of appendicitis. Requires urgent surgical evaluation."
+    severity: "critical"
+  - keywords: ["positive Murphy's sign", "RUQ pain on inspiration"]
+    alert: "A positive Murphy's sign (sharp pain and inspiratory arrest on palpation of the RUQ) is a key indicator of acute cholecystitis."
+    severity: "warning"
+  - keywords: ["pulsatile abdominal mass", "expansile pulsation"]
+    alert: "A pulsatile abdominal mass wider than 3 cm suggests an abdominal aortic aneurysm (AAA). Risk of rupture is high. Urgent surgical consultation is needed."
+    severity: "critical"
+  - keywords: ["hepatosplenomegaly", "enlarged liver and spleen"]
+    alert: "Hepatosplenomegaly (enlarged liver and spleen) can be caused by liver disease, portal hypertension, infection, or hematologic disorders. Requires further workup."
+    severity: "warning"
+  - keywords: ["ascites", "shifting dullness", "fluid wave"]
+    alert: "Shifting dullness and a positive fluid wave are signs of ascites (fluid in the peritoneal cavity), often due to liver disease or heart failure."
+    severity: "warning"
+  - keywords: ["costovertebral angle tenderness", "CVAT"]
+    alert: "Costovertebral angle (CVA) tenderness suggests kidney inflammation, most commonly from pyelonephritis."
+    severity: "warning"
+  - keywords: ["hyperactive bowel sounds", "high-pitched tinkling"]
+    alert: "Hyperactive, high-pitched bowel sounds ('tinkling') can indicate an early intestinal obstruction."
+    severity: "warning"
+  - keywords: ["absent bowel sounds"]
+    alert: "Absent bowel sounds may indicate a paralytic ileus or peritonitis after a period of hyperactivity."
+    severity: "warning"
+  - keywords: ["renal artery bruit", "abdominal bruit"]
+    alert: "A bruit heard over the renal arteries may indicate renal artery stenosis, a cause of secondary hypertension."
+    severity: "warning"

@@ -1,0 +1,145 @@
+oral_condition:
+  # Category: Lips
+  - keywords: ["central cyanosis", "blue lips", "blue tongue", "blue gums"]
+    alert: "Central cyanosis (blue discoloration of lips, tongue, or oral mucosa) is a sign of severe hypoxia and is a medical emergency. Assess oxygen saturation and respiratory status immediately."
+    severity: "critical"
+  - keywords: ["pallor of lips", "pale lips"]
+    alert: "Pale lips or oral mucosa suggest anemia or poor perfusion (shock). Correlate with other vital signs and a complete blood count."
+    severity: "warning"
+  - keywords: ["dry lips", "cracked lips", "chapped lips"]
+    alert: "Dry or cracked lips are a common sign of dehydration. Assess overall fluid status, including mucous membrane moisture and urine output."
+    severity: "warning"
+  - keywords:
+      ["angular cheilitis", "angular stomatitis", "cracks at corners of mouth"]
+    alert: "Angular cheilitis (inflammation at the corners of the mouth) can be caused by nutritional deficiencies (iron, B vitamins), infection (Candida), or excessive lip-licking."
+    severity: "info"
+  - keywords:
+      ["herpes simplex", "cold sore", "fever blister", "vesicles on lip"]
+    alert: "Vesicles on an erythematous base on the lip border suggest Herpes Simplex Virus. Primary infection in children (herpetic gingivostomatitis) can be severe."
+    severity: "warning"
+  - keywords: ["angioedema of lips", "swollen lips"]
+    alert: "Lip angioedema is a sign of an allergic reaction. Assess for airway compromise (stridor, difficulty breathing) as this can be life-threatening."
+    severity: "critical"
+  - keywords: ["microstomia", "small mouth"]
+    alert: "Microstomia (abnormally small mouth) can be a feature of congenital syndromes such as Trisomy 18 and 21."
+    severity: "info"
+  - keywords: ["fish mouth"]
+    alert: "A 'fish mouth' appearance, with a thin upper lip and smooth philtrum, is a characteristic feature of Fetal Alcohol Syndrome."
+    severity: "info"
+
+  # Category: Oral Mucosa & Gums
+  - keywords: ["dry mucous membranes", "tacky mucosa", "dry mouth"]
+    alert: "Dry or tacky oral mucosa is a reliable sign of dehydration. Assess for other signs of volume depletion."
+    severity: "warning"
+  - keywords: ["gingivitis", "bleeding gums", "swollen gums", "red gums"]
+    alert: "Gingivitis (inflamed, bleeding gums) is common and often related to poor oral hygiene. Can also be seen in nutritional deficiencies or systemic disease. Recommend dental evaluation."
+    severity: "info"
+  - keywords: ["aphthous ulcer", "canker sore"]
+    alert: "Aphthous ulcer (canker sore) is a painful, shallow whitish ulcer with a red halo. Typically heals in 7-10 days. Offer symptomatic relief."
+    severity: "info"
+  - keywords: ["Koplik's spots", "koplik spots"]
+    alert: "Koplik's spots (small white specks resembling grains of salt on a red background on the buccal mucosa) are pathognomonic for measles (rubeola). This is a critical public health finding."
+    severity: "critical"
+  - keywords: ["oral vesicles", "ulcers in mouth"]
+    alert: "Oral vesicles or ulcers can be a sign of viral infection, such as Hand, Foot, and Mouth Disease (Coxsackievirus) or primary Herpes Simplex infection."
+    severity: "warning"
+  - keywords: ["petechiae on palate", "palatal petechiae"]
+    alert: "Petechiae on the palate can be a sign of streptococcal pharyngitis, infectious mononucleosis, or more serious conditions like endocarditis or thrombocytopenia."
+    severity: "warning"
+
+  # Category: Teeth & Dentition
+  - keywords: ["dental caries", "cavities", "tooth decay"]
+    alert: "Dental caries are present. This is the most common chronic disease of childhood. Refer for dental evaluation."
+    severity: "info"
+  - keywords: ["nursing bottle caries", "baby bottle tooth decay"]
+    alert: "Characteristic pattern of severe decay on upper front teeth suggests nursing bottle caries. Counsel caregivers on feeding practices and refer to a dentist urgently."
+    severity: "warning"
+  - keywords: ["natal teeth"]
+    alert: "Presence of teeth at birth (natal teeth) is uncommon. Assess for mobility; loose teeth pose an aspiration risk and may require removal."
+    severity: "warning"
+  - keywords: ["delayed eruption", "absent teeth"]
+    alert: "Significant delay in tooth eruption may be a normal variation but can also be associated with systemic conditions like hypothyroidism or nutritional deficiencies."
+    severity: "info"
+  - keywords: ["malocclusion", "crooked teeth", "poor bite"]
+    alert: "Malocclusion (misalignment of teeth) is a common finding. Refer for orthodontic evaluation as needed."
+    severity: "info"
+
+  # Category: Tongue
+  - keywords: ["strawberry tongue", "red swollen tongue"]
+    alert: "A bright red tongue with prominent papillae ('strawberry tongue') is a critical sign associated with Scarlet Fever and Kawasaki disease. Requires urgent evaluation."
+    severity: "critical"
+  - keywords:
+      [
+        "oral candidiasis",
+        "thrush",
+        "white plaques on tongue",
+        "white coat on tongue",
+      ]
+    alert: "Oral candidiasis (thrush) presents as white plaques on the tongue or mucosa that can be scraped off, leaving a raw surface. Common in infants; in older children may indicate immunosuppression."
+    severity: "warning"
+  - keywords: ["geographic tongue"]
+    alert: "Geographic tongue presents with scattered smooth red areas on the dorsum of the tongue, giving a map-like appearance. This is a benign, migratory condition."
+    severity: "info"
+  - keywords: ["fissured tongue", "scrotal tongue"]
+    alert: "Fissured tongue has deep grooves on the dorsal surface. This is a benign condition that may appear with aging."
+    severity: "info"
+  - keywords: ["smooth tongue", "atrophic glossitis"]
+    alert: "A smooth, glossy red tongue with loss of papillae suggests atrophic glossitis, which can be caused by nutritional deficiencies (Vitamin B12, iron, folate)."
+    severity: "warning"
+  - keywords: ["macroglossia", "enlarged tongue"]
+    alert: "An abnormally large tongue (macroglossia) can be a sign of congenital hypothyroidism or genetic syndromes like Down syndrome or Beckwith-Wiedemann."
+    severity: "warning"
+  - keywords: ["deviated tongue", "tongue deviates"]
+    alert: "Tongue deviation on protrusion points to a lesion of the hypoglossal nerve (CN XII). The tongue deviates toward the weak side."
+    severity: "critical"
+  - keywords: ["hairy leukoplakia", "feathery white patches", "side of tongue"]
+    alert: "Hairy leukoplakia (white, feathery patches on the sides of the tongue that cannot be scraped off) is strongly associated with immunosuppression, particularly HIV/AIDS."
+    severity: "warning"
+  - keywords:
+      [
+        "carcinoma of tongue",
+        "non-healing ulcer on tongue",
+        "indurated tongue nodule",
+      ]
+    alert: "Any non-healing ulcer or indurated nodule on the tongue is suspicious for carcinoma (rare in children but possible) and requires urgent biopsy."
+    severity: "critical"
+
+  # Category: Palate, Pharynx & Tonsils
+  - keywords: ["pharyngitis", "sore throat", "red throat"]
+    alert: "Erythematous pharynx is a sign of pharyngitis. Assess for fever and exudates to differentiate between viral and bacterial causes."
+    severity: "warning"
+  - keywords:
+      [
+        "exudative pharyngitis",
+        "tonsillar exudates",
+        "white patches on tonsils",
+        "pus on tonsils",
+      ]
+    alert: "Exudative pharyngitis, especially with fever and without a cough, is suggestive of streptococcal pharyngitis ('strep throat'). Consider rapid strep test."
+    severity: "warning"
+  - keywords: ["peritonsillar abscess", "quinsy"]
+    alert: "A peritonsillar abscess can compromise the airway. Look for severe sore throat, fever, 'hot potato' voice, and uvular deviation. Requires urgent ENT evaluation."
+    severity: "critical"
+  - keywords: ["uvula deviation", "deviated uvula"]
+    alert: "Deviation of the uvula to one side suggests a peritonsillar abscess or a lesion of the vagus nerve (CN X). This is a critical finding."
+    severity: "critical"
+  - keywords: ["Epstein's pearls", "Epstein pearls"]
+    alert: "Epstein's pearls are small, white, benign cysts on the hard palate of newborns. They are a normal finding and resolve spontaneously."
+    severity: "info"
+  - keywords: ["high arched palate"]
+    alert: "A high arched palate can be a normal variant or associated with several congenital syndromes, such as Marfan syndrome."
+    severity: "info"
+  - keywords: ["diphtheria", "gray membrane in throat"]
+    alert: "A gray, adherent pseudomembrane on the pharynx, uvula, or tongue is a classic sign of diphtheria, a medical emergency."
+    severity: "critical"
+
+  # Category: Breath & Salivation
+  - keywords: ["fruity breath", "acetone breath"]
+    alert: "Fruity or acetone odor on the breath is a classic sign of diabetic ketoacidosis (DKA). Check blood glucose and ketones immediately."
+    severity: "critical"
+  - keywords: ["excessive drooling", "sialorrhea"]
+    alert: "Excessive drooling in an acutely ill child with fever and sore throat can be a sign of epiglottitis or a retropharyngeal abscess, indicating potential airway obstruction."
+    severity: "critical"
+  - keywords: ["halitosis", "bad breath"]
+    alert: "Halitosis can be caused by poor oral hygiene, dental caries, pharyngitis, or a nasal foreign body. Assess for underlying cause."
+    severity: "info"

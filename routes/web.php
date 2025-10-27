@@ -107,10 +107,11 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
         Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
-        // New route to handle patient selection via POST
         Route::post('/select', [PhysicalExamController::class, 'selectPatient'])->name('select');
         Route::post('/', [PhysicalExamController::class, 'store'])->name('store');
         Route::post('/cdss', [PhysicalExamController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
+        // New route for real-time, single-field analysis
+        Route::post('/analyze-field', [PhysicalExamController::class, 'runSingleCdssAnalysis'])->name('analyze-field');
     });
 
     // Medical History Store Routes
@@ -152,8 +153,13 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
         Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
         Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-        Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
+        // Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
+
+        Route::post('/select-patient', [ActOfDailyLivingController::class, 'selectPatient'])->name('select');
+        Route::post('/select-date-day', [ActOfDailyLivingController::class, 'selectDateAndDay'])->name('select-date-day');
+        Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
     });
+
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {

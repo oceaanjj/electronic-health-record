@@ -1,0 +1,29 @@
+extremities:
+  - keywords: ["absent pulses", "diminished pulses", "1+ pulse"]
+    alert: "Diminished or absent peripheral pulses are a sign of peripheral arterial disease (PAD) or acute arterial occlusion."
+    severity: "warning"
+  - keywords: ["pitting edema", "pedal edema"]
+    alert: "Pitting edema can be a sign of heart failure, nephrotic syndrome, cirrhosis, or venous insufficiency."
+    severity: "warning"
+  - keywords: ["unilateral calf swelling", "calf tenderness"]
+    alert: "Unilateral calf swelling and tenderness are classic signs of a deep venous thrombosis (DVT). This requires urgent evaluation to prevent pulmonary embolism."
+    severity: "critical"
+  - keywords: ["intermittent claudication"]
+    alert: "Intermittent claudication (exercise-induced leg pain relieved by rest) is a hallmark symptom of peripheral arterial disease (PAD)."
+    severity: "warning"
+  - keywords: ["pallor on elevation", "dependent rubor"]
+    alert: "Postural color changes (pallor on elevation, rubor when dependent) are signs of severe chronic arterial insufficiency."
+    severity: "warning"
+  - keywords:
+      ["stasis dermatitis", "brown pigmentation", "hemosiderin staining"]
+    alert: "Brownish pigmentation and dermatitis of the lower legs are signs of chronic venous insufficiency."
+    severity: "info"
+  - keywords: ["arterial ulcer", "toe ulcer", "painful ulcer", "gangrene"]
+    alert: "Ulcers on the toes or points of trauma, often with gangrene, are typical of severe arterial insufficiency."
+    severity: "critical"
+  - keywords: ["venous ulcer", "medial malleolus ulcer"]
+    alert: "Ulcers located near the medial ankle, often with edema and pigmentation, are characteristic of chronic venous insufficiency."
+    severity: "warning"
+  - keywords: ["lymphedema"]
+    alert: "Lymphedema (swelling due to lymphatic obstruction) is typically non-pitting and can involve the dorsum of the foot."
+    severity: "info"

@@ -192,8 +192,8 @@ class AdlCdssService
 
                 if ($isNegated) {
                     // Reduce the score drastically for a potential negated finding.
-                    // A critical alert shouldn't fire if negated, but a low-score INFO might still be useful.
-                    if ($ruleSeverityStr === self::SEVERITY['CRITICAL']['str']) {
+                    // NEGATED CRITICAL AND WARNING alerts.
+                    if ($ruleSeverityStr === self::SEVERITY['CRITICAL']['str'] || $ruleSeverityStr === self::SEVERITY['WARNING']['str']) {
                         $ruleScore = 0; // Completely ignore CRITICAL if negated.
                     } else {
                         $ruleScore *= 0.1; // Greatly reduce score for WARNING/INFO.

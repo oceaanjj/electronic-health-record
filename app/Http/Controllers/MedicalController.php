@@ -26,6 +26,7 @@ class MedicalController extends Controller
 
     public function show(Request $request)
     {
+        
         // $patients = Patient::all();
         $patients = Auth::user()->patients;
 
@@ -60,6 +61,43 @@ class MedicalController extends Controller
         return view('medical-history', compact('patients', 'selectedPatient', 'presentIllness', 'pastMedicalSurgical', 'allergy', 'vaccination', 'developmentalHistory'));
     }
 
+
+public function showDevelopmentalHistory(Request $request)
+{
+    $patients = Auth::user()->patients;
+    $patientId = $request->session()->get('selected_patient_id');
+
+    if (!$patientId) {
+        return redirect()->route('medical-history')->with('error', 'Please select a patient first.');
+    }
+
+    $selectedPatient = Patient::find($patientId);
+    $developmentalHistory = DevelopmentalHistory::where('patient_id', $patientId)->first();
+
+    return view('developmental-history', compact('patients', 'selectedPatient', 'developmentalHistory'));
+}
+public function storeDevelopmentalHistory(Request $request)
+{
+    $patientId = $request->session()->get('selected_patient_id');
+
+    if (!$patientId) {
+        return redirect()->route('medical-history')
+            ->with('error', 'Please select a patient first.');
+    }
+
+    DevelopmentalHistory::updateOrCreate(
+        ['patient_id' => $patientId],
+        [
+            'gross_motor' => $request->gross_motor,
+            'fine_motor' => $request->fine_motor,
+            'language' => $request->language,
+            'cognitive' => $request->cognitive,
+            'social' => $request->social,
+        ]
+    );
+
+    return redirect()->route('medical-history')->with('success', 'Developmental history saved successfully.');
+}
 
     public function store(Request $request)
     {
@@ -173,6 +211,9 @@ class MedicalController extends Controller
                     $updatedFlag = true;
                 }
             }
+              if ($request->input('action') === 'next') {
+                return redirect()->route('developmental-history');
+            }
 
             // audit log
             $message = '';
@@ -203,7 +244,7 @@ class MedicalController extends Controller
         } catch (Throwable $e) {
             return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());
         }
-    }
+    }   
 
 
     private function handleRecord(string $modelClass, array $data): bool

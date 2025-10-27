@@ -2,10 +2,11 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
-    {{-- NEW SEARCHABLE PATIENT DROPDOWN --}}
-    <div class="header">
-        <label for="patient_search_input">PATIENT NAME :</label>
-        <div class="searchable-dropdown" data-select-url="{{ route('adl.select') }}">
+    {{-- NEW SEARCHABLE PATIENT DROPDOWN, DATE, AND DAY SELECTORS (in one row) --}}
+    <div class="header" style="display: flex; align-items: center; justify-content: flex-start; gap: 20px;">
+        {{-- PATIENT SELECTOR (Copied from physical-exam.blade.php) --}}
+        <label for="patient_search_input" style="color: white; white-space: nowrap;">PATIENT NAME :</label>
+        <div class="searchable-dropdown" data-select-url="{{ route('adl.select') }}" style="min-width: 250px;">
             <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
                 value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off">
             <div id="patient_options_container">
@@ -16,131 +17,119 @@
                 @endforeach
             </div>
         </div>
+        {{-- This hidden input will hold the selected patient's ID for the main form and for the Date/Day logic --}}
         <input type="hidden" name="patient_id_for_form" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
+
+        {{-- DATE INPUT --}}
+        <label for="date_selector" style="color: white; white-space: nowrap;">DATE :</label>
+        {{-- The data-admission-date attribute is used by the new JS logic --}}
+        <input class="date" type="date" id="date_selector" name="date"
+            value="{{ session('selected_date') ?? ($selectedPatient ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d')) }}"
+            @if (!$selectedPatient) disabled @endif>
+
+        {{-- DAY NO SELECTOR --}}
+        <label for="day_no_selector" style="color: white; white-space: nowrap;">DAY NO :</label>
+        <select id="day_no_selector" name="day_no" @if (!$selectedPatient) disabled @endif>
+            <option value="">-- Day --</option>
+            @for ($i = 1; $i <= 30; $i++)
+                <option value="{{ $i }}" @if(session('selected_day_no') == $i) selected @endif>
+                    {{ $i }}
+                </option>
+            @endfor
+        </select>
     </div>
+    {{-- END HEADER --}}
+
 
     <div id="form-content-container">
+        {{-- DISABLED input overlay --}}
         @if (!session('selected_patient_id'))
             <div class="form-overlay">
-                <span>Please select a patient to input</span>
+                <span>Please select a patient to input</span> {{-- message --}}
             </div>
         @endif
 
-        <!-- DATE AND DAY SELECTOR -->
-        <!-- Added data-select-url and removed onchange attributes  -->
-        <form action="{{ route('adl.select-date-day') }}" method="POST" id="date-day-select-form"
-            class="flex items-center space-x-4" style="margin-left: 15rem; margin-top: 1rem;"
-            data-select-url="{{ route('adl.select-date-day') }}">
-            @csrf
-            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
-
-            <!-- date -->
-            <div>
-                <label for="date" style="color: white;">DATE :</label>
-                <input class="date" type="date" id="date_selector" name="date"
-                    value="{{ session('selected_date') ?? ($selectedPatient && $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d')) }}">
-            </div>
-
-            <!-- day -->
-            <div><label for="day_no" style="color: white;">DAY NO :</label>
-                <select id="day_no" name="day_no">
-                    @for ($i = 1; $i <= 30; $i++)
-                        <option value="{{ $i }}" @if(session('selected_day_no') == $i) selected @endif>
-                            {{ $i }}
-                        </option>
-                    @endfor
-                </select>
-            </div>
-        </form>
-
-        {{-- Main ADL form --}}
+        {{-- MAIN FORM (sumbit) with CDSS setup --}}
         <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"
             data-analyze-url="{{ route('adl.analyze-field') }}">
             @csrf
-            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
-            <input type="hidden" name="date"
-                value="{{ session('selected_date') ?? ($selectedPatient && $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d')) }}">
-            <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
+
+            {{-- Hidden PATIENT_ID AND DATE/DAY from header elements --}}
+            <input type="hidden" name="patient_id" class="patient-id-input" value="{{ session('selected_patient_id') }}">
+            <input type="hidden" name="date" class="date-input" value="{{ session('selected_date') }}">
+            <input type="hidden" name="day_no" class="day-no-input" value="{{ session('selected_day_no') }}">
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
-                <center>
-                    <table>
-                        <tr>
-                            <th class="title">CATEGORY</th>
-                            <th class="title">ASSESSMENT</th>
-                            <th class="title">ALERTS</th>
-                        </tr>
-                        <tr>
-                            <th class="title">MOBILITY</th>
-                            <td>
-                                <input type="text" name="mobility_assessment" placeholder="mobility" class="cdss-input"
-                                    data-field-name="mobility_assessment"
-                                    value="{{ old('mobility_assessment', $adlData->mobility_assessment ?? '') }}">
-                            </td>
-                            <td class="alert-box" data-alert-for="mobility_assessment"></td>
-                        </tr>
-                        <tr>
-                            <th class="title">HYGIENE</th>
-                            <td>
-                                <input type="text" name="hygiene_assessment" placeholder="hygiene" class="cdss-input"
-                                    data-field-name="hygiene_assessment"
-                                    value="{{ old('hygiene_assessment', $adlData->hygiene_assessment ?? '') }}">
-                            </td>
-                            <td class="alert-box" data-alert-for="hygiene_assessment"></td>
-                        </tr>
-                        <tr>
-                            <th class="title">TOILETING</th>
-                            <td>
-                                <input type="text" name="toileting_assessment" placeholder="toileting" class="cdss-input"
-                                    data-field-name="toileting_assessment"
-                                    value="{{ old('toileting_assessment', $adlData->toileting_assessment ?? '') }}">
-                            </td>
-                            <td class="alert-box" data-alert-for="toileting_assessment"></td>
-                        </tr>
-                        <tr>
-                            <th class="title">FEEDING</th>
-                            <td>
-                                <input type="text" name="feeding_assessment" placeholder="feeding" class="cdss-input"
-                                    data-field-name="feeding_assessment"
-                                    value="{{ old('feeding_assessment', $adlData->feeding_assessment ?? '') }}">
-                            </td>
-                            <td class="alert-box" data-alert-for="feeding_assessment"></td>
-                        </tr>
-                        <tr>
-                            <th class="title">HYDRATION</th>
-                            <td>
-                                <input type="text" name="hydration_assessment" placeholder="hydration" class="cdss-input"
-                                    data-field-name="hydration_assessment"
-                                    value="{{ old('hydration_assessment', $adlData->hydration_assessment ?? '') }}">
-                            </td>
-                            <td class="alert-box" data-alert-for="hydration_assessment"></td>
-                        </tr>
-                        <tr>
-                            <th class="title">SLEEP PATTERN</th>
-                            <td>
-                                <input type="text" name="sleep_pattern_assessment" placeholder="sleep pattern"
-                                    class="cdss-input" data-field-name="sleep_pattern_assessment"
-                                    value="{{ old('sleep_pattern_assessment', $adlData->sleep_pattern_assessment ?? '') }}">
-                            </td>
-                            <td class="alert-box" data-alert-for="sleep_pattern_assessment"></td>
-                        </tr>
-                        <tr>
-                            <th class="title">PAIN LEVEL</th>
-                            <td>
-                                <input type="text" name="pain_level_assessment" placeholder="pain level" class="cdss-input"
-                                    data-field-name="pain_level_assessment"
-                                    value="{{ old('pain_level_assessment', $adlData->pain_level_assessment ?? '') }}">
-                            </td>
-                            <td class="alert-box" data-alert-for="pain_level_assessment"></td>
-                        </tr>
-                    </table>
-                </center>
+                <table>
+                    <tr>
+                        <th class="title">CATEGORY</th>
+                        <th class="title">ASSESSMENT</th>
+                        <th class="title">ALERTS</th>
+                    </tr>
 
-                <div class="buttons">
-                    <button class="btn" type="button">CDSS</button>
-                    <button class="btn" type="submit">Submit</button>
-                </div>
+                    @php
+                        // Helper to get alert data and color
+                        function getAlertData($field, $session)
+                        {
+                            $alertData = $session->get("cdss.$field");
+                            if (!$alertData)
+                                return ['alert' => null, 'color' => null];
+
+                            $color = 'alert-green';
+                            if ($alertData['severity'] === 'CRITICAL')
+                                $color = 'alert-red';
+                            elseif ($alertData['severity'] === 'WARNING')
+                                $color = 'alert-orange';
+
+                            return ['alert' => $alertData['alert'], 'color' => $color];
+                        }
+                    @endphp
+
+                    @foreach ([
+                            'mobility_assessment' => 'MOBILITY',
+                            'hygiene_assessment' => 'HYGIENE',
+                            'toileting_assessment' => 'TOILETING',
+                            'feeding_assessment' => 'FEEDING',
+                            'hydration_assessment' => 'HYDRATION',
+                            'sleep_pattern_assessment' => 'SLEEP PATTERN',
+                            'pain_level_assessment' => 'PAIN LEVEL',
+                        ] as $field => $label)
+                            @php
+                                $alert = getAlertData($field, session());
+                            @endphp
+                            <tr>
+                                <th class="title">{{ $label }}</th>
+                                <td>
+                                    {{-- Added cdss-input and data-field-name classes for alert.js --}}
+                                    <input type="text" name="{{ $field }}" placeholder="{{ strtolower($label) }}"
+                                        class="cdss-input" data-field-name="{{ $field }}"
+                                        value="{{ old($field, $adlData->$field ?? '') }}">
+                                </td>
+                                {{-- Added data-alert-for for alert.js to place alerts --}}
+                                <td data-alert-for="{{ $field }}">
+                                    @if (isset($adlData))
+                                        {{-- Initial alert rendering for pre-filled data. Will be overwritten by JS on page load/reload --}}
+                                    @elseif ($alert['alert'])
+                                        <div class="alert-box {{ $alert['color'] }}">
+                                            <span class="alert-message">{{ $alert['alert'] }}</span>
+                                        </div>
+                                    @endif
+                                    @error($field)
+                                        <div class="alert-box alert-red">
+                                            <span class="alert-message">{{ $message }}</span>
+                                        </div>
+                                    @enderror
+                                </td>
+                            </tr>
+                    @endforeach
+
+                </table>
             </fieldset>
+
+            <div class="buttons">
+                <button class="btn" type="button">CDSS</button>
+                <button class="btn" type="submit">Submit</button>
+            </div>
         </form>
     </div>
 @endsection
@@ -148,6 +137,7 @@
 @push('styles')
     @vite('resources/css/act-of-daily-living.css')
 @endpush
+
 
 @push('scripts')
     @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])

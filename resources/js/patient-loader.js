@@ -14,11 +14,22 @@ document.addEventListener("patient:selected", async (event) => {
         .querySelector('meta[name="csrf-token"]')
         ?.getAttribute("content");
 
+    // Get header elements on the current page (may or may not exist)
+    const patientSearchInput = document.getElementById("patient_search_input");
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
+
+    // Check if this form *has* date/day selectors (e.g., ADL form)
+    const isDateDayForm = dateSelector && dayNoSelector;
+
     if (!formContainer || !selectUrl || !patientId) {
         console.error(
-            "Patient loader: Missing required data for fetch.",
+            "Patient loader: Missing required data for fetch or patientId.",
             event.detail
         );
+        // Safely disable date/day inputs if they exist
+        if (dateSelector) dateSelector.disabled = true;
+        if (dayNoSelector) dayNoSelector.disabled = true;
         return;
     }
 
@@ -34,6 +45,7 @@ document.addEventListener("patient:selected", async (event) => {
                 "X-CSRF-TOKEN": csrfToken,
                 "X-Requested-With": "XMLHttpRequest",
             },
+            // The controller handles determining the default date/day based on patient_id
             body: `patient_id=${encodeURIComponent(patientId)}`,
         });
 
@@ -43,32 +55,53 @@ document.addEventListener("patient:selected", async (event) => {
         const htmlText = await response.text();
         const parser = new DOMParser();
         const newHtml = parser.parseFromString(htmlText, "text/html");
+
+        // --- Step 1: Update Header Elements (Date, Day) from the Response ---
+        // This is necessary because the controller might update the session date/day after selection.
+
+        // 1. Update patient search input (mostly for consistency, as the searchable-dropdown manages this)
+        const newPatientSearchInput = newHtml.getElementById(
+            "patient_search_input"
+        );
+        if (patientSearchInput && newPatientSearchInput) {
+            patientSearchInput.value = newPatientSearchInput.value;
+        }
+
+        // 2. Only process Date/Day if the selectors exist on the current page
+        if (isDateDayForm) {
+            const newDateSelector = newHtml.getElementById("date_selector");
+            const newDayNoSelector = newHtml.getElementById("day_no_selector");
+
+            if (newDateSelector) {
+                dateSelector.value = newDateSelector.value;
+                dateSelector.disabled = false; // Enable date
+            }
+            if (newDayNoSelector) {
+                dayNoSelector.value = newDayNoSelector.value;
+                dayNoSelector.disabled = false; // Enable day
+            }
+        }
+
+        // --- Step 2: Replace the Main Form Content ---
         const newContent = newHtml.getElementById("form-content-container");
 
         if (newContent) {
             formContainer.innerHTML = newContent.innerHTML;
 
-            // Re-initialize all necessary scripts on the new content
-            // 1. Re-initialize the hybrid dropdown itself
-            const newDropdown = document.querySelector(
-                ".hybrid-dropdown-container"
-            );
-            if (newDropdown && typeof initializeHybridDropdown === "function") {
-                initializeHybridDropdown(newDropdown);
-            }
+            // --- Step 3: Re-initialize Scripts ---
 
-            // 2. Re-initialize the CDSS alerts for the new form
+            // Re-initialize the CDSS alerts for the new form (always safe to check and run)
             const newCdssForm = formContainer.querySelector(".cdss-form");
-            if (
-                newCdssForm &&
-                typeof window.initializeCdssForForm === "function"
-            ) {
+            if (typeof window.initializeCdssForForm === "function") {
                 window.initializeCdssForForm(newCdssForm);
             }
 
-            // MODIFIED: 3. Re-initialize the Date/Day loader for the new content
-            if (typeof window.initializeDateDayLoader === "function") {
-                window.initializeDateDayLoader();
+            // Re-initialize the generic Date/Day loader, only if this is a Date/Day form
+            if (
+                isDateDayForm &&
+                typeof window.initializeDateDayLoader === "function"
+            ) {
+                window.initializeDateDayLoader(selectUrl);
             }
         } else {
             throw new Error(

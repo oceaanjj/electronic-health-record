@@ -5,49 +5,76 @@ namespace App\Http\Controllers;
 use App\Models\ActOfDailyLiving;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use App\Services\CdssService;
+use App\Services\AdlCdssService;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
 
 class ActOfDailyLivingController extends Controller
 {
     /**
-     * Handles the AJAX request when a patient is selected from the dropdown.
-     * It returns the full view, and patient-loader.js will extract the needed content.
+     * Finds and returns the ADL record for a given patient, date, and day.
+     */
+    private function getAdlRecord($patientId, $date, $dayNo)
+    {
+        if (!$patientId || !$date || !$dayNo) {
+            return null;
+        }
+
+        return ActOfDailyLiving::where('patient_id', $patientId)
+            ->where('date', $date)
+            ->where('day_no', $dayNo)
+            ->first();
+    }
+
+    /**
+     * Handles the AJAX request for both patient selection AND date/day change.
+     * This is the single AJAX endpoint used by both patient-loader.js and date-day-loader.js.
      */
     public function selectPatient(Request $request)
     {
         $patientId = $request->input('patient_id');
-        $patients = Auth::user()->patients; // Needed for re-rendering the dropdown
+        $patients = Auth::user()->patients;
         $selectedPatient = Patient::find($patientId);
         $adlData = null;
 
         if ($selectedPatient) {
-            // Set the new patient ID in the session
             $request->session()->put('selected_patient_id', $patientId);
 
-            // --- MODIFIED LOGIC ---
-            // 1. Default to the patient's admission date and Day 1
-            $defaultDate = $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d');
-            $defaultDayNo = 1;
+            // 1. Determine Date and Day No
+            // Prioritize values from the AJAX request (used by date-day-loader.js), 
+            // otherwise fall back to session, then patient admission date.
+            $date = $request->input('date') ?? $request->session()->get('selected_date');
+            $dayNo = $request->input('day_no') ?? $request->session()->get('selected_day_no');
 
-            // 2. Store these new defaults in the session so the view uses them
-            $request->session()->put('selected_date', $defaultDate);
-            $request->session()->put('selected_day_no', $defaultDayNo);
+            // If a patient is newly selected (i.e., no date/day in session/request), reset to admission date and day 1
+            if (!$date || !$dayNo) {
+                $date = $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d');
+                $dayNo = 1;
+            }
 
-            // 3. Attempt to fetch the ADL record for these new defaults
-            $adlData = ActOfDailyLiving::where('patient_id', $patientId)
-                ->where('date', $defaultDate)
-                ->where('day_no', $defaultDayNo)
-                ->first();
-            // --- END MODIFIED LOGIC ---
+            // 2. Store the determined date/day selection in the session
+            $request->session()->put('selected_date', $date);
+            $request->session()->put('selected_day_no', $dayNo);
+
+            // 3. Fetch the ADL record for the selected patient/date/day
+            // This is where the data from SQL is loaded based on the selected date/day
+            $adlData = $this->getAdlRecord($patientId, $date, $dayNo);
+
+            // 4. Run CDSS analysis on fetched data to display alerts immediately (as requested)
+            $alerts = [];
+            if ($adlData) {
+                // Ensure the data is an array for analysis
+                $cdssService = new \App\Services\AdlCdssService();
+                $alerts = $cdssService->analyzeFindings($adlData->toArray());
+            }
+            $request->session()->flash('cdss', $alerts);
 
         } else {
-            // If for some reason the patient isn't found, clear the session
+            // If patient isn't found, clear the session
             $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
         }
 
-        // This view is returned via AJAX. The JS will extract the #form-content-container
+        // Return the rendered view. JS extracts the #form-content-container from this.
         return view('act-of-daily-living', [
             'patients' => $patients,
             'adlData' => $adlData,
@@ -56,19 +83,7 @@ class ActOfDailyLivingController extends Controller
     }
 
     /**
-     * Handles form submission from date/day changes for a full page reload.
-     */
-    public function selectDateAndDay(Request $request)
-    {
-        $request->session()->put('selected_patient_id', $request->input('patient_id'));
-        $request->session()->put('selected_date', $request->input('date'));
-        $request->session()->put('selected_day_no', $request->input('day_no'));
-
-        return redirect()->route('adl.show');
-    }
-
-    /**
-     * Displays the initial page or the page after a date/day change.
+     * Displays the initial page, loading data based on session state.
      */
     public function show(Request $request)
     {
@@ -82,11 +97,15 @@ class ActOfDailyLivingController extends Controller
 
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
-            if ($selectedPatient && $date && $dayNo) {
-                $adlData = ActOfDailyLiving::where('patient_id', $patientId)
-                    ->where('date', $date)
-                    ->where('day_no', $dayNo)
-                    ->first();
+            if ($selectedPatient) {
+                // Ensure default date is set if patient is selected but date/day is missing (e.g., initial load)
+                if (!$date || !$dayNo) {
+                    $date = $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d');
+                    $dayNo = 1;
+                    $request->session()->put('selected_date', $date);
+                    $request->session()->put('selected_day_no', $dayNo);
+                }
+                $adlData = $this->getAdlRecord($patientId, $date, $dayNo);
             }
         }
 
@@ -107,15 +126,18 @@ class ActOfDailyLivingController extends Controller
             'finding' => 'nullable|string',
         ]);
 
-        $cdssService = new CdssService('adl_rules');
+        $cdssService = new \App\Services\AdlCdssService();
 
-        // This method should exist in your CdssService to analyze one field
         $alert = $cdssService->analyzeSingleFinding($data['fieldName'], $data['finding'] ?? '');
 
         return response()->json($alert);
     }
 
-    //-----------------OLD---------------
+    // The store and runCdssAnalysis methods are omitted here as they remain unchanged 
+    // from the user's provided context but should be included in the final file.
+
+    // The store and runCdssAnalysis methods remain largely the same,
+    // but the CDSS analysis now uses the updated AdlCdssService.
     public function store(Request $request)
     {
         $request->validate([
@@ -179,8 +201,14 @@ class ActOfDailyLivingController extends Controller
 
         // Run CDSS Analysis
         $filteredData = array_filter($validatedData);
-        $cdssService = new CdssService('adl_rules');
+        $cdssService = new \App\Services\AdlCdssService(); // Use the dedicated service
         $alerts = $cdssService->analyzeFindings($filteredData);
+
+        // Update session with current data for a seamless post-submission view
+        $request->session()->put('selected_patient_id', $validatedData['patient_id']);
+        $request->session()->put('selected_date', $validatedData['date']);
+        $request->session()->put('selected_day_no', $validatedData['day_no']);
+
 
         return redirect()->route('adl.show')
             ->with('cdss', $alerts)
@@ -209,7 +237,7 @@ class ActOfDailyLivingController extends Controller
             $validatedData
         );
 
-        $cdssService = new CdssService('adl_rules');
+        $cdssService = new \App\Services\AdlCdssService(); // Use the dedicated service
         $analysisResults = $cdssService->analyzeFindings($adl->toArray());
 
         return redirect()->route('adl.show', [
@@ -218,8 +246,5 @@ class ActOfDailyLivingController extends Controller
         ])->with('cdss', $analysisResults)
             ->with('success', 'CDSS Analysis complete!');
     }
-    //-----------------OLD---------------
 
 }
-
-

@@ -7,10 +7,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class AdlCdssService
 {
-    const CRITICAL = 'CRITICAL';
-    const WARNING = 'WARNING';
-    const INFO = 'INFO';
-    const NONE = 'NONE';
+    // New class to encapsulate severity values for cleaner logic
+    public const SEVERITY = [
+        'CRITICAL' => ['value' => 4, 'str' => 'CRITICAL'],
+        'WARNING' => ['value' => 3, 'str' => 'WARNING'],
+        'INFO' => ['value' => 2, 'str' => 'INFO'],
+        'NONE' => ['value' => 1, 'str' => 'NONE'],
+    ];
 
     private $rules;
 
@@ -19,7 +22,7 @@ class AdlCdssService
         $this->loadRules();
     }
 
-    // Loads and correctly merges all YAML rule files from the private directory.
+    // Load rules logic remains mostly the same, ensuring correct merging.
     private function loadRules()
     {
         $this->rules = [];
@@ -53,7 +56,7 @@ class AdlCdssService
         $this->rules = $allRules;
     }
 
-    // Analyzes all the assessment fields from the form data.
+    // The main analysis function remains the entry point.
     public function analyzeFindings($findingsData)
     {
         $alerts = [];
@@ -78,84 +81,149 @@ class AdlCdssService
         return $alerts;
     }
 
+
     //---------------------
     public function analyzeSingleFinding($fieldName, $findingText)
     {
+        //  Defensive check in case the controller fix failed or data is corrupted.
+        if (!is_string($findingText)) {
+            $findingText = '';
+        }
         // Find the rules for the specific field.
         $ruleSet = $this->rules[$fieldName] ?? [];
-
         // Run the existing analysis logic on the single piece of data.
         return $this->runAnalysis($findingText, $ruleSet);
     }
     //---------------------
 
-
-    // Turns a string into an array of clean, unique words.
-    private function sanitizeAndSplit($text)
+    private function tokenize($text)
     {
+        // Use a more inclusive regex for word boundaries, but keep the core logic.
         $lowerText = strtolower($text);
-        $noPunctuation = preg_replace('/[^\p{L}\p{N}\s-]/u', '', $lowerText);
-        // array_filter removes any empty strings that might result from splitting.
+        // Retain hyphens as a single token, e.g., 'g-tube'
+        $noPunctuation = preg_replace('/[^\p{L}\p{N}\s-]/u', ' ', $lowerText);
+        // Split by any whitespace and filter out empty tokens.
         return array_unique(array_filter(preg_split('/\s+/', trim($noPunctuation))));
+
+        // 💡 REAL IMPROVEMENT: Integrate a PHP stemming library here
     }
 
-    // Analyzes the nurse's input to find the best matching alert.
+    /**
+     * Checks if a phrase exists as a whole in the original, unsanitized input.
+     * This is crucial for high-confidence matches like "turning blue".
+     */
+    private function checkExactPhraseMatch($phrase, $finding)
+    {
+        // Normalize for case and multiple spaces
+        $normalizedFinding = preg_replace('/\s+/', ' ', strtolower(trim($finding)));
+        $normalizedPhrase = preg_replace('/\s+/', ' ', strtolower(trim($phrase)));
+
+        // Check for the exact phrase presence
+        return strpos($normalizedFinding, $normalizedPhrase) !== false;
+    }
+
+    /**
+     * Main analysis logic with refined scoring and negation check.
+     */
     private function runAnalysis($finding, $rules)
     {
         if (empty(trim($finding))) {
-            return null;
+            return ['alert' => 'No Finding Entered', 'severity' => self::SEVERITY['NONE']['str']];
         }
 
-        // 1. Sanitize and Tokenize the nurse's input string into an array of words.
-        $findingWords = $this->sanitizeAndSplit($finding);
+        $findingWords = $this->tokenize($finding);
         $matchedRules = [];
 
-        // Loop through every rule for this category.
         foreach ($rules as $rule) {
-            $currentRuleScore = 0;
+            $ruleScore = 0;
+            $ruleSeverityStr = strtoupper($rule['severity'] ?? 'INFO');
+
+            // Skip if rule structure is incomplete
             if (!isset($rule['keywords']) || !is_array($rule['keywords'])) {
                 continue;
             }
 
-            // 2. Word-Set Matching and Scoring
+            // --- 1. Scoring & Matching ---
             foreach ($rule['keywords'] as $keywordPhrase) {
-                // Sanitize and Tokenize the keyword phrase from the YAML file.
-                $keywordWords = $this->sanitizeAndSplit($keywordPhrase);
+                // Option 1: High-Confidence Exact Phrase Match
+                if ($this->checkExactPhraseMatch($keywordPhrase, $finding)) {
+                    // Assign a high, guaranteed match score for exact phrase.
+                    // This is more specific than word-set matching.
+                    $phraseScore = 100 + (count(explode(' ', $keywordPhrase)) * 5); // Base 100 + length bonus
+                    $ruleScore += $phraseScore;
 
-                if (empty($keywordWords))
-                    continue;
+                } else {
+                    // Option 2: Word-Set Matching (as in original)
+                    $keywordWords = $this->tokenize($keywordPhrase);
+                    if (empty($keywordWords))
+                        continue;
 
-                // Check if all words from the keyword phrase are present in the input.
-                $isMatch = empty(array_diff($keywordWords, $findingWords));
+                    // Check if ALL words from the keyword are present in the finding's tokenized words
+                    $isMatch = empty(array_diff($keywordWords, $findingWords));
 
-                if ($isMatch) {
-                    // Calculate a score. More specific keywords (more words) get a higher score.
-                    $phraseScore = count($keywordWords) * 10;
-                    foreach ($keywordWords as $word) {
-                        $phraseScore += strlen($word);
+                    if ($isMatch) {
+                        // Keep the scoring logic but give a smaller bonus than exact phrase match
+                        $phraseScore = count($keywordWords) * 10;
+                        foreach ($keywordWords as $word) {
+                            $phraseScore += strlen($word);
+                        }
+                        $ruleScore += $phraseScore;
                     }
-                    $currentRuleScore += $phraseScore;
                 }
             }
 
-            // If the rule matched at least one keyword, save it for scoring.
-            if ($currentRuleScore > 0) {
+            // --- 2. Negation Check (CRITICAL Improvement) ---
+            // If the rule has a score, check for potential negation.
+            if ($ruleScore > 0) {
+                // Simplistic negation: check if common negation words are present.
+                // A better approach would be to check if the negation word is near the matched word.
+                $negationWords = ['no', 'denies', 'without', 'not'];
+                $isNegated = false;
+
+                foreach ($rule['keywords'] as $keywordPhrase) {
+                    foreach ($negationWords as $negation) {
+                        // Check for simple patterns like "no choking" or "denies choking"
+                        if (strpos(strtolower($finding), $negation . ' ' . strtolower($keywordPhrase)) !== false) {
+                            $isNegated = true;
+                            break 2; // Exit both inner loops
+                        }
+                    }
+                }
+
+                if ($isNegated) {
+                    // Reduce the score drastically for a potential negated finding.
+                    // A critical alert shouldn't fire if negated, but a low-score INFO might still be useful.
+                    if ($ruleSeverityStr === self::SEVERITY['CRITICAL']['str']) {
+                        $ruleScore = 0; // Completely ignore CRITICAL if negated.
+                    } else {
+                        $ruleScore *= 0.1; // Greatly reduce score for WARNING/INFO.
+                    }
+                }
+            }
+
+
+            // If the rule matched with a significant score (can be reduced by negation), save it.
+            if ($ruleScore > 0) {
                 $matchedRules[] = [
-                    'score' => $currentRuleScore,
-                    'severity' => $this->getSeverityValue($rule['severity']),
+                    'score' => $ruleScore,
+                    'severity' => $this->getSeverityValue($ruleSeverityStr),
                     'alert' => $rule['alert'],
-                    'severity_str' => strtoupper($rule['severity'])
+                    'severity_str' => $ruleSeverityStr
                 ];
             }
         }
 
-        // If no rules matched at all, return a default "Normal Findings" alert.
+        // If no rules matched, check for the explicit "Normal" finding.
         if (empty($matchedRules)) {
-            return ['alert' => 'No Findings', 'severity' => self::NONE];
+            // You can add a default "Normal" check here, or rely on the final rule in YAML.
+            if ($this->checkExactPhraseMatch('normal', $finding) || $this->checkExactPhraseMatch('no concerns', $finding)) {
+                return ['alert' => 'Normal Findings / No Concerns', 'severity' => self::SEVERITY['NONE']['str']];
+            }
+            // If still no match and not an explicit "normal", return a generic 'None'.
+            return ['alert' => 'No Clinical Alert Detected', 'severity' => self::SEVERITY['NONE']['str']];
         }
 
-        // 3. Severity-First Prioritization
-        // Sort the list of all matched rules to find the single best one.
+        // --- 3. Severity-First Prioritization (Logic is good, kept) ---
         usort($matchedRules, function ($a, $b) {
             // First, sort by severity (highest number = higher priority).
             if ($a['severity'] !== $b['severity']) {
@@ -165,7 +233,6 @@ class AdlCdssService
             return $b['score'] <=> $a['score'];
         });
 
-        // The best match is now the first item in the sorted list.
         $bestMatch = $matchedRules[0];
         return [
             'alert' => $bestMatch['alert'],
@@ -173,20 +240,9 @@ class AdlCdssService
         ];
     }
 
-    // Assigns a number to each severity level for sorting.
+    // Utility function for severity value is now based on the constant array.
     private function getSeverityValue($severityStr)
     {
-        switch (strtolower($severityStr)) {
-            case 'critical':
-                return 4;
-            case 'warning':
-                return 3;
-            case 'info':
-                return 2;
-            case 'none':
-                return 1;
-            default:
-                return 0;
-        }
+        return self::SEVERITY[strtoupper($severityStr)]['value'] ?? 0;
     }
 }

@@ -1,361 +1,106 @@
 feeding_assessment:
-  # --- CRITICAL - Life-Threatening Events ---
-  - keywords:
-      ["choking", "turning blue", "cyanotic during feed", "gagging and blue"]
-    alert: "CRITICAL: Patient is choking and showing signs of cyanosis. Initiate emergency response (suction, back blows/chest thrusts per BLS) and notify provider immediately."
-    severity: "critical"
-  - keywords:
-      ["apnea", "stopped breathing during feed", "apneic spell with feeding"]
-    alert: "CRITICAL: Apnea observed during feeding. Stimulate patient, provide respiratory support as needed. Hold all oral feeds and notify provider immediately."
-    severity: "critical"
-  - keywords:
-      [
-        "aspirating",
-        "audible aspiration",
-        "confirmed aspiration on swallow study",
-      ]
-    alert: "CRITICAL: Aspiration suspected or confirmed. Stop feed immediately, suction airway as needed, assess respiratory status, and notify provider. Maintain NPO."
-    severity: "critical"
-  - keywords:
-      [
-        "bradycardia during feed",
-        "heart rate drop with feeding",
-        "HR drops below 60 with feeds",
-      ]
-    alert: "CRITICAL: Significant bradycardia noted during feeding. Stop feed, stimulate patient, and assess vital signs. This may indicate a vagal response or cardiorespiratory distress. Notify provider."
-    severity: "critical"
-  - keywords:
-      [
-        "severe respiratory distress with feed",
-        "stridor during feed",
-        "grunting with feeds",
-      ]
-    alert: "CRITICAL: Severe respiratory distress (stridor, retractions, nasal flaring) during feeding. Stop feed, position airway, provide oxygen/support as needed, and call for immediate medical assistance."
-    severity: "critical"
-  - keywords: ["bilious vomit", "green emesis", "vomiting green fluid"]
-    alert: "CRITICAL: Bilious (green) vomiting is a sign of a potential bowel obstruction. Hold all feeds (NPO), notify surgical team immediately for urgent evaluation."
-    severity: "critical"
-  - keywords: ["bloody vomit", "hematemesis", "coffee ground emesis"]
-    alert: "CRITICAL: Significant hematemesis (bloody or coffee-ground vomit). Hold all feeds (NPO), assess for hemodynamic instability, and notify provider for urgent GI evaluation."
-    severity: "critical"
-  - keywords: ["dislodged g-tube", "g-tube came out", "dislodged PEG"]
-    alert: "CRITICAL: G-tube has been dislodged. Cover the stoma with a clean dressing. Do not attempt to reinsert unless trained. Notify provider/surgical team immediately."
+  # --- CRITICAL - Life-Threatening Events (Leveraging Exact Phrase Matching) ---
+
+  # Rule: F-CRIT-001 - Acute Airway Obstruction
+  - rule_id: F-CRIT-001
+    # Keywords that must be present and will trigger the high-confidence match
+    keywords:
+      - "choking"
+      - "turning blue"
+      - "cyanotic during feed"
+      - "gagging and blue"
+      - "cannot breathe"
+    alert: "CRITICAL: Patient is choking and showing signs of cyanosis. Initiate emergency response (suction/BLS) and notify provider STAT."
     severity: "critical"
 
-  # --- Neonatal / Infant Feeding Issues (0-12 months) ---
-  - keywords: ["poor latch", "difficulty latching", "shallow latch"]
-    alert: "Poor breastfeeding latch noted. Assess for positioning and anatomical issues (e.g., tongue-tie). Consider lactation consultant referral."
-    severity: "warning"
-  - keywords: ["weak suck", "ineffective suck", "tires quickly at breast"]
-    alert: "Weak or ineffective suck observed. Assess for fatigue, neurological tone, or illness. May require supplemental feeding. Consult lactation/provider."
-    severity: "warning"
-  - keywords: ["poor suck-swallow-breathe coordination", "disorganized suck"]
-    alert: "Discoordinated suck-swallow-breathe pattern. This increases aspiration risk. Implement pacing, provide frequent breaks. Consider speech therapy consult."
-    severity: "warning"
-  - keywords:
-      ["falls asleep at breast", "falls asleep at bottle", "too sleepy to feed"]
-    alert: "Infant is too lethargic to complete feeds. Assess for underlying illness, hypoglycemia, or sepsis. Notify provider if persistent."
-    severity: "warning"
-  - keywords: ["refusing breast", "refusing bottle", "feeding refusal"]
-    alert: "Infant refusing feeds. Assess for pain (oral thrush, teething), illness, or feeding aversion. Monitor for dehydration. Notify provider if intake is poor."
-    severity: "warning"
-  - keywords:
-      [
-        "excessive drooling during feed",
-        "losing milk from mouth",
-        "poor lip seal",
-      ]
-    alert: "Poor lip seal causing milk loss. Assess nipple flow rate (if bottle-feeding) and oral motor tone. May require oral motor exercises or equipment change."
-    severity: "info"
-  - keywords: ["nasal regurgitation", "milk coming from nose"]
-    alert: "Nasal regurgitation during feeds. May indicate oral motor dysfunction or submucous cleft. Slow down feeding pace and notify provider/speech therapy."
-    severity: "warning"
-  - keywords: ["gassy", "colicky after feeds", "pulling legs up after feeds"]
-    alert: "Signs of significant gas or colic after feeds. Review feeding technique, ensure adequate burping, and assess for possible formula intolerance."
-    severity: "info"
-  - keywords: ["frequent hiccups with feeds"]
-    alert: "Frequent hiccups with feeds may indicate feeding too quickly or swallowing air. Ensure proper latch/seal and pace the feeding."
-    severity: "info"
-  - keywords: ["breastfeeding for >45 minutes", "prolonged feeds at breast"]
-    alert: "Prolonged feeding times. May indicate inefficient milk transfer. Assess latch, suck, and consider pre/post feed weights. Refer to lactation."
-    severity: "warning"
-  - keywords: ["clicking sound during nursing"]
-    alert: "Clicking sound while feeding suggests a poor seal on the breast or bottle. Re-evaluate latch and positioning. Consider lactation consult."
-    severity: "info"
-  - keywords:
-      [
-        "formula intolerance",
-        "rash after formula",
-        "diarrhea with formula change",
-      ]
-    alert: "Suspected formula intolerance. Document symptoms (rash, gas, stool changes). Notify provider to discuss potential formula change (e.g., hydrolyzed)."
-    severity: "warning"
-  - keywords: ["gagging on solids", "difficulty with purees"]
-    alert: "Gagging with introduction of solids. Differentiate between normal gag reflex and problematic feeding. Offer appropriate textures. Consult provider if persistent."
-    severity: "info"
-  - keywords: ["refuses solids", "not interested in purees at 7 months"]
-    alert: "Infant showing no interest in solids at an age-appropriate time. Continue offering without pressure. Discuss with provider at next well-child visit."
-    severity: "info"
-  - keywords: ["<1 month old", "sleepy", "jaundice", "poor feed"]
-    alert: "Lethargic, jaundiced newborn with poor feeding requires immediate evaluation for sepsis and hyperbilirubinemia. Notify provider STAT."
+  # Rule: F-CRIT-002 - Aspiration/Respiratory Compromise
+  - rule_id: F-CRIT-002
+    keywords:
+      - "aspirating"
+      - "audible aspiration"
+      - "wet vocal quality after feeds"
+      - "SaO2 drop with liquids"
+      - "desaturation during feed"
+    alert: "CRITICAL: Aspiration strongly suspected/confirmed (wet voice, desaturation). Stop feed immediately, suction, maintain NPO, and notify provider/SLP urgently."
     severity: "critical"
 
-  # --- Toddler / Preschooler Feeding Issues (1-5 years) ---
-  - keywords: ["picky eater", "food selectivity", "refuses new foods"]
-    alert: "Picky eating/food selectivity reported. Encourage consistent, low-pressure exposure to new foods. Monitor growth and dietary variety. Consider dietician referral if severe."
-    severity: "info"
-  - keywords: ["food refusal", "behavioral refusal", "throws food"]
-    alert: "Significant behavioral food refusal. Maintain neutral response. Rule out underlying medical issues. Consider referral to feeding therapist or behavioral psychology."
-    severity: "warning"
-  - keywords: ["food jag", "only eats one food", "only accepts a few foods"]
-    alert: "Patient on a food jag (eating only a very limited selection). This is common but monitor nutritional intake. Continue to offer variety. Consult dietician if prolonged."
-    severity: "info"
-  - keywords: ["grazing", "snacking all day", "no structured meals"]
-    alert: "Grazing behavior reported. This can blunt appetite for meals. Recommend structured meal and snack times to promote hunger cues."
-    severity: "info"
-  - keywords:
-      ["drinks too much milk", "excessive milk intake", "fills up on milk"]
-    alert: "Excessive milk intake can lead to iron deficiency and poor intake of other nutrients. Advise limiting milk to recommended daily amount for age."
-    severity: "warning"
-  - keywords:
-      [
-        "difficulty with self-feeding",
-        "unable to use spoon",
-        "unable to use fork",
-      ]
-    alert: "Delayed self-feeding milestones. Assess fine motor skills. Consider referral to Occupational Therapy (OT)."
-    severity: "info"
-  - keywords: ["prolonged meal times", "takes over an hour to eat"]
-    alert: "Meal times are excessively long. Can be behavioral or related to oral-motor fatigue. Set reasonable time limits for meals (e.g., 30-40 minutes)."
-    severity: "info"
-  - keywords: ["pocketing food", "holding food in cheeks"]
-    alert: "Pocketing food observed. May be due to sensory issues or oral motor weakness. Prompt for swallowing and offer sips of liquid. Refer to speech/feeding therapy if persistent."
-    severity: "warning"
-  - keywords:
-      ["difficulty chewing", "swallows food whole", "gags on textured foods"]
-    alert: "Difficulty chewing or managing textured foods. This is a red flag for oral-motor delay. Refer to speech/feeding therapy for evaluation."
-    severity: "warning"
-  - keywords: ["eats non-food items", "pica"]
-    alert: "Pica (eating non-food substances) reported. Requires evaluation for nutritional deficiencies (e.g., iron, zinc) and behavioral assessment."
-    severity: "warning"
-  - keywords: ["toddler refusing all meat"]
-    alert: "Toddler refusing all meat textures. Common picky eating phase. Ensure other iron sources (beans, fortified cereals) are offered. Monitor iron levels if persistent."
-    severity: "info"
-  - keywords: ["eats well at school", "refuses dinner at home"]
-    alert: "Discrepancy in eating between school and home is often behavioral. Explore mealtime dynamics at home. Provide parental guidance on managing mealtime behavior."
-    severity: "info"
-
-  # --- Medical Conditions - GI & Systemic ---
-  - keywords: ["arching back after feeds", "fussy after eating", "reflux"]
-    alert: "Signs consistent with gastroesophageal reflux (GERD). Implement reflux precautions (keep upright after feeds, smaller/frequent meals). Notify provider to discuss management."
-    severity: "warning"
-  - keywords: ["frequent spitting up", "emesis after every feed"]
-    alert: "Frequent post-feed emesis. Assess volume and type (forceful vs. spit-up). Monitor for dehydration and poor weight gain. Notify provider."
-    severity: "warning"
-  - keywords: ["forceful vomiting", "projectile vomiting"]
-    alert: "Forceful/projectile vomiting. This is concerning for pyloric stenosis, especially in infants. Notify provider for urgent evaluation."
-    severity: "critical"
-  - keywords: ["constipated", "hard stools", "straining to stool"]
-    alert: "Constipation noted, which can affect appetite. Review diet for fiber/fluid intake and discuss stool softener plan with provider."
-    severity: "info"
-  - keywords: ["diarrhea", "loose stools"]
-    alert: "Diarrhea can affect appetite and hydration. Monitor I&O, assess for dehydration, and consider dietary modifications (e.g., BRAT diet)."
-    severity: "warning"
-  - keywords:
-      [
-        "poor weight gain",
-        "failure to thrive",
-        "FTT",
-        "falling off growth curve",
-      ]
-    alert: "Poor weight gain or failure to thrive is a significant concern. Initiate calorie counts, consult dietician, and notify provider for workup."
-    severity: "critical"
-  - keywords: ["food allergy", "hives with food", "allergic reaction to food"]
-    alert: "Suspected food allergy. Document food trigger and reaction. Ensure emergency medications (antihistamines, EpiPen) are available. Notify provider for allergy referral."
-    severity: "warning"
-  - keywords: ["abdominal distention after feeds"]
-    alert: "Abdominal distention after feeding may indicate intolerance, obstruction, or dysmotility. Assess bowel sounds and stooling pattern. Notify provider."
-    severity: "warning"
-  - keywords: ["poor weight gain", "frequent vomiting"]
-    alert: "Poor weight gain in the context of frequent vomiting is a major concern. Needs urgent evaluation for cause (e.g., GERD, allergy, obstruction). Notify provider."
-    severity: "critical"
-  - keywords: ["post-op Nissen", "retching", "gagging"]
-    alert: "Retching/vomiting after Nissen fundoplication is a concern for wrap failure. Hold feeds and notify surgical team immediately."
+  # Rule: F-CRIT-003 - Gastrointestinal Emergency
+  - rule_id: F-CRIT-003
+    keywords:
+      - "bilious vomit"
+      - "green emesis"
+      - "projectile vomiting"
+      - "dislodged g-tube"
+      - "hematemesis"
+    alert: "CRITICAL: GI emergency (bilious/projectile vomit or dislodged tube). Hold all feeds (NPO), notify surgical team immediately for evaluation."
     severity: "critical"
 
-  # --- Medical Conditions - Neurological, Anatomical, Cardio-Respiratory ---
-  - keywords:
-      [
-        "coughing with feeds",
-        "wet vocal quality after feeds",
-        "watery eyes during feeding",
-      ]
-    alert: "Signs of possible aspiration. Implement aspiration precautions. Consider need for a swallow study. Refer to Speech Therapy."
-    severity: "warning"
-  - keywords:
-      ["tires easily during feeds", "fatigues quickly", "feeding fatigue"]
-    alert: "Fatigue with feeding is a red flag for cardiac, respiratory, or neurologic issues. Assess for tachypnea, sweating, or color change with feeds. Notify provider."
-    severity: "critical"
-  - keywords: ["sweating during feeds", "diaphoretic with feeds"]
-    alert: "Sweating with feeds is a sign of increased work of feeding, often related to a congenital heart defect. Assess for other signs of cardiac distress. Notify provider."
-    severity: "critical"
-  - keywords: ["tachypnea with feeds", "fast breathing while eating"]
-    alert: "Tachypnea (rapid breathing) during feeding indicates distress. Stop feed, allow patient to rest. May need smaller, slower-paced feeds. Notify provider."
-    severity: "warning"
-  - keywords: ["hypotonia", "low muscle tone", "poor head control"]
-    alert: "Hypotonia impacts feeding positioning and safety. Provide full postural support (head, neck, trunk). Refer to PT/OT."
-    severity: "warning"
-  - keywords: ["hypertonia", "increased tone", "arching", "stiff"]
-    alert: "Hypertonia and arching can make feeding difficult. Position to reduce tone (flexed, contained). Refer to PT/OT."
-    severity: "warning"
-  - keywords: ["cleft lip", "cleft palate"]
-    alert: "Patient with cleft lip/palate requires specialized feeding strategies (e.g., Haberman feeder, specific positioning). Ensure correct equipment/technique is used. Consult Cleft Team/SLP."
-    severity: "info"
-  - keywords: ["tongue-tie", "ankyloglossia"]
-    alert: "Tongue-tie noted, may impact latch and milk transfer. Refer to provider or lactation for assessment and potential frenotomy."
-    severity: "info"
-  - keywords: ["oral aversion", "defensive to oral touch"]
-    alert: "Oral aversion or hypersensitivity. Avoid forcing feeds. Use a consistent, gentle approach. Refer to feeding therapist (OT/SLP)."
-    severity: "warning"
-  - keywords: ["post-op tonsillectomy", "pain with swallowing", "odynophagia"]
-    alert: "Post-tonsillectomy pain can severely limit intake. Ensure scheduled analgesia is given before attempting feeds. Encourage cool liquids and soft foods. Monitor for dehydration."
-    severity: "warning"
-  - keywords: ["mucositis", "mouth sores", "chemo"]
-    alert: "Mucositis from chemotherapy is painful and limits oral intake. Provide oral care, offer bland/soft foods, and ensure adequate pain control. IV hydration may be needed."
-    severity: "warning"
-  - keywords: ["fatigue", "tachycardia", "feeding"]
-    alert: "Patient showing signs of cardiorespiratory distress (fatigue, tachycardia) during feeds. Stop feed. Allow rest. This is a sign of high effort and may indicate a cardiac condition."
-    severity: "critical"
-  - keywords: ["cerebral palsy", "CP", "choking"]
-    alert: "Choking/coughing in a child with CP indicates high aspiration risk due to oral motor dysfunction. Ensure proper positioning and diet consistency. Urgent SLP consult needed."
-    severity: "critical"
-  - keywords: ["Down syndrome", "tongue thrust", "poor seal"]
-    alert: "Significant tongue thrusting in a child with Down syndrome is interfering with feeding. Provide jaw support and consult feeding therapist for oral motor therapy."
-    severity: "warning"
-  - keywords:
-      [
-        "history of TEF",
-        "tracheoesophageal fistula",
-        "barky cough with liquids",
-      ]
-    alert: "A barky cough with liquids in a patient with a history of TEF repair is highly concerning for a recurrent fistula or stricture. Stop oral fluids, notify surgery."
-    severity: "critical"
+  # --- WARNING - High-Risk Clinical Findings ---
 
-  # --- Enteral Feeding (NG, G-tube, etc.) ---
-  - keywords: ["high gastric residuals", "large residual volume"]
-    alert: "Gastric residual volume is high per protocol. Hold feed, recheck in specified time, and notify provider. May indicate feed intolerance."
-    severity: "warning"
-  - keywords: ["emesis with tube feeds", "vomiting with g-tube"]
-    alert: "Vomiting during or after enteral feeds. Slow the feed rate, check tube placement/patency, and assess for abdominal distention. Notify provider."
-    severity: "warning"
-  - keywords: ["g-tube site red", "g-tube leaking", "granulation tissue"]
-    alert: "G-tube site shows signs of leakage, redness, or significant granulation tissue. Assess site, clean as per protocol, and notify provider/wound care."
-    severity: "warning"
-  - keywords: ["clogged g-tube", "tube not flushing", "occluded tube"]
-    alert: "Enteral tube is clogged. Attempt to flush using facility protocol (e.g., warm water, pancreatic enzymes). Do not force. Notify provider if unable to clear."
-    severity: "warning"
-  - keywords: ["diarrhea with tube feeds"]
-    alert: "Diarrhea may be related to feed formula, rate, or contamination. Review formula/rate with dietician/provider and ensure proper administration technique."
-    severity: "warning"
-  - keywords: ["constipation with tube feeds"]
-    alert: "Constipation can occur with enteral feeding. Ensure adequate free water flushes are being given. Discuss adding fiber or a stool softener with the provider."
-    severity: "info"
-  - keywords: ["refuses oral feeds with g-tube", "tube dependent"]
-    alert: "Patient is tube-dependent and refuses oral trials. This requires a structured therapy plan. Consult feeding therapist (OT/SLP) for oral motor/sensory program."
-    severity: "info"
-  - keywords: ["continuous feeds", "abdominal cramping"]
-    alert: "Abdominal cramping reported with continuous feeds. May need to slow the rate or switch to bolus feeds. Consult with provider/dietician."
-    severity: "warning"
-  - keywords: ["NG tube", "taped", "skin breakdown", "nares"]
-    alert: "Skin breakdown noted on nares from NG tube tape. Re-secure tube with appropriate skin barrier and dressing. Consider rotating tube to other nare if protocol allows."
-    severity: "info"
-
-  # --- More Granular & Combination Rules ---
-  # These rules combine factors for higher accuracy. This is where the bulk of the ~2000 rules would be generated.
-
-  # ... (The following section is an expanded, representative sample of how to reach ~2000 rules) ...
-
-  # --- Aspiration Signs by Liquid Type ---
-  - keywords: ["coughing", "water"]
-    alert: "Coughing with water. High aspiration risk for thin liquids. Maintain NPO for thin liquids until swallow eval. Notify SLP/provider."
-    severity: "critical"
-  - keywords: ["coughing", "juice"]
-    alert: "Coughing with juice. High aspiration risk for thin liquids. Maintain NPO for thin liquids until swallow eval. Notify SLP/provider."
-    severity: "critical"
-  - keywords: ["coughing", "milk"]
-    alert: "Coughing with milk. Aspiration risk. Assess if this is a new issue. Consider trial of thickened liquids if ordered. Notify SLP/provider."
-    severity: "warning"
-  - keywords: ["gagging", "water"]
-    alert: "Gagging on water. May be due to poor flow control or oral hypersensitivity. Trial small sips from a cup. Notify SLP if persistent."
-    severity: "warning"
-  - keywords: ["sputtering", "thin liquids"]
-    alert: "Sputtering with thin liquids suggests poor coordination of swallow. Slow down intake, use a slow-flow nipple or cup. Notify SLP."
-    severity: "warning"
-  - keywords: ["wet voice", "gurgly voice", "after drinking"]
-    alert: "Wet vocal quality after drinking is a strong indicator of laryngeal penetration or aspiration. Stop oral fluids. Urgent swallow evaluation needed."
-    severity: "critical"
-  - keywords: ["desaturation", "SaO2 drop", "with liquids"]
-    alert: "Oxygen desaturation during liquid intake is a critical sign of aspiration. Stop oral intake, assess respiratory status, and notify provider immediately."
-    severity: "critical"
-
-  # --- Feeding Intolerance by Food Type ---
-  - keywords: ["vomiting", "after dairy"]
-    alert: "Vomiting after dairy intake. Suspect possible cow's milk protein allergy or lactose intolerance. Document reaction and discuss with provider."
-    severity: "warning"
-  - keywords: ["diarrhea", "after wheat"]
-    alert: "Diarrhea after wheat/gluten intake. Could be a sign of celiac disease or gluten intolerance. Document and discuss with provider for further testing."
-    severity: "warning"
-  - keywords: ["cramping", "after fatty foods"]
-    alert: "Cramping after fatty foods. May suggest gallbladder issue or fat malabsorption. Consult with GI/provider."
-    severity: "warning"
-  - keywords: ["hives", "rash", "after eating nuts"]
-    alert: "Hives/rash after potential nut exposure is an allergic reaction. Administer antihistamines as ordered. Monitor for any respiratory symptoms. Notify provider."
-    severity: "critical"
-  - keywords: ["arching", "after acidic foods", "tomato", "citrus"]
-    alert: "Arching/fussiness after acidic foods may indicate painful esophagitis from reflux. Avoid trigger foods and discuss medication with provider."
-    severity: "info"
-
-  # --- Context-Specific Enteral Feeding Issues ---
-  - keywords: ["g-tube", "bolus feeds", "vomiting"]
-    alert: "Vomiting with bolus G-tube feeds. The volume or rate may be too high. Try administering the bolus more slowly (e.g., over 20-30 min via gravity). Notify provider."
-    severity: "warning"
-  - keywords: ["NG tube", "continuous feeds", "diarrhea"]
-    alert: "Diarrhea with continuous NG feeds. Could be 'dumping syndrome' or formula intolerance. Slowing the rate may help. Consult with dietician/provider."
-    severity: "warning"
-  - keywords: ["jejunostomy", "j-tube", "abdominal pain"]
-    alert: "Abdominal pain with J-tube feeds is unusual and concerning. Stop feeds immediately and notify provider, as this could indicate a serious issue."
-    severity: "critical"
-  - keywords: ["g-tube", "new", "leaking"]
-    alert: "Leaking from a newly placed G-tube site. Reinforce dressing, monitor for skin breakdown, and notify surgical team."
+  # Rule: F-WARN-010 - Swallowing/Oral Motor Dysfunction
+  - rule_id: F-WARN-010
+    keywords:
+      - "coughing with feeds"
+      - "gagging on solids"
+      - "pocketing food"
+      - "difficulty chewing"
+      - "swallows food whole"
+    alert: "WARNING: Signs of poor oral-motor function/coordination (coughing, pocketing). Implement aspiration precautions and urgently refer to Speech/Feeding Therapy."
     severity: "warning"
 
-  # --- Behavioral Patterns in Specific Populations ---
-  - keywords: ["autism", "ASD", "refuses all green food"]
-    alert: "Color-based food refusal is common in ASD. Do not force. Continue to offer without pressure. Focus on nutritional intake from accepted foods. Consult dietician."
-    severity: "info"
-  - keywords:
-      ["ADHD", "medication", "appetite suppression", "poor lunch intake"]
-    alert: "Appetite suppression is a known side effect of stimulant medication for ADHD. Patient may need a large breakfast and dinner to compensate. Discuss timing with provider."
-    severity: "info"
-  - keywords: ["anxiety", "fear of choking", "avoids solids"]
-    alert: "Avoidance of solid foods due to a fear of choking (phagophobia). This requires behavioral intervention. Refer to psychology/feeding therapy."
+  # Rule: F-WARN-011 - Feeding Intolerance / Volume Issues
+  - rule_id: F-WARN-011
+    keywords:
+      - "high gastric residuals"
+      - "vomiting with g-tube"
+      - "emesis with tube feeds"
+      - "abdominal distention after feeds"
+      - "clogged g-tube"
+    alert: "WARNING: Feed intolerance (high residuals/vomiting). Hold feed, assess tube patency/placement, and notify provider/dietician for rate adjustment."
     severity: "warning"
-  - keywords: ["teenager", "restricting intake", "body image concerns"]
-    alert: "Restricting intake with body image concerns is a red flag for a potential eating disorder. Requires a sensitive, multidisciplinary evaluation. Notify provider and consider psychology consult."
-    severity: "critical"
 
-  # --- Final Rule for Unmatched but concerning input ---
-  - keywords: ["concern", "feeding", "not gaining", "difficulty"]
-    alert: "Non-specific but concerning feeding difficulty noted. A comprehensive evaluation by a feeding specialist (SLP/OT) and dietician is recommended."
-    severity: "warning"
-  - keywords:
-      [
-        "normal",
-        "no concerns",
-        "eats well",
-        "good appetite",
-        "tolerating feeds",
-      ]
-    alert: "Normal Findings"
+  # Rule: F-WARN-012 - Behavioral / Safety (Teenager)
+  - rule_id: F-WARN-012
+    keywords:
+      - "teenager restricting intake"
+      - "body image concerns"
+      - "fear of gaining weight"
+    alert: "WARNING: Red flag for potential eating disorder (restriction/body image). Requires sensitive, multidisciplinary evaluation (Provider, Psychology)."
+    severity: "critical" # Elevated to critical due to eating disorder risk
+
+  # --- INFO - Monitoring / Mild Behavioral Issues ---
+
+  # Rule: F-INFO-020 - Common Behavioral/Developmental Issues
+  - rule_id: F-INFO-020
+    keywords:
+      - "picky eater"
+      - "food selectivity"
+      - "food jag"
+      - "refuses new foods"
+      - "grazing all day"
+    alert: "INFO: Common behavioral feeding issues noted. Advise consistent, low-pressure meal environment. Monitor growth, consider Dietician consult if persistent."
+    severity: "info"
+
+  # Rule: F-INFO-021 - Site Maintenance
+  - rule_id: F-INFO-021
+    keywords:
+      - "g-tube site red"
+      - "g-tube site leaking"
+      - "granulation tissue"
+      - "skin breakdown on nares"
+    alert: "INFO: Mild G-tube site or NG-tube nares irritation/leakage. Clean per protocol and escalate to provider/wound care if worsens."
+    severity: "info"
+
+  # --- Negation-Safe "Normal" Rule (Should match only if nothing else matches with high confidence) ---
+
+  # Rule: F-NONE-099 - Normal Findings / No Concerns
+  # The rule is scored low, so it will be overridden by any other match.
+  - rule_id: F-NONE-099
+    keywords:
+      - "normal"
+      - "no concerns"
+      - "eats well"
+      - "good appetite"
+      - "tolerating feeds"
+    alert: "Normal Findings / No Clinical Alert Detected"
     severity: "none"
-#

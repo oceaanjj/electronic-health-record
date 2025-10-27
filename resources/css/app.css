@@ -260,4 +260,9 @@
 .option:hover {
     background-color: #f1f1f1;
 }
+
+.searchable-dropdown .option.active {
+    background-color: #e0f7fa; /* for selecting patient using up or down arrow in kb */
+    color: #000;
+}
 /* --------------- SAMPLE Searchable Dropdown Styles ---------------- */

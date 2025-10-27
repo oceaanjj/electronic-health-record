@@ -22,9 +22,9 @@
 
         {{-- DATE INPUT --}}
         <label for="date_selector" style="color: white; white-space: nowrap;">DATE :</label>
-        {{-- The data-admission-date attribute is used by the new JS logic --}}
         <input class="date" type="date" id="date_selector" name="date"
-            value="{{ session('selected_date') ?? ($selectedPatient ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d')) }}"
+            {{-- CRITICAL FIX: Use the reliable $currentDate variable passed from the controller --}}
+            value="{{ $currentDate ?? now()->format('Y-m-d') }}"
             @if (!$selectedPatient) disabled @endif>
 
         {{-- DAY NO SELECTOR --}}
@@ -32,7 +32,7 @@
         <select id="day_no_selector" name="day_no" @if (!$selectedPatient) disabled @endif>
             <option value="">-- Day --</option>
             @for ($i = 1; $i <= 30; $i++)
-                <option value="{{ $i }}" @if(session('selected_day_no') == $i) selected @endif>
+                <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
                     {{ $i }}
                 </option>
             @endfor
@@ -52,14 +52,15 @@
         {{-- MAIN FORM (sumbit) with CDSS setup --}}
         <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"
             data-analyze-url="{{ route('adl.analyze-field') }}">
-            @csrf
-
-            {{-- Hidden PATIENT_ID AND DATE/DAY from header elements --}}
-            <input type="hidden" name="patient_id" class="patient-id-input" value="{{ session('selected_patient_id') }}">
-            <input type="hidden" name="date" class="date-input" value="{{ session('selected_date') }}">
-            <input type="hidden" name="day_no" class="day-no-input" value="{{ session('selected_day_no') }}">
-
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
+                @csrf
+
+                {{-- Hidden PATIENT_ID AND DATE/DAY from header elements --}}
+                <input type="hidden" name="patient_id" class="patient-id-input" value="{{ session('selected_patient_id') }}">
+                {{-- Use the explicit variables for consistency in form submission --}}
+                <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? session('selected_date') }}">
+                <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? session('selected_day_no') }}">
+
                 <table>
                     <tr>
                         <th class="title">CATEGORY</th>
@@ -94,33 +95,33 @@
                             'sleep_pattern_assessment' => 'SLEEP PATTERN',
                             'pain_level_assessment' => 'PAIN LEVEL',
                         ] as $field => $label)
-                            @php
-                                $alert = getAlertData($field, session());
-                            @endphp
-                            <tr>
-                                <th class="title">{{ $label }}</th>
-                                <td>
-                                    {{-- Added cdss-input and data-field-name classes for alert.js --}}
-                                    <input type="text" name="{{ $field }}" placeholder="{{ strtolower($label) }}"
-                                        class="cdss-input" data-field-name="{{ $field }}"
-                                        value="{{ old($field, $adlData->$field ?? '') }}">
-                                </td>
-                                {{-- Added data-alert-for for alert.js to place alerts --}}
-                                <td data-alert-for="{{ $field }}">
-                                    @if (isset($adlData))
-                                        {{-- Initial alert rendering for pre-filled data. Will be overwritten by JS on page load/reload --}}
-                                    @elseif ($alert['alert'])
-                                        <div class="alert-box {{ $alert['color'] }}">
-                                            <span class="alert-message">{{ $alert['alert'] }}</span>
-                                        </div>
-                                    @endif
-                                    @error($field)
-                                        <div class="alert-box alert-red">
-                                            <span class="alert-message">{{ $message }}</span>
-                                        </div>
-                                    @enderror
-                                </td>
-                            </tr>
+                        @php
+                            $alert = getAlertData($field, session());
+                        @endphp
+                        <tr>
+                            <th class="title">{{ $label }}</th>
+                            <td>
+                                {{-- Added cdss-input and data-field-name classes for alert.js --}}
+                                <input type="text" name="{{ $field }}" placeholder="{{ strtolower($label) }}"
+                                    class="cdss-input" data-field-name="{{ $field }}"
+                                    value="{{ old($field, $adlData->$field ?? '') }}">
+                            </td>
+                            {{-- Added data-alert-for for alert.js to place alerts --}}
+                            <td data-alert-for="{{ $field }}">
+                                @if (isset($adlData) && session()->has('cdss'))
+                                    {{-- Initial alert rendering for pre-filled data. Will be overwritten by JS on page load/reload --}}
+                                @elseif ($alert['alert'])
+                                    <div class="alert-box {{ $alert['color'] }}">
+                                        <span class="alert-message">{{ $alert['alert'] }}</span>
+                                    </div>
+                                @endif
+                                @error($field)
+                                    <div class="alert-box alert-red">
+                                        <span class="alert-message">{{ $message }}</span>
+                                    </div>
+                                @enderror
+                            </td>
+                        </tr>
                     @endforeach
 
                 </table>

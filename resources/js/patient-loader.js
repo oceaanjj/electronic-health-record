@@ -7,6 +7,7 @@
  * 4. It shows a loading state and fetches the new form content.
  * 5. It replaces the old content and re-initializes all necessary scripts.
  */
+
 document.addEventListener("patient:selected", async (event) => {
     const { patientId, selectUrl } = event.detail;
     const formContainer = document.getElementById("form-content-container");
@@ -33,6 +34,17 @@ document.addEventListener("patient:selected", async (event) => {
         return;
     }
 
+    // --- Action: Reset Date/Day selectors immediately on patient change ---
+    if (isDateDayForm) {
+        // Clear value to indicate loading/reset
+        dateSelector.value = "";
+        dayNoSelector.value = "";
+        // Disable temporarily until the new response enables it and sets the new admission date
+        dateSelector.disabled = true;
+        dayNoSelector.disabled = true;
+    }
+    // --- End Reset ---
+
     // Show loading state
     const overlay = formContainer.querySelector(".form-overlay");
     if (overlay) overlay.style.display = "flex";
@@ -45,7 +57,6 @@ document.addEventListener("patient:selected", async (event) => {
                 "X-CSRF-TOKEN": csrfToken,
                 "X-Requested-With": "XMLHttpRequest",
             },
-            // The controller handles determining the default date/day based on patient_id
             body: `patient_id=${encodeURIComponent(patientId)}`,
         });
 
@@ -57,9 +68,8 @@ document.addEventListener("patient:selected", async (event) => {
         const newHtml = parser.parseFromString(htmlText, "text/html");
 
         // --- Step 1: Update Header Elements (Date, Day) from the Response ---
-        // This is necessary because the controller might update the session date/day after selection.
 
-        // 1. Update patient search input (mostly for consistency, as the searchable-dropdown manages this)
+        // 1. Update patient search input
         const newPatientSearchInput = newHtml.getElementById(
             "patient_search_input"
         );
@@ -73,12 +83,14 @@ document.addEventListener("patient:selected", async (event) => {
             const newDayNoSelector = newHtml.getElementById("day_no_selector");
 
             if (newDateSelector) {
+                // Set the value based on the admission date provided by the server response
                 dateSelector.value = newDateSelector.value;
-                dateSelector.disabled = false; // Enable date
+                dateSelector.disabled = false;
             }
             if (newDayNoSelector) {
+                // Set the default day value (Day 1) provided by the server response
                 dayNoSelector.value = newDayNoSelector.value;
-                dayNoSelector.disabled = false; // Enable day
+                dayNoSelector.disabled = false;
             }
         }
 
@@ -90,7 +102,7 @@ document.addEventListener("patient:selected", async (event) => {
 
             // --- Step 3: Re-initialize Scripts ---
 
-            // Re-initialize the CDSS alerts for the new form (always safe to check and run)
+            // Re-initialize the CDSS alerts for the new form
             const newCdssForm = formContainer.querySelector(".cdss-form");
             if (typeof window.initializeCdssForForm === "function") {
                 window.initializeCdssForForm(newCdssForm);

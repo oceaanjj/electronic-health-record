@@ -35,14 +35,14 @@ document.addEventListener("patient:selected", async (event) => {
     }
 
     // --- Action: Reset Date/Day selectors immediately on patient change ---
-    if (isDateDayForm) {
-        // Clear value to indicate loading/reset
-        dateSelector.value = "";
-        dayNoSelector.value = "";
-        // Disable temporarily until the new response enables it and sets the new admission date
-        dateSelector.disabled = true;
-        dayNoSelector.disabled = true;
-    }
+    // if (isDateDayForm) {
+    //     // Clear value to indicate loading/reset
+    //     dateSelector.value = "";
+    //     dayNoSelector.value = "";
+    //     // Disable temporarily until the new response enables it and sets the new admission date
+    //     dateSelector.disabled = true;
+    //     dayNoSelector.disabled = true;
+    // }
     // --- End Reset ---
 
     // Show loading state

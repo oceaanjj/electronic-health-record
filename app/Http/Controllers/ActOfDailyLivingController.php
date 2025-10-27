@@ -14,48 +14,33 @@ class ActOfDailyLivingController extends Controller
 
     public function selectPatientAndDate(Request $request)
     {
-        $newPatientId = $request->input('patient_id');
-        $currentPatientId = $request->session()->get('selected_patient_id');
+        $patientId = $request->input('patient_id');
         $date = $request->input('date');
         $dayNo = $request->input('day_no');
 
-        // Always update the patient and day number in the session
-        $request->session()->put('selected_patient_id', $newPatientId);
+        $request->session()->put('selected_patient_id', $patientId);
+        $request->session()->put('selected_date', $date);
         $request->session()->put('selected_day_no', $dayNo);
-
-        // If the patient has been changed, we must clear the old date from the session.
-        // This forces the view to use the new patient's admission_date as the default.
-        // Otherwise (if patient is the same), we update the session with the date from the form.
-        if ($newPatientId != $currentPatientId) {
-            $request->session()->forget('selected_date');
-        } else {
-            $request->session()->put('selected_date', $date);
-        }
 
         return redirect()->route('adl.show');
     }
+
     public function show(Request $request)
     {
         // $patients = Patient::all();
         $patients = Auth::user()->patients;
 
         $adlData = null;
-        $selectedPatient = null;
 
         $patientId = $request->session()->get('selected_patient_id');
         $date = $request->session()->get('selected_date');
         $dayNo = $request->session()->get('selected_day_no');
 
-        if ($patientId) {
-            // Find the full patient model using the ID from the session
-            $selectedPatient = Patient::find($patientId);
-
-            if ($date && $dayNo) {
-                $adlData = ActOfDailyLiving::where('patient_id', $patientId)
-                    ->where('date', $date)
-                    ->where('day_no', $dayNo)
-                    ->first();
-            }
+        if ($patientId && $date && $dayNo) {
+            $adlData = ActOfDailyLiving::where('patient_id', $patientId)
+                ->where('date', $date)
+                ->where('day_no', $dayNo)
+                ->first();
         }
 
         return view('act-of-daily-living', [
@@ -63,7 +48,6 @@ class ActOfDailyLivingController extends Controller
             'adlData' => $adlData,
             'selectedDate' => $date,
             'selectedDayNo' => $dayNo,
-            'selectedPatient' => $selectedPatient,//
         ]);
     }
 

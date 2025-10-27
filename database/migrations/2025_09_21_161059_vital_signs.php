@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('rr')->nullable();
             $table->string('bp')->nullable();
             $table->string('spo2')->nullable();
+            $table->string('alerts')->nullable();
             $table->timestamps();
         });
     }

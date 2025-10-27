@@ -75,7 +75,7 @@
                             <textarea
                                 class="notepad-lines h-[200px]"
                                 name="present_condition_name"
-                                placeholder="Type here..."
+                                placeholder="Type here..." required
                             >{{ $presentIllness->condition_name ?? '' }}</textarea>
                         </td>
                         
@@ -88,7 +88,7 @@
                         </td>
 
                         <td><textarea class="notepad-lines h-[200px]"
-                                name="present_description"
+                                name="present_medication"
                                 placeholder="Type here..." 
                                 name="present_medication"
                                 >{{ $presentIllness->medication ?? '' }}</textarea></td>
@@ -230,8 +230,11 @@
                 </div>
 
         
-        </form>
+        
 
+            <div class="buttons" style="margin-top:1rem;">
+                <button type="submit" name="action" value="next" class="btn">Next</button>
+            </div>
 
-
+</form>
 @endsection

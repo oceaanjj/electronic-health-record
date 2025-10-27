@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +11,7 @@
 
     {{-- Sidebar --}}
     @include('components.sidebar')
-
+    
     {{-- Header --}}
 
     @include('components.header')
@@ -26,31 +25,31 @@
 
             <!-- alerts -->
             @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                role="alert" id="success-alert">
-                {{ session('success') }}
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-            </div>
+                <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert"
+                    role="alert" id="success-alert">
+                    {{ session('success') }}
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+                </div>
             @endif
 
             @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                role="alert" id="error-alert">
-                {{ session('error') }}
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-            </div>
+                <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
+                    role="alert" id="error-alert">
+                    {{ session('error') }}
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+                </div>
             @endif
 
             @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                role="alert" id="error-alert">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-            </div>
+                <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
+                    role="alert" id="error-alert">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+                </div>
             @endif
 
 
@@ -60,12 +59,12 @@
             </main>
         </div>
 
-
+        
 
     </div>
 
     {{-- Main Content --}}
-        <div id="main" class="relative min-h-screen overflow-y-auto overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
+        <div id="main" class="relative h-screen overflow-y-auto overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
 
     
             <img 
@@ -86,7 +85,7 @@
                 
 
                 {{-- content ng page --}}
-                <main class="pt-[120px] pb-0transition-all duration-300 ease-in-out">
+                <main class="pt-[120px] transition-all duration-300 ease-in-out">
 
                     @yield('content')
                 </main>
@@ -112,12 +111,6 @@
                 @yield('content')
             </main>
         </div>
-    </div>
-
-
-
-
-
 
 
     <script>
@@ -127,7 +120,7 @@
             const arrow = document.getElementById("arrowBtn");
 
             sidebar.classList.remove("-translate-x-full");
-            main.classList.add("ml-[260px]");
+            main.classList.add("ml-[260px]"); 
             arrow.classList.replace("-right-24", "-right-10");
             arrow.classList.remove("hidden");
 
@@ -143,14 +136,13 @@
             arrow.classList.replace("-right-10", "-right-24");
 
             setTimeout(() => {
-                arrowBtn.classList.add("hidden");
-            }, 0);
+            arrowBtn.classList.add("hidden");
+        }, 0);
         }
     </script>
 
-
-    @stack('scripts')
-
 </body>
-
 </html>
+
+
+

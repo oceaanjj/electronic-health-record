@@ -2,196 +2,358 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\File;
-use Symfony\Component\Yaml\Yaml;
-
 class PhysicalExamCdssService
 {
-    const CRITICAL = 'CRITICAL';
-    const WARNING = 'WARNING';
-    const INFO = 'INFO';
-    const NONE = 'NONE';
+    // Gagamit tayo ng severity levels for alerts, based on tis severity kung ano yung irereturn
+    const CRITICAL = 'critical';
+    const WARNING = 'warning';
+    const INFO = 'info';
+    const NONE = 'none';
 
-    private $rules;
+    private $generalAppearanceRules = [
+        [
+            'keywords' => ['unresponsive', 'distress', 'cyanotic'],
+            'alert' => 'URGENT: Immediate resuscitation required. Call code blue.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['lethargic', 'confused', 'disoriented'],
+            'alert' => 'Monitor neurological status closely. Consider further evaluation.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['normal', 'well-nourished', 'alert', 'oriented', 'no acute distress'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
+    ];
+    private $skinRules = [
+        [
+            'keywords' => ['cyanosis', 'blue lips', 'blue fingertips', 'bluish', 'blue'],
+            'alert' => 'URGENT: Check oxygen saturation immediately. Consider oxygen therapy.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['jaundice', 'yellow', 'yellowing'],
+            'alert' => 'Check bilirubin levels. Monitor for liver function.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['normal', 'intact', 'no lesions', 'warm and dry'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
 
-    public function __construct()
-    {
-        $this->loadRules();
-    }
+    ];
+    private $eyeRules = [
+        [
+            'keywords' => ['red', 'pain', 'vision loss', 'blurred vision'],
+            'alert' => 'Urgent ophthalmology referral needed. Possible infection or acute glaucoma.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['dry', 'itchy', 'watery'],
+            'alert' => 'Consider allergy management or lubricating eye drops.',
+            'severity' => self::INFO
+        ],
+        [
+            'keywords' => ['normal', 'clear', 'no discharge', 'pupils equal and reactive'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
+    ];
+    private $oralRules = [
+        [
+            'keywords' => ['sores', 'ulcers', 'white patches', 'red patches'],
+            'alert' => 'Evaluate for oral infections or malignancy. Consider biopsy if persistent.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['bleeding', 'swollen', 'pain'],
+            'alert' => 'Recommend dental evaluation. Possible periodontal disease.',
+            'severity' => self::INFO
+        ],
+        [
+            'keywords' => ['normal', 'intact', 'pink mucosa', 'no lesions'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
+    ];
 
-    /**
-     * Loads rules from a single YAML file.
-     */
-    private function loadRules()
-    {
-        $this->rules = [];
-        $rulesFile = storage_path('app/private/physical_exam/physical_exam.yaml'); // Path to your single file
+    private $cardiovascularRules = [
+        [
+            'keywords' => ['murmur', 'irregular', 'palpitations'],
+            'alert' => 'Refer to cardiology for further evaluation.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['edema', 'swelling', 'swollen'],
+            'alert' => 'Assess for heart failure. Monitor fluid status.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['normal', 'regular rhythm', 'no murmurs', 'no edema'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
+    ];
 
-        if (!File::exists($rulesFile)) {
-            error_log("CDSS rules file not found at: " . $rulesFile);
-            return;
-        }
+    private $abdomenRules = [
+        [
+            'keywords' => ['tenderness', 'guarding', 'rebound'],
+            'alert' => 'Urgent surgical evaluation needed. Possible acute abdomen.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['distension', 'bloating', 'nausea'],
+            'alert' => 'Consider imaging to evaluate for obstruction or other pathology.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['normal', 'soft', 'non-tender', 'non-distended'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
+    ];
+    private $extremitiesRules = [
+        [
+            'keywords' => ['swelling', 'redness', 'warmth', 'pain'],
+            'alert' => 'Evaluate for deep vein thrombosis (DVT). Consider Doppler ultrasound.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['pain', 'stiffness', 'limited range of motion'],
+            'alert' => 'Consider rheumatology referral for possible arthritis.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['normal', 'no swelling', 'full range of motion'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
+    ];
 
-        try {
-            // Parses the entire YAML file into the rules property.
-            $this->rules = Yaml::parseFile($rulesFile);
-        } catch (\Exception $e) {
-            // Log an error if the YAML file is invalid and cannot be parsed.
-            error_log("Failed to parse YAML file: " . $rulesFile . " - " . $e->getMessage());
-        }
-    }
+    private $neurologicalRules = [
+        [
+            'keywords' => ['weakness', 'numbness', 'tingling', 'paralysis'],
+            'alert' => 'Urgent neurological evaluation needed. Possible stroke or neuropathy.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['dizziness', 'confusion'],
+            'alert' => 'Monitor neurological status. Consider imaging if symptoms persist.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['normal', 'alert', 'no numbness', 'no weakness'],
+            'alert' => 'Normal Findings',
+            'severity' => self::NONE
+        ]
+    ];
 
-    /**
-     * Analyzes all the assessment fields from the physical exam form data.
-     *
-     * @param array $findingsData The request data from the form.
-     * @return array The generated alerts.
-     */
+
     public function analyzeFindings($findingsData)
     {
         $alerts = [];
-        // These keys MUST match the 'name' attributes of the textareas in your form
-        // and the top-level keys in your YAML file.
-        $keysToAnalyze = [
-            'general_appearance',
-            'skin_condition',
-            'eye_condition',
-            'oral_condition',
-            'cardiovascular',
-            'abdomen_condition',
-            'extremities',
-            'neurological',
-        ];
 
-        foreach ($keysToAnalyze as $key) {
-            $finding = $findingsData[$key] ?? '';
-            $ruleSet = $this->rules[$key] ?? [];
-            $alert = $this->runAnalysis($finding, $ruleSet);
-
-            if ($alert) {
-                // This maps the form field name to the session key used in the view.
-                // e.g., 'skin_condition' becomes 'skin' for session('cdss.skin')
-                $sessionKey = str_replace(['_condition', '_appearance'], '', $key);
-                $alerts[$sessionKey] = $alert;
+        if (!empty($findingsData['skin_condition'])) {
+            $skinAlert = $this->analyzeSkin($findingsData['skin_condition']);
+            if ($skinAlert) {
+                $alerts['skin'] = $skinAlert;
             }
         }
+        if (!empty($findingsData['eye_condition'])) {
+            $eyeAlert = $this->analyzeEye($findingsData['eye_condition']);
+            if ($eyeAlert) {
+                $alerts['eyes'] = $eyeAlert;
+            }
+        }
+        if (!empty($findingsData['oral_condition'])) {
+            $oralAlert = $this->analyzeOral($findingsData['oral_condition']);
+            if ($oralAlert) {
+                $alerts['oral'] = $oralAlert;
+            }
+        }
+        if (!empty($findingsData['cardiovascular'])) {
+            $cardioAlert = $this->analyzeCardiovascular($findingsData['cardiovascular']);
+            if ($cardioAlert) {
+                $alerts['cardiovascular'] = $cardioAlert;
+            }
+        }
+        if (!empty($findingsData['abdomen_condition'])) {
+            $abdomenAlert = $this->analyzeAbdomen($findingsData['abdomen_condition']);
+            if ($abdomenAlert) {
+                $alerts['abdomen'] = $abdomenAlert;
+            }
+        }
+        if (!empty($findingsData['extremities'])) {
+            $extremitiesAlert = $this->analyzeExtremities($findingsData['extremities']);
+            if ($extremitiesAlert) {
+                $alerts['extremities'] = $extremitiesAlert;
+            }
+        }
+        if (!empty($findingsData['neurological'])) {
+            $neurologicalAlert = $this->analyzeNeurological($findingsData['neurological']);
+            if ($neurologicalAlert) {
+                $alerts['neurological'] = $neurologicalAlert;
+            }
+        }
+        if (!empty($findingsData['general_appearance'])) {
+            $generalAlert = $this->analyzeGeneralAppearance($findingsData['general_appearance']);
+            if ($generalAlert) {
+                $alerts['general_appearance'] = $generalAlert;
+            }
+        }
+
+
         return $alerts;
     }
 
-    /**
-     * Turns a string into an array of clean, unique words for matching.
-     *
-     * @param string $text The input string.
-     * @return array An array of sanitized words.
-     */
-    private function sanitizeAndSplit($text)
+
+    //Analysis functions for each system
+
+    private function analyzeGeneralAppearance($findings)
     {
-        $lowerText = strtolower($text);
-        // Removes punctuation but keeps letters, numbers, spaces, and hyphens.
-        $noPunctuation = preg_replace('/[^\p{L}\p{N}\s-]/u', '', $lowerText);
-        // Splits the string by spaces and removes any empty array elements.
-        return array_unique(array_filter(preg_split('/\s+/', trim($noPunctuation))));
-    }
-
-    /**
-     * Analyzes a single finding against a set of rules to find the best matching alert.
-     *
-     * @param string $finding The text input from a single textarea.
-     * @param array $rules The set of rules for that specific category.
-     * @return array|null The best matching alert or null if input is empty.
-     */
-    private function runAnalysis($finding, $rules)
-    {
-        // Don't process empty or whitespace-only fields.
-        if (empty(trim($finding))) {
-            return null;
-        }
-
-        $findingWords = $this->sanitizeAndSplit($finding);
-        $matchedRules = [];
-
-        foreach ((array) $rules as $rule) {
-            $currentRuleScore = 0;
-            if (!isset($rule['keywords']) || !is_array($rule['keywords'])) {
-                continue; // Skip malformed rules.
-            }
-
-            // --- Word-Set Matching and Scoring ---
-            foreach ($rule['keywords'] as $keywordPhrase) {
-                $keywordWords = $this->sanitizeAndSplit($keywordPhrase);
-                if (empty($keywordWords)) {
-                    continue;
-                }
-
-                // Check if all words from the keyword phrase are present in the user's input.
-                $isMatch = empty(array_diff($keywordWords, $findingWords));
-
-                if ($isMatch) {
-                    // A score is calculated to prioritize more specific keywords.
-                    // A longer phrase (more words) gets a higher base score.
-                    $phraseScore = count($keywordWords) * 10;
-                    // The length of each word adds to the score for further specificity.
-                    foreach ($keywordWords as $word) {
-                        $phraseScore += strlen($word);
-                    }
-                    $currentRuleScore += $phraseScore;
-                }
-            }
-
-            // If the rule's keywords generated a score, add it to our list of potential matches.
-            if ($currentRuleScore > 0) {
-                $matchedRules[] = [
-                    'score' => $currentRuleScore,
-                    'severity' => $this->getSeverityValue($rule['severity']),
+        foreach ($this->generalAppearanceRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
                     'alert' => $rule['alert'],
-                    'severity_str' => strtoupper($rule['severity'])
+                    'severity' => strtoupper($rule['severity'])
                 ];
             }
         }
-
-        // If no rules matched at all, return a default "Normal Findings" alert.
-        if (empty($matchedRules)) {
-            return ['alert' => 'Normal Findings', 'severity' => self::NONE];
-        }
-
-        // --- Severity-First Prioritization ---
-        // Sort the list of all matched rules to find the single best one.
-        usort($matchedRules, function ($a, $b) {
-            // First, sort by severity (highest number = higher priority).
-            if ($a['severity'] !== $b['severity']) {
-                return $b['severity'] <=> $a['severity'];
-            }
-            // If severity is the same, sort by score (higher score = better, more specific match).
-            return $b['score'] <=> $a['score'];
-        });
-
-        // The best match is now the first item in the sorted list.
-        $bestMatch = $matchedRules[0];
         return [
-            'alert' => $bestMatch['alert'],
-            'severity' => $bestMatch['severity_str']
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
         ];
     }
 
-    /**
-     * Assigns a numeric value to each severity level for sorting purposes.
-     *
-     * @param string $severityStr The severity string (e.g., 'critical').
-     * @return int The corresponding numeric value.
-     */
-    private function getSeverityValue($severityStr)
+    private function analyzeSkin($findings)
     {
-        switch (strtolower($severityStr)) {
-            case 'critical':
-                return 4;
-            case 'warning':
-                return 3;
-            case 'info':
-                return 2;
-            case 'none':
-                return 1;
-            default:
-                return 0;
+        foreach ($this->skinRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
+                    'alert' => $rule['alert'],
+                    'severity' => strtoupper($rule['severity'])
+                ];
+            }
         }
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
+    }
+
+    private function analyzeEye($findings)
+    {
+        foreach ($this->eyeRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
+                    'alert' => $rule['alert'],
+                    'severity' => strtoupper($rule['severity'])
+                ];
+            }
+        }
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
+    }
+
+    private function analyzeOral($findings)
+    {
+        foreach ($this->oralRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
+                    'alert' => $rule['alert'],
+                    'severity' => strtoupper($rule['severity'])
+                ];
+            }
+        }
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
+    }
+
+    private function analyzeCardiovascular($findings)
+    {
+        foreach ($this->cardiovascularRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
+                    'alert' => $rule['alert'],
+                    'severity' => strtoupper($rule['severity'])
+                ];
+            }
+        }
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
+    }
+
+    private function analyzeAbdomen($findings)
+    {
+        foreach ($this->abdomenRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
+                    'alert' => $rule['alert'],
+                    'severity' => strtoupper($rule['severity'])
+                ];
+            }
+        }
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+
+        ];
+    }
+
+    private function analyzeExtremities($findings)
+    {
+        foreach ($this->extremitiesRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
+                    'alert' => $rule['alert'],
+                    'severity' => strtoupper($rule['severity'])
+                ];
+            }
+        }
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+        ];
+    }
+
+    private function analyzeNeurological($findings)
+    {
+        foreach ($this->neurologicalRules as $rule) {
+            if ($this->matchesKeywords($findings, $rule['keywords'])) {
+                return [
+                    'alert' => $rule['alert'],
+                    'severity' => strtoupper($rule['severity'])
+                ];
+            }
+        }
+        return [
+            'alert' => 'No significant findings.',
+            'severity' => self::NONE
+        ];
+    }
+
+    // Helper method for keyword matching
+    private function matchesKeywords($text, $keywords)
+    {
+        $text = strtolower($text);
+        foreach ($keywords as $keyword) {
+            if (strpos($text, strtolower($keyword)) !== false) {
+                return true;
+            }
+        }
+        return false;
     }
 }

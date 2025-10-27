@@ -4,7 +4,6 @@
 
 @section('content')
 
-    {{--
         <form action="{{ route('medical-history.select') }}" method="POST">
             @csrf
             <div class="header">
@@ -19,30 +18,7 @@
                     </select>
                 </div>
                 
-        </form>--}}
-
-
-       
-<form action="{{ route('medical-history.select') }}" method="POST" id="patientForm" autocomplete="off">
-    @csrf
-    <div class="header" style="position: relative; width: 250px;">
-        <label for="patient_name" style="color: white;">PATIENT NAME :</label>
-        <input type="text" id="patient_name" name="patient_name" placeholder="Search patient..." class="input-search"
-               style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-        <input type="hidden" id="patient_id" name="patient_id">
-
-        <ul id="suggestions" class="suggestions-list"
-            style="position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #ccc; border-radius: 5px;
-                   margin-top: 2px; max-height: 150px; overflow-y: auto; display: none; list-style: none; padding: 0; z-index: 9999;">
-        </ul>
-    </div>
-</form>
-
-
-
-
-    
-      
+        </form>
 
 
         {{-- FORM for data submission (submits with POST) --}}

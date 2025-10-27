@@ -43,16 +43,30 @@ class ActOfDailyLivingController extends Controller
         if ($selectedPatient) {
             $request->session()->put('selected_patient_id', $patientId);
 
-            // 1. Determine Date and Day No
-            $date = $request->input('date') ?? $request->session()->get('selected_date');
-            $dayNo = $request->input('day_no') ?? $request->session()->get('selected_day_no');
+            // 1.Get date/day from request (for date/day change) or from session (for page reload or fresh patient selection)
+            $date = $request->input('date');
+            $dayNo = $request->input('day_no');
 
-            // If a patient is newly selected (no date/day in session/request), reset to admission date and day 1
-            if (!$date || !$dayNo) {
+            // Check if the request is ONLY a patient selection (no date/day change)
+            $isNewPatientSelection = is_null($date) && is_null($dayNo);
+
+            if ($isNewPatientSelection) {
+                // If a patient is newly selected (no date/day in request), reset to admission date and day 1
                 // Determine the correct default date (Admission Date)
-                $date = $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d');
+                $date = $selectedPatient->admission_date ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : now()->format('Y-m-d');
                 $dayNo = 1;
+            } else {
+                // This is a date/day change request. Fallback to session if request values are missing.
+                $date = $date ?? $request->session()->get('selected_date');
+                $dayNo = $dayNo ?? $request->session()->get('selected_day_no');
+
+                // Final fallback if session is also empty (unlikely after the above block)
+                if (!$date || !$dayNo) {
+                    $date = $selectedPatient->admission_date ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : now()->format('Y-m-d');
+                    $dayNo = 1;
+                }
             }
+
 
             // 2. Store the determined date/day selection in the session (CRITICAL STEP)
             $request->session()->put('selected_date', $date);

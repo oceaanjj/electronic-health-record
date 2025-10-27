@@ -2,10 +2,10 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
-    {{-- NEW SEARCHABLE PATIENT DROPDOWN, DATE, AND DAY SELECTORS (in one row) --}}
+    {{-- NEW SEARCHABLE PATIENT DROPDOWN, DATE, AND DAY SELECTORS --}}
     <div class="header" style="display: flex; align-items: center; justify-content: flex-start; gap: 20px;">
-        {{-- PATIENT SELECTOR (Copied from physical-exam.blade.php) --}}
-        <label for="patient_search_input" style="color: white; white-space: nowrap;">PATIENT NAME :</label>
+        {{-- PATIENT SELECTOR --}}
+        <label for="patient_search_input" style="white-space: nowrap;">PATIENT NAME :</label>
         <div class="searchable-dropdown" data-select-url="{{ route('adl.select') }}" style="min-width: 250px;">
             <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
                 value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off">
@@ -21,14 +21,14 @@
         <input type="hidden" name="patient_id_for_form" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
 
         {{-- DATE INPUT --}}
-        <label for="date_selector" style="color: white; white-space: nowrap;">DATE :</label>
+        <label for="date_selector" style=" white-space: nowrap;">DATE :</label>
+        {{-- Used the $currentDate passed from the controller, which correctly handles session/admission date logic --}}
         <input class="date" type="date" id="date_selector" name="date"
-            {{-- CRITICAL FIX: Use the reliable $currentDate variable passed from the controller --}}
             value="{{ $currentDate ?? now()->format('Y-m-d') }}"
             @if (!$selectedPatient) disabled @endif>
 
         {{-- DAY NO SELECTOR --}}
-        <label for="day_no_selector" style="color: white; white-space: nowrap;">DAY NO :</label>
+        <label for="day_no_selector" style="white-space: nowrap;">DAY NO :</label>
         <select id="day_no_selector" name="day_no" @if (!$selectedPatient) disabled @endif>
             <option value="">-- Day --</option>
             @for ($i = 1; $i <= 30; $i++)
@@ -45,7 +45,7 @@
         {{-- DISABLED input overlay --}}
         @if (!session('selected_patient_id'))
             <div class="form-overlay">
-                <span>Please select a patient to input</span> {{-- message --}}
+                <span>Please select a patient first to input</span> {{-- message --}}
             </div>
         @endif
 
@@ -101,12 +101,12 @@
                         <tr>
                             <th class="title">{{ $label }}</th>
                             <td>
-                                {{-- Added cdss-input and data-field-name classes for alert.js --}}
+                                {{-- Cdss-input and data-field-name classes for alert.js --}}
                                 <input type="text" name="{{ $field }}" placeholder="{{ strtolower($label) }}"
                                     class="cdss-input" data-field-name="{{ $field }}"
                                     value="{{ old($field, $adlData->$field ?? '') }}">
                             </td>
-                            {{-- Added data-alert-for for alert.js to place alerts --}}
+                            {{-- data-alert-for for alert.js to place alerts --}}
                             <td data-alert-for="{{ $field }}">
                                 @if (isset($adlData) && session()->has('cdss'))
                                     {{-- Initial alert rendering for pre-filled data. Will be overwritten by JS on page load/reload --}}
@@ -125,12 +125,11 @@
                     @endforeach
 
                 </table>
+                    <div class="buttons">
+                        <button class="btn" type="button">CDSS</button>
+                        <button class="btn" type="submit">Submit</button>
+                    </div>
             </fieldset>
-
-            <div class="buttons">
-                <button class="btn" type="button">CDSS</button>
-                <button class="btn" type="submit">Submit</button>
-            </div>
         </form>
     </div>
 @endsection

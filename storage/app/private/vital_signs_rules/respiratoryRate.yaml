@@ -1,0 +1,56 @@
+
+
+    private $respiratoryRateRules = [
+        [
+            'keywords' => ['tachypnea', 'rr 40', 'fast breathing'],
+            'alert' => 'Tachypnea observed. Assess for respiratory distress, infection, or metabolic acidosis.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['bradypnea', 'rr 8', 'slow breathing'],
+            'alert' => 'Bradypnea detected. Evaluate for CNS depression or overdose.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['normal rr', 'rr 20', 'regular breathing'],
+            'alert' => 'Normal respiratory rate findings.',
+            'severity' => self::NONE
+        ]
+    ];
+
+    private $bloodPressureRules = [
+        [
+            'keywords' => ['hypertension', 'bp 160/100', 'high blood pressure'],
+            'alert' => 'Hypertension detected. Monitor closely and consider antihypertensive intervention.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['hypotension', 'bp 80/50', 'low blood pressure'],
+            'alert' => 'Hypotension detected. Assess for shock, bleeding, or dehydration.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['normal bp', 'bp 120/80'],
+            'alert' => 'Normal blood pressure findings.',
+            'severity' => self::NONE
+        ]
+    ];
+
+    private $oxygenSaturationRules = [
+        [
+            'keywords' => ['low spo2', 'spo2 85', 'hypoxemia'],
+            'alert' => 'Critical low oxygen saturation. Provide supplemental oxygen and monitor.',
+            'severity' => self::CRITICAL
+        ],
+        [
+            'keywords' => ['borderline spo2', 'spo2 92', 'mild hypoxia'],
+            'alert' => 'Borderline oxygen saturation. Monitor closely and reassess frequently.',
+            'severity' => self::WARNING
+        ],
+        [
+            'keywords' => ['normal spo2', 'spo2 98', 'good oxygenation'],
+            'alert' => 'Normal oxygen saturation findings.',
+            'severity' => self::NONE
+        ]
+    ];
+

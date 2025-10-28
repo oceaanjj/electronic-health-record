@@ -59,9 +59,10 @@
         
     </div>
     --}}
+    
 
     {{-- Main Content --}}
-        <div id="main" class="relative h-screen overflow-y-auto overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
+        <div id="main" class="relative min-h-screen overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
 
     
             <img 
@@ -85,6 +86,8 @@
                     @yield('content')
                 </main>
             </div>
+        </div>
+
 
    
 
@@ -110,6 +113,7 @@
                 sidebar.classList.add("-translate-x-full");
                 main?.classList.remove("ml-[260px]");
                 arrow.classList.replace("-right-10", "-right-24");
+                arrow.classList.add("hidden");
             }
 
             void sidebar.offsetHeight;
@@ -152,8 +156,10 @@
         }
     </script>
 
-    <!-- !important -->
     @stack('scripts')
+
+    
+
 
 </body>
 

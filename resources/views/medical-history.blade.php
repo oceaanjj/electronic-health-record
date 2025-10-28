@@ -208,9 +208,7 @@
         
         
 
-            <div class="buttons" style="margin-top:1rem;">
-                <button type="submit" name="action" value="next" class="btn">Next</button>
-            </div>
+           
 
 </form>
 @endsection

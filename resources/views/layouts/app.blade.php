@@ -59,6 +59,7 @@
         
     </div>
     --}}
+    
 
     {{-- Main Content --}}
         <div id="main" class="relative min-h-screen overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
@@ -154,6 +155,10 @@
             }, 0);
         }
     </script>
+
+    @stack('scripts')
+
+    
 
 
 </body>

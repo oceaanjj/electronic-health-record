@@ -1,0 +1,110 @@
+.container {
+    padding: 1rem;
+}
+
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header label {
+    color: white;
+}
+
+.diagnostic-grid {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.diagnostic-panel {
+    background: #f7edc9;
+    border-radius: 6px;
+    width: 48%;
+    min-width: 360px;
+    padding: 0.5rem;
+}
+
+.image-container {
+    background: linear-gradient(#9edc9e,#1e4e2a);
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.image-preview {
+    max-height: 200px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.panel-title {
+    font-weight: 700;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.6rem;
+}
+
+.insert-photo {
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.insert-photo.enabled {
+    background: #f2b233;
+    color: #222;
+    cursor: pointer;
+}
+
+.insert-photo.disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.delete-button {
+    background: #cf2b2b;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-button.disabled {
+    background: #ccc;
+    color: #666;
+}
+
+.back-button {
+    margin-top: 1rem;
+    background: #2b7a2b;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+}

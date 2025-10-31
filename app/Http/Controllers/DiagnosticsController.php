@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 
 class DiagnosticsController extends Controller
 {
-
     public function selectPatient(Request $request)
     {
         $patientId = $request->input('patient_id');
@@ -21,8 +20,7 @@ class DiagnosticsController extends Controller
 
     public function index(Request $request)
     {
-        $patients = Patient::orderBy('name')->get(); 
-        
+        $patients = Patient::orderBy('name')->get();
         $patientId = $request->session()->get('selected_patient_id');
 
         $selectedPatient = $patientId ? Patient::where('patient_id', $patientId)->first() : null;
@@ -31,35 +29,37 @@ class DiagnosticsController extends Controller
             ? Diagnostic::where('patient_id', $patientId)->orderBy('created_at')->get()->groupBy('type')
             : collect();
 
-        return view('diagnostics', [
-            'patients' => $patients,
-            'patientId' => $patientId,
-            'selectedPatient' => $selectedPatient,
-            'images' => $images,
-        ]);
+        return view('diagnostics', compact('patients', 'patientId', 'selectedPatient', 'images'));
     }
 
-    public function upload(Request $request)
-    {
-        $request->validate([
-            'patient_id' => 'required|exists:patients,patient_id',
-            'type' => 'required|in:xray,ultrasound,ct_scan,echocardiogram',
-            'image' => 'required|image|max:8192',
-        ]);
+public function submit(Request $request)
+{
+    $request->validate([
+        'patient_id' => 'required|exists:patients,patient_id',
+        'images.*' => 'nullable|image|max:8192',
+    ]);
 
-        $file = $request->file('image');
-        $filename = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('public/diagnostics', $filename);
+    $patientId = $request->input('patient_id');
 
-        Diagnostic::create([
-            'patient_id' => $request->patient_id,
-            'type' => $request->type,
-            'path' => $path,
-            'original_name' => $file->getClientOriginalName(),
-        ]);
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $type => $file) {
+            if ($file) {
+                $filename = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('public/diagnostics', $filename);
 
-        return redirect()->back()->with('success', 'Image uploaded.');
+                Diagnostic::create([
+                    'patient_id' => $patientId,
+                    'type' => $type,
+                    'path' => $path,
+                    'original_name' => $file->getClientOriginalName(),
+                ]);
+            }
+        }
     }
+
+    return redirect()->back()->with('success', 'Diagnostics saved successfully.');
+}
+
 
     public function destroy($id)
     {

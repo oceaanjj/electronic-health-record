@@ -99,6 +99,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     // Patient & Medical Record Routes
     Route::prefix('patients')->name('patients.')->group(function () {
         Route::get('/search', fn() => view('patients.search'))->name('search');
+        Route::get('/live-search', [PatientController::class, 'liveSearch'])->name('live-search');
         Route::get('/search-results', [PatientController::class, 'search'])->name('search-results');
     });
 

@@ -157,4 +157,22 @@ class PatientController extends Controller
             'input' => $search_term
         ]);
     }
+
+    public function liveSearch(Request $request)
+    {
+        $search_term = trim($request->input('input'));
+
+        $patients_query = Auth::user()->patients();
+
+        if (!empty($search_term)) {
+            $patients_query->where(function ($query) use ($search_term) {
+                $query->where('patient_id', 'LIKE', $search_term . '%')
+                    ->orWhere('name', 'LIKE', '%' . $search_term . '%');
+            });
+        }
+
+        $patients = $patients_query->get();
+
+        return response()->json($patients);
+    }
 }

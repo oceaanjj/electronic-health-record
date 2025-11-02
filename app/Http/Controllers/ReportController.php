@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Patient;
+use App\Models\MedicalHistory\Allergy;
+use App\Models\MedicalHistory\DevelopmentalHistory;
+use App\Models\MedicalHistory\PastMedicalSurgical;
+use App\Models\MedicalHistory\PresentIllness;
+use App\Models\MedicalHistory\Vaccination;
+use App\Models\PhysicalExam;
+use App\Models\Vitals;
+use App\Models\IntakeAndOutput;
+use App\Models\ActOfDailyLiving;
+use App\Models\LabValues;
+use App\Models\IvsAndLine;
+use App\Models\MedicalReconciliation;
+use App\Models\DischargePlan;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+class ReportController extends Controller
+{
+    public function generateReport(Request $request)
+    {
+        $patient_id = $request->input('patient_id');
+        $patient = Patient::findOrFail($patient_id);
+
+        $data = [
+            'patient' => $patient,
+            'allergies' => Allergy::where('patient_id', $patient_id)->get(),
+            'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->get(),
+            'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
+            'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
+            'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
+            'physicalExam' => PhysicalExam::where('patient_id', $patient_id)->get(),
+            'vitals' => Vitals::where('patient_id', $patient_id)->get(),
+            'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
+            'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
+            'labValues' => LabValues::where('patient_id', $patient_id)->get(),
+            'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
+            'medicalReconciliation' => MedicalReconciliation::where('patient_id', $patient_id)->get(),
+            'dischargePlan' => DischargePlan::where('patient_id', $patient_id)->get(),
+        ];
+
+        return view('reports.patient-report', $data);
+    }
+
+    public function downloadPDF($patient_id)
+    {
+        $patient = Patient::findOrFail($patient_id);
+
+        $data = [
+            'patient' => $patient,
+            'allergies' => Allergy::where('patient_id', $patient_id)->get(),
+            'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->get(),
+            'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
+            'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
+            'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
+            'physicalExam' => PhysicalExam::where('patient_id', $patient_id)->get(),
+            'vitals' => Vitals::where('patient_id', $patient_id)->get(),
+            'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
+            'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
+            'labValues' => LabValues::where('patient_id', $patient_id)->get(),
+            'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
+            'medicalReconciliation' => MedicalReconciliation::where('patient_id', $patient_id)->get(),
+            'dischargePlan' => DischargePlan::where('patient_id', $patient_id)->get(),
+        ];
+
+        $pdf = Pdf::loadView('reports.patient-report-pdf', $data);
+        return $pdf->download($patient->name . '_Results.pdf');
+    }
+}

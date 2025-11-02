@@ -59,12 +59,16 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // No delete routes!
 });
 
+use App\Http\Controllers\ReportController;
+
 //-------------------------------------------------------------
 // Protected Routes for Doctor
 //-------------------------------------------------------------
-Route::get('/doctor', [HomeController::class, 'doctorHome'])
-    ->name('doctor-home')
-    ->middleware(['auth', 'can:is-doctor']);
+Route::middleware(['auth', 'can:is-doctor'])->group(function () {
+    Route::get('/doctor', [HomeController::class, 'doctorHome'])->name('doctor-home');
+    Route::post('/doctor/generate-report', [ReportController::class, 'generateReport'])->name('doctor.generate-report');
+    Route::get('/doctor/patient-report/{patient_id}/pdf', [ReportController::class, 'downloadPDF'])->name('doctor.report.pdf');
+});
 
 
 //-------------------------------------------------------------

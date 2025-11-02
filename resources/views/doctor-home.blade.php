@@ -1,22 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@section('title', 'Doctor Home')
 
-<body>
-
-    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        LOG OUT
-    </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
-
+@section('content')
+<div class="container">
     <h1>DOCTOR HOME</h1>
-</body>
 
-</html>
+    <div class="card">
+        <div class="card-header">Generate Patient Report</div>
+        <div class="card-body">
+            <form action="{{ route('doctor.generate-report') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="patient_id">Select Patient:</label>
+                    <select name="patient_id" id="patient_id" class="form-control">
+                        @foreach($patients as $patient)
+                            <option value="{{ $patient->patient_id }}">{{ $patient->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Generate Report</button>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

@@ -121,6 +121,8 @@ class PatientController extends Controller
         AuditLogController::log('Patient Deleted', 'User ' . Auth::user()->username . ' deleted patient record.', ['patient_id' => $id]);
 
         return response()->json(['success' => 'Patient deleted successfully']);
+        //         return redirect()->route('patients.index')->with('success', 'Patient deleted           │       
+// │        successfully');  
     }
 
     public function recover($id)
@@ -132,6 +134,8 @@ class PatientController extends Controller
         AuditLogController::log('Patient Recovered', 'User ' . Auth::user()->username . ' recovered patient record.', ['patient_id' => $id]);
 
         return response()->json(['success' => 'Patient recovered successfully']);
+        //         return redirect()->route('patients.index')->with('success', 'Patient recovered         │       
+// │        successfully');
     }
 
 

@@ -104,6 +104,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     });
 
     Route::resource('patients', PatientController::class);
+    Route::post('patients/{patient}/recover', [PatientController::class, 'recover'])->name('patients.recover');
 
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {

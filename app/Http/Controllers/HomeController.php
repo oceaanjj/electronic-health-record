@@ -52,11 +52,12 @@ class HomeController extends Controller
                     return redirect()->route('admin-home');
                 default:
                     Auth::logout();
-                    return redirect()->route('home');
+                    return redirect()->route('login');
             }
         }
 
-        return view('home');
+        return view('login.login');
+        // return view('home');
     }
 
     public function nurseHome(Request $request)

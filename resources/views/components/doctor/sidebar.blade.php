@@ -42,5 +42,16 @@
                     Report</span>
             </a>
         </li>
+        <li>
+            <form action="{{ route('logout') }}" method="POST" class="flex items-center gap-3 pl-4 pb-2 pt-2
+                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
+                @csrf
+                <button type="submit" class="group flex items-center gap-3 w-full text-left">
+                    <img src="{{ asset('img/sidebar/logout-icon.png') }}" alt="Logout Icon"
+                        class="w-5 h-5 transition duration-200">
+                    <span class="group-hover:text-white group-hover:font-bold">Logout</span>
+                </button>
+            </form>
+        </li>
     </ul>
 </div>

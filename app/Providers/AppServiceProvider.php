@@ -48,13 +48,13 @@ class AppServiceProvider extends ServiceProvider
 
 
         //auto login
-        // if (app()->environment('local') && !Auth::check()) {
-        //     //  Replace 3 with the ID of any user you want to use for testing
-        //     // 1 = Admin
-        //     // 2 = Doctor
-        //     // 3 = Nurse
-        //     Auth::loginUsingId(3);
-        // }
+        if (app()->environment('local') && !Auth::check()) {
+            //  Replace 3 with the ID of any user you want to use for testing
+            // 1 = Admin
+            // 2 = Doctor
+            // 3 = Nurse
+            Auth::loginUsingId(3);
+        }
 
     }
 }

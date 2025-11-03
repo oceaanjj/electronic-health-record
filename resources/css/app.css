@@ -119,9 +119,8 @@
     }
 
     td {
-        background-color: var(--color-beige);
+        /* background-color: var(--color-beige);*/
         border-color: var(--color-line-brown);
-        border: 2px solid var(--color-line-brown);
         font-family: var(--font-typewriter);
         font-size: 12px;
     }
@@ -172,6 +171,19 @@
         transform: scale(0.97) translateY(2px);
         box-shadow: 0 2px 5px rgba(0, 128, 0, 0.4) inset;
         transition: transform 0.1s ease-in;
+    }
+
+    .vital-input {
+        @apply w-full text-center px-4 py-5
+            focus:outline-none focus:ring-dark-green;
+            font-family: var(--font-creato-bold);
+        font-size: 13px;
+    }
+
+
+    .alert-box {
+        @apply w-full rounded-[15px] text-center font-semibold text-white shadow-md transition-all duration-300;
+        background: linear-gradient(to bottom, #8fd89a, #0c5f1c);
     }
 }
 

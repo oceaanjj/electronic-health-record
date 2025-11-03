@@ -19,6 +19,7 @@ use App\Models\MedicalReconciliation;
 use App\Models\MedicalReconciliation\ChangesInMedication;
 use App\Models\MedicalReconciliation\CurrentMedication;
 use App\Models\MedicalReconciliation\HomeMedication;
+use App\Models\DischargePlan;
 use App\Models\Diagnostic;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -45,6 +46,7 @@ class ReportController extends Controller
             'currentMedication' => CurrentMedication::where('patient_id', $patient_id)->get(),
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
+            'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
         ];
     }
 
@@ -68,6 +70,7 @@ class ReportController extends Controller
             'currentMedication' => CurrentMedication::where('patient_id', $patient_id)->get(),
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
+            'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
         ];
 
         $pdf = Pdf::loadView('reports.patient-report-pdf', $data);

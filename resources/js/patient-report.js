@@ -5,12 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     function toggleGenerateReportButton() {
+        // patientSelected? = true
         if (patientIdHidden.value) {
             generateReportButton.removeAttribute("disabled");
             generateReportButton.classList.remove(
                 "opacity-50",
                 "cursor-not-allowed"
             );
+            generateReportButton.classList.add("cursor-pointer");
         } else {
             generateReportButton.setAttribute("disabled", "disabled");
             generateReportButton.classList.add(

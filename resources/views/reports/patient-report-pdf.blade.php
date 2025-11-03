@@ -49,6 +49,8 @@
 
         table {
             width: 100%;
+            table-layout: fixed;
+            /* Crucial for fixed column widths */
             border-collapse: collapse;
             margin-top: 5px;
             max-width: 100%;
@@ -61,6 +63,8 @@
             text-align: left;
             word-break: break-word;
             vertical-align: top;
+            width: 33.33%;
+            /* Equal width for 3 columns */
         }
 
         th {
@@ -98,8 +102,8 @@
         <p><strong>Sex:</strong> {{ $patient->sex }}</p>
         <p><strong>Address:</strong> {{ $patient->address }}</p>
         <p><strong>Chief of Complaints:</strong> {{ $patient->chief_complaints }}</p>
-        <p><strong>Room No:</strong> {{ $patient->room_no }}</p>
-        <p><strong>Bed No:</strong> {{ $patient->bed_no }}</p>
+        <!-- <p><strong>Room No:</strong> {{ $patient->room_no }}</p>
+        <p><strong>Bed No:</strong> {{ $patient->bed_no }}</p> -->
     </div>
 
     <div class="section">

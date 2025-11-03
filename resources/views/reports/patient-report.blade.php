@@ -11,8 +11,23 @@
         .section { margin-bottom: 10px; border: 1px solid #eee; padding: 8px; border-radius: 5px; }
         .section-title { background-color: #f9f9f9; padding: 5px; margin: -8px -8px 8px -8px; border-bottom: 1px solid #eee; }
         .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 5px; max-width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 5px; text-align: left; word-break: break-word; vertical-align: top; }
+                table {
+                    width: 100%;
+                    table-layout: fixed; /* Crucial for fixed column widths */
+                    border-collapse: collapse;
+                    margin-top: 5px;
+                    max-width: 100%;
+                }
+        
+                th,
+                td {
+                    border: 1px solid #ddd;
+                    padding: 5px;
+                    text-align: left;
+                    word-break: break-word;
+                    vertical-align: top;
+                    width: 33.33%; /* Equal width for 3 columns */
+                }
         th { background-color: #f2f2f2; }
         .no-data { color: #777; font-style: italic; }
         .diagnostic-image { max-width: 100%; height: auto; margin-top: 5px; border: 1px solid #ddd; }

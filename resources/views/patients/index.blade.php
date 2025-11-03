@@ -32,7 +32,7 @@
             </thead>
             <tbody>
                 @foreach($patients as $patient)
-                    <tr>
+                    <tr class="{{ $patient->trashed() ? 'deleted' : '' }}" data-id="{{ $patient->patient_id }}">
                         <td>{{ $patient->patient_id }}</td>
                         <td>
                             <a href="{{ route('patients.show', $patient->patient_id) }}">
@@ -42,12 +42,19 @@
                         <td>{{ $patient->age }}</td>
                         <td>{{ $patient->sex }}</td>
                         <td>
-                            <a href="{{ route('patients.edit', $patient->patient_id) }}" class="btn-edit">Edit</a>
-                            <form action="{{ route('patients.destroy', $patient->patient_id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-delete">Delete</button>
-                            </form>
+                            @if($patient->trashed())
+                                <form action="{{ route('patients.recover', $patient->patient_id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn-recover">Recover</button>
+                                </form>
+                            @else
+                                <a href="{{ route('patients.edit', $patient->patient_id) }}" class="btn-edit">Edit</a>
+                                <form action="{{ route('patients.destroy', $patient->patient_id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete">Delete</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -56,6 +63,16 @@
     </div>
 @endsection
 
-        @push('styles')
-            @vite(['resources/css/index-style.css'])
-        @endpush
+@push('styles')
+    @vite(['resources/css/index-style.css'])
+    <style>
+        .deleted {
+            background-color: #ffdddd;
+            color: red;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    @vite(['resources/js/soft-delete.js'])
+@endpush

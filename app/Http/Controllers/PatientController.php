@@ -28,7 +28,7 @@ class PatientController extends Controller
     // Show lahat ng patient
     public function index()
     {
-        $patients = Auth::user()->patients()->get();
+        $patients = Auth::user()->patients()->withTrashed()->get();
         return view('patients.index', compact('patients'));
     }
 
@@ -120,7 +120,18 @@ class PatientController extends Controller
         // Log patient deletion
         AuditLogController::log('Patient Deleted', 'User ' . Auth::user()->username . ' deleted patient record.', ['patient_id' => $id]);
 
-        return redirect()->route('patients.index')->with('success', 'Patient deleted successfully');
+        return response()->json(['success' => 'Patient deleted successfully']);
+    }
+
+    public function recover($id)
+    {
+        $patient = Patient::withTrashed()->findOrFail($id);
+        $patient->restore();
+
+        // Log patient recovery
+        AuditLogController::log('Patient Recovered', 'User ' . Auth::user()->username . ' recovered patient record.', ['patient_id' => $id]);
+
+        return response()->json(['success' => 'Patient recovered successfully']);
     }
 
 
@@ -156,5 +167,23 @@ class PatientController extends Controller
             'patients' => $patients,
             'input' => $search_term
         ]);
+    }
+
+    public function liveSearch(Request $request)
+    {
+        $search_term = trim($request->input('input'));
+
+        $patients_query = Auth::user()->patients();
+
+        if (!empty($search_term)) {
+            $patients_query->where(function ($query) use ($search_term) {
+                $query->where('patient_id', 'LIKE', $search_term . '%')
+                    ->orWhere('name', 'LIKE', '%' . $search_term . '%');
+            });
+        }
+
+        $patients = $patients_query->get();
+
+        return response()->json($patients);
     }
 }

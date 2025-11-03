@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electronic Health Record</title>
     @vite('resources/css/app.css')
+    @stack('styles')
 
     <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- !important for instant alerts-->
 </head>

@@ -37,8 +37,9 @@
 
                 <img src="{{ asset('img/sidebar/demographic-profile.png') }}" alt="Home Icon"
                     class="w-5 h-5 transition duration-200">
-                                    <span
-                                        class="{{ request()->routeIs('doctor.patient-report') ? 'text-white font-bold' : 'group-hover:font-bold group-hover:text-white' }}">Patient                    Report</span>
+                <span
+                    class="{{ request()->routeIs('doctor.patient-report') ? 'text-white font-bold' : 'group-hover:font-bold group-hover:text-white' }}">Patient
+                    Report</span>
             </a>
         </li>
     </ul>

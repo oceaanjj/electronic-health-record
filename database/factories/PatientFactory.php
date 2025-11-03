@@ -41,8 +41,8 @@ class PatientFactory extends Factory
 
 
             'name' => $this->faker->name(),
-            'age' => $this->faker->numberBetween(0, 12),
-            'sex' => $this->faker->randomElement(['Male', 'Female', 'Other']),
+            'age' => $this->faker->numberBetween(1, 42),
+            'sex' => $this->faker->randomElement(['Male', 'Female']),
             'address' => $this->faker->address(),
             'birthplace' => $this->faker->city(),
             'religion' => $this->faker->randomElement(['Catholic', 'Iglesia ni Cristo', 'Christian']),

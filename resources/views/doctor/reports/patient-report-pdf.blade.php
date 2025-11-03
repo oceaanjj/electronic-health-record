@@ -11,22 +11,19 @@
         body {
             font-family: sans-serif;
             margin: 5mm 10mm;
-            font-size: 10px;
+            font-size: 14px;
         }
 
         h1 {
-            color: #333;
             font-size: 18px;
         }
 
         h2 {
-            color: #333;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         h3 {
-            color: #333;
-            font-size: 12px;
+            font-size: 15px;
         }
 
         .section {

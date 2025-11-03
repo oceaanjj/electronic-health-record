@@ -114,7 +114,7 @@ cardiovascular:
   - keywords: ["syncope on exertion", "presyncope with exercise"]
     alert: "Syncope or presyncope, especially when associated with exercise, is a critical red flag for conditions like hypertrophic cardiomyopathy, severe aortic stenosis, or arrhythmias."
     severity: "critical"
-  - keywords: ["chest pain on exertion"]
+  - keywords: ["chest pain", "chest pain on exertion"]
     alert: "Chest pain that occurs with exertion in a child is an abnormal finding that warrants urgent evaluation for conditions such as anomalous coronary arteries, severe outflow obstruction, or HOCM."
     severity: "critical"
   - keywords:

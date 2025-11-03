@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
             // 1 = Admin
             // 2 = Doctor
             // 3 = Nurse
-            Auth::loginUsingId(3);
+            Auth::loginUsingId(2);
         }
 
     }

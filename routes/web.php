@@ -22,15 +22,24 @@ use App\Http\Controllers\IntakeAndOutputController;
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
 
-Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');
+// -- UPDATED LOGIN ROUTES ---
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
-Route::prefix('login')->name('login.')->group(function () {
-    Route::get('/nurse', [LoginController::class, 'showNurseLoginForm'])->name('nurse');
-    Route::get('/doctor', [LoginController::class, 'showDoctorLoginForm'])->name('doctor');
-    Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
-    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
-});
 
+
+// Old routes for separate login forms (as requested, kept as comments)
+
+// Route::prefix('login')->name('login.')->group(callback: function () {
+//     Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');
+//     Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+//     Route::get('/nurse', [LoginController::class, 'showNurseLoginForm'])->name('nurse');
+//     Route::get('/doctor', [LoginController::class, 'showDoctorLoginForm'])->name('doctor');
+//     Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
+// });
+
+//Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
@@ -59,12 +68,17 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // No delete routes!
 });
 
+use App\Http\Controllers\Doctor\ReportController;
+
 //-------------------------------------------------------------
 // Protected Routes for Doctor
 //-------------------------------------------------------------
-Route::get('/doctor', [HomeController::class, 'doctorHome'])
-    ->name('doctor-home')
-    ->middleware(['auth', 'can:is-doctor']);
+Route::middleware(['auth', 'can:is-doctor'])->group(function () {
+    Route::get('/doctor', [HomeController::class, 'doctorHome'])->name('doctor-home');
+    Route::get('/doctor/patient-report', [ReportController::class, 'showPatientReportForm'])->name('doctor.patient-report');
+    Route::post('/doctor/generate-report', [ReportController::class, 'generateReport'])->name('doctor.generate-report');
+    Route::get('/doctor/patient-report/{patient_id}/pdf', [ReportController::class, 'downloadPDF'])->name('doctor.report.pdf');
+});
 
 
 //-------------------------------------------------------------
@@ -125,7 +139,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
     Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
     Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
-   //Developmental History
+    //Developmental History
     Route::get('/developmental-history', [MedicalController::class, 'showDevelopmentalHistory'])->name('developmental-history');
     Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
 
@@ -162,10 +176,11 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
     });
 
-Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
-Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
-Route::post('/diagnostics/submit', [DiagnosticsController::class, 'submit'])->name('diagnostics.submit');
-Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
+    Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
+    Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
+    Route::post('/diagnostics/submit', [DiagnosticsController::class, 'submit'])->name('diagnostics.submit');
+    Route::delete('/diagnostics/destroy/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
+
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {

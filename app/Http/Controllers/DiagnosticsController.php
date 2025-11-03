@@ -1,115 +1,131 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Diagnostic;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class DiagnosticsController extends Controller
 {
+    /** Select patient and store in session */
     public function selectPatient(Request $request)
     {
         $patientId = $request->input('patient_id');
         $request->session()->put('selected_patient_id', $patientId);
-
         return redirect()->route('diagnostics.index');
     }
 
+    /** Show diagnostics page */
     public function index(Request $request)
     {
-        $patients = Patient::orderBy('name')->get();
+        $patients = Auth::user()->patients()->orderBy('name')->get();
         $patientId = $request->session()->get('selected_patient_id');
+        $selectedPatient = null;
+        $images = [];
 
-        $selectedPatient = $patientId ? Patient::where('patient_id', $patientId)->first() : null;
+        if ($patientId) {
+            $selectedPatient = $patients->firstWhere('patient_id', $patientId);
 
-        $images = $patientId
-            ? Diagnostic::where('patient_id', $patientId)->orderBy('created_at')->get()->groupBy('type')
-            : collect();
+            if ($selectedPatient) {
+                // Fetch diagnostics and group by type
+                $diagnostics = Diagnostic::where('patient_id', $patientId)
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+                    ->groupBy('type');
 
-        return view('diagnostics', compact('patients', 'patientId', 'selectedPatient', 'images'));
+                // Convert to array for Blade
+                foreach ($diagnostics as $type => $items) {
+                    $images[$type] = $items;
+                }
+            }
+        }
+
+        return view('diagnostics', compact('patients', 'selectedPatient', 'images', 'patientId'));
     }
 
-public function submit(Request $request)
+    /** Handle upload of diagnostic images */
+    public function submit(Request $request)
     {
-        // 1. Kunin ang patient_id mula sa SESSION (ito ang pinaka-sigurado)
-        $patientId = $request->session()->get('selected_patient_id');
-
-        // 2. Suriin muna kung may naka-select na pasyente sa session
-        if (!$patientId) {
-            return redirect()->back()
-                ->with('error', 'ERROR: Walang napiling pasyente. Pumili muna sa dropdown.')
-                ->withInput(); // withInput() para hindi mawala ang data
-        }
-
-        // 3. I-validate lang ang images
         $request->validate([
-            'images.*' => 'nullable|array',
-            'images.*.*' => 'nullable|image|max:8192', // 8MB Max
+            'patient_id' => 'required|exists:patients,patient_id',
+            'images' => 'nullable|array',
+            'images.*.*' => 'nullable|image|max:8192',
+        ], [
+            'patient_id.required' => 'ERROR: Walang napiling pasyente. Pumili muna sa dropdown.',
+            'patient_id.exists' => 'ERROR: Ang napiling pasyente ay wala sa database.',
         ]);
 
-        // 4. Suriin kung may file na in-upload
-        if (!$request->hasFile('images')) {
-            return redirect()->back()
-                ->with('error', 'ERROR: Walang file na napiling i-upload. Pindutin ang "INSERT PHOTO" at pumili ng file.')
-                ->withInput();
+        $patientId = $request->input('patient_id');
+        $userId = Auth::id();
+
+        $patient = Patient::where('patient_id', $patientId)
+            ->where('user_id', $userId)
+            ->first();
+
+        if (!$patient) {
+            return redirect()->back()->with('error', 'ERROR: Unauthorized access.');
         }
 
-        $filesSaved = 0; // Magbilang tayo kung may na-save
+        $filesSaved = 0;
 
         try {
-            // 5. I-proseso ang bawat file
-            foreach ($request->file('images') as $type => $files) {
-                if (is_array($files)) {
-                    foreach ($files as $file) {
-                        if ($file && $file->isValid()) { // Check kung valid ang file
-                            $filename = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
-                            $path = $file->storeAs('public/diagnostics', $filename);
+            foreach ((array) $request->file('images') as $type => $files) {
+                if (!is_array($files)) continue;
 
-                            Diagnostic::create([
-                                'patient_id' => $patientId, // Galing sa Session
-                                'type' => $type,
-                                'path' => $path,
-                                'original_name' => $file->getClientOriginalName(),
-                            ]);
+                foreach ($files as $file) {
+                    if ($file && $file->isValid()) {
+                        $filename = time() . '_' . $file->getClientOriginalName();
 
-                            $filesSaved++; // May na-save! Bilangin
-                        }
+                        // Store in public disk (storage/app/public/diagnostics)
+                        $path = $file->storeAs('diagnostics', $filename, 'public');
+
+                        Diagnostic::create([
+                            'patient_id' => $patientId,
+                            'type' => $type,
+                            'path' => $path,
+                            'original_name' => $file->getClientOriginalName(),
+                        ]);
+
+                        $filesSaved++;
                     }
                 }
             }
-        } catch (\Exception $e) {
-            // 6. Kung may error sa database (e.g., maling column name, atbp.)
-            // DITO NATIN MAKIKITA ANG TUNAY NA ERROR
-            return redirect()->back()
-                ->with('error', 'DATABASE ERROR: ' . $e->getMessage())
-                ->withInput();
+        } catch (Throwable $e) {
+            return redirect()->back()->with('error', 'DATABASE ERROR: ' . $e->getMessage());
         }
 
-        // 7. I-check kung may na-save ba talaga
-        if ($filesSaved > 0) {
-            return redirect()->back()
-                ->with('success', "Success! $filesSaved na file/s ang na-save.");
-        } else {
-            // Dito mapupunta kung may 'images' sa request pero
-            // sa-loob ng loop ay walang 'valid' na file.
-            return redirect()->back()
-                ->with('error', 'Walang valid na file na na-proseso. Paki-check ang iyong files.')
-                ->withInput();
-        }
+        return redirect()->route('diagnostics.index')
+            ->with('success', "Success! $filesSaved file(s) uploaded successfully.");
     }
-    
+
+    /** Delete diagnostic image */
     public function destroy($id)
     {
-        $record = Diagnostic::findOrFail($id);
+        try {
+            $record = Diagnostic::findOrFail($id);
+            $userId = Auth::id();
 
-        if ($record->path && Storage::exists($record->path)) {
-            Storage::delete($record->path);
+            $patient = Patient::where('patient_id', $record->patient_id)
+                ->where('user_id', $userId)
+                ->first();
+
+            if (!$patient) {
+                return redirect()->back()->with('error', 'ERROR: Unauthorized access.');
+            }
+
+            if ($record->path && Storage::disk('public')->exists($record->path)) {
+                Storage::disk('public')->delete($record->path);
+            }
+
+            $record->delete();
+
+            return redirect()->back()->with('success', 'Image deleted successfully.');
+        } catch (Throwable $e) {
+            return redirect()->back()->with('error', 'Failed to delete image: ' . $e->getMessage());
         }
-
-        $record->delete();
-
-        return redirect()->back()->with('success', 'Image deleted successfully.');
     }
 }

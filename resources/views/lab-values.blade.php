@@ -20,80 +20,99 @@
     </div>
 
     <form action="{{ route('lab-values.store') }}" method="POST">
-        @csrf
+    @csrf
+    <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
-        <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+    <center>
+       <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+            <div class="w-[68%] rounded-[15px] overflow-hidden">
 
-        <table>
-            <tr>
-                <th class="title">LAB TEST</th>
-                <th class="title">RESULT</th>
-                <th class="title">PEDIATRIC NORMAL RANGE</th>
-                <th class="title">ALERTS</th>
-            </tr>
+                 <table class="w-full table-fixed border-collapse border-spacing-y-0">
+                    <tr>
+                        <th class="w-[30%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">LAB TEST</th>
+                        <th class="w-[30%] bg-dark-green text-white font-bold py-2">RESULT</th>
+                        <th class="w-[40%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">PEDIATRIC NORMAL RANGE</th>
+                    </tr>
 
-            @php
-                $labTests = [
-                    'WBC (×10⁹/L)' => 'wbc',
-                    'RBC (×10¹²/L)' => 'rbc',
-                    'Hgb (g/dL)' => 'hgb',
-                    'Hct (%)' => 'hct',
-                    'Platelets (×10⁹/L)' => 'platelets',
-                    'MCV (fL)' => 'mcv',
-                    'MCH (pg)' => 'mch',
-                    'MCHC (g/dL)' => 'mchc',
-                    'RDW (%)' => 'rdw',
-                    'Neutrophils (%)' => 'neutrophils',
-                    'Lymphocytes (%)' => 'lymphocytes',
-                    'Monocytes (%)' => 'monocytes',
-                    'Eosinophils (%)' => 'eosinophils',
-                    'Basophils (%)' => 'basophils'
-                ];
-            @endphp
+                    @php
+                        $labTests = [
+                            'WBC (×10⁹/L)' => 'wbc',
+                            'RBC (×10¹²/L)' => 'rbc',
+                            'Hgb (g/dL)' => 'hgb',
+                            'Hct (%)' => 'hct',
+                            'Platelets (×10⁹/L)' => 'platelets',
+                            'MCV (fL)' => 'mcv',
+                            'MCH (pg)' => 'mch',
+                            'MCHC (g/dL)' => 'mchc',
+                            'RDW (%)' => 'rdw',
+                            'Neutrophils (%)' => 'neutrophils',
+                            'Lymphocytes (%)' => 'lymphocytes',
+                            'Monocytes (%)' => 'monocytes',
+                            'Eosinophils (%)' => 'eosinophils',
+                            'Basophils (%)' => 'basophils'
+                        ];
+                    @endphp
 
-            @foreach ($labTests as $label => $name)
-                <tr>
-                    <th class="title">{{ $label }}</th>
-                    <td>
-                        <input type="number" step="any" name="{{ $name }}_result" placeholder="result"
-                            value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}">
-                    </td>
-                    <td>
-                        <input type="text" name="{{ $name }}_normal_range" placeholder="normal range"
-                            value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}">
-                    </td>
-                    <td>
-                            @if (session('alerts') && isset(session('alerts')[$name . '_alerts']))
-                                @foreach (session('alerts')[$name . '_alerts'] as $alertData)
-                                    @php
-                                        $alertText = $alertData['text'];
-                        $severity = $alertData['severity'];
-                        $color = 'text-gray-600'; // Default
-                            if ($severity === \App\Services\LabValuesCdssService::CRITICAL) {
-                                $color = 'text-red-600 font-bold';
-                            } elseif ($severity === \App\Services\LabValuesCdssService::WARNING) {
-                                $color = 'text-orange-500';
-                            } elseif ($severity === \App\Services\LabValuesCdssService::INFO) {
-                                $color = 'text-blue-500';
-                            } elseif ($severity === \App\Services\LabValuesCdssService::NONE) {
-                                $color = 'text-green-600';
-                            }
-                                @endphp
-                            <p class="{{ $color }}">{{ $alertText }}</p>
-                                    @endforeach
-                                @endif
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-</div>
-
-            <div class="buttons">
-                <button class="btn" type="button">CDSS</button>
-                <button class="btn" type="submit">Submit</button>
+                    @foreach ($labTests as $label => $name)
+                        <tr>
+                            <td class="p-2 font-semibold">{{ $label }}</td>
+                            <td class="p-2">
+                                <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
+                                    value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
+                                    class="w-full h-[20px]">
+                            </td>
+                            <td class="p-2">
+                                <input type="text" name="{{ $name }}_normal_range" placeholder="Normal Range"
+                                    value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}"
+                                    class="w-full">
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
             </div>
 
-            </form>
+            {{-- for alerts, not sure if connected to sa row ng other table for input okei --}}
+            <div class="w-[30%] rounded-[15px] overflow-hidden">
+                <table class="w-full border-collapse text-center">
+                    <tr>
+                        <th class="bg-dark-green text-white py-2 rounded-[15px]">ALERTS</th>
+                    </tr>
+
+                    @foreach ($labTests as $label => $name)
+                        <tr>
+                            <td class="align-middle">
+                                <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center"></div>
+                                    @if (session('alerts') && isset(session('alerts')[$name . '_alerts']))
+                                        @foreach (session('alerts')[$name . '_alerts'] as $alertData)
+                                            @php
+                                                $alertText = $alertData['text'];
+                                                $severity = $alertData['severity'];
+                                                $color = match($severity) {
+                                                    \App\Services\LabValuesCdssService::CRITICAL => 'text-red-600 font-bold',
+                                                    \App\Services\LabValuesCdssService::WARNING => 'text-orange-500',
+                                                    \App\Services\LabValuesCdssService::INFO => 'text-blue-500',
+                                                    \App\Services\LabValuesCdssService::NONE => 'text-green-600',
+                                                    default => 'text-gray-600',
+                                                };
+                                            @endphp
+                                            <p class="{{ $color }} text-sm leading-snug">{{ $alertText }}</p>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+    </center>
+
+    {{-- BUTTONS --}}
+    <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+        <button type="button" class="button-default">CDSS</button>
+        <button type="submit" class="button-default">SUBMIT</button>
+    </div>
+</form>
 
 @endsection
 

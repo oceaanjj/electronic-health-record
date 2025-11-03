@@ -47,33 +47,49 @@
             <input type="hidden" name="date" value="{{ session('selected_date') }}">
             <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
 
-            <table>
+            <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+                <div class="w-[68%] rounded-[15px] overflow-hidden">
+
+                    <table class="w-full table-fixed border-collapse border-spacing-y-0">
+                            <tr>
+                                <th class="w-[15%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">ORAL INTAKE (mL)</th>
+                                <th class="w-[13%] bg-dark-green text-white">IV FLUIDS (mL)</th>
+                                <th class="w-[13%] bg-dark-green text-white rounded-tr-lg">URINE OUTPUT (mL)</th>
+                            </tr>
+
+                            <tr>
+                                {{-- ORAL INTAKE INPUT --}}
+                                <td>
+                                    <input type="number" name="oral_intake" placeholder="Oral Intake"
+                                        value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}">
+                                </td>
+
+                                {{-- IV FLUIDS INPUT --}}
+                                <td>
+                                    <input type="number" name="iv_fluids_volume" placeholder="IV Fluids"
+                                        value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}">
+                                </td>
+
+                                {{-- URINE OUTPUT INPUT --}}
+                                <td>
+                                    <input type="number" name="urine_output" placeholder="Urine Output"
+                                        value="{{ old('urine_output', $ioData->urine_output ?? '') }}">
+                                </td>
+                            </tr>
+                        </table>
+                </div>
+
+
+
+             <div class="w-[25%] rounded-[15px] overflow-hidden">
+                <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                    ALERTS
+                </div>
+
+                <table class="w-full border-collapse">
                 <tr>
-                    <th class="title">ORAL INTAKE (mL)</th>
-                    <th class="title">IV FLUIDS (mL)</th>
-                    <th class="title">URINE OUTPUT (mL)</th>
-                    <th class="title">Alerts</th>
-                </tr>
 
-                <tr>
-                    {{-- ORAL INTAKE INPUT --}}
-                    <td>
-                        <input type="number" name="oral_intake" placeholder="Oral Intake"
-                            value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}">
-                    </td>
-
-                    {{-- IV FLUIDS INPUT --}}
-                    <td>
-                        <input type="number" name="iv_fluids_volume" placeholder="IV Fluids"
-                            value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}">
-                    </td>
-
-                    {{-- URINE OUTPUT INPUT --}}
-                    <td>
-                        <input type="number" name="urine_output" placeholder="Urine Output"
-                            value="{{ old('urine_output', $ioData->urine_output ?? '') }}">
-                    </td>
-
+                    {{-- HINDI KO ITO MAGETS --}}
                     {{-- ALERTS --}}
                     <td>
                         <!-- Oral Intake Alerts -->
@@ -129,25 +145,19 @@
                     </td>
                 </tr>
 
-            </table>
+                </table>
+            </div>
+        </div>
         </form>
 
-    <div class="buttons">
 
-        <div class="button-col"></div>
-
-        <div class="button-col">
-            <a href="#" class="btn">Calculate fluid balance</a>
-        </div>
-
-        <div class="button-col">
-            <button class="btn">CDSS</button>
-        </div>
-
-        <div class="button-col">
-            <button class="btn" type="button" onclick="document.getElementById('io-form').submit()">Submit</button>
-        </div>
+    <div class="w-[70%] mx-auto flex justify-end mt-20 mb-30 space-x-4">
+            <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button> 
+            <button type="button" class="button-default">CDSS</button>
+            <button type="submit" class="button-default" onclick="document.getElementById('io-form').submit()">SUBMIT</button>   
+                 
     </div>
+
 
 
 @endsection

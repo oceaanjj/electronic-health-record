@@ -61,12 +61,14 @@
                 <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? session('selected_date') }}">
                 <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? session('selected_day_no') }}">
 
-                <table>
-                    <tr>
-                        <th class="title">CATEGORY</th>
-                        <th class="title">ASSESSMENT</th>
-                        <th class="title">ALERTS</th>
-                    </tr>
+                <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+                    <div class="w-[68%] rounded-[15px] overflow-hidden">
+                
+                        <table class="w-full table-fixed border-collapse border-spacing-y-0">
+                            <tr>
+                                <th class="w-[40%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">CATEGORY</th>
+                                <th class="w-[60%] bg-dark-green text-white rounded-tr-lg">ASSESSMENT</th>
+                            </tr>
 
                     @php
                         // Helper to get alert data and color
@@ -125,10 +127,10 @@
                     @endforeach
 
                 </table>
-                    <div class="buttons">
-                        <button class="btn" type="button">CDSS</button>
-                        <button class="btn" type="submit">Submit</button>
-                    </div>
+                    <div class="w-[97%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
+                    <button type="button" class="button-default">CDSS</button>
+                    <button type="submit" class="button-default">SUBMIT</button>       
+                </div>
             </fieldset>
         </form>
     </div>

@@ -4,20 +4,33 @@
     <title>Patient Report</title>
     <style>
         * { box-sizing: border-box; }
-        body { font-family: sans-serif; margin: 10mm 15mm; }
-        h1, h2, h3 { color: #333; }
-        .section { margin-bottom: 15px; border: 1px solid #eee; padding: 10px; border-radius: 5px; }
-        .section-title { background-color: #f9f9f9; padding: 8px; margin: -10px -10px 10px -10px; border-bottom: 1px solid #eee; }
-        ul { list-style-type: disc; margin-left: 15px; padding: 0; }
-        ul ul { list-style-type: circle; margin-left: 15px; }
-        li { margin-bottom: 3px; }
+        body { font-family: sans-serif; margin: 5mm 10mm; font-size: 10px; }
+        h1 { color: #333; font-size: 18px; }
+        h2 { color: #333; font-size: 14px; }
+        h3 { color: #333; font-size: 12px; }
+        .section { margin-bottom: 10px; border: 1px solid #eee; padding: 8px; border-radius: 5px; }
+        .section-title { background-color: #f9f9f9; padding: 5px; margin: -8px -8px 8px -8px; border-bottom: 1px solid #eee; }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; max-width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 5px; text-align: left; word-break: break-word; vertical-align: top; }
+        th { background-color: #f2f2f2; }
         .no-data { color: #777; font-style: italic; }
-        .diagnostic-image { max-width: 100%; height: auto; margin-top: 8px; border: 1px solid #ddd; }
+        .diagnostic-image { max-width: 100%; height: auto; margin-top: 5px; border: 1px solid #ddd; }
+        img { max-width: 100%; height: auto; }
         .page-break { page-break-after: always; }
     </style>
 </head>
 <body>
-    <h1>Patient Report for {{ $patient->name }}</h1>
+    <div class="patient-demographics">
+        <h2>Patient Information</h2>
+        <p><strong>Name:</strong> {{ $patient->name }}</p>
+        <p><strong>Age:</strong> {{ $patient->age }}</p>
+        <p><strong>Sex:</strong> {{ $patient->sex }}</p>
+        <p><strong>Address:</strong> {{ $patient->address }}</p>
+        <p><strong>Chief of Complaints:</strong> {{ $patient->chief_of_complaints }}</p>
+        <p><strong>Room No:</strong> {{ $patient->room_no }}</p>
+        <p><strong>Bed No:</strong> {{ $patient->bed_no }}</p>
+    </div>
 
     <div class="section">
         <h2 class="section-title">1. Medical History</h2>
@@ -26,13 +39,36 @@
             <p class="no-data">No Present Illness data available.</p>
         @else
             @foreach($presentIllness as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -42,13 +78,36 @@
             <p class="no-data">No Past Medical / Surgical data available.</p>
         @else
             @foreach($pastMedicalSurgical as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -58,13 +117,36 @@
             <p class="no-data">No Known Conditions or Allergies data available.</p>
         @else
             @foreach($allergies as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -74,13 +156,36 @@
             <p class="no-data">No Vaccination data available.</p>
         @else
             @foreach($vaccination as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -94,13 +199,36 @@
             <p class="no-data">No Physical Exam data available.</p>
         @else
             @foreach($physicalExam as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -114,13 +242,36 @@
             <p class="no-data">No Vital Signs data available.</p>
         @else
             @foreach($vitals as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -134,13 +285,36 @@
             <p class="no-data">No Intake and Output data available.</p>
         @else
             @foreach($intakeAndOutput as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -154,13 +328,36 @@
             <p class="no-data">No Activities of Daily Living data available.</p>
         @else
             @foreach($actOfDailyLiving as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -174,13 +371,36 @@
             <p class="no-data">No Lab Values data available.</p>
         @else
             @foreach($labValues as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -194,19 +414,40 @@
             <p class="no-data">No Diagnostics data available.</p>
         @else
             @foreach($diagnostics as $item)
-                <ul>
-                    @if(!in_array('type', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                        <li><strong>Type:</strong> {{ $item->type }}</li>
-                    @endif
-                    @if(!in_array('original_name', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                        <li><strong>Original Name:</strong> {{ $item->original_name }}</li>
-                    @endif
-                    @if($item->path && !in_array('path', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                        <li><strong>Image:</strong> <img src="{{ asset('storage/' . $item->path) }}" alt="Diagnostic Image" class="diagnostic-image"></li>
-                    @elseif(!in_array('path', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                        <li>No image available for this diagnostic entry.</li>
-                    @endif
-                </ul>
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            if($column == 'path'){
+                                $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = '<img src="' . asset('storage/' . $item->path) . '">';
+                            } else {
+                                $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                            }
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{!! isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' !!}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endforeach
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -220,13 +461,36 @@
             <p class="no-data">No IV's & Lines data available.</p>
         @else
             @foreach($ivsAndLines as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -248,13 +512,36 @@
             <p class="no-data">No Current Medication data available.</p>
         @else
             @foreach($currentMedication as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -264,13 +551,36 @@
             <p class="no-data">No Home Medication data available.</p>
         @else
             @foreach($homeMedication as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
@@ -280,13 +590,36 @@
             <p class="no-data">No Changes in Medication data available.</p>
         @else
             @foreach($changesInMedication as $item)
-                <ul>
-                    @foreach($item->getAttributes() as $column => $value)
-                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
-                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
-                        @endif
+                @php
+                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+                    $filteredAttributes = [];
+                    foreach($item->getAttributes() as $column => $value) {
+                        if(!in_array($column, $excludedColumns)) {
+                            $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        }
+                    }
+                    $attributeChunks = array_chunk($filteredAttributes, 3, true);
+                @endphp
+                <div class="table-responsive">
+                    @foreach($attributeChunks as $chunk)
+                        <table>
+                            <thead>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
+                                    @endfor
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for($i = 0; $i < 3; $i++)
+                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
+                                    @endfor
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
-                </ul>
+                </div>
                 @if(!$loop->last)<hr>@endif
             @endforeach
         @endif

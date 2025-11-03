@@ -94,15 +94,13 @@
             bottom: 0px;
             left: 0px;
             right: 0px;
-            height: 30px;
+            height: 50px;
             text-align: center;
             line-height: 35px;
         }
 
         .footer .page-number:after {
-            content: "Page " counter(page) " of " counter(pages);
-            font-size: 10px;
-            color: gray;
+            content: "Page " counter(page);
         }
     </style>
 </head>

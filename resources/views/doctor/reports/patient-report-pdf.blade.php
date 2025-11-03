@@ -98,10 +98,6 @@
             text-align: center;
             line-height: 35px;
         }
-
-        .footer .page-number:after {
-            content: "Page " counter(page);
-        }
     </style>
 </head>
 
@@ -140,8 +136,19 @@
 
     @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning])
 
-    <div class="footer">
-        <span class="page-number"></span>
-    </div>
+    <footer>
+        <script type="text/php">
+            if (isset($pdf)) {
+                $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
+                $size = 9;
+
+                $font = $fontMetrics->getFont("Verdana");
+                $width = $fontMetrics->get_text_width($text, $font, $size) / 2;
+                $x = ($pdf->get_width() - $width) / 2;
+                $y = $pdf->get_height() - 35;
+                $pdf->page_text($x, $y, $text, $font, $size, [0.3, 0.3, 0.3]);
+            }
+        </script>
+    </footer>
 </body>
 </html>

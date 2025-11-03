@@ -1,7 +1,6 @@
 @extends('layouts.doctor')
 @section('title', 'Generate Patient Report')
 @section('content')
-
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Generate Patient Report</h1>
@@ -35,5 +34,10 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/patient-loader.js',
+        'resources/js/patient-report.js',
+        'resources/js/searchable-dropdown.js',
+    ])
 @endpush

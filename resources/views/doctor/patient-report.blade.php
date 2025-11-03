@@ -9,7 +9,7 @@
                 @csrf
                 <div class="mb-4">
                     <label for="patient_search_input" class="block text-gray-700 font-bold mb-2">Search Patient:</label>
-                    <div class="searchable-dropdown" data-select-url="{{ route('doctor.patient-report') }}">
+                    <div class="searchable-dropdown relative" data-select-url="{{ route('doctor.patient-report') }}">
                         <input type="text" id="patient_search_input"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="-Select or type to search-" autocomplete="off">

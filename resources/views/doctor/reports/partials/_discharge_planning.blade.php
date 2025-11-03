@@ -1,4 +1,4 @@
-    <div class="page-break"></div>
+<div class="page-break"></div>
 
     <div class="section">
         <h2 class="section-title">11. Discharge Planning</h2>

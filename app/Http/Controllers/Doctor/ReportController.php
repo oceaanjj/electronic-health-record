@@ -55,7 +55,7 @@ class ReportController extends Controller
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
         ];
 
-        return view('doctor.reports.patient-report', $data);
+        return view('doctor.reports.patient-report-web', $data);
     }
 
     public function downloadPDF($patient_id)

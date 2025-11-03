@@ -81,7 +81,7 @@
             <div class="relative z-10">
 
                 {{-- content ng page --}}
-                <main class="pt-[120px] transition-all duration-300 ease-in-out">
+                <main class="pt-[120px] px-6 transition-all duration-300 ease-in-out">
 
                     @yield('content')
                 </main>

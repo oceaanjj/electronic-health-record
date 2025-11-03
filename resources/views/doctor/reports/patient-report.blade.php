@@ -36,6 +36,10 @@
     </style>
 </head>
 <body>
+    <div class="flex justify-end mb-4">
+        <a href="{{ route('doctor.report.pdf', ['patient_id' => $patient->patient_id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download PDF</a>
+    </div>
+
     <div class="patient-demographics">
         <h2>Patient Information</h2>
         <p><strong>Name:</strong> {{ $patient->name }}</p>

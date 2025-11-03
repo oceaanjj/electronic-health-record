@@ -1,4 +1,4 @@
-    <div class="page-break"></div>
+<div class="page-break"></div>
 
     <div class="section">
         <h2 class="section-title">6. Lab Values</h2>

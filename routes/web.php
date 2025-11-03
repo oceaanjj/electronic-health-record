@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\DiagnosticsController;
 use App\Http\Controllers\LabValuesController;
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\PatientController;
@@ -160,6 +160,13 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
     });
 
+    Route::middleware(['auth'])->group(function () {
+    // Diagnostics
+    Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
+    Route::post('/diagnostics/upload', [DiagnosticsController::class, 'upload'])->name('diagnostics.upload');
+    Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
+    Route::post('/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
+});
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {

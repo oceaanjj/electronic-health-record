@@ -3,15 +3,16 @@
 <head>
     <title>Patient Report</title>
     <style>
-        body { font-family: sans-serif; margin: 20px; }
+        * { box-sizing: border-box; }
+        body { font-family: sans-serif; margin: 10mm 15mm; }
         h1, h2, h3 { color: #333; }
-        .section { margin-bottom: 30px; border: 1px solid #eee; padding: 15px; border-radius: 5px; }
-        .section-title { background-color: #f9f9f9; padding: 10px; margin: -15px -15px 15px -15px; border-bottom: 1px solid #eee; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
+        .section { margin-bottom: 15px; border: 1px solid #eee; padding: 10px; border-radius: 5px; }
+        .section-title { background-color: #f9f9f9; padding: 8px; margin: -10px -10px 10px -10px; border-bottom: 1px solid #eee; }
+        ul { list-style-type: disc; margin-left: 15px; padding: 0; }
+        ul ul { list-style-type: circle; margin-left: 15px; }
+        li { margin-bottom: 3px; }
         .no-data { color: #777; font-style: italic; }
-        .diagnostic-image { max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ddd; }
+        .diagnostic-image { max-width: 100%; height: auto; margin-top: 8px; border: 1px solid #ddd; }
         .page-break { page-break-after: always; }
     </style>
 </head>
@@ -24,96 +25,64 @@
         @if($presentIllness->isEmpty())
             <p class="no-data">No Present Illness data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($presentIllness->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($presentIllness as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($presentIllness as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
 
         <h3>Past Medical / Surgical</h3>
         @if($pastMedicalSurgical->isEmpty())
             <p class="no-data">No Past Medical / Surgical data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($pastMedicalSurgical->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($pastMedicalSurgical as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($pastMedicalSurgical as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
 
         <h3>Known Conditions or Allergies</h3>
         @if($allergies->isEmpty())
             <p class="no-data">No Known Conditions or Allergies data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($allergies->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($allergies as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($allergies as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
 
         <h3>Vaccination</h3>
         @if($vaccination->isEmpty())
             <p class="no-data">No Vaccination data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($vaccination->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($vaccination as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($vaccination as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 
@@ -124,24 +93,16 @@
         @if($physicalExam->isEmpty())
             <p class="no-data">No Physical Exam data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($physicalExam->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($physicalExam as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($physicalExam as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 
@@ -152,24 +113,16 @@
         @if($vitals->isEmpty())
             <p class="no-data">No Vital Signs data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($vitals->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($vitals as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($vitals as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 
@@ -180,24 +133,16 @@
         @if($intakeAndOutput->isEmpty())
             <p class="no-data">No Intake and Output data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($intakeAndOutput->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($intakeAndOutput as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($intakeAndOutput as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 
@@ -208,24 +153,16 @@
         @if($actOfDailyLiving->isEmpty())
             <p class="no-data">No Activities of Daily Living data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($actOfDailyLiving->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($actOfDailyLiving as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($actOfDailyLiving as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 
@@ -236,24 +173,16 @@
         @if($labValues->isEmpty())
             <p class="no-data">No Lab Values data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($labValues->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($labValues as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($labValues as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 
@@ -265,14 +194,20 @@
             <p class="no-data">No Diagnostics data available.</p>
         @else
             @foreach($diagnostics as $item)
-                <p><strong>Type:</strong> {{ $item->type }}</p>
-                <p><strong>Original Name:</strong> {{ $item->original_name }}</p>
-                @if($item->path)
-                    <img src="{{ asset('storage/' . $item->path) }}" alt="Diagnostic Image" class="diagnostic-image">
-                @else
-                    <p class="no-data">No image available for this diagnostic entry.</p>
-                @endif
-                <hr>
+                <ul>
+                    @if(!in_array('type', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                        <li><strong>Type:</strong> {{ $item->type }}</li>
+                    @endif
+                    @if(!in_array('original_name', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                        <li><strong>Original Name:</strong> {{ $item->original_name }}</li>
+                    @endif
+                    @if($item->path && !in_array('path', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                        <li><strong>Image:</strong> <img src="{{ asset('storage/' . $item->path) }}" alt="Diagnostic Image" class="diagnostic-image"></li>
+                    @elseif(!in_array('path', ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                        <li>No image available for this diagnostic entry.</li>
+                    @endif
+                </ul>
+                @if(!$loop->last)<hr>@endif
             @endforeach
         @endif
     </div>
@@ -284,24 +219,16 @@
         @if($ivsAndLines->isEmpty())
             <p class="no-data">No IV's & Lines data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($ivsAndLines->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($ivsAndLines as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($ivsAndLines as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 
@@ -320,72 +247,48 @@
         @if($currentMedication->isEmpty())
             <p class="no-data">No Current Medication data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($currentMedication->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($currentMedication as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($currentMedication as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
 
         <h3>Patient's Home Medication (If Any)</h3>
         @if($homeMedication->isEmpty())
             <p class="no-data">No Home Medication data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($homeMedication->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($homeMedication as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($homeMedication as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
 
         <h3>Changes in Medication During Hospitalization</h3>
         @if($changesInMedication->isEmpty())
             <p class="no-data">No Changes in Medication data available.</p>
         @else
-            <table>
-                <thead>
-                    <tr>
-                        @foreach($changesInMedication->first()->getAttributes() as $column => $value)
-                            <th>{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($changesInMedication as $item)
-                        <tr>
-                            @foreach($item->getAttributes() as $value)
-                                <td>{{ $value }}</td>
-                            @endforeach
-                        </tr>
+            @foreach($changesInMedication as $item)
+                <ul>
+                    @foreach($item->getAttributes() as $column => $value)
+                        @if(!in_array($column, ['id', 'patient_id', 'created_at', 'updated_at', 'deleted_at']))
+                            <li><strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong> {{ $value }}</li>
+                        @endif
                     @endforeach
-                </tbody>
-            </table>
+                </ul>
+                @if(!$loop->last)<hr>@endif
+            @endforeach
         @endif
     </div>
 </body>

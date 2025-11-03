@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Doctor;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\MedicalHistory\Allergy;
@@ -25,6 +26,11 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
+    public function showPatientReportForm()
+    {
+        $patients = Patient::all();
+        return view('doctor.patient-report', compact('patients'));
+    }
     public function generateReport(Request $request)
     {
         $patient_id = $request->input('patient_id');
@@ -48,6 +54,8 @@ class ReportController extends Controller
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
         ];
+
+        return view('doctor.reports.patient-report', $data);
     }
 
     public function downloadPDF($patient_id)
@@ -73,7 +81,7 @@ class ReportController extends Controller
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
         ];
 
-        $pdf = Pdf::loadView('reports.patient-report-pdf', $data);
+        $pdf = Pdf::loadView('doctor.reports.patient-report-pdf', $data);
         return $pdf->download($patient->name . '_Results.pdf');
     }
 }

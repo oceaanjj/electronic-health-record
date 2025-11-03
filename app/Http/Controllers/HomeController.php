@@ -68,8 +68,7 @@ class HomeController extends Controller
 
     public function doctorHome()
     {
-        $patients = Patient::all();
-        return view('doctor-home', compact('patients'));
+        return view('doctor.home');
     }
 
     public function adminHome()

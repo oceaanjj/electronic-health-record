@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Doctor Home')
+@section('title', 'Generate Patient Report')
 
 @section('content')
 <div class="container">
-    <h1>DOCTOR HOME</h1>
+    <h1>Generate Patient Report</h1>
 
     <div class="card">
         <div class="card-header">Generate Patient Report</div>

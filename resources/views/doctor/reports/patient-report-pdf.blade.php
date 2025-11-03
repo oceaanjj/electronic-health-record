@@ -88,6 +88,22 @@
         .page-break {
             page-break-after: always;
         }
+
+        .footer {
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            height: 30px;
+            text-align: center;
+            line-height: 35px;
+        }
+
+        .footer .page-number:after {
+            content: "Page " counter(page) " of " counter(pages);
+            font-size: 10px;
+            color: gray;
+        }
     </style>
 </head>
 
@@ -117,6 +133,7 @@
 
     @include('doctor.reports.partials._medication_administration')
 
+
     @include('doctor.reports.partials._medication_reconciliation', [
         'currentMedication' => $currentMedication,
         'homeMedication' => $homeMedication,
@@ -124,6 +141,9 @@
     ])
 
     @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning])
-</body>
 
+    <div class="footer">
+        <span class="page-number"></span>
+    </div>
+</body>
 </html>

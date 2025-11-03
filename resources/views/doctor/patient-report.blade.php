@@ -1,6 +1,13 @@
 @extends('layouts.doctor')
 @section('title', 'Generate Patient Report')
 @section('content')
+    <style>
+        /* for arr down keyboard in search patient */
+        .option.active {
+            background-color: #dbeafe;
+            /* bg-blue-100 */
+        }
+    </style>
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Generate Patient Report</h1>
@@ -14,7 +21,7 @@
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="-Select or type to search-" autocomplete="off">
                         <div id="patient_options_container"
-                            class="absolute z-10 w-full bg-white border border-gray-300 rounded-b-lg shadow-lg"
+                            class="absolute z-10 w-full bg-white border border-gray-300 rounded-b-lg shadow-lg max-h-48 overflow-y-auto"
                             style="display: none;">
                             @foreach ($patients as $patient)
                                 <div class="option p-2 hover:bg-gray-200 cursor-pointer"
@@ -32,6 +39,8 @@
         </div>
     </div>
 @endsection
+
+
 
 @push('scripts')
     @vite([

@@ -16,7 +16,10 @@ use App\Models\ActOfDailyLiving;
 use App\Models\LabValues;
 use App\Models\IvsAndLine;
 use App\Models\MedicalReconciliation;
-use App\Models\DischargePlan;
+use App\Models\MedicalReconciliation\ChangesInMedication;
+use App\Models\MedicalReconciliation\CurrentMedication;
+use App\Models\MedicalReconciliation\HomeMedication;
+use App\Models\Diagnostic;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
@@ -28,22 +31,21 @@ class ReportController extends Controller
 
         $data = [
             'patient' => $patient,
-            'allergies' => Allergy::where('patient_id', $patient_id)->get(),
-            'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->get(),
-            'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
             'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
+            'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
+            'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'physicalExam' => PhysicalExam::where('patient_id', $patient_id)->get(),
             'vitals' => Vitals::where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
             'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
             'labValues' => LabValues::where('patient_id', $patient_id)->get(),
+            'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
-            'medicalReconciliation' => MedicalReconciliation::where('patient_id', $patient_id)->get(),
-            'dischargePlan' => DischargePlan::where('patient_id', $patient_id)->get(),
+            'currentMedication' => CurrentMedication::where('patient_id', $patient_id)->get(),
+            'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
+            'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
         ];
-
-        return view('reports.patient-report', $data);
     }
 
     public function downloadPDF($patient_id)
@@ -52,19 +54,20 @@ class ReportController extends Controller
 
         $data = [
             'patient' => $patient,
-            'allergies' => Allergy::where('patient_id', $patient_id)->get(),
-            'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->get(),
-            'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
             'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
+            'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
+            'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'physicalExam' => PhysicalExam::where('patient_id', $patient_id)->get(),
             'vitals' => Vitals::where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
             'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
             'labValues' => LabValues::where('patient_id', $patient_id)->get(),
+            'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
-            'medicalReconciliation' => MedicalReconciliation::where('patient_id', $patient_id)->get(),
-            'dischargePlan' => DischargePlan::where('patient_id', $patient_id)->get(),
+            'currentMedication' => CurrentMedication::where('patient_id', $patient_id)->get(),
+            'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
+            'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
         ];
 
         $pdf = Pdf::loadView('reports.patient-report-pdf', $data);

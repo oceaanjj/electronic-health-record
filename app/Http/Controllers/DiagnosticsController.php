@@ -32,45 +32,49 @@ class DiagnosticsController extends Controller
         return view('diagnostics', compact('patients', 'patientId', 'selectedPatient', 'images'));
     }
 
-public function submit(Request $request)
-{
-    $request->validate([
-        'patient_id' => 'required|exists:patients,patient_id',
-        'images.*' => 'nullable|image|max:8192',
-    ]);
+    public function submit(Request $request)
+    {
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'images.*' => 'nullable|array',
+            'images.*.*' => 'nullable|image|max:8192', // Allow multiple images
+        ]);
 
-    $patientId = $request->input('patient_id');
+        $patientId = $request->input('patient_id');
 
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $type => $file) {
-            if ($file) {
-                $filename = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('public/diagnostics', $filename);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $type => $files) {
+                if (is_array($files)) {
+                    foreach ($files as $file) {
+                        if ($file) {
+                            $filename = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
+                            $path = $file->storeAs('public/diagnostics', $filename);
 
-                Diagnostic::create([
-                    'patient_id' => $patientId,
-                    'type' => $type,
-                    'path' => $path,
-                    'original_name' => $file->getClientOriginalName(),
-                ]);
+                            Diagnostic::create([
+                                'patient_id' => $patientId,
+                                'type' => $type,
+                                'path' => $path,
+                                'original_name' => $file->getClientOriginalName(),
+                            ]);
+                        }
+                    }
+                }
             }
         }
+
+        return redirect()->back()->with('success', 'Diagnostics saved successfully.');
     }
 
-    return redirect()->back()->with('success', 'Diagnostics saved successfully.');
+public function destroy($id)
+{
+    $record = Diagnostic::findOrFail($id);
+
+    if ($record->path && Storage::exists($record->path)) {
+        Storage::delete($record->path);
+    }
+
+    $record->delete();
+
+    return redirect()->back()->with('success', 'Image deleted successfully.');
 }
-
-
-    public function destroy($id)
-    {
-        $record = Diagnostic::findOrFail($id);
-
-        if ($record->path && Storage::exists($record->path)) {
-            Storage::delete($record->path);
-        }
-
-        $record->delete();
-
-        return redirect()->back()->with('success', 'Image deleted.');
-    }
 }

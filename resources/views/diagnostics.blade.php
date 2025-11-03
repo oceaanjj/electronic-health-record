@@ -52,11 +52,14 @@
     border-radius: 4px;
     color: #fff;
     overflow: hidden;
+    flex-wrap: wrap;
 }
 .image-preview {
     max-height: 200px;
     max-width: 100%;
     object-fit: contain;
+    margin: 4px;
+    border-radius: 5px;
 }
 .panel-title {
     font-weight: 700;
@@ -69,11 +72,11 @@
 .insert-photo {
     padding: 0.5rem;
     border-radius: 4px;
+    cursor: pointer;
 }
 .insert-photo.enabled {
     background: #f2b233;
     color: #222;
-    cursor: pointer;
 }
 .insert-photo.disabled {
     background: #ccc;
@@ -91,6 +94,7 @@
 .delete-button.disabled {
     background: #ccc;
     color: #666;
+    cursor: not-allowed;
 }
 .submit-btn {
     margin-top: 1rem;
@@ -103,21 +107,24 @@
 </style>
 
 <div class="container">
+
+    {{-- Patient select form --}}
+    <form action="{{ route('diagnostics.select') }}" method="POST" style="margin-bottom:1rem;">
+        @csrf
+        <label for="patient_select" style="color:white;margin-right:0.5rem;">PATIENT NAME :</label>
+        <select id="patient_select" name="patient_id" onchange="this.form.submit()">
+            <option value="">-- Select Patient --</option>
+            @foreach ($patients as $patient)
+                <option value="{{ $patient->patient_id }}"
+                    {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
+                    {{ $patient->name }}
+                </option>
+            @endforeach
+        </select>
+    </form>
+
     <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="header">
-            <label for="patient_id">PATIENT NAME :</label>
-            <select id="patient_info" name="patient_id">
-                <option value="">-- Select Patient --</option>
-                @foreach ($patients as $patient)
-                    <option value="{{ $patient->patient_id }}" 
-                        {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
-                        {{ $patient->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
         <div class="diagnostic-grid">
             @php
                 $types = [
@@ -132,8 +139,11 @@
                 <div class="diagnostic-panel">
                     <div class="image-container" id="preview-{{ $key }}">
                         @if(isset($images[$key]) && $images[$key]->count() > 0)
-                            @php $latest = $images[$key]->last(); @endphp
-                            <img src="{{ Storage::url($latest->path) }}" alt="{{ $label }}" class="image-preview">
+                            @foreach($images[$key] as $image)
+                                <div class="image-wrapper">
+                                    <img src="{{ Storage::url($image->path) }}" alt="{{ $label }}" class="image-preview">
+                                </div>
+                            @endforeach
                         @else
                             <div class="panel-title">{{ $label }}</div>
                         @endif
@@ -141,22 +151,23 @@
 
                     <div class="button-container">
                         <label class="insert-photo enabled">
-                        INSERT PHOTO
-                        <input type="file" name="images[{{ $key }}]" accept="image/*"
-                            style="display:none;"
-                            onchange="previewImage(event, '{{ $key }}')">
-                    </label>
+                            INSERT PHOTO
+                            <input type="file" name="images[{{ $key }}][]" accept="image/*" multiple
+                                   style="display:none;"
+                                   onchange="previewImages(event, '{{ $key }}')">
+                        </label>
 
-                        @if(isset($images[$key]) && $images[$key]->count() > 0)
-                            @php $latest = $images[$key]->last(); @endphp
-                            <form action="{{ route('diagnostics.destroy', $latest->id) }}" method="POST" onsubmit="return confirm('Delete this image?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="delete-button">DELETE</button>
-                            </form>
-                        @else
-                            <button disabled class="delete-button disabled">DELETE</button>
-                        @endif
+                        <form id="delete-form-{{ $key }}" action="#" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button"
+                                    id="delete-btn-{{ $key }}"
+                                    class="delete-button {{ (isset($images[$key]) && $images[$key]->count() > 0) ? '' : 'disabled' }}"
+                                    onclick="deleteImages('{{ $key }}')"
+                                    {{ (!isset($images[$key]) || $images[$key]->count() == 0) ? 'disabled' : '' }}>
+                                DELETE
+                            </button>
+                        </form>
                     </div>
                 </div>
             @endforeach
@@ -169,19 +180,45 @@
 </div>
 
 <script>
-function previewImage(event, type) {
-    const file = event.target.files[0];
-    if (!file) return;
-
+function previewImages(event, type) {
+    const files = event.target.files;
     const previewBox = document.getElementById('preview-' + type);
+    const deleteBtn = document.getElementById('delete-btn-' + type);
+
+    // Clear old previews
     previewBox.innerHTML = '';
 
-    const img = document.createElement('img');
-    img.classList.add('image-preview');
-    img.src = URL.createObjectURL(file);
+    // Show each selected image
+    Array.from(files).forEach(file => {
+        const img = document.createElement('img');
+        img.classList.add('image-preview');
+        img.src = URL.createObjectURL(file);
+        previewBox.appendChild(img);
+    });
 
-    previewBox.appendChild(img);
+    // Enable the delete button when files exist
+    if (files.length > 0) {
+        deleteBtn.classList.remove('disabled');
+        deleteBtn.disabled = false;
+    } else {
+        deleteBtn.classList.add('disabled');
+        deleteBtn.disabled = true;
+    }
+}
+
+// Handle delete button click
+function deleteImages(type) {
+    const deleteBtn = document.getElementById('delete-btn-' + type);
+    const previewBox = document.getElementById('preview-' + type);
+
+    if (confirm('Are you sure you want to remove the selected images?')) {
+        // Clear previews (client-side)
+        previewBox.innerHTML = '<div class="panel-title">' + type.toUpperCase() + '</div>';
+        deleteBtn.classList.add('disabled');
+        deleteBtn.disabled = true;
+    }
 }
 </script>
 
 @endsection
+    

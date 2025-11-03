@@ -9,8 +9,8 @@ return new class extends Migration
     {
         Schema::create('diagnostics', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_id')->index();
-            $table->string('type'); // xray, ultrasound, ct_scan, echocardiogram
+            $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
+            $table->string('type');
             $table->string('path');
             $table->string('original_name')->nullable();
             $table->timestamps();

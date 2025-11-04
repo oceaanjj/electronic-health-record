@@ -162,11 +162,10 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
     });
 
-    Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
+Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
 Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
 Route::post('/diagnostics/submit', [DiagnosticsController::class, 'submit'])->name('diagnostics.submit');
-Route::delete('/diagnostics/destroy/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
-
+Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {

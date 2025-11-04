@@ -5,220 +5,293 @@
 @section('content')
 
 <style>
-.container {
-    padding: 1rem;
+.container { padding: 1rem; }
+.header { display: flex; align-items: center; gap: 1rem; }
+.header label { color: white; font-weight: 600; }
+.alert { padding: 10px; border-radius: 6px; margin-bottom: 1rem; }
+.alert-success { background: #d1e7dd; color: #0f5132; }
+.alert-error { background: #f8d7da; color: #842029; }
+
+.diagnostic-grid { 
+    margin-top: 1rem; 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 1rem; 
 }
-.success-message {
-    background: #d4edda;
-    color: #155724;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-}
-.error-message {
-    background: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-}
-.header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-.header label {
-    color: white;
-}
-.diagnostic-grid {
-    margin-top: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
+
 .diagnostic-panel {
-    background: #f7edc9;
-    border-radius: 6px;
-    width: 48%;
-    min-width: 360px;
-    padding: 0.5rem;
-}
-.image-container {
-    background: linear-gradient(#9edc9e, #1e4e2a);
-    height: 220px;
+    border-radius: 12px;
+    box-shadow: 0 0 5px #b0a87e;
+    flex: 1 1 300px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    color: #fff;
+    flex-direction: column;
     overflow: hidden;
-    flex-wrap: wrap;
 }
-.image-preview {
-    max-height: 200px;
-    max-width: 100%;
-    object-fit: contain;
-    margin: 4px;
-    border-radius: 5px;
+
+.panel-body {
+    background: linear-gradient(135deg, #5a9c5a, #4a8c4a);
+    padding: 1rem;
+    flex-grow: 1;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
 }
-.panel-title {
-    font-weight: 700;
+
+.panel-body h2 {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
 }
-.button-container {
+
+.panel-footer {
+    background: #f7edc9;
+    padding: 0.75rem 1rem;
     display: flex;
     justify-content: space-between;
-    margin-top: 0.6rem;
+    align-items: center;
 }
-.insert-photo {
-    padding: 0.5rem;
+
+.insert-btn {
+    background: green;
+    color: #fff;
+    padding: 6px 12px;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
-.insert-photo.enabled {
-    background: #f2b233;
-    color: #222;
-}
-.insert-photo.disabled {
-    background: #ccc;
-    color: #666;
-    cursor: not-allowed;
-}
-.delete-button {
-    background: #cf2b2b;
-    color: white;
-    padding: 0.5rem;
+
+.clear-btn {
+    background: red;
+    padding: 6px 12px;
     border-radius: 4px;
     border: none;
+    color: #fff;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
 }
-.delete-button.disabled {
-    background: #ccc;
-    color: #666;
-    cursor: not-allowed;
+
+button[type=submit] { 
+    background: #007bff; 
+    color: white; 
+    padding: 8px 16px; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-weight: bold; 
 }
-.submit-btn {
+
+.file-input {
+    display: none;
+}
+
+.preview-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 8px; 
     margin-top: 1rem;
-    background: #2b7a2b;
+}
+.preview-item { 
+    position: relative; 
+    width: 100px; 
+    height: 100px; 
+}
+.preview-item img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    border-radius: 8px; 
+    border: 2px solid #ccc; 
+}
+.delete-btn { 
+    position: absolute; 
+    top: -6px; 
+    right: -6px; 
+    background: red; 
+    color: white; 
+    border: none; 
+    border-radius: 50%; 
+    width: 22px; 
+    height: 22px; 
+    font-size: 12px; 
+    cursor: pointer; 
+}
+
+.uploaded-title {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 5px;
+}
+
+/* --- button disabledd --- */
+.insert-btn.disabled,
+.insert-btn[disabled],
+button.clear-btn[disabled],
+button[type=submit][disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #e0e0e0;
+    color: #999;
+}
+button.clear-btn[disabled] {
+    background: none;
+    opacity: 0.4;
 }
 </style>
 
 <div class="container">
 
-    {{-- Patient select form --}}
-    <form action="{{ route('diagnostics.select') }}" method="POST" style="margin-bottom:1rem;">
-        @csrf
-        <label for="patient_select" style="color:white;margin-right:0.5rem;">PATIENT NAME :</label>
-        <select id="patient_select" name="patient_id" onchange="this.form.submit()">
-            <option value="">-- Select Patient --</option>
-            @foreach ($patients as $patient)
-                <option value="{{ $patient->patient_id }}"
-                    {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
-                    {{ $patient->name }}
-                </option>
-            @endforeach
-        </select>
-    </form>
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-error">{{ session('error') }}</div>
+    @endif
+
+    <div class="header">
+        <form action="{{ route('diagnostics.select') }}" method="POST" id="patient-select-form">
+            @csrf
+            <label for="patient_id">PATIENT NAME:</label>
+            <select name="patient_id" id="patient_id" onchange="this.form.submit()" required>
+                <option value="">-- Select Patient --</option>
+                @foreach ($patients as $patient)
+                    <option value="{{ $patient->patient_id }}" {{ $patientId == $patient->patient_id ? 'selected' : '' }}>
+                        {{ $patient->name }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
+    </div>
+
+    @if ($selectedPatient)
+        <h2 style="color:white; margin-top: 1rem;">Diagnostics for: <strong>{{ $selectedPatient->name }}</strong></h2>
+    @endif
 
     <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="patient_id" value="{{ $selectedPatient ? $selectedPatient->patient_id : '' }}">
+
         <div class="diagnostic-grid">
             @php
                 $types = [
-                    'xray' => 'XRAY',
-                    'ultrasound' => 'ULTRASOUND',
-                    'ct_scan' => 'CT SCAN',
-                    'echocardiogram' => 'ECHOCARDIOGRAM'
+                    'xray' => 'X-Ray',
+                    'ultrasound' => 'Ultrasound',
+                    'ct_scan' => 'CT Scan',
+                    'echocardiogram' => 'Echocardiogram'
                 ];
             @endphp
 
-            @foreach($types as $key => $label)
+            @foreach ($types as $key => $label)
                 <div class="diagnostic-panel">
-                    <div class="image-container" id="preview-{{ $key }}">
-                        @if(isset($images[$key]) && $images[$key]->count() > 0)
-                            @foreach($images[$key] as $image)
-                                <div class="image-wrapper">
-                                    <img src="{{ Storage::url($image->path) }}" alt="{{ $label }}" class="image-preview">
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="panel-title">{{ $label }}</div>
+                    
+                    <div class="panel-body">
+                        <h2>{{ $label }}</h2>
+
+                        <div class="preview-grid" id="preview-{{ $key }}"></div>
+
+                        @if ($selectedPatient && isset($images[$key]) && count($images[$key]))
+                            <h4 class="uploaded-title">Uploaded Files:</h4>
+                            <div class="preview-grid">
+                                @foreach ($images[$key] as $image)
+                                    <div class="preview-item">
+                                        <img src="{{ Storage::url($image->path) }}" alt="{{ $image->original_name }}">
+                                        <button type="button" class="delete-btn"
+                                            onclick="deleteImage('{{ route('diagnostics.destroy', $image->id) }}')">x</button>
+                                    </div>
+                                @endforeach
+                            </div>
                         @endif
                     </div>
 
-                    <div class="button-container">
-                        <label class="insert-photo enabled">
+                    <div class="panel-footer">
+                        <input 
+                            type="file" 
+                            name="images[{{ $key }}][]" 
+                            accept="image/*" 
+                            multiple 
+                            onchange="previewImages(event, '{{ $key }}')" 
+                            class="file-input" 
+                            id="file-input-{{ $key }}"
+                            {{ !$selectedPatient ? 'disabled' : '' }}>
+                        
+                        <label 
+                            for="file-input-{{ $key }}" 
+                            class="insert-btn {{ !$selectedPatient ? 'disabled' : '' }}">
                             INSERT PHOTO
-                            <input type="file" name="images[{{ $key }}][]" accept="image/*" multiple
-                                   style="display:none;"
-                                   onchange="previewImages(event, '{{ $key }}')">
                         </label>
 
-                        <form id="delete-form-{{ $key }}" action="#" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button"
-                                    id="delete-btn-{{ $key }}"
-                                    class="delete-button {{ (isset($images[$key]) && $images[$key]->count() > 0) ? '' : 'disabled' }}"
-                                    onclick="deleteImages('{{ $key }}')"
-                                    {{ (!isset($images[$key]) || $images[$key]->count() == 0) ? 'disabled' : '' }}>
-                                DELETE
-                            </button>
-                        </form>
+                        <button 
+                            type="button" 
+                            class="clear-btn" 
+                            onclick="clearPreview('{{ $key }}')"
+                            {{ !$selectedPatient ? 'disabled' : '' }}>
+                            CLEAR
+                        </button>
                     </div>
+                    
                 </div>
             @endforeach
         </div>
 
-        <div class="buttons">
-            <button class="submit-btn" type="submit">Submit</button>
+        <div style="margin-top: 1rem;">
+            <button type="submit" {{ !$selectedPatient ? 'disabled' : '' }}>Submit</button>
         </div>
     </form>
 </div>
 
 <script>
 function previewImages(event, type) {
-    const files = event.target.files;
-    const previewBox = document.getElementById('preview-' + type);
-    const deleteBtn = document.getElementById('delete-btn-' + type);
+    const input = event.target;
+    const previewContainer = document.getElementById('preview-' + type);
+    previewContainer.innerHTML = '';
 
-    // Clear old previews
-    previewBox.innerHTML = '';
-
-    // Show each selected image
-    Array.from(files).forEach(file => {
-        const img = document.createElement('img');
-        img.classList.add('image-preview');
-        img.src = URL.createObjectURL(file);
-        previewBox.appendChild(img);
-    });
-
-    // Enable the delete button when files exist
-    if (files.length > 0) {
-        deleteBtn.classList.remove('disabled');
-        deleteBtn.disabled = false;
-    } else {
-        deleteBtn.classList.add('disabled');
-        deleteBtn.disabled = true;
+    if (input.files) {
+        Array.from(input.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const div = document.createElement('div');
+                div.classList.add('preview-item');
+                div.innerHTML = `<img src="${e.target.result}" alt="preview">`;
+                previewContainer.appendChild(div);
+            };
+            reader.readAsDataURL(file);
+        });
     }
 }
 
-// Handle delete button click
-function deleteImages(type) {
-    const deleteBtn = document.getElementById('delete-btn-' + type);
-    const previewBox = document.getElementById('preview-' + type);
+function clearPreview(type) {
+    const previewContainer = document.getElementById('preview-' + type);
+    const input = document.querySelector(`input[name="images[${type}][]"]`); 
+    previewContainer.innerHTML = '';
+    input.value = '';
+}
 
-    if (confirm('Are you sure you want to remove the selected images?')) {
-        // Clear previews (client-side)
-        previewBox.innerHTML = '<div class="panel-title">' + type.toUpperCase() + '</div>';
-        deleteBtn.classList.add('disabled');
-        deleteBtn.disabled = true;
-    }
+function deleteImage(url) {
+    if (!confirm('Delete this image?')) return;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new URLSearchParams({ _method: 'DELETE' })
+    })
+    .then(res => {
+        if (res.ok) location.reload();
+        else alert('Failed to delete image.');
+    })
+    .catch(() => alert('Error deleting image.'));
 }
 </script>
 
 @endsection
-    

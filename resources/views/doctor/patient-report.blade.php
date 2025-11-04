@@ -33,7 +33,8 @@
                     </div>
                     <input type="hidden" name="patient_id" id="patient_id_hidden">
                 </div>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate
+                <button type="submit"
+                    class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Generate
                     Report</button>
             </form>
         </div>

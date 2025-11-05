@@ -54,7 +54,9 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'middle_name' => 'nullable|string',
             'age' => 'required|integer',
             'sex' => 'required|in:Male,Female,Other',
             'address' => 'nullable|string',
@@ -92,7 +94,9 @@ class PatientController extends Controller
         $patient = Patient::findOrFail($id);
 
         $data = $request->validate([
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'middle_name' => 'nullable|string',
             'age' => 'required|integer',
             'sex' => 'required|in:Male,Female,Other',
             'address' => 'nullable|string',
@@ -160,7 +164,8 @@ class PatientController extends Controller
                 // 1. Search by exact patient_id
                 $query->where('patient_id', $search_term)
                     // 2. Search by partial name match (case-insensitive)
-                    ->orWhere('name', 'LIKE', $search_term . '%');
+                    ->orWhere('first_name', 'LIKE', $search_term . '%')
+                    ->orWhere('last_name', 'LIKE', $search_term . '%');
             });
         }
 
@@ -182,7 +187,8 @@ class PatientController extends Controller
         if (!empty($search_term)) {
             $patients_query->where(function ($query) use ($search_term) {
                 $query->where('patient_id', 'LIKE', $search_term . '%')
-                    ->orWhere('name', 'LIKE', '%' . $search_term . '%');
+                    ->orWhere('first_name', 'LIKE', '%' . $search_term . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $search_term . '%');
             });
         }
 

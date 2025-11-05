@@ -29,7 +29,9 @@ class Patient extends Model
 
     // basically declaration na itong mga columns nato is puwedeng lagyan ng value
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_name',
         'age',
         'sex',
         'address',
@@ -44,6 +46,11 @@ class Patient extends Model
     protected $casts = [
         'admission_date' => 'datetime',
     ];
+
+    public function getNameAttribute()
+    {
+        return trim("{$this->first_name} {$this->middle_name} {$this->last_name}");
+    }
 
     public function nurse()
     {

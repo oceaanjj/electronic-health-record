@@ -16,9 +16,18 @@
             @method('PUT')
 
             <div class="form-group">
-                <label>Name</label>
-                <input type="text" name="name" value="{{ $patient->name }}" required>
+                <label>First Name</label>
+                <input type="text" name="first_name" value="{{ $patient->first_name }}" required>
             </div>
+
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="last_name" value="{{ $patient->last_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Middle Name</label>
+                <input type="text" name="middle_name" value="{{ $patient->middle_name }}">
 
             <div class="form-group">
                 <label>Age</label>

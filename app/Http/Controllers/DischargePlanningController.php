@@ -16,7 +16,7 @@ class DischargePlanningController extends Controller
     {
         $patientId = $request->input('patient_id');
         $request->session()->put('selected_patient_id', $patientId);
-        return redirect()->route('discharge-planning')->with('selected_patient_id', $patientId);
+        return redirect()->route('discharge-planning');
     }
 
     public function show(Request $request)
@@ -108,7 +108,6 @@ class DischargePlanningController extends Controller
 
 
         return redirect()->route('discharge-planning')
-            ->withInput($data)
             ->with('success', $message);
     }
 }

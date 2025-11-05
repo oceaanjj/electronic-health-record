@@ -12,7 +12,7 @@
             border-radius: 5px;
         }
 
-        .section-title {
+        .section-title {    /* component title */
             background-color: #ffe070ff;
             padding: 5px;
             margin: -8px -8px 8px -8px;

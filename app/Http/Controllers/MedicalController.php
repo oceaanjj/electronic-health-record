@@ -238,7 +238,7 @@ public function storeDevelopmentalHistory(Request $request)
                 );
             }
 
-            return redirect()->route('medical-history')
+            return redirect()->route('developmental-history')
                 ->with('success', $alert);
 
         } catch (Throwable $e) {

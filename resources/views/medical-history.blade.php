@@ -195,20 +195,29 @@
          
         </center>
 
-                <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
+                                <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
 
-                        {{-- paasyos ako ng routing here, dapat mapupunta sa developmental history --}}
-                        <a href="{{ route('developmental-history') }}">
-                            <button class="button-default">NEXT</button>
-                        </a>
-                    </div>
+                
 
-                </div>
+                                        {{-- paasyos ako ng routing here, dapat mapupunta sa developmental history --}}
 
-        
-        
+                                        <button type="submit" class="button-default">NEXT</button>
 
-           
+                                    </div>
 
-</form>
+                
+
+                                </div>
+
+                
+
+                        
+
+                
+
+                           
+
+                
+
+                </form>
 @endsection

@@ -4,23 +4,24 @@
 
 @section('content')
 
-    <div class="header">
-        <label for="patient_info" style="color: white;">PATIENT NAME :</label>
-        <form action="{{ route('lab-values.select') }}" method="POST" id="patient-select-form">
-            @csrf
-            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
-                @foreach ($patients as $patient)
-                    <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id) selected @endif>
-                    {{ $patient->name }}
-                    </option>
-                @endforeach
-            </select>
-        </form>
-    </div>
+    <x-searchable-dropdown 
+        :patients="$patients" 
+        :selectedPatient="$selectedPatient ?? null"
+        selectUrl="{{ route('lab-values.select') }}" 
+    />
 
-    <form action="{{ route('lab-values.store') }}" method="POST">
+    <div id="form-content-container">
+        {{-- DISABLED input overlay --}}
+        @if (!session('selected_patient_id'))
+            <div class="form-overlay" style="margin-left:15rem;">
+                <span>Please select a patient to input</span> {{-- message --}}
+            </div>
+        @endif
+
+    <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
+            data-analyze-url="{{ route('lab-values.run-cdss-field') }}">
     @csrf
+    <fieldset @if (!session('selected_patient_id')) disabled @endif>
     <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
     <center>
@@ -59,7 +60,7 @@
                             <td class="p-2">
                                 <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
                                     value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
-                                    class="w-full h-[20px]">
+                                    class="w-full h-[20px] cdss-input" data-field-name="{{ $name }}_result">
                             </td>
                             <td class="p-2">
                                 <input type="text" name="{{ $name }}_normal_range" placeholder="Normal Range"
@@ -80,25 +81,8 @@
 
                     @foreach ($labTests as $label => $name)
                         <tr>
-                            <td class="align-middle">
-                                <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center"></div>
-                                    @if (session('alerts') && isset(session('alerts')[$name . '_alerts']))
-                                        @foreach (session('alerts')[$name . '_alerts'] as $alertData)
-                                            @php
-                                                $alertText = $alertData['text'];
-                                                $severity = $alertData['severity'];
-                                                $color = match($severity) {
-                                                    \App\Services\LabValuesCdssService::CRITICAL => 'text-red-600 font-bold',
-                                                    \App\Services\LabValuesCdssService::WARNING => 'text-orange-500',
-                                                    \App\Services\LabValuesCdssService::INFO => 'text-blue-500',
-                                                    \App\Services\LabValuesCdssService::NONE => 'text-green-600',
-                                                    default => 'text-gray-600',
-                                                };
-                                            @endphp
-                                            <p class="{{ $color }} text-sm leading-snug">{{ $alertText }}</p>
-                                        @endforeach
-                                    @endif
-                                </div>
+                            <td class="align-middle alert-box" data-alert-for="{{ $name }}_result">
+                                {{-- Alert content will be dynamically loaded by alert.js --}}
                             </td>
                         </tr>
                     @endforeach
@@ -112,11 +96,17 @@
         <button type="button" class="button-default">CDSS</button>
         <button type="submit" class="button-default">SUBMIT</button>
     </div>
+</fieldset>
 </form>
+</div>
 
 @endsection
 
 @push('styles')
     @vite(['resources/css/lab-values.css'])
+@endpush
+
+@push('scripts')
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
 @endpush
 

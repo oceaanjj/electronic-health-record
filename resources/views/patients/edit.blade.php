@@ -85,7 +85,7 @@
 
              <div class="form-group">
                 <label>Admission Date</label>
-                <input type="date" name="admission_date" value="{{ $patient->admission_date }}">
+                <input type="date" name="admission_date" value="{{ $patient->admission_date ? $patient->admission_date->format('Y-m-d') : '' }}">
             </div>
 
             <div class="form-group full-width">

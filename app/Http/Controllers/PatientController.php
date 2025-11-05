@@ -194,6 +194,10 @@ class PatientController extends Controller
 
         $patients = $patients_query->get();
 
+        $patients->each(function ($patient) {
+            $patient->name = $patient->name;
+        });
+
         return response()->json($patients);
     }
 }

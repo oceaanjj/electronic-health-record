@@ -12,8 +12,12 @@ return new class extends Migration {
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id('patient_id');
-            $table->string('name');
+            // $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('middle_name')->nullable();
             $table->integer('age');
+            $table->date('birthdate')->nullable();
             $table->enum('sex', ['Male', 'Female', 'Other']);
             $table->string('address')->nullable();
             $table->string('birthplace')->nullable();
@@ -34,6 +38,11 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('patients');
+
+        // Re-enable foreign key checks
+        Schema::enableForeignKeyConstraints();
     }
 };

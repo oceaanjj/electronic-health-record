@@ -42,10 +42,16 @@
             <div class="form-group">
                 <label>Middle Name</label>
                 <input type="text" name="middle_name" value="{{ $patient->middle_name }}">
+            </div>
+
+            <div class="form-group">
+                <label>Birthdate</label>
+                <input type="date" name="birthdate" id="birthdate" value="{{ $patient->birthdate }}">
+            </div>
 
             <div class="form-group">
                 <label>Age</label>
-                <input type="number" name="age" value="{{ $patient->age }}" required>
+                <input type="number" name="age" value="{{ $patient->age }}" id="age" readonly required>
             </div>
 
             <div class="form-group">
@@ -100,4 +106,8 @@
 
 @push('styles')
     @vite(['resources/css/edit-style.css'])
+@endpush
+
+@push('scripts')
+    @vite(['resources/js/compute-age.js'])
 @endpush

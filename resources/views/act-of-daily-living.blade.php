@@ -4,39 +4,9 @@
 
     {{-- NEW SEARCHABLE PATIENT DROPDOWN, DATE, AND DAY SELECTORS --}}
     <div class="header" style="display: flex; align-items: center; justify-content: flex-start; gap: 20px;">
-        {{-- PATIENT SELECTOR --}}
-        <label for="patient_search_input" style="white-space: nowrap;">PATIENT NAME :</label>
-        <div class="searchable-dropdown" data-select-url="{{ route('adl.select') }}" style="min-width: 250px;">
-            <input type="text" id="patient_search_input" placeholder="-Select or type to search-"
-                value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off">
-            <div id="patient_options_container">
-                @foreach ($patients as $patient)
-                    <div class="option" data-value="{{ $patient->patient_id }}">
-                        {{ trim($patient->name) }}
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        {{-- This hidden input will hold the selected patient's ID for the main form and for the Date/Day logic --}}
-        <input type="hidden" name="patient_id_for_form" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
+        <x-searchable-dropdown :patients="$patients" :selectedPatient="$selectedPatient" selectUrl="{{ route('adl.select') }}" />
 
-        {{-- DATE INPUT --}}
-        <label for="date_selector" style=" white-space: nowrap;">DATE :</label>
-        {{-- Used the $currentDate passed from the controller, which correctly handles session/admission date logic --}}
-        <input class="date" type="date" id="date_selector" name="date"
-            value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-            @if (!$selectedPatient) disabled @endif>
-
-        {{-- DAY NO SELECTOR --}}
-        <label for="day_no_selector" style="white-space: nowrap;">DAY NO :</label>
-        <select id="day_no_selector" name="day_no" @if (!$selectedPatient) disabled @endif>
-            <option value="">-- Day --</option>
-            @for ($i = 1; $i <= 30; $i++)
-                <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
-                    {{ $i }}
-                </option>
-            @endfor
-        </select>
+        <x-date-day-selector :selectedPatient="$selectedPatient" :currentDate="$currentDate" :currentDayNo="$currentDayNo" />
     </div>
     {{-- END HEADER --}}
 
@@ -143,4 +113,16 @@
 
 @push('scripts')
     @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const patientIdHidden = document.getElementById("patient_id_hidden");
+            const dateSelector = document.getElementById("date_selector");
+
+            // Only initialize if we have a patient ID and the date selector exists (i.e., it's the ADL form)
+            if (patientIdHidden && patientIdHidden.value && dateSelector) {
+                // Explicitly call initializeDateDayLoader with the correct URL
+                window.initializeDateDayLoader('{{ route('adl.select') }}');
+            }
+        });
+    </script>
 @endpush

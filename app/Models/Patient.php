@@ -64,8 +64,18 @@ class Patient extends Model
 
     public function getNameAttribute()
     {
-        $middleInitial = $this->middle_name ? strtoupper(substr($this->middle_name, 0, 1)) . '.' : '';
-        return trim("{$this->last_name}, {$this->first_name} {$middleInitial}");
+        // capitalize first and last names for display
+        $firstName = ucfirst(strtolower($this->first_name));
+        $lastName = ucfirst(strtolower($this->last_name));
+
+        // determine middle initial, capitalizing if present
+        $middleInitial = '';
+        if ($this->middle_name) {
+            $middleInitial = strtoupper(substr($this->middle_name, 0, 1)) . '.';
+        }
+
+        // return formatted full name
+        return trim("{$lastName}, {$firstName} {$middleInitial}");
     }
 
     public function nurse()

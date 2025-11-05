@@ -13,7 +13,7 @@
         }
 
         .section-title {
-            background-color: #f9f9f9;
+            background-color: #ffe070ff;
             padding: 5px;
             margin: -8px -8px 8px -8px;
             border-bottom: 1px solid #eee;
@@ -26,7 +26,7 @@
             font-size:16px;
         }
        
-        h3 {  /* ex: present illness, past medical sa table */
+        h3 {  /* ex: present illness, sa table */
             font-size: 16px;
             font-weight: bold;
             margin-top: 15px;

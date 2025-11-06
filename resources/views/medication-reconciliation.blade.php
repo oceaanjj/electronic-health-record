@@ -4,27 +4,14 @@
 
 @section('content')
 
-  <!-- updated dropddwn -->
-  <form action="{{ route('medreconciliation.select') }}" method="POST">
-    @csrf
-    <div class="container">
-      <div class="header">
-        <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-        <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-          <option value="">-- Select Patient --</option>
-          @foreach ($patients as $patient)
-            <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
-              {{ $patient->name }}
-            </option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-  </form>
-
+<div id="form-content-container">
+  <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
+            selectRoute="{{ route('medreconciliation.select') }}" inputPlaceholder="-Select or type to search-"
+            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
   <form action="{{ route('medreconciliation.store') }}" method="POST">
     @csrf
+    <fieldset @if (!session('selected_patient_id')) disabled @endif>
     {{-- Hidden input to send the selected patient's ID with the POST request --}}
     <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
 
@@ -118,6 +105,8 @@
 
     <div class="buttons">
       <button class="btn" type="submit">Submit</button>
+    </div>
+
     </div>
 
   </form>

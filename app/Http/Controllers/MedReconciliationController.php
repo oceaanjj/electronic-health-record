@@ -16,36 +16,37 @@ class MedReconciliationController extends Controller
 
     public function selectPatient(Request $request)
     {
-        $patientId = $request->input('patient_id');
-        $request->session()->put('selected_patient_id', $patientId);
-        return redirect()->route('medication-reconciliation');
-    }
-
-    public function show(Request $request)
-    {
-        // $patients = Patient::all();
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
-
         $selectedPatient = null;
         $currentMedication = null;
         $homeMedication = null;
         $changesInMedication = null;
 
-        // Get the patient ID from the session
-        $patientId = $request->session()->get('selected_patient_id');
+        $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
-            if ($selectedPatient) {
-                // Fetch the medical records for the selected patient
-                $currentMedication = MedicalReconciliation::where('patient_id', $patientId)->first();
-                $homeMedication = HomeMedication::where('patient_id', $patientId)->first();
-                $changesInMedication = ChangesInMedication::where('patient_id', $patientId)->first();
+            if (!$selectedPatient) {
+                $request->session()->forget('selected_patient_id');
+                return view('medication-reconciliation', compact('patients', 'selectedPatient', 'currentMedication', 'homeMedication', 'changesInMedication'));
             }
+            $request->session()->put('selected_patient_id', $patientId);
+
+            $currentMedication = MedicalReconciliation::where('patient_id', $patientId)->first();
+            $homeMedication = HomeMedication::where('patient_id', $patientId)->first();
+            $changesInMedication = ChangesInMedication::where('patient_id', $patientId)->first();
+        } else {
+            $request->session()->forget('selected_patient_id');
         }
 
-        // Pass all necessary data to the view
         return view('medication-reconciliation', compact('patients', 'selectedPatient', 'currentMedication', 'homeMedication', 'changesInMedication'));
+    }
+
+
+    public function show(Request $request)
+    {
+        // The logic for displaying the initial page is now handled by selectPatient
+        return $this->selectPatient($request);
     }
 
 

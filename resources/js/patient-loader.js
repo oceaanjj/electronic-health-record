@@ -28,9 +28,6 @@ document.addEventListener("patient:selected", async (event) => {
             "Patient loader: Missing required data for fetch or patientId.",
             event.detail
         );
-        // Safely disable date/day inputs if they exist
-        if (dateSelector) dateSelector.disabled = true;
-        if (dayNoSelector) dayNoSelector.disabled = true;
         return;
     }
 

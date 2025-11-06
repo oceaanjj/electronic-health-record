@@ -99,8 +99,12 @@ window.initializeDateDayLoader = function (selectUrl) {
 
                 // Re-initialize CDSS alerts for the new form content
                 const newCdssForm = formContainer.querySelector(".cdss-form");
-                if (typeof window.initializeCdssForForm === "function") {
-                    window.initializeCdssForForm(newCdssForm);
+                if (newCdssForm) {
+                    if (newCdssForm.id === 'vitals-form' && typeof window.initializeVitalSignsAlerts === 'function') {
+                        window.initializeVitalSignsAlerts();
+                    } else if (newCdssForm.id === 'io-form' && typeof window.initializeIntakeOutputAlerts === 'function') {
+                        window.initializeIntakeOutputAlerts();
+                    }
                 }
 
                 // Re-attach event listeners to the newly rendered date/day selectors

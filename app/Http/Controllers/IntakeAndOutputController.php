@@ -46,41 +46,66 @@ class IntakeAndOutputController extends Controller
 
     public function selectPatientAndDate(Request $request)
     {
-        $patientId = $request->input('patient_id');
-        $date = $request->input('date');
-        $dayNo = $request->input('day_no');
-
-        $request->session()->put('selected_patient_id', $patientId);
-        $request->session()->put('selected_date', $date);
-        $request->session()->put('selected_day_no', $dayNo);
-
-        return redirect()->route('io.show');
-    }
-
-    public function show(Request $request)
-    {
-        // $patients = Patient::all();
-
         $patients = Auth::user()->patients;
+        $selectedPatient = null;
         $ioData = null;
+        $date = now()->format('Y-m-d');
+        $dayNo = 1;
 
-        $patientId = $request->session()->get('selected_patient_id');
-        $date = $request->session()->get('selected_date');
-        $dayNo = $request->session()->get('selected_day_no');
+        $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
-        if ($patientId && $date && $dayNo) {
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
+            if (!$selectedPatient) {
+                $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData'));
+            }
+            $request->session()->put('selected_patient_id', $patientId);
+
+            $date = $request->input('date');
+            $dayNo = $request->input('day_no');
+
+            if (is_null($date) || is_null($dayNo)) {
+                $latestIo = IntakeAndOutput::where('patient_id', $patientId)
+                                    ->orderBy('date', 'desc')
+                                    ->orderBy('day_no', 'desc')
+                                    ->first();
+
+                if ($latestIo) {
+                    $date = $latestIo->date;
+                    $dayNo = $latestIo->day_no;
+                } else {
+                    $date = now()->format('Y-m-d');
+                    $dayNo = 1;
+                }
+            }
+
+            $request->session()->put('selected_date', $date);
+            $request->session()->put('selected_day_no', $dayNo);
+
             $ioData = IntakeAndOutput::where('patient_id', $patientId)
                 ->where('date', $date)
-                ->where('day_no', $dayNo)
+                ->where('day_no', (int)$dayNo)
                 ->first();
+        } else {
+            $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
         }
+
+        $currentDate = $date;
+        $currentDayNo = $dayNo;
 
         return view('intake-and-output', [
             'patients' => $patients,
             'ioData' => $ioData,
-            'selectedDate' => $date,
-            'selectedDayNo' => $dayNo,
+            'selectedPatient' => $selectedPatient,
+            'currentDate' => $currentDate,
+            'currentDayNo' => $currentDayNo,
         ]);
+    }
+
+    public function show(Request $request)
+    {
+        return $this->selectPatientAndDate($request);
     }
 
     public function store(Request $request)
@@ -145,7 +170,25 @@ class IntakeAndOutputController extends Controller
             ->with('success', $message);
     }
 
+    public function checkIntakeOutput(Request $request)
+    {
+        $oralIntake = $request->input('oral_intake');
+        $ivFluidsVolume = $request->input('iv_fluids_volume');
+        $urineOutput = $request->input('urine_output');
 
+        $data = [
+            'oral_intake' => $oralIntake,
+            'iv_fluids_volume' => $ivFluidsVolume,
+            'urine_output' => $urineOutput,
+        ];
+
+        $cdssAlerts = new \App\Services\IntakeAndOutputCdssService();
+        $result = $cdssAlerts->analyzeIntakeOutput($data);
+
+        $result['severity'] = strtoupper($result['severity']);
+
+        return response()->json($result);
+    }
 
 
 

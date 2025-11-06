@@ -196,6 +196,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::get('/intake-and-output', [IntakeAndOutputController::class, 'show'])->name('io.show');
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
+    Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
 
     // ---------------
     // ADPIE Routes

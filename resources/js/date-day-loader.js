@@ -22,14 +22,16 @@ window.initializeDateDayLoader = function (selectUrl) {
             : null;
     }
 
-    const dateSelector = document.getElementById("date_selector");
-    const dayNoSelector = document.getElementById("day_no_selector");
-    const patientIdHidden = document.getElementById("patient_id_hidden");
     const formContainer = document.getElementById("form-content-container");
 
-    // Check if ALL required ADL elements are present
+    // Get elements for event listeners (these will be re-queried inside handleDateDayChange)
+    const initialDateSelector = document.getElementById("date_selector");
+    const initialDayNoSelector = document.getElementById("day_no_selector");
+    const initialPatientIdHidden = document.getElementById("patient_id_hidden");
+
+    // Check if ALL required ADL elements are present initially
     const isADLForm =
-        dateSelector && dayNoSelector && patientIdHidden && formContainer;
+        initialDateSelector && initialDayNoSelector && initialPatientIdHidden && formContainer;
 
     if (!selectUrl || !isADLForm) {
         console.warn(
@@ -39,6 +41,11 @@ window.initializeDateDayLoader = function (selectUrl) {
     }
 
     const handleDateDayChange = async () => {
+        // Re-query elements to ensure they are fresh after potential DOM updates
+        const patientIdHidden = document.getElementById("patient_id_hidden");
+        const dateSelector = document.getElementById("date_selector");
+        const dayNoSelector = document.getElementById("day_no_selector");
+
         const patientId = patientIdHidden.value;
         const date = dateSelector.value;
         const dayNo = dayNoSelector.value;
@@ -96,9 +103,20 @@ window.initializeDateDayLoader = function (selectUrl) {
                     window.initializeCdssForForm(newCdssForm);
                 }
 
-                // Keep the date/day inputs enabled/disabled status synchronized
-                dateSelector.disabled = false;
-                dayNoSelector.disabled = false;
+                // Re-attach event listeners to the newly rendered date/day selectors
+                const updatedDateSelector = document.getElementById("date_selector");
+                const updatedDayNoSelector = document.getElementById("day_no_selector");
+
+                if (updatedDateSelector && updatedDayNoSelector) {
+                    updatedDateSelector.removeEventListener("change", handleDateDayChange);
+                    updatedDayNoSelector.removeEventListener("change", handleDateDayChange);
+                    updatedDateSelector.addEventListener("change", handleDateDayChange);
+                    updatedDayNoSelector.addEventListener("change", handleDateDayChange);
+
+                    // Keep the date/day inputs enabled/disabled status synchronized
+                    updatedDateSelector.disabled = false;
+                    updatedDayNoSelector.disabled = false;
+                }
             } else {
                 throw new Error(
                     "Could not find '#form-content-container' in response."
@@ -110,22 +128,7 @@ window.initializeDateDayLoader = function (selectUrl) {
         }
     };
 
-    // Remove existing listeners to prevent duplication if called multiple times
-    dateSelector.removeEventListener("change", handleDateDayChange);
-    dayNoSelector.removeEventListener("change", handleDateDayChange);
-
-    // Add new listeners
-    dateSelector.addEventListener("change", handleDateDayChange);
-    dayNoSelector.addEventListener("change", handleDateDayChange);
+    // Attach event listeners to the initial elements
+    initialDateSelector.addEventListener("change", handleDateDayChange);
+    initialDayNoSelector.addEventListener("change", handleDateDayChange);
 };
-
-// Initial call on DOMContentLoaded for forms loaded with an existing patient/date/day.
-document.addEventListener("DOMContentLoaded", () => {
-    const patientIdHidden = document.getElementById("patient_id_hidden");
-    const dateSelector = document.getElementById("date_selector");
-
-    // Only initialize if we have a patient ID and the date selector exists (i.e., it's the ADL form)
-    if (patientIdHidden && patientIdHidden.value && dateSelector) {
-        window.initializeDateDayLoader();
-    }
-});

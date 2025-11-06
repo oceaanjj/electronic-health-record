@@ -94,7 +94,7 @@
 {{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
-            <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}" data-analyze-url="{{ route('vital-signs.check') }}">
+            <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}" data-analyze-url="{{ route('vital-signs.check') }}">
                 @csrf
 
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
@@ -224,6 +224,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             window.initializeDateDayLoader();
             window.initializeVitalSignsAlerts();
+
+            // Debugging for date-day-loader.js
+            const originalHandleDateDayChange = window.initializeDateDayLoader.handleDateDayChange; // Assuming it's exposed
+            window.initializeDateDayLoader.handleDateDayChange = async () => {
+                const patientId = document.getElementById("patient_id_hidden").value;
+                const date = document.getElementById("date_selector").value;
+                const dayNo = document.getElementById("day_no_selector").value;
+                console.log('DEBUG: handleDateDayChange - patientId:', patientId, 'date:', date, 'dayNo:', dayNo);
+                await originalHandleDateDayChange();
+            };
+
+            const patientIdHidden = document.getElementById("patient_id_hidden");
+            const dateSelector = document.getElementById("date_selector");
+            const dayNoSelector = document.getElementById("day_no_selector");
+
+            console.log('DEBUG: DOMContentLoaded - patientId (initial):', patientIdHidden.value);
+            console.log('DEBUG: DOMContentLoaded - date (initial):', dateSelector.value);
+            console.log('DEBUG: DOMContentLoaded - dayNo (initial):', dayNoSelector.value);
         });
     </script>
 @endpush

@@ -1,30 +1,28 @@
+/* Reset */
+* {
+    margin: 5px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Page Background */
 body {
-    background: #1a6a24;
-    margin: 0;
+    background-color: #1a6a24; /* Dark Green */
+    color: white;
     padding: 20px;
-    color: #000;
-    font-family: Arial, sans-serif;
 }
 
-.container {
-    background: #fffbe6; /* light cream */
-    padding: 15px;
-    border-radius: 5px;
-    border: 3px solid #1a6a24;
-    margin-bottom: 20px;
-}
-
+/* Header */
 .header {
-    margin-bottom: 15px;
+    font-size: 22px;
     font-weight: bold;
     background: #1a6a24;
-    color: #fff;
-    padding: 10px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    max-width: 100%;
+    color: #000000;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 3px solid #edb62c;
+    border-radius: 4px;
 }
 
 .header select {
@@ -72,7 +70,7 @@ body {
 }
 
 table {
-    width: 100%;
+    width: 99%;
     border-collapse: collapse;
     margin-top: 10px;
     background: #fffbe6;
@@ -101,6 +99,7 @@ th {
 }
 
 input {
+    color: black;
     width: 100%;
     padding: 6px;
     border: none;
@@ -140,4 +139,40 @@ input {
 
 .alert-green {
     color: green;
+}
+
+button,
+.clear-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1a6a24;
+    color: #fff;
+    border: 2px solid #edb62c;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+}
+
+button:hover,
+.clear-btn:hover {
+    background: #14501b;
+}
+
+/* for patient search */
+#patient_options_container {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ddd;
+    z-index: 1000;
+    /* These two lines create the scrollbar */
+    max-height: 250px; /* You can adjust this value */
+    overflow-y: auto; /* Show scrollbar only when needed */
+    border-radius: 4px;
 }

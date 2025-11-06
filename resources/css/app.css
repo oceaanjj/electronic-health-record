@@ -7,20 +7,34 @@
 @source '../**/*.js';
 
 @font-face {
-  font-family: 'Alte Haas Grotesk Bold';
-  src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: "Alte Haas Grotesk Bold";
+    src: url("/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
 
-  font-family: 'Creato Display Bold';
-  src: url('/public/font/creato_display/CreatoDisplay-Bold.otf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: "Creato Display Bold";
+    src: url("/public/font/creato_display/CreatoDisplay-Bold.otf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
 
-  font-family: 'Creato Display Black';
-  src: url('/public/font/creato_display/CreatoDisplay-Black.otf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: "Creato Display Black";
+    src: url("/public/font/creato_display/CreatoDisplay-Black.otf")
+        format("truetype");
+    font-weight: bold;
+    font-style: normal;
+
+    font-family: "Trajan Pro";
+    src: url("/public/font/trajan-pro/TrajanPro-Bold.otf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+
+    font-family: "typewriter";
+    src: url("/public/font/jmh_typewriter/JMH\ Typewriter-Bold.otf")
+        format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @theme {
@@ -28,16 +42,340 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 
-    --color-ehr: #1a6a24;
-    --color-yellow: #FDE050;
-    --color-dark-yellow: #F3B809;
-    --color-red: 	#ec0000;
-    --color-dark-red: #8E1600;
-    --font-alte: 'Alte Haas Grotesk Bold', arial;
-    --font-creato-bold: 'Creato Display Bold', arial;
-    --font-creato-black: 'Creato Display Black', arial;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-yellow: #eeaa00;
+    --color-dark-green: #1a6a24;
+    --color-beige: #fff6cf;
+    --color-light-beige: #fffced;
+    --color-yellow-light: #edb62c;
+    --color-brown: #744b13;
+    --color-line-brown: #c18b04;
+    --color-button-green: #03582c;
+    --color-button-middle-green: #379f35;
+    --color-button-light-green: #acf858;
+    --color-button-default-green: #e5ffe9;
+    --color-hover: #EBEBEB;
+
+    --font-alte: "Alte Haas Grotesk Bold", arial;
+    --font-creato-bold: "Creato Display Bold", arial;
+    --font-creato-black: "Creato Display Black", arial;
+    --font-trajan-bold: "Trajan Pro", serif;
+    --font-typewriter: "typewriter", monospace;
+
+    --radius-oval: 50%;
 }
 
+@layer components {
+
+    .notepad-lines {
+        background-color: var(--color-beige);
+        background-image: repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 19px,
+            rgba(116, 75, 19, 0.2) 20px
+        );
+
+        line-height: 20px;
+        background-size: 100% 20px;
+        background-attachment: local;
+
+        background-repeat: repeat;
+        background-origin: content-box;
+        background-clip: content-box, border-box;
+
+        border: none;
+        outline: none;
+        resize: none;
+        color: var(--color-brown);
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    .notepad-lines::-webkit-scrollbar {
+        width: 8px;
+        cursor: pointer;
+    }
+
+    .notepad-lines::-webkit-scrollbar-track {
+        background: var(--color-light-beige);
+    }
+
+    .notepad-lines::-webkit-scrollbar-thumb {
+        background-color: rgba(116, 75, 19, 0.4);
+        border-radius: 10px;
+        cursor: grab;
+    }
+
+    .notepad-lines::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(116, 75, 19, 0.7);
+        cursor: grabbing;
+    }
+
+    textarea.notepad-lines {
+        font-family: inherit;
+    }
+
+    td {
+        /* background-color: var(--color-beige);*/
+        border-color: var(--color-line-brown);
+        font-family: var(--font-typewriter);
+        font-size: 12px;
+    }
+
+    .pe {
+        font-family: var(--font-typewriter);
+    }
+
+    .button-default {
+        @apply w-[120px] border-2 rounded-full py-2 px-4 font-creato-bold transition-all duration-300;
+        border-color: var(--color-dark-green);
+        color: var(--color-dark-green);
+        background-color: var(--color-button-default-green);
+        box-shadow: 0 0 0 rgba(0, 128, 0, 0);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .button-default::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            var(--color-button-light-green),
+            var(--color-button-middle-green),
+            var(--color-button-green)
+        );
+        transform: translateY(-100%);
+        transition: transform 0.35s ease-out;
+        z-index: -1;
+    }
+
+    .button-default:hover::before {
+        transform: translateY(0);
+    }
+
+    .button-default:hover {
+        color: white;
+        border-color: var(--color-button-green);
+        transform: scale(1.03);
+        box-shadow: 0 0 10px var(--color-dark-green),
+            0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .button-default:active {
+        transform: scale(0.97) translateY(2px);
+        box-shadow: 0 2px 5px rgba(0, 128, 0, 0.4) inset;
+        transition: transform 0.1s ease-in;
+    }
+
+    .vital-input {
+        @apply w-full text-center px-4 py-5
+            focus:outline-none focus:ring-dark-green;
+            font-family: var(--font-creato-bold);
+        font-size: 13px;
+    }
+
+
+                /* ===== ito yung alert box ===== */
+                .alert-box {
+                @apply w-full rounded-[15px] text-white font-semibold transition-all duration-300;
+
+                background: linear-gradient(to bottom, #8fd89a, #0c5f1c);
+                width: 100%;
+                max-height: 90px;
+
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 12px 14px 12px 16px;
+                box-sizing: border-box;
+                position: relative;
+                overflow: hidden; 
+                cursor: pointer;
+                border-radius: 15px;
+                box-shadow: none;
+                }
+
+                .alert-box.has-no-alert {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 0;
+                overflow: hidden;
+                }
+
+                .alert-box.has-no-alert .alert-message {
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-weight: 600;
+                opacity: 0.9;
+                }
+
+
+                /* ===== kapag over na yung text sa alerts makakapag scroll ===== */
+                .alert-message {
+                width: 100%;
+                overflow-y: auto; 
+                max-height: 70px;
+                line-height: 1.4;
+                word-wrap: break-word;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
+                padding-right: 6px;
+                }
+
+                /* ===== style for scollbar ==== */
+                .alert-message::-webkit-scrollbar {
+                width: 5px;
+                }
+                .alert-message::-webkit-scrollbar-track {
+                background: transparent;
+                }
+                .alert-message::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.45);
+                border-radius: 4px;
+                }
+                .alert-message:hover::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.6);
+                }
+
+
+                .alert-box::before,
+                .alert-box::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                height: 16px;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                }
+
+           
+                .alert-box::before {
+                top: 0;
+                background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
+                }
+
+                .alert-box::after {
+                bottom: 0;
+                background: linear-gradient(to top, rgba(255, 255, 255, 0.35), transparent);
+                }
+
+                
+                .alert-box.is-scrollable::after {
+                opacity: 1;
+                }
+                .alert-box.is-scrolled::before {
+                opacity: 1;
+                }
+
+                /* ===== loading spinner ===== */
+                .alert-loading {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #ffffffcc;
+                font-weight: 600;
+                gap: 10px;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                animation: fadeIn 0.25s ease forwards;
+                }
+
+                .loading-spinner {
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-top: 3px solid #ffffff;
+                border-radius: 50%;
+                width: 18px;
+                height: 18px;
+                animation: spin 0.8s linear infinite;
+                }
+
+                /* ===== ANIMATIONS ===== */
+                @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+                }
+                @keyframes fadeIn {
+                to { opacity: 1; }
+                }
+
+                /* ===== MODAL (unchanged) ===== */
+                .alert-modal-overlay {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(4px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                }
+
+                .alert-modal {
+                background: #fffdf2;
+                padding: 25px 30px;
+                border-radius: 15px;
+                max-width: 480px;
+                width: 90%;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                color: #333;
+                text-align: left;
+                position: relative;
+                }
+
+                .alert-modal h2 {
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #155b23;
+                }
+
+                .alert-modal .close-btn {
+                position: absolute;
+                top: 10px; right: 14px;
+                background: none;
+                border: none;
+                font-size: 22px;
+                color: #333;
+                cursor: pointer;
+                }
+
+
+                /* ===== sa pag choose ng patient ito ===== */
+                .searchable-dropdown input {
+                transition: all 0.2s ease-in-out;
+                background-color: #fff;
+                }
+
+                .searchable-dropdown input:focus {
+                box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+                }
+
+                #patient_options_container {
+                animation: fadeIn 0.15s ease;
+                }
+
+                .option.active {
+                background-color: #e8f0fe; 
+                }
+
+                @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(4px); }
+                to { opacity: 1; transform: translateY(0); }
+                }
+
+}
 
 /* alerts */
 .alert {
@@ -54,8 +392,10 @@
     font-size: 1rem;
     line-height: 1.5;
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-}
 
+    opacity: 1;
+    transition: opacity 0.6s ease;
+}
 /* Variants */
 .alert-primary {
     color: #084298;
@@ -118,3 +458,6 @@
         opacity: 1;
     }
 }
+
+
+

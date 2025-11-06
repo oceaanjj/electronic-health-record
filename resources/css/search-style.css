@@ -1,6 +1,6 @@
 /* Reset */
 * {
-    margin: 0;
+    margin: 5px;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
@@ -8,19 +8,23 @@
 
 /* Page Background */
 body {
-    background: #1A6A24;
+    background-color: #1A6A24; /* Dark Green */
     color: white;
-    padding: 30px;
+    padding: 20px;
 }
 
-/* Title */
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 28px;
+/* Header */
+.header {
+    font-size: 22px;
     font-weight: bold;
-    color: #fff;
-    letter-spacing: 1px;
+    background: #1A6A24;
+    color: #ffffff;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 3px solid #EDB62C;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
 }
 
 /* Search Form */
@@ -32,20 +36,22 @@ form {
 }
 
 
-form input[type="text"] {
-    padding: 10px;
-    width: 280px;
-    border: 2px solid #EDB62C;
-    border-radius: 6px;
-    font-size: 14px;
-    outline: none;
-    color: #000;
-}
+form input{
+      padding: 6px;
+      border: 1px solid #EDB62C;
+      border-radius: 4px;
+      background: #fffdf5;
+      font-size: 13px;
+      text-align: center;
+      width: 280px;
+      color: #000;
+      
+    }
 
-form input[type="text"]:focus {
-    border-color: #1A6A24;
-    box-shadow: 0px 0px 6px rgba(237,182,44,0.8);
-}
+    form label {
+      margin-right: 8px;
+      font-size: 16px;
+    }
 
 form button {
     padding: 10px 20px;
@@ -109,4 +115,23 @@ p {
     font-size: 16px;
     color: #EDB62C;
     font-weight: bold;
+}
+
+button, .clear-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1A6A24;
+    color: #fff;
+    border: 2px solid #EDB62C;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+}
+
+button:hover, .clear-btn:hover {
+    background: #14501b;
 }

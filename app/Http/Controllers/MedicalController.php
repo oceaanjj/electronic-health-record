@@ -26,7 +26,10 @@ class MedicalController extends Controller
 
     public function show(Request $request)
     {
-        $patients = Patient::all();
+        
+        // $patients = Patient::all();
+        $patients = Auth::user()->patients;
+
         $selectedPatient = null;
         $presentIllness = null;
         $pastMedicalSurgical = null;
@@ -47,12 +50,54 @@ class MedicalController extends Controller
                 $allergy = Allergy::where('patient_id', $patientId)->first();
                 $vaccination = Vaccination::where('patient_id', $patientId)->first();
                 $developmentalHistory = DevelopmentalHistory::where('patient_id', $patientId)->first();
+            } else {
+                // If patient not found in nurse's list, clear session and redirect
+                $request->session()->forget('selected_patient_id');
+                return redirect()->route('medical-history')
+                    ->with('error', 'Selected patient is not associated with your account.');
             }
         }
 
         return view('medical-history', compact('patients', 'selectedPatient', 'presentIllness', 'pastMedicalSurgical', 'allergy', 'vaccination', 'developmentalHistory'));
     }
 
+
+public function showDevelopmentalHistory(Request $request)
+{
+    $patients = Auth::user()->patients;
+    $patientId = $request->session()->get('selected_patient_id');
+
+    if (!$patientId) {
+        return redirect()->route('medical-history')->with('error', 'Please select a patient first.');
+    }
+
+    $selectedPatient = Patient::find($patientId);
+    $developmentalHistory = DevelopmentalHistory::where('patient_id', $patientId)->first();
+
+    return view('developmental-history', compact('patients', 'selectedPatient', 'developmentalHistory'));
+}
+public function storeDevelopmentalHistory(Request $request)
+{
+    $patientId = $request->session()->get('selected_patient_id');
+
+    if (!$patientId) {
+        return redirect()->route('medical-history')
+            ->with('error', 'Please select a patient first.');
+    }
+
+    DevelopmentalHistory::updateOrCreate(
+        ['patient_id' => $patientId],
+        [
+            'gross_motor' => $request->gross_motor,
+            'fine_motor' => $request->fine_motor,
+            'language' => $request->language,
+            'cognitive' => $request->cognitive,
+            'social' => $request->social,
+        ]
+    );
+
+    return redirect()->route('medical-history')->with('success', 'Developmental history saved successfully.');
+}
 
     public function store(Request $request)
     {
@@ -70,9 +115,18 @@ class MedicalController extends Controller
         try {
             $username = Auth::user() ? Auth::user()->username : 'Guest';
 
+            $user_id = Auth::id();
+            $patient = Patient::where('patient_id', $request->patient_id)
+                ->where('user_id', $user_id)
+                ->first();
+            if (!$patient) {
+                return back()->with('error', 'Unauthorized patient access.');
+            }
+
             if (!$request->has('patient_id')) {
                 return back()->with('error', 'No patient selected.');
             }
+
 
             if ($request->has('present_condition_name')) {
                 $data = [
@@ -157,6 +211,9 @@ class MedicalController extends Controller
                     $updatedFlag = true;
                 }
             }
+              if ($request->input('action') === 'next') {
+                return redirect()->route('developmental-history');
+            }
 
             // audit log
             $message = '';
@@ -187,7 +244,7 @@ class MedicalController extends Controller
         } catch (Throwable $e) {
             return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());
         }
-    }
+    }   
 
 
     private function handleRecord(string $modelClass, array $data): bool

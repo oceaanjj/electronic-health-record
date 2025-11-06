@@ -11,7 +11,7 @@ class UserController extends Controller
     public function updateRole(Request $request, $id)
     {
         $request->validate([
-            'role' => 'required|in:Admin,Doctor,Nurse',
+            'role' => 'required|in:Doctor,Nurse',
         ]);
 
         $user = User::findOrFail($id);
@@ -19,26 +19,23 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->save();
 
-        // // log into audit_logs
-        // AuditLog::create([
-        //     'id' => Auth::id(),
-        //     'action'    => 'Changed role',
-        //     'details'   => "User {$user->name}: {$oldRole} → {$user->role}",
-        //     'created_at'=> now(),
-        // ]);
+        // ✅ Log into audit_logs
+        AuditLog::create([
+            'user_id'   => Auth::id(),
+            'action'    => 'Changed role',
+            'details'   => "User {$user->username}: {$oldRole} → {$user->role}",
+            'created_at'=> now(),
+        ]);
 
-
-        AuditLogController::log('Patient Deleted', 'User ' . Auth::user()->username . ' deleted patient record.', ['patient_id' => $id]);
-        return redirect()->route('admin-home')->with('success', 'User role updated successfully!');
+        return redirect()->route('admin-home')
+            ->with('success', "User {$user->username}'s role updated successfully from {$oldRole} to {$user->role}!");
     }
 
-     public function index()
+    public function index()
     {
         // Fetch all users except admin
-        $users = User::where('role', '!=', 'admin')->get();
+        $users = User::where('role', '!=', 'Admin')->get();
 
-        // Pass users to your blade file
         return view('admin.users', compact('users'));
     }
-
 }

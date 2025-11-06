@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -32,7 +33,13 @@ class PatientFactory extends Factory
             'Weight loss',
         ];
 
+        $nurse_id = User::where('role', 'Nurse')->inRandomOrder()->first()?->id ?? 1;
+
         return [
+
+            'user_id' => $nurse_id,
+
+
             'name' => $this->faker->name(),
             'age' => $this->faker->numberBetween(0, 12),
             'sex' => $this->faker->randomElement(['Male', 'Female', 'Other']),
@@ -42,6 +49,7 @@ class PatientFactory extends Factory
             'ethnicity' => $this->faker->randomElement(['Filipino', 'Foreign']),
             'chief_complaints' => $this->faker->randomElement($complaints),
             'admission_date' => $this->faker->date('Y-m-d'),
+
         ];
     }
 }

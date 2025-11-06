@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients', 'patient_id')->onDelete('cascade');
 
-            // Lab test results and normal ranges
             $table->string('wbc_result')->nullable();
             $table->string('wbc_normal_range')->nullable();
             $table->string('rbc_result')->nullable();
@@ -43,7 +42,7 @@ return new class extends Migration {
             $table->string('eosinophils_normal_range')->nullable();
             $table->string('basophils_result')->nullable();
             $table->string('basophils_normal_range')->nullable();
-
+            $table->string('alerts')->nullable();
             $table->timestamps();
 
             // Ensure a patient can only have one lab record for a specific date

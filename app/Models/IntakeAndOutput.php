@@ -9,8 +9,8 @@ class IntakeAndOutput extends Model
     protected $table = 'intake_and_outputs';
     protected $fillable = [
         'patient_id',
-        'date',
         'day_no',
+        'date',
         'oral_intake',
         'iv_fluids_volume',
         'iv_fluids_type',

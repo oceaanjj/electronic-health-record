@@ -1,45 +1,32 @@
 @extends('layouts.app')
-
 @section('title', 'Search Patient')
 
-@vite(['resources/css/search-style.css'])
-
+@vite(['resources/css/search-style.css', 'resources/js/patient-search.js'])
 @section('content')
-    <div class="container">
-        <div class="header">
-        <h4>SEARCH PATIENT</h4>
-        </div>
 
-        <form action="{{ route('patients.search-results') }}" method="GET">
-            <input type="text" name="input" placeholder="Search patient by id" value="{{ request('input') }}">
-            <button type="submit">Search</button>
-        </form>
 
-        @if (request()->filled('input'))
-            @if ($patients->isNotEmpty())
-                @php $patient = $patients->first(); @endphp
-                <h2>Search Result</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Patient ID</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $patient->patient_id }}</td>
-                            <td>{{ $patient->name }}</td>
-                            <td>{{ $patient->age }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            @else
-                <p>No patient found with that ID.</p>
-            @endif
-        @else
-            <p>Please enter an id</p>
-        @endif
+    <div class="header">
+        SEARCH PATIENT
     </div>
-@endsection
+
+    <form action="{{ route('patients.search-results') }}" method="GET">
+        <input type="text" name="input" id="patientSearchInput" placeholder="Search by ID or Patient Name"
+            value="{{ request('input') }}">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody id="patientTableBody">
+            <!-- Patient data will be loaded here by JavaScript -->
+        </tbody>
+    </table>
+
+    </div>
+
+    @endsection

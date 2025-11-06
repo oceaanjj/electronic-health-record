@@ -76,30 +76,42 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if (strtolower($user->role) === $expectedRole) {
+            // ✅ Allow Admins to log in anywhere
+            if (strtolower($user->role) === $expectedRole || strtolower($user->role) === 'admin') {
                 $request->session()->regenerate();
-                // Log the successful login action with user details
-                AuditLogController::log('Login Successful', 'User logged in to the system.', ['user_role' => $user->role]);
 
+                // Log the successful login action with user details
+                AuditLogController::log('Login Successful', 'User logged in to the system.', [
+                    'user_role' => $user->role,
+                    'login_as' => ucfirst($expectedRole)
+                ]);
+
+                // Redirect based on actual role (Admins always go to admin-home)
                 switch ($user->role) {
                     case 'Nurse':
-                        return redirect()->route('nurse-home')->with('success', 'Nurse ' . $user->username . ' login successful!');
+                        return redirect()->route('nurse-home');
                     case 'Doctor':
-                        return redirect()->route('doctor-home')->with('success', 'Doctor ' . $user->username . ' login successful!');
+                        return redirect()->route('doctor-home');
                     case 'Admin':
-                        return redirect()->route('admin-home')->with('success', 'Admin ' . $user->username . ' login successful!');
+                        return redirect()->route('admin-home');
                     default:
                         Auth::logout();
-                        return redirect()->route('home')->withErrors(['username' => 'Access denied. Unrecognized role.']);
+                        return redirect()->route('home')->withErrors([
+                            'username' => 'Access denied. Unrecognized role.'
+                        ]);
                 }
             }
 
+            // If role mismatch (not admin, not expected role)
             Auth::logout();
-            return back()->withErrors(['username' => 'Access denied. You are not a ' . ucfirst($expectedRole) . '.'])
-                ->onlyInput('username');
+            return back()->withErrors([
+                'username' => 'Access denied. You are not a ' . ucfirst($expectedRole) . '.'
+            ])->onlyInput('username');
         }
 
-        return back()->withErrors(['username' => 'Invalid login details.'])->onlyInput('username');
+        return back()->withErrors([
+            'username' => 'Invalid login details.'
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request): RedirectResponse
@@ -113,6 +125,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Logout successful!');
+        return redirect('/');
     }
 }

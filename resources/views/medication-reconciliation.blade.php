@@ -1,8 +1,4 @@
-<head>
-  <meta charset="UTF-8">
-  <title>Patient Medical Reconciliation</title>
-  @vite(['./resources/css/lab-values.css'])
-</head>
+
 
 @extends('layouts.app')
 
@@ -15,7 +11,7 @@
     @csrf
     <div class="container">
       <div class="header">
-        <label for="patient_id">PATIENT NAME :</label>
+        <label for="patient_id" style="color: white;">PATIENT NAME :</label>
         <select id="patient_info" name="patient_id" onchange="this.form.submit()">
           <option value="">-- Select Patient --</option>
           @foreach ($patients as $patient)
@@ -130,6 +126,6 @@
 
 @endsection
 
-@push('styles')
-  @vite(['resources/css/medication-reconciliation.css'])
+@push('scripts')
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
 @endpush

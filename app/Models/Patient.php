@@ -16,11 +16,11 @@ namespace App\Models;
 use App\Http\Controllers\PatientController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Patient extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'patient_id';
 
@@ -38,6 +38,8 @@ class Patient extends Model
         'ethnicity',
         'chief_complaints',
         'admission_date',
+
+        'user_id',
     ];
 
     // rs to records, one patient -> many dpie
@@ -56,4 +58,13 @@ class Patient extends Model
     {
         return $this->hasMany(\App\Models\DiagnosticImage::class, 'patient_id');
     }
+    protected $casts = [
+        'admission_date' => 'datetime',
+    ];
+
+    public function nurse()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 }

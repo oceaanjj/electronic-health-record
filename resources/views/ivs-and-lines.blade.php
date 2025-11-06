@@ -4,59 +4,88 @@
 
 @section('content')
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Patient Ivs and Lines</title>
-        @vite(['./resources/css/ivs-and-lines.css'])
-    </head>
 
-    <body>
 
-        <form action="{{ route('ivs-and-lines.select') }}" method="POST">
-            @csrf
-                <div class="header">
-                    <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-                    <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                        <option value="">-- Select Patient --</option>
-                        @foreach ($patients as $patient)
-                            <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
-                                {{ $patient->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-        </form>
+    {{-- PATIENT SELECTION --}}
+    <form action="{{ route('ivs-and-lines.select') }}" method="POST">
+        @csrf
+        <div class="header">
+            <label for="patient_id" style="color: white;">PATIENT NAME :</label>
+            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                <option value="">-- Select Patient --</option>
+                @foreach ($patients as $patient)
+                    <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
+                        {{ $patient->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </form>
 
-        <form action="{{ route('ivs-and-lines.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+    {{-- MAIN FORM --}}
+    <form action="{{ route('ivs-and-lines.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
-            <table>
-                <tr>
-                    <th class="title">IV FLUID</th>
-                    <th class="title">RATE</th>
-                    <th class="title">SITE</th>
-                    <th class="title">STATUS</th>
-                </tr>
+        {{-- MAIN CONTENT (Vital Signs Layout Style) --}}
+        <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
 
-                <tr>
-                    <td><input type="text" name="iv_fluid" placeholder="iv fluid"
-                            value="{{ $ivsAndLineRecord->iv_fluid ?? '' }}"></td>
-                    <td><input type="text" name="rate" placeholder="rate" value="{{ $ivsAndLineRecord->rate ?? '' }}"></td>
-                    <td><input type="text" name="site" placeholder="site" value="{{ $ivsAndLineRecord->site ?? '' }}"></td>
-                    <td><input type="text" name="status" placeholder="status" value="{{ $ivsAndLineRecord->status ?? '' }}">
-                    </td>
-                </tr>
-            </table>
+            {{-- LEFT SIDE: INPUT TABLE --}}
+            <div class="w-[68%] rounded-[15px] overflow-hidden">
+                <table class="w-full table-fixed border-collapse border-spacing-y-0">
+                    <tr>
+                        <th class="w-[25%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">IV FLUID</th>
+                        <th class="w-[25%] bg-dark-green text-white font-bold py-2">RATE</th>
+                        <th class="w-[25%] bg-dark-green text-white font-bold py-2">SITE</th>
+                        <th class="w-[25%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">STATUS</th>
+                    </tr>
 
-            <div class="buttons">
-                <button class="btn" type="submit">Submit</button>
+                    <tr>
+                        <td class="p-2 bg-beige text-center">
+                            <input type="text" name="iv_fluid" placeholder="iv fluid"
+                                value="{{ $ivsAndLineRecord->iv_fluid ?? '' }}" class="w-full h-[45px] text-center">
+                        </td>
+                        <td class="p-2 bg-beige text-center">
+                            <input type="text" name="rate" placeholder="rate" value="{{ $ivsAndLineRecord->rate ?? '' }}"
+                                class="w-full h-[45px] text-center">
+                        </td>
+                        <td class="p-2 bg-beige text-center">
+                            <input type="text" name="site" placeholder="site" value="{{ $ivsAndLineRecord->site ?? '' }}"
+                                class="w-full h-[45px] text-center">
+                        </td>
+                        <td class="p-2 bg-beige text-center">
+                            <input type="text" name="status" placeholder="status"
+                                value="{{ $ivsAndLineRecord->status ?? '' }}" class="w-full h-[45px] text-center">
+                        </td>
+                    </tr>
+                </table>
             </div>
-        </form>
-    </body>
+
+            {{-- ALERTS TABLE--}}
+            <div class="w-[25%] rounded-[15px] overflow-hidden">
+                <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                    ALERTS
+                </div>
+                <table class="w-full border-collapse text-center">
+                    <tr>
+                        <td>
+                            <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+                                <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        {{-- BUTTONS --}}
+        <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+            <button class="button-default" type="submit">SUBMIT</button>
+        </div>
+    </form>
+
 
 @endsection
-
-@push('styles')
-    @vite(['resources/css/ivs-and-lines.css'])
+@push('scripts')
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
 @endpush

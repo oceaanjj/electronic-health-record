@@ -4,35 +4,37 @@
 
 @section('content')
 
-    <x-searchable-dropdown 
-        :patients="$patients" 
-        :selectedPatient="$selectedPatient ?? null"
-        selectUrl="{{ route('lab-values.select') }}" 
-    />
+    <div class="header">
+        <label for="patient_info" style="color: white;">PATIENT NAME :</label>
+        <form action="{{ route('lab-values.select') }}" method="POST" id="patient-select-form">
+            @csrf
+            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
+                <option value="" @if(session('selected_patient_id') == '') selected @endif>-- Select Patient --</option>
+                @foreach ($patients as $patient)
+                    <option value="{{ $patient->patient_id }}" @if(session('selected_patient_id') == $patient->patient_id)
+                    selected @endif>
+                        {{ $patient->name }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
+    </div>
 
-    <div id="form-content-container">
-        {{-- DISABLED input overlay --}}
-        @if (!session('selected_patient_id'))
-            <div class="form-overlay" style="margin-left:15rem;">
-                <span>Please select a patient to input</span> {{-- message --}}
-            </div>
-        @endif
+    <form action="{{ route('lab-values.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
-    <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
-            data-analyze-url="{{ route('lab-values.run-cdss-field') }}">
-    @csrf
-    <fieldset @if (!session('selected_patient_id')) disabled @endif>
-    <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+        {{-- MAIN CONTENT - SAME STRUCTURE AS VITAL SIGNS --}}
+        <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
 
-    <center>
-       <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+            {{-- LEFT SIDE: LAB VALUES TABLE --}}
             <div class="w-[68%] rounded-[15px] overflow-hidden">
-
-                 <table class="w-full table-fixed border-collapse border-spacing-y-0">
+                <table class="w-full table-fixed border-collapse border-spacing-y-0">
                     <tr>
                         <th class="w-[30%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">LAB TEST</th>
                         <th class="w-[30%] bg-dark-green text-white font-bold py-2">RESULT</th>
-                        <th class="w-[40%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">PEDIATRIC NORMAL RANGE</th>
+                        <th class="w-[40%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">PEDIATRIC NORMAL RANGE
+                        </th>
                     </tr>
 
                     @php
@@ -55,58 +57,72 @@
                     @endphp
 
                     @foreach ($labTests as $label => $name)
-                        <tr>
-                            <td class="p-2 font-semibold">{{ $label }}</td>
-                            <td class="p-2">
+                        <tr class="border-b-2 border-line-brown/70">
+                            <td class="p-2 font-semibold bg-yellow-light text-brown text-center">
+                                {{ $label }}
+                            </td>
+                            <td class="p-2 bg-beige text-center">
                                 <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
                                     value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
-                                    class="w-full h-[20px] cdss-input" data-field-name="{{ $name }}_result">
+                                    class="w-full h-[40px] text-center">
                             </td>
-                            <td class="p-2">
+                            <td class="p-2 bg-beige text-center">
                                 <input type="text" name="{{ $name }}_normal_range" placeholder="Normal Range"
                                     value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}"
-                                    class="w-full">
+                                    class="w-full h-[40px] text-center">
                             </td>
                         </tr>
                     @endforeach
                 </table>
             </div>
 
-            {{-- for alerts, not sure if connected to sa row ng other table for input okei --}}
-            <div class="w-[30%] rounded-[15px] overflow-hidden">
-                <table class="w-full border-collapse text-center">
-                    <tr>
-                        <th class="bg-dark-green text-white py-2 rounded-[15px]">ALERTS</th>
-                    </tr>
+            {{-- ALERTS TABLE--}}
+            <div class="w-[25%] rounded-[15px] overflow-hidden">
+                <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                    ALERTS
+                </div>
 
+                <table class="w-full border-collapse text-center">
                     @foreach ($labTests as $label => $name)
                         <tr>
-                            <td class="align-middle alert-box" data-alert-for="{{ $name }}_result">
-                                {{-- Alert content will be dynamically loaded by alert.js --}}
+                            <td class="align-middle">
+                                <div class="alert-box my-[3px] h-[53px] flex justify-center items-center flex-col px-2">
+                                    @if (session('alerts') && isset(session('alerts')[$name . '_alerts']))
+                                        @foreach (session('alerts')[$name . '_alerts'] as $alertData)
+                                            @php
+                                                $alertText = $alertData['text'];
+                                                $severity = $alertData['severity'];
+                                                $color = match ($severity) {
+                                                    \App\Services\LabValuesCdssService::CRITICAL => 'text-red-600 font-bold',
+                                                    \App\Services\LabValuesCdssService::WARNING => 'text-orange-500',
+                                                    \App\Services\LabValuesCdssService::INFO => 'text-blue-500',
+                                                    \App\Services\LabValuesCdssService::NONE => 'text-green-600',
+                                                    default => 'text-gray-600',
+                                                };
+                                            @endphp
+                                            <p class="{{ $color }} text-sm leading-snug">{{ $alertText }}</p>
+                                        @endforeach
+                                    @else
+                                        <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach
                 </table>
             </div>
         </div>
-    </center>
 
-    {{-- BUTTONS --}}
-    <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-        <button type="button" class="button-default">CDSS</button>
-        <button type="submit" class="button-default">SUBMIT</button>
-    </div>
-</fieldset>
-</form>
-</div>
+        {{-- BUTTONS --}}
+        <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+            <button type="button" class="button-default">CDSS</button>
+            <button type="submit" class="button-default">SUBMIT</button>
+        </div>
+
+    </form>
 
 @endsection
 
 @push('styles')
-    @vite(['resources/css/lab-values.css'])
+    @vite(['resources/css/lab-values.css'])
 @endpush
-
-@push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
-@endpush
-

@@ -4,34 +4,87 @@
 
 @section('content')
 
-    <div class="header">
-        <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
-            class="flex items-center space-x-4">
-            @csrf
-            <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                <option value="" {{ old('patient_id', session('selected_patient_id')) == '' ? 'selected' : '' }}>-- Select
-                    Patient --</option>
+   {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
+<div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
+    <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form" class="flex items-center gap-6 w-full">
+        @csrf
+
+        {{-- PATIENT NAME --}}
+        <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            PATIENT NAME :
+        </label>
+
+        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}">
+            {{-- Text input for search --}}
+            <input 
+                type="text" 
+                id="patient_search_input" 
+                placeholder="Select or type Patient Name" 
+                value="{{ trim($selectedPatient->name ?? '') }}" 
+                autocomplete="off"
+                class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+            >
+
+            {{-- Dropdown list --}}
+            <div 
+                id="patient_options_container" 
+                class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto"
+            >
                 @foreach ($patients as $patient)
-                    <option value="{{ $patient->patient_id }}" {{ old('patient_id', session('selected_patient_id')) == $patient->patient_id ? 'selected' : '' }}>
-                        {{ $patient->name }}
-                    </option>
+                    <div 
+                        class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150" 
+                        data-value="{{ $patient->patient_id }}"
+                    >
+                        {{ trim($patient->name) }}
+                    </div>
                 @endforeach
-            </select>
-            <label for="date" style="color: white;">DATE :</label>
-            <input class="date" type="date" id="date_selector" name="date"
-                value="{{ old('date', session('selected_date')) }}" onchange="this.form.submit()">
-            <label for="day_no" style="color: white;">DAY NO :</label>
-            <select id="day_no" name="day_no" onchange="this.form.submit()">
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
-                    <option value="{{ $i }}" {{ old('day_no', session('selected_day_no')) == $i ? 'selected' : '' }}>
-                        {{ $i }}
-                    </option>
-                @endfor
-            </select>
-        </form>
-    </div>
+            </div>
+
+            {{-- Hidden input to store selected patient ID --}}
+            <input type="hidden" id="patient_id_hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+        </div>
+
+        {{-- DATE --}}
+        <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            DATE :
+        </label>
+        <input 
+            type="date" 
+            id="date_selector" 
+            name="date" 
+            value="{{ old('date', session('selected_date')) }}" 
+            onchange="this.form.submit()"
+            class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+        >
+
+        {{-- DAY NO --}}
+        <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            DAY NO :
+        </label>
+        <select 
+            id="day_no" 
+            name="day_no" 
+            onchange="this.form.submit()"
+            class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+        >
+            <option value="">-- Select number --</option>
+            @for ($i = 1; $i <= 30; $i++)
+                <option 
+                    value="{{ $i }}" 
+                    {{ old('day_no', session('selected_day_no')) == $i ? 'selected' : '' }}
+                >
+                    {{ $i }}
+                </option>
+            @endfor
+        </select>
+    </form>
+</div>
+{{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
+
+
 
     <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
         @csrf
@@ -57,43 +110,57 @@
                     @php
                         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
                     @endphp
-                
 
-                    @foreach ($times as $time)
+                    @foreach ($times as $index => $time)
                         @php
                             $vitalsRecord = $vitalsData->get($time);
+                            $isLast = $index === count($times) - 1;
+                            $borderClass = $isLast ? '' : 'border-b-2 border-line-brown/70';
                         @endphp
-                        <tr>
-                            <th class="time">{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</th>
-                            <td>
+
+                        <tr class="{{ $borderClass }}">
+                            {{-- TIME COLUMN --}}
+                            <th class="text-center font-semibold py-2 bg-yellow-light text-brown {{ $borderClass }}">
+                                {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
+                            </th>
+
+                            {{-- TEMPERATURE --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
                                     value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                    class="vital-input" data-param="temperature" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="temperature" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- HR --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="hr_{{ $time }}" placeholder="bpm"
                                     value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                    class="vital-input" data-param="hr" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="hr" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- RR --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="rr_{{ $time }}" placeholder="bpm"
                                     value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                    class="vital-input" data-param="rr" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="rr" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- BP --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
                                     value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                    class="vital-input" data-param="bp" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="bp" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- SpO₂ --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="spo2_{{ $time }}" placeholder="%"
                                     value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                    class="vital-input" data-param="spo2" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="spo2" data-time="{{ $time }}">
                             </td>
-                            
-
                         </tr>
                     @endforeach
+
                 </table>
             </div>
 
@@ -116,7 +183,7 @@
 
                             <tr>
                                 <td class="align-middle">
-                                    <div class="alert-box my-1 py-4 px-3 flex justify-center items-center">
+                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
                                         @if ($vitalsRecord && optional($vitalsRecord)->alerts)
                                             <ul class="list-none text-center {{ $color }}">
                                                 @foreach($alerts as $alert)
@@ -143,9 +210,6 @@
    
 @endsection
 
-
-
-@push('styles')
-    @vite(['resources/css/act-of-daily-living.css'])
+@push('scripts')
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
 @endpush
-

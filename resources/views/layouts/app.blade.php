@@ -19,7 +19,7 @@
     @include('components.header')
 
 
-    {{--  
+    {{--
     <div id="main" class="transition-transform duration-300 ease-in-out">
         <div class="flex flex-col min-h-screen">
             @include('components.header')
@@ -56,40 +56,34 @@
             </main>
         </div>
 
-        
+
     </div>
     --}}
-    
+
 
     {{-- Main Content --}}
-        <div id="main" class="relative min-h-screen overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
+    <div id="main" class="relative min-h-screen overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
 
-    
-            <img 
-                src="{{ asset('img/bg-design-right.png') }}" 
-                alt="Top right design"
-                class="absolute top-[120px] right-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0"
-            >
-            <img 
-                src="{{ asset('img/bg-design-left.png') }}" 
-                alt="Bottom left design"
-                class="absolute bottom-0 left-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0"
-            >
 
-            
+        <img src="{{ asset('img/bg-design-right.png') }}" alt="Top right design"
+            class="absolute top-[120px] right-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0">
+        <img src="{{ asset('img/bg-design-left.png') }}" alt="Bottom left design"
+            class="absolute bottom-0 left-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0">
 
-            <div class="relative z-10">
 
-                {{-- content ng page --}}
-                <main class="pt-[120px] px-6 transition-all duration-300 ease-in-out">
 
-                    @yield('content')
-                </main>
-            </div>
+        <div class="relative z-10">
+
+            {{-- content ng page --}}
+            <main class="pt-[120px] transition-all duration-300 ease-in-out">
+
+                @yield('content')
+            </main>
         </div>
+    </div>
 
 
-   
+
 
     <script>
 
@@ -97,7 +91,7 @@
             const sidebar = document.getElementById("mySidenav");
             const main = document.getElementById("main");
             const arrow = document.getElementById("arrowBtn");
-            
+
 
             sidebar.style.transition = "none";
             main && (main.style.transition = "none")
@@ -134,7 +128,7 @@
             arrow.classList.replace("-right-24", "-right-10");
             arrow.classList.remove("hidden");
 
-            
+
             localStorage.setItem("sidebarOpen", "true");
 
         }
@@ -157,8 +151,9 @@
     </script>
 
     @stack('scripts')
+    @vite(['resources/js/match-heights.js'])
 
-    
+
 
 
 </body>

@@ -202,11 +202,144 @@
         </div>     
     </form>
 
-    
-    <div class="w-[70%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
+
+    <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
             <button type="button" class="button-default">CDSS</button>
             <button type="submit" class="button-default">SUBMIT</button>       
     </div>
+
+    <div class="vital-chart-container w-[50%] mx-auto mt-0 mb-20">
+            <h2 class="text-center text-dark-green font-bold text-xl mb-4">Vital Sign Trend</h2>
+            <canvas id="vitalSignChart" height="120"></canvas>
+    </div>
+</div>
+
+@push('scripts')
+@vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById('vitalSignChart').getContext('2d');
+    const labels = ['TEMP', 'HR (bpm)', 'RR (bpm)', 'BP (mmHg)', 'SpO₂ (%)'];
+    const timePoints = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+
+    const lineColors = [
+        '#0D47A1', // rich deep blue
+        '#7B1FA2', // royal violet
+        '#1B5E20', // dark green
+        '#B71C1C', // rich red
+        '#37474F', // steel gray
+        '#4E342E', // cocoa brown
+        '#006064', // deep cyan
+        '#512DA8'  // indigo
+    ];
+
+    const datasets = [
+        @foreach ($times as $index => $time)
+        {
+            label: '{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}',
+            data: [
+                {{ optional($vitalsData->get($time))->temperature ?? 'null' }},
+                {{ optional($vitalsData->get($time))->hr ?? 'null' }},
+                {{ optional($vitalsData->get($time))->rr ?? 'null' }},
+                {{ optional($vitalsData->get($time))->bp ?? 'null' }},
+                {{ optional($vitalsData->get($time))->spo2 ?? 'null' }},
+            ],
+            borderColor: lineColors[{{ $index }} % lineColors.length],
+            backgroundColor: lineColors[{{ $index }} % lineColors.length],
+            borderWidth: 2.5,
+            tension: 0, // perfectly straight
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            fill: false
+        },
+        @endforeach
+    ];
+
+    // Initialize chart
+    const vitalChart = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+            responsive: true,
+            animation: {
+                duration: 800,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#2c3e50', font: { size: 13, weight: 'bold' } }
+                },
+                tooltip: {
+                    backgroundColor: '#333',
+                    titleColor: '#fff',
+                    bodyColor: '#f0f0f0'
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#2c3e50', font: { weight: 'bold' } },
+                    grid: { color: 'rgba(0,0,0,0.1)' }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#2c3e50', font: { weight: 'bold' } },
+                    grid: { color: 'rgba(0,0,0,0.1)' }
+                }
+            }
+        }
+    });
+
+    // 🔁 Auto-update chart + input color feedback
+    document.querySelectorAll('.vital-input').forEach(input => {
+        input.addEventListener('input', () => {
+            const time = input.getAttribute('data-time');
+            const param = input.getAttribute('data-param');
+            const value = parseFloat(input.value) || null;
+            const paramIndex = { temperature: 0, hr: 1, rr: 2, bp: 3, spo2: 4 }[param];
+            const datasetIndex = timePoints.indexOf(time);
+
+            if (datasetIndex !== -1 && paramIndex !== undefined) {
+                vitalChart.data.datasets[datasetIndex].data[paramIndex] = value;
+                vitalChart.update('active');
+            }
+
+
+            // ✅ Pediatric (6–12 yrs) normal ranges
+                let bg = '';
+                let color = '#000';
+
+                if (param === 'temperature') {
+                    if (value > 37.0) { bg = '#B71C1C'; color = '#fff'; }          // high = red, white text
+                    else if (value >= 36.3 && value <= 37.0) { bg = '#fff6cf'; }   // normal = super yellow
+                }
+                if (param === 'hr') {
+                    if (value > 110) { bg = '#B71C1C'; color = '#fff'; }
+                    else if (value >= 70 && value <= 110) { bg = '#fff6cf'; }
+                }
+                if (param === 'rr') {
+                    if (value > 22) { bg = '#B71C1C'; color = '#fff'; }
+                    else if (value >= 16 && value <= 22) { bg = '#fff6cf'; }
+                }
+                if (param === 'bp') {
+                    if (value > 120) { bg = '#B71C1C'; color = '#fff'; }
+                    else if (value >= 90 && value <= 120) { bg = '#fff6cf'; }
+                }
+                if (param === 'spo2') {
+                    if (value < 95) { bg = '#B71C1C'; color = '#fff'; }
+                    else if (value >= 95 && value <= 100) { bg = '#fff6cf'; }
+                }
+
+                input.style.backgroundColor = bg;
+                input.style.color = color;
+
+                        });
+                    });
+});
+</script>
+@endpush
+
    
 @endsection
 

@@ -18,12 +18,14 @@
         <div>
             <p class="text-[220px] text-dark-red font-creato-black leading-none text-center">404</p>
             <p class="text-[60px] text-dark-red font-creato-black leading-none pb-10 text-center">Not found</p>
-            <p class="text-[18px] font-creato-bold text-center leading-7">Sorry, but the page you are looking for doess't exist.</p>
-            <p class="text-[18px] font-creato-bold text-center leading-7">Please check your credentials or contact the administrator.</p>
+            <p class="text-[18px] font-creato-bold text-center leading-7">Sorry, but the page you are looking for
+                doess't exist.</p>
+            <p class="text-[18px] font-creato-bold text-center leading-7">Please check your credentials or contact the
+                administrator.</p>
 
             <div class="mt-4 flex justify-center">
                 <a href="{{ route('home') }}"
-                class="font-creato-bold text-[15px] text-white px-6 py-3 bg-ehr rounded-full shadow-md
+                    class="font-creato-bold text-[15px] text-white px-6 py-3 bg-ehr rounded-full shadow-md
                      hover:bg-dark-yellow hover:font-creato-bold hover:text-ehr hover:shadow-lg transition ease-in-out duration-200">
                     RETURN TO HOME PAGE
                 </a>

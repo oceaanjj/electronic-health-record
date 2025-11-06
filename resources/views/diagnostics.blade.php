@@ -6,8 +6,6 @@
 
 <style>
 .container { padding: 1rem; }
-.header { display: flex; align-items: center; gap: 1rem; }
-.header label { color: white; font-weight: 600; }
 .alert { padding: 10px; border-radius: 6px; margin-bottom: 1rem; }
 .alert-success { background: #d1e7dd; color: #0f5132; }
 .alert-error { background: #f8d7da; color: #842029; }
@@ -149,7 +147,7 @@ button.clear-btn[disabled] {
 }
 </style>
 
-<div class="container">
+<div id="form-content-container">
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -158,98 +156,94 @@ button.clear-btn[disabled] {
         <div class="alert alert-error">{{ session('error') }}</div>
     @endif
 
-    <div class="header">
-        <form action="{{ route('diagnostics.select') }}" method="POST" id="patient-select-form">
-            @csrf
-            <label for="patient_id">PATIENT NAME:</label>
-            <select name="patient_id" id="patient_id" onchange="this.form.submit()" required>
-                <option value="">-- Select Patient --</option>
-                @foreach ($patients as $patient)
-                    <option value="{{ $patient->patient_id }}" {{ $patientId == $patient->patient_id ? 'selected' : '' }}>
-                        {{ $patient->name }}
-                    </option>
-                @endforeach
-            </select>
-        </form>
-    </div>
+    <x-searchable-patient-dropdown
+        :patients="$patients"
+        :selectedPatient="$selectedPatient"
+        selectRoute="{{ route('diagnostics.select') }}"
+        inputPlaceholder="-Select or type to search-"
+        inputName="patient_id"
+        inputValue="{{ session('selected_patient_id') }}"
+    />
 
     @if ($selectedPatient)
-        <h2 style="color:white; margin-top: 1rem;">Diagnostics for: <strong>{{ $selectedPatient->name }}</strong></h2>
+        <h2 style="color:white; margin-top: 1rem;">Diagnostics for: <strong>{{ $selectedPatient->first_name }} {{ $selectedPatient->middle_name ? $selectedPatient->middle_name . ' ' : '' }}{{ $selectedPatient->last_name }}</strong></h2>
     @endif
 
     <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="patient_id" value="{{ $selectedPatient ? $selectedPatient->patient_id : '' }}">
 
-        <div class="diagnostic-grid">
-            @php
-                $types = [
-                    'xray' => 'X-Ray',
-                    'ultrasound' => 'Ultrasound',
-                    'ct_scan' => 'CT Scan',
-                    'echocardiogram' => 'Echocardiogram'
-                ];
-            @endphp
+        <fieldset {{ !$selectedPatient ? 'disabled' : '' }}>
+            <div class="diagnostic-grid">
+                @php
+                    $types = [
+                        'xray' => 'X-Ray',
+                        'ultrasound' => 'Ultrasound',
+                        'ct_scan' => 'CT Scan',
+                        'echocardiogram' => 'Echocardiogram'
+                    ];
+                @endphp
 
-            @foreach ($types as $key => $label)
-                <div class="diagnostic-panel">
-                    
-                    <div class="panel-body">
-                        <h2>{{ $label }}</h2>
-
-                        <div class="preview-grid" id="preview-{{ $key }}"></div>
-
-                        @if ($selectedPatient && isset($images[$key]) && count($images[$key]))
-                            <h4 class="uploaded-title">Uploaded Files:</h4>
-                            <div class="preview-grid">
-                                @foreach ($images[$key] as $image)
-                                    <div class="preview-item">
-                                        <img src="{{ Storage::url($image->path) }}" alt="{{ $image->original_name }}">
-                                        <button type="button" class="delete-btn"
-                                            onclick="deleteImage('{{ route('diagnostics.destroy', $image->id) }}')">x</button>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-
-                    <div class="panel-footer">
-                        <input 
-                            type="file" 
-                            name="images[{{ $key }}][]" 
-                            accept="image/*" 
-                            multiple 
-                            onchange="previewImages(event, '{{ $key }}')" 
-                            class="file-input" 
-                            id="file-input-{{ $key }}"
-                            {{ !$selectedPatient ? 'disabled' : '' }}>
+                @foreach ($types as $key => $label)
+                    <div class="diagnostic-panel">
                         
-                        <label 
-                            for="file-input-{{ $key }}" 
-                            class="insert-btn {{ !$selectedPatient ? 'disabled' : '' }}">
-                            INSERT PHOTO
-                        </label>
+                        <div class="panel-body">
+                            <h2>{{ $label }}</h2>
 
-                        <button 
-                            type="button" 
-                            class="clear-btn" 
-                            onclick="clearPreview('{{ $key }}')"
-                            {{ !$selectedPatient ? 'disabled' : '' }}>
-                            CLEAR
-                        </button>
+                            <div class="preview-grid" id="preview-{{ $key }}"></div>
+
+                            @if ($selectedPatient && isset($images[$key]) && count($images[$key]))
+                                <h4 class="uploaded-title">Uploaded Files:</h4>
+                                <div class="preview-grid">
+                                    @foreach ($images[$key] as $image)
+                                        <div class="preview-item">
+                                            <img src="{{ Storage::url($image->path) }}" alt="{{ $image->original_name }}">
+                                            <button type="button" class="delete-btn"
+                                                onclick="deleteImage('{{ route('diagnostics.destroy', $image->id) }}')">x</button>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="panel-footer">
+                            <input 
+                                type="file" 
+                                name="images[{{ $key }}][]" 
+                                accept="image/*" 
+                                multiple 
+                                onchange="previewImages(event, '{{ $key }}')" 
+                                class="file-input" 
+                                id="file-input-{{ $key }}"
+                                {{ !$selectedPatient ? 'disabled' : '' }}>
+                            
+                            <label 
+                                for="file-input-{{ $key }}" 
+                                class="insert-btn {{ !$selectedPatient ? 'disabled' : '' }}">
+                                INSERT PHOTO
+                            </label>
+
+                            <button 
+                                type="button" 
+                                class="clear-btn" 
+                                onclick="clearPreview('{{ $key }}')"
+                                {{ !$selectedPatient ? 'disabled' : '' }}>
+                                CLEAR
+                            </button>
+                        </div>
+                        
                     </div>
-                    
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
 
-        <div style="margin-top: 1rem;">
-            <button type="submit" {{ !$selectedPatient ? 'disabled' : '' }}>Submit</button>
-        </div>
+            <div style="margin-top: 1rem;">
+                <button type="submit" {{ !$selectedPatient ? 'disabled' : '' }}>Submit</button>
+            </div>
+        </fieldset>
     </form>
 </div>
 
-<script>
+    <script>
 function previewImages(event, type) {
     const input = event.target;
     const previewContainer = document.getElementById('preview-' + type);
@@ -292,6 +286,17 @@ function deleteImage(url) {
     })
     .catch(() => alert('Error deleting image.'));
 }
+
+// Initialize searchable dropdown on page load
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.initSearchableDropdown) {
+        window.initSearchableDropdown();
+    }
+});
 </script>
 
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+@endpush

@@ -22,7 +22,7 @@ class DiagnosticsController extends Controller
     /** Show diagnostics page */
     public function index(Request $request)
     {
-        $patients = Auth::user()->patients()->orderBy('name')->get();
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $patientId = $request->session()->get('selected_patient_id');
         $selectedPatient = null;
         $images = [];

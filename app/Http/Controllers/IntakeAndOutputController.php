@@ -93,6 +93,14 @@ class IntakeAndOutputController extends Controller
         $currentDate = $date;
         $currentDayNo = $dayNo;
 
+        if ($request->ajax()) {
+            return response()->json([
+                'ioData' => $ioData,
+                'currentDate' => $currentDate,
+                'currentDayNo' => $currentDayNo,
+            ]);
+        }
+
         return view('intake-and-output', [
             'patients' => $patients,
             'ioData' => $ioData,

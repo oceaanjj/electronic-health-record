@@ -172,6 +172,17 @@
                 showDefaultNoAlertsLocal(alertBoxDiv);
             }
         }
+
+        // Listen for io:data-loaded event to re-trigger analysis
+        document.addEventListener('io:data-loaded', (event) => {
+            console.log('io:data-loaded event received, re-triggering CDSS analysis.');
+            // If ioData is null, it means fields were cleared, so show no alerts
+            if (!event.detail.ioData) {
+                showDefaultNoAlertsLocal(alertBoxDiv);
+            } else {
+                triggerAnalysis();
+            }
+        });
     }
 
     // Initialize CDSS for Intake and Output when the DOM is fully loaded

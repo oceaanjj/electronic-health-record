@@ -176,5 +176,5 @@
 @endsection
 
 @push('scripts')
-        @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/intake-output-cdss.js', 'resources/js/searchable-dropdown.js'])
+        @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/intake-output-cdss.js', 'resources/js/searchable-dropdown.js', 'resources/js/intake-output-data-loader.js'])
 @endpush

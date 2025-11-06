@@ -75,7 +75,7 @@ function showAlertLoading(alertCell) {
 
         alertBoxDiv.innerHTML = `
 
-            <div class=\"alert-message\">\n            <div class=\"alert-loading fade-in\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>\n        </div>
+            <div class=\"alert-message\">\n            <div class=\"alert-loading\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>\n        </div>
 
         `;
 
@@ -110,7 +110,7 @@ function displayAlert(alertCell, alertData) {
     else if (alertData.severity === "WARNING") colorClass = "alert-orange";
     else if (alertData.severity === "INFO") colorClass = "alert-green";
 
-    alertCell.classList.add(colorClass, "fade-in"); // Add color class and fade-in
+    alertCell.classList.add(colorClass); // Add color class
 
     let alertMessageContent;
     if (alertData.alert?.toLowerCase().includes("no findings")) {
@@ -137,7 +137,7 @@ function showDefaultNoAlerts(alertCell) {
 
     // Manage classes on the parent <td> (alertCell)
     alertCell.classList.remove("alert-loading", "alert-red", "alert-orange"); // Remove loading and severity classes
-    alertCell.classList.add("has-no-alert", "alert-green", "fade-in"); // Add no alerts state, green color, and fade-in
+    alertCell.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
 
     // Update content of the inner div
     alertBoxDiv.innerHTML = `

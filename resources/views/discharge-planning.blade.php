@@ -6,11 +6,13 @@
 
     {{-- PATIENT DROP-DOWN FORM --}}
 
-    <x-searchable-dropdown 
+    <x-searchable-patient-dropdown 
         :patients="$patients" 
         :selectedPatient="$selectedPatient ?? null"
-        selectUrl="{{ route('discharge-planning.select') }}" 
-    />
+        selectRoute="{{ route('discharge-planning.select') }}" 
+        inputPlaceholder="-Select or type to search-"
+        inputName="patient_id" 
+        inputValue="{{ session('selected_patient_id') }}" />
 
 
     <div id="form-content-container">

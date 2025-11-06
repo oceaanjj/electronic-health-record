@@ -94,7 +94,8 @@
 {{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
-            <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
+            <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}" class="cdss-form"
+                data-analyze-url="{{ route('vital-signs.check') }}">
                 @csrf
 
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
@@ -135,21 +136,21 @@
 
                                     {{-- TEMPERATURE --}}
                                     <td class="bg-beige {{ $borderClass }}">
-                                        <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
+                                        <input type="number" step="0.1" name="temperature_{{ $time }}" placeholder="temperature"
                                             value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
                                             class="vital-input h-[60px]" data-param="temperature" data-time="{{ $time }}">
                                     </td>
 
                                     {{-- HR --}}
                                     <td class="bg-beige {{ $borderClass }}">
-                                        <input type="text" name="hr_{{ $time }}" placeholder="bpm"
+                                        <input type="number" name="hr_{{ $time }}" placeholder="bpm"
                                             value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
                                             class="vital-input h-[60px]" data-param="hr" data-time="{{ $time }}">
                                     </td>
 
                                     {{-- RR --}}
                                     <td class="bg-beige {{ $borderClass }}">
-                                        <input type="text" name="rr_{{ $time }}" placeholder="bpm"
+                                        <input type="number" name="rr_{{ $time }}" placeholder="bpm"
                                             value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
                                             class="vital-input h-[60px]" data-param="rr" data-time="{{ $time }}">
                                     </td>
@@ -163,7 +164,7 @@
 
                                     {{-- SpO₂ --}}
                                     <td class="bg-beige {{ $borderClass }}">
-                                        <input type="text" name="spo2_{{ $time }}" placeholder="%"
+                                        <input type="number" name="spo2_{{ $time }}" placeholder="%"
                                             value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
                                             class="vital-input h-[60px]" data-param="spo2" data-time="{{ $time }}">
                                     </td>
@@ -209,13 +210,11 @@
                         </table>
                     </div>
                 </div>
+                <div class="w-[70%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
+                    <button type="button" class="button-default">CDSS</button>
+                    <button type="submit" class="button-default">SUBMIT</button>
+                </div>
             </form>
-
-
-            <div class="w-[70%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
-                <button type="button" class="button-default">CDSS</button>
-                <button type="submit" class="button-default">SUBMIT</button>
-            </div>
         </fieldset>
     </div>
 
@@ -225,6 +224,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.initializeDateDayLoader();
+            const vitalsForm = document.getElementById('vitals-form');
+            if (vitalsForm && typeof window.initializeCdssForForm === 'function') {
+                window.initializeCdssForForm(vitalsForm);
+            }
         });
     </script>
 @endpush

@@ -227,8 +227,10 @@ class VitalSignsController extends Controller
         $message = $anyCreated ? 'Vital Signs data saved successfully.'
             : ($anyUpdated ? 'Vital Signs data updated successfully.' : 'No changes made.');
 
-        return redirect()->route('vital-signs.show')
-            ->with('success', $message);
+        return redirect()->route('vital-signs.show', [
+            'date' => $validatedData['date'],
+            'day_no' => $validatedData['day_no'],
+        ])->with('success', $message);
     }
 
     public function checkVitals(Request $request)

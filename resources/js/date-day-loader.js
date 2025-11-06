@@ -73,6 +73,7 @@ window.initializeDateDayLoader = function (selectUrl) {
                     "Content-Type": "application/x-www-form-urlencoded",
                     "X-CSRF-TOKEN": csrfToken,
                     "X-Requested-With": "XMLHttpRequest",
+                    "X-Fetch-Form-Content": "true",
                 },
                 // Pass all three values to the controller to fetch specific data from SQL
                 body: `patient_id=${encodeURIComponent(

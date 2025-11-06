@@ -17,7 +17,8 @@
             return;
         }
 
-        const analyzeUrl = patientSelectForm.action; // This is io.select route
+        const dropdownContainer = document.querySelector(".searchable-dropdown");
+        const analyzeUrl = dropdownContainer ? dropdownContainer.dataset.selectUrl : null;
         const csrfToken = document.querySelector('meta[name="csrf-token"]')
             ?.getAttribute("content");
 

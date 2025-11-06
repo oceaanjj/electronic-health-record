@@ -29,11 +29,10 @@ class ActOfDailyLivingController extends Controller
     /**
      * Handles the AJAX request for both patient selection AND date/day change.
      */
-    public function selectPatient(Request $request)
-    {
-        $patientId = $request->input('patient_id');
-        $patients = Auth::user()->patients;
-        $selectedPatient = Patient::find($patientId);
+            public function selectPatient(Request $request)
+            {
+                $patientId = $request->input('patient_id');
+                $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();        $selectedPatient = Patient::find($patientId);
         $adlData = null;
 
         // Default values for rendering the view if selection fails
@@ -108,7 +107,7 @@ class ActOfDailyLivingController extends Controller
      */
     public function show(Request $request)
     {
-        $patients = Auth::user()->patients;
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $adlData = null;
         $selectedPatient = null;
         $currentDate = now()->format('Y-m-d'); // Default

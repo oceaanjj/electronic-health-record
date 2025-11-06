@@ -46,7 +46,7 @@ class IntakeAndOutputController extends Controller
 
     public function selectPatientAndDate(Request $request)
     {
-        $patients = Auth::user()->patients;
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $selectedPatient = null;
         $ioData = null;
         $date = now()->format('Y-m-d');

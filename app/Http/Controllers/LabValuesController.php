@@ -21,7 +21,7 @@ class LabValuesController extends Controller
 
     public function show(Request $request)
     {
-        $patients = Auth::user()->patients;
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $selectedPatient = null;
         $labValue = null;
         $alerts = [];

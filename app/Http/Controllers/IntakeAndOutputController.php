@@ -61,17 +61,21 @@ class IntakeAndOutputController extends Controller
             $dayNo = $request->input('day_no');
 
             if (is_null($date) || is_null($dayNo)) {
-                $latestIo = IntakeAndOutput::where('patient_id', $patientId)
-                    ->orderBy('date', 'desc')
-                    ->orderBy('day_no', 'desc')
-                    ->first();
+                // Try to get date and day from session first
+                $date = $request->session()->get('selected_date', now()->format('Y-m-d'));
+                $dayNo = $request->session()->get('selected_day_no', 1);
 
-                if ($latestIo) {
-                    $date = $latestIo->date;
-                    $dayNo = $latestIo->day_no;
-                } else {
-                    $date = now()->format('Y-m-d');
-                    $dayNo = 1;
+                // If still no date/day (e.g., first load, or session cleared), then try latest IO
+                if ($date === now()->format('Y-m-d') && $dayNo === 1) { // Check if defaults were used from session
+                    $latestIo = IntakeAndOutput::where('patient_id', $patientId)
+                        ->orderBy('date', 'desc')
+                        ->orderBy('day_no', 'desc')
+                        ->first();
+
+                    if ($latestIo) {
+                        $date = $latestIo->date;
+                        $dayNo = $latestIo->day_no;
+                    }
                 }
             }
 
@@ -160,6 +164,9 @@ class IntakeAndOutputController extends Controller
                 ['patient_id' => $validatedData['patient_id']]
             );
         }
+
+        $request->session()->put('selected_date', $validatedData['date']);
+        $request->session()->put('selected_day_no', $validatedData['day_no']);
 
         return redirect()->route('io.show')
             ->with('success', $message);

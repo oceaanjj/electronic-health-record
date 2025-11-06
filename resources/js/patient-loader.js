@@ -97,6 +97,11 @@ document.addEventListener("patient:selected", async (event) => {
         if (newContent) {
             formContainer.innerHTML = newContent.innerHTML;
 
+            // Re-initialize the searchable dropdown if it exists in the new content
+            if (typeof window.initSearchableDropdown === "function") {
+                window.initSearchableDropdown();
+            }
+
             // --- Step 3: Re-initialize Scripts ---
 
             // Re-initialize the CDSS alerts for the new form

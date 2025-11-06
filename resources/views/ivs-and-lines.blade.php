@@ -6,26 +6,28 @@
 
 
 
-    {{-- PATIENT SELECTION --}}
-    <form action="{{ route('ivs-and-lines.select') }}" method="POST">
-        @csrf
-        <div class="header">
-            <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                <option value="">-- Select Patient --</option>
-                @foreach ($patients as $patient)
-                    <option value="{{ $patient->patient_id }}" {{ (isset($selectedPatient) && $selectedPatient->patient_id == $patient->patient_id) ? 'selected' : '' }}>
-                        {{ $patient->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-    </form>
+    <div id="form-content-container">
+        @if (!session('selected_patient_id'))
+            <div
+                class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
+                <span class="text-gray-600 font-creato">Please select a patient to input</span>
+            </div>
+        @endif
+    </div>
+
+    <x-searchable-patient-dropdown
+        :patients="$patients"
+        :selectedPatient="$selectedPatient"
+        selectRoute="{{ route('ivs-and-lines.select') }}"
+        inputPlaceholder="-Select or type to search-"
+        inputName="patient_id"
+        inputValue="{{ session('selected_patient_id') }}"
+    />
 
     {{-- MAIN FORM --}}
-    <form action="{{ route('ivs-and-lines.store') }}" method="POST">
+    <form action="{{ route('ivs-and-lines.store') }}" method="POST" class="cdss-form" data-analyze-url="">
         @csrf
-        <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+        <fieldset @if (!session('selected_patient_id')) disabled @endif>
 
         {{-- MAIN CONTENT (Vital Signs Layout Style) --}}
         <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
@@ -43,19 +45,19 @@
                     <tr>
                         <td class="p-2 bg-beige text-center">
                             <input type="text" name="iv_fluid" placeholder="iv fluid"
-                                value="{{ $ivsAndLineRecord->iv_fluid ?? '' }}" class="w-full h-[45px] text-center">
+                                value="{{ $ivsAndLineRecord->iv_fluid ?? '' }}" class="w-full h-[45px] text-center cdss-input" data-field-name="iv_fluid">
                         </td>
                         <td class="p-2 bg-beige text-center">
                             <input type="text" name="rate" placeholder="rate" value="{{ $ivsAndLineRecord->rate ?? '' }}"
-                                class="w-full h-[45px] text-center">
+                                class="w-full h-[45px] text-center cdss-input" data-field-name="rate">
                         </td>
                         <td class="p-2 bg-beige text-center">
                             <input type="text" name="site" placeholder="site" value="{{ $ivsAndLineRecord->site ?? '' }}"
-                                class="w-full h-[45px] text-center">
+                                class="w-full h-[45px] text-center cdss-input" data-field-name="site">
                         </td>
                         <td class="p-2 bg-beige text-center">
                             <input type="text" name="status" placeholder="status"
-                                value="{{ $ivsAndLineRecord->status ?? '' }}" class="w-full h-[45px] text-center">
+                                value="{{ $ivsAndLineRecord->status ?? '' }}" class="w-full h-[45px] text-center cdss-input" data-field-name="status">
                         </td>
                     </tr>
                 </table>
@@ -83,6 +85,7 @@
             <button class="button-default" type="submit">SUBMIT</button>
         </div>
     </form>
+</fieldset>
 
 
 @endsection

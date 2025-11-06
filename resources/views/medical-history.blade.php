@@ -42,7 +42,7 @@
 
 
 
-        {{-- FORM for data submission (submits with POST) --}}
+        
         <form action="{{ route('medical.store') }}" method="POST">
             @csrf
 

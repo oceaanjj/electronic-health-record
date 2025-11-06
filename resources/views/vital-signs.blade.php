@@ -4,34 +4,87 @@
 
 @section('content')
 
-    <div class="header">
-        <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
-            class="flex items-center space-x-4">
-            @csrf
-            <label for="patient_id" style="color: white;">PATIENT NAME :</label>
-            <select id="patient_info" name="patient_id" onchange="this.form.submit()">
-                <option value="" {{ old('patient_id', session('selected_patient_id')) == '' ? 'selected' : '' }}>-- Select
-                    Patient --</option>
+   {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
+<div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
+    <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form" class="flex items-center gap-6 w-full">
+        @csrf
+
+        {{-- PATIENT NAME --}}
+        <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            PATIENT NAME :
+        </label>
+
+        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}">
+            {{-- Text input for search --}}
+            <input 
+                type="text" 
+                id="patient_search_input" 
+                placeholder="Select or type Patient Name" 
+                value="{{ trim($selectedPatient->name ?? '') }}" 
+                autocomplete="off"
+                class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+            >
+
+            {{-- Dropdown list --}}
+            <div 
+                id="patient_options_container" 
+                class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto"
+            >
                 @foreach ($patients as $patient)
-                    <option value="{{ $patient->patient_id }}" {{ old('patient_id', session('selected_patient_id')) == $patient->patient_id ? 'selected' : '' }}>
-                        {{ $patient->name }}
-                    </option>
+                    <div 
+                        class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150" 
+                        data-value="{{ $patient->patient_id }}"
+                    >
+                        {{ trim($patient->name) }}
+                    </div>
                 @endforeach
-            </select>
-            <label for="date" style="color: white;">DATE :</label>
-            <input class="date" type="date" id="date_selector" name="date"
-                value="{{ old('date', session('selected_date')) }}" onchange="this.form.submit()">
-            <label for="day_no" style="color: white;">DAY NO :</label>
-            <select id="day_no" name="day_no" onchange="this.form.submit()">
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
-                    <option value="{{ $i }}" {{ old('day_no', session('selected_day_no')) == $i ? 'selected' : '' }}>
-                        {{ $i }}
-                    </option>
-                @endfor
-            </select>
-        </form>
-    </div>
+            </div>
+
+            {{-- Hidden input to store selected patient ID --}}
+            <input type="hidden" id="patient_id_hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+        </div>
+
+        {{-- DATE --}}
+        <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            DATE :
+        </label>
+        <input 
+            type="date" 
+            id="date_selector" 
+            name="date" 
+            value="{{ old('date', session('selected_date')) }}" 
+            onchange="this.form.submit()"
+            class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+        >
+
+        {{-- DAY NO --}}
+        <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            DAY NO :
+        </label>
+        <select 
+            id="day_no" 
+            name="day_no" 
+            onchange="this.form.submit()"
+            class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+        >
+            <option value="">-- Select number --</option>
+            @for ($i = 1; $i <= 30; $i++)
+                <option 
+                    value="{{ $i }}" 
+                    {{ old('day_no', session('selected_day_no')) == $i ? 'selected' : '' }}
+                >
+                    {{ $i }}
+                </option>
+            @endfor
+        </select>
+    </form>
+</div>
+{{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
+
+
 
     <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
         @csrf

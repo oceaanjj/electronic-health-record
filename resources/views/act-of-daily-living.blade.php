@@ -74,7 +74,7 @@
             </div>
         @endif
 
-        {{-- MAIN FORM (submit) with CDSS setup --}}
+
         <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"
             data-analyze-url="{{ route('adl.analyze-field') }}">
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
@@ -143,7 +143,7 @@
                         </table>
                     </div>
 
-                    {{-- RIGHT SIDE TABLE (ALERTS) --}}
+                    {{-- ALERTS TABLE --}}
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
                         <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                             ALERTS
@@ -177,9 +177,9 @@
                         </table>
                     </div>
                 </div>
-                {{-- END COPY OF VITAL SIGNS LAYOUT STYLE --}}
 
-                {{-- BUTTONS (same position and styling) --}}
+
+       
                 <div class="w-[70%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
                     <button type="button" class="button-default">CDSS</button>
                     <button type="submit" class="button-default">SUBMIT</button>       

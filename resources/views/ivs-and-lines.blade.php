@@ -65,7 +65,7 @@
                     </table>
                 </div>
 
-                {{-- RIGHT SIDE: ALERTS TABLE (for CDSS or notes later) --}}
+                {{-- ALERTS TABLE--}}
                 <div class="w-[25%] rounded-[15px] overflow-hidden">
                     <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                         ALERTS

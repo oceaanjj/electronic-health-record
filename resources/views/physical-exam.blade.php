@@ -63,7 +63,7 @@
                 <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
 
-                    {{-- LEFT SIDE: Physical Exam Inputs --}}
+                    
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
                         <table class="w-full border-separate border-spacing-0">
                             <tr>
@@ -155,7 +155,7 @@
                         </table>
                     </div>
 
-                    {{-- RIGHT SIDE: ALERTS --}}
+                    {{-- ALERTS TABLE--}}
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
                         <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                             ALERTS

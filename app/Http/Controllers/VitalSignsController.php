@@ -45,11 +45,17 @@ class VitalSignsController extends Controller
             });
         }
 
+        $selectedPatient = null;
+        if ($patientId) {
+            $selectedPatient = Patient::where('patient_id', $patientId)->first();
+        }
+
         return view('vital-signs', [
             'patients' => $patients,
             'vitalsData' => $vitalsData,
             'selectedDate' => $date,
             'selectedDayNo' => $dayNo,
+            'selectedPatient' => $selectedPatient,
         ]);
     }
 

@@ -15,7 +15,7 @@
 
    {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR INTAKE AND OUTPUT --}}
 <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
-    <form action="{{ route('io.select') }}" method="POST" id="patient-select-form" class="flex items-center gap-6 w-full">
+    <form id="patient-select-form" class="flex items-center gap-6 w-full">
         @csrf
 
         {{-- PATIENT NAME --}}
@@ -63,7 +63,6 @@
             id="date_selector"
             name="date"
             value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-            @if (!isset($selectedPatient)) disabled @endif
             class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
@@ -75,7 +74,6 @@
         <select
             id="day_no_selector"
             name="day_no"
-            @if (!isset($selectedPatient)) disabled @endif
             class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                    focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
@@ -93,7 +91,7 @@
 </div>
 {{-- END SEARCHABLE PATIENT DROPDOWN FOR INTAKE AND OUTPUT --}}
 
-        <fieldset @if (!session('selected_patient_id')) disabled @endif>
+        <fieldset>
             <form id="io-form" class="cdss-form" method="POST" action="{{ route('io.store') }}" data-analyze-url="{{ route('io.check') }}">
                 @csrf
 
@@ -176,5 +174,23 @@
 @endsection
 
 @push('scripts')
-        @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/intake-output-cdss.js', 'resources/js/searchable-dropdown.js', 'resources/js/intake-output-data-loader.js'])
+        @vite(['resources/js/alert.js', 'resources/js/intake-output-patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/intake-output-cdss.js', 'resources/js/searchable-dropdown.js', 'resources/js/intake-output-data-loader.js'])
+
+        {{-- Define the specific initializers for this page --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                window.pageInitializers = [
+                    window.initializeSearchableDropdown,
+                    window.initializeDateDayLoader,
+                    // Assuming intakeOutputCdss has an init method or is directly callable
+                    () => {
+                        if (typeof window.intakeOutputCdss === 'function') {
+                            window.intakeOutputCdss();
+                        } else if (typeof window.intakeOutputCdss?.init === 'function') {
+                            window.intakeOutputCdss.init();
+                        }
+                    }
+                ];
+            });
+        </script>
 @endpush

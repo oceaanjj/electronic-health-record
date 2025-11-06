@@ -93,7 +93,30 @@ class IntakeAndOutputController extends Controller
         $currentDate = $date;
         $currentDayNo = $dayNo;
 
-        if ($request->ajax()) {
+        if ($request->ajax() && $request->header('X-Fetch-Form-Content')) {
+            // Render the full view and extract the specific section
+            $view = view('intake-and-output', [
+                'patients' => $patients,
+                'ioData' => $ioData,
+                'selectedPatient' => $selectedPatient,
+                'currentDate' => $currentDate,
+                'currentDayNo' => $currentDayNo,
+            ])->render();
+
+            // Use DOMDocument to parse and extract the form-content-container
+            $dom = new \DOMDocument();
+            // Suppress warnings about malformed HTML5
+            libxml_use_internal_errors(true);
+            $dom->loadHTML($view, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            libxml_clear_errors();
+
+            $container = $dom->getElementById('form-content-container');
+            if ($container) {
+                return response($dom->saveHTML($container));
+            } else {
+                return response('<div id="form-content-container">Error: Content container not found.</div>', 500);
+            }
+        } elseif ($request->ajax()) {
             return response()->json([
                 'ioData' => $ioData,
                 'currentDate' => $currentDate,

@@ -22,7 +22,7 @@ class DischargePlanningController extends Controller
     public function show(Request $request)
     {
         // $patients = Patient::all();
-        $patients = Auth::user()->patients;
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
 
         $selectedPatient = null;
         $dischargePlan = null;

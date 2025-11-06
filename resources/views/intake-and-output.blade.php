@@ -176,19 +176,172 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js', 'resources/js/io-alerts.js'])
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/io-alerts.js'])
     <script>
+        function initializeSearchableDropdown() {
+            const dropdownContainer = document.querySelector(".searchable-dropdown");
+            if (!dropdownContainer) return;
+
+            const searchInput = document.getElementById("patient_search_input");
+            const hiddenInput = document.getElementById("patient_id_hidden");
+            const optionsContainer = document.getElementById("patient_options_container");
+            if (!optionsContainer) return;
+            const options = optionsContainer.querySelectorAll(".option");
+            const selectUrl = dropdownContainer.dataset.selectUrl;
+
+            let currentFocus = -1;
+            optionsContainer.style.display = "none";
+
+            const removeActive = () => {
+                options.forEach((option) => {
+                    option.classList.remove("active");
+                });
+            };
+
+            const addActive = (n) => {
+                removeActive();
+                if (n >= options.length) n = 0;
+                if (n < 0) n = options.length - 1;
+                currentFocus = n;
+                const visibleOptions = Array.from(options).filter(
+                    (opt) => opt.style.display !== "none"
+                );
+                if (visibleOptions.length > 0) {
+                    const focusedOption = visibleOptions[currentFocus % visibleOptions.length];
+                    if (focusedOption) {
+                        focusedOption.classList.add("active");
+                        focusedOption.scrollIntoView({
+                            block: "nearest",
+                            behavior: "smooth",
+                        });
+                    }
+                }
+            };
+
+            const filterAndShowOptions = () => {
+                const filter = searchInput.value.toLowerCase();
+                let visibleCount = 0;
+                options.forEach((option) => {
+                    const text = (option.textContent || option.innerText).toLowerCase();
+                    const shouldShow = text.includes(filter);
+                    option.style.display = shouldShow ? "block" : "none";
+                    if (shouldShow) {
+                        visibleCount++;
+                    }
+                });
+                currentFocus = -1;
+                removeActive();
+                if (visibleCount > 0) {
+                    optionsContainer.style.display = "block";
+                } else {
+                    optionsContainer.style.display = "none";
+                }
+            };
+
+            searchInput.addEventListener("focus", () => {
+                filterAndShowOptions();
+            });
+
+            searchInput.addEventListener("keyup", (event) => {
+                if (
+                    event.key !== "ArrowUp" &&
+                    event.key !== "ArrowDown" &&
+                    event.key !== "Enter"
+                ) {
+                    filterAndShowOptions();
+                }
+            });
+
+            const selectOption = (option) => {
+                const patientId = option.getAttribute("data-value");
+                const patientName = (option.textContent || option.innerText).trim();
+                searchInput.value = patientName;
+                hiddenInput.value = patientId;
+                optionsContainer.style.display = "none";
+                currentFocus = -1;
+                removeActive();
+                const event = new CustomEvent("patient:selected", {
+                    bubbles: true,
+                    detail: {
+                        patientId: patientId,
+                        selectUrl: selectUrl,
+                    },
+                });
+                document.dispatchEvent(event);
+            };
+
+            searchInput.addEventListener("keydown", (event) => {
+                const visibleOptions = Array.from(options).filter(
+                    (opt) => opt.style.display !== "none"
+                );
+                if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                    event.preventDefault();
+                    if (visibleOptions.length > 0) {
+                        const direction = event.key === "ArrowDown" ? 1 : -1;
+                        let nextFocus = currentFocus + direction;
+                        if (nextFocus >= visibleOptions.length) {
+                            nextFocus = 0;
+                        } else if (nextFocus < 0) {
+                            nextFocus = visibleOptions.length - 1;
+                        }
+                        addActive(nextFocus);
+                    }
+                } else if (event.key === "Enter") {
+                    event.preventDefault();
+                    const activeOption = optionsContainer.querySelector(".option.active");
+                    if (activeOption) {
+                        selectOption(activeOption);
+                    } else {
+                        const firstVisibleOption = visibleOptions[0];
+                        if (firstVisibleOption) {
+                            selectOption(firstVisibleOption);
+                        }
+                    }
+                }
+            });
+
+            options.forEach((option) => {
+                option.addEventListener("click", () => {
+                    selectOption(option);
+                });
+            });
+
+            document.addEventListener("click", (event) => {
+                setTimeout(() => {
+                    if (!event.target.closest(".searchable-dropdown")) {
+                        if (document.activeElement !== searchInput) {
+                            optionsContainer.style.display = "none";
+                        }
+                    }
+                }, 100);
+            });
+        }
+
+        function initializePageScripts() {
+            initializeSearchableDropdown();
+            if (window.initializeDateDayLoader) {
+                window.initializeDateDayLoader();
+            }
+            if (window.initializeIntakeOutputAlerts) {
+                window.initializeIntakeOutputAlerts();
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            window.initializeDateDayLoader();
-            window.initializeIntakeOutputAlerts(); // This will be the new function for I/O alerts
+            initializePageScripts();
 
-            const patientIdHidden = document.getElementById("patient_id_hidden");
-            const dateSelector = document.getElementById("date_selector");
-            const dayNoSelector = document.getElementById("day_no_selector");
-
-            console.log('DEBUG: DOMContentLoaded - patientId (initial):', patientIdHidden.value);
-            console.log('DEBUG: DOMContentLoaded - date (initial):', dateSelector.value);
-            console.log('DEBUG: DOMContentLoaded - dayNo (initial):', dayNoSelector.value);
+            const container = document.getElementById('form-content-container');
+            if (container) {
+                const observer = new MutationObserver(function(mutations) {
+                    for (let mutation of mutations) {
+                        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                            initializePageScripts();
+                            break; 
+                        }
+                    }
+                });
+                observer.observe(container, { childList: true, subtree: true });
+            }
         });
     </script>
 @endpush

@@ -193,15 +193,8 @@
                                 <tr>
                                     <td class="align-middle" data-alert-for-time="{{ $time }}">
                                         <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-                                            @if ($vitalsRecord && optional($vitalsRecord)->alerts)
-                                                <ul class="list-none text-center {{ $color }}">
-                                                    @foreach($alerts as $alert)
-                                                        <li class="font-semibold">{{ $alert }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            @else
-                                                <span class="opacity-70 text-white font-semibold">No Alerts</span>
-                                            @endif
+                                            {{-- Dynamic alert content will load here --}}
+                                            <span class="opacity-70 text-white font-semibold">No Alerts</span>
                                         </div>
                                     </td>
                                 </tr>

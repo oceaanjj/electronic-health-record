@@ -181,22 +181,24 @@ class VitalSignsController extends Controller
 
             $hasData = count(array_filter($vitalsForTime, fn($v) => $v !== null && $v !== '')) > 0;
 
+            $queryConditions = [
+                'patient_id' => $validatedData['patient_id'],
+                'date' => $validatedData['date'],
+                'day_no' => $validatedData['day_no'],
+                'time' => $dbTime,
+            ];
+
             if ($hasData) {
                 $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsForTime);
-                $vitalsForTime['alerts'] = $alertResult['alert']; 
+                $vitalsForTime['alerts'] = $alertResult['alert'];
                 $vitalsForTime['news_severity'] = $alertResult['severity'];
-                
+
                 $vitalRecord = Vitals::updateOrCreate(
-                    [
-                        'patient_id' => $validatedData['patient_id'],
-                        'date' => $validatedData['date'],
-                        'day_no' => $validatedData['day_no'],
-                        'time' => $dbTime,
-                    ],
+                    $queryConditions,
                     $vitalsForTime
                 );
-                
-                 if ($vitalRecord->wasRecentlyCreated) {
+
+                if ($vitalRecord->wasRecentlyCreated) {
                     AuditLogController::log(
                         'Vital Signs Record Created',
                         'User ' . Auth::user()->username . " created a new Vital Signs record",
@@ -211,6 +213,14 @@ class VitalSignsController extends Controller
                     );
                     $anyUpdated = true;
                 }
+            } else {
+                // If no data is submitted for this time slot, delete the existing record
+                Vitals::where($queryConditions)->delete();
+                AuditLogController::log(
+                    'Vital Signs Record Deleted',
+                    'User ' . Auth::user()->username . " deleted a Vital Signs record for time " . $time,
+                    ['patient_id' => $validatedData['patient_id'], 'time' => $time]
+                );
             }
         }
 
@@ -223,20 +233,17 @@ class VitalSignsController extends Controller
 
     public function checkVitals(Request $request)
     {
-        $fieldName = $request->input('fieldName');
         $time = $request->input('time');
-        $value = $request->input('value');
+        $vitals = $request->input('vitals'); // This will be an array of vital signs for the time slot
 
-        if (!$fieldName || !$time) {
+        if (!$time || !is_array($vitals)) {
             return response()->json(['alert' => '', 'severity' => 'NONE']);
         }
 
         $cdssService = new VitalCdssService();
-        // The getAlertForVital method likely expects just the vital sign parameter (e.g., 'temperature')
-        // not the combined 'temperature_06:00'. So we extract it.
-        $param = $fieldName; // Assuming fieldName is already like 'temperature'
 
-        $result = $cdssService->getAlertForVital($param, $value);
+        // Call analyzeVitalsForAlerts with the complete set of vitals for the time slot
+        $result = $cdssService->analyzeVitalsForAlerts($vitals);
 
         $result['severity'] = strtoupper($result['severity']);
 

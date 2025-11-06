@@ -18,6 +18,7 @@ use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
+use App\Http\Controllers\MedicationAdministrationController;
 
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
@@ -196,6 +197,17 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::get('/intake-and-output', [IntakeAndOutputController::class, 'show'])->name('io.show');
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
+
+Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
+     ->name('medication-administration');
+
+// Para sa pag-save ng data (kapag nag-submit ng form)
+Route::post('/medication-administration/store', [MedicationAdministrationController::class, 'store'])
+     ->name('medication-administration.store');
+
+// Para sa patient dropdown search (base sa code mo)
+Route::post('/adl-select', [MedicationAdministrationController::class, 'selectPatient'])
+     ->name('adl.select');
 
     // ---------------
     // ADPIE Routes

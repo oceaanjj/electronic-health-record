@@ -6,107 +6,209 @@
  * after replacing page content.
  */
 
-// Make this function globally accessible
+let debounceTimer;
+
 window.initializeCdssForForm = function (form) {
-    const analyzeUrl = form.dataset.analyzeUrl;
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
-    let debounceTimer;
+  const analyzeUrl = form.dataset.analyzeUrl;
+  const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
 
-    if (!analyzeUrl || !csrfToken) {
-        console.error(
-            'CDSS form is missing "data-analyze-url" or CSRF token is not found.',
-            form
-        );
-        return;
+  if (!analyzeUrl || !csrfToken) {
+    console.error(
+      'CDSS form missing "data-analyze-url" or CSRF token not found.',
+      form
+    );
+    return;
+  }
+
+  const inputs = form.querySelectorAll(".cdss-input");
+
+  // --- Initialize fields on load ---
+  inputs.forEach((input) => {
+    const fieldName = input.dataset.fieldName;
+    const finding = input.value.trim();
+    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+
+    if (alertCell) {
+      if (finding === "") showDefaultNoAlerts(alertCell);
+      else analyzeField(fieldName, finding, analyzeUrl, csrfToken);
     }
+  });
 
-    const inputs = form.querySelectorAll(".cdss-input");
+  // --- Analyze while typing ---
+  inputs.forEach((input) => {
+    input.addEventListener("input", (e) => {
+      clearTimeout(debounceTimer);
 
-    // --- Analyze Pre-filled Data on Load ---
-    inputs.forEach((input) => {
-        if (input.value.trim() !== "") {
-            const fieldName = input.dataset.fieldName;
-            const finding = input.value;
-            analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+      const fieldName = e.target.dataset.fieldName;
+      const finding = e.target.value.trim();
+      const alertCell = document.querySelector(
+        `[data-alert-for="${fieldName}"]`
+      );
+
+      if (alertCell) {
+        if (finding === "") {
+          showDefaultNoAlerts(alertCell);
+        } else {
+          if (!alertCell.classList.contains("alert-loading")) {
+            showAlertLoading(alertCell);
+          }
         }
-    });
+      }
 
-    // --- Analyze on Type ---
-    inputs.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            clearTimeout(debounceTimer);
-            const fieldName = e.target.dataset.fieldName;
-            const finding = e.target.value;
-
-            debounceTimer = setTimeout(() => {
-                if (fieldName && finding !== null) {
-                    analyzeField(fieldName, finding, analyzeUrl, csrfToken);
-                }
-            }, 500);
-        });
+      debounceTimer = setTimeout(() => {
+        if (fieldName && finding !== "") {
+          analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+        }
+      }, 300);
     });
+  });
 };
 
-// This runs on the initial page load
+// --- Initialize CDSS forms on page load ---
 document.addEventListener("DOMContentLoaded", () => {
-    const cdssForms = document.querySelectorAll(".cdss-form");
-    cdssForms.forEach((form) => {
-        // Call the global function
-        window.initializeCdssForForm(form);
-    });
+  const cdssForms = document.querySelectorAll(".cdss-form");
+  cdssForms.forEach((form) => window.initializeCdssForForm(form));
 });
 
+// --- Function: Analyze input with backend ---
 async function analyzeField(fieldName, finding, url, token) {
-    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
-    if (!alertCell) return;
+  const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+  if (!alertCell) return;
 
-    if (finding.trim() === "") {
-        alertCell.innerHTML = "";
-        return;
-    }
+  showAlertLoading(alertCell);
 
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": token,
-            },
-            body: JSON.stringify({
-                fieldName: fieldName,
-                finding: finding,
-            }),
-        });
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": token,
+      },
+      body: JSON.stringify({ fieldName, finding }),
+    });
 
-        if (!response.ok) {
-            throw new Error(`Server responded with status: ${response.status}`);
-        }
+    if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
-        const alertData = await response.json();
-        displayAlert(alertCell, alertData);
-    } catch (error) {
-        console.error("CDSS analysis failed:", error);
-        alertCell.innerHTML = `<div class="alert-box alert-red"><span class="alert-message">Error analyzing...</span></div>`;
-    }
+    const alertData = await response.json();
+
+    setTimeout(() => {
+      displayAlert(alertCell, alertData);
+    }, 150);
+  } catch (error) {
+    console.error("CDSS analysis failed:", error);
+    alertCell.innerHTML = `
+      <div class="alert-box alert-red fade-in" style="height:90px;margin:2px;">
+        <span class="alert-message">Error analyzing...</span>
+      </div>
+    `;
+  }
 }
 
+// --- Display alert content ---
 function displayAlert(alertCell, alertData) {
-    alertCell.innerHTML = ""; // Clear previous alert
+  alertCell.innerHTML = "";
 
-    let colorClass = "alert-green"; // Default for NONE
-    if (alertData.severity === "CRITICAL") {
-        colorClass = "alert-red";
-    } else if (alertData.severity === "WARNING") {
-        colorClass = "alert-orange";
-    } else if (alertData.severity === "INFO") {
-        colorClass = "alert-green";
-    }
+  const alertBox = document.createElement("div");
+  alertBox.className = "alert-box fade-in";
+  alertBox.style.height = "90px";
+  alertBox.style.margin = "2px";
 
-    //show alert
-    const alertBox = document.createElement("div");
-    alertBox.className = `alert-box ${colorClass}`;
-    alertBox.innerHTML = `<span class="alert-message">${alertData.alert}</span>`;
-    alertCell.appendChild(alertBox);
+  // Set color by severity
+  let colorClass = "alert-green";
+  if (alertData.severity === "CRITICAL") colorClass = "alert-red";
+  else if (alertData.severity === "WARNING") colorClass = "alert-orange";
+  else if (alertData.severity === "INFO") colorClass = "alert-green";
+
+  alertBox.classList.add(colorClass);
+
+  const alertMessage = document.createElement("div");
+  alertMessage.className = "alert-message";
+  alertMessage.style.padding = "8px"; // ✅ add padding instead of fade/gradient
+
+  // --- Handle NO FINDINGS ---
+  if (alertData.alert?.toLowerCase().includes("no findings")) {
+    alertBox.classList.add("has-no-alert");
+    alertMessage.innerHTML = `
+      <span class="text-white text-center uppercase font-semibold opacity-80">
+        NO FINDINGS
+      </span>
+    `;
+  } else {
+    alertMessage.innerHTML = `<span>${alertData.alert}</span>`;
+  }
+
+  alertBox.appendChild(alertMessage);
+  alertCell.appendChild(alertBox);
+
+  // --- Simple scroll behavior without gradient ---
+  alertMessage.addEventListener("scroll", () => {
+    // No visual fade — clean scroll only
+  });
+
+  if (!alertData.alert?.toLowerCase().includes("no findings")) {
+    alertBox.addEventListener("click", () => openAlertModal(alertData));
+  }
 }
+
+// --- Default NO ALERTS state ---
+function showDefaultNoAlerts(alertCell) {
+  alertCell.className = "alert-box has-no-alert alert-green fade-in";
+  alertCell.style.height = "90px";
+  alertCell.style.margin = "2.8px";
+  alertCell.innerHTML = `
+    <span class="alert-message opacity-80 text-white text-center font-semibold uppercase">
+      NO ALERTS
+    </span>
+  `;
+  alertCell.onclick = null;
+}
+
+// --- Loading spinner (continuous) ---
+function showAlertLoading(alertCell) {
+  alertCell.className = "alert-box alert-green alert-loading fade-in";
+  alertCell.style.height = "90px";
+  alertCell.style.margin = "2px";
+  alertCell.innerHTML = `
+    <div class="alert-loading">
+      <div class="loading-spinner"></div>
+      <span>Analyzing...</span>
+    </div>
+  `;
+  alertCell.onclick = null;
+}
+
+// --- Modal popup for details ---
+function openAlertModal(alertData) {
+  const overlay = document.createElement("div");
+  overlay.className = "alert-modal-overlay";
+
+  const modal = document.createElement("div");
+  modal.className = "alert-modal fade-in";
+  modal.innerHTML = `
+    <button class="close-btn">&times;</button>
+    <h2>Alert Details</h2>
+    <p>${alertData.alert}</p>
+  `;
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  const closeModal = () => overlay.remove();
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  modal.querySelector(".close-btn").addEventListener("click", closeModal);
+}
+
+// --- Fade-in animation ---
+const style = document.createElement("style");
+style.textContent = `
+  .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+  }
+`;
+document.head.appendChild(style);

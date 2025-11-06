@@ -106,7 +106,7 @@ document.addEventListener("patient:selected", async (event) => {
 
             // Re-initialize the CDSS alerts for the new form
             const newCdssForm = formContainer.querySelector(".cdss-form");
-            if (typeof window.initializeCdssForForm === "function") {
+            if (newCdssForm && typeof window.initializeCdssForForm === "function") {
                 window.initializeCdssForForm(newCdssForm);
             }
 

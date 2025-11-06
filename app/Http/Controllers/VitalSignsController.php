@@ -15,12 +15,14 @@ class VitalSignsController extends Controller
     public function selectPatientAndDate(Request $request)
     {
         $patientId = $request->input('patient_id');
-        $date = $request->input('date');
-        $dayNo = $request->input('day_no');
+        // Always set the date to the current date when a patient is selected
+        $currentDate = now()->format('Y-m-d');
+        // Always set the day number to 1 when a patient is selected
+        $defaultDayNo = 1;
 
         $request->session()->put('selected_patient_id', $patientId);
-        $request->session()->put('selected_date', $date);
-        $request->session()->put('selected_day_no', $dayNo);
+        $request->session()->put('selected_date', $currentDate);
+        $request->session()->put('selected_day_no', $defaultDayNo);
 
         return redirect()->route('vital-signs.show');
     }

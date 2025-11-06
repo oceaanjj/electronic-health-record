@@ -71,21 +71,15 @@ function showAlertLoading(alertCell) {
         return;
     }
 
-    // Manage classes on the parent <td> (alertCell)
-    alertCell.classList.remove(
-        "has-no-alert",
-        "alert-red",
-        "alert-orange",
-        "alert-green",
-        "fade-in"
-    ); // Remove all previous state and animation classes
-    alertCell.classList.add("alert-loading"); // Add loading state class
+        // Update content of the inner div
 
-    // Update content of the inner div
-    alertBoxDiv.innerHTML = `
-        <div class=\"alert-message\">\n            <div class=\"alert-loading\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>\n        </div>
-    `;
-    alertCell.onclick = null;
+        alertBoxDiv.innerHTML = `
+
+            <div class=\"alert-message\">\n            <div class=\"alert-loading fade-in\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>\n        </div>
+
+        `;
+
+        alertCell.onclick = null;
 }
 
 // --- Display alert content ---

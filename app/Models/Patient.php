@@ -41,6 +41,23 @@ class Patient extends Model
 
         'user_id',
     ];
+
+    // rs to records, one patient -> many dpie
+    // add another one for each modules that need a dpie or need a relation the patient_id
+    public function physicalExams()
+    {
+        return $this->hasMany(\App\Models\PhysicalExam::class, 'patient_id');
+    }
+
+    public function intakeAndOutputs()
+    {
+        return $this->hasMany(\App\Models\IntakeAndOutput::class, 'patient_id');
+    }
+
+    public function diagnosticImages()
+    {
+        return $this->hasMany(\App\Models\DiagnosticImage::class, 'patient_id');
+    }
     protected $casts = [
         'admission_date' => 'datetime',
     ];

@@ -194,14 +194,19 @@ class VitalSignsController extends Controller
 
     public function checkVitals(Request $request)
     {
-        $param = $request->input('param');
+        $fieldName = $request->input('fieldName');
+        $time = $request->input('time');
         $value = $request->input('value');
 
-        if (!$param) {
+        if (!$fieldName || !$time) {
             return response()->json(['alert' => '', 'severity' => 'NONE']);
         }
 
         $cdssService = new VitalCdssService();
+        // The getAlertForVital method likely expects just the vital sign parameter (e.g., 'temperature')
+        // not the combined 'temperature_06:00'. So we extract it.
+        $param = $fieldName; // Assuming fieldName is already like 'temperature'
+
         $result = $cdssService->getAlertForVital($param, $value);
 
         $result['severity'] = strtoupper($result['severity']);

@@ -94,8 +94,7 @@
 {{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
-            <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}" class="cdss-form"
-                data-analyze-url="{{ route('vital-signs.check') }}">
+            <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}" data-analyze-url="{{ route('vital-signs.check') }}">
                 @csrf
 
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
@@ -138,35 +137,35 @@
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" step="0.1" name="temperature_{{ $time }}" placeholder="temperature"
                                             value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                            class="vital-input h-[60px]" data-param="temperature" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="temperature" data-time="{{ $time }}">
                                     </td>
 
                                     {{-- HR --}}
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" name="hr_{{ $time }}" placeholder="bpm"
                                             value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                            class="vital-input h-[60px]" data-param="hr" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="hr" data-time="{{ $time }}">
                                     </td>
 
                                     {{-- RR --}}
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" name="rr_{{ $time }}" placeholder="bpm"
                                             value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                            class="vital-input h-[60px]" data-param="rr" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="rr" data-time="{{ $time }}">
                                     </td>
 
                                     {{-- BP --}}
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
                                             value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                            class="vital-input h-[60px]" data-param="bp" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="bp" data-time="{{ $time }}">
                                     </td>
 
                                     {{-- SpO₂ --}}
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" name="spo2_{{ $time }}" placeholder="%"
                                             value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                            class="vital-input h-[60px]" data-param="spo2" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="spo2" data-time="{{ $time }}">
                                     </td>
                                 </tr>
                             @endforeach
@@ -192,7 +191,7 @@
                                 @endphp
 
                                 <tr>
-                                    <td class="align-middle">
+                                    <td class="align-middle" data-alert-for-time="{{ $time }}">
                                         <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
                                             @if ($vitalsRecord && optional($vitalsRecord)->alerts)
                                                 <ul class="list-none text-center {{ $color }}">
@@ -220,14 +219,11 @@
 
 @endsection
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js'])
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.initializeDateDayLoader();
-            const vitalsForm = document.getElementById('vitals-form');
-            if (vitalsForm && typeof window.initializeCdssForForm === 'function') {
-                window.initializeCdssForForm(vitalsForm);
-            }
+            window.initializeVitalSignsAlerts();
         });
     </script>
 @endpush

@@ -192,7 +192,7 @@
 
                                 <tr>
                                     <td class="align-middle" data-alert-for-time="{{ $time }}">
-                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+                                        <div class="alert-box my-1 py-4 px-3 flex justify-center items-center w-full h-[53px]" data-alert-for-time="{{ $time }}">
                                             {{-- Dynamic alert content will load here --}}
                                             <span class="opacity-70 text-white font-semibold">No Alerts</span>
                                         </div>
@@ -213,7 +213,7 @@
 @endsection
 @push('scripts')
     {{-- Load all necessary script files --}}
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
+    @vite(['resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
 
     {{-- Define the specific initializers for this page --}}
     <script>

@@ -30,14 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up a MutationObserver to re-initialize scripts whenever the main content container is updated.
     const container = document.getElementById('form-content-container');
     if (container) {
+        let debounceTimer;
         const observer = new MutationObserver(function(mutations) {
-            // We only need to know that a change happened, not what the change was.
-            for (let mutation of mutations) {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            // Check if any significant changes occurred (e.g., child nodes added/removed)
+            const hasSignificantChanges = mutations.some(mutation => mutation.type === 'childList' && mutation.addedNodes.length > 0);
+
+            if (hasSignificantChanges) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
                     runPageInitializers();
-                    // Once we've run the initializers for a set of mutations, we can stop observing.
-                    break;
-                }
+                }, 50); // Debounce by 50ms
             }
         });
 

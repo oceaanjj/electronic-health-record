@@ -24,17 +24,17 @@ window.initializeCdssForForm = function (form) {
 
   const inputs = form.querySelectorAll(".cdss-input");
 
-  // --- Initialize fields on load ---
-  inputs.forEach((input) => {
-    const fieldName = input.dataset.fieldName;
-    const finding = input.value.trim();
-    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+  // --- Initialize fields on load (removed to prevent redundant analysis on re-initialization) ---
+  // inputs.forEach((input) => {
+  //   const fieldName = input.dataset.fieldName;
+  //   const finding = input.value.trim();
+  //   const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
 
-    if (alertCell) {
-      if (finding === "") showDefaultNoAlerts(alertCell);
-      else analyzeField(fieldName, finding, analyzeUrl, csrfToken);
-    }
-  });
+  //   if (alertCell) {
+  //     if (finding === "") showDefaultNoAlerts(alertCell);
+  //     else analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+  //   }
+  // });
 
   // --- Analyze while typing ---
   inputs.forEach((input) => {
@@ -65,6 +65,42 @@ window.initializeCdssForForm = function (form) {
     });
   });
 };
+
+// --- Listen for form reload event to trigger initial analysis for pre-filled fields ---
+document.addEventListener("cdss:form-reloaded", (event) => {
+  const formContainer = event.detail.formContainer;
+  const cdssForm = formContainer.querySelector(".cdss-form");
+
+  if (cdssForm) {
+    const analyzeUrl = cdssForm.dataset.analyzeUrl;
+    const csrfToken = document
+      .querySelector('meta[name="csrf-token"]')
+      ?.getAttribute("content");
+
+    if (!analyzeUrl || !csrfToken) {
+      console.error(
+        'CDSS form reloaded: Missing "data-analyze-url" or CSRF token.',
+        cdssForm
+      );
+      return;
+    }
+
+    const inputs = cdssForm.querySelectorAll(".cdss-input");
+    inputs.forEach((input) => {
+      const fieldName = input.dataset.fieldName;
+      const finding = input.value.trim();
+      const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+
+      if (alertCell) {
+        if (finding === "") {
+          showDefaultNoAlerts(alertCell);
+        } else {
+          analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+        }
+      }
+    });
+  }
+});
 
 // --- Initialize CDSS forms on page load ---
 document.addEventListener("DOMContentLoaded", () => {

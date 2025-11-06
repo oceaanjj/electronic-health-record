@@ -110,13 +110,11 @@ document.addEventListener("patient:selected", async (event) => {
                 window.initializeCdssForForm(newCdssForm);
             }
 
-            // Re-initialize the generic Date/Day loader, only if this is a Date/Day form
-            if (
-                isDateDayForm &&
-                typeof window.initializeDateDayLoader === "function"
-            ) {
-                window.initializeDateDayLoader(selectUrl);
-            }
+            // Dispatch a custom event to signal that the form content has been reloaded
+            document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {
+                bubbles: true,
+                detail: { formContainer: formContainer }
+            }));
         } else {
             throw new Error(
                 "Could not find '#form-content-container' in response."

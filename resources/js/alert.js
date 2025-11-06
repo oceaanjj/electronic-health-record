@@ -188,6 +188,35 @@ function displayAlert(alertCell, alertData) {
   }
 }
 
+// --- Function: Trigger initial CDSS analysis for pre-filled fields ---
+window.triggerInitialCdssAnalysis = function (form) {
+  const analyzeUrl = form.dataset.analyzeUrl;
+  const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
+
+  if (!analyzeUrl || !csrfToken) {
+    console.error(
+      'Initial CDSS analysis missing "data-analyze-url" or CSRF token.',
+      form
+    );
+    return;
+  }
+
+  const inputs = form.querySelectorAll(".cdss-input");
+  inputs.forEach((input) => {
+    const fieldName = input.dataset.fieldName;
+    const finding = input.value.trim();
+    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+
+    if (alertCell && finding !== "") {
+      analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+    } else if (alertCell && finding === "") {
+      showDefaultNoAlerts(alertCell);
+    }
+  });
+};
+
 // --- Default NO ALERTS state ---
 function showDefaultNoAlerts(alertCell) {
   alertCell.className = "alert-box has-no-alert alert-green fade-in";

@@ -13,43 +13,33 @@ class PhysicalExamController extends Controller
 {
     public function selectPatient(Request $request)
     {
-        $patientId = $request->input('patient_id');
-        $request->session()->put('selected_patient_id', $patientId);
+        $patients = Auth::user()->patients;
+        $selectedPatient = null;
+        $physicalExam = null;
 
-        return redirect()->route('physical-exam.index');
+        $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
+
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
+            if (!$selectedPatient) {
+                $request->session()->forget('selected_patient_id');
+                return view('physical-exam', compact('patients', 'selectedPatient', 'physicalExam'));
+            }
+            $request->session()->put('selected_patient_id', $patientId);
+
+            $physicalExam = PhysicalExam::where('patient_id', $patientId)->first();
+        } else {
+            $request->session()->forget('selected_patient_id');
+        }
+
+        return view('physical-exam', compact('patients', 'selectedPatient', 'physicalExam'));
     }
 
 
     public function show(Request $request)
     {
-        // $patients = Patient::all();
-        $patients = Auth::user()->patients;
-
-
-        // pang debug lang to, --IGNORE NIYO LANG-- 
-        // if ($patients->isEmpty()) {
-        //     dd('No patients found in database');
-        // } else {
-        //     dd('Patients found:', $patients->toArray());
-        // }
-        $selectedPatient = null;
-        $physicalExam = null;
-
-        $patientId = $request->session()->get('selected_patient_id');
-
-        if ($patientId) {
-            $selectedPatient = Patient::find($patientId);
-            if ($selectedPatient) {
-                $physicalExam = PhysicalExam::where('patient_id', $patientId)->first();
-            } else {
-                //
-                $request->session()->forget('selected_patient_id');
-                return redirect()->route('physical-exam.index')
-                    ->with('error', 'Selected patient is not associated with your account.');
-            }
-        }
-
-        return view('physical-exam', compact('patients', 'selectedPatient', 'physicalExam'));
+        // The logic for displaying the initial page is now handled by selectPatient
+        return $this->selectPatient($request);
     }
 
     public function store(Request $request)

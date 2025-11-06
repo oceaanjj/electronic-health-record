@@ -25,6 +25,7 @@
     <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form"
         data-analyze-url="{{ route('physical-exam.analyze-field') }}">
         @csrf
+        <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
 
 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>

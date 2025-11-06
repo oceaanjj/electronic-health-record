@@ -5,12 +5,7 @@
 
     {{-- NOTE : sa css ko a-add pa ko my-1 py-4 px-3 each alerts tenks wag niyo burahin to makakalimutan ko --}}
 
-    <!-- dropdown component -->
-    <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-        selectRoute="{{ route('physical-exam.select') }}" inputPlaceholder="-Select or type to search-"
-        inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
-
-    {{-- FORM OVERLAY --}}
+    {{-- FORM OVERLAY (ALERT)--}}
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
             <div
@@ -19,6 +14,12 @@
             </div>
         @endif
     </div>
+
+    <!-- DROPDOWN component -->
+    <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
+        selectRoute="{{ route('physical-exam.select') }}" inputPlaceholder="-Select or type to search-"
+        inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
+
 
 
     <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form"

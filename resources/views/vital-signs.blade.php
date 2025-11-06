@@ -57,43 +57,57 @@
                     @php
                         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
                     @endphp
-                
 
-                    @foreach ($times as $time)
+                    @foreach ($times as $index => $time)
                         @php
                             $vitalsRecord = $vitalsData->get($time);
+                            $isLast = $index === count($times) - 1;
+                            $borderClass = $isLast ? '' : 'border-b-2 border-line-brown/70';
                         @endphp
-                        <tr>
-                            <th class="time">{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</th>
-                            <td>
+
+                        <tr class="{{ $borderClass }}">
+                            {{-- TIME COLUMN --}}
+                            <th class="text-center font-semibold py-2 bg-yellow-light text-brown {{ $borderClass }}">
+                                {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
+                            </th>
+
+                            {{-- TEMPERATURE --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
                                     value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                    class="vital-input" data-param="temperature" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="temperature" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- HR --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="hr_{{ $time }}" placeholder="bpm"
                                     value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                    class="vital-input" data-param="hr" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="hr" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- RR --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="rr_{{ $time }}" placeholder="bpm"
                                     value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                    class="vital-input" data-param="rr" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="rr" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- BP --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
                                     value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                    class="vital-input" data-param="bp" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="bp" data-time="{{ $time }}">
                             </td>
-                            <td>
+
+                            {{-- SpO₂ --}}
+                            <td class="bg-beige {{ $borderClass }}">
                                 <input type="text" name="spo2_{{ $time }}" placeholder="%"
                                     value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                    class="vital-input" data-param="spo2" data-time="{{ $time }}">
+                                    class="vital-input h-[60px]" data-param="spo2" data-time="{{ $time }}">
                             </td>
-                            
-
                         </tr>
                     @endforeach
+
                 </table>
             </div>
 
@@ -116,7 +130,7 @@
 
                             <tr>
                                 <td class="align-middle">
-                                    <div class="alert-box my-1 py-4 px-3 flex justify-center items-center">
+                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
                                         @if ($vitalsRecord && optional($vitalsRecord)->alerts)
                                             <ul class="list-none text-center {{ $color }}">
                                                 @foreach($alerts as $alert)
@@ -143,9 +157,6 @@
    
 @endsection
 
-
-
-@push('styles')
-    @vite(['resources/css/act-of-daily-living.css'])
+@push('scripts')
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
 @endpush
-

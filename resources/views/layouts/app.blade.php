@@ -157,6 +157,7 @@
     </script>
 
     @stack('scripts')
+    @vite(['resources/js/match-heights.js'])
 
     
 

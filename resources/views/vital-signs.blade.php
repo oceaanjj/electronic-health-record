@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
             borderColor: lineColors[{{ $index }} % lineColors.length],
             backgroundColor: lineColors[{{ $index }} % lineColors.length],
             borderWidth: 2.5,
-            tension: 0, // perfectly straight
+            tension: 0, 
             pointRadius: 4,
             pointHoverRadius: 6,
             fill: false
@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
         @endforeach
     ];
 
-    // Initialize chart
+
     const vitalChart = new Chart(ctx, {
         type: 'line',
         data: { labels, datasets },
@@ -291,7 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // 🔁 Auto-update chart + input color feedback
     document.querySelectorAll('.vital-input').forEach(input => {
         input.addEventListener('input', () => {
             const time = input.getAttribute('data-time');
@@ -306,13 +305,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // ✅ Pediatric (6–12 yrs) normal ranges
                 let bg = '';
                 let color = '#000';
 
                 if (param === 'temperature') {
-                    if (value > 37.0) { bg = '#B71C1C'; color = '#fff'; }          // high = red, white text
-                    else if (value >= 36.3 && value <= 37.0) { bg = '#fff6cf'; }   // normal = super yellow
+                    if (value > 37.0) { bg = '#B71C1C'; color = '#fff'; }          
+                    else if (value >= 36.3 && value <= 37.0) { bg = '#fff6cf'; }  
                 }
                 if (param === 'hr') {
                     if (value > 110) { bg = '#B71C1C'; color = '#fff'; }

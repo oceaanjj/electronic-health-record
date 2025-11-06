@@ -38,117 +38,81 @@
             </div>
         </form>
 
-        {{-- MAIN DATA FORM (submit) --}}
-        <form id="io-form" method="POST" action="{{ route('io.store') }}">
-            @csrf
+        {{-- MAIN DATA FORM --}}
+    <form id="io-form" method="POST" action="{{ route('io.store') }}">
+        @csrf
 
-            {{-- Hidden fields to send patient context with the data submission --}}
-            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
-            <input type="hidden" name="date" value="{{ session('selected_date') }}">
-            <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
+        {{-- Hidden fields --}}
+        <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+        <input type="hidden" name="date" value="{{ session('selected_date') }}">
+        <input type="hidden" name="day_no" value="{{ session('selected_day_no') }}">
 
-            <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
-                <div class="w-[68%] rounded-[15px] overflow-hidden">
+        <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+            {{-- INPUT TABLE --}}
+            <div class="w-[68%] rounded-[15px] overflow-hidden">
+                <table class="w-full table-fixed border-collapse border-spacing-y-0">
+                    <tr>
+                        <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">ORAL INTAKE (mL)</th>
+                        <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center">IV FLUIDS (mL)</th>
+                        <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tr-lg">URINE OUTPUT (mL)</th>
+                    </tr>
 
-                    <table class="w-full table-fixed border-collapse border-spacing-y-0">
-                            <tr>
-                                <th class="w-[15%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">ORAL INTAKE (mL)</th>
-                                <th class="w-[13%] bg-dark-green text-white">IV FLUIDS (mL)</th>
-                                <th class="w-[13%] bg-dark-green text-white rounded-tr-lg">URINE OUTPUT (mL)</th>
-                            </tr>
+                <tr class="bg-beige text-brown">
+                    {{-- ORAL INTAKE --}}
+                    <td class="text-center align-middle">
+                        <input type="number" 
+                            name="oral_intake" 
+                            placeholder="Enter Oral Intake"
+                            value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}"
+                            step="100"
+                            min="0"
+                            class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none" />
+                    </td>
 
-                            <tr>
-                                {{-- ORAL INTAKE INPUT --}}
-                                <td>
-                                    <input type="number" name="oral_intake" placeholder="Oral Intake"
-                                        value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}">
-                                </td>
+                    {{-- IV FLUIDS --}}
+                    <td class="text-center align-middle">
+                        <input type="number" 
+                            name="iv_fluids_volume" 
+                            placeholder="Enter IV Fluids"
+                            value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}"
+                            step="100"
+                            min="0"
+                            class="w-[80%] h-100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none" />
+                    </td>
 
-                                {{-- IV FLUIDS INPUT --}}
-                                <td>
-                                    <input type="number" name="iv_fluids_volume" placeholder="IV Fluids"
-                                        value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}">
-                                </td>
-
-                                {{-- URINE OUTPUT INPUT --}}
-                                <td>
-                                    <input type="number" name="urine_output" placeholder="Urine Output"
-                                        value="{{ old('urine_output', $ioData->urine_output ?? '') }}">
-                                </td>
-                            </tr>
-                        </table>
-                </div>
-
-
-
-             <div class="w-[25%] rounded-[15px] overflow-hidden">
-                <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
-                    ALERTS
-                </div>
-
-                <table class="w-full border-collapse">
-                <tr>
-
-                    {{-- HINDI KO ITO MAGETS --}}
-                    {{-- ALERTS --}}
-                    <td>
-                        <!-- Oral Intake Alerts -->
-                        @if ($errors->has('oral_intake') || session('cdss.oral_intake'))
-                            <div class="alert-group">
-                                @error('oral_intake')
-                                    <div class="alert-box alert-red"><span class="alert-message">{{ $message }}</span></div>
-                                @enderror
-                                @if (session('cdss.oral_intake'))
-                                    @php
-                                        $alertData = session('cdss.oral_intake');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}"><span class="alert-message">Intake:
-                                            {{ $alertData['alert'] }}</span></div>
-                                @endif
-                            </div>
-                        @endif
-
-                        <!-- IV Fluids Alerts -->
-                        @if ($errors->has('iv_fluids') || session('cdss.iv_fluids'))
-                            <div class="alert-group">
-                                @error('iv_fluids')
-                                    <div class="alert-box alert-red"><span class="alert-message">{{ $message }}</span></div>
-                                @enderror
-                                @if (session('cdss.iv_fluids'))
-                                    @php
-                                        $alertData = session('cdss.iv_fluids');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}"><span class="alert-message">IV Fluids:
-                                            {{ $alertData['alert'] }}</span></div>
-                                @endif
-                            </div>
-                        @endif
-
-                        <!-- Urine Output Alerts -->
-                        @if ($errors->has('urine_output') || session('cdss.urine_output'))
-                            <div class="alert-group">
-                                @error('urine_output')
-                                    <div class="alert-box alert-red"><span class="alert-message">{{ $message }}</span></div>
-                                @enderror
-                                @if (session('cdss.urine_output'))
-                                    @php
-                                        $alertData = session('cdss.urine_output');
-                                        $color = ($alertData['severity'] === 'CRITICAL') ? 'alert-red' : (($alertData['severity'] === 'WARNING') ? 'alert-orange' : 'alert-green');
-                                    @endphp
-                                    <div class="alert-box {{ $color }}"><span class="alert-message">Output:
-                                            {{ $alertData['alert'] }}</span></div>
-                                @endif
-                            </div>
-                        @endif
+                    {{-- URINE OUTPUT --}}
+                    <td class="text-center align-middle">
+                        <input type="number" 
+                            name="urine_output" 
+                            placeholder="Enter Urine Output"
+                            value="{{ old('urine_output', $ioData->urine_output ?? '') }}"
+                            step="100"
+                            min="0"
+                            class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none" />
                     </td>
                 </tr>
 
                 </table>
             </div>
+
+            {{-- ALERTS --}}
+            <div class="w-[25%] rounded-[15px] overflow-hidden">
+                <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                    ALERTS
+                </div>
+
+                <table class="w-full border-collapse">
+                    <tr>
+                        <td class="align-middle">
+                            <div class="alert-box my-[3px] h-[90px] flex justify-center items-center">
+                                <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        </form>
+    </form>
 
 
     <div class="w-[70%] mx-auto flex justify-end mt-20 mb-30 space-x-4">
@@ -161,7 +125,3 @@
 
 
 @endsection
-
-@push('styles')
-    @vite(['resources/css/intake-and-output-style.css'])
-@endpush

@@ -38,7 +38,21 @@ window.initializeIntakeOutputAlerts = function () {
                         iv_fluids_volume: ivFluidsInput.value.trim(),
                         urine_output: urineOutputInput.value.trim(),
                     };
-                    analyzeIntakeOutput(intakeData, analyzeUrl, csrfToken);
+
+                    const alertCell = document.querySelector('[data-alert-for-field="io_alert"]');
+                    if (!alertCell) return;
+
+                    // Check if all fields are empty
+                    const allEmpty = Object.values(intakeData).every(val => val === '');
+
+                    if (allEmpty) {
+                        showDefaultNoAlerts(alertCell);
+                    } else {
+                        if (!alertCell.classList.contains("alert-loading")) {
+                            showAlertLoading(alertCell);
+                        }
+                        analyzeIntakeOutput(intakeData, analyzeUrl, csrfToken);
+                    }
                 }
             }, 300);
         });
@@ -47,8 +61,6 @@ window.initializeIntakeOutputAlerts = function () {
     async function analyzeIntakeOutput(intakeData, url, token) {
         const alertCell = document.querySelector('[data-alert-for-field="io_alert"]');
         if (!alertCell) return;
-
-        showAlertLoading(alertCell);
 
         try {
             const response = await fetch(url, {
@@ -69,72 +81,105 @@ window.initializeIntakeOutputAlerts = function () {
             }, 150);
         } catch (error) {
             console.error("I/O CDSS analysis failed:", error);
-            alertCell.innerHTML = `
-                <div class="alert-box alert-red fade-in" style="height:90px;margin:2px;">
-                    <span class="alert-message">Error analyzing...</span>
-                </div>
-            `;
+            displayAlert(alertCell, { alert: 'Error analyzing...', severity: 'CRITICAL' });
         }
     }
 
+    function showAlertLoading(alertCell) {
+        const alertBoxContentDiv = alertCell.querySelector('.alert-box-content');
+        if (!alertBoxContentDiv) return;
+
+        // Manage classes on the parent <td> (alertCell)
+        alertCell.classList.remove("has-no-alert", "alert-red", "alert-orange", "alert-green", "fade-in"); // Remove all previous state and animation classes
+        alertCell.classList.add("alert-loading"); // Add loading state class
+
+        // Update content of the inner div
+        alertBoxContentDiv.innerHTML = `
+            <div class=\"alert-loading\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>
+        `;
+        alertCell.onclick = null;
+    }
+
     function displayAlert(alertCell, alertData) {
-        alertCell.innerHTML = "";
+        const alertBoxContentDiv = alertCell.querySelector('.alert-box-content');
+        if (!alertBoxContentDiv) return;
 
-        const alertBox = document.createElement("div");
-        alertBox.className = "alert-box fade-in";
-        alertBox.style.height = "90px";
-        alertBox.style.margin = "2px";
+        // Manage classes on the parent <td> (alertCell)
+        alertCell.classList.remove("alert-loading", "has-no-alert", "alert-red", "alert-orange", "alert-green"); // Remove previous state classes
 
+        // Set color by severity
         let colorClass = "alert-green";
         if (alertData.severity === "CRITICAL") colorClass = "alert-red";
         else if (alertData.severity === "WARNING") colorClass = "alert-orange";
         else if (alertData.severity === "INFO") colorClass = "alert-green";
 
-        alertBox.classList.add(colorClass);
+        alertCell.classList.add(colorClass, "fade-in"); // Add color class and fade-in
 
-        const alertMessage = document.createElement("div");
-        alertMessage.className = "alert-message";
-        alertMessage.style.padding = "8px";
-
+        let innerHtmlContent;
         if (alertData.alert?.toLowerCase().includes("no findings")) {
-            alertBox.classList.add("has-no-alert");
-            alertMessage.innerHTML = `
-                <span class="text-white text-center uppercase font-semibold opacity-80">
-                    NO FINDINGS
-                </span>
+            alertCell.classList.add("has-no-alert");
+            innerHtmlContent = `
+                <span class="alert-message opacity-80 text-white text-center font-semibold uppercase">\n                    NO FINDINGS\n                </span>
             `;
+            alertCell.onclick = null; // No modal for "No Findings"
         } else {
-            alertMessage.innerHTML = `<span>${alertData.alert}</span>`;
+            innerHtmlContent = `<span>${alertData.alert}</span>`;
+            alertCell.onclick = () => openAlertModal(alertData); // Add click listener for modal
         }
 
-        alertBox.appendChild(alertMessage);
-        alertCell.appendChild(alertBox);
+        // Update content of the inner div
+        alertBoxContentDiv.innerHTML = innerHtmlContent;
     }
 
     function showDefaultNoAlerts(alertCell) {
-        alertCell.className = "alert-box has-no-alert alert-green fade-in";
-        alertCell.style.height = "90px";
-        alertCell.style.margin = "2.8px";
-        alertCell.innerHTML = `
-            <span class="alert-message opacity-80 text-white text-center font-semibold uppercase">
-                NO ALERTS
-            </span>
+        const alertBoxContentDiv = alertCell.querySelector('.alert-box-content');
+        if (!alertBoxContentDiv) return;
+
+        // Manage classes on the parent <td> (alertCell)
+        alertCell.classList.remove("alert-loading", "alert-red", "alert-orange"); // Remove loading and severity classes
+        alertCell.classList.add("has-no-alert", "alert-green", "fade-in"); // Add no alerts state, green color, and fade-in
+
+        // Update content of the inner div
+        alertBoxContentDiv.innerHTML = `
+            <span class=\"alert-message opacity-80 text-white text-center font-semibold uppercase\">\n                NO ALERTS\n            </span>
         `;
         alertCell.onclick = null;
     }
 
-    function showAlertLoading(alertCell) {
-        alertCell.className = "alert-box alert-green alert-loading fade-in";
-        alertCell.style.height = "90px";
-        alertCell.style.margin = "2px";
-        alertCell.innerHTML = `
-            <div class="alert-loading">
-                <div class="loading-spinner"></div>
-                <span>Analyzing...</span>
-            </div>
+
+    // --- Modal popup for details ---
+    function openAlertModal(alertData) {
+        const overlay = document.createElement("div");
+        overlay.className = "alert-modal-overlay";
+
+        const modal = document.createElement("div");
+        modal.className = "alert-modal fade-in";
+        modal.innerHTML = `
+            <button class=\"close-btn\">&times;</button>
+            <h2>Alert Details</h2>
+            <p>${alertData.alert}</p>
         `;
-        alertCell.onclick = null;
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        const closeModal = () => overlay.remove();
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        modal.querySelector(".close-btn").addEventListener("click", closeModal);
     }
+
+    // --- Fade-in animation ---
+    const style = document.createElement("style");
+    style.textContent = `
+        .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
 };
 
 document.addEventListener('DOMContentLoaded', () => {

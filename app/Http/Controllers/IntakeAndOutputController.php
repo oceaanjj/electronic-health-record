@@ -39,11 +39,6 @@ class IntakeAndOutputController extends Controller
 
     }
 
-
-
-
-
-
     public function selectPatientAndDate(Request $request)
     {
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
@@ -67,9 +62,9 @@ class IntakeAndOutputController extends Controller
 
             if (is_null($date) || is_null($dayNo)) {
                 $latestIo = IntakeAndOutput::where('patient_id', $patientId)
-                                    ->orderBy('date', 'desc')
-                                    ->orderBy('day_no', 'desc')
-                                    ->first();
+                    ->orderBy('date', 'desc')
+                    ->orderBy('day_no', 'desc')
+                    ->first();
 
                 if ($latestIo) {
                     $date = $latestIo->date;
@@ -85,7 +80,7 @@ class IntakeAndOutputController extends Controller
 
             $ioData = IntakeAndOutput::where('patient_id', $patientId)
                 ->where('date', $date)
-                ->where('day_no', (int)$dayNo)
+                ->where('day_no', (int) $dayNo)
                 ->first();
         } else {
             $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);

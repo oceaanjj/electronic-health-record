@@ -45,7 +45,7 @@ window.initializeVitalSignsAlerts = function () {
                 if (fieldName && time && value !== "") {
                     const currentAlertCell = document.querySelector(`[data-alert-for-time="${time}"]`);
                     if (currentAlertCell && !currentAlertCell.classList.contains("alert-loading")) {
-                        showAlertLoading(currentAlertCell);
+                        showAlertLoading(currentAlertCell); // Re-add this call
                     }
                     analyzeVitalSignField(fieldName, time, value, analyzeUrl, csrfToken);
                 }
@@ -57,8 +57,6 @@ window.initializeVitalSignsAlerts = function () {
     async function analyzeVitalSignField(fieldName, time, value, url, token) {
         const alertCell = document.querySelector(`[data-alert-for-time="${time}"]`);
         if (!alertCell) return;
-
-        showAlertLoading(alertCell);
 
         // Collect all vital signs for the current time slot
         const vitalsForTime = {};
@@ -87,10 +85,24 @@ window.initializeVitalSignsAlerts = function () {
             }, 150);
         } catch (error) {
             console.error("Vital Signs CDSS analysis failed:", error);
-            alertCell.querySelector('.alert-box').innerHTML = `
-                <div class=\"alert-loading alert-red\" style=\"height:90px;margin:2px;\">\n                    <span class=\"alert-message\">Error analyzing...</span>\n                </div>
-            `;
+            displayAlert(alertCell, { alert: 'Error analyzing...', severity: 'CRITICAL' });
         }
+    }
+
+    // --- Loading spinner (continuous) ---
+    function showAlertLoading(alertCell) {
+        const alertBoxDiv = alertCell.querySelector('.alert-box');
+        if (!alertBoxDiv) return;
+
+        // Manage classes on the parent <td> (alertCell)
+        alertCell.classList.remove("has-no-alert", "alert-red", "alert-orange", "alert-green", "fade-in"); // Remove all previous state and animation classes
+        alertCell.classList.add("alert-loading"); // Add loading state class
+
+        // Update content of the inner div
+        alertBoxDiv.innerHTML = `
+            <div class=\"alert-loading\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>
+        `;
+        alertCell.onclick = null;
     }
 
     // --- Display alert content ---
@@ -113,15 +125,16 @@ window.initializeVitalSignsAlerts = function () {
         if (alertData.alert?.toLowerCase().includes("no findings")) {
             alertCell.classList.add("has-no-alert");
             innerHtmlContent = `
-                <span class="alert-message opacity-80 text-white text-center font-semibold uppercase">\n                    NO FINDINGS\n                </span>
+                <span class=\"alert-message opacity-80 text-white text-center font-semibold uppercase\">\n                    NO FINDINGS\n                </span>
             `;
+            alertCell.onclick = null; // No modal for "No Findings"
         } else {
             innerHtmlContent = `<span>${alertData.alert}</span>`;
+            alertCell.onclick = () => openAlertModal(alertData); // Add click listener for modal
         }
 
         // Update content of the inner div
         alertBoxDiv.innerHTML = innerHtmlContent;
-        alertCell.onclick = null; // Reset onclick
     }
 
     // --- Default NO ALERTS state ---
@@ -140,24 +153,40 @@ window.initializeVitalSignsAlerts = function () {
         alertCell.onclick = null;
     }
 
-    // --- Loading spinner (continuous) ---
-    function showAlertLoading(alertCell) {
-        const alertBoxDiv = alertCell.querySelector('.alert-box');
-        if (!alertBoxDiv) return;
 
-        // Manage classes on the parent <td> (alertCell)
-        alertCell.classList.remove("has-no-alert", "alert-red", "alert-orange", "alert-green", "fade-in"); // Remove all previous state and animation classes
-        alertCell.classList.add("alert-loading"); // Add loading state class
+    // --- Modal popup for details ---
+    function openAlertModal(alertData) {
+        const overlay = document.createElement("div");
+        overlay.className = "alert-modal-overlay";
 
-        // Update content of the inner div
-        alertBoxDiv.innerHTML = `
-            <div class="alert-loading">
-                <div class="loading-spinner"></div>
-                <span>Analyzing...</span>
-            </div>
+        const modal = document.createElement("div");
+        modal.className = "alert-modal fade-in";
+        modal.innerHTML = `
+            <button class=\"close-btn\">&times;</button>
+            <h2>Alert Details</h2>
+            <p>${alertData.alert}</p>
         `;
-        alertCell.onclick = null;
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        const closeModal = () => overlay.remove();
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        modal.querySelector(".close-btn").addEventListener("click", closeModal);
     }
+
+    // --- Fade-in animation ---
+    const style = document.createElement("style");
+    style.textContent = `
+        .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
 };
 
 document.addEventListener('DOMContentLoaded', () => {

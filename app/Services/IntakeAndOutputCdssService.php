@@ -71,63 +71,77 @@ class IntakeAndOutputCdssService
 
     public function analyzeIntakeOutput($intakeData)
     {
-        $alerts = [];
+        $allAlerts = [];
 
         // Analyze oral intake
-        if (!empty($intakeData['oral_intake'])) {
+        if (isset($intakeData['oral_intake']) && $intakeData['oral_intake'] !== '') {
             $oralAlert = $this->analyzeOral($intakeData['oral_intake']);
             if ($oralAlert) {
-                $alerts[] = $oralAlert;
+                $allAlerts[] = $oralAlert;
             }
         }
 
         // Analyze IV fluids
-        if (!empty($intakeData['iv_fluids_volume'])) {
-            $ivAlert = $this->analyzeIVFluids($intakeData['iv_fluids_volume'], $intakeData['iv_fluids_type'] ?? null);
+        if (isset($intakeData['iv_fluids_volume']) && $intakeData['iv_fluids_volume'] !== '') {
+            $ivAlert = $this->analyzeIVFluids($intakeData['iv_fluids_volume']);
             if ($ivAlert) {
-                $alerts[] = $ivAlert;
+                $allAlerts[] = $ivAlert;
             }
         }
 
         // Analyze urine output
-        if (!empty($intakeData['urine_output'])) {
+        if (isset($intakeData['urine_output']) && $intakeData['urine_output'] !== '') {
             $urineAlert = $this->analyzeOutput($intakeData['urine_output']);
             if ($urineAlert) {
-                $alerts[] = $urineAlert;
+                $allAlerts[] = $urineAlert;
             }
         }
 
-        // Analyze fluid balance (total intake vs output)
-        if (!empty($intakeData['oral_intake']) || !empty($intakeData['iv_fluids_volume']) || !empty($intakeData['urine_output'])) {
-            $balanceAlert = $this->analyzeFluidBalance($intakeData);
-            if ($balanceAlert) {
-                $alerts[] = $balanceAlert;
-            }
+        // Analyze fluid balance
+        $balanceAlert = $this->analyzeFluidBalance($intakeData);
+        if ($balanceAlert) {
+            $allAlerts[] = $balanceAlert;
         }
-        return implode("\n", $alerts);
+
+        if (empty($allAlerts)) {
+            return ['alert' => 'No Findings', 'severity' => self::NONE];
+        }
+
+        // Sort by severity (CRITICAL > WARNING > INFO)
+        usort($allAlerts, function ($a, $b) {
+            $severityOrder = [self::CRITICAL => 3, self::WARNING => 2, self::INFO => 1];
+            return ($severityOrder[$b['severity']] ?? 0) <=> ($severityOrder[$a['severity']] ?? 0);
+        });
+
+        $highestSeverityAlert = $allAlerts[0];
+
+        return [
+            'alert' => $highestSeverityAlert['alert'],
+            'severity' => $highestSeverityAlert['severity']
+        ];
     }
 
     private function analyzeOral($oralIntake)
     {
         foreach ($this->oralIntakeRules as $rule) {
             if ($rule['condition'] === 'very_low' && $oralIntake < $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             } elseif ($rule['condition'] === 'low' && $oralIntake < $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             } elseif ($rule['condition'] === 'excessive' && $oralIntake > $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             }
         }
         return null;
     }
 
-    private function analyzeIVFluids($ivVolume, $ivType = null)
+    private function analyzeIVFluids($ivVolume)
     {
         foreach ($this->ivFluidsVolumeRules as $rule) {
             if ($rule['condition'] === 'very_high_volume' && $ivVolume > $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             } elseif ($rule['condition'] === 'high_volume' && $ivVolume > $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             }
         }
         return null;
@@ -137,11 +151,11 @@ class IntakeAndOutputCdssService
     {
         foreach ($this->urineOutputRules as $rule) {
             if ($rule['condition'] === 'severe_oliguria' && $urineOutput < $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             } elseif ($rule['condition'] === 'oliguria' && $urineOutput < $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             } elseif ($rule['condition'] === 'polyuria' && $urineOutput > $rule['threshold']) {
-                return $rule['alert'];
+                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
             }
         }
         return null;
@@ -151,21 +165,19 @@ class IntakeAndOutputCdssService
     {
         $totalIntake = ($data['oral_intake'] ?? 0) + ($data['iv_fluids_volume'] ?? 0);
         $totalOutput = $data['urine_output'] ?? 0;
-        
+
         $balance = $totalIntake - $totalOutput;
 
-        // Positive balance (retention)
         if ($balance > 1500) {
-            return 'CRITICAL: Positive fluid balance > 1500ml. Risk of fluid overload. Assess for edema and respiratory distress.';
+            return ['alert' => 'CRITICAL: Positive fluid balance > 1500ml. Risk of fluid overload. Assess for edema and respiratory distress.', 'severity' => self::CRITICAL];
         } elseif ($balance > 1000) {
-            return 'WARNING: Positive fluid balance > 1000ml. Monitor for signs of fluid retention.';
+            return ['alert' => 'WARNING: Positive fluid balance > 1000ml. Monitor for signs of fluid retention.', 'severity' => self::WARNING];
         }
 
-        // Negative balance (deficit)
         if ($balance < -1000) {
-            return 'CRITICAL: Negative fluid balance > 1000ml. Risk of dehydration. Increase fluid intake.';
+            return ['alert' => 'CRITICAL: Negative fluid balance > 1000ml. Risk of dehydration. Increase fluid intake.', 'severity' => self::CRITICAL];
         } elseif ($balance < -500) {
-            return 'WARNING: Negative fluid balance > 500ml. Monitor hydration status.';
+            return ['alert' => 'WARNING: Negative fluid balance > 500ml. Monitor hydration status.', 'severity' => self::WARNING];
         }
 
         return null;

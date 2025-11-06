@@ -155,8 +155,8 @@
 
                         <table class="w-full border-collapse">
                             <tr>
-                                <td class="align-middle" data-alert-for-field="io_alert">
-                                    <div class="alert-box my-[3px] h-[90px] flex justify-center items-center">
+                                <td class="align-middle alert-box" data-alert-for-field="io_alert">
+                                    <div class="alert-box-content my-[3px] h-[90px] flex justify-center items-center">
                                         <span class="opacity-70 text-white font-semibold">No Alerts</span>
                                     </div>
                                 </td>

@@ -12,7 +12,14 @@
                     foreach ($item->getAttributes() as $column => $value) {
                         if (!in_array($column, $excludedColumns)) {
                             if ($column == 'path') {
-                                $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = '<img src="' . asset('storage/' . $item->path) . '">';
+                                $imagePath = storage_path('app/public/' . $item->path);
+                                if (file_exists($imagePath)) {
+                                    $imageData = base64_encode(file_get_contents($imagePath));
+                                    $imageMimeType = mime_content_type($imagePath);
+                                    $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = '<img src="data:' . $imageMimeType . ';base64,' . $imageData . '" class="diagnostic-image">';
+                                } else {
+                                    $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = 'Image not found: ' . $item->path;
+                                }
                             } else {
                                 $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
                             }

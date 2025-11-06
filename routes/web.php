@@ -181,6 +181,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
     Route::post('/diagnostics/submit', [DiagnosticsController::class, 'submit'])->name('diagnostics.submit');
     Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
+    Route::delete('/diagnostics/destroy-all/{type}/{patient_id}', [DiagnosticsController::class, 'destroyAll'])->name('diagnostics.destroy-all');
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {

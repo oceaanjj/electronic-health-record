@@ -185,7 +185,8 @@ button.clear-btn[disabled] {
                 @endphp
 
                 @foreach ($types as $key => $label)
-                    <div class="diagnostic-panel">
+                    <div class="diagnostic-panel" data-type="{{ $key }}"
+                         data-uploaded-image-ids="{{ json_encode($selectedPatient && isset($images[$key]) ? $images[$key]->pluck('id')->toArray() : []) }}">
                         
                         <div class="panel-body">
                             <h2>{{ $label }}</h2>
@@ -194,7 +195,7 @@ button.clear-btn[disabled] {
 
                             @if ($selectedPatient && isset($images[$key]) && count($images[$key]))
                                 <h4 class="uploaded-title">Uploaded Files:</h4>
-                                <div class="preview-grid">
+                                <div class="preview-grid" id="uploaded-files-{{ $key }}">
                                     @foreach ($images[$key] as $image)
                                         <div class="preview-item">
                                             <img src="{{ Storage::url($image->path) }}" alt="{{ $image->original_name }}">
@@ -226,7 +227,7 @@ button.clear-btn[disabled] {
                             <button 
                                 type="button" 
                                 class="clear-btn" 
-                                onclick="clearPreview('{{ $key }}')"
+                                onclick="handleClearButtonClick('{{ $key }}')"
                                 {{ !$selectedPatient ? 'disabled' : '' }}>
                                 CLEAR
                             </button>
@@ -285,6 +286,47 @@ function deleteImage(url) {
         else alert('Failed to delete image.');
     })
     .catch(() => alert('Error deleting image.'));
+}
+
+function handleClearButtonClick(type) {
+    const panel = document.querySelector(`.diagnostic-panel[data-type="${type}"]`);
+    const uploadedImageIds = JSON.parse(panel.dataset.uploadedImageIds || '[]');
+
+    if (uploadedImageIds.length > 0) {
+        // If there are uploaded images, trigger bulk delete
+        deleteAllImages(type, uploadedImageIds);
+    } else {
+        // Otherwise, just clear the client-side preview
+        clearPreview(type);
+    }
+}
+
+function deleteAllImages(type, imageIds) {
+    if (!confirm('Delete ALL images for ' + type.toUpperCase() + '? This action cannot be undone.')) return;
+
+    fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
+        .replace('__TYPE__', type)
+        .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
+        method: 'POST', // Laravel uses POST for DELETE via _method
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            location.reload(); // Reload page to reflect changes
+        } else {
+            alert('Failed to delete images: ' + (data.message || 'Unknown error.'));
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting images:', error);
+        alert('Error deleting images.');
+    });
 }
 
 // Initialize searchable dropdown on page load

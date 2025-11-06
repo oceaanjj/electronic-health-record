@@ -62,8 +62,8 @@
             type="date"
             id="date_selector"
             name="date"
-            value="{{ old('date', session('selected_date', date('Y-m-d'))) }}"
-            onchange="this.form.submit()"
+            value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+            @if (!$selectedPatient) disabled @endif
             class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
@@ -75,7 +75,7 @@
         <select
             id="day_no_selector"
             name="day_no"
-            onchange="this.form.submit()"
+            @if (!$selectedPatient) disabled @endif
             class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                    focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
@@ -83,7 +83,7 @@
             @for ($i = 1; $i <= 30; $i++)
                 <option
                     value="{{ $i }}"
-                    {{ old('day_no', session('selected_day_no', 1)) == $i ? 'selected' : '' }}
+                    @if(($currentDayNo ?? 1) == $i) selected @endif
                 >
                     {{ $i }}
                 </option>
@@ -97,9 +97,9 @@
             <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
                 @csrf
 
-                <input type="hidden" name="patient_id" value="{{ old('patient_id', session('selected_patient_id')) }}">
-                <input type="hidden" name="date" value="{{ old('date', session('selected_date')) }}">
-                <input type="hidden" name="day_no" value="{{ old('day_no', session('selected_day_no')) }}">
+                <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+                <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
+                <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
                 <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
@@ -221,5 +221,10 @@
 
 @endsection
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.initializeDateDayLoader();
+        });
+    </script>
 @endpush

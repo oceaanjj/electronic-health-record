@@ -12,53 +12,112 @@ use Carbon\Carbon;
 
 class VitalSignsController extends Controller
 {
-    public function selectPatientAndDate(Request $request)
+    /**
+     * Finds and returns the Vitals record for a given patient, date, and day.
+     *
+     * @param string $patientId
+     * @param string $date (format Y-m-d)
+     * @param int $dayNo
+     * @return \Illuminate\Support\Collection
+     */
+    private function getVitalsRecord(string $patientId, string $date, int $dayNo): \Illuminate\Support\Collection
     {
-        $patientId = $request->input('patient_id');
-        // Always set the date to the current date when a patient is selected
-        $currentDate = now()->format('Y-m-d');
-        // Always set the day number to 1 when a patient is selected
-        $defaultDayNo = 1;
-
-        $request->session()->put('selected_patient_id', $patientId);
-        $request->session()->put('selected_date', $currentDate);
-        $request->session()->put('selected_day_no', $defaultDayNo);
-
-        return redirect()->route('vital-signs.show');
-    }
-
-    public function show(Request $request)
-    {
-        $patients = Auth::user()->patients;
-        $vitalsData = collect();
-
-        $patientId = $request->session()->get('selected_patient_id');
-        $date = $request->session()->get('selected_date');
-        $dayNo = $request->session()->get('selected_day_no');
-
-        if ($patientId && $date && $dayNo) {
-            $vitals = Vitals::where('patient_id', $patientId)
-                ->where('date', $date)
-                ->where('day_no', $dayNo)
-                ->get();
-
-            $vitalsData = $vitals->keyBy(function ($item) {
+        return Vitals::where('patient_id', $patientId)
+            ->where('date', $date)
+            ->where('day_no', $dayNo)
+            ->get()
+            ->keyBy(function ($item) {
                 return Carbon::parse($item->time)->format('H:i');
             });
+    }
+
+    /**
+     * Handles the AJAX request for patient selection and date/day changes.
+     * Also displays the initial page, loading data based on session state.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function selectPatient(Request $request)
+    {
+        $patients = Auth::user()->patients;
+        $selectedPatient = null;
+        $alerts = [];
+        $vitalsData = collect();
+
+        $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
+        
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
+            if (!$selectedPatient) {
+                // Patient not found, clear session and reset
+                $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+                return view('vital-signs', compact('patients', 'selectedPatient', 'vitalsData'));
+            }
+            $request->session()->put('selected_patient_id', $patientId);
+
+            // Determine date and day_no
+            $date = $request->input('date');
+            $dayNo = $request->input('day_no');
+
+            // If a new patient is selected or if date/day_no are not provided in the request,
+            // set defaults based on patient admission date or current date.
+            $isNewPatientSelection = (is_null($date) && is_null($dayNo)) || !$request->session()->has('selected_date');
+
+            if ($isNewPatientSelection) {
+                $date = now()->format('Y-m-d');
+                $dayNo = 1;
+            } else {
+                // Existing patient or date/day changed. Use request values or fall back to session.
+                $date = $date ?? $request->session()->get('selected_date');
+                $dayNo = $dayNo ?? $request->session()->get('selected_day_no');
+                
+                // Final fallback if session also empty (e.g., first load after session clear)
+                if (is_null($date) || is_null($dayNo)) {
+                    $date = now()->format('Y-m-d');
+                    $dayNo = 1;
+                }
+            }
+
+            // Store the determined date/day selection in the session
+            $request->session()->put('selected_date', $date);
+            $request->session()->put('selected_day_no', $dayNo);
+
+            // Fetch the Vitals record
+            $vitalsData = $this->getVitalsRecord($patientId, $date, (int)$dayNo);
+            
+            // Re-run CDSS for all fetched vitals to get alerts
+            $cdssService = new \App\Services\VitalCdssService();
+            foreach($vitalsData as $time => $vitalRecord) {
+                $vitalsArray = $vitalRecord->toArray();
+                $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsArray);
+                $vitalsData[$time]->alerts = $alertResult['alert'];
+                $vitalsData[$time]->news_severity = $alertResult['severity'];
+            }
+
+        } else {
+            // No patient selected, clear session
+            $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
         }
 
-        $selectedPatient = null;
-        if ($patientId) {
-            $selectedPatient = Patient::where('patient_id', $patientId)->first();
-        }
+        // Pass the explicit variables for the Blade template to ensure immediate update
+        $currentDate = $request->session()->get('selected_date', now()->format('Y-m-d'));
+        $currentDayNo = $request->session()->get('selected_day_no', 1);
+
 
         return view('vital-signs', [
             'patients' => $patients,
             'vitalsData' => $vitalsData,
-            'selectedDate' => $date,
-            'selectedDayNo' => $dayNo,
             'selectedPatient' => $selectedPatient,
+            'currentDate' => $currentDate,
+            'currentDayNo' => $currentDayNo,
         ]);
+    }
+
+    public function show(Request $request)
+    {
+        // The logic for displaying the initial page is now handled by selectPatient
+        return $this->selectPatient($request);
     }
 
     public function store(Request $request)

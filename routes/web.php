@@ -187,7 +187,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::get('/', [VitalSignsController::class, 'show'])->name('show');
         Route::post('/', [VitalSignsController::class, 'store'])->name('store');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-        Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
+        Route::post('/select', [VitalSignsController::class, 'selectPatient'])->name('select');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
         Route::post('/check', [VitalSignsController::class, 'checkVitals'])->name('check');
     });

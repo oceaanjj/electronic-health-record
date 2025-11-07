@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IntakeAndOutput;
 use App\Models\Patient;
+use App\Services\IntakeAndOutputCdssService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -161,6 +162,11 @@ class IntakeAndOutputController extends Controller
             'other_output' => 'nullable|integer',
         ]);
 
+        // Analyze the data to get the alert
+        $cdss = new IntakeAndOutputCdssService();
+        $alertData = $cdss->analyzeIntakeOutput($validatedData);
+        $validatedData['alert'] = $alertData['alert'];
+
         $existingIo = IntakeAndOutput::where('patient_id', $validatedData['patient_id'])
             ->where('day_no', $validatedData['day_no'])
             ->first();
@@ -201,7 +207,7 @@ class IntakeAndOutputController extends Controller
             'urine_output' => $urineOutput,
         ];
 
-        $cdssAlerts = new \App\Services\IntakeAndOutputCdssService();
+        $cdssAlerts = new IntakeAndOutputCdssService();
         $result = $cdssAlerts->analyzeIntakeOutput($data);
 
         $result['severity'] = strtoupper($result['severity']);

@@ -1,3 +1,5 @@
+<div class="page-break"></div>
+
 <div class="section">
     <h2 class="section-title">Developmental History</h2>
     <table class="data-table">

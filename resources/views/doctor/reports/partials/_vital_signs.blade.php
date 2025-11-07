@@ -7,7 +7,7 @@
     @else
         @foreach($vitals as $item)
             @php
-                $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at', 'alerts'];
+                $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at',];
                 $filteredAttributes = [];
                 foreach ($item->getAttributes() as $column => $value) {
                     if (!in_array($column, $excludedColumns)) {

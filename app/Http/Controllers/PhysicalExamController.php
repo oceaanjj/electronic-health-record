@@ -87,11 +87,11 @@ class PhysicalExamController extends Controller
 
             $existingExam->update(array_merge($data, [
                 'general_appearance_alert' => $alerts['general_appearance_alert'] ?? null,
-                'skin_alert' => $alerts['skin_alert'] ?? null,
-                'eye_alert' => $alerts['eye_alert'] ?? null,
-                'oral_alert' => $alerts['oral_alert'] ?? null,
+                'skin_alert' => $alerts['skin_condition_alert'] ?? null,
+                'eye_alert' => $alerts['eye_condition_alert'] ?? null,
+                'oral_alert' => $alerts['oral_condition_alert'] ?? null,
                 'cardiovascular_alert' => $alerts['cardiovascular_alert'] ?? null,
-                'abdomen_alert' => $alerts['abdomen_alert'] ?? null,
+                'abdomen_alert' => $alerts['abdomen_condition_alert'] ?? null,
                 'extremities_alert' => $alerts['extremities_alert'] ?? null,
                 'neurological_alert' => $alerts['neurological_alert'] ?? null,
             ]));
@@ -118,11 +118,11 @@ class PhysicalExamController extends Controller
                 'neurological' => $data['neurological'],
                 // Store alerts
                 'general_appearance_alert' => $alerts['general_appearance_alert'] ?? null,
-                'skin_alert' => $alerts['skin_alert'] ?? null,
-                'eye_alert' => $alerts['eye_alert'] ?? null,
-                'oral_alert' => $alerts['oral_alert'] ?? null,
+                'skin_alert' => $alerts['skin_condition_alert'] ?? null,
+                'eye_alert' => $alerts['eye_condition_alert'] ?? null,
+                'oral_alert' => $alerts['oral_condition_alert'] ?? null,
                 'cardiovascular_alert' => $alerts['cardiovascular_alert'] ?? null,
-                'abdomen_alert' => $alerts['abdomen_alert'] ?? null,
+                'abdomen_alert' => $alerts['abdomen_condition_alert'] ?? null,
                 'extremities_alert' => $alerts['extremities_alert'] ?? null,
                 'neurological_alert' => $alerts['neurological_alert'] ?? null,
             ]);

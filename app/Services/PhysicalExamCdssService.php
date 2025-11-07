@@ -89,11 +89,9 @@ class PhysicalExamCdssService
 
             if ($alert) {
                 $alerts[$key . '_alert'] = $alert['alert'];
-                $alerts[$key . '_condition_alert'] = $alert['alert'];
             } else {
                 $alerts[$key . '_alert'] = 'No Findings';
             }
-            $alerts[$key] = $alert['alert'];
         }
         return $alerts;
     }

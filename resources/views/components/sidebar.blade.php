@@ -26,7 +26,7 @@
     <ul class="mt-[140px] text-dark-green text-[13px] font-creato-black pr-[10px] pl-[10px]">
         <li>
             <a href="{{ route('nurse-home') }}"
-                class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
+                class="group flex items-center gap-3 pl-4 pb-2 pt-2 mt-[20px]
                         hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
                     <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-5 h-5 transition duration-200">
                     <span >Home</span>
@@ -134,7 +134,7 @@
                          {{ request()->routeIs('diagnostics.show') 
                             ? 'bg-dark-green text-white font-bold' 
                             : 'hover:bg-hover hover:font-bold' }}">
-                    <img src="./img/sidebar/diagnostics.png" alt="Lab Icon" class="w-5 h-5 transition duration-200">
+                    <img src="./img/sidebar/diagnostics.png" alt="Lab Icon" class="w-6 h-6 transition duration-200">
                     <span class="{{ request()->routeIs('diagnostics.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Diagnostics</span>
             </a>
         </li>
@@ -149,14 +149,14 @@
                          {{ request()->routeIs('ivs-and-lines') 
                             ? 'bg-dark-green text-white font-bold' 
                             : 'hover:bg-hover hover:font-bold' }}">
-                    <img src="./img/sidebar/ivs-and-lines.png" alt="IV Icon" class="w-5 h-5 transition duration-200">
+                    <img src="./img/sidebar/ivs-and-lines.png" alt="IV Icon" class="w-4 h-4 transition duration-200">
                     <span class="{{ request()->routeIs('ivs-and-lines') ? 'text-white font-bold' : 'group-hover:font-bold' }}">IVs & Lines</span>
             </a>
         </li>
 
         <li>
             <a href="{{ route('medication-administration') }}"
-                 class="group flex items-center gap-3 pl-5 pb-2 pt-2 
+                 class="group flex items-center gap-3 pl-4 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('medication-administration') 
                             ? 'bg-dark-green text-white font-bold' 
@@ -168,7 +168,7 @@
 
         <li>
             <a href="{{ route('medication-reconciliation') }}"
-                    class="group flex items-center gap-3 pl-5 pb-2 pt-2 
+                    class="group flex items-center gap-3 pl-4 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('medication-reconciliation') 
                             ? 'bg-dark-green text-white font-bold' 

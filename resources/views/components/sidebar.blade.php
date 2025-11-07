@@ -26,10 +26,10 @@
     <ul class="mt-[140px] text-dark-green text-[13px] font-creato-black pr-[10px] pl-[10px]">
         <li>
             <a href="{{ route('nurse-home') }}"
-                class="group flex items-center gap-3 pl-4 pb-2 pt-2
-                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
+                class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
+                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
                     <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-5 h-5 transition duration-200">
-                    <span class=" group-hover:text-white group-hover:font-bold">Home</span>
+                    <span >Home</span>
             </a>
         </li>
 
@@ -128,7 +128,7 @@
         </li>
 
         <li>
-            <a href="{{ route('lab-values.index') }}"
+            <a href="{{ route('diagnostics.index') }}"
              class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('diagnostics.show') 
@@ -190,6 +190,26 @@
             </a>
         </li>
 
+
+        <li>
+            <center>
+                 <hr class="w-full mt-[120px] border-dark-green border-t-1">
+            </center>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+
+            <a href="#" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
+                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold 
+                        " onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <img src="./img/sidebar/logout.png" alt="Discharge Icon" class="w-6 h-6 transition duration-200">
+                <span>LOG OUT</span>
+            </a>
+        </li>
+        
+
+        {{-- 
         <li>
             <a href="about.php"
                class="group flex items-center gap-3 pl-5 pb-2 pt-2 
@@ -200,7 +220,7 @@
                 <img src="./img/sidebar/about.png" alt="About Icon" class="w-5 h-5 transition duration-200">
                 <span class="{{ request()->routeIs('about') ? 'text-white font-bold' : 'group-hover:font-bold' }}">About</span>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </div>
 

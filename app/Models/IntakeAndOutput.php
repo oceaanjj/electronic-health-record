@@ -10,7 +10,6 @@ class IntakeAndOutput extends Model
     protected $fillable = [
         'patient_id',
         'day_no',
-        'date',
         'oral_intake',
         'iv_fluids_volume',
         'iv_fluids_type',

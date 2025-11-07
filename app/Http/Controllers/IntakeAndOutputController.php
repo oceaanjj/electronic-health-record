@@ -44,7 +44,6 @@ class IntakeAndOutputController extends Controller
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $selectedPatient = null;
         $ioData = null;
-        $date = now()->format('Y-m-d');
         $dayNo = 1;
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
@@ -52,45 +51,38 @@ class IntakeAndOutputController extends Controller
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
             if (!$selectedPatient) {
-                $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+                $request->session()->forget(['selected_patient_id', 'selected_day_no']);
                 return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData'));
             }
             $request->session()->put('selected_patient_id', $patientId);
 
-            $date = $request->input('date');
             $dayNo = $request->input('day_no');
 
-            if (is_null($date) || is_null($dayNo)) {
-                // Try to get date and day from session first
-                $date = $request->session()->get('selected_date', now()->format('Y-m-d'));
+            if (is_null($dayNo)) {
+                // Try to get day from session first
                 $dayNo = $request->session()->get('selected_day_no', 1);
 
-                // If still no date/day (e.g., first load, or session cleared), then try latest IO
-                if ($date === now()->format('Y-m-d') && $dayNo === 1) { // Check if defaults were used from session
+                // If still no day (e.g., first load, or session cleared), then try latest IO
+                if ($dayNo === 1) { // Check if defaults were used from session
                     $latestIo = IntakeAndOutput::where('patient_id', $patientId)
-                        ->orderBy('date', 'desc')
                         ->orderBy('day_no', 'desc')
                         ->first();
 
                     if ($latestIo) {
-                        $date = $latestIo->date;
                         $dayNo = $latestIo->day_no;
                     }
                 }
             }
 
-            $request->session()->put('selected_date', $date);
             $request->session()->put('selected_day_no', $dayNo);
 
             $ioData = IntakeAndOutput::where('patient_id', $patientId)
-                ->where('date', $date)
                 ->where('day_no', (int) $dayNo)
                 ->first();
         } else {
-            $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+            $request->session()->forget(['selected_patient_id', 'selected_day_no']);
         }
 
-        $currentDate = $date;
         $currentDayNo = $dayNo;
 
         if ($request->ajax() && $request->header('X-Fetch-Form-Content')) {
@@ -99,7 +91,6 @@ class IntakeAndOutputController extends Controller
                 'patients' => $patients,
                 'ioData' => $ioData,
                 'selectedPatient' => $selectedPatient,
-                'currentDate' => $currentDate,
                 'currentDayNo' => $currentDayNo,
             ])->render();
 
@@ -119,7 +110,6 @@ class IntakeAndOutputController extends Controller
         } elseif ($request->ajax()) {
             return response()->json([
                 'ioData' => $ioData,
-                'currentDate' => $currentDate,
                 'currentDayNo' => $currentDayNo,
             ]);
         }
@@ -128,7 +118,6 @@ class IntakeAndOutputController extends Controller
             'patients' => $patients,
             'ioData' => $ioData,
             'selectedPatient' => $selectedPatient,
-            'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
         ]);
     }
@@ -165,7 +154,6 @@ class IntakeAndOutputController extends Controller
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
             'day_no' => 'required|integer|between:1,30',
-            'date' => 'required|date',
             'oral_intake' => 'nullable|integer',
             'iv_fluids_volume' => 'nullable|integer',
             'iv_fluids_type' => 'nullable|string',
@@ -174,7 +162,6 @@ class IntakeAndOutputController extends Controller
         ]);
 
         $existingIo = IntakeAndOutput::where('patient_id', $validatedData['patient_id'])
-            ->where('date', $validatedData['date'])
             ->where('day_no', $validatedData['day_no'])
             ->first();
 
@@ -196,7 +183,6 @@ class IntakeAndOutputController extends Controller
             );
         }
 
-        $request->session()->put('selected_date', $validatedData['date']);
         $request->session()->put('selected_day_no', $validatedData['day_no']);
 
         return redirect()->route('io.show')

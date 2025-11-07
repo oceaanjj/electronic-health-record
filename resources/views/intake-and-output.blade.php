@@ -54,19 +54,6 @@
             <input type="hidden" id="patient_id_hidden" name="patient_id" value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset">
         </div>
 
-        {{-- DATE --}}
-        <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
-            DATE :
-        </label>
-        <input
-            type="date"
-            id="date_selector"
-            name="date"
-            value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-            class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
-        >
-
         {{-- DAY NO --}}
         <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
             DAY NO :
@@ -96,7 +83,6 @@
                 @csrf
 
                 <input type="hidden" name="patient_id" value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset">
-                <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
                 <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
                 <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
@@ -174,7 +160,7 @@
 @endsection
 
 @push('scripts')
-        @vite(['resources/js/alert.js', 'resources/js/intake-output-patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/intake-output-cdss.js', 'resources/js/searchable-dropdown.js', 'resources/js/intake-output-data-loader.js'])
+        @vite(['resources/js/alert.js', 'resources/js/intake-output-patient-loader.js', 'resources/js/intake-output-cdss.js', 'resources/js/searchable-dropdown.js', 'resources/js/intake-output-data-loader.js'])
 
         {{-- Define the specific initializers for this page --}}
         <script>

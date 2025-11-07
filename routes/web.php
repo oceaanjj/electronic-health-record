@@ -216,8 +216,8 @@ Route::post('/medication-administration/store', [MedicationAdministrationControl
      ->name('medication-administration.store');
 
 // Para sa patient dropdown search (base sa code mo)
-Route::post('/adl-select', [MedicationAdministrationController::class, 'selectPatient'])
-     ->name('adl.select');
+    Route::post('/medication-administration/select-patient', [MedicationAdministrationController::class, 'selectPatient'])
+        ->name('medication-administration.select-patient');
 
     // ---------------
     // ADPIE Routes

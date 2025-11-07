@@ -32,8 +32,8 @@
 <form method="POST" action="{{ route('medication-administration.store') }}">
     @csrf
 
-    <div class="header flex items-center gap-4">
-        <label for="patient_search_input" class="text-black whitespace-nowrap">
+    <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
+        <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
             PATIENT NAME :
         </label>
 
@@ -64,14 +64,17 @@
         <input type="hidden" name="patient_id" id="patient_id_for_form" value="{{ $selectedPatient->patient_id ?? '' }}">
 
         {{-- 📅 DATE SELECTOR --}}
-        <label for="date_selector" class="text-white whitespace-nowrap font-medium">DATE :</label>
-        <input 
-            class="date border border-gray-300 rounded-lg px-3 py-2 shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-300 focus:outline-none transition duration-200" 
-            type="date" 
-            id="date_selector" 
+        <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            DATE :
+        </label>
+        <input
+            type="date"
+            id="date_selector"
             name="date"
             value="{{ $currentDate ?? now()->format('Y-m-d') }}"
             @if (!$selectedPatient) disabled @endif
+            class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
     </div>
 

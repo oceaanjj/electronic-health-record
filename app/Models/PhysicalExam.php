@@ -28,6 +28,14 @@ class PhysicalExam extends Model
         'abdomen_condition',
         'extremities',
         'neurological',
+        'general_appearance_alert',
+        'skin_condition_alert',
+        'eye_condition_alert',
+        'oral_condition_alert',
+        'cardiovascular_alert',
+        'abdomen_condition_alert',
+        'extremities_alert',
+        'neurological_alert',
     ];
 
     // Relationship sa patient table

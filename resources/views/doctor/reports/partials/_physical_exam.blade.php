@@ -1,7 +1,7 @@
 <div class="page-break"></div>
 
 <div class="section">
-    <h2 class="section-title">2. Physical Exam</h2>
+    <h2 class="section-title">Physical Exam</h2>
 
     @php
         $item = $physicalExam->first() ?? null;

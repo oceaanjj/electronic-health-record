@@ -1,7 +1,7 @@
 <div class="page-break"></div>
 
 <div class="section">
-    <h2 class="section-title">3. Vital Signs</h2>
+    <h2 class="section-title">Vital Signs</h2>
 
     @if($vitals->isEmpty())
         <p class="no-data">No Vital Signs data available.</p>

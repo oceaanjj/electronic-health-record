@@ -11,7 +11,10 @@
                 $filteredAttributes = [];
                 foreach ($item->getAttributes() as $column => $value) {
                     if (!in_array($column, $excludedColumns)) {
-                        $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
+                        $filteredAttributes[ucfirst(
+                            str_replace(['_', 'alerts'], [' ', 'alert'], $column)
+                        )
+                        ] = $value;
                     }
                 }
                 $attributeChunks = array_chunk($filteredAttributes, 3, true);

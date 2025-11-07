@@ -15,7 +15,7 @@ class IntakeAndOutput extends Model
         'iv_fluids_volume',
         'iv_fluids_type',
         'urine_output',
-        'alerts',
+        'alert',
     ];
 
     public function patient()

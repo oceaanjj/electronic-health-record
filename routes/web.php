@@ -90,6 +90,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     // Array of simple nurse-accessible views to avoid repetition.
     $nurseViews = [
+        'about-page',
         'medical-history',
         'physical-exam' => 'physical-exam.index',
         'vital-signs',

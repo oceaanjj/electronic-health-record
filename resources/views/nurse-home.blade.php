@@ -210,7 +210,7 @@ use Illuminate\Support\Facades\Auth;
                 <img src="img/about.png" alt="about icon" class="box-icon">
                 <h3>ABOUT</h3>
                 <p>Provides system information, purpose, and guidelines for users.</p>
-                <a class="proceed" href="#">
+                <a class="proceed" href="{{ route('about-page') }}">
                     <div>PROCEED <span class="arrow">▶</span></div>
                 </a>
             </div>

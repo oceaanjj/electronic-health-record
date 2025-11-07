@@ -142,27 +142,25 @@ class PatientController extends Controller
     }
 
     // SET TO INACTIVE
-    public function deactivate($id)
-    {
-        try {
-            $patient = Patient::findOrFail($id); // Only find active patients to deactivate
-            $patient->delete(); // This is the soft delete
+public function deactivate($id)
+{
+    try {
+        $patient = Patient::findOrFail($id); 
+        $patient->delete(); 
 
-            // Log patient deactivation
-            AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
+   
+        AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-        return response()->json(['success' => 'Patient deleted successfully']);
-        //         return redirect()->route('patients.index')->with('success', 'Patient deleted           │       
-// │        successfully');  
+        return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
+
+    } 
+    catch (ModelNotFoundException $e) {
+        abort(404, 'Patient not found or already inactive');
+    } catch (\Exception $e) {
+        Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
+        return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
     }
-
-        } catch (ModelNotFoundException $e) {
-            abort(404, 'Patient not found or already inactive');
-        } catch (\Exception $e) {
-            Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
-            return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
-        }
-    }
+}
     
     // SET TO ACTIVE
     public function activate($id)
@@ -174,12 +172,12 @@ class PatientController extends Controller
             // Log patient activation
             AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
 
-        return response()->json(['success' => 'Patient recovered successfully']);
+            return response()->json(['success' => 'Patient recovered successfully']);
         //         return redirect()->route('patients.index')->with('success', 'Patient recovered         │       
 // │        successfully');
-    }
+            }
 
-        } catch (ModelNotFoundException $e) {
+         catch (ModelNotFoundException $e) {
             abort(404, 'Patient not found');
         } catch (\Exception $e) {
             Log::error('Error in PatientController@activate: ' . $e->getMessage());

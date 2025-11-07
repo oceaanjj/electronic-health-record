@@ -34,11 +34,6 @@
                     </tr>
                 @endforelse
 
-                {{-- Add a spacer row --}}
-                <tr>
-                    <td colspan="7" class="spacer-row" style="height: 10px;"></td>
-                </tr>
-
                 {{-- 2. Past Medical / Surgical Section --}}
                 @forelse($pastMedicalSurgical as $item)
                     <tr>
@@ -57,10 +52,6 @@
                     </tr>
                 @endforelse
 
-                {{-- Add a spacer row --}}
-                <tr>
-                    <td colspan="7" class="spacer-row" style="height: 10px;"></td>
-                </tr>
 
                 {{-- 3. Known Conditions or Allergies Section --}}
                 @forelse($allergies as $item)
@@ -79,11 +70,6 @@
                         <td colspan="6" class="no-data">No Known Conditions or Allergies data available.</td>
                     </tr>
                 @endforelse
-
-                {{-- Add a spacer row --}}
-                <tr>
-                    <td colspan="7" class="spacer-row" style="height: 10px;"></td>
-                </tr>
 
                 {{-- 4. Vaccination Section --}}
                 @forelse($vaccination as $item)

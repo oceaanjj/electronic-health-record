@@ -229,7 +229,7 @@ class LabValuesCdssService
             'rbc' => $this->rbcRules,
             'hgb' => $this->hgbRules,
             'hct' => $this->hctRules,
-            'platelet' => $this->plateletRules,
+            'platelets' => $this->plateletRules,
             'neutrophils' => $this->neutrophilsRules,
             'lymphocytes' => $this->lymphocytesRules,
             'monocytes' => $this->monocytesRules,

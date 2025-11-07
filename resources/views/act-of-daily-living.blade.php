@@ -156,10 +156,11 @@
                 </div>
             </div>
 
-            <div class="w-[70%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
-                <button type="button" class="button-default">CDSS</button>
-                <button type="submit" class="button-default">SUBMIT</button>
-            </div>
+           <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                    <button type="button" class="button-default">CDSS</button>
+                    <button type="submit" class="button-default">SUBMIT</button>
+                </div>
+                
         </fieldset>
     </form>
 </div>

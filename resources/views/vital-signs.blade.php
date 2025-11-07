@@ -200,14 +200,12 @@
                         @endforeach
                 </table>
             </div>
-        </div>     
-    </form>
-
-
+        </div>        
     <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
             <button type="button" class="button-default">CDSS</button>
             <button type="submit" class="button-default">SUBMIT</button>       
     </div>
+ </form>
 
     <div class="vital-chart-container w-[50%] mx-auto mt-0 mb-20">
             <h2 class="text-center text-dark-green font-bold text-xl mb-4">Vital Sign Trend</h2>

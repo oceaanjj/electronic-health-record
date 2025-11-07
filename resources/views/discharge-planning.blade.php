@@ -4,7 +4,25 @@
 
 @section('content')
 
-    {{-- PATIENT DROP-DOWN FORM --}}
+    {{-- =================================================================== --}}
+    {{-- 1. SEARCHABLE PATIENT DROPDOWN --}}
+    {{-- =================================================================== --}}
+    <form action="{{ route('discharge-planning.select') }}" method="POST" id="patient-select-form">
+        @csrf
+        <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
+            <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
+                PATIENT NAME :
+            </label>
+
+            <div class="searchable-dropdown relative w-[400px]">
+                <input 
+                    type="text" 
+                    id="patient_search_input"
+                    placeholder="Select or type Patient Name" 
+                    value="{{ trim($selectedPatient->name ?? '') }}"
+                    autocomplete="off"
+                    class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                >
 
     <x-searchable-patient-dropdown 
         :patients="$patients" 
@@ -23,7 +41,9 @@
             </div>
         @endif
 
-    {{-- Form for data submission (submits with POST) --}}
+    {{-- =================================================================== --}}
+    {{-- 2. MAIN CONTENT FORM (Restyled) --}}
+    {{-- =================================================================== --}}
     <form action="{{ route('discharge-planning.store') }}" method="POST">
         @csrf
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
@@ -31,14 +51,16 @@
         {{-- Hidden input to send the selected patient's ID with the POST request --}}
         <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
-        <div class="section">
-            <table class="w-[72%]">
+        {{-- TABLE 1: Discharge Planning --}}
+        <center>
+            <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                 <tr>
-                    <th colspan="2">Discharge Planning</th>
+                    {{-- ===== FIX: Added text-center here ===== --}}
+                    <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">Discharge Planning</th>
                 </tr>
                 <tr>
-                    <th>Discharge Criteria</th>
-                    <th>Required Action</th>
+                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">Discharge Criteria</th>
+                    <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Required Action</th>
                 </tr>
                 <tr>
                     <td class="criteria">Fever Resolution</td>
@@ -60,16 +82,18 @@
                     </td>
                 </tr>
             </table>
-        </div>
+        </center>
 
-        <div class="section">
-            <table>
+        {{-- TABLE 2: Discharge Instruction --}}
+        <center>
+            <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                 <tr>
-                    <th colspan="2">Discharge Instruction</th>
+                    {{-- ===== FIX: Added text-center here ===== --}}
+                    <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">Discharge Instruction</th>
                 </tr>
                 <tr>
-                    <th>Instruction</th>
-                    <th>Details</th>
+                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">Instruction</th>
+                    <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Details</th>
                 </tr>
                 <tr>
                     <td class="criteria">Medications</td>
@@ -99,16 +123,22 @@
                     </td>
                 </tr>
             </table>
-        </div>
+        </center>
 
-        <div class="buttons">
-            <button class="btn" type="submit">Submit</button>
+        {{-- SUBMIT BUTTON --}}
+        <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
+            <button class="button-default" type="submit">Submit</button>
         </div>
 
     </fieldset>
     </form>
 </div>
 @endsection
+
+@push('scripts')
+    {{-- These scripts are required for the new searchable dropdown --}}
+    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+@endpush
 
 @push('styles')
     @vite(['resources/css/discharge-planning.css'])

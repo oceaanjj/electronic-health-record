@@ -118,8 +118,16 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::get('/search-results', [PatientController::class, 'search'])->name('search-results');
     });
 
-    Route::resource('patients', PatientController::class);
-    Route::post('patients/{patient}/recover', [PatientController::class, 'recover'])->name('patients.recover');
+// In routes/web.php
+
+// This gives you: index, create, store, show, edit, update
+Route::resource('patients', PatientController::class)->except([
+    'destroy' 
+]);
+
+// ADD THESE TWO NEW ROUTES for Active/Inactive
+Route::delete('patients/{id}/deactivate', [PatientController::class, 'deactivate'])->name('patients.deactivate');
+Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->name('patients.activate');
 
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {

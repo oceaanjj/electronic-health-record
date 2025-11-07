@@ -111,6 +111,8 @@
         'vaccination' => $vaccination,
     ])
 
+    @include('doctor.reports.partials._developmental-history', ['developmentalHistory' => $developmentalHistory])
+
     @include('doctor.reports.partials._physical_exam', ['physicalExam' => $physicalExam])
 
     @include('doctor.reports.partials._vital_signs', ['vitals' => $vitals])

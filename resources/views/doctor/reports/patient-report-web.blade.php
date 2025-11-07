@@ -79,6 +79,9 @@
                 ])
             </div>
             <div class="section">
+                @include('doctor.reports.partials._developmental-history', ['developmentalHistory' => $developmentalHistory])
+            </div>
+            <div class="section">
                 @include('doctor.reports.partials._physical_exam', ['physicalExam' => $physicalExam])
             </div>
             <div class="section">

@@ -2,7 +2,7 @@
  *
  * How it works:
  * 1. Listens for a custom "patient:selected" event on the document.
- * 2. This event is dispatched by UI components like the hybrid-dropdown.
+ * 2. This event is dispatched by UI components like the searchable-dropdown.
  * 3. The event's 'detail' contains the patient ID and the URL to fetch.
  * 4. It shows a loading state and fetches the new form content.
  * 5. It replaces the old content and re-initializes all necessary scripts.
@@ -25,22 +25,11 @@ document.addEventListener("patient:selected", async (event) => {
 
     if (!formContainer || !selectUrl || !patientId) {
         console.error(
-            "Patient loader: Missing required data for fetch or patientId.",
+            "Intake/Output Patient Loader: Missing required data for fetch or patientId.",
             event.detail
         );
         return;
     }
-
-    // --- Action: Reset Date/Day selectors immediately on patient change ---
-    // if (isDateDayForm) {
-    //     // Clear value to indicate loading/reset
-    //     dateSelector.value = "";
-    //     dayNoSelector.value = "";
-    //     // Disable temporarily until the new response enables it and sets the new admission date
-    //     dateSelector.disabled = true;
-    //     dayNoSelector.disabled = true;
-    // }
-    // --- End Reset ---
 
     // Show loading state
     const overlay = formContainer.querySelector(".form-overlay");
@@ -53,6 +42,7 @@ document.addEventListener("patient:selected", async (event) => {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "X-CSRF-TOKEN": csrfToken,
                 "X-Requested-With": "XMLHttpRequest",
+                "X-Fetch-Form-Content": "true", // Custom header to request full form content
             },
             body: `patient_id=${encodeURIComponent(patientId)}`,
         });
@@ -103,12 +93,19 @@ document.addEventListener("patient:selected", async (event) => {
             }
 
             // --- Step 3: Re-initialize Scripts ---
-
-            // Re-initialize the CDSS alerts for the new form
-            const newCdssForm = formContainer.querySelector(".cdss-form");
-            if (newCdssForm && typeof window.initializeCdssForForm === "function") {
-                window.initializeCdssForForm(newCdssForm);
+            // Re-initialize the date-day loader
+            if (typeof window.initializeDateDayLoader === "function") {
+                window.initializeDateDayLoader();
             }
+
+            // Re-initialize the intake-output CDSS
+            // Assuming intakeOutputCdss is a function or object with an init method
+            if (typeof window.intakeOutputCdss === "function") {
+                window.intakeOutputCdss();
+            } else if (typeof window.intakeOutputCdss?.init === "function") {
+                window.intakeOutputCdss.init();
+            }
+
 
             // Dispatch a custom event to signal that the form content has been reloaded
             document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {
@@ -117,11 +114,11 @@ document.addEventListener("patient:selected", async (event) => {
             }));
         } else {
             throw new Error(
-                "Could not find '#form-content-container' in response."
+                "Intake/Output Patient Loader: Could not find '#form-content-container' in response."
             );
         }
     } catch (error) {
-        console.error("Patient loading failed:", error);
+        console.error("Intake/Output Patient loading failed:", error);
         window.location.reload(); // Fallback to a full refresh on error
     }
 });

@@ -12,45 +12,141 @@ use Carbon\Carbon;
 
 class VitalSignsController extends Controller
 {
-    public function selectPatientAndDate(Request $request)
+    /**
+     * Finds and returns the Vitals record for a given patient, date, and day.
+     *
+     * @param string $patientId
+     * @param string $date (format Y-m-d)
+     * @param int $dayNo
+     * @return \Illuminate\Support\Collection
+     */
+    private function getVitalsRecord(string $patientId, string $date, int $dayNo): \Illuminate\Support\Collection
     {
-        $patientId = $request->input('patient_id');
-        $date = $request->input('date');
-        $dayNo = $request->input('day_no');
+        return Vitals::where('patient_id', $patientId)
+            ->where('date', $date)
+            ->where('day_no', $dayNo)
+            ->get()
+            ->keyBy(function ($item) {
+                return Carbon::parse($item->time)->format('H:i');
+            });
+    }
 
-        $request->session()->put('selected_patient_id', $patientId);
-        $request->session()->put('selected_date', $date);
-        $request->session()->put('selected_day_no', $dayNo);
+    /**
+     * Handles the AJAX request for patient selection and date/day changes.
+     * Also displays the initial page, loading data based on session state.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function selectPatient(Request $request)
+    {
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
+        $selectedPatient = null;
+        $alerts = [];
+        $vitalsData = collect();
+        $date = now()->format('Y-m-d'); // Initialize with a default value
+        $dayNo = 1; // Initialize with a default value
 
-        return redirect()->route('vital-signs.show');
+        $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
+        
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
+            if (!$selectedPatient) {
+                // Patient not found, clear session and reset
+                $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+                return view('vital-signs', compact('patients', 'selectedPatient', 'vitalsData'));
+            }
+            $request->session()->put('selected_patient_id', $patientId);
+
+            // Determine date and day_no
+            $date = $request->input('date');
+            $dayNo = $request->input('day_no');
+
+            // If date and dayNo are provided in the request, they take precedence (e.g., from date-day-loader.js)
+            if (!is_null($date) && !is_null($dayNo)) {
+                // Use provided date and dayNo
+            } else {
+                // If only patient_id is provided (e.g., from patient-loader.js), try to find the most recent vital signs entry
+                $latestVitals = Vitals::where('patient_id', $patientId)
+                                    ->orderBy('date', 'desc')
+                                    ->orderBy('day_no', 'desc')
+                                    ->first();
+
+                if ($latestVitals) {
+                    $date = $latestVitals->date;
+                    $dayNo = $latestVitals->day_no;
+                } else {
+                    // No vital signs data found for this patient, default to current date and day 1
+                    $date = now()->format('Y-m-d');
+                    $dayNo = 1;
+                }
+            }
+
+            // Store the determined date/day selection in the session
+            $request->session()->put('selected_date', $date);
+            $request->session()->put('selected_day_no', $dayNo);
+
+                        // 3. Fetch the Vitals record
+
+                        $vitalsData = $this->getVitalsRecord($patientId, $date, (int)$dayNo);
+
+            
+
+                        // For debugging: Inspect the fetched data
+
+                        // dd(['patientId' => $patientId, 'date' => $date, 'dayNo' => $dayNo, 'vitalsData' => $vitalsData->toArray()]);
+
+            
+
+                        // 4. Re-run CDSS analysis on fetched data to display alerts
+
+                        $cdssService = new \App\Services\VitalCdssService();
+
+                        foreach($vitalsData as $time => $vitalRecord) {
+
+                            $vitalsArray = $vitalRecord->toArray();
+
+                            $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsArray);
+
+                            $vitalsData[$time]->alerts = $alertResult['alert'];
+
+                            $vitalsData[$time]->news_severity = $alertResult['severity'];
+
+                        }
+
+            
+
+                    } else {
+
+                        // No patient selected, clear session
+
+                        $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+
+                    }
+
+            
+
+                    // Pass the explicit variables for the Blade template to ensure immediate update
+
+                    $currentDate = $date;
+
+                    $currentDayNo = $dayNo;
+
+            
+
+                            return view('vital-signs', [
+            'patients' => $patients,
+            'vitalsData' => $vitalsData,
+            'selectedPatient' => $selectedPatient,
+            'currentDate' => $currentDate,
+            'currentDayNo' => $currentDayNo,
+        ]);
     }
 
     public function show(Request $request)
     {
-        $patients = Auth::user()->patients;
-        $vitalsData = collect();
-
-        $patientId = $request->session()->get('selected_patient_id');
-        $date = $request->session()->get('selected_date');
-        $dayNo = $request->session()->get('selected_day_no');
-
-        if ($patientId && $date && $dayNo) {
-            $vitals = Vitals::where('patient_id', $patientId)
-                ->where('date', $date)
-                ->where('day_no', $dayNo)
-                ->get();
-
-            $vitalsData = $vitals->keyBy(function ($item) {
-                return Carbon::parse($item->time)->format('H:i');
-            });
-        }
-
-        return view('vital-signs', [
-            'patients' => $patients,
-            'vitalsData' => $vitalsData,
-            'selectedDate' => $date,
-            'selectedDayNo' => $dayNo,
-        ]);
+        // The logic for displaying the initial page is now handled by selectPatient
+        return $this->selectPatient($request);
     }
 
     public function store(Request $request)
@@ -85,22 +181,24 @@ class VitalSignsController extends Controller
 
             $hasData = count(array_filter($vitalsForTime, fn($v) => $v !== null && $v !== '')) > 0;
 
+            $queryConditions = [
+                'patient_id' => $validatedData['patient_id'],
+                'date' => $validatedData['date'],
+                'day_no' => $validatedData['day_no'],
+                'time' => $dbTime,
+            ];
+
             if ($hasData) {
                 $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsForTime);
-                $vitalsForTime['alerts'] = $alertResult['alert']; 
+                $vitalsForTime['alerts'] = $alertResult['alert'];
                 $vitalsForTime['news_severity'] = $alertResult['severity'];
-                
+
                 $vitalRecord = Vitals::updateOrCreate(
-                    [
-                        'patient_id' => $validatedData['patient_id'],
-                        'date' => $validatedData['date'],
-                        'day_no' => $validatedData['day_no'],
-                        'time' => $dbTime,
-                    ],
+                    $queryConditions,
                     $vitalsForTime
                 );
-                
-                 if ($vitalRecord->wasRecentlyCreated) {
+
+                if ($vitalRecord->wasRecentlyCreated) {
                     AuditLogController::log(
                         'Vital Signs Record Created',
                         'User ' . Auth::user()->username . " created a new Vital Signs record",
@@ -115,27 +213,39 @@ class VitalSignsController extends Controller
                     );
                     $anyUpdated = true;
                 }
+            } else {
+                // If no data is submitted for this time slot, delete the existing record
+                Vitals::where($queryConditions)->delete();
+                AuditLogController::log(
+                    'Vital Signs Record Deleted',
+                    'User ' . Auth::user()->username . " deleted a Vital Signs record for time " . $time,
+                    ['patient_id' => $validatedData['patient_id'], 'time' => $time]
+                );
             }
         }
 
         $message = $anyCreated ? 'Vital Signs data saved successfully.'
             : ($anyUpdated ? 'Vital Signs data updated successfully.' : 'No changes made.');
 
-        return redirect()->route('vital-signs.show')
-            ->with('success', $message);
+        return redirect()->route('vital-signs.show', [
+            'date' => $validatedData['date'],
+            'day_no' => $validatedData['day_no'],
+        ])->with('success', $message);
     }
 
     public function checkVitals(Request $request)
     {
-        $param = $request->input('param');
-        $value = $request->input('value');
+        $time = $request->input('time');
+        $vitals = $request->input('vitals'); // This will be an array of vital signs for the time slot
 
-        if (!$param) {
+        if (!$time || !is_array($vitals)) {
             return response()->json(['alert' => '', 'severity' => 'NONE']);
         }
 
         $cdssService = new VitalCdssService();
-        $result = $cdssService->getAlertForVital($param, $value);
+
+        // Call analyzeVitalsForAlerts with the complete set of vitals for the time slot
+        $result = $cdssService->analyzeVitalsForAlerts($vitals);
 
         $result['severity'] = strtoupper($result['severity']);
 

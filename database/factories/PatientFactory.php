@@ -40,7 +40,9 @@ class PatientFactory extends Factory
             'user_id' => $nurse_id,
 
 
-            'name' => $this->faker->name(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'middle_name' => $this->faker->optional()->firstName(),
             'age' => $this->faker->numberBetween(1, 42),
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'address' => $this->faker->address(),

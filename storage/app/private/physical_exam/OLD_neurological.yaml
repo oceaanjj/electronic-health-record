@@ -1,0 +1,41 @@
+neurological:
+  - keywords: ["hemiparesis", "hemiplegia", "one-sided weakness"]
+    alert: "Hemiparesis (one-sided weakness) is a hallmark of an upper motor neuron lesion, most commonly a stroke."
+    severity: "critical"
+  - keywords: ["facial droop", "flattened nasolabial fold"]
+    alert: "Facial droop suggests a lesion of the facial nerve (CN VII). A central lesion (stroke) spares the forehead, while a peripheral lesion (Bell's Palsy) involves the entire side of the face."
+    severity: "warning"
+  - keywords: ["dysarthria", "slurred speech"]
+    alert: "Dysarthria (difficulty forming words) can result from lesions of CN X or XII, or from cerebellar or central nervous system damage."
+    severity: "warning"
+  - keywords: ["ataxia", "ataxic gait", "incoordination"]
+    alert: "Ataxia (impaired coordination) suggests a cerebellar disorder. Observe gait and perform point-to-point testing."
+    severity: "warning"
+  - keywords: ["resting tremor", "pill-rolling tremor"]
+    alert: "A resting, pill-rolling tremor that disappears with movement is a classic sign of Parkinson's disease."
+    severity: "warning"
+  - keywords: ["intention tremor"]
+    alert: "An intention tremor (tremor that worsens with intentional movement) is a sign of a cerebellar disorder."
+    severity: "warning"
+  - keywords: ["positive Romberg test", "loses balance with eyes closed"]
+    alert: "A positive Romberg test (loss of balance when eyes are closed) indicates poor position sense (proprioception), often due to posterior column disease or peripheral neuropathy."
+    severity: "warning"
+  - keywords: ["pronator drift"]
+    alert: "Pronator drift (downward drift and pronation of an outstretched arm) is a sensitive sign of a contralateral corticospinal tract lesion."
+    severity: "warning"
+  - keywords: ["glove and stocking neuropathy", "distal sensory loss"]
+    alert: "A 'glove-and-stocking' pattern of sensory loss is characteristic of peripheral neuropathy, commonly seen in diabetes and alcoholism."
+    severity: "info"
+  - keywords: ["hyperreflexia", "clonus", "4+ reflexes"]
+    alert: "Hyperreflexia and clonus are signs of an upper motor neuron lesion."
+    severity: "warning"
+  - keywords: ["absent reflexes", "areflexia", "0 reflexes"]
+    alert: "Absent deep tendon reflexes suggest a lower motor neuron lesion, such as a peripheral neuropathy or spinal nerve root compression."
+    severity: "warning"
+  - keywords:
+      ["positive Babinski sign", "upgoing toe", "extensor plantar response"]
+    alert: "A positive Babinski sign (dorsiflexion of the big toe) is a key indicator of a corticospinal (upper motor neuron) tract lesion."
+    severity: "warning"
+  - keywords: ["nuchal rigidity", "stiff neck", "meningismus"]
+    alert: "Nuchal rigidity (stiff neck with resistance to flexion) is a critical sign of meningitis or subarachnoid hemorrhage."
+    severity: "critical"

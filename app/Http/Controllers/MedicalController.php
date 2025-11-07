@@ -26,9 +26,8 @@ class MedicalController extends Controller
 
     public function show(Request $request)
     {
-        
-        // $patients = Patient::all();
-        $patients = Auth::user()->patients;
+
+$patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
 
         $selectedPatient = null;
         $presentIllness = null;
@@ -62,42 +61,42 @@ class MedicalController extends Controller
     }
 
 
-public function showDevelopmentalHistory(Request $request)
-{
-    $patients = Auth::user()->patients;
-    $patientId = $request->session()->get('selected_patient_id');
+    public function showDevelopmentalHistory(Request $request)
+    {
+        $patients = Auth::user()->patients;
+        $patientId = $request->session()->get('selected_patient_id');
 
-    if (!$patientId) {
-        return redirect()->route('medical-history')->with('error', 'Please select a patient first.');
+        if (!$patientId) {
+            return redirect()->route('medical-history')->with('error', 'Please select a patient first.');
+        }
+
+        $selectedPatient = Patient::find($patientId);
+        $developmentalHistory = DevelopmentalHistory::where('patient_id', $patientId)->first();
+
+        return view('developmental-history', compact('patients', 'selectedPatient', 'developmentalHistory'));
     }
+    public function storeDevelopmentalHistory(Request $request)
+    {
+        $patientId = $request->session()->get('selected_patient_id');
 
-    $selectedPatient = Patient::find($patientId);
-    $developmentalHistory = DevelopmentalHistory::where('patient_id', $patientId)->first();
+        if (!$patientId) {
+            return redirect()->route('medical-history')
+                ->with('error', 'Please select a patient first.');
+        }
 
-    return view('developmental-history', compact('patients', 'selectedPatient', 'developmentalHistory'));
-}
-public function storeDevelopmentalHistory(Request $request)
-{
-    $patientId = $request->session()->get('selected_patient_id');
+        DevelopmentalHistory::updateOrCreate(
+            ['patient_id' => $patientId],
+            [
+                'gross_motor' => $request->gross_motor,
+                'fine_motor' => $request->fine_motor,
+                'language' => $request->language,
+                'cognitive' => $request->cognitive,
+                'social' => $request->social,
+            ]
+        );
 
-    if (!$patientId) {
-        return redirect()->route('medical-history')
-            ->with('error', 'Please select a patient first.');
+        return redirect()->route('medical-history')->with('success', 'Developmental history saved successfully.');
     }
-
-    DevelopmentalHistory::updateOrCreate(
-        ['patient_id' => $patientId],
-        [
-            'gross_motor' => $request->gross_motor,
-            'fine_motor' => $request->fine_motor,
-            'language' => $request->language,
-            'cognitive' => $request->cognitive,
-            'social' => $request->social,
-        ]
-    );
-
-    return redirect()->route('medical-history')->with('success', 'Developmental history saved successfully.');
-}
 
     public function store(Request $request)
     {
@@ -211,7 +210,7 @@ public function storeDevelopmentalHistory(Request $request)
                     $updatedFlag = true;
                 }
             }
-              if ($request->input('action') === 'next') {
+            if ($request->input('action') === 'next') {
                 return redirect()->route('developmental-history');
             }
 
@@ -238,13 +237,16 @@ public function storeDevelopmentalHistory(Request $request)
                 );
             }
 
-            return redirect()->route('medical-history')
+
+            return redirect()->route('developmental-history')
+                ->withInput($data)
                 ->with('success', $alert);
+
 
         } catch (Throwable $e) {
             return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());
         }
-    }   
+    }
 
 
     private function handleRecord(string $modelClass, array $data): bool

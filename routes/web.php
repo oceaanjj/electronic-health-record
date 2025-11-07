@@ -149,6 +149,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/lab-values/select', [LabValuesController::class, 'selectPatient'])->name('lab-values.select');
     Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
     Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.cdss');
+    Route::post('/lab-values/analyze-field', [LabValuesController::class, 'runSingleCdssAnalysis'])->name('lab-values.run-cdss-field');
 
     // IVS AND LINES:
     Route::get('/ivs-and-lines', [IvsAndLineController::class, 'show'])->name('ivs-and-lines');
@@ -180,15 +181,15 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
     Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
     Route::post('/diagnostics/submit', [DiagnosticsController::class, 'submit'])->name('diagnostics.submit');
-    Route::delete('/diagnostics/destroy/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
-
+    Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
+    Route::delete('/diagnostics/destroy-all/{type}/{patient_id}', [DiagnosticsController::class, 'destroyAll'])->name('diagnostics.destroy-all');
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
         Route::get('/', [VitalSignsController::class, 'show'])->name('show');
         Route::post('/', [VitalSignsController::class, 'store'])->name('store');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-        Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
+        Route::post('/select', [VitalSignsController::class, 'selectPatient'])->name('select');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
         Route::post('/check', [VitalSignsController::class, 'checkVitals'])->name('check');
     });
@@ -197,6 +198,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::get('/intake-and-output', [IntakeAndOutputController::class, 'show'])->name('io.show');
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
+    Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
 
 Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
      ->name('medication-administration');

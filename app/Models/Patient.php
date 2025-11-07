@@ -29,7 +29,10 @@ class Patient extends Model
 
     // basically declaration na itong mga columns nato is puwedeng lagyan ng value
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'birthdate',
         'age',
         'sex',
         'address',
@@ -61,6 +64,37 @@ class Patient extends Model
     protected $casts = [
         'admission_date' => 'datetime',
     ];
+
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst(strtolower($value));
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst(strtolower($value));
+    }
+
+    public function setMiddleNameAttribute($value)
+    {
+        $this->attributes['middle_name'] = $value ? ucfirst(strtolower($value)) : null;
+    }
+
+    public function getNameAttribute()
+    {
+        // capitalize first and last names for display
+        $firstName = ucfirst(strtolower($this->first_name));
+        $lastName = ucfirst(strtolower($this->last_name));
+
+        // determine middle initial, capitalizing if present
+        $middleInitial = '';
+        if ($this->middle_name) {
+            $middleInitial = strtoupper(substr($this->middle_name, 0, 1)) . '.';
+        }
+
+        // return formatted full name
+        return trim("{$lastName}, {$firstName} {$middleInitial}");
+    }
 
     public function nurse()
     {

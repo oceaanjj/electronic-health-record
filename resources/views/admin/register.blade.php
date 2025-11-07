@@ -80,11 +80,11 @@
             registerBtn.disabled = !(usernameValid && emailValid && passwordValid);
         }
 
-        // ✅ Username check
+        //  Username check
         usernameInput.addEventListener('input', () => {
             const username = usernameInput.value;
             if (username.length < 3) {
-                usernameStatus.textContent = "❌ Too short";
+                usernameStatus.textContent = "Too short";
                 usernameStatus.style.color = "red";
                 usernameValid = false;
                 toggleRegisterButton();
@@ -94,11 +94,11 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.available) {
-                        usernameStatus.textContent = "✅ Available";
+                        usernameStatus.textContent = "Available";
                         usernameStatus.style.color = "green";
                         usernameValid = true;
                     } else {
-                        usernameStatus.textContent = "❌ Already taken";
+                        usernameStatus.textContent = "Already taken";
                         usernameStatus.style.color = "red";
                         usernameValid = false;
                     }
@@ -106,11 +106,11 @@
                 });
         });
 
-        // ✅ Email check
+        //  Email check
         emailInput.addEventListener('input', () => {
             const email = emailInput.value;
             if (!email.includes("@")) {
-                emailStatus.textContent = "❌ Invalid email";
+                emailStatus.textContent = "Invalid email";
                 emailStatus.style.color = "red";
                 emailValid = false;
                 toggleRegisterButton();
@@ -120,11 +120,11 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.available) {
-                        emailStatus.textContent = "✅ Available";
+                        emailStatus.textContent = "Available";
                         emailStatus.style.color = "green";
                         emailValid = true;
                     } else {
-                        emailStatus.textContent = "❌ Already used";
+                        emailStatus.textContent = "Already used";
                         emailStatus.style.color = "red";
                         emailValid = false;
                     }
@@ -132,12 +132,12 @@
                 });
         });
 
-        // ✅ Password confirmation check
+        //  Password confirmation check
         function checkPasswords() {
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
 
-            // --- 💡 NEW PASSWORD STRENGTH LOGIC 💡 ---
+            // ---  NEW PASSWORD STRENGTH LOGIC  ---
             const minLength = password.length >= 8;
             const hasUpper = /[A-Z]/.test(password);
             const hasLower = /[a-z]/.test(password);
@@ -179,7 +179,7 @@
                 passwordStatus.style.color = "red";
                 passwordValid = false;
             } else {
-                passwordStatus.textContent = "✅ Password is strong and matches!";
+                passwordStatus.textContent = "Password is strong and matches!";
                 passwordStatus.style.color = "green";
                 passwordValid = true;
             }
@@ -194,7 +194,7 @@
         passwordInput.addEventListener('input', checkPasswords);
         confirmPasswordInput.addEventListener('input', checkPasswords);
 
-        // ✅ Auto-hide success message after 3s
+        // Auto-hide success message after 3s
         const successMessage = document.getElementById('success-message');
         if (successMessage) {
             setTimeout(() => {

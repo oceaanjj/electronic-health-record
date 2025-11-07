@@ -15,13 +15,26 @@
                 @csrf
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" placeholder="Enter patient name" name="name">
+                        <label>First Name</label>
+                        <input type="text" placeholder="Enter first name" name="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Enter last name" name="last_name">
+                    </div>
+                    <div class="form-group">
+                        <label>Middle Name</label>
+                        <input type="text" placeholder="Enter middle name" name="middle_name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Birthdate</label>
+                        <input type="date" name="birthdate" id="birthdate">
                     </div>
 
                     <div class="form-group">
                         <label>Age</label>
-                        <input type="number" placeholder="Enter age" name="age">
+                        <input type="number" placeholder="Age" name="age" id="age" readonly>
                     </div>
 
                     <div class="form-group">
@@ -112,4 +125,8 @@
 
         @push('styles')
             @vite(['resources/css/registration-style.css'])
+        @endpush
+
+        @push('scripts')
+            @vite(['resources/js/compute-age.js'])
         @endpush

@@ -1,6 +1,6 @@
-    <div class="page-break"></div>
+<div class="page-break"></div>
 
-    <div class="section">
-        <h2 class="section-title">9. Medication Administration</h2>
-        <p class="no-data">Medication Administration data is not available in this report.</p>
-    </div>
+<div class="section">
+    <h2 class="section-title">9. Medication Administration</h2>
+    <p class="no-data">No Medication Administration data available.... (wala pa ehhhhhhhhhhhh) </p>
+</div>

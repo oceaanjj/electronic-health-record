@@ -7,6 +7,8 @@ use App\Models\Diagnostic;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class DiagnosticsController extends Controller
@@ -22,7 +24,7 @@ class DiagnosticsController extends Controller
     /** Show diagnostics page */
     public function index(Request $request)
     {
-        $patients = Auth::user()->patients()->orderBy('name')->get();
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $patientId = $request->session()->get('selected_patient_id');
         $selectedPatient = null;
         $images = [];
@@ -126,6 +128,48 @@ class DiagnosticsController extends Controller
             return redirect()->back()->with('success', 'Image deleted successfully.');
         } catch (Throwable $e) {
             return redirect()->back()->with('error', 'Failed to delete image: ' . $e->getMessage());
+        }
+    }
+
+    /** Delete all diagnostic images for a given type and patient */
+    public function destroyAll(Request $request, $type, $patient_id)
+    {
+        try {
+            $userId = Auth::id();
+            $patient = Patient::where('patient_id', $patient_id)
+                ->where('user_id', $userId)
+                ->first();
+
+            if (!$patient) {
+                return response()->json(['success' => false, 'message' => 'Unauthorized access or patient not found.'], 403);
+            }
+
+            // Fetch all diagnostic records for the given type and patient
+            $records = Diagnostic::where('patient_id', $patient_id)
+                                 ->where('type', $type)
+                                 ->get();
+
+            if ($records->isEmpty()) {
+                return response()->json(['success' => true, 'message' => 'No images found to delete for this type.'], 200);
+            }
+
+            DB::beginTransaction();
+
+            foreach ($records as $record) {
+                if ($record->path && Storage::disk('public')->exists($record->path)) {
+                    Storage::disk('public')->delete($record->path);
+                }
+                $record->delete();
+            }
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'All images for ' . $type . ' deleted successfully.'], 200);
+
+        } catch (Throwable $e) {
+            DB::rollBack();
+            Log::error("Error deleting all diagnostics for patient {$patient_id}, type {$type}: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to delete images: ' . $e->getMessage()], 500);
         }
     }
 }

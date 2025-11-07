@@ -1,105 +1,78 @@
 <div class="page-break"></div>
 
-    <div class="section">
-        <h2 class="section-title">11. Discharge Planning</h2>
-        @if($dischargePlanning->isEmpty())
-            <p class="no-data">No Discharge Planning data available.</p>
-        @else
-            @foreach($dischargePlanning as $item)
-                @php
-                    $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
+<div class="section">
+    <h2 class="section-title">Discharge Planning</h2>
 
-                    $dischargePlanningHeaderMap = [
-                        'criteria_feverRes' => 'Fever Resolution',
-                        'criteria_patientCount' => 'Normalization of Patient Count',
-                        'criteria_manageFever' => 'Manage Fever Effectively',
-                        'criteria_manageFever2' => 'Manage Fever Effectively 2',
-                        'instruction_med' => 'Medications',
-                        'instruction_appointment' => 'Follow-Up Appointment',
-                        'instruction_fluidIntake' => 'Fluid Intake',
-                        'instruction_exposure' => 'Avoid Mosquito Exposure',
-                        'instruction_complications' => 'Monitor for Signs of Complications',
-                    ];
+    @if($dischargePlanning->isEmpty())
+        <p>No Discharge Planning data available.</p>
+    @else
 
-                    // Discharge Criteria
-                    $criteriaColumns = [
-                        'criteria_feverRes',
-                        'criteria_patientCount',
-                        'criteria_manageFever',
-                        'criteria_manageFever2',
-                    ];
-                    $filteredCriteria = [];
-                    foreach ($criteriaColumns as $col) {
-                        if (!in_array($col, $excludedColumns)) {
-                            $displayName = $dischargePlanningHeaderMap[$col] ?? ucfirst(str_replace('_', ' ', $col));
-                            $filteredCriteria[$displayName] = $item->$col ?? 'N/A';
-                        }
-                    }
-                    $criteriaChunks = array_chunk($filteredCriteria, 3, true);
+        @foreach($dischargePlanning as $item)
 
-                    // Discharge Instructions
-                    $instructionColumns = [
-                        'instruction_med',
-                        'instruction_appointment',
-                        'instruction_fluidIntake',
-                        'instruction_exposure',
-                        'instruction_complications',
-                    ];
-                    $filteredInstructions = [];
-                    foreach ($instructionColumns as $col) {
-                        if (!in_array($col, $excludedColumns)) {
-                            $displayName = $dischargePlanningHeaderMap[$col] ?? ucfirst(str_replace('_', ' ', $col));
-                            $filteredInstructions[$displayName] = $item->$col ?? 'N/A';
-                        }
-                    }
-                    $instructionChunks = array_chunk($filteredInstructions, 3, true);
-                @endphp
+            <table>
+                <thead>
+                    <tr>
+                        <th>Discharge Criteria</th>
+                        <th>Required Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fever Resolution</td>
+                        <td>{{ $item->criteria_feverRes ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Normalization of Patient Count</td>
+                        <td>{{ $item->criteria_patientCount ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Manage Fever Effectively</td>
+                        <td>{{ $item->criteria_manageFever ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Manage Fever Effectively 2</td>
+                        <td>{{ $item->criteria_manageFever2 ?? 'N/A' }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <h3>Discharge Criteria:</h3>
-                <div class="table-responsive">
-                    @foreach($criteriaChunks as $chunk)
-                        <table>
-                            <thead>
-                                <tr>
-                                    @for($i = 0; $i < 3; $i++)
-                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                                    @endfor
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    @for($i = 0; $i < 3; $i++)
-                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                                    @endfor
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endforeach
-                </div>
 
-                <h3>Discharge Instructions:</h3>
-                <div class="table-responsive">
-                    @foreach($instructionChunks as $chunk)
-                        <table>
-                            <thead>
-                                <tr>
-                                    @for($i = 0; $i < 3; $i++)
-                                        <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                                    @endfor
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    @for($i = 0; $i < 3; $i++)
-                                        <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                                    @endfor
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endforeach
-                </div>
-                @if(!$loop->last)
-                <hr>@endif
-            @endforeach
-        @endif
-    </div>
+            <h2 class="section-title">Discharge Instructions</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Instruction</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Medications</td>
+                        <td>{{ $item->instruction_med ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Follow-Up Appointment</td>
+                        <td>{{ $item->instruction_appointment ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Fluid Intake</td>
+                        <td>{{ $item->instruction_fluidIntake ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Avoid Mosquito Exposure</td>
+                        <td>{{ $item->instruction_exposure ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Monitor for Signs of Complications</td>
+                        <td>{{ $item->instruction_complications ?? 'N/A' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @if(!$loop->last)
+                <hr>
+            @endif
+        @endforeach
+    @endif
+</div>

@@ -15,7 +15,8 @@
         .section-title {    /* component title */
             background-color: #ffe070ff;
             padding: 5px;
-            margin: -8px -8px 8px -8px;
+            margin-top:10px;
+            margin-botom:10px;
             border-bottom: 1px solid #eee;
             font-size: 16px;
             font-weight: bold;

@@ -4,39 +4,6 @@
 
 @section('content')
 
-<<<<<<< HEAD
-    {{-- wala pa palang columns for room number, bed number, and emergency contacts --}}
-
-    <body>
-        <div class="header">PATIENT REGISTRATION</div>
-        {{-- one of the things that i did here is the form action
-        as well as adding the names of each input so that they know where theyll be going to be inserted in --}}
-        <div class="form-container">
-            <form action="{{ route('patients.store') }}" method="POST">
-                @csrf
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" placeholder="Enter first name" name="first_name">
-                    </div>
-                    <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" placeholder="Enter last name" name="last_name">
-                    </div>
-                    <div class="form-group">
-                        <label>Middle Name</label>
-                        <input type="text" placeholder="Enter middle name" name="middle_name">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Birthdate</label>
-                        <input type="date" name="birthdate" id="birthdate">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Age</label>
-                        <input type="number" placeholder="Age" name="age" id="age" readonly>
-=======
     {{-- This container centers the content and matches the width of the medical-history page --}}
     <div class="w-[72%] mx-auto my-10">
         
@@ -107,7 +74,6 @@
                         <label for="age" class="block mb-2 font-bold text-dark-green">Age</label>
                         <input type="number" id="age" name="age" placeholder="Age" value="{{ old('age') }}"
                                class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm" readonly>
->>>>>>> 0344ddb459dbeb5be996aa258591c4f865de915a
                     </div>
 
                     {{-- Sex --}}
@@ -202,7 +168,7 @@
                                class="w-full text-[1sem 0 0 0] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
                     </div>
 
-         {{--  --}}Number --}}
+       
                     <div class="col-span-1">
                         <label for="contact_number" class="block mb-2 font-bold text-dark-green">Contact Number</label>
                         <input type="text" id="contact_number" name="contact_number" placeholder="Enter number" value="{{ old('contact_number') }}"
@@ -222,7 +188,6 @@
 
 @endsection
 
-<<<<<<< HEAD
         @push('styles')
             @vite(['resources/css/registration-style.css'])
         @endpush
@@ -230,9 +195,3 @@
         @push('scripts')
             @vite(['resources/js/compute-age.js'])
         @endpush
-=======
-{{-- This script is needed to calculate the age from the birthdate --}}
-@push('scripts')
-    @vite(['resources/js/compute-age.js'])
-@endpush
->>>>>>> 0344ddb459dbeb5be996aa258591c4f865de915a

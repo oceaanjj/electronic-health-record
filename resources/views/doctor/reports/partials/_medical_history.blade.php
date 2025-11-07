@@ -1,189 +1,108 @@
 <div class="section">
     <h2 class="section-title">1. Medical History</h2>
 
-    <h3>Present Illness</h3>
-    @forelse($presentIllness as $item)
-        @php
-            $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
-            $filteredAttributes = [];
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Condition Name</th>
+                    <th>Description</th>
+                    <th>Medication</th>
+                    <th>Dosage</th>
+                    <th>Side Effect</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
 
-            // 1. Prepare attributes (keeping only the first 6 for a 2x6 table)
-            foreach ($item->getAttributes() as $column => $value) {
-                if (!in_array($column, $excludedColumns)) {
-                    $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
-                }
-            }
+                {{-- 1. Present Illness Section --}}
+                @forelse($presentIllness as $item)
+                    <tr>
+                        <td>Present Illness</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td>**Present Illness**</td>
+                        <td colspan="6" class="no-data">No Present Illness data available.</td>
+                    </tr>
+                @endforelse
 
-            // 2. Select only the first 6 attributes to guarantee a 2x6 (6 column) structure
-            $chunk = array_slice($filteredAttributes, 0, 6, true);
-        @endphp
+                {{-- Add a spacer row --}}
+                <tr>
+                    <td colspan="7" class="spacer-row" style="height: 10px;"></td>
+                </tr>
 
-        @if(count($chunk) > 0)
-            <div class="table-responsive">
-                <table>
-                    {{-- Row 1: Headers (6 Columns) --}}
-                    <thead>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                {{-- Display the label of the i-th attribute, or empty if less than 6 --}}
-                                <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                            @endfor
-                        </tr>
-                    </thead>
-                    {{-- Row 2: Data Values (6 Columns) --}}
-                    <tbody>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                {{-- Display the value of the i-th attribute, or empty if less than 6 --}}
-                                <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        @else
-            {{-- If the item existed but had no useful attributes --}}
-            <p class="no-data">No Present Illness data available.</p>
-        @endif
+                {{-- 2. Past Medical / Surgical Section --}}
+                @forelse($pastMedicalSurgical as $item)
+                    <tr>
+                        <td>Past Medical / Surgical</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td>**Past Medical / Surgical**</td>
+                        <td colspan="6" class="no-data">No Past Medical / Surgical data available.</td>
+                    </tr>
+                @endforelse
 
-        @if(!$loop->last)
-        <hr>@endif
-    @empty
-        <p class="no-data">No Present Illness data available.</p>
-    @endforelse
+                {{-- Add a spacer row --}}
+                <tr>
+                    <td colspan="7" class="spacer-row" style="height: 10px;"></td>
+                </tr>
 
-    <!-- --- -->
+                {{-- 3. Known Conditions or Allergies Section --}}
+                @forelse($allergies as $item)
+                    <tr>
+                        <td>Known Conditions or Allergies</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td>**Allergies**</td>
+                        <td colspan="6" class="no-data">No Known Conditions or Allergies data available.</td>
+                    </tr>
+                @endforelse
 
-    <h3>Past Medical / Surgical</h3>
-    @forelse($pastMedicalSurgical as $item)
-        @php
-            $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
-            $filteredAttributes = [];
+                {{-- Add a spacer row --}}
+                <tr>
+                    <td colspan="7" class="spacer-row" style="height: 10px;"></td>
+                </tr>
 
-            foreach ($item->getAttributes() as $column => $value) {
-                if (!in_array($column, $excludedColumns)) {
-                    $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
-                }
-            }
-            $chunk = array_slice($filteredAttributes, 0, 6, true);
-        @endphp
-
-        @if(count($chunk) > 0)
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                            @endfor
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        @else
-            <p class="no-data">No Past Medical / Surgical data available.</p>
-        @endif
-
-        @if(!$loop->last)
-        <hr>@endif
-    @empty
-        <p class="no-data">No Past Medical / Surgical data available.</p>
-    @endforelse
-
-    <!-- --- -->
-
-    <h3>Known Conditions or Allergies</h3>
-    @forelse($allergies as $item)
-        @php
-            $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
-            $filteredAttributes = [];
-
-            foreach ($item->getAttributes() as $column => $value) {
-                if (!in_array($column, $excludedColumns)) {
-                    $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
-                }
-            }
-            $chunk = array_slice($filteredAttributes, 0, 6, true);
-        @endphp
-
-        @if(count($chunk) > 0)
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                            @endfor
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        @else
-            <p class="no-data">No Known Conditions or Allergies data available.</p>
-        @endif
-
-        @if(!$loop->last)
-        <hr>@endif
-    @empty
-        <p class="no-data">No Known Conditions or Allergies data available.</p>
-    @endforelse
-
-    <!-- --- -->
-
-    <h3>Vaccination</h3>
-    @forelse($vaccination as $item)
-        @php
-            $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
-            $filteredAttributes = [];
-
-            foreach ($item->getAttributes() as $column => $value) {
-                if (!in_array($column, $excludedColumns)) {
-                    $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
-                }
-            }
-            $chunk = array_slice($filteredAttributes, 0, 6, true);
-        @endphp
-
-        @if(count($chunk) > 0)
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                            @endfor
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            @for($i = 0; $i < 6; $i++)
-                                <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        @else
-            <p class="no-data">No Vaccination data available.</p>
-        @endif
-
-        @if(!$loop->last)
-        <hr>@endif
-    @empty
-        <p class="no-data">No Vaccination data available.</p>
-    @endforelse
+                {{-- 4. Vaccination Section --}}
+                @forelse($vaccination as $item)
+                    <tr>
+                        <td>Vaccination</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td>**Vaccination**</td>
+                        <td colspan="6" class="no-data">No Vaccination data available.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>

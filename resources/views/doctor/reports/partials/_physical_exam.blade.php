@@ -7,71 +7,77 @@
         @php
             $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at'];
             $rawAttributes = $item->getAttributes();
-            $pairedAttributes = [];
+            $examRows = []; // Array to hold the final 3-column rows
 
-            // The key is the base column name (the one without '_alert').
-            // The value is an array: [Category Header, Component Header]
-            $baseColumns = [
-                'general_appearance' => ['General Appearance', 'Alert'],
-                'skin_condition' => ['Skin Condition', 'Alert'],
-                'eye_condition' => ['Eye Condition', 'Alert'],
-                'oral_condition' => ['Oral Condition', 'Alert'],
-                'cardiovascular' => ['Cardiovascular', 'Alert'],
-                'abdomen_condition' => ['Abdomen Condition', 'Alert'],
-                'extremities' => ['Extremities', 'Alert'],
-                'neurological' => ['Neurological', 'Alert'],
+            // Define the base categories and their desired System label.
+            $systemMap = [
+                'general_appearance' => 'General Appearance',
+                'skin_condition' => 'Skin Condition',
+                'eye_condition' => 'Eye Condition',
+                'oral_condition' => 'Oral Condition',
+                'cardiovascular' => 'Cardiovascular',
+                'abdomen_condition' => 'Abdomen Condition',
+                'extremities' => 'Extremities',
+                'neurological' => 'Neurological',
             ];
 
-            foreach ($baseColumns as $baseName => $labels) {
+            foreach ($systemMap as $baseName => $systemLabel) {
+                // 1. Determine the name of the findings/condition column (usually the base name itself)
+                $findingsName = $baseName;
+
+                // 2. Determine the name of the corresponding alert column
                 $alertName = $baseName . '_alert';
 
-                // Special case handling where the base column already has a suffix
-                if ($baseName === 'skin_condition') {
-                    $alertName = 'skin_alert';
-                } elseif ($baseName === 'eye_condition') {
-                    $alertName = 'eye_alert';
-                } elseif ($baseName === 'oral_condition') {
-                    $alertName = 'oral_alert';
-                } elseif ($baseName === 'abdomen_condition') {
-                    $alertName = 'abdomen_alert';
+                // Handle specific mappings for alert columns where the base name has a suffix
+                if (in_array($baseName, ['skin_condition', 'eye_condition', 'oral_condition', 'abdomen_condition'])) {
+                    // Example: 'skin_condition' becomes 'skin_alert'
+                    $alertName = str_replace('_condition', '_alert', $baseName);
                 }
 
-                // Check if the base column exists and is not excluded
-                if (isset($rawAttributes[$baseName]) && !in_array($baseName, $excludedColumns)) {
+                // --- Data Extraction and Filtering ---
 
-                    // Structure for the <table> with two columns
-                    $pairedAttributes[] = [
-                        'header1' => $labels[0], // e.g., 'Skin Condition'
-                        'value1' => $rawAttributes[$baseName],
-                        'header2' => $labels[1], // e.g., 'Alert'
-                        'value2' => isset($rawAttributes[$alertName]) ? $rawAttributes[$alertName] : '',
+                $findingsValue = isset($rawAttributes[$findingsName]) ? $rawAttributes[$findingsName] : '';
+                $alertValue = isset($rawAttributes[$alertName]) ? $rawAttributes[$alertName] : '';
+
+                // Check if the base column exists and is not excluded, AND has a value OR an alert value
+                if (
+                    isset($rawAttributes[$findingsName]) &&
+                    !in_array($findingsName, $excludedColumns) &&
+                    ($findingsValue !== null && $findingsValue !== '' || $alertValue !== null && $alertValue !== '')
+                ) {
+                    // Structure for the consolidated 3-column row
+                    $examRows[] = [
+                        'system' => $systemLabel,
+                        'findings' => $findingsValue,
+                        'alerts' => $alertValue,
                     ];
                 }
             }
         @endphp
 
         <div class="table-responsive">
-            @foreach($pairedAttributes as $pair)
-                <table>
-                    <thead>
+            <table>
+                {{-- Single Header Row for the entire table --}}
+                <thead>
+                    <tr>
+                        <th>System</th>
+                        <th>Findings</th>
+                        <th>Alerts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- Loop through the prepared 3-column rows --}}
+                    @foreach($examRows as $row)
                         <tr>
-                            {{-- First Column Header (Category) --}}
-                            <th>{{ $pair['header1'] }}</th>
-                            {{-- Second Column Header (Alert/Component) --}}
-                            <th>{{ $pair['header2'] }}</th>
+                            <td>{{ $row['system'] }}</td>
+                            <td>{{ $row['findings'] }}</td>
+                            <td>{{ $row['alerts'] }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {{-- First Column Data --}}
-                            <td>{{ $pair['value1'] }}</td>
-                            {{-- Second Column Data --}}
-                            <td>{{ $pair['value2'] }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            @endforeach
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+
         @if(!$loop->last)
         <hr>@endif
     @empty

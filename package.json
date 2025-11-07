@@ -18,6 +18,7 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
-        "@popperjs/core": "^2.11.8"
+        "@popperjs/core": "^2.11.8",
+        "chart.js": "^4.5.1"
     }
 }

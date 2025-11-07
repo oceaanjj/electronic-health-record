@@ -83,7 +83,8 @@
                 @endfor
             </select>
         </div>
-    </div>
+       </div>
+        
     {{-- END HEADER --}}
 
     <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"

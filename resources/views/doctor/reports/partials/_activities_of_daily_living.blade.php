@@ -1,14 +1,14 @@
 <div class="page-break"></div>
 
 <div class="section">
-    <h2 class="section-title">6. Activities of Daily Living</h2>
+    <h2 class="section-title">Activities of Daily Living</h2>
 
     @php
         $item = $actOfDailyLiving->first() ?? null;
     @endphp
 
     @if($item)
-        <table class="data-table adl-status">
+        <table>
             <tbody>
                 <tr>
                     <th colspan="2">

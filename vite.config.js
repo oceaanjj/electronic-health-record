@@ -27,7 +27,6 @@ export default defineConfig({
                 "resources/css/physical-exam-style.css",
                 "resources/css/search-style.css",
                 "resources/css/show-style.css",
-                "resources/css/vital-signs-style.css",
                 "resources/js/app.js",
                 "resources/js/alert.js",
                 "resources/js/date-day-loader.js",

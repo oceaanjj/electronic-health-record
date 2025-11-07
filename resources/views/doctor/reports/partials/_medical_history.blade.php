@@ -1,5 +1,5 @@
 <div class="section">
-    <h2 class="section-title">1. Medical History</h2>
+    <h2 class="section-title">Medical History</h2>
 
     <div class="table-responsive">
         <table>

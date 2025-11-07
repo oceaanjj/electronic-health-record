@@ -190,7 +190,7 @@ neurological:
   - keywords: ["normal gait"]
     alert: "Gait steady and coordinated. No neurological deficit noted."
     severity: "none"
-neurological:
+
   # Speech and Language
   - keywords: ["slurred speech", "dysarthria"]
     alert: "Slurred speech (dysarthria) can occur with brainstem stroke, cranial nerve lesions, or cerebellar dysfunction."
@@ -382,7 +382,7 @@ neurological:
   - keywords: ["normal coordination tests"]
     alert: "Coordination intact. No cerebellar deficit detected."
     severity: "none"
-neurological:
+
   # Brainstem and Pupillary Responses
   - keywords: ["pupils pinpoint", "pinpoint pupils"]
     alert: "Pinpoint pupils are seen in pontine hemorrhage or opioid intoxication. Assess airway and ventilation."
@@ -396,7 +396,8 @@ neurological:
   - keywords: ["absent doll's eye reflex", "no oculocephalic response"]
     alert: "Absent oculocephalic reflex indicates brainstem dysfunction in comatose patients."
     severity: "critical"
-  - keywords: ["abnormal vestibulo-ocular reflex", "no eye movement with caloric test"]
+  - keywords:
+      ["abnormal vestibulo-ocular reflex", "no eye movement with caloric test"]
     alert: "Absent vestibulo-ocular response signifies severe brainstem injury."
     severity: "critical"
   - keywords: ["decorticate to pain", "flexor posturing to pain"]

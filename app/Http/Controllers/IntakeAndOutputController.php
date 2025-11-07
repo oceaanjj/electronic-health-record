@@ -7,7 +7,6 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Services\IntakeAndOutputCdssService;
 
 class IntakeAndOutputController extends Controller
 {
@@ -174,10 +173,6 @@ class IntakeAndOutputController extends Controller
             'other_output' => 'nullable|integer',
         ]);
 
-        $cdss = new IntakeAndOutputCdssService();
-        $analysis = $cdss->analyzeIntakeOutput($validatedData);
-        $validatedData['alert'] = $analysis['alert'];
-
         $existingIo = IntakeAndOutput::where('patient_id', $validatedData['patient_id'])
             ->where('date', $validatedData['date'])
             ->where('day_no', $validatedData['day_no'])
@@ -220,7 +215,7 @@ class IntakeAndOutputController extends Controller
             'urine_output' => $urineOutput,
         ];
 
-        $cdssAlerts = new IntakeAndOutputCdssService();
+        $cdssAlerts = new \App\Services\IntakeAndOutputCdssService();
         $result = $cdssAlerts->analyzeIntakeOutput($data);
 
         $result['severity'] = strtoupper($result['severity']);

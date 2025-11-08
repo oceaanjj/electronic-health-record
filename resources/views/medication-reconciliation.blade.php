@@ -156,6 +156,5 @@
 @endsection
 
     @push('scripts')
-        {{-- These scripts are required for the new searchable dropdown --}}
         @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
     @endpush

@@ -61,7 +61,7 @@ function displayAdlAlert(alertCell, alertData) {
         alertData.alert &&
         !alertData.alert.toLowerCase().includes("no findings")
     ) {
-        messageContainerHTML = `<div class="alert-message"><span>${alertData.alert}</span></div>`;
+        messageContainerHTML = `<div class="alert-message" style="padding:1rem;"><span>${alertData.alert}</span></div>`;
         alertCell.onclick = () => openAlertModal(alertData);
     } else {
         messageContainerHTML = `<div class="alert-message text-center"><span class="opacity-70 text-white font-semibold">NO FINDINGS</span></div>`;

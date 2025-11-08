@@ -71,15 +71,15 @@ function showAlertLoading(alertCell) {
         return;
     }
 
-        // Update content of the inner div
+    // Update content of the inner div
 
-        alertBoxDiv.innerHTML = `
+    alertBoxDiv.innerHTML = `
 
             <div class=\"alert-message\">\n            <div class=\"alert-loading\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>\n        </div>
 
         `;
 
-        alertCell.onclick = null;
+    alertCell.onclick = null;
 }
 
 // --- Display alert content ---
@@ -120,12 +120,12 @@ function displayAlert(alertCell, alertData) {
         `;
         alertCell.onclick = null; // No modal for "No Findings"
     } else {
-        alertMessageContent = `<span>${alertData.alert}</span>`;
+        alertMessageContent = `<span >${alertData.alert}</span>`;
         alertCell.onclick = () => openAlertModal(alertData); // Add click listener for modal
     }
 
     // Update content of the inner div
-    alertBoxDiv.innerHTML = `<div class=\"alert-message\">${alertMessageContent}</div>`;
+    alertBoxDiv.innerHTML = `<div class=\"alert-message\"  style="padding:1rem;">${alertMessageContent}</div>`;
 }
 
 // --- Default NO ALERTS state ---

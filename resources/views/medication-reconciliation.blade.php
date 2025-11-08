@@ -13,7 +13,7 @@
                 {{-- Hidden input to send the selected patient's ID with the POST request --}}
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
 
-                {{-- TABLE 1: Patient's Current Medication --}}
+                {{-- ..... Patient's Current Medication --}}
                 <center>
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         <tr>

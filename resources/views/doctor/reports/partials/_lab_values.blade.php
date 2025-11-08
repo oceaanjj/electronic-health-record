@@ -12,7 +12,7 @@
                     <tr>
                         <th>Lab Test</th>
                         <th>Result</th>
-                        <th>Pediatric Normal Range</th>
+                        <th>Normal Range</th>
                         <th>Alerts</th>
                     </tr>
                 </thead>

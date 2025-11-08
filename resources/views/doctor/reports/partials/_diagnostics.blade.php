@@ -32,7 +32,7 @@
                     @endphp
                     <tr>
                         <td>{{ strtoupper(str_replace('_', ' ', $item->type)) ?? 'N/A' }}</td>
-                        <td>{!! $imageHtml !!}</td>
+                        <td style="text-align: center;">{!! $imageHtml !!}</td>
                     </tr>
                 @endforeach
             </tbody>

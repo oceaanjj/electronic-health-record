@@ -28,7 +28,7 @@ class ReportController extends Controller
 {
     public function showPatientReportForm()
     {
-        $patients = Patient::all();
+        $patients = Patient::orderBy('last_name')->get();
         return view('doctor.patient-report', compact('patients'));
     }
     public function generateReport(Request $request)

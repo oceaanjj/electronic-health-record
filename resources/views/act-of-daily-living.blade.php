@@ -173,16 +173,20 @@
     {{-- Define the specific initializers for this page --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            window.initialAdlAnalysisDone = false; // Flag to prevent re-analysis
+
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                () => { // Wrap the CDSS initializer to pass the correct form element
+                () => { // Wrap the CDSS initializer
                     const cdssForm = document.querySelector('.cdss-form');
                     if (cdssForm && window.initializeCdssForForm) {
                         window.initializeCdssForForm(cdssForm);
-                        // --- Trigger analysis for pre-filled data on initial page load (auto generate alert on first view---
-                        if (window.triggerInitialCdssAnalysis) {
+
+                        // --- Trigger analysis only ONCE for pre-filled data ---
+                        if (!window.initialAdlAnalysisDone && window.triggerInitialCdssAnalysis) {
                             window.triggerInitialCdssAnalysis(cdssForm);
+                            window.initialAdlAnalysisDone = true; // Set flag to true after running
                         }
                     }
                 }

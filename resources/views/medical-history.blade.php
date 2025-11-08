@@ -41,7 +41,8 @@
 
                         <tr class="bg-beige">
                             <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="present_condition_name" placeholder="Type here..."
+                                <textarea class="notepad-lines h-[200px]" name="present_condition_name"
+                                    placeholder="Type here..."
                                     required>{{ $presentIllness->condition_name ?? '' }}</textarea>
                             </td>
 

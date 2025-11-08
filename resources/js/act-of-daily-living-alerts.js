@@ -62,7 +62,11 @@ function displayAdlAlert(alertCell, alertData) {
         !alertData.alert.toLowerCase().includes("no findings")
     ) {
         messageContainerHTML = `<div class="alert-message" style="padding:1rem;"><span>${alertData.alert}</span></div>`;
-        alertCell.onclick = () => openAlertModal(alertData);
+        alertBox.onclick = () => {
+            if (!alertBox.classList.contains("has-no-alert")) {
+                openAlertModal(alertData);
+            }
+        };
     } else {
         messageContainerHTML = `<div class="alert-message text-center"><span class="opacity-70 text-white font-semibold">NO FINDINGS</span></div>`;
         alertCell.onclick = null;
@@ -94,14 +98,18 @@ function showAlertLoading(alertCell) { // alertCell is the <td>
 
 // Show default "No Alerts" state
 function showDefaultNoAlerts(alertCell) {
+    alertCell.classList.remove("alert-loading", "alert-red", "alert-orange", "alert-green"); // Remove loading and severity classes
+    alertCell.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
     alertCell.innerHTML = `
-       <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-                                        <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
-                                    </div>
-
-        
+        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+            <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
+        </div>
     `;
-    alertCell.dataset.alerted = "true"; // Mark as alerted to prevent re-analysis
+    // Get the newly created alert-box div and set its onclick to null
+    const alertBoxDiv = alertCell.querySelector(".alert-box");
+    if (alertBoxDiv) {
+        alertBoxDiv.onclick = null;
+    }
 }
 
 // --- Modal popup for details (from vital-signs-alerts.js) ---

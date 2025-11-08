@@ -32,37 +32,49 @@ class LoginController extends Controller
         return null;
     }
 
-    public function showRoleSelectionForm()
+    public function showLoginForm()
     {
         if ($response = $this->redirectToRoleBasedDashboard()) {
             return $response;
         }
-        return view('home');
+
+        // views/login/login.blade.php
+        return view('login.login');
     }
 
-    public function showNurseLoginForm()
-    {
-        if ($response = $this->redirectToRoleBasedDashboard()) {
-            return $response;
-        }
-        return view('login.nurse-login');
-    }
 
-    public function showDoctorLoginForm()
-    {
-        if ($response = $this->redirectToRoleBasedDashboard()) {
-            return $response;
-        }
-        return view('login.doctor-login');
-    }
+    //OLD: WITH ROLE SELECTION FORM (HOMEPAGE VBEFORE)
+    // public function showRoleSelectionForm()
+    // {
+    //     if ($response = $this->redirectToRoleBasedDashboard()) {
+    //         return $response;
+    //     }
+    //     return view('home');
+    // }
 
-    public function showAdminLoginForm()
-    {
-        if ($response = $this->redirectToRoleBasedDashboard()) {
-            return $response;
-        }
-        return view('login.admin-login');
-    }
+    // public function showNurseLoginForm()
+    // {
+    //     if ($response = $this->redirectToRoleBasedDashboard()) {
+    //         return $response;
+    //     }
+    //     return view('login.nurse-login');
+    // }
+
+    // public function showDoctorLoginForm()
+    // {
+    //     if ($response = $this->redirectToRoleBasedDashboard()) {
+    //         return $response;
+    //     }
+    //     return view('login.doctor-login');
+    // }
+
+    // public function showAdminLoginForm()
+    // {
+    //     if ($response = $this->redirectToRoleBasedDashboard()) {
+    //         return $response;
+    //     }
+    //     return view('login.admin-login');
+    // }
 
     public function authenticate(Request $request): RedirectResponse
     {
@@ -71,42 +83,41 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        $expectedRole = strtolower($request->input('role'));
+        // $expectedRole = strtolower($request->input('role'));
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            // ✅ Allow Admins to log in anywhere
-            if (strtolower($user->role) === $expectedRole || strtolower($user->role) === 'admin') {
-                $request->session()->regenerate();
+            //  Allow Admins to log in anywhere
+            // if (strtolower($user->role) === $expectedRole || strtolower($user->role) === 'admin') {
+            $request->session()->regenerate();
 
-                // Log the successful login action with user details
-                AuditLogController::log('Login Successful', 'User logged in to the system.', [
-                    'user_role' => $user->role,
-                    'login_as' => ucfirst($expectedRole)
-                ]);
+            // Log the successful login action with user details
+            // AuditLogController::log('Login Successful', 'User logged in to the system.', [
+            //     'user_role' => $user->role,
+            //     'login_as' => ucfirst($expectedRole)
+            // ]);
 
-                // Redirect based on actual role (Admins always go to admin-home)
-                switch ($user->role) {
-                    case 'Nurse':
-                        return redirect()->route('nurse-home');
-                    case 'Doctor':
-                        return redirect()->route('doctor-home');
-                    case 'Admin':
-                        return redirect()->route('admin-home');
-                    default:
-                        Auth::logout();
-                        return redirect()->route('home')->withErrors([
-                            'username' => 'Access denied. Unrecognized role.'
-                        ]);
-                }
+            AuditLogController::log('Login Successful', 'User logged in to the system.', [
+                'user_role' => $user->role,
+                // 'login_as' is no longer needed
+            ]);
+
+            // Redirect based on actual role (Admins always go to admin-home)
+            switch ($user->role) {
+                case 'Nurse':
+                    return redirect()->route('nurse-home');
+                case 'Doctor':
+                    return redirect()->route('doctor-home');
+                case 'Admin':
+                    return redirect()->route('admin-home');
+                default:
+                    Auth::logout();
+                    return back()->withErrors([ // Use back() to stay on the login page
+                        'username' => 'Access denied.'
+                    ])->onlyInput('username');
+                // }
             }
-
-            // If role mismatch (not admin, not expected role)
-            Auth::logout();
-            return back()->withErrors([
-                'username' => 'Access denied. You are not a ' . ucfirst($expectedRole) . '.'
-            ])->onlyInput('username');
         }
 
         return back()->withErrors([

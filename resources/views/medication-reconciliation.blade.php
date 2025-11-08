@@ -4,6 +4,8 @@
 
 @section('content')
 
+<div id="form-content-container">
+
     {{-- =================================================================== --}}
     {{-- 1. SEARCHABLE PATIENT DROPDOWN (Copied from your design) --}}
     {{-- =================================================================== --}}
@@ -26,7 +28,7 @@
 
                 {{-- Dropdown options --}}
                 <div id="patient_options_container" 
-                    class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto">
+                     class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto">
                     @foreach ($patients as $patient)
                         <div 
                             class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150" 
@@ -42,14 +44,16 @@
         </div>
     </form>
 
-
     {{-- =================================================================== --}}
-    {{-- 2. MAIN CONTENT FORM (Restyled) --}}
+    {{-- 2. MAIN CONTENT FORM (Using fieldset logic from your second file) --}}
     {{-- =================================================================== --}}
     <form action="{{ route('medreconciliation.store') }}" method="POST">
         @csrf
-        {{-- Hidden input to send the selected patient's ID with the POST request --}}
-        <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+        {{-- This fieldset will disable all tables and the submit button if no patient is selected --}}
+        <fieldset @if (!session('selected_patient_id')) disabled @endif>
+            
+            {{-- Hidden input to send the selected patient's ID with the POST request --}}
+            <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
 
         {{-- TABLE 1: Patient's Current Medication --}}
         <center>
@@ -165,11 +169,13 @@
             <button type="submit" class="button-default">SUBMIT</button>
         </div>
 
+        </fieldset>
     </form>
+
+</div> {{-- End of #form-content-container --}}
 
 @endsection
 
 @push('scripts')
-    {{-- These scripts are required for the new searchable dropdown --}}
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+  @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
 @endpush

@@ -39,48 +39,103 @@ class IntakeAndOutputController extends Controller
 
     }
 
-
-
-
-
-
     public function selectPatientAndDate(Request $request)
     {
-        $patientId = $request->input('patient_id');
-        $date = $request->input('date');
-        $dayNo = $request->input('day_no');
-
-        $request->session()->put('selected_patient_id', $patientId);
-        $request->session()->put('selected_date', $date);
-        $request->session()->put('selected_day_no', $dayNo);
-
-        return redirect()->route('io.show');
-    }
-
-    public function show(Request $request)
-    {
-        // $patients = Patient::all();
-
-        $patients = Auth::user()->patients;
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
+        $selectedPatient = null;
         $ioData = null;
+        $date = now()->format('Y-m-d');
+        $dayNo = 1;
 
-        $patientId = $request->session()->get('selected_patient_id');
-        $date = $request->session()->get('selected_date');
-        $dayNo = $request->session()->get('selected_day_no');
+        $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
-        if ($patientId && $date && $dayNo) {
+        if ($patientId) {
+            $selectedPatient = Patient::find($patientId);
+            if (!$selectedPatient) {
+                $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData'));
+            }
+            $request->session()->put('selected_patient_id', $patientId);
+
+            $date = $request->input('date');
+            $dayNo = $request->input('day_no');
+
+            if (is_null($date) || is_null($dayNo)) {
+                // Try to get date and day from session first
+                $date = $request->session()->get('selected_date', now()->format('Y-m-d'));
+                $dayNo = $request->session()->get('selected_day_no', 1);
+
+                // If still no date/day (e.g., first load, or session cleared), then try latest IO
+                if ($date === now()->format('Y-m-d') && $dayNo === 1) { // Check if defaults were used from session
+                    $latestIo = IntakeAndOutput::where('patient_id', $patientId)
+                        ->orderBy('date', 'desc')
+                        ->orderBy('day_no', 'desc')
+                        ->first();
+
+                    if ($latestIo) {
+                        $date = $latestIo->date;
+                        $dayNo = $latestIo->day_no;
+                    }
+                }
+            }
+
+            $request->session()->put('selected_date', $date);
+            $request->session()->put('selected_day_no', $dayNo);
+
             $ioData = IntakeAndOutput::where('patient_id', $patientId)
                 ->where('date', $date)
-                ->where('day_no', $dayNo)
+                ->where('day_no', (int) $dayNo)
                 ->first();
+        } else {
+            $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+        }
+
+        $currentDate = $date;
+        $currentDayNo = $dayNo;
+
+        if ($request->ajax() && $request->header('X-Fetch-Form-Content')) {
+            // Render the full view and extract the specific section
+            $view = view('intake-and-output', [
+                'patients' => $patients,
+                'ioData' => $ioData,
+                'selectedPatient' => $selectedPatient,
+                'currentDate' => $currentDate,
+                'currentDayNo' => $currentDayNo,
+            ])->render();
+
+            // Use DOMDocument to parse and extract the form-content-container
+            $dom = new \DOMDocument();
+            // Suppress warnings about malformed HTML5
+            libxml_use_internal_errors(true);
+            $dom->loadHTML($view, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            libxml_clear_errors();
+
+            $container = $dom->getElementById('form-content-container');
+            if ($container) {
+                return response($dom->saveHTML($container));
+            } else {
+                return response('<div id="form-content-container">Error: Content container not found.</div>', 500);
+            }
+        } elseif ($request->ajax()) {
+            return response()->json([
+                'ioData' => $ioData,
+                'currentDate' => $currentDate,
+                'currentDayNo' => $currentDayNo,
+            ]);
         }
 
         return view('intake-and-output', [
             'patients' => $patients,
             'ioData' => $ioData,
-            'selectedDate' => $date,
-            'selectedDayNo' => $dayNo,
+            'selectedPatient' => $selectedPatient,
+            'currentDate' => $currentDate,
+            'currentDayNo' => $currentDayNo,
         ]);
+    }
+
+    public function show(Request $request)
+    {
+        return $this->selectPatientAndDate($request);
     }
 
     public function store(Request $request)
@@ -141,11 +196,32 @@ class IntakeAndOutputController extends Controller
             );
         }
 
+        $request->session()->put('selected_date', $validatedData['date']);
+        $request->session()->put('selected_day_no', $validatedData['day_no']);
+
         return redirect()->route('io.show')
             ->with('success', $message);
     }
 
+    public function checkIntakeOutput(Request $request)
+    {
+        $oralIntake = $request->input('oral_intake');
+        $ivFluidsVolume = $request->input('iv_fluids_volume');
+        $urineOutput = $request->input('urine_output');
 
+        $data = [
+            'oral_intake' => $oralIntake,
+            'iv_fluids_volume' => $ivFluidsVolume,
+            'urine_output' => $urineOutput,
+        ];
+
+        $cdssAlerts = new \App\Services\IntakeAndOutputCdssService();
+        $result = $cdssAlerts->analyzeIntakeOutput($data);
+
+        $result['severity'] = strtoupper($result['severity']);
+
+        return response()->json($result);
+    }
 
 
 

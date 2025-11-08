@@ -15,7 +15,6 @@ export default defineConfig({
                 "resources/css/admin-users.css",
                 "resources/css/admin.css",
                 "resources/css/audit-index.css",
-                "resources/css/bootstrap.css",
                 "resources/css/discharge-planning.css",
                 "resources/css/edit-style.css",
                 "resources/css/index-style.css",

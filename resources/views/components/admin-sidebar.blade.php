@@ -1,62 +1,60 @@
 <div id="mySidenav"
-    class="fixed top-0 left-0 h-full w-75 bg-ehr z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
+    class="fixed top-0 left-0 h-full w-[260px] shadow-md bg-ehr z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
+
+
+    <button id="arrowBtn" onclick="closeNav()" class="group absolute top-1/2 -right-4 transform -translate-y-1/2 
+        bg-white text-dark-green border border-gray-300 rounded-oval
+        w-8 h-15 flex items-center justify-center 
+        shadow-xl hover:bg-dark-green hover:scale-105 
+        transition-all duration-300 ease-in-out">
+
+        <img src="{{ asset('img/sidebar/close-arrow.png') }}" class="w-3 block group-hover:hidden" alt="arrow">
+
+
+        <img src="{{ asset('img/sidebar/close-arrow-hover.png') }}" class="w-3 hidden group-hover:block"
+            alt="arrow-hover">
+
+    </button>
 
 
 
-    <div class="relative flex flex-col items-center">
-
-        <div class="w-full h-70 bg-white rounded-b-full flex flex-col items-center justify-center">
-            <button onclick="closeNav()"
-                class="absolute top-4 right-4 text-ehr text-2xl font-bold cursor-pointer">&times;
-            </button>
-            <img src="/img/ehr-logo.png" alt="Logo" class="w-40 h-40 p-2">
-            <h3 class="mt-2 text-sm font-bold text-center leading-tight text-ehr">
-                ELECTRONIC HEALTH <br>RECORD
-            </h3>
-        </div>
-    </div>
-
-
-
-    <ul class="mt-7 space-y-0.9 px-0 list-none text-white">
-
+    <ul class="mt-[140px] text-dark-green text-[13px] font-creato-black pr-[10px] pl-[10px]">
         <li>
-            <a href="{{ route('login') }}"
-                class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
-                <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-6 h-6">
-                <span>Home</span>
+            <a href="{{ route('admin-home') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2
+                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
+                <img src="{{ asset('img/sidebar/home-icon.png') }}" alt="Home Icon"
+                    class="w-5 h-5 transition duration-200">
+                <span class=" group-hover:text-white group-hover:font-bold">Home</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ route('audit.index') }}"
-                class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
-                <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-6 h-6">
-                <span>Audit Log</span>
+            <a href="{{ route('audit.index') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2
+                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
+                <img src="{{ asset('img/sidebar/home-icon.png') }}" alt="Audit Log Icon"
+                    class="w-5 h-5 transition duration-200">
+                <span class=" group-hover:text-white group-hover:font-bold">Audit Log</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ route('users') }}"
-                class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer">
-                <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-6 h-6">
-                <span>Users</span>
+            <a href="{{ route('users') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2
+                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
+                <img src="{{ asset('img/sidebar/home-icon.png') }}" alt="Users Icon"
+                    class="w-5 h-5 transition duration-200">
+                <span class=" group-hover:text-white group-hover:font-bold">Users</span>
             </a>
         </li>
-
         <li>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form action="{{ route('logout') }}" method="POST" class="flex items-center gap-3 pl-4 pb-2 pt-2
+                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
                 @csrf
+                <button type="submit" class="group flex items-center cursor-pointer gap-3 w-full text-left">
+                    <img src="{{ asset('img/sidebar/about.png') }}" alt="Logout Icon"
+                        class="w-5 h-5 transition duration-200">
+                    <span class="group-hover:text-white group-hover:font-bold">Logout</span>
+                </button>
             </form>
-            <a href="#" class="flex items-center gap-3 pl-9 pb-1 pt-1 pr-2 hover:bg-white/20 cursor-pointer text-center"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-6 h-6">
-                <span>Log Out</span>
-            </a>
         </li>
-
-
     </ul>
-
-
 </div>

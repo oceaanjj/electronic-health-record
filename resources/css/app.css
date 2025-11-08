@@ -55,8 +55,8 @@
     --color-button-middle-green: #379f35;
     --color-button-light-green: #acf858;
     --color-button-default-green: #e5ffe9;
-    --color-hover: #EBEBEB;
-    --color-dark-red: #8B0000;
+    --color-hover: #ebebeb;
+    --color-dark-red: #8b0000;
 
     --font-alte: "Alte Haas Grotesk Bold", arial;
     --font-creato-bold: "Creato Display Bold", arial;
@@ -68,80 +68,58 @@
 }
 
 @layer components {
-
-    td {
-        /* background-color: var(--color-beige);*/
-        border-color: var(--color-line-brown);
-        font-family: var(--font-typewriter);
-        font-size: 12px;
+    .bg-yellow-light {
+        background: linear-gradient(180deg, #ffd966, #f4b400);
     }
 
-    .main-header{
-        @apply bg-dark-green text-center text-white font-bold py-2; 
-        background: linear-gradient(180deg, #006400, #004d00);
-        @apply font-trajan-bold font-black text-[15px];
-    }
-
-    .table-header{
-       @apply bg-yellow-light text-brown border-b-2 border-line-brown;
-       background: linear-gradient(180deg, #FFD966, #F4B400);
-       @apply font-trajan-bold font-bold text-[15px];
-    }
-
-
-
-    
     /* === VITAL SIGNS 3D STYLE === */
 
-/* 3D background container */
-.vital-section {
-    background: linear-gradient(180deg, #fff6e5 0%, #fddf9b 100%);
-    border-radius: 20px;
-    box-shadow:
-        inset 0 3px 6px rgba(255, 255, 255, 0.5),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
-        0 8px 20px rgba(0, 0, 0, 0.25);
-    padding: 25px;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
+    /* 3D background container */
+    .vital-section {
+        background: linear-gradient(180deg, #fff6e5 0%, #fddf9b 100%);
+        border-radius: 20px;
+        box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.5),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.15), 0 8px 20px rgba(0, 0, 0, 0.25);
+        padding: 25px;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
 
-/* hover lift effect */
-.vital-section:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.3),
-        inset 0 3px 6px rgba(255, 255, 255, 0.5);
-}
+    /* hover lift effect */
+    .vital-section:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3),
+            inset 0 3px 6px rgba(255, 255, 255, 0.5);
+    }
 
-/* Table 3D look */
-.vital-section table {
-    background: linear-gradient(180deg, #ffffff, #f2e3c5);
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 15px;
-    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6),
-                0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-}
+    /* Table 3D look */
+    .vital-section table {
+        background: linear-gradient(180deg, #ffffff, #f2e3c5);
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 15px;
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6),
+            0 4px 8px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
 
-/* Table headers */
-.vital-section th {
-    background: linear-gradient(180deg, #006400, #004d00);
-    color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px;
-}
+    /* Table headers */
+    .vital-section th {
+        background: linear-gradient(180deg, #006400, #004d00);
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 10px;
+    }
 
-/* Table data cells */
-.vital-section td {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: linear-gradient(180deg, #fff8ea, #f4e5b0);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
-    text-align: center;
-}
+    /* Table data cells */
+    .vital-section td {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: linear-gradient(180deg, #fff8ea, #f4e5b0);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        text-align: center;
+    }
 
-/* Inputs inside table cells 
+    /* Inputs inside table cells 
 .vital-section input.vital-input {
     width: 90%;
     text-align: center;
@@ -182,6 +160,15 @@
 }
     
 
+    /* Chart container */
+    .vital-chart-container {
+        background: linear-gradient(180deg, #ffe699, #f9c74f);
+        border-radius: 20px;
+        box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.6),
+            0 6px 15px rgba(0, 0, 0, 0.25);
+        padding: 25px;
+        margin-top: 40px;
+    }
 
     .notepad-lines {
         background-color: var(--color-beige);
@@ -286,204 +273,220 @@
     .vital-input {
         @apply w-full text-center px-4 py-5
             focus:outline-none focus:ring-dark-green;
-            font-family: var(--font-creato-bold);
+        font-family: var(--font-creato-bold);
         font-size: 13px;
     }
 
+    /* ===== ito yung alert box ===== */
+    .alert-box {
+        @apply w-full rounded-[15px] text-white font-semibold transition-all duration-300;
 
-                /* ===== ito yung alert box ===== */
-                .alert-box {
-                @apply w-full rounded-[15px] text-white font-semibold transition-all duration-300;
+        background: linear-gradient(to bottom, #8fd89a, #0c5f1c);
+        width: 100%;
+        max-height: 90px;
 
-                background: linear-gradient(to bottom, #8fd89a, #0c5f1c);
-                width: 100%;
-                max-height: 90px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 12px 14px 12px 16px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        border-radius: 15px;
+        box-shadow: none;
+    }
 
-                display: flex;
-                align-items: flex-start;
-                justify-content: flex-start;
-                padding: 12px 14px 12px 16px;
-                box-sizing: border-box;
-                position: relative;
-                overflow: hidden; 
-                cursor: pointer;
-                border-radius: 15px;
-                box-shadow: none;
-                }
+    .alert-box.has-no-alert {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+        overflow: hidden;
+    }
 
-                .alert-box.has-no-alert {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                padding: 0;
-                overflow: hidden;
-                }
+    .alert-box.has-no-alert .alert-message {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        opacity: 0.9;
+    }
 
-                .alert-box.has-no-alert .alert-message {
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-weight: 600;
-                opacity: 0.9;
-                }
+    /* ===== kapag over na yung text sa alerts makakapag scroll ===== */
+    .alert-message {
+        width: 100%;
+        overflow-y: auto;
+        max-height: 70px;
+        line-height: 1.4;
+        word-wrap: break-word;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
+        padding-right: 6px;
+    }
 
+    /* ===== style for scollbar ==== */
+    .alert-message::-webkit-scrollbar {
+        width: 5px;
+    }
+    .alert-message::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .alert-message::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.45);
+        border-radius: 4px;
+    }
+    .alert-message:hover::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.6);
+    }
 
-                /* ===== kapag over na yung text sa alerts makakapag scroll ===== */
-                .alert-message {
-                width: 100%;
-                overflow-y: auto; 
-                max-height: 70px;
-                line-height: 1.4;
-                word-wrap: break-word;
-                scrollbar-width: thin;
-                scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
-                padding-right: 6px;
-                }
+    .alert-box::before,
+    .alert-box::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 16px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
 
-                /* ===== style for scollbar ==== */
-                .alert-message::-webkit-scrollbar {
-                width: 5px;
-                }
-                .alert-message::-webkit-scrollbar-track {
-                background: transparent;
-                }
-                .alert-message::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.45);
-                border-radius: 4px;
-                }
-                .alert-message:hover::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.6);
-                }
+    .alert-box::before {
+        top: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.35),
+            transparent
+        );
+    }
 
+    .alert-box::after {
+        bottom: 0;
+        background: linear-gradient(
+            to top,
+            rgba(255, 255, 255, 0.35),
+            transparent
+        );
+    }
 
-                .alert-box::before,
-                .alert-box::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                right: 0;
-                height: 16px;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-                }
+    .alert-box.is-scrollable::after {
+        opacity: 1;
+    }
+    .alert-box.is-scrolled::before {
+        opacity: 1;
+    }
 
-           
-                .alert-box::before {
-                top: 0;
-                background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
-                }
+    /* ===== loading spinner ===== */
+    .alert-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffffcc;
+        font-weight: 600;
+        gap: 10px;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        animation: fadeIn 0.25s ease forwards;
+    }
 
-                .alert-box::after {
-                bottom: 0;
-                background: linear-gradient(to top, rgba(255, 255, 255, 0.35), transparent);
-                }
+    .loading-spinner {
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid #ffffff;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        animation: spin 0.8s linear infinite;
+    }
 
-                
-                .alert-box.is-scrollable::after {
-                opacity: 1;
-                }
-                .alert-box.is-scrolled::before {
-                opacity: 1;
-                }
+    /* ===== ANIMATIONS ===== */
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
 
-                /* ===== loading spinner ===== */
-                .alert-loading {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #ffffffcc;
-                font-weight: 600;
-                gap: 10px;
-                width: 100%;
-                height: 100%;
-                opacity: 0;
-                animation: fadeIn 0.25s ease forwards;
-                }
+    /* ===== MODAL (unchanged) ===== */
+    .alert-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
 
-                .loading-spinner {
-                border: 3px solid rgba(255, 255, 255, 0.3);
-                border-top: 3px solid #ffffff;
-                border-radius: 50%;
-                width: 18px;
-                height: 18px;
-                animation: spin 0.8s linear infinite;
-                }
+    .alert-modal {
+        background: #fffdf2;
+        padding: 25px 30px;
+        border-radius: 15px;
+        max-width: 480px;
+        width: 90%;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        color: #333;
+        text-align: left;
+        position: relative;
+    }
 
-                /* ===== ANIMATIONS ===== */
-                @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-                }
-                @keyframes fadeIn {
-                to { opacity: 1; }
-                }
+    .alert-modal h2 {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #155b23;
+    }
 
-                /* ===== MODAL (unchanged) ===== */
-                .alert-modal-overlay {
-                position: fixed;
-                top: 0; left: 0;
-                width: 100%; height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(4px);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                }
+    .alert-modal .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        background: none;
+        border: none;
+        font-size: 22px;
+        color: #333;
+        cursor: pointer;
+    }
 
-                .alert-modal {
-                background: #fffdf2;
-                padding: 25px 30px;
-                border-radius: 15px;
-                max-width: 480px;
-                width: 90%;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-                color: #333;
-                text-align: left;
-                position: relative;
-                }
+    /* ===== sa pag choose ng patient ito ===== */
+    .searchable-dropdown input {
+        transition: all 0.2s ease-in-out;
+        background-color: #fff;
+    }
 
-                .alert-modal h2 {
-                font-weight: bold;
-                margin-bottom: 10px;
-                color: #155b23;
-                }
+    .searchable-dropdown input:focus {
+        box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+    }
 
-                .alert-modal .close-btn {
-                position: absolute;
-                top: 10px; right: 14px;
-                background: none;
-                border: none;
-                font-size: 22px;
-                color: #333;
-                cursor: pointer;
-                }
+    #patient_options_container {
+        animation: fadeIn 0.15s ease;
+    }
 
+    .option.active {
+        background-color: #e8f0fe;
+    }
 
-                /* ===== sa pag choose ng patient ito ===== */
-                .searchable-dropdown input {
-                transition: all 0.2s ease-in-out;
-                background-color: #fff;
-                }
-
-                .searchable-dropdown input:focus {
-                box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
-                }
-
-                #patient_options_container {
-                animation: fadeIn 0.15s ease;
-                }
-
-                .option.active {
-                background-color: #e8f0fe; 
-                }
-
-                @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(4px); }
-                to { opacity: 1; transform: translateY(0); }
-                }
-
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }
 
 /* alerts */
@@ -567,6 +570,3 @@
         opacity: 1;
     }
 }
-
-
-

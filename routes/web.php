@@ -18,19 +18,29 @@ use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
+use App\Http\Controllers\MedicationAdministrationController;
 
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
 
-Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');
+// -- UPDATED LOGIN ROUTES ---
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
-Route::prefix('login')->name('login.')->group(function () {
-    Route::get('/nurse', [LoginController::class, 'showNurseLoginForm'])->name('nurse');
-    Route::get('/doctor', [LoginController::class, 'showDoctorLoginForm'])->name('doctor');
-    Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
-    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
-});
 
+
+// Old routes for separate login forms (as requested, kept as comments)
+
+// Route::prefix('login')->name('login.')->group(callback: function () {
+//     Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');
+//     Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+//     Route::get('/nurse', [LoginController::class, 'showNurseLoginForm'])->name('nurse');
+//     Route::get('/doctor', [LoginController::class, 'showDoctorLoginForm'])->name('doctor');
+//     Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin');
+// });
+
+//Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
@@ -59,12 +69,17 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // No delete routes!
 });
 
+use App\Http\Controllers\Doctor\ReportController;
+
 //-------------------------------------------------------------
 // Protected Routes for Doctor
 //-------------------------------------------------------------
-Route::get('/doctor', [HomeController::class, 'doctorHome'])
-    ->name('doctor-home')
-    ->middleware(['auth', 'can:is-doctor']);
+Route::middleware(['auth', 'can:is-doctor'])->group(function () {
+    Route::get('/doctor', [HomeController::class, 'doctorHome'])->name('doctor-home');
+    Route::get('/doctor/patient-report', [ReportController::class, 'showPatientReportForm'])->name('doctor.patient-report');
+    Route::post('/doctor/generate-report', [ReportController::class, 'generateReport'])->name('doctor.generate-report');
+    Route::get('/doctor/patient-report/{patient_id}/pdf', [ReportController::class, 'downloadPDF'])->name('doctor.report.pdf');
+});
 
 
 //-------------------------------------------------------------
@@ -75,6 +90,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     // Array of simple nurse-accessible views to avoid repetition.
     $nurseViews = [
+        'about-page',
         'medical-history',
         'physical-exam' => 'physical-exam.index',
         'vital-signs',
@@ -133,7 +149,7 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
     Route::post('/vaccination', [MedicalController::class, 'storeVaccination'])->name('vaccination.store');
     Route::post('/developmental', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
     Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
-   //Developmental History
+    //Developmental History
     Route::get('/developmental-history', [MedicalController::class, 'showDevelopmentalHistory'])->name('developmental-history');
     Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
 
@@ -142,6 +158,7 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
     Route::post('/lab-values/select', [LabValuesController::class, 'selectPatient'])->name('lab-values.select');
     Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
     Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.cdss');
+    Route::post('/lab-values/analyze-field', [LabValuesController::class, 'runSingleCdssAnalysis'])->name('lab-values.run-cdss-field');
 
     // IVS AND LINES:
     Route::get('/ivs-and-lines', [IvsAndLineController::class, 'show'])->name('ivs-and-lines');
@@ -170,17 +187,18 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
         Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
     });
 
-Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
-Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
-Route::post('/diagnostics/submit', [DiagnosticsController::class, 'submit'])->name('diagnostics.submit');
-Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
+    Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
+    Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
+    Route::post('/diagnostics/submit', [DiagnosticsController::class, 'submit'])->name('diagnostics.submit');
+    Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->name('diagnostics.destroy');
+    Route::delete('/diagnostics/destroy-all/{type}/{patient_id}', [DiagnosticsController::class, 'destroyAll'])->name('diagnostics.destroy-all');
 
     //VITAL SIGNS:
     Route::prefix('vital-signs')->name('vital-signs.')->group(function () {
         Route::get('/', [VitalSignsController::class, 'show'])->name('show');
         Route::post('/', [VitalSignsController::class, 'store'])->name('store');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
-        Route::post('/select', [VitalSignsController::class, 'selectPatientAndDate'])->name('select');
+        Route::post('/select', [VitalSignsController::class, 'selectPatient'])->name('select');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
         Route::post('/check', [VitalSignsController::class, 'checkVitals'])->name('check');
     });
@@ -189,6 +207,18 @@ Route::delete('/diagnostics/{id}', [DiagnosticsController::class, 'destroy'])->n
     Route::get('/intake-and-output', [IntakeAndOutputController::class, 'show'])->name('io.show');
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
+    Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
+
+Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
+     ->name('medication-administration');
+
+// Para sa pag-save ng data (kapag nag-submit ng form)
+Route::post('/medication-administration/store', [MedicationAdministrationController::class, 'store'])
+     ->name('medication-administration.store');
+
+// Para sa patient dropdown search (base sa code mo)
+    Route::post('/medication-administration/select-patient', [MedicationAdministrationController::class, 'selectPatient'])
+        ->name('medication-administration.select-patient');
 
     // ---------------
     // ADPIE Routes

@@ -4,6 +4,15 @@
 
 @section('content')
 
+    {{-- FORM OVERLAY (ALERT) --}}
+    <div id="form-content-container">
+        @if (!session('selected_patient_id'))
+            <div
+                class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
+                <span class="text-gray-600 font-creato">Please select a patient to input</span>
+            </div>
+        @endif
+
    {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
 <div class="header flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-6 my-6 md:my-10 mx-auto w-[90%] md:w-[80%]">
     <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
@@ -68,7 +77,13 @@
 
 {{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
 
+        <fieldset @if (!session('selected_patient_id')) disabled @endif>
+            <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}" data-analyze-url="{{ route('vital-signs.check') }}">
+                @csrf
 
+                <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+                <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
+                <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
     <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
         @csrf
@@ -182,6 +197,7 @@
             <button type="button" class="button-default">CDSS</button>
             <button type="submit" class="button-default">SUBMIT</button>       
     </div>
+ </form>
 
     <div class="vital-chart-container w-[50%] mx-auto mt-0 mb-20">
             <h2 class="text-center text-dark-green font-bold text-xl mb-4">Vital Sign Trend</h2>
@@ -314,8 +330,20 @@ document.addEventListener("DOMContentLoaded", function () {
 @endpush
 
    
-@endsection
 
+@endsection
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+    {{-- Load all necessary script files --}}
+    @vite(['resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
+
+    {{-- Define the specific initializers for this page --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.pageInitializers = [
+                window.initializeSearchableDropdown,
+                window.initializeDateDayLoader,
+                window.initializeVitalSignsAlerts
+            ];
+        });
+    </script>
 @endpush

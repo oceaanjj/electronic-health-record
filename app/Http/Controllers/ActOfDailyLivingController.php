@@ -29,11 +29,10 @@ class ActOfDailyLivingController extends Controller
     /**
      * Handles the AJAX request for both patient selection AND date/day change.
      */
-    public function selectPatient(Request $request)
-    {
-        $patientId = $request->input('patient_id');
-        $patients = Auth::user()->patients;
-        $selectedPatient = Patient::find($patientId);
+            public function selectPatient(Request $request)
+            {
+                $patientId = $request->input('patient_id');
+                $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();        $selectedPatient = Patient::find($patientId);
         $adlData = null;
 
         // Default values for rendering the view if selection fails
@@ -53,7 +52,7 @@ class ActOfDailyLivingController extends Controller
             if ($isNewPatientSelection) {
                 // If a patient is newly selected (no date/day in request), reset to admission date and day 1
                 // Determine the correct default date (Admission Date)
-                $date = $selectedPatient->admission_date ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : now()->format('Y-m-d');
+                $date = now()->format('Y-m-d');
                 $dayNo = 1;
             } else {
                 // This is a date/day change request. Fallback to session if request values are missing.
@@ -108,7 +107,7 @@ class ActOfDailyLivingController extends Controller
      */
     public function show(Request $request)
     {
-        $patients = Auth::user()->patients;
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $adlData = null;
         $selectedPatient = null;
         $currentDate = now()->format('Y-m-d'); // Default
@@ -123,7 +122,7 @@ class ActOfDailyLivingController extends Controller
             if ($selectedPatient) {
                 // Ensure default date is set if patient is selected but date/day is missing (e.g., initial load)
                 if (!$date || !$dayNo) {
-                    $date = $selectedPatient->admission_date ? $selectedPatient->admission_date->format('Y-m-d') : now()->format('Y-m-d');
+                    $date = now()->format('Y-m-d');
                     $dayNo = 1;
                     $request->session()->put('selected_date', $date);
                     $request->session()->put('selected_day_no', $dayNo);

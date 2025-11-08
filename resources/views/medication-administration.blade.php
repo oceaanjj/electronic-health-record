@@ -77,9 +77,9 @@
                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
     </div>
-
     {{-- MAIN CONTAINER --}}
     <div class="w-[80%] mx-auto flex justify-center items-start gap-1 mt-6">
+<center>
 
         <div class="w-[68%] rounded-[15px] overflow-hidden">
             <table class="w-full table-fixed border-collapse border-spacing-y-0">
@@ -158,21 +158,11 @@
             </table>
         </div>
 
-        <div class="w-[25%] rounded-[15px] overflow-hidden">
-            <div class="bg-dark-green text-white font-bold py-2 mb-0.5 text-center rounded-[15px]">
-                ALERTS
-            </div>
-            <table class="w-full border-collapse text-center">
-                <tr><td><div class="alert-box my-[3px] h-[90px] flex justify-center items-center"><span class="opacity-70 text-white font-semibold">No Alerts</span></div></td></tr>
-                <tr><td><div class="alert-box my-[3px] h-[90px] flex justify-center items-center"><span class="opacity-70 text-white font-semibold">No Alerts</span></div></td></tr>
-                <tr><td><div class="alert-box my-[3px] h-[90px] flex justify-center items-center"><span class="opacity-70 text-white font-semibold">No Alerts</span></div></td></tr>
-            </table>
-        </div>
-    </div>
 
     <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
         <button class="button-default" type="submit">SUBMIT</button>
     </div>
+</center>
 
 </form>
 

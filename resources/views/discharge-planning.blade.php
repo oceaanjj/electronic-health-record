@@ -57,28 +57,28 @@
             <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                 <tr>
                     {{-- ===== FIX: Added text-center here ===== --}}
-                    <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">Discharge Planning</th>
+                    <th colspan="2" class="main-header rounded-t-lg text-center">DISCHARGE PLANNING</th>
                 </tr>
                 <tr>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">Discharge Criteria</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Required Action</th>
+                    <th class="table-header border-r-2 border-line-brown w-1/3">DISCHARGE CRITERIA</th>
+                    <th class="table-header border-line-brown">REQUIRED ACTION</th>
                 </tr>
                 
-                <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Fever Resolution</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="criteria_feverRes">{{ $dischargePlan->criteria_feverRes ?? '' }}</textarea></td>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="text-center table-header border-r-2 border-line-brown w-1/3">FEVER RESOLUTION</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="criteria_feverRes">{{ $dischargePlan->criteria_feverRes ?? '' }}</textarea></td>
                 </tr>
-                <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Normalization of Patient Count</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="criteria_patientCount">{{ $dischargePlan->criteria_patientCount ?? '' }}</textarea></td>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="text-center table-header border-r-2 border-line-brown w-1/3">NORMALIZATION OF PATIENT COUNT</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="criteria_patientCount">{{ $dischargePlan->criteria_patientCount ?? '' }}</textarea></td>
                 </tr>
-                <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Manage Fever Effectively</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="criteria_manageFever">{{ $dischargePlan->criteria_manageFever ?? '' }}</textarea></td>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="text-center table-header border-r-2 border-line-brown w-1/3">MANAGE FEVER EFFECTIVELY</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="criteria_manageFever">{{ $dischargePlan->criteria_manageFever ?? '' }}</textarea></td>
                 </tr>
-                <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Manage Fever Effectively</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="criteria_manageFever2">{{ $dischargePlan->criteria_manageFever2 ?? '' }}</textarea></td>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="text-center table-header border-r-2 border-line-brown w-1/3">MANAGE FEVER EFFECTIVELY</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="criteria_manageFever2">{{ $dischargePlan->criteria_manageFever2 ?? '' }}</textarea></td>
                 </tr>
             </table>
         </center>
@@ -88,38 +88,38 @@
             <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                 <tr>
                     {{-- ===== FIX: Added text-center here ===== --}}
-                    <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">Discharge Instruction</th>
+                    <th colspan="2" class="main-header rounded-t-lg text-center">DISCHARGE INSTRUCTION</th>
                 </tr>
-                <tr>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">Instruction</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Details</th>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <th class="table-header border-r-2 border-line-brown w-1/3">INSTRUCTION</th>
+                    <th class="table-header border-line-brown">DETAILS</th>
+                </tr>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="text-center table-header border-r-2  border-line-brown w-1/3">MEDICATIONS</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="instruction_med">{{ $dischargePlan->instruction_med ?? '' }}</textarea></td>
+                </tr>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="table-header border-r-2 border-line-brown w-1/3">FOLLOW-UP APPOINTMENT</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="instruction_appointment">{{ $dischargePlan->instruction_appointment ?? '' }}</textarea></td>
+                </tr>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="table-header text-center border-r-2 border-line-brown w-1/3">FLUID INTAKE</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="instruction_fluidIntake">{{ $dischargePlan->instruction_fluidIntake ?? '' }}</textarea></td>
+                </tr>
+                <tr class="bg-beige text-center border-b-2 border-line-brown">
+                    <td class="table-header text-center border-r-2 border-line-brown w-1/3">AVOID MOSQUITO EXPOSURE</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="instruction_exposure">{{ $dischargePlan->instruction_exposure ?? '' }}</textarea></td>
                 </tr>
                 <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Medications</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="instruction_med">{{ $dischargePlan->instruction_med ?? '' }}</textarea></td>
-                </tr>
-                <tr class="bg-beige text-center">
-                    <td class="criteria-cell border-r-2 border-line-brown w-1/3">Follow-Up Appointment</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="instruction_appointment">{{ $dischargePlan->instruction_appointment ?? '' }}</textarea></td>
-                </tr>
-                <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Fluid Intake</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="instruction_fluidIntake">{{ $dischargePlan->instruction_fluidIntake ?? '' }}</textarea></td>
-                </tr>
-                <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Avoid Mosquito Exposure</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="instruction_exposure">{{ $dischargePlan->instruction_exposure ?? '' }}</textarea></td>
-                </tr>
-                <tr class="bg-beige">
-                    <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Monitor for Signs of Complications</td>
-                    <td><textarea class="notepad-lines h-[100px]" name="instruction_complications">{{ $dischargePlan->instruction_complications ?? '' }}</textarea></td>
+                    <td class="table-header text-center border-r-2 border-line-brown w-1/3">MONITOR FOR SIGNS OF COMPLICATIONS</td>
+                    <td><textarea class="notepad-lines h-[100px]" placeholder="Type here..." name="instruction_complications">{{ $dischargePlan->instruction_complications ?? '' }}</textarea></td>
                 </tr>
             </table>
         </center>
 
         {{-- SUBMIT BUTTON --}}
         <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
-            <button class="button-default" type="submit">Submit</button>
+            <button class="button-default" type="submit">SUBMIT</button>
         </div>
 
     </form>

@@ -67,13 +67,13 @@
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
                         <table class="w-full border-separate border-spacing-0">
                             <tr>
-                                <th class="w-[20%] bg-dark-green py-2 text-white rounded-tl-lg">SYSTEM</th>
-                                <th class="w-[45%] bg-dark-green py-2 text-white rounded-tr-lg">FINDINGS</th>
+                                <th class="w-[20%] main-header rounded-tl-lg">SYSTEM</th>
+                                <th class="w-[45%] main-header rounded-tr-lg">FINDINGS</th>
                             </tr>
 
                             {{-- GENERAL APPEARANCE --}}
                             <tr>
-                                <th class="bg-yellow-light text-brown border-b-2 border-line-brown">
+                                <th class="table-header border-line-brown border-r-2">
                                     GENERAL<br>APPEARANCE
                                 </th>
                                 <td class="bg-beige border-b-2 border-line-brown">
@@ -85,7 +85,7 @@
 
                             {{-- SKIN --}}
                             <tr>
-                                <th class="bg-yellow-light text-brown border-b-2 border-line-brown">SKIN</th>
+                                <th class="table-header border-line-brown border-r-2">SKIN</th>
                                 <td class="bg-beige border-b-2 border-line-brown">
                                     <textarea name="skin_condition" class="notepad-lines cdss-input w-full h-[90px] border-none"
                                         data-field-name="skin_condition"
@@ -95,7 +95,7 @@
 
                             {{-- EYES --}}
                             <tr>
-                                <th class="bg-yellow-light text-brown border-b-2 border-line-brown">EYES</th>
+                                <th class="table-header border-line-brown border-r-2">EYES</th>
                                 <td class="bg-beige border-b-2 border-line-brown">
                                     <textarea name="eye_condition" class="notepad-lines cdss-input w-full h-[90px] border-none"
                                         data-field-name="eye_condition"
@@ -105,7 +105,7 @@
 
                             {{-- ORAL CAVITY --}}
                             <tr>
-                                <th class="bg-yellow-light text-brown border-b-2 border-line-brown">ORAL CAVITY</th>
+                                <th class="table-header border-line-brown border-r-2">ORAL CAVITY</th>
                                 <td class="bg-beige border-b-2 border-line-brown">
                                     <textarea name="oral_condition" class="notepad-lines cdss-input w-full h-[90px] border-none"
                                         data-field-name="oral_condition"
@@ -115,7 +115,7 @@
 
                             {{-- CARDIOVASCULAR --}}
                             <tr>
-                                <th class="bg-yellow-light text-brown border-b-2 border-line-brown">CARDIOVASCULAR</th>
+                                <th class="table-header border-line-brown border-r-2">CARDIOVASCULAR</th>
                                 <td class="bg-beige border-b-2 border-line-brown">
                                     <textarea name="cardiovascular" class="notepad-lines cdss-input w-full h-[90px] border-none"
                                         data-field-name="cardiovascular"
@@ -125,7 +125,7 @@
 
                             {{-- ABDOMEN --}}
                             <tr>
-                                <th class="bg-yellow-light text-brown border-b-2 border-line-brown">ABDOMEN</th>
+                                <th class="table-header border-line-brown border-r-2">ABDOMEN</th>
                                 <td class="bg-beige border-b-2 border-line-brown">
                                     <textarea name="abdomen_condition" class="notepad-lines cdss-input w-full h-[90px] border-none"
                                         data-field-name="abdomen_condition"
@@ -135,7 +135,7 @@
 
                             {{-- EXTREMITIES --}}
                             <tr>
-                                <th class="bg-yellow-light text-brown border-b-2 border-line-brown">EXTREMITIES</th>
+                                <th class="table-header border-line-brown border-r-2">EXTREMITIES</th>
                                 <td class="bg-beige border-b-2 border-line-brown">
                                     <textarea name="extremities" class="notepad-lines cdss-input w-full h-[90px] border-none"
                                         data-field-name="extremities"
@@ -145,7 +145,7 @@
 
                             {{-- NEUROLOGICAL --}}
                             <tr class="border-2 border-line-brown">
-                                <th class="bg-yellow-light text-brown rounded-bl-lg">NEUROLOGICAL</th>
+                                <th class="table-header border-line-brown border-r-2">NEUROLOGICAL</th>
                                 <td class="bg-beige">
                                     <textarea name="neurological" class="notepad-lines cdss-input"
                                         data-field-name="neurological"
@@ -157,7 +157,7 @@
 
                     {{-- ALERTS TABLE--}}
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header rounded-[15px]">
                             ALERTS
                         </div>
                         <table class="w-full border-collapse">

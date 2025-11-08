@@ -28,16 +28,16 @@
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
             {{-- MAIN CONTENT (Vital Signs Layout Style) --}}
-            <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+            <div class="w-[90%] mx-auto flex justify-center items-start gap-1 mt-6">
 
                 {{-- LEFT SIDE: INPUT TABLE --}}
-                <div class="w-[68%] rounded-[15px] overflow-hidden">
+                <div class="w-[60%] rounded-[15px] overflow-hidden">
                     <table class="w-full table-fixed border-collapse border-spacing-y-0">
                         <tr>
-                            <th class="w-[25%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">IV FLUID</th>
-                            <th class="w-[25%] bg-dark-green text-white font-bold py-2">RATE</th>
-                            <th class="w-[25%] bg-dark-green text-white font-bold py-2">SITE</th>
-                            <th class="w-[25%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">STATUS</th>
+                            <th class="w-[25%] main-header rounded-tl-[15px]">IV FLUID</th>
+                            <th class="w-[25%] main-header">RATE</th>
+                            <th class="w-[25%] main-header">SITE</th>
+                            <th class="w-[25%] main-header rounded-tr-[15px]">STATUS</th>
                         </tr>
 
                         <tr>
@@ -66,8 +66,8 @@
                 </div>
 
                 {{-- ALERTS TABLE--}}
-                <div class="w-[25%] rounded-[15px] overflow-hidden">
-                    <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                <div class="w-[30%] rounded-[15px] overflow-hidden">
+                    <div class="main-header rounded-[15px]">
                         ALERTS
                     </div>
                     <table class="w-full border-collapse text-center">
@@ -83,7 +83,7 @@
             </div>
 
             {{-- BUTTONS --}}
-            <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+            <div class="w-[80%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                 <button class="button-default" type="submit">SUBMIT</button>
             </div>
         </form>

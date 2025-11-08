@@ -58,12 +58,12 @@
                     <th colspan="6" class="bg-dark-green text-white rounded-t-lg">Patient's Current Medication (Upon Admission)</th>
                 </tr>
                 <tr>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Medication</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Dose</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Route</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Frequency</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Indication</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Administered During Stay?</th>
+                    <th class="table-header border-r-2 border-line-brown">Medication</th>
+                    <th class="table-header border-r-2 border-line-brown">Dose</th>
+                    <th class="table-header border-r-2 border-line-brown">Route</th>
+                    <th class="table-header border-r-2 border-line-brown">Frequency</th>
+                    <th class="table-header border-r-2 border-line-brown">Indication</th>
+                    <th class="table-header border-line-brown">Administered During Stay?</th>
                 </tr>
                 <tr class="bg-beige">
                     <td class="border-r-2 border-line-brown/70">
@@ -95,12 +95,12 @@
                     <th colspan="6" class="bg-dark-green text-white rounded-t-lg">Patient's Home Medication (If Any)</th>
                 </tr>
                 <tr>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Medication</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Dose</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Route</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Frequency</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Indication</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Discontinued on Admission?</th>
+                    <th class="table-header border-r-2 border-line-brown">Medication</th>
+                    <th class="table-header border-r-2 border-line-brown">Dose</th>
+                    <th class="table-header border-r-2 border-line-brown">Route</th>
+                    <th class="table-header border-r-2 border-line-brown">Frequency</th>
+                    <th class="table-header border-r-2 border-line-brown">Indication</th>
+                    <th class="table-header border-line-brown">Discontinued on Admission?</th>
                 </tr>
                 <tr class="bg-beige">
                     <td class="border-r-2 border-line-brown/70">
@@ -133,11 +133,11 @@
                     <th colspan="5" class="bg-dark-green text-white rounded-t-lg">Changes in Medication During Hospitalization</th>
                 </tr>
                 <tr>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Medication</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Dose</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Route</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Frequency</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Reason for Change</th>
+                    <th class="table-header border-r-2 border-line-brown">Medication</th>
+                    <th class="table-header border-r-2 border-line-brown">Dose</th>
+                    <th class="table-header border-r-2 border-line-brown">Route</th>
+                    <th class="table-header border-r-2 border-line-brown">Frequency</th>
+                    <th class="table-header border-line-brown">Reason for Change</th>
                 </tr>
                 <tr class="bg-beige">
                     <td class="border-r-2 border-line-brown/70">
@@ -162,7 +162,7 @@
         {{-- SUBMIT BUTTON --}}
         <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
             {{-- Styled just like your "NEXT" button, but it's a submit type --}}
-            <button type="submit" class="button-default">Submit</button>
+            <button type="submit" class="button-default">SUBMIT</button>
         </div>
 
     </form>

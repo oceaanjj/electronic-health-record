@@ -30,9 +30,9 @@
         <div class="w-[68%] rounded-[15px] overflow-hidden">
             <table class="w-full table-fixed border-collapse border-spacing-y-0">
                 <tr>
-                    <th class="w-[30%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">LAB TEST</th>
-                    <th class="w-[30%] bg-dark-green text-white font-bold py-2">RESULT</th>
-                    <th class="w-[40%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">PEDIATRIC NORMAL RANGE</th>
+                    <th class="w-[30%] main-header rounded-tl-[15px]">LAB TEST</th>
+                    <th class="w-[30%] main-header">RESULT</th>
+                    <th class="w-[40%] main-header rounded-tr-[15px]">PEDIATRIC NORMAL RANGE</th>
                 </tr>
 
                 @php
@@ -56,7 +56,7 @@
 
                 @foreach ($labTests as $label => $name)
                     <tr class="border-b-2 border-line-brown/70">
-                        <td class="p-2 font-semibold bg-yellow-light text-brown text-center">
+                        <td class="table-header p-2 font-semibold bg-yellow-light text-brown text-center">
                             {{ $label }}
                         </td>
                         <td class="p-2 bg-beige text-center">
@@ -76,7 +76,7 @@
 
         {{-- ALERTS TABLE--}}
         <div class="w-[25%] rounded-[15px] overflow-hidden">
-            <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+            <div class="main-header text-center rounded-[15px]">
                 ALERTS
             </div>
 

@@ -69,9 +69,27 @@
 
 @layer components {
 
-    .bg-yellow-light {
-    background: linear-gradient(180deg, #FFD966, #F4B400);
+    td {
+        /* background-color: var(--color-beige);*/
+        border-color: var(--color-line-brown);
+        font-family: var(--font-typewriter);
+        font-size: 12px;
     }
+
+    .main-header{
+        @apply bg-dark-green text-center text-white font-bold py-2; 
+        background: linear-gradient(180deg, #006400, #004d00);
+        @apply font-trajan-bold font-black text-[15px];
+    }
+
+    .table-header{
+       @apply bg-yellow-light text-brown border-b-2 border-line-brown;
+       background: linear-gradient(180deg, #FFD966, #F4B400);
+       @apply font-trajan-bold font-bold text-[15px];
+    }
+
+
+
     
     /* === VITAL SIGNS 3D STYLE === */
 
@@ -216,13 +234,7 @@
         font-family: inherit;
     }
 
-    td {
-        /* background-color: var(--color-beige);*/
-        border-color: var(--color-line-brown);
-        font-family: var(--font-typewriter);
-        font-size: 12px;
-    }
-
+    
     .pe {
         font-family: var(--font-typewriter);
     }

@@ -52,9 +52,9 @@
             <div class="w-[68%] rounded-[15px] overflow-hidden">
                 <table class="w-full table-fixed border-collapse border-spacing-y-0">
                     <tr>
-                        <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">ORAL INTAKE (mL)</th>
-                        <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center">IV FLUIDS (mL)</th>
-                        <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tr-lg">URINE OUTPUT (mL)</th>
+                        <th class="w-[33%] main-header rounded-tl-lg">ORAL INTAKE (mL)</th>
+                        <th class="w-[33%] main-header">IV FLUIDS (mL)</th>
+                        <th class="w-[33%] main-header rounded-tr-lg">URINE OUTPUT (mL)</th>
                     </tr>
 
                 <tr class="bg-beige text-brown">
@@ -97,7 +97,7 @@
 
             {{-- ALERTS --}}
             <div class="w-[25%] rounded-[15px] overflow-hidden">
-                <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                <div class="main-header rounded-[15px]">
                     ALERTS
                 </div>
 

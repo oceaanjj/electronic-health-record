@@ -53,17 +53,17 @@
                 <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                     {{-- PRESENT ILLNESS --}}
                     <tr>
-                        <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PRESENT ILLNESS</th>
+                        <th colspan="6" class="main-header rounded-t-lg">PRESENT ILLNESS</th>
                     </tr>
 
                     
                     <tr>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
-                        <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                        <th class="table-header border-line-brown border-r-2">NAME</th>
+                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
+                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
+                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
+                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
+                        <th class="table-header border-line-brown">COMMENT</th>
                     </tr>
 
              
@@ -115,16 +115,16 @@
 
                     {{-- PAST MEDICAL / SURGICAL --}}
                     <tr>
-                        <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
+                        <th colspan="6" class="main-header rounded-t-lg">PAST MEDICAL / SURGICAL</th>
                     </tr>
                     <tr>
                         
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
-                        <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                         <th class="table-header border-line-brown border-r-2">NAME</th>
+                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
+                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
+                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
+                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
+                        <th class="table-header border-line-brown">COMMENT</th>
                     </tr>
                     
                     <tr class="bg-beige">
@@ -172,19 +172,19 @@
                     {{-- KNOWN CONDITION OR ALLERGIES --}}
                     
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
+                            <th colspan="6" class="main-header rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
                         </tr>
                 
                 
 
                     <tr>
                         
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
-                        <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
-                        <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                        <th class="table-header border-line-brown border-r-2">NAME</th>
+                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
+                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
+                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
+                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
+                        <th class="table-header border-line-brown">COMMENT</th>
                     </tr>
 
                     <tr class="bg-beige">
@@ -217,16 +217,16 @@
             <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                 {{-- VACCINATION --}}
                 <tr>
-                    <th colspan="6" class="bg-dark-green text-white rounded-t-lg">VACCINATION</th>
+                    <th colspan="6" class="main-header rounded-t-lg">VACCINATION</th>
                 </tr>
                 <tr>
                     
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
-                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
-                    <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                        <th class="table-header border-line-brown border-r-2">NAME</th>
+                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
+                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
+                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
+                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
+                        <th class="table-header border-line-brown">COMMENT</th>
                 </tr>
 
                 <tr class="bg-beige">

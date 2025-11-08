@@ -23,12 +23,12 @@
         <div class="w-[68%] rounded-[15px] overflow-hidden">
             <table class="w-full table-fixed border-collapse border-spacing-y-0">
                 <tr>
-                    <th class="w-[20%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">MEDICATION</th>
-                    <th class="w-[15%] bg-dark-green text-white font-bold py-2">DOSE</th>
-                    <th class="w-[15%] bg-dark-green text-white font-bold py-2">ROUTE</th>
-                    <th class="w-[15%] bg-dark-green text-white font-bold py-2">FREQUENCY</th>
-                    <th class="w-[20%] bg-dark-green text-white font-bold py-2">COMMENTS</th>
-                    <th class="w-[15%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">TIME</th>
+                    <th class="w-[20%] main-header rounded-tl-[15px]">MEDICATION</th>
+                    <th class="w-[15%] main-header">DOSE</th>
+                    <th class="w-[15%] main-header">ROUTE</th>
+                    <th class="w-[15%] main-header">FREQUENCY</th>
+                    <th class="w-[20%] main-header">COMMENTS</th>
+                    <th class="w-[15%] main-header rounded-tr-[15px]">TIME</th>
                 </tr>
 
                 <tr class="border-b-2 border-line-brown/70 h-[100px]">
@@ -47,7 +47,7 @@
                     <td class="bg-beige text-center">
                         <input type="text" placeholder="Comments" class="w-full h-[45px] text-center">
                     </td>
-                    <th class="bg-beige text-brown font-semibold">10:00 AM</th>
+                    <th class="table-header border-line-brown border-l-2">10:00 AM</th>
                 </tr>
 
                 <tr class="border-b-2 border-line-brown/70 h-[100px]">
@@ -66,7 +66,7 @@
                     <td class="bg-beige text-center">
                         <input type="text" placeholder="Comments" class="w-full h-[45px] text-center">
                     </td>
-                    <th class="bg-beige text-brown font-semibold">2:00 PM</th>
+                    <th class="table-header border-line-brown border-l-2">2:00 PM</th>
                 </tr>
 
                 <tr>
@@ -85,14 +85,14 @@
                     <td class="bg-beige text-center">
                         <input type="text" placeholder="Comments" class="w-full h-[45px] text-center">
                     </td>
-                    <th class="bg-beige text-brown font-semibold">6:00 PM</th>
+                    <th class="table-header border-line-brown border-l-2">6:00 PM</th>
                 </tr>
             </table>
         </div>
 
         {{-- ALERTS TABLE --}}
         <div class="w-[25%] rounded-[15px] overflow-hidden">
-            <div class="bg-dark-green text-white font-bold py-2 mb-0.5 text-center rounded-[15px]">
+            <div class="main-header rounded-[15px]">
                 ALERTS
             </div>
 

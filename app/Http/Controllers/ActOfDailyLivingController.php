@@ -91,6 +91,9 @@ class ActOfDailyLivingController extends Controller
             $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
         }
 
+        // Check if this is an AJAX request for a content refresh
+        $isLoading = $request->header('X-Fetch-Form-Content') === 'true';
+
         // Return the rendered view. JS extracts the #form-content-container from this.
         return view('act-of-daily-living', [
             'patients' => $patients,
@@ -99,6 +102,7 @@ class ActOfDailyLivingController extends Controller
             // Pass the explicit variables for the Blade template to ensure immediate update
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
+            'isLoading' => $isLoading,
         ]);
     }
 

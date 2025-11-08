@@ -146,9 +146,16 @@
                         ] as $field)
                             <tr>
                                 <td class="align-middle" data-alert-for="{{ $field }}">
-                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-                                        <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
-                                    </div>
+                                    @if (isset($isLoading) && $isLoading && old($field, $adlData->$field ?? ''))
+                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-loading">
+                                            <div class="loading-spinner"></div>
+                                            <span>Analyzing...</span>
+                                        </div>
+                                    @else
+                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+                                            <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
+                                        </div>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

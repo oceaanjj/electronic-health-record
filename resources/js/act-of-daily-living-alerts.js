@@ -64,7 +64,7 @@ function displayAdlAlert(alertCell, alertData) {
         messageContainerHTML = `<div class="alert-message"><span>${alertData.alert}</span></div>`;
         alertCell.onclick = () => openAlertModal(alertData);
     } else {
-        messageContainerHTML = `<div class="alert-message text-center"><span class="opacity-70 text-white font-semibold">No Findings</span></div>`;
+        messageContainerHTML = `<div class="alert-message text-center"><span class="opacity-70 text-white font-semibold">NO FINDINGS</span></div>`;
         alertCell.onclick = null;
     }
 
@@ -87,11 +87,11 @@ function showAlertLoading(alertCell) {
 // Show default "No Alerts" state
 function showDefaultNoAlerts(alertCell) {
     alertCell.innerHTML = `
-        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center has-no-alert">
-            <div class="alert-message text-center">
-                <span class="opacity-70 text-white font-semibold">No Alerts</span>
-            </div>
-        </div>
+       <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+                                        <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
+                                    </div>
+
+        
     `;
     alertCell.dataset.alerted = "true"; // Mark as alerted to prevent re-analysis
 }

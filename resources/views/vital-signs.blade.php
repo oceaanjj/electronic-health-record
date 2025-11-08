@@ -193,7 +193,7 @@
                                     <td class="align-middle" data-alert-for-time="{{ $time }}">
                                         <div class="alert-box my-1 py-4 px-3 flex justify-center items-center w-full h-[53px]" data-alert-for-time="{{ $time }}">
                                             {{-- Dynamic alert content will load here --}}
-                                            <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                                            <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
                                     </div>
                                 </td>
                             </tr>

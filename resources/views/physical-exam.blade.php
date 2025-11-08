@@ -161,7 +161,15 @@
                 </center>
 
                 <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                    <button type="button" class="button-default">CDSS</button>
+
+                    @if (isset($physicalExam))
+                        {{-- IF we are EDITING, link to the start of the wizard --}}
+                        <a href="{{ route('nursing-diagnosis.start', $physicalExam->id) }}" class="button-default text-center">
+                            CDSS
+                        </a>
+                    @else
+                    @endif
+
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
             </fieldset>

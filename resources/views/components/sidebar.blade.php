@@ -8,10 +8,11 @@
         shadow-xl hover:bg-dark-green hover:scale-105 
         transition-all duration-300 ease-in-out">
 
-        <img src="./img/sidebar/close-arrow.png" class="w-3 block group-hover:hidden" alt="arrow">
+        <img src="{{ asset('img/sidebar/close-arrow.png') }}" class="w-3 block group-hover:hidden" alt="arrow">
 
 
-        <img src="./img/sidebar/close-arrow-hover.png" class="w-3 hidden group-hover:block" alt="arrow-hover">
+        <img src="{{ asset('img/sidebar/close-arrow-hover.png') }}" class="w-3 hidden group-hover:block"
+            alt="arrow-hover">
 
     </button>
 
@@ -21,7 +22,8 @@
         <li>
             <a href="{{ route('nurse-home') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2 mt-[20px]
                         hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
-                <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/home-icon.png') }}" alt="Home Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span>Home</span>
             </a>
         </li>
@@ -33,7 +35,7 @@
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover' }}">
 
-                <img src="./img/sidebar/demographic-profile.png" alt="Home Icon"
+                <img src="{{ asset('img/sidebar/demographic-profile.png') }}" alt="Home Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('patients.index') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Demographic
@@ -51,7 +53,8 @@
                          {{ request()->routeIs('medical-history')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/medical-history.png" alt="History Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/medical-history.png') }}" alt="History Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('medical-history') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Medical
                     History</span>
@@ -64,7 +67,7 @@
                          {{ request()->routeIs('physical-exam.index')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold'}}">
-                <img src="./img/sidebar/physical-exam.png" alt="Physical Exam Icon"
+                <img src="{{ asset('img/sidebar/physical-exam.png') }}" alt="Physical Exam Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('physical-exam.index') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Physical
@@ -78,7 +81,8 @@
                          {{ request()->routeIs('vital-signs.show')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/vital-signs.png" alt="History Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/vital-signs.png') }}" alt="History Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('vital-signs.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Vital
                     Signs</span>
@@ -91,7 +95,7 @@
                          {{ request()->routeIs('io.show')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/intake-and-output.png" alt="History Icon"
+                <img src="{{ asset('img/sidebar/intake-and-output.png') }}" alt="History Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('io.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Intake
@@ -107,7 +111,7 @@
                          {{ request()->routeIs('adl.show')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/activities-of-daily-living.png" alt="ADL Icon"
+                <img src="{{ asset('img/sidebar/activities-of-daily-living.png') }}" alt="ADL Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('adl.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Activities
@@ -121,7 +125,8 @@
                          {{ request()->routeIs('lab-values.index')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/lab-values.png" alt="Lab Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/lab-values.png') }}" alt="Lab Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('lab-values.index') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Lab
                     Values</span>
@@ -133,7 +138,8 @@
                 class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('diagnostics.index') ? 'bg-dark-green text-white font-bold' : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/lab-values.png" alt="Lab Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/lab-values.png') }}" alt="Lab Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('diagnostics.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Diagnostics</span>
             </a>
@@ -149,7 +155,8 @@
                          {{ request()->routeIs('ivs-and-lines')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/ivs-and-lines.png" alt="IV Icon" class="w-4 h-4 transition duration-200">
+                <img src="{{ asset('img/sidebar/ivs-and-lines.png') }}" alt="IV Icon"
+                    class="w-4 h-4 transition duration-200">
                 <span
                     class="{{ request()->routeIs('ivs-and-lines') ? 'text-white font-bold' : 'group-hover:font-bold' }}">IVs
                     & Lines</span>
@@ -162,7 +169,8 @@
                          {{ request()->routeIs('medication-administration')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/med-admini.png" alt="Medication Icon" class="w-6 h-6 transition duration-200">
+                <img src="{{ asset('img/sidebar/med-admini.png') }}" alt="Medication Icon"
+                    class="w-6 h-6 transition duration-200">
                 <span
                     class="{{ request()->routeIs('medication-administration') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Medication
                     Administration</span>
@@ -175,7 +183,7 @@
                          {{ request()->routeIs('medication-reconciliation')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover' }}">
-                <img src="./img/sidebar/med-recon.png" alt="Reconciliation Icon"
+                <img src="{{ asset('img/sidebar/med-recon.png') }}" alt="Reconciliation Icon"
                     class="w-6 h-6 transition duration-200">
                 <span
                     class="{{ request()->routeIs('medication-reconciliation') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Medication
@@ -189,7 +197,7 @@
                          {{ request()->routeIs('discharge-planning')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover' }}">
-                <img src="./img/sidebar/discharge-planning.png" alt="Discharge Icon"
+                <img src="{{ asset('img/sidebar/discharge-planning.png') }}" alt="Discharge Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('discharge-planning') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Discharge
@@ -210,7 +218,8 @@
             <a href="#" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
                         hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold 
                         " onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <img src="./img/sidebar/logout.png" alt="Discharge Icon" class="w-6 h-6 transition duration-200">
+                <img src="{{ asset('img/sidebar/logout.png') }}" alt="Discharge Icon"
+                    class="w-6 h-6 transition duration-200">
                 <span>LOG OUT</span>
             </a>
         </li>

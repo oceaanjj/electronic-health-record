@@ -90,14 +90,12 @@ async function analyzeVitalSignField(
 
         const alertData = await response.json();
 
-        setTimeout(() => {
-            displayAlert(alertCell, alertData);
-            activeAnalysisCount--;
-            if (activeAnalysisCount === 0) {
-                vitalsForm.classList.remove('is-loading-vitals');
-                enableHeaderInputs();
-            }
-        }, 150);
+        displayAlert(alertCell, alertData);
+        activeAnalysisCount--;
+        if (activeAnalysisCount === 0) {
+            vitalsForm.classList.remove('is-loading-vitals');
+            enableHeaderInputs();
+        }
     } catch (error) {
         console.error("Vital Signs CDSS analysis failed:", error);
         displayAlert(alertCell, {

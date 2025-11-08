@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Step 2: Planning')
+@section('title', 'Step 3: Intervention')
+
 
 
 
@@ -26,7 +27,7 @@
     </div>
 
     {{-- COPIED FROM physical-exam.blade.php (with <fieldset> and <center>) --}}
-    <form action="{{ route('nursing-diagnosis.storePlanning', $diagnosis->id) }}" method="POST" class="h-full flex flex-col cdss-form"
+    <form action="{{ route('nursing-diagnosis.storeIntervention', $diagnosis->id) }}" method="POST" class="h-full flex flex-col cdss-form"
             data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
             data-patient-id="{{ $patient->patient_id }}">
         @csrf
@@ -34,21 +35,21 @@
         <fieldset> 
             <center>
                 
-                {{-- This is your original two-column layout --}}
+                {{-- This is your original two-column layout, now inside w-[70%] --}}
                 <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
-                    {{-- Left Column: Planning Input --}}
+                    {{-- Left Column: Intervention Input --}}
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
                         <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
-                            PLANNING (STEP 2 of 4)
+                            INTERVENTION (STEP 3 of 4)
                         </div>
-                        <textarea id="planning" name="planning"
+                        <textarea id="intervention" name="intervention"
                             class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input"
-                            data-field-name="planning"
+                            data-field-name="intervention"
                             style="border-top: none;" {{-- Remove double border --}}
-                            placeholder="Enter planning (e.g., goals, outcomes)...">{{ old('planning', $diagnosis->planning) }}</textarea>
+                            placeholder="Enter interventions (e.g., assess, monitor, administer, educate)...">{{ old('intervention', $diagnosis->intervention) }}</textarea>
                         
-                        @error('planning')
+                        @error('intervention')
                             <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                         @enderror
                     </div>
@@ -59,7 +60,7 @@
                             RECOMMENDATIONS
                         </div>
                         <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
-                                data-alert-for="planning"
+                                data-alert-for="intervention"
                                 style="border-top: none;"> {{-- Remove double border --}}
                             <span class="opacity-70 text-white font-semibold">No Recommendations</span>
                         </div>
@@ -67,7 +68,7 @@
 
                 </div>
 
-            
+             
 
             </center>
 
@@ -84,7 +85,7 @@
                         SUBMIT
                     </button>
                     <button type="submit" name="action" value="save_and_proceed" class="button-default">
-                        INTERVENTION
+                       EVALUATION
                     </button>
                 </div>
             </div>

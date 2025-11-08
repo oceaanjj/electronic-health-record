@@ -29,7 +29,7 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 
 
 
-// Old routes for separate login forms (as requested, kept as comments)
+// Old routes for separate login forms 
 
 // Route::prefix('login')->name('login.')->group(callback: function () {
 //     Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');
@@ -119,16 +119,16 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::get('/search-results', [PatientController::class, 'search'])->name('search-results');
     });
 
-// In routes/web.php
+    // In routes/web.php
 
-// This gives you: index, create, store, show, edit, update
-Route::resource('patients', PatientController::class)->except([
-    'destroy' 
-]);
+    // This gives you: index, create, store, show, edit, update
+    Route::resource('patients', PatientController::class)->except([
+        'destroy'
+    ]);
 
-// ADD THESE TWO NEW ROUTES for Active/Inactive
-Route::delete('patients/{id}/deactivate', [PatientController::class, 'deactivate'])->name('patients.deactivate');
-Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->name('patients.activate');
+    // ADD THESE TWO NEW ROUTES for Active/Inactive
+    Route::delete('patients/{id}/deactivate', [PatientController::class, 'deactivate'])->name('patients.deactivate');
+    Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->name('patients.activate');
 
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
@@ -209,16 +209,15 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
     Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
 
-Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
-     ->name('medication-administration');
-
-// Para sa pag-save ng data (kapag nag-submit ng form)
-Route::post('/medication-administration/store', [MedicationAdministrationController::class, 'store'])
-     ->name('medication-administration.store');
-
-// Para sa patient dropdown search (base sa code mo)
+    //MEDICATION-ADMINISTRATION:
+    Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
+        ->name('medication-administration');
+    Route::post('/medication-administration/store', [MedicationAdministrationController::class, 'store'])
+        ->name('medication-administration.store');
     Route::post('/medication-administration/select-patient', [MedicationAdministrationController::class, 'selectPatient'])
         ->name('medication-administration.select-patient');
+    Route::get('/medication-administration/records', [MedicationAdministrationController::class, 'getRecords'])
+        ->name('medication-administration.get-records');
 
     // ---------------
     // ADPIE Routes

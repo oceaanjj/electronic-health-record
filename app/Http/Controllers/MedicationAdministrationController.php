@@ -95,10 +95,36 @@ class MedicationAdministrationController extends Controller
                 );
             }
 
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Medication Administration data saved successfully!']);
+            }
+
             return redirect()->route('medication-administration')->with('success', 'Medication Administration data saved successfully!');
 
         } catch (Throwable $e) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Error saving data: ' . $e->getMessage()], 500);
+            }
             return back()->with('error', 'Error saving data: ' . $e->getMessage());
         }
+    }
+
+    public function getRecords(Request $request)
+    {
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $patientId = $request->input('patient_id');
+        $date = $request->input('date');
+
+        // Fetch records for the given patient and date
+        $records = MedicationAdministration::where('patient_id', $patientId)
+            ->whereDate('created_at', $date)
+            ->orderBy('time') // Assuming 'time' column exists and is used for ordering
+            ->get();
+
+        return response()->json($records);
     }
 }

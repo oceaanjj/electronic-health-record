@@ -1,46 +1,74 @@
 <div class="page-break"></div>
-
 <div class="section">
     <h2 class="section-title">Vital Signs</h2>
 
     @if($vitals->isEmpty())
-        <p class="no-data">No Vital Signs data available.</p>
+        <p>No Vital Signs data available.</p>
     @else
-        <table class="data-table full-width-vitals">
+        @php
+            $currentGroupKey = null;
+        @endphp
+
+        <table class="">
             <tbody>
                 @foreach($vitals as $item)
+                    @php
+                        $groupKey = $item->date . '|' . $item->day_no;
+                    @endphp
+
+                    @if ($groupKey !== $currentGroupKey)
+
+                        @if ($currentGroupKey !== null)
+                                </tbody>
+                            </table>
+                            <!-- seperator for the next day -->
+                            <div style="height: 15px;"></div>
+                            <table>
+                                <tbody>
+                        @endif
+
+                        @php
+                            $currentGroupKey = $groupKey;
+                        @endphp
+
+                        {{-- HEADER ROW (Date and Day): Colspans adjusted to total 10 (4 + 6) --}}
+                        <tr>
+                            <th colspan="4">
+                                Date: {{ isset($item->date) ? \Carbon\Carbon::parse($item->date)->format('F j, Y') : 'N/A' }}
+                            </th>
+                            <th colspan="6">
+                                Day: {{ $item->day_no ?? 'N/A' }}
+                            </th>
+                        </tr>
+
+                        {{-- MEASUREMENTS HEADER ROW: Alert colspan set to 4 --}}
+                        <tr>
+                            <th>Time</th>
+                            <th>Temp (°C/°F)</th>
+                            <th>HR (bpm)</th>
+                            <th>RR (bpm)</th>
+                            <th>BP (mmHg)</th>
+                            <th>SpO2 (%)</th>
+                            <th colspan="4">Alert</th>
+                        </tr>
+                    @endif
+
+                    {{-- DATA ROW: Alert colspan set to 4 --}}
                     <tr>
-                        <th colspan="4">
-                            Date: {{ $item->date ?? 'N/A' }}
-                        </th>
-                        <th colspan="3">
-                            Day: {{ $item->day_no ?? 'N/A' }}
-                        </th>
-                    </tr>
+                        <td>{{ isset($item->time) ? \Carbon\Carbon::parse($item->time)->format('h:i A') : '' }}</td>
 
-                    <tr class="vitals-measurements-header">
-                        <th>Time</th>
-                        <th>Temp (°C/°F)</th>
-                        <th>HR (bpm)</th>
-                        <th>RR (bpm)</th>
-                        <th>BP (mmHg)</th>
-                        <th>SpO2 (%)</th>
-                        <th>Alert</th>
-                    </tr>
-
-                    <tr class="vitals-data-row">
-                        <td>{{ $item->time ?? '' }}</td>
                         <td>{{ $item->temperature ?? 'N/A' }}</td>
                         <td>{{ $item->hr ?? 'N/A' }}</td>
                         <td>{{ $item->rr ?? 'N/A' }}</td>
                         <td>{{ $item->bp ?? 'N/A' }}</td>
                         <td>{{ $item->spo2 ?? 'N/A' }}</td>
-                        <td>{{ $item->alert ?? $item->alerts ?? '' }}</td>
+                        <td colspan="4">{{ $item->alert ?? $item->alerts ?? '' }}</td>
                     </tr>
 
-                    @if(!$loop->last)
-                        <tr class="vitals-separator">
-                            <td colspan="7">
+                    {{-- SEPARATOR: Colspan set to 10 --}}
+                    @if ($groupKey === $currentGroupKey && !$loop->last)
+                        <tr>
+                            <td colspan="10">
                                 <hr>
                             </td>
                         </tr>

@@ -1,10 +1,7 @@
-/**
- * vital-signs-alerts.js
- *
- * This script handles real-time CDSS alerts for the vital signs form.
- * It listens for input changes on vital sign fields and dynamically updates
- * the corresponding alert box for that time slot.
- */
+let debounceTimer;
+let activeAnalysisCount = 0; // Counter for active analysis requests
+
+// --- Function: Disable header inputs ---
 
 // --- Function: Disable header inputs ---
 function disableHeaderInputs() {
@@ -70,7 +67,14 @@ async function analyzeVitalSignField(
         });
     }
 
-    disableHeaderInputs(); // Disable inputs at the start of analysis
+    const vitalsForm = document.getElementById("vitals-form");
+    if (!vitalsForm) return;
+
+    activeAnalysisCount++;
+    if (activeAnalysisCount === 1) {
+        vitalsForm.classList.add('is-loading-vitals');
+        disableHeaderInputs();
+    }
 
     try {
         const response = await fetch(url, {
@@ -88,7 +92,11 @@ async function analyzeVitalSignField(
 
         setTimeout(() => {
             displayAlert(alertCell, alertData);
-            enableHeaderInputs(); // Re-enable inputs after successful analysis
+            activeAnalysisCount--;
+            if (activeAnalysisCount === 0) {
+                vitalsForm.classList.remove('is-loading-vitals');
+                enableHeaderInputs();
+            }
         }, 150);
     } catch (error) {
         console.error("Vital Signs CDSS analysis failed:", error);
@@ -96,7 +104,11 @@ async function analyzeVitalSignField(
             alert: "Error analyzing...",
             severity: "CRITICAL",
         });
-        enableHeaderInputs(); // Re-enable inputs after failed analysis
+        activeAnalysisCount--;
+        if (activeAnalysisCount === 0) {
+            vitalsForm.classList.remove('is-loading-vitals');
+            enableHeaderInputs();
+        }
     }
 }
 

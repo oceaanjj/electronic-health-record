@@ -221,7 +221,13 @@
         font-family: inherit;
     }
 
-    
+    td {
+        /* background-color: var(--color-beige);*/
+        border-color: var(--color-line-brown);
+        font-family: var(--font-typewriter);
+        font-size: 12px;
+    }
+
     .pe {
         font-family: var(--font-typewriter);
     }

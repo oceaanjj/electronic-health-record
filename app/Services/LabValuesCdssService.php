@@ -5,9 +5,9 @@ namespace App\Services;
 class LabValuesCdssService
 {
     const CRITICAL = 'CRITICAL';
-    const WARNING  = 'WARNING';
-    const INFO     = 'INFO';
-    const NONE     = 'NONE';
+    const WARNING = 'WARNING';
+    const INFO = 'INFO';
+    const NONE = 'NONE';
 
     // =========================================================================
     // EXPANDED RULES BASED ON PEDIATRIC REFERENCE RANGES
@@ -26,7 +26,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 4.0, 'max' => 15.5, 'alert' => 'Normal WBC.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 3.9, 'alert' => 'Leukopenia: Risk of infection.', 'severity' => self::CRITICAL],
         ['ageGroup' => 'child', 'min' => 15.6, 'max' => null, 'alert' => 'Leukocytosis: Possible infection/inflammation.', 'severity' => self::WARNING],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 4.0, 'max' => 13.5, 'alert' => 'Normal WBC.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 3.9, 'alert' => 'Leukopenia: Risk of infection.', 'severity' => self::CRITICAL],
         ['ageGroup' => 'adolescent', 'min' => 13.6, 'max' => null, 'alert' => 'Leukocytosis: Possible infection/inflammation.', 'severity' => self::WARNING],
@@ -45,7 +45,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 3.9, 'max' => 5.3, 'alert' => 'Normal RBC.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 3.8, 'alert' => 'Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'child', 'min' => 5.4, 'max' => null, 'alert' => 'Erythrocytosis.', 'severity' => self::INFO],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 4.0, 'max' => 5.3, 'alert' => 'Normal RBC.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 3.9, 'alert' => 'Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 5.4, 'max' => null, 'alert' => 'Erythrocytosis.', 'severity' => self::INFO],
@@ -64,7 +64,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 11.5, 'max' => 15.5, 'alert' => 'Normal Hgb.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 11.4, 'alert' => 'Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'child', 'min' => 15.6, 'max' => null, 'alert' => 'High Hgb.', 'severity' => self::INFO],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 12.0, 'max' => 16.1, 'alert' => 'Normal Hgb.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 11.9, 'alert' => 'Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 16.2, 'max' => null, 'alert' => 'High Hgb.', 'severity' => self::INFO],
@@ -83,7 +83,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 33, 'max' => 45, 'alert' => 'Normal Hct.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 32, 'alert' => 'Low Hct: Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'child', 'min' => 46, 'max' => null, 'alert' => 'High Hct.', 'severity' => self::INFO],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 35, 'max' => 47, 'alert' => 'Normal Hct.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 34, 'alert' => 'Low Hct: Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 48, 'max' => null, 'alert' => 'High Hct.', 'severity' => self::INFO],
@@ -105,7 +105,7 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 149, 'alert' => 'Thrombocytopenia: Risk of bleeding.', 'severity' => self::CRITICAL],
         ['ageGroup' => 'adolescent', 'min' => 451, 'max' => null, 'alert' => 'Thrombocytosis: Possible inflammation/infection.', 'severity' => self::WARNING],
     ];
-    
+
     // --- DIFFERENTIALS (Note: Physiologic Crossover) ---
     // Neonates: Neutrophil-dominant
     // Infants: Lymphocyte-dominant
@@ -124,7 +124,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 23, 'max' => 54, 'alert' => 'Normal neutrophil %.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 22, 'alert' => 'Neutropenia: Risk of infection.', 'severity' => self::WARNING],
         ['ageGroup' => 'child', 'min' => 55, 'max' => null, 'alert' => 'Neutrophilia: Possible bacterial infection.', 'severity' => self::WARNING],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 33, 'max' => 64, 'alert' => 'Normal neutrophil %.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 32, 'alert' => 'Neutropenia: Risk of infection.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 65, 'max' => null, 'alert' => 'Neutrophilia: Possible bacterial infection.', 'severity' => self::WARNING],
@@ -143,7 +143,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 28, 'max' => 65, 'alert' => 'Normal lymphocyte %.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 27, 'alert' => 'Lymphopenia.', 'severity' => self::WARNING],
         ['ageGroup' => 'child', 'min' => 66, 'max' => null, 'alert' => 'Lymphocytosis: Possible viral infection.', 'severity' => self::WARNING],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 25, 'max' => 48, 'alert' => 'Normal lymphocyte %.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 24, 'alert' => 'Lymphopenia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 49, 'max' => null, 'alert' => 'Lymphocytosis: Possible viral infection.', 'severity' => self::WARNING],
@@ -162,7 +162,7 @@ class LabValuesCdssService
     ];
 
     private $basophilsRules = [
-         // All ages
+        // All ages
         ['ageGroup' => 'all', 'min' => 0, 'max' => 2, 'alert' => 'Normal basophil %.', 'severity' => self::NONE],
         ['ageGroup' => 'all', 'min' => 3, 'max' => null, 'alert' => 'Basophilia: Possible allergic reaction or chronic inflammation.', 'severity' => self::WARNING],
     ];
@@ -182,7 +182,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 75, 'max' => 95, 'alert' => 'Normal MCV.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 74, 'alert' => 'Microcytosis: Possible iron deficiency, thalassemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'child', 'min' => 96, 'max' => null, 'alert' => 'Macrocytosis: Possible B12/folate deficiency.', 'severity' => self::WARNING],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 78, 'max' => 98, 'alert' => 'Normal MCV.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 77, 'alert' => 'Microcytosis: Possible iron deficiency, thalassemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 99, 'max' => null, 'alert' => 'Macrocytosis: Possible B12/folate deficiency.', 'severity' => self::WARNING],
@@ -201,7 +201,7 @@ class LabValuesCdssService
         ['ageGroup' => 'child', 'min' => 24, 'max' => 33, 'alert' => 'Normal MCH.', 'severity' => self::NONE],
         ['ageGroup' => 'child', 'min' => null, 'max' => 23, 'alert' => 'Hypochromia: Possible iron deficiency.', 'severity' => self::WARNING],
         ['ageGroup' => 'child', 'min' => 34, 'max' => null, 'alert' => 'Hyperchromia.', 'severity' => self::INFO],
-         // Adolescent (12yr - 18yr)
+        // Adolescent (12yr - 18yr)
         ['ageGroup' => 'adolescent', 'min' => 25, 'max' => 35, 'alert' => 'Normal MCH.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 24, 'alert' => 'Hypochromia: Possible iron deficiency.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 36, 'max' => null, 'alert' => 'Hyperchromia.', 'severity' => self::INFO],
@@ -225,24 +225,24 @@ class LabValuesCdssService
     public function checkLabResult($param, $value, $ageGroup)
     {
         $rules = match ($param) {
-            'wbc'         => $this->wbcRules,
-            'rbc'         => $this->rbcRules,
-            'hgb'         => $this->hgbRules,
-            'hct'         => $this->hctRules,
-            'platelet'    => $this->plateletRules,
+            'wbc' => $this->wbcRules,
+            'rbc' => $this->rbcRules,
+            'hgb' => $this->hgbRules,
+            'hct' => $this->hctRules,
+            'platelet' => $this->plateletRules,
             'neutrophils' => $this->neutrophilsRules,
             'lymphocytes' => $this->lymphocytesRules,
-            'monocytes'   => $this->monocytesRules,
+            'monocytes' => $this->monocytesRules,
             'eosinophils' => $this->eosinophilsRules,
-            'basophils'   => $this->basophilsRules,
-            'mcv'         => $this->mcvRules,
-            'mch'         => $this->mchRules,
-            'mchc'        => $this->mchcRules,
-            'rdw'         => $this->rdwRules,
-            default       => []
+            'basophils' => $this->basophilsRules,
+            'mcv' => $this->mcvRules,
+            'mch' => $this->mchRules,
+            'mchc' => $this->mchcRules,
+            'rdw' => $this->rdwRules,
+            default => []
         };
-        
-        $numericValue = (float)$value;
+
+        $numericValue = (float) $value;
 
         foreach ($rules as $rule) {
             if ($rule['ageGroup'] !== 'all' && $rule['ageGroup'] !== $ageGroup) {
@@ -263,17 +263,17 @@ class LabValuesCdssService
         return ['alert' => 'No matching rule found.', 'severity' => self::INFO];
     }
 }
-        // ['min' => 30, 'max' => null, 'alert' => 'Severe leukocytosis in neonate: High risk of sepsis!', 'severity' => self::CRITICAL, 'ageGroup' => 'neonate'],
-        // ['min' => 9, 'max' => 29, 'alert' => 'Normal WBC (neonate).', 'severity' => self::NONE, 'ageGroup' => 'neonate'],
-        // ['min' => 7, 'max' => 8.9, 'alert' => 'Mild leukopenia (neonate).', 'severity' => self::WARNING, 'ageGroup' => 'neonate'],
-        // ['min' => null, 'max' => 6.9, 'alert' => 'Severe leukopenia (neonate): Risk of infection!', 'severity' => self::CRITICAL, 'ageGroup' => 'neonate'],
-        // // Infants
-        // ['min' => 20, 'max' => null, 'alert' => 'High WBC (infant): Possible infection.', 'severity' => self::CRITICAL, 'ageGroup' => 'infant'],
-        // ['min' => 6, 'max' => 19.9, 'alert' => 'Normal WBC (infant).', 'severity' => self::NONE, 'ageGroup' => 'infant'],
-        // ['min' => 4, 'max' => 5.9, 'alert' => 'Mild leukopenia (infant).', 'severity' => self::WARNING, 'ageGroup' => 'infant'],
-        // ['min' => null, 'max' => 3.9, 'alert' => 'Severe leukopenia (infant).', 'severity' => self::CRITICAL, 'ageGroup' => 'infant'],
-        // // Child
-        // ['min' => 15, 'max' => null, 'alert' => 'High WBC (child): Possible infection.', 'severity' => self::CRITICAL, 'ageGroup' => 'child'],
-        // ['min' => 5, 'max' => 14.9, 'alert' => 'Normal WBC (child).', 'severity' => self::NONE, 'ageGroup' => 'child'],
-        // ['min' => 3, 'max' => 4.9, 'alert' => 'Mild leukopenia (child).', 'severity' => self::WARNING, 'ageGroup' => 'child'],
-        // ['min' => null, 'max' => 2.9, 'alert' => 'Severe leukopenia (child).', 'severity' => self::CRITICAL, 'ageGroup' => 'child'],
+// ['min' => 30, 'max' => null, 'alert' => 'Severe leukocytosis in neonate: High risk of sepsis!', 'severity' => self::CRITICAL, 'ageGroup' => 'neonate'],
+// ['min' => 9, 'max' => 29, 'alert' => 'Normal WBC (neonate).', 'severity' => self::NONE, 'ageGroup' => 'neonate'],
+// ['min' => 7, 'max' => 8.9, 'alert' => 'Mild leukopenia (neonate).', 'severity' => self::WARNING, 'ageGroup' => 'neonate'],
+// ['min' => null, 'max' => 6.9, 'alert' => 'Severe leukopenia (neonate): Risk of infection!', 'severity' => self::CRITICAL, 'ageGroup' => 'neonate'],
+// // Infants
+// ['min' => 20, 'max' => null, 'alert' => 'High WBC (infant): Possible infection.', 'severity' => self::CRITICAL, 'ageGroup' => 'infant'],
+// ['min' => 6, 'max' => 19.9, 'alert' => 'Normal WBC (infant).', 'severity' => self::NONE, 'ageGroup' => 'infant'],
+// ['min' => 4, 'max' => 5.9, 'alert' => 'Mild leukopenia (infant).', 'severity' => self::WARNING, 'ageGroup' => 'infant'],
+// ['min' => null, 'max' => 3.9, 'alert' => 'Severe leukopenia (infant).', 'severity' => self::CRITICAL, 'ageGroup' => 'infant'],
+// // Child
+// ['min' => 15, 'max' => null, 'alert' => 'High WBC (child): Possible infection.', 'severity' => self::CRITICAL, 'ageGroup' => 'child'],
+// ['min' => 5, 'max' => 14.9, 'alert' => 'Normal WBC (child).', 'severity' => self::NONE, 'ageGroup' => 'child'],
+// ['min' => 3, 'max' => 4.9, 'alert' => 'Mild leukopenia (child).', 'severity' => self::WARNING, 'ageGroup' => 'child'],
+// ['min' => null, 'max' => 2.9, 'alert' => 'Severe leukopenia (child).', 'severity' => self::CRITICAL, 'ageGroup' => 'child'],

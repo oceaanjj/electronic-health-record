@@ -58,8 +58,11 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'middle_name' => 'nullable|string',
             'age' => 'required|integer',
+            'birthdate' => 'required|date',
             'sex' => 'required|in:Male,Female,Other',
             'address' => 'nullable|string',
             'birthplace' => 'nullable|string',
@@ -106,8 +109,11 @@ class PatientController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'middle_name' => 'nullable|string',
             'age' => 'required|integer',
+            'birthdate' => 'required|date',
             'sex' => 'required|in:Male,Female,Other',
             'address' => 'nullable|string',
             'birthplace' => 'nullable|string',
@@ -136,24 +142,25 @@ class PatientController extends Controller
     }
 
     // SET TO INACTIVE
-    public function deactivate($id)
-    {
-        try {
-            $patient = Patient::findOrFail($id); // Only find active patients to deactivate
-            $patient->delete(); // This is the soft delete
+public function deactivate($id)
+{
+    try {
+        $patient = Patient::findOrFail($id); 
+        $patient->delete(); 
 
-            // Log patient deactivation
-            AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
+   
+        AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-            return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
+        return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
 
-        } catch (ModelNotFoundException $e) {
-            abort(404, 'Patient not found or already inactive');
-        } catch (\Exception $e) {
-            Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
-            return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
-        }
+    } 
+    catch (ModelNotFoundException $e) {
+        abort(404, 'Patient not found or already inactive');
+    } catch (\Exception $e) {
+        Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
+        return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
     }
+}
     
     // SET TO ACTIVE
     public function activate($id)
@@ -165,9 +172,12 @@ class PatientController extends Controller
             // Log patient activation
             AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
 
-            return redirect()->route('patients.index')->with('success', 'Patient set to active successfully');
+            return response()->json(['success' => 'Patient recovered successfully']);
+        //         return redirect()->route('patients.index')->with('success', 'Patient recovered         │       
+// │        successfully');
+            }
 
-        } catch (ModelNotFoundException $e) {
+         catch (ModelNotFoundException $e) {
             abort(404, 'Patient not found');
         } catch (\Exception $e) {
             Log::error('Error in PatientController@activate: ' . $e->getMessage());
@@ -187,7 +197,9 @@ class PatientController extends Controller
         if (!empty($search_term)) {
             $patients_query->where(function ($query) use ($search_term) {
                 $query->where('patient_id', $search_term)
-                    ->orWhere('name', 'LIKE', $search_term . '%');
+                    // 2. Search by partial name match (case-insensitive)
+                    ->orWhere('first_name', 'LIKE', $search_term . '%')
+                    ->orWhere('last_name', 'LIKE', $search_term . '%');
             });
         }
         $patients = $patients_query->get();
@@ -206,10 +218,15 @@ class PatientController extends Controller
         if (!empty($search_term)) {
             $patients_query->where(function ($query) use ($search_term) {
                 $query->where('patient_id', 'LIKE', $search_term . '%')
-                    ->orWhere('name', 'LIKE', '%' . $search_term . '%');
+                    ->orWhere('first_name', 'LIKE', '%' . $search_term . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $search_term . '%');
             });
         }
         $patients = $patients_query->get();
+
+        $patients->each(function ($patient) {
+            $patient->name = $patient->name;
+        });
 
         return response()->json($patients);
     }

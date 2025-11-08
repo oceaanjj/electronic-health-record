@@ -28,9 +28,6 @@ document.addEventListener("patient:selected", async (event) => {
             "Patient loader: Missing required data for fetch or patientId.",
             event.detail
         );
-        // Safely disable date/day inputs if they exist
-        if (dateSelector) dateSelector.disabled = true;
-        if (dayNoSelector) dayNoSelector.disabled = true;
         return;
     }
 
@@ -100,21 +97,24 @@ document.addEventListener("patient:selected", async (event) => {
         if (newContent) {
             formContainer.innerHTML = newContent.innerHTML;
 
+            // Re-initialize the searchable dropdown if it exists in the new content
+            if (typeof window.initSearchableDropdown === "function") {
+                window.initSearchableDropdown();
+            }
+
             // --- Step 3: Re-initialize Scripts ---
 
             // Re-initialize the CDSS alerts for the new form
             const newCdssForm = formContainer.querySelector(".cdss-form");
-            if (typeof window.initializeCdssForForm === "function") {
+            if (newCdssForm && typeof window.initializeCdssForForm === "function") {
                 window.initializeCdssForForm(newCdssForm);
             }
 
-            // Re-initialize the generic Date/Day loader, only if this is a Date/Day form
-            if (
-                isDateDayForm &&
-                typeof window.initializeDateDayLoader === "function"
-            ) {
-                window.initializeDateDayLoader(selectUrl);
-            }
+            // Dispatch a custom event to signal that the form content has been reloaded
+            document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {
+                bubbles: true,
+                detail: { formContainer: formContainer }
+            }));
         } else {
             throw new Error(
                 "Could not find '#form-content-container' in response."

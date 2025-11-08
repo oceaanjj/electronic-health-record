@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,11 +52,12 @@ class HomeController extends Controller
                     return redirect()->route('admin-home');
                 default:
                     Auth::logout();
-                    return redirect()->route('home');
+                    return redirect()->route('login');
             }
         }
 
-        return view('home');
+        return view('login.login');
+        // return view('home');
     }
 
     public function nurseHome(Request $request)
@@ -67,7 +69,7 @@ class HomeController extends Controller
 
     public function doctorHome()
     {
-        return view('doctor-home');
+        return view('doctor.home');
     }
 
     public function adminHome()

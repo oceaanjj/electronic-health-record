@@ -46,15 +46,14 @@ class AppServiceProvider extends ServiceProvider
             return $user->role === 'Nurse';
         });
 
-
-        //auto login
-        if (app()->environment('local') && !Auth::check()) {
-            //  Replace 3 with the ID of any user you want to use for testing
-            // 1 = Admin
-            // 2 = Doctor
-            // 3 = Nurse
-            Auth::loginUsingId(3);
-        }
+        //AUTO LOGIN
+        // if (app()->environment('local') && !Auth::check()) {
+        //     //  Replace 3 with the ID of any user you want to use for testing
+        //     // 1 = Admin
+        //     // 2 = Doctor
+        //     // 3 = Nurse
+        //     Auth::loginUsingId(3);
+        // }
 
     }
 }

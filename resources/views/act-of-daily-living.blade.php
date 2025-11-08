@@ -180,6 +180,10 @@
                     const cdssForm = document.querySelector('.cdss-form');
                     if (cdssForm && window.initializeCdssForForm) {
                         window.initializeCdssForForm(cdssForm);
+                        // --- Trigger analysis for pre-filled data on initial page load (auto generate alert on first view---
+                        if (window.triggerInitialCdssAnalysis) {
+                            window.triggerInitialCdssAnalysis(cdssForm);
+                        }
                     }
                 }
             ];

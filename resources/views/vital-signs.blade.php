@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.vital-input').forEach(input => {
         input.addEventListener('input', () => {
             const time = input.getAttribute('data-time');
-            const param = input.getAttribute('data-param');
+            const param = input.getAttribute('data-field-name');
             const value = parseFloat(input.value) || null;
             const paramIndex = { temperature: 0, hr: 1, rr: 2, bp: 3, spo2: 4 }[param];
             const datasetIndex = timePoints.indexOf(time);

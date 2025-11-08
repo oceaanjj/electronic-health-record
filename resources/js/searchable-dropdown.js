@@ -81,6 +81,16 @@ const initSearchableDropdown = () => {
         }
     });
 
+    searchInput.addEventListener("input", () => {
+        if (searchInput.value === "") {
+            if (hiddenInput) {
+                hiddenInput.value = "";
+            }
+            disableForm(true);
+            clearFormInputs();
+        }
+    });
+
     const selectOption = (option) => {
         if (!option) return;
         const patientId = option.getAttribute("data-value");
@@ -94,6 +104,8 @@ const initSearchableDropdown = () => {
 
         currentFocus = -1;
         removeActive();
+
+        disableForm(false); // Enable form when a patient is selected
 
         const event = new CustomEvent("patient:selected", {
             bubbles: true,
@@ -131,6 +143,30 @@ const initSearchableDropdown = () => {
             selectOption(option);
         }
     });
+
+    const formFieldset = document.querySelector("#form-content-container fieldset");
+
+    const disableForm = (isDisabled) => {
+        if (formFieldset) {
+            formFieldset.disabled = isDisabled;
+        }
+    };
+
+    const clearFormInputs = () => {
+        if (formFieldset) {
+            const textareas = formFieldset.querySelectorAll("textarea.notepad-lines");
+            textareas.forEach(textarea => {
+                textarea.value = "";
+            });
+        }
+    };
+
+    // Initial state check
+    if (hiddenInput && hiddenInput.value === "") {
+        disableForm(true);
+    } else {
+        disableForm(false);
+    }
 };
 
 // This listener handles clicks outside the dropdown to close it.

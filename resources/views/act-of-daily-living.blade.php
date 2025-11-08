@@ -167,29 +167,22 @@
 @endsection
 
 @push('scripts')
-    {{-- Load all necessary script files --}}
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
+    {{-- Load all necessary script files, replacing generic alert.js with the specific one --}}
+    @vite([
+        'resources/js/patient-loader.js',
+        'resources/js/date-day-loader.js',
+        'resources/js/init-searchable-dropdown.js',
+        'resources/js/page-initializer.js',
+        'resources/js/act-of-daily-living-alerts.js'
+    ])
 
-    {{-- Define the specific initializers for this page --}}
+    {{-- Define the specific initializers for this page, following the vital-signs pattern --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            window.initialAdlAnalysisDone = false; // Flag to prevent re-analysis
-
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                () => { // Wrap the CDSS initializer
-                    const cdssForm = document.querySelector('.cdss-form');
-                    if (cdssForm && window.initializeCdssForForm) {
-                        window.initializeCdssForForm(cdssForm);
-
-                        // --- Trigger analysis only ONCE for pre-filled data ---
-                        if (!window.initialAdlAnalysisDone && window.triggerInitialCdssAnalysis) {
-                            window.triggerInitialCdssAnalysis(cdssForm);
-                            window.initialAdlAnalysisDone = true; // Set flag to true after running
-                        }
-                    }
-                }
+                window.initializeAdlAlerts // This is the new, specific initializer
             ];
         });
     </script>

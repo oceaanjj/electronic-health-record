@@ -12,7 +12,7 @@
             <tbody>
                 <tr>
                     <th colspan="2">
-                        Date: {{ $item->date ?? 'N/A' }}
+                        Date: {{ isset($item->date) ? \Carbon\Carbon::parse($item->date)->format('F j, Y') : 'N/A' }}
                     </th>
                     <th colspan="1">
                         Day: {{ $item->day_no ?? 'N/A' }}

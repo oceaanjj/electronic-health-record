@@ -66,7 +66,8 @@
                         {{-- Birthdate --}}
                         <div class="col-span-6 md:col-span-2">
                             <label for="birthdate" class="block mb-2 font-bold text-dark-green">Birthdate</label>
-                            <input type="date" id="birthdate" name="birthdate" value="{{ $patient->birthdate ? \Carbon\Carbon::parse($patient->birthdate)->format('Y-m-d') : '' }}"
+                            <input type="date" id="birthdate" name="birthdate"
+                                value="{{ $patient->birthdate ? \Carbon\Carbon::parse($patient->birthdate)->format('Y-m-d') : '' }}"
                                 class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
                                 required>
                         </div>
@@ -133,7 +134,7 @@
                             <label for="admission_date" class="block mb-2 font-bold text-dark-green">Admission
                                 Date</label>
                             <input type="date" id="admission_date" name="admission_date"
-                                value="{{ $patient->admission_date }}"
+                                value="{{ $patient->admission_date ? $patient->admission_date->format('Y-m-d') : '' }}"
                                 class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
                         </div>
 

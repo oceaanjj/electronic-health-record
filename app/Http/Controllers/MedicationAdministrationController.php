@@ -39,11 +39,16 @@ class MedicationAdministrationController extends Controller
         return view('medication-administration', compact('patients', 'selectedPatient', 'administrations'));
     }
 
+    /**
+     * Stores or updates medication administration entries.
+     * Uses patient_id, date, and time as the unique key to determine if it's an update or create operation.
+     */
     public function store(Request $request)
     {
+        // Removed validation for 'id.*'
         $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'date' => 'required|date_format:Y-m-d', // Validate the new date column
+            'date' => 'required|date_format:Y-m-d',
             'medication.*' => 'nullable|string',
             'dose.*' => 'nullable|string',
             'route.*' => 'nullable|string',
@@ -53,8 +58,7 @@ class MedicationAdministrationController extends Controller
         ]);
 
         try {
-            $patient = Patient::where('patient_id', $request->patient_id)
-                ->first();
+            $patient = Patient::where('patient_id', $request->patient_id)->first();
 
             if (!$patient) {
                 return back()->with('error', 'Patient not found.');
@@ -62,47 +66,63 @@ class MedicationAdministrationController extends Controller
 
             $count = count($request->input('medication', []));
             $createdCount = 0;
-            $administrationDate = $request->input('date'); // Get the administration date
+            $updatedCount = 0;
+            $administrationDate = $request->input('date');
 
             for ($i = 0; $i < $count; $i++) {
-                if (
-                    empty($request->medication[$i]) &&
+                $submittedTime = $request->time[$i] ?? null;
+
+
+                $allEmpty = empty($request->medication[$i]) &&
                     empty($request->dose[$i]) &&
                     empty($request->route[$i]) &&
                     empty($request->frequency[$i]) &&
-                    empty($request->comments[$i])
-                ) {
+                    empty($request->comments[$i]);
+
+                if ($allEmpty || empty($submittedTime)) {
                     continue;
                 }
 
-                MedicationAdministration::create([
+                $attributes = [
                     'patient_id' => $request->patient_id,
+                    'date' => $administrationDate,
+                    'time' => $submittedTime,
+                ];
+
+                $values = [
                     'medication' => $request->medication[$i] ?? null,
                     'dose' => $request->dose[$i] ?? null,
                     'route' => $request->route[$i] ?? null,
                     'frequency' => $request->frequency[$i] ?? null,
                     'comments' => $request->comments[$i] ?? null,
-                    'time' => $request->time[$i] ?? null,
-                    'date' => $administrationDate, // Use the new date column
-                ]);
+                ];
 
-                $createdCount++;
+                $record = MedicationAdministration::updateOrCreate($attributes, $values);
+
+                if ($record->wasRecentlyCreated) {
+                    $createdCount++;
+                } else {
+                    $updatedCount++;
+                }
             }
 
-            if ($createdCount > 0) {
+            $totalAffected = $createdCount + $updatedCount;
+            $message = "{$createdCount} new entries created and {$updatedCount} entries updated.";
+
+            if ($totalAffected > 0) {
                 $username = Auth::user()->username ?? 'Unknown';
                 AuditLogController::log(
-                    'Medication Administration Created',
-                    "User {$username} recorded {$createdCount} medication entries for patient ID {$request->patient_id}.",
+                    'Medication Administration Saved',
+                    "User {$username} recorded {$totalAffected} medication entries (C:{$createdCount}, U:{$updatedCount}) for patient ID {$request->patient_id}.",
                     ['patient_id' => $request->patient_id]
                 );
             }
 
             if ($request->expectsJson()) {
-                return response()->json(['message' => 'Medication Administration data saved successfully!']);
+                return response()->json(['message' => 'Medication Administration data saved successfully!', 'created' => $createdCount, 'updated' => $updatedCount]);
             }
 
-            return redirect()->route('medication-administration')->with('success', 'Medication Administration data saved successfully!');
+            return redirect()->route('medication-administration')->with('success', "Medication Administration data saved successfully! {$message}");
 
         } catch (Throwable $e) {
             if ($request->expectsJson()) {

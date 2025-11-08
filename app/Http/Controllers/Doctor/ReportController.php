@@ -16,6 +16,7 @@ use App\Models\IntakeAndOutput;
 use App\Models\ActOfDailyLiving;
 use App\Models\LabValues;
 use App\Models\IvsAndLine;
+use App\Models\MedicationAdministration;
 use App\Models\MedicalReconciliation;
 use App\Models\MedicalReconciliation\ChangesInMedication;
 use App\Models\MedicalReconciliation\CurrentMedication;
@@ -50,6 +51,7 @@ class ReportController extends Controller
             'labValues' => LabValues::where('patient_id', $patient_id)->get(),
             'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
+            'medicationAdministrations' => MedicationAdministration::where('patient_id', $patient_id)->get(),
             'currentMedication' => CurrentMedication::where('patient_id', $patient_id)->get(),
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
@@ -77,6 +79,7 @@ class ReportController extends Controller
             'labValues' => LabValues::where('patient_id', $patient_id)->get(),
             'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
+            'medicationAdministrations' => MedicationAdministration::where('patient_id', $patient_id)->get(),
             'currentMedication' => CurrentMedication::where('patient_id', $patient_id)->get(),
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),

@@ -21,11 +21,11 @@
             <tbody>
                 @foreach($intakeAndOutput as $item)
                     <tr>
-                        <td style="width: 12.5%;">{{ $item->day_no ?? 'N/A' }}</td>
-                        <td style="width: 12.5%;">{{ $item->oral_intake ?? 'N/A' }}</td>
-                        <td style="width: 12.5%;">{{ $item->iv_fluids_volume ?? 'N/A' }}</td>
-                        <td style="width: 12.5%;">{{ $item->urine_output ?? 'N/A' }}</td>
-                        <td style="width: 50%;">{{ $item->alert ?? '' }}</td>
+                        <td style="width: 12.5%;">{{ $item->day_no ?? '-' }}</td>
+                        <td style="width: 12.5%;">{{ $item->oral_intake ?? '-' }}</td>
+                        <td style="width: 12.5%;">{{ $item->iv_fluids_volume ?? '-' }}</td>
+                        <td style="width: 12.5%;">{{ $item->urine_output ?? '-' }}</td>
+                        <td style="width: 50%;">{{ $item->alert ?? '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>

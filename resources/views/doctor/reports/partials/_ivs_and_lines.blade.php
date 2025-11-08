@@ -18,10 +18,10 @@
             <tbody>
                 @foreach($ivsAndLines as $item)
                     <tr>
-                        <td>{{ $item->iv_fluid ?? 'N/A' }}</td>
-                        <td>{{ $item->rate ?? 'N/A' }}</td>
-                        <td>{{ $item->site ?? 'N/A' }}</td>
-                        <td>{{ $item->status ?? 'N/A' }}</td>
+                        <td>{{ $item->iv_fluid ?? '-' }}</td>
+                        <td>{{ $item->rate ?? '-' }}</td>
+                        <td>{{ $item->site ?? '-' }}</td>
+                        <td>{{ $item->status ?? '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>

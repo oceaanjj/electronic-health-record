@@ -22,12 +22,12 @@
             <tbody>
                 @foreach($currentMedication as $item)
                     <tr>
-                        <td>{{ $item->current_med ?? 'N/A' }}</td>
-                        <td>{{ $item->current_dose ?? 'N/A' }}</td>
-                        <td>{{ $item->current_route ?? 'N/A' }}</td>
-                        <td>{{ $item->current_frequency ?? 'N/A' }}</td>
-                        <td>{{ $item->current_indication ?? 'N/A' }}</td>
-                        <td>{{ $item->current_text ?? 'N/A' }}</td>
+                        <td>{{ $item->current_med ?? '-' }}</td>
+                        <td>{{ $item->current_dose ?? '-' }}</td>
+                        <td>{{ $item->current_route ?? '-' }}</td>
+                        <td>{{ $item->current_frequency ?? '-' }}</td>
+                        <td>{{ $item->current_indication ?? '-' }}</td>
+                        <td>{{ $item->current_text ?? '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -53,12 +53,12 @@
             <tbody>
                 @foreach($homeMedication as $item)
                     <tr>
-                        <td>{{ $item->home_med ?? 'N/A' }}</td>
-                        <td>{{ $item->home_dose ?? 'N/A' }}</td>
-                        <td>{{ $item->home_route ?? 'N/A' }}</td>
-                        <td>{{ $item->home_frequency ?? 'N/A' }}</td>
-                        <td>{{ $item->home_indication ?? 'N/A' }}</td>
-                        <td>{{ $item->home_text ?? 'N/A' }}</td>
+                        <td>{{ $item->home_med ?? '-' }}</td>
+                        <td>{{ $item->home_dose ?? '-' }}</td>
+                        <td>{{ $item->home_route ?? '-' }}</td>
+                        <td>{{ $item->home_frequency ?? '-' }}</td>
+                        <td>{{ $item->home_indication ?? '-' }}</td>
+                        <td>{{ $item->home_text ?? '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -83,11 +83,11 @@
             <tbody>
                 @foreach($changesInMedication as $item)
                     <tr>
-                        <td>{{ $item->change_med ?? 'N/A' }}</td>
-                        <td>{{ $item->change_dose ?? 'N/A' }}</td>
-                        <td>{{ $item->change_route ?? 'N/A' }}</td>
-                        <td>{{ $item->change_frequency ?? 'N/A' }}</td>
-                        <td>{{ $item->change_text ?? 'N/A' }}</td>
+                        <td>{{ $item->change_med ?? '-' }}</td>
+                        <td>{{ $item->change_dose ?? '-' }}</td>
+                        <td>{{ $item->change_route ?? '-' }}</td>
+                        <td>{{ $item->change_frequency ?? '-' }}</td>
+                        <td>{{ $item->change_text ?? '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>

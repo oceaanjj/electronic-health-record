@@ -128,8 +128,7 @@
 
     @include('doctor.reports.partials._ivs_and_lines', ['ivsAndLines' => $ivsAndLines])
 
-    @include('doctor.reports.partials._medication_administration')
-
+    @include('doctor.reports.partials._medication_administrations', ['medicationAdministrations' => $medicationAdministrations])
 
     @include('doctor.reports.partials._medication_reconciliation', [
         'currentMedication' => $currentMedication,

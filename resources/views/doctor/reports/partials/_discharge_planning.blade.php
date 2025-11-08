@@ -19,19 +19,19 @@
                 <tbody>
                     <tr>
                         <td>Fever Resolution</td>
-                        <td>{{ $item->criteria_feverRes ?? 'N/A' }}</td>
+                        <td>{{ $item->criteria_feverRes ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Normalization of Patient Count</td>
-                        <td>{{ $item->criteria_patientCount ?? 'N/A' }}</td>
+                        <td>{{ $item->criteria_patientCount ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Manage Fever Effectively</td>
-                        <td>{{ $item->criteria_manageFever ?? 'N/A' }}</td>
+                        <td>{{ $item->criteria_manageFever ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Manage Fever Effectively 2</td>
-                        <td>{{ $item->criteria_manageFever2 ?? 'N/A' }}</td>
+                        <td>{{ $item->criteria_manageFever2 ?? '-' }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -49,23 +49,23 @@
                 <tbody>
                     <tr>
                         <td>Medications</td>
-                        <td>{{ $item->instruction_med ?? 'N/A' }}</td>
+                        <td>{{ $item->instruction_med ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Follow-Up Appointment</td>
-                        <td>{{ $item->instruction_appointment ?? 'N/A' }}</td>
+                        <td>{{ $item->instruction_appointment ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Fluid Intake</td>
-                        <td>{{ $item->instruction_fluidIntake ?? 'N/A' }}</td>
+                        <td>{{ $item->instruction_fluidIntake ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Avoid Mosquito Exposure</td>
-                        <td>{{ $item->instruction_exposure ?? 'N/A' }}</td>
+                        <td>{{ $item->instruction_exposure ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Monitor for Signs of Complications</td>
-                        <td>{{ $item->instruction_complications ?? 'N/A' }}</td>
+                        <td>{{ $item->instruction_complications ?? '-' }}</td>
                     </tr>
                 </tbody>
             </table>

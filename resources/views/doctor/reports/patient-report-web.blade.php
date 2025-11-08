@@ -103,16 +103,16 @@
             <div class="section">
                 @include('doctor.reports.partials._ivs_and_lines', ['ivsAndLines' => $ivsAndLines])
             </div>
-        <div class="section">
-            @include('doctor.reports.partials._medication_administration')
-        </div>
-        <div class="section">
-            @include('doctor.reports.partials._medication_reconciliation', [
-                'currentMedication' => $currentMedication,
-                'homeMedication' => $homeMedication,
-                'changesInMedication' => $changesInMedication,
-            ])
-                    </div>
+            <div class="section">
+                @include('doctor.reports.partials._medication_administrations', ['medicationAdministrations' => $medicationAdministrations])
+            </div>
+            <div class="section">
+                @include('doctor.reports.partials._medication_reconciliation', [
+                    'currentMedication' => $currentMedication,
+                    'homeMedication' => $homeMedication,
+                    'changesInMedication' => $changesInMedication,
+                ])
+            </div>
                     <div class="section">
                         @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning])
                     </div>

@@ -19,43 +19,43 @@
             <tbody>
                 <tr>
                     <td>General Appearance</td>
-                    <td>{{ $item->general_appearance ?? 'N/A' }}</td>
-                    <td>{{ $item->general_appearance_alert ?? '' }}</td>
+                    <td>{{ $item->general_appearance ?? '-' }}</td>
+                    <td>{{ $item->general_appearance_alert ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Skin Condition</td>
-                    <td>{{ $item->skin_condition ?? 'N/A' }}</td>
-                    <td>{{ $item->skin_alert ?? '' }}</td>
+                    <td>{{ $item->skin_condition ?? '-' }}</td>
+                    <td>{{ $item->skin_alert ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Eye Condition</td>
-                    <td>{{ $item->eye_condition ?? 'N/A' }}</td>
-                    <td>{{ $item->eye_alert ?? '' }}</td>
+                    <td>{{ $item->eye_condition ?? '-' }}</td>
+                    <td>{{ $item->eye_alert ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Oral Condition</td>
-                    <td>{{ $item->oral_condition ?? 'N/A' }}</td>
-                    <td>{{ $item->oral_alert ?? '' }}</td>
+                    <td>{{ $item->oral_condition ?? '-' }}</td>
+                    <td>{{ $item->oral_alert ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Cardiovascular</td>
-                    <td>{{ $item->cardiovascular ?? 'N/A' }}</td>
-                    <td>{{ $item->cardiovascular_alert ?? '' }}</td>
+                    <td>{{ $item->cardiovascular ?? '-' }}</td>
+                    <td>{{ $item->cardiovascular_alert ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Abdomen Condition</td>
-                    <td>{{ $item->abdomen_condition ?? 'N/A' }}</td>
-                    <td>{{ $item->abdomen_alert ?? '' }}</td>
+                    <td>{{ $item->abdomen_condition ?? '-' }}</td>
+                    <td>{{ $item->abdomen_alert ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Extremities</td>
-                    <td>{{ $item->extremities ?? 'N/A' }}</td>
-                    <td>{{ $item->extremities_alert ?? '' }}</td>
+                    <td>{{ $item->extremities ?? '-' }}</td>
+                    <td>{{ $item->extremities_alert ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Neurological</td>
-                    <td>{{ $item->neurological ?? 'N/A' }}</td>
-                    <td>{{ $item->neurological_alert ?? '' }}</td>
+                    <td>{{ $item->neurological ?? '-' }}</td>
+                    <td>{{ $item->neurological_alert ?? '-' }}</td>
                 </tr>
             </tbody>
         </table>

@@ -1,223 +1,72 @@
-<?php
-use Illuminate\Support\Facades\Auth;
-?>
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@section('title', 'EHR - Components')
 
+<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electronic Health Record</title>
     @vite(['resources/css/home-style.css'])
 </head>
+=======
+@section('content')
+>>>>>>> 5d3b16a7a29d5a9df57baa135128fa9ed225379e
 
+<div class="min-h-screen bg-white text-gray-800 font-sans px-10 py-12">
 
-<body>
-    <header class="header">
-        <div class="logo">
-            <a href="{{ route('home') }}"> <img src="img/ehr-logo.png" alt="Hospital Logo"> </a>
-            <span>ELECTRONIC HEALTH RECORD</span>
-        </div>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-        <a href="#" class="login" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            LOG OUT
-        </a>
-    </header>
-
-
-    <!-- Alerts -->
-    @vite(['resources/js/app.js'])
-
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert" role="alert"
-            id="success-alert">
-            {{ session('success') }}
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert" role="alert"
-            id="error-alert">
-            {{ session('error') }}
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-        </div>
-    @endif
-
-
-
-    <section class="welcome">
-        <div class="welcome-text">
-            <h3>WELCOME TO</h3>
-            <h1>ELECTRONIC HEALTH <br> RECORD SYSTEM <br>
-                <span class="highlight">PEDIA WARD</span>
-            </h1>
-            <p>
-                This system is designed to simplify healthcare documentation by providing a secure
-                platform for recording and managing patient information. It supports the complete
-                documentation of medical data including patient profiles, vital signs, treatments,
-                and medication records, ensuring accurate and accessible healthcare management.
-            </p>
-            <!-- <a href="#" class="login">LOG IN</a> -->
-        </div>
-        <div class="welcome-image">
-            <img src="img/doctor-kids.png" alt="Doctor with Kids">
-        </div>
-    </section>
-
-    <!-- EHR Components -->
-    <section class="ehr-container">
-
-        <h2>EHR - COMPONENTS</h2>
-        <p>
-            Our system offers a set of integrated components that make patient data documentation
+    <div class="text-center mb-10">
+        <h1 class="text-2xl font-bold mb-2">EHR - COMPONENTS</h1>
+        <p class="text-sm text-gray-600">
+            Our system offers a set of integrated components that make patient data documentation 
             and healthcare management simple, secure, and accessible online.
         </p>
+        <div class="border-t-2 border-green-700 w-[90%] mx-auto mt-4"></div>
+    </div>
 
-        <div class="boxes">
+    <div class="grid grid-cols-5 gap-6 max-w-[1200px] mx-auto">
 
-            <div class="box">
-                <img src="img/register.png" alt="Register Icon" class="box-icon">
-                <h3>REGISTER</h3>
-                <p>This is where new patients are registered into the system.</p>
-                <a class="proceed" href="{{ route('patients.create') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
+        @php
+            $cards = [
+                ['route' => 'patients.create', 'img' => 'register.png', 'title' => 'REGISTER', 'desc' => 'This is where new patients are registered into the system.'],
+                ['route' => 'patients.index', 'img' => 'demographic-profile.png', 'title' => 'DEMOGRAPHIC PROFILE', 'desc' => 'Store and manage patient information.'],
+                ['route' => 'medical-history', 'img' => 'medical-history.png', 'title' => 'MEDICAL HISTORY', 'desc' => 'Document past illnesses, surgeries, allergies, and family medical background.'],
+                ['route' => 'physical-exam.index', 'img' => 'physical-exam.png', 'title' => 'PHYSICAL EXAM', 'desc' => 'Record findings from clinical examinations and physical assessments.'],
+                ['route' => 'vital-signs.show', 'img' => 'vital-signs.png', 'title' => 'VITAL SIGNS', 'desc' => 'Track and update measurements such as temperature, blood pressure, pulse, and respiration.'],
+                ['route' => 'io.show', 'img' => 'intake-and-output.png', 'title' => 'INTAKE AND OUTPUT', 'desc' => 'Monitor and log a patient’s fluid intake and output for accurate care management.'],
+                ['route' => 'adl.show', 'img' => 'activities-of-daily-living.png', 'title' => 'ACTIVITIES OF DAILY LIVING', 'desc' => 'Assess a patient’s ability to perform daily tasks such as eating, bathing, and mobility.'],
+                ['route' => 'lab-values.index', 'img' => 'lab-values.png', 'title' => 'LAB VALUES', 'desc' => 'Record laboratory test results and integrate findings into the patient’s medical record.'],
+                ['route' => 'diagnostics.index', 'img' => 'diagnostics.png', 'title' => 'DIAGNOSTICS', 'desc' => 'Document diagnostic procedures and results such as imaging, scans, and other tests.'],
+                ['route' => 'ivs-and-lines', 'img' => 'ivs-and-lines.png', 'title' => "IV'S & LINES", 'desc' => 'Manage intravenous lines, infusions, and related treatments.'],
+                ['route' => 'medication-administration', 'img' => 'med-admini.png', 'title' => 'MEDICATION ADMINISTRATION', 'desc' => 'Track prescribed medicines and record their administration schedules.'],
+                ['route' => 'medication-reconciliation', 'img' => 'med-recon.png', 'title' => 'MEDICATION RECONCILIATION', 'desc' => 'Compare medications to ensure accuracy and prevent duplication or errors.'],
+                ['route' => 'discharge-planning', 'img' => 'discharge-planning.png', 'title' => 'DISCHARGE PLANNING', 'desc' => 'Plan and document the patient’s care instructions upon discharge.']
+            ];
+        @endphp
 
-            <div class="box">
-                <img src="img/search-patient.png" alt="Search Icon" class="box-icon">
-                <h3>SEARCH PATIENT</h3>
-                <p>For viewing and finding existing patients and records to continue documentation.</p>
-                <a class="proceed" href="{{ route('patients.search') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
+        @foreach ($cards as $card)
+            <a href="{{ route($card['route']) }}" 
+               class="group border border-gray-300 rounded-[20px] p-8 flex flex-col justify-between text-left bg-white shadow-sm hover:shadow-md transition duration-200 hover:-translate-y-1 hover:border-green-600">
+                
+                <div>
+                    <img src="{{ asset('img/sidebar/' . $card['img']) }}" 
+                         class="w-14 h-14 mb-4 object-contain" 
+                         alt="{{ $card['title'] }}">
+                    <h2 class="font-bold text-sm mb-2">{{ $card['title'] }}</h2>
+                    <p class="text-xs text-gray-600 mb-6 leading-relaxed">
+                        {{ $card['desc'] }}
+                    </p>
+                </div>
 
-            <div class="box">
-                <img src="img/demographic-profile.png" alt="Demographic Icon" class="box-icon">
-                <h3>DEMOGRAPHIC PROFILE</h3>
-                <p>Store and manage patient information.</p>
-                <a class="proceed" href="{{ route('patients.index') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
+                <span class="text-green-700 text-xs font-semibold group-hover:underline flex items-center mt-auto">
+                    PROCEED 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                </span>
+            </a>
+        @endforeach
 
-            <div class="box">
-                <img src="img/medical-history.png" alt="History Icon" class="box-icon">
-                <h3>MEDICAL HISTORY</h3>
-                <p>Document past illnesses, surgeries, allergies, and family medical background.</p>
-                <a class="proceed" href="{{ route('medical-history') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/physical-exam.png" alt="Exam Icon" class="box-icon">
-                <h3>PHYSICAL EXAM</h3>
-                <p>Record findings from clinical examinations and physical assessments.</p>
-                <a class="proceed" href="{{ route('physical-exam.index') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/vital-signs.png" alt="Vitals Icon" class="box-icon">
-                <h3>VITAL SIGNS</h3>
-                <p>Track and update measurements such as temperature, blood pressure, pulse, and respiration.</p>
-                <a class="proceed" href="{{ route('vital-signs.show') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/intake-and-output.png" alt="Intake Icon" class="box-icon">
-                <h3>INTAKE AND OUTPUT</h3>
-                <p>Monitor and log a patient’s fluid intake and output for accurate care management.</p>
-                <a class="proceed" href="{{ route('io.show') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/activities-of-daily-living.png" alt="ADL Icon" class="box-icon">
-                <h3>ACTIVITIES OF DAILY LIVING</h3>
-                <p>Assess a patient’s ability to perform daily tasks such as eating, bathing, and mobility.</p>
-                <a class="proceed" href="{{ route('adl.show') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/lab-values.png" alt="Lab Icon" class="box-icon">
-                <h3>LAB VALUES</h3>
-                <p>Record laboratory test results and integrate findings into the patient’s medical record.</p>
-                <a class="proceed" href="{{ route('lab-values.index') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/diagnostics.png" alt="Diagnostics Icon" class="box-icon">
-                <h3>DIAGNOSTICS</h3>
-                <p>Document diagnostic procedures and results such as imaging, scans, and other tests.</p>
-                <a class="proceed" href="{{ route('diagnostics.index') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-
-            <div class="box">
-                <img src="img/iv-and-lines.png" alt="IVs & Lines icon" class="box-icon">
-                <h3>IV's & LINES</h3>
-                <p>Manage intravenous lines, infusions, and related treatments.</p>
-                <a class="proceed" href="{{ route('ivs-and-lines') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/med-admini.png" alt="Medical administration icon" class="box-icon">
-                <h3>MEDICAL ADMINISTRATION</h3>
-                <p>Track prescribed medicines and record their administration schedules.</p>
-                <a class="proceed" href="{{ route('medication-administration') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/med-recon.png" alt="Medical reconciliation" class="box-icon">
-                <h3>MEDICAL RECONCILIATION</h3>
-                <p>Compare medications to ensure accuracy and prevent duplication or errors.</p>
-                <a class="proceed" href="{{ route('medication-reconciliation') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/discharge-planning.png" alt="Discharge Icon" class="box-icon">
-                <h3>DISCHARGE PLANNING</h3>
-                <p>Plan and document the patient’s care instructions upon discharge.</p>
-                <a class="proceed" href="{{ route('discharge-planning') }}">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-            <div class="box">
-                <img src="img/about.png" alt="about icon" class="box-icon">
-                <h3>ABOUT</h3>
-                <p>Provides system information, purpose, and guidelines for users.</p>
-                <a class="proceed" href="#">
-                    <div>PROCEED <span class="arrow">▶</span></div>
-                </a>
-            </div>
-
-
-    </section>
-
-</body>
-
-</html>
+    </div>
+</div>
+@endsection

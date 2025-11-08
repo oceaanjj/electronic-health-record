@@ -3,6 +3,9 @@
 @section('title', 'Patient Vital Signs')
 
 @section('content')
+
+
+
     
 
 

@@ -72,7 +72,6 @@
             id="date_selector"
             name="date"
             value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-            @if (!$selectedPatient) disabled @endif
             class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
@@ -95,20 +94,20 @@
                 {{-- Row 1 (10:00 AM) --}}
                 <tr class="border-b-2 border-line-brown/70 h-[100px]">
                     <td class="bg-beige text-center">
-                        <input type="text" name="medication[]" placeholder="Medication" class="w-full h-[45px] text-center">
+                        <input type="text" name="medication[]" placeholder="Medication" class="w-full h-[45px] text-center medication-input">
                         <input type="hidden" name="time[]" value="10:00:00">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="dose[]" placeholder="Dose" class="w-full h-[45px] text-center">
+                        <input type="text" name="dose[]" placeholder="Dose" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="route[]" placeholder="Route" class="w-full h-[45px] text-center">
+                        <input type="text" name="route[]" placeholder="Route" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="frequency[]" placeholder="Frequency" class="w-full h-[45px] text-center">
+                        <input type="text" name="frequency[]" placeholder="Frequency" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="comments[]" placeholder="Comments" class="w-full h-[45px] text-center">
+                        <input type="text" name="comments[]" placeholder="Comments" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <th class="bg-beige text-brown font-semibold">10:00 AM</th>
                 </tr>
@@ -116,20 +115,20 @@
                 {{-- Row 2 (2:00 PM) --}}
                 <tr class="border-b-2 border-line-brown/70 h-[100px]">
                     <td class="bg-beige text-center">
-                        <input type="text" name="medication[]" placeholder="Medication" class="w-full h-[45px] text-center">
+                        <input type="text" name="medication[]" placeholder="Medication" class="w-full h-[45px] text-center medication-input">
                         <input type="hidden" name="time[]" value="14:00:00">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="dose[]" placeholder="Dose" class="w-full h-[45px] text-center">
+                        <input type="text" name="dose[]" placeholder="Dose" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="route[]" placeholder="Route" class="w-full h-[45px] text-center">
+                        <input type="text" name="route[]" placeholder="Route" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="frequency[]" placeholder="Frequency" class="w-full h-[45px] text-center">
+                        <input type="text" name="frequency[]" placeholder="Frequency" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="comments[]" placeholder="Comments" class="w-full h-[45px] text-center">
+                        <input type="text" name="comments[]" placeholder="Comments" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <th class="bg-beige text-brown font-semibold">2:00 PM</th>
                 </tr>
@@ -137,21 +136,21 @@
                 {{-- Row 3 (6:00 PM) --}}
                 <tr>
                     <td class="bg-beige text-center h-[100px]">
-                        <input type="text" name="medication[]" placeholder="Medication" class="w-full h-[45px] text-center">
+                        <input type="text" name="medication[]" placeholder="Medication" class="w-full h-[45px] text-center medication-input">
 
                         <input type="hidden" name="time[]" value="18:00:00">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="dose[]" placeholder="Dose" class="w-full h-[45px] text-center">
+                        <input type="text" name="dose[]" placeholder="Dose" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="route[]" placeholder="Route" class="w-full h-[45px] text-center">
+                        <input type="text" name="route[]" placeholder="Route" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="frequency[]" placeholder="Frequency" class="w-full h-[45px] text-center">
+                        <input type="text" name="frequency[]" placeholder="Frequency" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <td class="bg-beige text-center">
-                        <input type="text" name="comments[]" placeholder="Comments" class="w-full h-[45px] text-center">
+                        <input type="text" name="comments[]" placeholder="Comments" class="w-full h-[45px] text-center medication-input">
                     </td>
                     <th class="bg-beige text-brown font-semibold">6:00 PM</th>
                 </tr>
@@ -160,7 +159,7 @@
 
 
     <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-        <button class="button-default" type="submit">SUBMIT</button>
+        <button class="button-default" type="submit" id="submit_button">SUBMIT</button>
     </div>
 </center>
 
@@ -182,6 +181,21 @@
             const options = optionsContainer.querySelectorAll('.option');
             const hiddenPatientIdInput = document.getElementById('patient_id_for_form');
             const dateInput = document.getElementById('date_selector');
+            const medicationInputs = document.querySelectorAll('.medication-input');
+            const submitButton = document.getElementById('submit_button');
+
+            function toggleFormElements(enable) {
+                dateInput.disabled = !enable;
+                medicationInputs.forEach(input => input.disabled = !enable);
+                submitButton.disabled = !enable;
+            }
+
+            // Initial state
+            if (!hiddenPatientIdInput.value) {
+                toggleFormElements(false);
+            } else {
+                toggleFormElements(true);
+            }
 
             searchInput.addEventListener('focus', () => {
                 optionsContainer.classList.remove('hidden');
@@ -198,6 +212,12 @@
                     }
                 });
                 optionsContainer.classList.remove('hidden');
+
+                // If search input is cleared, disable form elements
+                if (searchInput.value.trim() === '') {
+                    hiddenPatientIdInput.value = ''; // Clear hidden patient ID
+                    toggleFormElements(false);
+                }
             });
 
             options.forEach(option => {
@@ -207,14 +227,22 @@
 
                     searchInput.value = patientName;
                     hiddenPatientIdInput.value = patientId;
-                    dateInput.disabled = false;
-
                     optionsContainer.classList.add('hidden');
+                    toggleFormElements(true); // Enable form elements when a patient is selected
                 });
             });
+
             document.addEventListener('click', (e) => {
                 if (!searchInput.contains(e.target) && !optionsContainer.contains(e.target)) {
                     optionsContainer.classList.add('hidden');
+                }
+            });
+
+            // Add a blur event listener to the search input to handle cases where the user types and then clears
+            searchInput.addEventListener('blur', () => {
+                // If the search input is empty and no patient is selected, ensure elements are disabled
+                if (searchInput.value.trim() === '' && hiddenPatientIdInput.value === '') {
+                    toggleFormElements(false);
                 }
             });
         });

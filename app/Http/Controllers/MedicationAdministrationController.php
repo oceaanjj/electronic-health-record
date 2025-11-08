@@ -43,6 +43,7 @@ class MedicationAdministrationController extends Controller
     {
         $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
+            'date' => 'required|date_format:Y-m-d', // Validate the new date column
             'medication.*' => 'nullable|string',
             'dose.*' => 'nullable|string',
             'route.*' => 'nullable|string',
@@ -61,6 +62,7 @@ class MedicationAdministrationController extends Controller
 
             $count = count($request->input('medication', []));
             $createdCount = 0;
+            $administrationDate = $request->input('date'); // Get the administration date
 
             for ($i = 0; $i < $count; $i++) {
                 if (
@@ -81,6 +83,7 @@ class MedicationAdministrationController extends Controller
                     'frequency' => $request->frequency[$i] ?? null,
                     'comments' => $request->comments[$i] ?? null,
                     'time' => $request->time[$i] ?? null,
+                    'date' => $administrationDate, // Use the new date column
                 ]);
 
                 $createdCount++;
@@ -119,10 +122,10 @@ class MedicationAdministrationController extends Controller
         $patientId = $request->input('patient_id');
         $date = $request->input('date');
 
-        // Fetch records for the given patient and date
+        // Fetch records for the given patient and date using the new 'date' column
         $records = MedicationAdministration::where('patient_id', $patientId)
-            ->whereDate('created_at', $date)
-            ->orderBy('time') // Assuming 'time' column exists and is used for ordering
+            ->where('date', $date) // Use the new date column for filtering
+            ->orderBy('time')
             ->get();
 
         return response()->json($records);

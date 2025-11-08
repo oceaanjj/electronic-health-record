@@ -190,7 +190,7 @@ const initSearchableDropdown = () => {
 
     const clearAlerts = () => {
         alertBoxes.forEach(alertBox => {
-            alertBox.innerHTML = '<span class="opacity-70 text-white font-semibold">NO ALERTS</span>';
+            alertBox.innerHTML = '<span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>';
             alertBox.style.backgroundColor = ""; // Clear background color
             alertBox.onclick = null; // Ensure the alert box is not clickable
         });

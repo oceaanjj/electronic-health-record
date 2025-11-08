@@ -102,7 +102,7 @@ function showDefaultNoAlerts(alertCell) {
     alertCell.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
     alertCell.innerHTML = `
         <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-            <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
+            <span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>
         </div>
     `;
     // Get the newly created alert-box div and set its onclick to null

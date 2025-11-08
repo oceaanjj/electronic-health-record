@@ -72,7 +72,7 @@ async function analyzeVitalSignField(
 
     activeAnalysisCount++;
     if (activeAnalysisCount === 1) {
-        vitalsForm.classList.add('is-loading-vitals');
+        vitalsForm.classList.add("is-loading-vitals");
         disableHeaderInputs();
     }
 
@@ -93,7 +93,7 @@ async function analyzeVitalSignField(
         displayAlert(alertCell, alertData);
         activeAnalysisCount--;
         if (activeAnalysisCount === 0) {
-            vitalsForm.classList.remove('is-loading-vitals');
+            vitalsForm.classList.remove("is-loading-vitals");
             enableHeaderInputs();
         }
     } catch (error) {
@@ -104,7 +104,7 @@ async function analyzeVitalSignField(
         });
         activeAnalysisCount--;
         if (activeAnalysisCount === 0) {
-            vitalsForm.classList.remove('is-loading-vitals');
+            vitalsForm.classList.remove("is-loading-vitals");
             enableHeaderInputs();
         }
     }
@@ -167,7 +167,11 @@ function displayAlert(alertCell, alertData) {
         alertCell.onclick = null; // No modal for "No Findings"
     } else {
         alertMessageContent = `<span >${alertData.alert}</span>`;
-        alertCell.onclick = () => openAlertModal(alertData); // Add click listener for modal
+        alertCell.onclick = () => {
+            if (!alertCell.classList.contains("has-no-alert")) {
+                openAlertModal(alertData);
+            }
+        };
     }
 
     // Update content of the inner div
@@ -187,7 +191,11 @@ function showDefaultNoAlerts(alertCell) {
 
     // Update content of the inner div
     alertBoxDiv.innerHTML = `
-        <div class=\"alert-message\">\n            <span class=\"opacity-80 text-white text-center font-semibold uppercase\">\n                NO ALERTS\n            </span>\n        </div>
+        <div class=\"alert-message text-center\">
+        <span class=\"opacity-80 text-white text-center font-semibold uppercase\">
+                  NO ALERTS
+        </span>\   
+        </div>
     `;
     alertCell.onclick = null;
 }
@@ -319,6 +327,20 @@ window.initializeVitalSignsAlerts = function () {
             'Vital Signs Alerts: Form missing "data-analyze-url" or CSRF token not found.'
         );
         return;
+    }
+
+    const patientIdInput = document.getElementById("patient_id_hidden");
+    const patientSelected = patientIdInput && patientIdInput.value;
+
+    if (!patientSelected) {
+        // If no patient is selected, ensure all alert cells display "NO ALERTS" and are unclickable
+        const allAlertCells = document.querySelectorAll(
+            "[data-alert-for-time]"
+        );
+        allAlertCells.forEach((alertCell) => {
+            showDefaultNoAlerts(alertCell);
+        });
+        return; // No need to set up input listeners if no patient is selected
     }
 
     const inputs = vitalsForm.querySelectorAll(".cdss-input");

@@ -38,7 +38,7 @@
             alertBoxDiv.classList.remove("alert-loading", "alert-red", "alert-orange", "alert-green"); // Remove loading and severity classes
             alertBoxDiv.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
             alertBoxDiv.innerHTML = `
-                <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
+                <span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>
             `;
             alertBoxDiv.onclick = null;
         }

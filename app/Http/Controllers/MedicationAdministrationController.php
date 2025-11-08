@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MedicationAdministration;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditLogController; 
+use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 
@@ -20,7 +20,7 @@ class MedicationAdministrationController extends Controller
 
     public function show(Request $request)
     {
-        $patients = Auth::user()->patients; 
+        $patients = Auth::user()->patients->sortBy('last_name');
         $selectedPatient = null;
         $administrations = collect();
 
@@ -28,7 +28,7 @@ class MedicationAdministrationController extends Controller
 
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
-            
+
             if ($selectedPatient) {
                 $administrations = MedicationAdministration::where('patient_id', $patientId)
                     ->orderBy('created_at', 'desc')
@@ -70,7 +70,7 @@ class MedicationAdministrationController extends Controller
                     empty($request->frequency[$i]) &&
                     empty($request->comments[$i])
                 ) {
-                    continue; 
+                    continue;
                 }
 
                 MedicationAdministration::create([
@@ -96,7 +96,7 @@ class MedicationAdministrationController extends Controller
             }
 
             return redirect()->route('medication-administration')->with('success', 'Medication Administration data saved successfully!');
-        
+
         } catch (Throwable $e) {
             return back()->with('error', 'Error saving data: ' . $e->getMessage());
         }

@@ -1,6 +1,6 @@
 <div class="page-break"></div>
 
-<div>
+<div class="section">
     <h2 class="section-title">Lab Values</h2>
 
     @if($labValues->isEmpty())

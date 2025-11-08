@@ -1,6 +1,6 @@
 <div class="page-break"></div>
 
-<div>
+<div class="section">
     <h2 class="section-title">IV's & Lines</h2>
 
     @if($ivsAndLines->isEmpty())

@@ -1,6 +1,6 @@
 <div class="page-break"></div>
 
-<div>
+<div class="section">
     <h2 class="section-title">Intake and Output</h2>
 
     @if($intakeAndOutput->isEmpty())

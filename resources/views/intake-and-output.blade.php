@@ -103,7 +103,7 @@
                                         placeholder="Enter Oral Intake"
                                         value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}"
                                         min="0"
-                                        class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none cdss-input"
+                                        class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none cdss-input vital-input"
                                         data-field-name="oral_intake" />
                                 </td>
 
@@ -114,7 +114,7 @@
                                         placeholder="Enter IV Fluids"
                                         value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}"
                                         min="0"
-                                        class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none cdss-input"
+                                        class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none cdss-input vital-input"
                                         data-field-name="iv_fluids_volume" />
                                 </td>
 
@@ -125,7 +125,7 @@
                                         placeholder="Enter Urine Output"
                                         value="{{ old('urine_output', $ioData->urine_output ?? '') }}"
                                         min="0"
-                                        class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none cdss-input"
+                                        class="w-[80%] h-[100px] rounded-[10px] px-3 text-center bg-beige text-brown font-semibold focus:outline-none cdss-input vital-input"
                                         data-field-name="urine_output" />
                                 </td>
                             </tr>

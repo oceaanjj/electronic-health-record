@@ -80,8 +80,16 @@ class IntakeAndOutputController extends Controller
             $ioData = IntakeAndOutput::where('patient_id', $patientId)
                 ->where('day_no', (int) $dayNo)
                 ->first();
+
+            Log::info('IntakeAndOutputController@selectPatientAndDate Debug:', [
+                'patient_id' => $patientId,
+                'day_no' => $dayNo,
+                'ioData_found' => $ioData ? 'true' : 'false',
+                'ioData_content' => $ioData ? $ioData->toArray() : null,
+            ]);
         } else {
             $request->session()->forget(['selected_patient_id', 'selected_day_no']);
+            Log::info('IntakeAndOutputController@selectPatientAndDate Debug: No patient ID found, session cleared.');
         }
 
         $currentDayNo = $dayNo;

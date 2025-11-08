@@ -1,6 +1,6 @@
 
 (function() {
-    document.addEventListener('DOMContentLoaded', function() {
+    function initializeIntakeOutputDataLoader() {
         const patientSelectForm = document.getElementById('patient-select-form');
         if (!patientSelectForm) {
             console.warn('Intake/Output Data Loader: #patient-select-form not found.');
@@ -93,11 +93,16 @@
         };
 
         // Event listeners for day changes
+        dayNoSelector.removeEventListener('change', fetchIntakeOutputData); // Remove previous listener if any
         dayNoSelector.addEventListener('change', fetchIntakeOutputData);
 
         // Also trigger on patient selection change (if patient_id_hidden changes)
-        // This assumes patient_id_hidden is updated by another script (e.g., searchable-dropdown.js)
-        // We can listen for a custom event or mutation observer if direct change event is not reliable
+        // We need to ensure only one observer is active for the current patient_id_hidden
+        // Disconnect previous observers if this function is called multiple times
+        if (patientIdHiddenInput._mutationObserver) {
+            patientIdHiddenInput._mutationObserver.disconnect();
+        }
+
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
@@ -109,10 +114,17 @@
             });
         });
         observer.observe(patientIdHiddenInput, { attributes: true, attributeFilter: ['value'] });
+        patientIdHiddenInput._mutationObserver = observer; // Store observer for later disconnection
 
-        // Initial fetch if a patient is already selected on page load
+        // Initial fetch if a patient is already selected on page load or after re-initialization
         if (patientIdHiddenInput.value) {
             fetchIntakeOutputData();
         }
-    });
+    }
+
+    // Expose the initializer globally
+    window.initializeIntakeOutputDataLoader = initializeIntakeOutputDataLoader;
+
+    // Run on initial DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', initializeIntakeOutputDataLoader);
 })();

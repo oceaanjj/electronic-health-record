@@ -9,7 +9,10 @@
         {{-- Action Buttons & Success Messages --}}
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-3xl font-creato-black font-black text-dark-green">PATIENT LIST</h2>
-            <a href="{{ route('patients.create') }}" class="button-default  w-[200px] text-center">ADD PATIENT</a>
+            <div class="flex items-center space-x-4">
+                <input type="text" id="patient-search" placeholder="Search patients..." class="w-64 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                <a href="{{ route('patients.create') }}" class="button-default w-[200px] text-center">ADD PATIENT</a>
+            </div>
         </div>
         
         @if(session('success'))
@@ -80,6 +83,6 @@
 {{-- Removed the @push('styles') as styles are now inlined with Tailwind --}}
 
 @push('scripts')
-    {{-- This JS file might need updates if it was hardcoded to look for 'delete' --}}
     @vite(['resources/js/soft-delete.js'])
+    @vite(['resources/js/patient-search.js'])
 @endpush

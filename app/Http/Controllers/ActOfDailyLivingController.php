@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ActOfDailyLiving;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use App\Services\AdlCdssService; // Corrected usage for consistency
+use App\Services\ActOfDailyLivingCdssService;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,7 +81,7 @@ class ActOfDailyLivingController extends Controller
             // 4. Run CDSS analysis on fetched data to display alerts
             $alerts = [];
             if ($adlData) {
-                $cdssService = new \App\Services\AdlCdssService();
+                $cdssService = new \App\Services\ActOfDailyLivingCdssService();
                 $alerts = $cdssService->analyzeFindings($adlData->toArray());
             }
             $request->session()->flash('cdss', $alerts);
@@ -91,6 +91,9 @@ class ActOfDailyLivingController extends Controller
             $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
         }
 
+        // Check if this is an AJAX request for a content refresh
+        $isLoading = $request->header('X-Fetch-Form-Content') === 'true';
+
         // Return the rendered view. JS extracts the #form-content-container from this.
         return view('act-of-daily-living', [
             'patients' => $patients,
@@ -99,6 +102,7 @@ class ActOfDailyLivingController extends Controller
             // Pass the explicit variables for the Blade template to ensure immediate update
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
+            'isLoading' => $isLoading,
         ]);
     }
 
@@ -153,7 +157,7 @@ class ActOfDailyLivingController extends Controller
             'finding' => 'nullable|string',
         ]);
 
-        $cdssService = new \App\Services\AdlCdssService();
+        $cdssService = new \App\Services\ActOfDailyLivingCdssService();
 
         $alert = $cdssService->analyzeSingleFinding($data['fieldName'], $data['finding'] ?? '');
 
@@ -196,6 +200,27 @@ class ActOfDailyLivingController extends Controller
             'pain_level_assessment' => 'nullable|string',
         ]);
 
+        // Run CDSS Analysis
+        $cdssService = new ActOfDailyLivingCdssService();
+        $analysisResults = $cdssService->analyzeFindings($validatedData);
+
+        // Map analysis results to the correct database columns
+        $alertMapping = [
+            'mobility_assessment' => 'mobility_alert',
+            'hygiene_assessment' => 'hygiene_alert',
+            'toileting_assessment' => 'toileting_alert',
+            'feeding_assessment' => 'feeding_alert',
+            'hydration_assessment' => 'hydration_alert',
+            'sleep_pattern_assessment' => 'sleep_pattern_alert',
+            'pain_level_assessment' => 'pain_level_alert',
+        ];
+
+        foreach ($alertMapping as $assessmentKey => $alertKey) {
+            if (isset($analysisResults[$assessmentKey])) {
+                $validatedData[$alertKey] = $analysisResults[$assessmentKey]['alert'];
+            }
+        }
+
         $existingAdl = ActOfDailyLiving::where('patient_id', $validatedData['patient_id'])
             ->where('date', $validatedData['date'])
             ->where('day_no', $validatedData['day_no'])
@@ -221,19 +246,12 @@ class ActOfDailyLivingController extends Controller
             );
         }
 
-        // Run CDSS Analysis
-        $filteredData = array_filter($validatedData);
-        $cdssService = new \App\Services\AdlCdssService(); // Use the dedicated service
-        $alerts = $cdssService->analyzeFindings($filteredData);
-
         // Update session with current data for a seamless post-submission view
         $request->session()->put('selected_patient_id', $validatedData['patient_id']);
         $request->session()->put('selected_date', $validatedData['date']);
         $request->session()->put('selected_day_no', $validatedData['day_no']);
 
-
         return redirect()->route('adl.show')
-            ->with('cdss', $alerts)
             ->with('success', $message);
     }
 
@@ -259,7 +277,7 @@ class ActOfDailyLivingController extends Controller
             $validatedData
         );
 
-        $cdssService = new \App\Services\AdlCdssService(); // Use the dedicated service
+        $cdssService = new ActOfDailyLivingCdssService(); // Use the dedicated service
         $analysisResults = $cdssService->analyzeFindings($adl->toArray());
 
         return redirect()->route('adl.show', [

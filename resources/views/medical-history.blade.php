@@ -27,7 +27,7 @@
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         {{-- PRESENT ILLNESS --}}
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PRESENT ILLNESS</th>
+                            <th colspan="6" class="main-header rounded-t-lg">PRESENT ILLNESS</th>
                         </tr>
 
                         <tr>
@@ -41,7 +41,8 @@
 
                         <tr class="bg-beige">
                             <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="present_condition_name" placeholder="Type here..."
+                                <textarea class="notepad-lines h-[200px]" name="present_condition_name"
+                                    placeholder="Type here..."
                                     required>{{ $presentIllness->condition_name ?? '' }}</textarea>
                             </td>
 
@@ -75,7 +76,7 @@
 
                         {{-- PAST MEDICAL / SURGICAL --}}
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
+                            <th colspan="6" class="main-header rounded-t-lg">PAST MEDICAL / SURGICAL</th>
                         </tr>
                         <tr>
 
@@ -122,7 +123,7 @@
                         {{-- KNOWN CONDITION OR ALLERGIES --}}
 
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
+                            <th colspan="6" class="main-header rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
                         </tr>
 
                         <tr>
@@ -168,7 +169,7 @@
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         {{-- VACCINATION --}}
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">VACCINATION</th>
+                            <th colspan="6" class="main-header rounded-t-lg">VACCINATION</th>
                         </tr>
                         <tr>
 

@@ -35,6 +35,12 @@
         format("truetype");
     font-weight: normal;
     font-style: normal;
+
+    font-family: "neometric";
+    src: url("/public/font/neometric/Neometric-Regular.otf")
+        format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @theme {
@@ -46,7 +52,7 @@
     --color-black: #000000;
     --color-yellow: #eeaa00;
     --color-dark-green: #1a6a24;
-    --color-beige: #fff6cf;
+    --color-beige: #fcf8e6;
     --color-light-beige: #fffced;
     --color-yellow-light: #edb62c;
     --color-brown: #744b13;
@@ -63,6 +69,7 @@
     --font-creato-black: "Creato Display Black", arial;
     --font-trajan-bold: "Trajan Pro", serif;
     --font-typewriter: "typewriter", monospace;
+    --font-neometric: "neometric", sans-serif;
 
     --radius-oval: 50%;
 }
@@ -72,9 +79,68 @@
         background: linear-gradient(180deg, #ffd966, #f4b400);
     }
 
-    /* === VITAL SIGNS 3D STYLE === */
+    .main-header {
+    @apply bg-dark-green text-center text-white font-bold py-2; 
+        background: linear-gradient(180deg, #006400, #004d00);
+        @apply font-creato-bold font-black text-[15px];
+    }
 
-    /* 3D background container */
+
+    /* for login */
+    .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 2.5rem; /* space for eye */
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover {
+            color: #000;
+        }
+
+        /* Error message design */
+        .error-box {
+            background: #ffe6e6;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    /* end for login */
+
+
     .vital-section {
         background: linear-gradient(180deg, #fff6e5 0%, #fddf9b 100%);
         border-radius: 20px;
@@ -146,20 +212,6 @@
 
 */
 
-
-
-/* Chart container */
-.vital-chart-container {
-    background: linear-gradient(180deg, #ffe699, #f9c74f);
-    border-radius: 20px;
-    box-shadow:
-        inset 0 3px 6px rgba(255, 255, 255, 0.6),
-        0 6px 15px rgba(0, 0, 0, 0.25);
-    padding: 25px;
-    margin-top: 40px;
-}
-    
-
     /* Chart container */
     .vital-chart-container {
         background: linear-gradient(180deg, #ffe699, #f9c74f);
@@ -224,8 +276,9 @@
     td {
         /* background-color: var(--color-beige);*/
         border-color: var(--color-line-brown);
-        font-family: var(--font-typewriter);
+        font-family: var(--font-neometric);
         font-size: 12px;
+        font-weight: bold;
     }
 
     .pe {

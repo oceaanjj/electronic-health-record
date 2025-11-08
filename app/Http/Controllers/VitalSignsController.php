@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Models\Vitals;
 use Illuminate\Http\Request;
-use App\Services\VitalCdssService; 
+use App\Services\VitalCdssService;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -48,7 +48,7 @@ class VitalSignsController extends Controller
         $dayNo = 1; // Initialize with a default value
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
-        
+
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
             if (!$selectedPatient) {
@@ -68,9 +68,9 @@ class VitalSignsController extends Controller
             } else {
                 // If only patient_id is provided (e.g., from patient-loader.js), try to find the most recent vital signs entry
                 $latestVitals = Vitals::where('patient_id', $patientId)
-                                    ->orderBy('date', 'desc')
-                                    ->orderBy('day_no', 'desc')
-                                    ->first();
+                    ->orderBy('date', 'desc')
+                    ->orderBy('day_no', 'desc')
+                    ->first();
 
                 if ($latestVitals) {
                     $date = $latestVitals->date;
@@ -86,55 +86,55 @@ class VitalSignsController extends Controller
             $request->session()->put('selected_date', $date);
             $request->session()->put('selected_day_no', $dayNo);
 
-                        // 3. Fetch the Vitals record
+            // 3. Fetch the Vitals record
 
-                        $vitalsData = $this->getVitalsRecord($patientId, $date, (int)$dayNo);
+            $vitalsData = $this->getVitalsRecord($patientId, $date, (int) $dayNo);
 
-            
 
-                        // For debugging: Inspect the fetched data
 
-                        // dd(['patientId' => $patientId, 'date' => $date, 'dayNo' => $dayNo, 'vitalsData' => $vitalsData->toArray()]);
+            // For debugging: Inspect the fetched data
 
-            
+            // dd(['patientId' => $patientId, 'date' => $date, 'dayNo' => $dayNo, 'vitalsData' => $vitalsData->toArray()]);
 
-                        // 4. Re-run CDSS analysis on fetched data to display alerts
 
-                        $cdssService = new \App\Services\VitalCdssService();
 
-                        foreach($vitalsData as $time => $vitalRecord) {
+            // 4. Re-run CDSS analysis on fetched data to display alerts
 
-                            $vitalsArray = $vitalRecord->toArray();
+            $cdssService = new \App\Services\VitalCdssService();
 
-                            $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsArray);
+            foreach ($vitalsData as $time => $vitalRecord) {
 
-                            $vitalsData[$time]->alerts = $alertResult['alert'];
+                $vitalsArray = $vitalRecord->toArray();
 
-                            $vitalsData[$time]->news_severity = $alertResult['severity'];
+                $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsArray);
 
-                        }
+                $vitalsData[$time]->alerts = $alertResult['alert'];
 
-            
+                $vitalsData[$time]->news_severity = $alertResult['severity'];
 
-                    } else {
+            }
 
-                        // No patient selected, clear session
 
-                        $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
 
-                    }
+        } else {
 
-            
+            // No patient selected, clear session
 
-                    // Pass the explicit variables for the Blade template to ensure immediate update
+            $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
 
-                    $currentDate = $date;
+        }
 
-                    $currentDayNo = $dayNo;
 
-            
 
-                            return view('vital-signs', [
+        // Pass the explicit variables for the Blade template to ensure immediate update
+
+        $currentDate = $date;
+
+        $currentDayNo = $dayNo;
+
+
+
+        return view('vital-signs', [
             'patients' => $patients,
             'vitalsData' => $vitalsData,
             'selectedPatient' => $selectedPatient,
@@ -161,12 +161,13 @@ class VitalSignsController extends Controller
         $patient = Patient::where('patient_id', $request->patient_id)
             ->where('user_id', $user_id)
             ->first();
-        if (!$patient) return back()->with('error', 'Unauthorized patient access.');
+        if (!$patient)
+            return back()->with('error', 'Unauthorized patient access.');
 
         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
         $anyCreated = false;
         $anyUpdated = false;
-        $cdssService = new VitalCdssService(); 
+        $cdssService = new VitalCdssService();
 
         foreach ($times as $time) {
             $dbTime = Carbon::createFromFormat('H:i', $time)->format('H:i:s');

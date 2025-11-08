@@ -36,7 +36,8 @@
         .section-title {
             background-color: #f9f9f9;
             padding: 5px;
-            margin: -8px -8px 8px -8px;
+            margin-top: 10px;
+            margin-botom: 10px;
             border-bottom: 1px solid #eee;
         }
 
@@ -76,7 +77,7 @@
         .diagnostic-image {
             max-width: 100%;
             height: auto;
-            margin-top: 5px;
+            margin: auto;
             border: 1px solid #ddd;
         }
 
@@ -111,6 +112,8 @@
         'vaccination' => $vaccination,
     ])
 
+    @include('doctor.reports.partials._developmental-history', ['developmentalHistory' => $developmentalHistory])
+
     @include('doctor.reports.partials._physical_exam', ['physicalExam' => $physicalExam])
 
     @include('doctor.reports.partials._vital_signs', ['vitals' => $vitals])
@@ -125,8 +128,7 @@
 
     @include('doctor.reports.partials._ivs_and_lines', ['ivsAndLines' => $ivsAndLines])
 
-    @include('doctor.reports.partials._medication_administration')
-
+    @include('doctor.reports.partials._medication_administrations', ['medicationAdministrations' => $medicationAdministrations])
 
     @include('doctor.reports.partials._medication_reconciliation', [
         'currentMedication' => $currentMedication,
@@ -141,6 +143,9 @@
             if (isset($pdf)) {
                 $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
                 $size = 9;
+
+
+
 
                 $font = $fontMetrics->getFont("Verdana");
                 $width = $fontMetrics->get_text_width($text, $font, $size) / 2;

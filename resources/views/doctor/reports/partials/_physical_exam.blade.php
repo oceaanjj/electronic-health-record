@@ -1,43 +1,65 @@
 <div class="page-break"></div>
 
 <div class="section">
-    <h2 class="section-title">2. Physical Exam</h2>
-    @if($physicalExam->isEmpty())
-        <p class="no-data">No Physical Exam data available.</p>
+    <h2 class="section-title">Physical Exam</h2>
+
+    @php
+        $item = $physicalExam->first() ?? null;
+    @endphp
+
+    @if($item)
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>System</th>
+                    <th>Findings</th>
+                    <th>Alerts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>General Appearance</td>
+                    <td>{{ $item->general_appearance ?? '-' }}</td>
+                    <td>{{ $item->general_appearance_alert ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Skin Condition</td>
+                    <td>{{ $item->skin_condition ?? '-' }}</td>
+                    <td>{{ $item->skin_alert ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Eye Condition</td>
+                    <td>{{ $item->eye_condition ?? '-' }}</td>
+                    <td>{{ $item->eye_alert ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Oral Condition</td>
+                    <td>{{ $item->oral_condition ?? '-' }}</td>
+                    <td>{{ $item->oral_alert ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Cardiovascular</td>
+                    <td>{{ $item->cardiovascular ?? '-' }}</td>
+                    <td>{{ $item->cardiovascular_alert ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Abdomen Condition</td>
+                    <td>{{ $item->abdomen_condition ?? '-' }}</td>
+                    <td>{{ $item->abdomen_alert ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Extremities</td>
+                    <td>{{ $item->extremities ?? '-' }}</td>
+                    <td>{{ $item->extremities_alert ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Neurological</td>
+                    <td>{{ $item->neurological ?? '-' }}</td>
+                    <td>{{ $item->neurological_alert ?? '-' }}</td>
+                </tr>
+            </tbody>
+        </table>
     @else
-        @foreach($physicalExam as $item)
-            @php
-                $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at', 'alert'];
-                $filteredAttributes = [];
-                foreach ($item->getAttributes() as $column => $value) {
-                    if (!in_array($column, $excludedColumns)) {
-                        $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
-                    }
-                }
-                $attributeChunks = array_chunk($filteredAttributes, 3, true);
-            @endphp
-            <div class="table-responsive">
-                @foreach($attributeChunks as $chunk)
-                    <table>
-                        <thead>
-                            <tr>
-                                @for($i = 0; $i < 3; $i++)
-                                    <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                                @endfor
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                @for($i = 0; $i < 3; $i++)
-                                    <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                                @endfor
-                            </tr>
-                        </tbody>
-                    </table>
-                @endforeach
-            </div>
-            @if(!$loop->last)
-            <hr>@endif
-        @endforeach
+        <p class="no-data">No Physical Exam data available.</p>
     @endif
 </div>

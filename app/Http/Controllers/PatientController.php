@@ -142,26 +142,25 @@ class PatientController extends Controller
     }
 
     // SET TO INACTIVE
-public function deactivate($id)
-{
-    try {
-        $patient = Patient::findOrFail($id); 
-        $patient->delete(); 
+    public function deactivate($id)
+    {
+        try {
+            $patient = Patient::findOrFail($id);
+            $patient->delete();
 
-   
-        AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-        return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
+            AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-    } 
-    catch (ModelNotFoundException $e) {
-        abort(404, 'Patient not found or already inactive');
-    } catch (\Exception $e) {
-        Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
-        return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
+            return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
+
+        } catch (ModelNotFoundException $e) {
+            abort(404, 'Patient not found or already inactive');
+        } catch (\Exception $e) {
+            Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
+            return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
+        }
     }
-}
-    
+
     // SET TO ACTIVE
     public function activate($id)
     {
@@ -172,12 +171,8 @@ public function deactivate($id)
             // Log patient activation
             AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
 
-            return response()->json(['success' => 'Patient recovered successfully']);
-        //         return redirect()->route('patients.index')->with('success', 'Patient recovered         │       
-// │        successfully');
-            }
-
-         catch (ModelNotFoundException $e) {
+            return redirect()->route('patients.index')->with('success', 'Patient set to active successfully');
+        } catch (ModelNotFoundException $e) {
             abort(404, 'Patient not found');
         } catch (\Exception $e) {
             Log::error('Error in PatientController@activate: ' . $e->getMessage());
@@ -192,7 +187,7 @@ public function deactivate($id)
     {
         // Retrieve the input and trim any whitespace
         $search_term = trim($request->input('input'));
-        $patients_query = Auth::user()->patients()->withTrashed(); 
+        $patients_query = Auth::user()->patients()->withTrashed();
 
         if (!empty($search_term)) {
             $patients_query->where(function ($query) use ($search_term) {

@@ -106,13 +106,13 @@
 
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[15%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">TIME
+                                <th class="w-[15%] main-header rounded-tl-lg">TIME
                                 </th>
-                                <th class="w-[13%] bg-dark-green text-white">TEMPERATURE</th>
-                                <th class="w-[10%] bg-dark-green text-white">HR</th>
-                                <th class="w-[10%] bg-dark-green text-white">RR</th>
-                                <th class="w-[10%] bg-dark-green text-white">BP</th>
-                                <th class="w-[10%] bg-dark-green text-white rounded-tr-lg">SpO₂</th>
+                                <th class="w-[18%] main-header">TEMPERATURE</th>
+                                <th class="w-[10%] main-header">HR</th>
+                                <th class="w-[10%] main-header">RR</th>
+                                <th class="w-[10%] main-header">BP</th>
+                                <th class="w-[10%] main-header">SpO₂</th>
 
                             {{-- NOTE: paki-explain saakin ito kasi gagawin kong input text ito--}}
                             @php
@@ -136,36 +136,35 @@
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" step="0.1" name="temperature_{{ $time }}" placeholder="temperature"
                                             value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="temperature" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="temperature" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
                                     </td>
 
                                     {{-- HR --}}
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" name="hr_{{ $time }}" placeholder="bpm"
                                             value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="hr" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="hr" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
                                     </td>
 
                                     {{-- RR --}}
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" name="rr_{{ $time }}" placeholder="bpm"
                                             value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="rr" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="rr" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
                                     </td>
 
                                     {{-- BP --}}
                                     <td class="bg-beige {{ $borderClass }}">
-                                        <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
+                                        <input type="number" name="bp_{{ $time }}" placeholder="mmHg"
                                             value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="bp" data-time="{{ $time }}">
+                                            class="cdss-input vital-input h-[60px]" data-field-name="bp" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
                                     </td>
 
                                     {{-- SpO₂ --}}
                                     <td class="bg-beige {{ $borderClass }}">
                                         <input type="number" name="spo2_{{ $time }}" placeholder="%"
                                             value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="spo2" data-time="{{ $time }}">
-                                    </td>
+                                            class="cdss-input vital-input h-[60px]" data-field-name="spo2" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
                                 </tr>
                             @endforeach
 
@@ -173,7 +172,7 @@
                     </div>
 
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header rounded-[15px]">
                             ALERTS
                         </div>
 
@@ -193,7 +192,7 @@
                                     <td class="align-middle" data-alert-for-time="{{ $time }}">
                                         <div class="alert-box my-1 py-4 px-3 flex justify-center items-center w-full h-[53px]" data-alert-for-time="{{ $time }}">
                                             {{-- Dynamic alert content will load here --}}
-                                            <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                                            <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
                                     </div>
                                 </td>
                             </tr>

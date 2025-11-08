@@ -95,33 +95,40 @@ class LabValuesController extends Controller
             'basophils_normal_range' => 'nullable|string|max:50',
         ]);
 
-        $existingLabValue = LabValues::where('patient_id', $data['patient_id'])->first();
-        if ($existingLabValue) {
-            $existingLabValue->update($data);
-            $message = 'Lab values data updated successfully!';
-            AuditLogController::log(
-                'Lab Values Updated',
-                'User ' . Auth::user()->username . ' updated an existing Lab Values record.',
-                ['patient_id' => $data['patient_id']]
-            );
-        } else {
-            LabValues::create($data);
-            $message = 'Lab values data saved successfully!';
-            AuditLogController::log(
-                'Lab Values Created',
-                'User ' . Auth::user()->username . ' created a new Lab Values record.',
-                ['patient_id' => $data['patient_id']]
-            );
-        }
-
         $ageGroup = $this->getAgeGroup($patient);
         $cdssService = new LabValuesCdssService();
         $alerts = $this->runLabCdss((object) $data, $cdssService, $ageGroup);
 
+        // Add alerts to the data array
+        foreach ($alerts as $key => $alertInfo) {
+            // Assuming $key is like 'wbc_alerts' and we want to store the text in 'wbc_alert'
+            $fieldName = str_replace('_alerts', '_alert', $key);
+            if (isset($alertInfo[0]['text'])) {
+                $data[$fieldName] = $alertInfo[0]['text'];
+            }
+        }
+
+        $labValue = LabValues::updateOrCreate(
+            ['patient_id' => $data['patient_id']],
+            $data
+        );
+
+        $message = $labValue->wasRecentlyCreated ? 'Lab values data saved successfully!' : 'Lab values data updated successfully!';
+        $action = $labValue->wasRecentlyCreated ? 'Lab Values Created' : 'Lab Values Updated';
+
+        AuditLogController::log(
+            $action,
+            'User ' . Auth::user()->username . ' ' . ($labValue->wasRecentlyCreated ? 'created a new' : 'updated an existing') . ' Lab Values record.',
+            ['patient_id' => $data['patient_id']]
+        );
+
         $request->session()->put('selected_patient_id', $data['patient_id']);
 
-        return redirect()->route('lab-values.index') 
-            ->with('alerts', $alerts)
+        // Re-run CDSS to get severity for the view
+        $viewAlerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
+
+        return redirect()->route('lab-values.index')
+            ->with('alerts', $viewAlerts)
             ->with('success', $message);
     }
 
@@ -133,7 +140,7 @@ class LabValuesController extends Controller
             'rbc' => 'rbc_result',
             'hgb' => 'hgb_result',
             'hct' => 'hct_result',
-            'platelet' => 'platelets_result',
+            'platelets' => 'platelets_result',
             'mcv' => 'mcv_result',
             'mch' => 'mch_result',
             'mchc' => 'mchc_result',
@@ -252,7 +259,7 @@ class LabValuesController extends Controller
             'rbc_result' => 'rbc',
             'hgb_result' => 'hgb',
             'hct_result' => 'hct',
-            'platelets_result' => 'platelet',
+            'platelets_result' => 'platelets',
             'mcv_result' => 'mcv',
             'mch_result' => 'mch',
             'mchc_result' => 'mchc',

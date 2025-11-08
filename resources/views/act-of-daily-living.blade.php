@@ -101,8 +101,8 @@
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
                     <table class="w-full table-fixed border-collapse border-spacing-y-0">
                         <tr>
-                            <th class="w-[40%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">CATEGORY</th>
-                            <th class="w-[60%] bg-dark-green text-white rounded-tr-lg">ASSESSMENT</th>
+                            <th class="w-[40%] main-header rounded-tl-lg">CATEGORY</th>
+                            <th class="w-[60%] main-header rounded-tr-lg">ASSESSMENT</th>
                         </tr>
 
                         @foreach ([
@@ -131,7 +131,7 @@
 
                 {{-- ALERTS TABLE (JAVASCRIPT-CONTROLLED) --}}
                 <div class="w-[25%] rounded-[15px] overflow-hidden">
-                    <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                    <div class="main-header mb-1 text-center rounded-[15px]">
                         ALERTS
                     </div>
                     <table class="w-full border-collapse">
@@ -145,10 +145,17 @@
                             'pain_level_assessment',
                         ] as $field)
                             <tr>
-                                <td class="align-middle">
-                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center" data-alert-for="{{ $field }}">
-                                        <span class="opacity-70 text-white font-semibold">No Alerts</span>
-                                    </div>
+                                <td class="align-middle" data-alert-for="{{ $field }}">
+                                    @if (isset($isLoading) && $isLoading && old($field, $adlData->$field ?? ''))
+                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-loading">
+                                            <div class="loading-spinner"></div>
+                                            <span>Analyzing...</span>
+                                        </div>
+                                    @else
+                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+                                            <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
+                                        </div>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -167,21 +174,22 @@
 @endsection
 
 @push('scripts')
-    {{-- Load all necessary script files --}}
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
+    {{-- Load all necessary script files, replacing generic alert.js with the specific one --}}
+    @vite([
+        'resources/js/patient-loader.js',
+        'resources/js/date-day-loader.js',
+        'resources/js/init-searchable-dropdown.js',
+        'resources/js/page-initializer.js',
+        'resources/js/act-of-daily-living-alerts.js'
+    ])
 
-    {{-- Define the specific initializers for this page --}}
+    {{-- Define the specific initializers for this page, following the vital-signs pattern --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                () => { // Wrap the CDSS initializer to pass the correct form element
-                    const cdssForm = document.querySelector('.cdss-form');
-                    if (cdssForm && window.initializeCdssForForm) {
-                        window.initializeCdssForForm(cdssForm);
-                    }
-                }
+                window.initializeAdlAlerts // This is the new, specific initializer
             ];
         });
     </script>

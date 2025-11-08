@@ -27,7 +27,13 @@ class ActOfDailyLiving extends Model
         'hydration_assessment',
         'sleep_pattern_assessment',
         'pain_level_assessment',
-        'alerts'
+        'mobility_alert',
+        'hygiene_alert',
+        'toileting_alert',
+        'feeding_alert',
+        'hydration_alert',
+        'sleep_pattern_alert',
+        'pain_level_alert',
     ];
 
     /**

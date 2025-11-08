@@ -24,8 +24,7 @@ mobility_assessment:
       - attempted transfer
       - unsupervised transfer
       - fall during mobilization
-    alert: >-
-      Orthostatic symptoms on standing. Assess vitals and assist with slow
+    alert: Orthostatic symptoms on standing. Assess vitals and assist with slow
       changes in position.
     severity: critical
   - keywords:

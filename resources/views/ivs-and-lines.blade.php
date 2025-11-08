@@ -32,10 +32,10 @@
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[25%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">IV FLUID</th>
-                                <th class="w-[25%] bg-dark-green text-white font-bold py-2">RATE</th>
-                                <th class="w-[25%] bg-dark-green text-white font-bold py-2">SITE</th>
-                                <th class="w-[25%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">STATUS</th>
+                                <th class="w-[25%] main-header rounded-tl-[15px]">IV FLUID</th>
+                                <th class="w-[25%] main-header">RATE</th>
+                                <th class="w-[25%] main-header">SITE</th>
+                                <th class="w-[25%] main-header rounded-tr-[15px]">STATUS</th>
                             </tr>
 
                             <tr>
@@ -77,14 +77,14 @@
 
                     {{-- ALERTS TABLE--}}
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header rounded-[15px]">
                             ALERTS
                         </div>
                         <table class="w-full border-collapse text-center">
                             <tr>
                                 <td>
                                     <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-                                        <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                                        <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
                                     </div>
                                 </td>
                             </tr>

@@ -1,43 +1,34 @@
 <div class="page-break"></div>
 
-<div class="section">
-    <h2 class="section-title">4. Intake and Output</h2>
+<div>
+    <h2 class="section-title">Intake and Output</h2>
+
     @if($intakeAndOutput->isEmpty())
-        <p class="no-data">No Intake and Output data available.</p>
+        <p>No Intake and Output data available.</p>
     @else
-        @foreach($intakeAndOutput as $item)
-            @php
-                $excludedColumns = ['id', 'patient_id', 'medical_id', 'created_at', 'updated_at', 'deleted_at', 'cdss_alerts', 'iv_fluids_type'];
-                $filteredAttributes = [];
-                foreach ($item->getAttributes() as $column => $value) {
-                    if (!in_array($column, $excludedColumns)) {
-                        $filteredAttributes[ucfirst(str_replace('_', ' ', $column))] = $value;
-                    }
-                }
-                $attributeChunks = array_chunk($filteredAttributes, 3, true);
-            @endphp
-            <div class="table-responsive">
-                @foreach($attributeChunks as $chunk)
-                    <table>
-                        <thead>
-                            <tr>
-                                @for($i = 0; $i < 3; $i++)
-                                    <th>{{ isset(array_keys($chunk)[$i]) ? array_keys($chunk)[$i] : '' }}</th>
-                                @endfor
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                @for($i = 0; $i < 3; $i++)
-                                    <td>{{ isset(array_values($chunk)[$i]) ? array_values($chunk)[$i] : '' }}</td>
-                                @endfor
-                            </tr>
-                        </tbody>
-                    </table>
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    {{-- Smaller Columns (12.5% each) --}}
+                    <th style="width: 12.5%;">Day</th>
+                    <th style="width: 12.5%;">Oral Intake</th>
+                    <th style="width: 12.5%;">IV Fluids</th>
+                    <th style="width: 12.5%;">Urine Output</th>
+                    {{-- Alert Column (50%) - 4 times 12.5% --}}
+                    <th style="width: 50%;">Alert</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($intakeAndOutput as $item)
+                    <tr>
+                        <td style="width: 12.5%;">{{ $item->day_no ?? '-' }}</td>
+                        <td style="width: 12.5%;">{{ $item->oral_intake ?? '-' }}</td>
+                        <td style="width: 12.5%;">{{ $item->iv_fluids_volume ?? '-' }}</td>
+                        <td style="width: 12.5%;">{{ $item->urine_output ?? '-' }}</td>
+                        <td style="width: 50%;">{{ $item->alert ?? '-' }}</td>
+                    </tr>
                 @endforeach
-            </div>
-            @if(!$loop->last)
-            <hr>@endif
-        @endforeach
+            </tbody>
+        </table>
     @endif
 </div>

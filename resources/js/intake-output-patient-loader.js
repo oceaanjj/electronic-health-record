@@ -106,6 +106,11 @@ document.addEventListener("patient:selected", async (event) => {
                 window.intakeOutputCdss.init();
             }
 
+            // Re-initialize the intake-output data loader
+            if (typeof window.initializeIntakeOutputDataLoader === "function") {
+                window.initializeIntakeOutputDataLoader();
+            }
+
 
             // Dispatch a custom event to signal that the form content has been reloaded
             document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {

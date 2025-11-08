@@ -10,8 +10,8 @@
             </div>
         @endif
 
-        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-            selectRoute="" inputPlaceholder="-Selected Patient-" inputName="patient_id" inputValue="{{ session('selected_patient_id') }}"
+        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient" selectRoute=""
+            inputPlaceholder="-Selected Patient-" inputName="patient_id" inputValue="{{ session('selected_patient_id') }}"
             :disabled="true" />
 
 
@@ -149,7 +149,7 @@
 @push('scripts')
     @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const patientSearchInput = document.getElementById('patient_search_input');
             if (patientSearchInput) {
                 patientSearchInput.setAttribute('readonly', true);

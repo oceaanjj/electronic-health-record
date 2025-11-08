@@ -81,6 +81,16 @@ const initSearchableDropdown = () => {
         }
     });
 
+    searchInput.addEventListener("input", () => {
+        if (searchInput.value === "") {
+            if (hiddenInput) {
+                hiddenInput.value = "";
+            }
+            disableForm(true);
+            clearFormInputs();
+        }
+    });
+
     const selectOption = (option) => {
         if (!option) return;
         const patientId = option.getAttribute("data-value");
@@ -94,6 +104,8 @@ const initSearchableDropdown = () => {
 
         currentFocus = -1;
         removeActive();
+
+        disableForm(false); // Enable form when a patient is selected
 
         const event = new CustomEvent("patient:selected", {
             bubbles: true,
@@ -131,6 +143,101 @@ const initSearchableDropdown = () => {
             selectOption(option);
         }
     });
+
+    const disableForm = (isDisabled) => {
+        const formFieldset = document.querySelector("#form-content-container fieldset");
+        const dateSelector = document.getElementById("date_selector");
+        const dayNoSelector = document.getElementById("day_no_selector");
+        const vitalInputs = document.querySelectorAll(".vital-input");
+        const cdssButton = document.querySelector(".cdss-form button[type='button']");
+        const submitButton = document.querySelector(".cdss-form button[type='submit']");
+        const insertButtons = document.querySelectorAll(".insert-btn"); // Select all insert buttons
+        const clearButtons = document.querySelectorAll(".clear-btn"); // Select all clear buttons
+
+        if (formFieldset) {
+            formFieldset.disabled = isDisabled;
+        }
+        if (dateSelector) {
+            dateSelector.disabled = isDisabled;
+        }
+        if (dayNoSelector) {
+            dayNoSelector.disabled = isDisabled;
+        }
+        vitalInputs.forEach(input => {
+            input.disabled = isDisabled;
+        });
+        if (cdssButton) {
+            cdssButton.disabled = isDisabled;
+        }
+        if (submitButton) {
+            submitButton.disabled = isDisabled;
+        }
+
+        // Explicitly disable/enable insert and clear buttons
+        insertButtons.forEach(button => {
+            if (isDisabled) {
+                button.classList.add('disabled');
+                button.setAttribute('disabled', 'true');
+            } else {
+                button.classList.remove('disabled');
+                button.removeAttribute('disabled');
+            }
+        });
+
+        clearButtons.forEach(button => {
+            button.disabled = isDisabled;
+        });
+    };
+
+    const clearFormInputs = () => {
+        const formFieldset = document.querySelector("#form-content-container fieldset");
+        if (formFieldset) {
+            const inputs = formFieldset.querySelectorAll("input, textarea, textarea.notepad-lines");
+            inputs.forEach(input => {
+                if (input.type !== 'hidden') { // Do not clear hidden inputs
+                    input.value = "";
+                }
+                input.style.backgroundColor = ""; // Clear background color
+                input.style.color = ""; // Clear text color
+            });
+
+            // Clear image previews and file inputs
+            const diagnosticPanels = formFieldset.querySelectorAll(".diagnostic-panel");
+            diagnosticPanels.forEach(panel => {
+                const type = panel.dataset.type;
+                const previewContainer = document.getElementById('preview-' + type);
+                if (previewContainer) {
+                    previewContainer.innerHTML = '';
+                }
+                const uploadedFilesContainer = document.getElementById('uploaded-files-' + type);
+                if (uploadedFilesContainer) {
+                    uploadedFilesContainer.innerHTML = '';
+                }
+                // Also clear the file input itself
+                const fileInput = document.getElementById('file-input-' + type);
+                if (fileInput) {
+                    fileInput.value = '';
+                }
+            });
+        }
+        clearAlerts(); // Call clearAlerts when inputs are cleared
+    };
+
+    const clearAlerts = () => {
+        const alertBoxes = document.querySelectorAll(".alert-box");
+        alertBoxes.forEach(alertBox => {
+            alertBox.innerHTML = '<span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>';
+            alertBox.style.backgroundColor = ""; // Clear background color
+            alertBox.onclick = null; // Ensure the alert box is not clickable
+        });
+    };
+
+    // Initial state check
+    if (hiddenInput && hiddenInput.value === "") {
+        disableForm(true);
+    } else {
+        disableForm(false);
+    }
 };
 
 // This listener handles clicks outside the dropdown to close it.

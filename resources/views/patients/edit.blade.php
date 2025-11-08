@@ -40,10 +40,33 @@
                     {{-- A responsive grid for layout. 6 columns on medium screens, 1 on small screens --}}
                     <div class="grid grid-cols-6 gap-6">
 
-                        {{-- Name --}}
-                        <div class="col-span-6 md:col-span-3">
-                            <label for="name" class="block mb-2 font-bold text-dark-green">Name</label>
-                            <input type="text" id="name" name="name" value="{{ $patient->name }}"
+                        {{-- First Name --}}
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="first_name" class="block mb-2 font-bold text-dark-green">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ $patient->first_name }}"
+                                class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                                required>
+                        </div>
+
+                        {{-- Middle Name --}}
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="middle_name" class="block mb-2 font-bold text-dark-green">Middle Name</label>
+                            <input type="text" id="middle_name" name="middle_name" value="{{ $patient->middle_name }}"
+                                class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                        </div>
+
+                        {{-- Last Name --}}
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="last_name" class="block mb-2 font-bold text-dark-green">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ $patient->last_name }}"
+                                class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                                required>
+                        </div>
+
+                        {{-- Birthdate --}}
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="birthdate" class="block mb-2 font-bold text-dark-green">Birthdate</label>
+                            <input type="date" id="birthdate" name="birthdate" value="{{ $patient->birthdate ? \Carbon\Carbon::parse($patient->birthdate)->format('Y-m-d') : '' }}"
                                 class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
                                 required>
                         </div>

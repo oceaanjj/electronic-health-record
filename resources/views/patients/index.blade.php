@@ -8,8 +8,8 @@
 
         {{-- Action Buttons & Success Messages --}}
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-dark-green">PATIENT LIST</h2>
-            <a href="{{ route('patients.create') }}" class="button-default">Add Patient</a>
+            <h2 class="text-3xl font-creato-black font-black text-dark-green">PATIENT LIST</h2>
+            <a href="{{ route('patients.create') }}" class="button-default  w-[200px] text-center">ADD PATIENT</a>
         </div>
         
         @if(session('success'))
@@ -21,44 +21,44 @@
 
         {{-- Table Container --}}
         <div class="bg-beige rounded-lg shadow-md overflow-hidden">
-            <table class="w-full border-collapse">
+            <table class="w-full border-collapse ">
                 <thead>
                     <tr>
-                        <th class="bg-yellow-light text-brown text-[13px] p-3 text-left border-b-2 border-line-brown font-bold">Patient ID</th>
-                        <th class="bg-yellow-light text-brown text-[13px] p-3 text-left border-b-2 border-line-brown font-bold">Name</th>
-                        <th class="bg-yellow-light text-brown text-[13px] p-3 text-left border-b-2 border-line-brown font-bold">Age</th>
-                        <th class="bg-yellow-light text-brown text-[13px] p-3 text-left border-b-2 border-line-brown font-bold">Sex</th>
-                        <th class="bg-yellow-light text-brown text-[13px] p-3 text-left border-b-2 border-line-brown font-bold">Actions</th>
+                        <th class="bg-yellow-light text-brown text-[13px] p-2 border-b-2 border-r-2 border-line-brown font-bold text-center">PATIENT ID</th>
+                        <th class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-r-2 border-line-brown font-bold text-center">NAME</th>
+                        <th class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-r-2 border-line-brown font-bold text-center">AGE</th>
+                        <th class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-r-2 border-line-brown font-bold text-center">SEX</th>
+                        <th class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-line-brown font-bold text-center">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($patients as $patient)
                         {{-- The trashed() check now means "Inactive". The styling is perfect for this. --}}
                         <tr class="{{ $patient->trashed() ? 'bg-red-100 text-red-700' : 'bg-beige' }} hover:bg-gray-100" data-id="{{ $patient->patient_id }}">
-                            <td class="p-3 border-b border-line-brown/70">{{ $patient->patient_id }}</td>
-                            <td class="p-3 border-b border-line-brown/70">
-                                <a href="{{ route('patients.show', $patient->patient_id) }}" class="text-black hover:underline font-semibold">
+                            <td class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] text-center border-r-2">{{ $patient->patient_id }}</td>
+                            <td class="p-3 border-b-2 border-line-brown/70 border-r-2">
+                                <a href="{{ route('patients.show', $patient->patient_id) }}" class="p-3 font-creato-black font-bold text-brown text-[13px]">
                                     {{ $patient->name }}
                                 </a>
                             </td>
-                            <td class="p-3 border-b border-line-brown/70">{{ $patient->age }}</td>
-                            <td class="p-3 border-b border-line-brown/70">{{ $patient->sex }}</td>
-                            <td class="p-3 border-b border-line-brown/70 whitespace-nowrap">
+                            <td class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] border-r-2 text-center">{{ $patient->age }}</td>
+                            <td class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] border-r-2 text-center">{{ $patient->sex }}</td>
+                            <td class="p-3 border-b-2 border-line-brown/70 whitespace-nowrap text-center"> 
                                 
                                 @if($patient->trashed())
                                     {{-- This is an INACTIVE patient. Show "Set Active" button. --}}
                                     <form action="{{ route('patients.activate', $patient->patient_id) }}" method="POST" class="inline-block">
                                         @csrf
-                                        <button type="submit" class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150">Set Active</button>
+                                        <button type="submit" class="inline-block  bg-green-500 hover:bg-green-600  text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">SET ACTIVE</button>
                                     </form>
                                 @else
                                     {{-- This is an ACTIVE patient. Show "Edit" and "Set Inactive" buttons. --}}
-                                    <a href="{{ route('patients.edit', $patient->patient_id) }}" class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150">Edit</a>
+                                    <a href="{{ route('patients.edit', $patient->patient_id) }}" class="inline-block  bg-green-500 hover:bg-green-600  text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
                                     
                                     <form action="{{ route('patients.deactivate', $patient->patient_id) }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-block bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150">Set Inactive</button>
+                                        <button type="submit" class="inline-block bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">SET INACTIVE</button>
                                     </form>
                                 @endif
 

@@ -62,7 +62,21 @@
                         <td>{{ $item->rr ?? 'N/A' }}</td>
                         <td>{{ $item->bp ?? 'N/A' }}</td>
                         <td>{{ $item->spo2 ?? 'N/A' }}</td>
-                        <td colspan="4">{{ $item->alert ?? $item->alerts ?? '' }}</td>
+                        <td colspan="4">
+                            @php
+                                $alertsString = $item->alert ?? $item->alerts ?? '';
+                                $alertsArray = array_filter(explode('; ', $alertsString));
+                            @endphp
+                            @if (!empty($alertsArray))
+                                <ul>
+                                    @foreach ($alertsArray as $alert)
+                                        <li> • {{ trim($alert) }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
 
                     {{-- SEPARATOR: Colspan set to 10 --}}

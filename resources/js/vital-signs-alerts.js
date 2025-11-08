@@ -6,7 +6,39 @@
  * the corresponding alert box for that time slot.
  */
 
-let debounceTimer;
+// --- Function: Disable header inputs ---
+function disableHeaderInputs() {
+    const patientSearchInput = document.getElementById("patient_search_input");
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
+
+    if (patientSearchInput) {
+        patientSearchInput.setAttribute("disabled", "true");
+    }
+    if (dateSelector) {
+        dateSelector.setAttribute("disabled", "true");
+    }
+    if (dayNoSelector) {
+        dayNoSelector.setAttribute("disabled", "true");
+    }
+}
+
+// --- Function: Enable header inputs ---
+function enableHeaderInputs() {
+    const patientSearchInput = document.getElementById("patient_search_input");
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
+
+    if (patientSearchInput) {
+        patientSearchInput.removeAttribute("disabled");
+    }
+    if (dateSelector) {
+        dateSelector.removeAttribute("disabled");
+    }
+    if (dayNoSelector) {
+        dayNoSelector.removeAttribute("disabled");
+    }
+}
 
 // --- Function: Analyze input with backend ---
 async function analyzeVitalSignField(
@@ -38,6 +70,8 @@ async function analyzeVitalSignField(
         });
     }
 
+    disableHeaderInputs(); // Disable inputs at the start of analysis
+
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -54,6 +88,7 @@ async function analyzeVitalSignField(
 
         setTimeout(() => {
             displayAlert(alertCell, alertData);
+            enableHeaderInputs(); // Re-enable inputs after successful analysis
         }, 150);
     } catch (error) {
         console.error("Vital Signs CDSS analysis failed:", error);
@@ -61,6 +96,7 @@ async function analyzeVitalSignField(
             alert: "Error analyzing...",
             severity: "CRITICAL",
         });
+        enableHeaderInputs(); // Re-enable inputs after failed analysis
     }
 }
 

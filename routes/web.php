@@ -244,7 +244,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
 
 
-    // --- ADD THESE NEW ROUTES FOR THE DPIE WIZARD ---
+    // --- D P I E---
 
     Route::get('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'startDiagnosis'])
         ->name('nursing-diagnosis.start');

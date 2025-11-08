@@ -14,83 +14,67 @@
         @endif
 
    {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
-<div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
-    <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form" class="flex items-center gap-6 w-full">
+<div class="header flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-6 my-6 md:my-10 mx-auto w-[90%] md:w-[80%]">
+    <form action="{{ route('vital-signs.select') }}" method="POST" id="patient-select-form"
+        class="flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-6 w-full">
         @csrf
 
         {{-- PATIENT NAME --}}
-        <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
+        <label for="patient_search_input"
+            class="whitespace-nowrap font-alte font-bold text-dark-green text-sm md:text-base">
             PATIENT NAME :
         </label>
 
-        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}">
+        <div class="searchable-dropdown relative w-full md:w-[400px]" data-select-url="{{ route('vital-signs.select') }}">
             {{-- Text input for search --}}
-            <input
-                type="text"
-                id="patient_search_input"
-                placeholder="Select or type Patient Name"
-                value="{{ trim($selectedPatient->name ?? '') }}"
-                autocomplete="off"
+            <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
+                value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off"
                 class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
-            >
-
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
             {{-- Dropdown list --}}
-            <div
-                id="patient_options_container"
-                class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto"
-            >
+            <div id="patient_options_container"
+                class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto">
                 @foreach ($patients as $patient)
-                    <div
-                        class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150"
-                        data-value="{{ $patient->patient_id }}"
-                    >
+                    <div class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150"
+                        data-value="{{ $patient->patient_id }}">
                         {{ trim($patient->name) }}
                     </div>
                 @endforeach
             </div>
 
-            {{-- Hidden input to store selected patient ID --}}
-            <input type="hidden" id="patient_id_hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+            {{-- Hidden input --}}
+            <input type="hidden" id="patient_id_hidden" name="patient_id"
+                value="{{ $selectedPatient->patient_id ?? '' }}">
         </div>
 
         {{-- DATE --}}
-        <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
+        <label for="date_selector"
+            class="whitespace-nowrap font-alte font-bold text-dark-green text-sm md:text-base">
             DATE :
         </label>
-        <input
-            type="date"
-            id="date_selector"
-            name="date"
-            value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-            @if (!$selectedPatient) disabled @endif
+        <input type="date" id="date_selector" name="date"
+            value="{{ old('date', session('selected_date')) }}" onchange="this.form.submit()"
             class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
-        >
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm w-full md:w-auto">
 
         {{-- DAY NO --}}
-        <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
+        <label for="day_no"
+            class="whitespace-nowrap font-alte font-bold text-dark-green text-sm md:text-base">
             DAY NO :
         </label>
-        <select
-            id="day_no_selector"
-            name="day_no"
-            @if (!$selectedPatient) disabled @endif
-            class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                   focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
-        >
+        <select id="day_no" name="day_no" onchange="this.form.submit()"
+            class="w-full md:w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
             <option value="">-- Select number --</option>
             @for ($i = 1; $i <= 30; $i++)
-                <option
-                    value="{{ $i }}"
-                    @if(($currentDayNo ?? 1) == $i) selected @endif
-                >
+                <option value="{{ $i }}" {{ old('day_no', session('selected_day_no')) == $i ? 'selected' : '' }}>
                     {{ $i }}
                 </option>
             @endfor
         </select>
     </form>
 </div>
+
 {{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
@@ -101,106 +85,114 @@
                 <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
                 <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
-                <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
-                    <div class="w-[68%] rounded-[15px] overflow-hidden">
+    <form id="vitals-form" method="POST" action="{{ route('vital-signs.store') }}">
+        @csrf
 
-                        <table class="w-full table-fixed border-collapse border-spacing-y-0">
-                            <tr>
-                                <th class="w-[15%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">TIME
-                                </th>
-                                <th class="w-[13%] bg-dark-green text-white">TEMPERATURE</th>
-                                <th class="w-[10%] bg-dark-green text-white">HR</th>
-                                <th class="w-[10%] bg-dark-green text-white">RR</th>
-                                <th class="w-[10%] bg-dark-green text-white">BP</th>
-                                <th class="w-[10%] bg-dark-green text-white rounded-tr-lg">SpO₂</th>
+        <input type="hidden" name="patient_id" value="{{ old('patient_id', session('selected_patient_id')) }}">
+        <input type="hidden" name="date" value="{{ old('date', session('selected_date')) }}">
+        <input type="hidden" name="day_no" value="{{ old('day_no', session('selected_day_no')) }}">
 
-                            {{-- NOTE: paki-explain saakin ito kasi gagawin kong input text ito--}}
-                            @php
-                                $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
-                            @endphp
+       <!-- SCROLLABLE CONTAINER -->
+<div class="w-full overflow-x-auto">
+  <div class="flex flex-row justify-center items-start gap-6 min-w-[900px] px-4 py-6 w-[90%] mx-auto">
 
-                            @foreach ($times as $index => $time)
-                                @php
-                                    $vitalsRecord = $vitalsData->get($time);
-                                    $isLast = $index === count($times) - 1;
-                                    $borderClass = $isLast ? '' : 'border-b-2 border-line-brown/70';
-                                @endphp
+    <!-- LEFT: Vital Signs Table -->
+    <div class="w-[65%] rounded-[15px] overflow-x-auto">
+      <table class="w-full table-fixed border-collapse border-spacing-y-0">
+        <tr>
+          <th class="w-[15%] main-header rounded-tl-lg">TIME</th>
+          <th class="w-[13%] main-header">TEMPERATURE</th>
+          <th class="w-[10%] main-header">HR</th>
+          <th class="w-[10%] main-header">RR</th>
+          <th class="w-[10%] main-header">BP</th>
+          <th class="w-[10%] main-header rounded-tr-lg">SpO₂</th>
+        </tr>
 
-                                <tr class="{{ $borderClass }}">
-                                    {{-- TIME COLUMN --}}
-                                    <th class="text-center font-semibold py-2 bg-yellow-light text-brown {{ $borderClass }}">
-                                        {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
-                                    </th>
+        @php
+          $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+        @endphp
 
-                                    {{-- TEMPERATURE --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" step="0.1" name="temperature_{{ $time }}" placeholder="temperature"
-                                            value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="temperature" data-time="{{ $time }}">
-                                    </td>
+        @foreach ($times as $index => $time)
+          @php
+            $vitalsRecord = $vitalsData->get($time);
+            $isLast = $index === count($times) - 1;
+            $borderClass = $isLast ? '' : 'border-b-2 border-line-brown/70';
+          @endphp
 
-                                    {{-- HR --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" name="hr_{{ $time }}" placeholder="bpm"
-                                            value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="hr" data-time="{{ $time }}">
-                                    </td>
+          <tr class="{{ $borderClass }}">
+            <th class="text-center font-semibold py-2 bg-yellow-light text-brown table-header {{ $borderClass }}">
+              {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
+            </th>
+            <td class="bg-beige {{ $borderClass }}">
+              <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
+                value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
+                class="vital-input h-[60px]" data-param="temperature" data-time="{{ $time }}">
+            </td>
+            <td class="bg-beige {{ $borderClass }}">
+              <input type="text" name="hr_{{ $time }}" placeholder="bpm"
+                value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
+                class="vital-input h-[60px]" data-param="hr" data-time="{{ $time }}">
+            </td>
+            <td class="bg-beige {{ $borderClass }}">
+              <input type="text" name="rr_{{ $time }}" placeholder="bpm"
+                value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
+                class="vital-input h-[60px]" data-param="rr" data-time="{{ $time }}">
+            </td>
+            <td class="bg-beige {{ $borderClass }}">
+              <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
+                value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
+                class="vital-input h-[60px]" data-param="bp" data-time="{{ $time }}">
+            </td>
+            <td class="bg-beige {{ $borderClass }}">
+              <input type="text" name="spo2_{{ $time }}" placeholder="%"
+                value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
+                class="vital-input h-[60px]" data-param="spo2" data-time="{{ $time }}">
+            </td>
+          </tr>
+        @endforeach
+      </table>
+    </div>
 
-                                    {{-- RR --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" name="rr_{{ $time }}" placeholder="bpm"
-                                            value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="rr" data-time="{{ $time }}">
-                                    </td>
+    <!-- RIGHT: Alerts Table -->
+    <div class="w-[25%] rounded-[15px]">
+      <div class="main-header rounded-[15px] mb-2 text-center">ALERTS</div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+          @foreach ($times as $time)
+            @php
+              $vitalsRecord = $vitalsData->get($time);
+              $severity = optional($vitalsRecord)->news_severity ?? 'NONE';
+              $color = $severity === 'CRITICAL' ? 'text-red-600'
+                      : ($severity === 'WARNING' ? 'text-orange-500'
+                      : ($severity === 'INFO' ? 'text-blue-500'
+                      : ($severity === 'NONE' ? 'text-white' : 'text-black')));
+              $alerts = $vitalsRecord ? explode('; ', $vitalsRecord->alerts) : [];
+            @endphp
+            <tr>
+              <td class="align-middle">
+                <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+                  @if ($vitalsRecord && optional($vitalsRecord)->alerts)
+                    <ul class="list-none text-center {{ $color }}">
+                      @foreach($alerts as $alert)
+                        <li class="font-semibold">{{ $alert }}</li>
+                      @endforeach
+                    </ul>
+                  @else
+                    <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                  @endif
+                </div>
+              </td>
+            </tr>
+          @endforeach
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-                                    {{-- BP --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
-                                            value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="bp" data-time="{{ $time }}">
-                                    </td>
+    </form>
 
-                                    {{-- SpO₂ --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" name="spo2_{{ $time }}" placeholder="%"
-                                            value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="spo2" data-time="{{ $time }}">
-                                    </td>
-                                </tr>
-                            @endforeach
 
-                        </table>
-                    </div>
-
-                    <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
-                            ALERTS
-                        </div>
-
-                        <table class="w-full border-collapse">
-                            @foreach ($times as $time)
-                                @php
-                                    $vitalsRecord = $vitalsData->get($time);
-                                    $severity = optional($vitalsRecord)->news_severity ?? 'NONE';
-                                    $color = $severity === 'CRITICAL' ? 'text-red-600'
-                                        : ($severity === 'WARNING' ? 'text-orange-500'
-                                            : ($severity === 'INFO' ? 'text-blue-500'
-                                                : ($severity === 'NONE' ? 'text-white' : 'text-black')));
-                                    $alerts = $vitalsRecord ? explode('; ', $vitalsRecord->alerts) : [];
-                                @endphp
-
-                                <tr>
-                                    <td class="align-middle" data-alert-for-time="{{ $time }}">
-                                        <div class="alert-box my-1 py-4 px-3 flex justify-center items-center w-full h-[53px]" data-alert-for-time="{{ $time }}">
-                                            {{-- Dynamic alert content will load here --}}
-                                            <span class="opacity-70 text-white font-semibold">No Alerts</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                </table>
-            </div>
-        </div>        
     <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
             <button type="button" class="button-default">CDSS</button>
             <button type="submit" class="button-default">SUBMIT</button>       

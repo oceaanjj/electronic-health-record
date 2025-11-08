@@ -1,6 +1,5 @@
-<header class="fixed flex items-center justify-between bg-white shadow-md h-[120px] z-50 top-0 left-0 right-0">
-    <div class="flex items-center space-x-10 pr-10 pl-10">
-
+<header class="fixed flex flex-wrap md:flex-nowrap items-center justify-between bg-white shadow-md h-auto md:h-[120px] z-50 top-0 left-0 right-0 px-4 md:px-10 py-4">
+    <div class="flex items-center space-x-4 md:space-x-10">
         <button onclick="openNav()" class="text-yellow text-2xl font-bold focus:outline-none cursor-pointer">
             ☰
         </button>
@@ -27,14 +26,12 @@
             }
         @endphp
 
-        <a href="{{ route($homeRoute) }}" class="flex items-center gap-10">
-            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-20">
-            <div class="flex flex-col leading-tight">
-                <span class="text-[30px] font-trajan-bold font-black text-black">ELECTRONIC HEALTH RECORD</span>
-                <span class="text-[20px] font-creato-black font-bold text-yellow">Bachelor of Science in Nursing</span>
+        <a href="{{ route($homeRoute) }}" class="flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-10">
+            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-12 md:h-20">
+            <div class="flex flex-col leading-tight text-center md:text-left">
+                <span class="text-lg md:text-[30px] font-trajan-bold font-black text-black">ELECTRONIC HEALTH RECORD</span>
+                <span class="text-sm md:text-[20px] font-creato-black font-bold text-yellow">Bachelor of Science in Nursing</span>
             </div>    
         </a>
-
     </div>
-
 </header>

@@ -216,8 +216,6 @@
 @push('scripts')
 @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- VITAL SIGNS CHART -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById('vitalSignChart').getContext('2d');
@@ -337,9 +335,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
 });
 </script>
-<!-- VITAL SIGNS CHART -->
-
-
 @endpush
 
    

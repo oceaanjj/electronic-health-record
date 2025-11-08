@@ -18,6 +18,7 @@ use App\Http\Controllers\MedReconciliationController;
 use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
+use App\Http\Controllers\MedicationAdministrationController;
 
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
@@ -89,6 +90,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     // Array of simple nurse-accessible views to avoid repetition.
     $nurseViews = [
+        'about-page',
         'medical-history',
         'physical-exam' => 'physical-exam.index',
         'vital-signs',
@@ -206,6 +208,17 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
     Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
+
+Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
+     ->name('medication-administration');
+
+// Para sa pag-save ng data (kapag nag-submit ng form)
+Route::post('/medication-administration/store', [MedicationAdministrationController::class, 'store'])
+     ->name('medication-administration.store');
+
+// Para sa patient dropdown search (base sa code mo)
+    Route::post('/medication-administration/select-patient', [MedicationAdministrationController::class, 'selectPatient'])
+        ->name('medication-administration.select-patient');
 
     // ---------------
     // ADPIE Routes

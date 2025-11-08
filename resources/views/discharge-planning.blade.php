@@ -2,8 +2,8 @@
 @section('title', 'Patient Discharge Planning')
 @section('content')
 
+    <!-- Ito yung tama, ewan ko san galing yung nasa baba  -->
     {{-- PATIENT DROP-DOWN FORM --}}
-
     <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient ?? null"
         selectRoute="{{ route('discharge-planning.select') }}" inputPlaceholder="-Select or type to search-"
         inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />

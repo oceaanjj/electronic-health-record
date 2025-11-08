@@ -145,10 +145,10 @@ class PatientController extends Controller
     public function deactivate($id)
     {
         try {
-            $patient = Patient::findOrFail($id); // Only find active patients to deactivate
-            $patient->delete(); // This is the soft delete
+            $patient = Patient::findOrFail($id);
+            $patient->delete();
 
-            // Log patient deactivation
+
             AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
             return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
@@ -172,7 +172,6 @@ class PatientController extends Controller
             AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
 
             return redirect()->route('patients.index')->with('success', 'Patient set to active successfully');
-
         } catch (ModelNotFoundException $e) {
             abort(404, 'Patient not found');
         } catch (\Exception $e) {

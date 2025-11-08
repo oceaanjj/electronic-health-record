@@ -5,6 +5,7 @@
 @section('content')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <body>
     <div class="header">
         EDIT PATIENT
@@ -30,10 +31,16 @@
     <div class="w-[72%] mx-auto my-10">
         
 >>>>>>> 5d3b16a7a29d5a9df57baa135128fa9ed225379e
+=======
+    {{-- This container centers the content and matches the width of the registration page --}}
+    <div class="w-[72%] mx-auto my-10">
+        
+>>>>>>> 237d7e389833dc81f9f2c113fcef077115a301e6
         <form action="{{ route('patients.update', $patient->patient_id) }}" method="POST">
             @csrf
             @method('PUT')
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             <div class="form-group">
                 <label>First Name</label>
@@ -59,6 +66,8 @@
                 <label>Age</label>
                 <input type="number" name="age" value="{{ $patient->age }}" id="age" readonly required>
 =======
+=======
+>>>>>>> 237d7e389833dc81f9f2c113fcef077115a301e6
             {{-- Styled Header for Edit Patient --}}
             <div class="bg-dark-green text-white rounded-t-lg font-bold text-lg p-4 w-full">
                 EDIT PATIENT
@@ -151,7 +160,10 @@
                                class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
                     </div>
                 </div>
+<<<<<<< HEAD
 >>>>>>> 5d3b16a7a29d5a9df57baa135128fa9ed225379e
+=======
+>>>>>>> 237d7e389833dc81f9f2c113fcef077115a301e6
             </div>
 
             {{-- Styled Header for Emergency Contact (Added from registration form) --}}
@@ -200,6 +212,7 @@
             </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             <div class="form-group">
                 <label>Religion</label>
                 <input type="text" name="religion" value="{{ $patient->religion }}">
@@ -229,11 +242,14 @@
             </div>
 =======
 >>>>>>> 5d3b16a7a29d5a9df57baa135128fa9ed225379e
+=======
+>>>>>>> 237d7e389833dc81f9f2c113fcef077115a301e6
         </form>
     </div>
 
 @endsection
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 @push('styles')
     @vite(['resources/css/edit-style.css'])
@@ -245,3 +261,6 @@
 =======
 {{-- Removed the push for 'edit-style.css' --}}
 >>>>>>> 5d3b16a7a29d5a9df57baa135128fa9ed225379e
+=======
+{{-- Removed the push for 'edit-style.css' --}}
+>>>>>>> 237d7e389833dc81f9f2c113fcef077115a301e6

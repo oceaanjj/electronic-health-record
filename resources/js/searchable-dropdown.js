@@ -175,16 +175,13 @@ const initSearchableDropdown = () => {
 
     const clearFormInputs = () => {
         if (formFieldset) {
-            const textareas = formFieldset.querySelectorAll("textarea.notepad-lines");
-            textareas.forEach(textarea => {
-                textarea.value = "";
+            const inputs = formFieldset.querySelectorAll("input, textarea, textarea.notepad-lines");
+            inputs.forEach(input => {
+                input.value = "";
+                input.style.backgroundColor = ""; // Clear background color
+                input.style.color = ""; // Clear text color
             });
         }
-        vitalInputs.forEach(input => {
-            input.value = "";
-            input.style.backgroundColor = ""; // Clear background color
-            input.style.color = ""; // Clear text color
-        });
         clearAlerts(); // Call clearAlerts when inputs are cleared
     };
 

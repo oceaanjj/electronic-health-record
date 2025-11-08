@@ -22,22 +22,22 @@
             {{-- Hidden input to send the selected patient's ID with the POST request --}}
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
-            <center>
-                <table class="mb-2 w-[72%] border-collapse border-spacing-0">
-                    {{-- PRESENT ILLNESS --}}
-                    <tr>
-                        <th colspan="6" class="main-header rounded-t-lg">PRESENT ILLNESS</th>
-                    </tr>
+            <fieldset @if (!session('selected_patient_id')) disabled @endif>
+                <center>
+                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
+                        {{-- PRESENT ILLNESS --}}
+                        <tr>
+                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PRESENT ILLNESS</th>
+                        </tr>
 
-                    
-                    <tr>
-                        <th class="table-header border-line-brown border-r-2">NAME</th>
-                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
-                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
-                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
-                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
-                        <th class="table-header border-line-brown">COMMENT</th>
-                    </tr>
+                        <tr>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
+                            <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                        </tr>
 
                         <tr class="bg-beige">
                             <td class="border-r-2 border-line-brown/70">
@@ -79,54 +79,13 @@
                         </tr>
                         <tr>
 
-                    {{-- PAST MEDICAL / SURGICAL --}}
-                    <tr>
-                        <th colspan="6" class="main-header rounded-t-lg">PAST MEDICAL / SURGICAL</th>
-                    </tr>
-                    <tr>
-                        
-                         <th class="table-header border-line-brown border-r-2">NAME</th>
-                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
-                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
-                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
-                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
-                        <th class="table-header border-line-brown">COMMENT</th>
-                    </tr>
-                    
-                    <tr class="bg-beige">
-                        <td class="border-r-2 border-line-brown/70">
-                            <textarea
-                                class="notepad-lines h-[200px]"
-                                name="past_condition_name"
-                                placeholder="Type here...">{{ $pastMedicalSurgical->condition_name ?? '' }}</textarea>
-                        </td>
-                       <td class="border-r-2 border-line-brown/70">
-                            <textarea class="notepad-lines h-[200px]"
-                                name="past_description"
-                                placeholder="Type here...">{{ $pastMedicalSurgical->description ?? '' }}</textarea>
-                       </td>
-                        <td class="border-r-2 border-line-brown/70">
-                            <textarea class="notepad-lines h-[200px]"
-                                name="past_medication"
-                                placeholder="Type here...">{{ $pastMedicalSurgical->medication ?? '' }}</textarea>
-                        </td>
-                        <td class="border-r-2 border-line-brown/70">
-                            <textarea class="notepad-lines h-[200px]"
-                                name="past_dosage"
-                                placeholder="Type here...">{{ $pastMedicalSurgical->dosage ?? '' }}</textarea>
-                        </td>
-                        <td class="border-r-2 border-line-brown/70">
-                            <textarea class="notepad-lines h-[200px]"
-                                name="past_side_effect"
-                                placeholder="Type here...">{{ $pastMedicalSurgical->side_effect ?? '' }}</textarea></td>
-                        <td>
-                            <textarea class="notepad-lines h-[200px]"
-                            name="past_comment"
-                            placeholder="Type here...">{{ $pastMedicalSurgical->comment ?? '' }}</textarea>
-                        </td>
-                    </tr>
-                </table>
-            </center>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
+                            <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                        </tr>
 
                         <tr class="bg-beige">
                             <td class="border-r-2 border-line-brown/70">
@@ -163,18 +122,18 @@
                         {{-- KNOWN CONDITION OR ALLERGIES --}}
 
                         <tr>
-                            <th colspan="6" class="main-header rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
+                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
                         </tr>
 
-                    <tr>
-                        
-                        <th class="table-header border-line-brown border-r-2">NAME</th>
-                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
-                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
-                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
-                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
-                        <th class="table-header border-line-brown">COMMENT</th>
-                    </tr>
+                        <tr>
+
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
+                            <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                        </tr>
 
                         <tr class="bg-beige">
                             <td class="border-r-2 border-line-brown/70">
@@ -205,21 +164,13 @@
                     </table>
                 </center>
 
-        <center>
-            <table class="mb-2 w-[72%] border-collapse border-spacing-0">
-                {{-- VACCINATION --}}
-                <tr>
-                    <th colspan="6" class="main-header rounded-t-lg">VACCINATION</th>
-                </tr>
-                <tr>
-                    
-                        <th class="table-header border-line-brown border-r-2">NAME</th>
-                        <th class="table-header border-line-brown border-r-2">DESCRIPTION</th>
-                        <th class="table-header border-line-brown border-r-2">MEDICATION</th>
-                        <th class="table-header border-line-brown border-r-2">DOSAGE</th>
-                        <th class="table-header border-line-brown border-r-2">SIDE EFFECT</th>
-                        <th class="table-header border-line-brown">COMMENT</th>
-                </tr>
+                <center>
+                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
+                        {{-- VACCINATION --}}
+                        <tr>
+                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">VACCINATION</th>
+                        </tr>
+                        <tr>
 
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>

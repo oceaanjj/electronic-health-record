@@ -69,7 +69,7 @@
                                 @if($patient->trashed())
                                     {{-- This is an INACTIVE patient. Show "Set Active" button. --}}
                                     <button type="button"
-                                        class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
+                                        class="inline-block bg-green-500 cursor-pointer hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
                                         data-patient-id="{{ $patient->patient_id }}" data-action="activate">SET ACTIVE</button>
                                 @else
                                     {{-- This is an ACTIVE patient. Show "Edit" and "Set Inactive" buttons. --}}
@@ -77,7 +77,7 @@
                                         class="inline-block  bg-green-500 hover:bg-green-600  text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
 
                                     <button type="button"
-                                        class="inline-block bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
+                                        class="inline-block bg-red-500 cursor-pointer hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
                                         data-patient-id="{{ $patient->patient_id }}" data-action="deactivate">SET INACTIVE</button>
                                 @endif
 

@@ -6,7 +6,7 @@
     <h3>Patient's Current Medication</h3>
 
     @if($currentMedication->isEmpty())
-        <p>No Current Medication data available.</p>
+        <p class="no-data">No Current Medication data available.</p>
     @else
         <table>
             <thead>

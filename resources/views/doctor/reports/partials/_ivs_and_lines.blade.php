@@ -4,7 +4,7 @@
     <h2 class="section-title">IV's & Lines</h2>
 
     @if($ivsAndLines->isEmpty())
-        <p>No IV's & Lines data available.</p>
+        <p class="no-data">No IV's & Lines data available.</p>
     @else
         <table>
             <thead>

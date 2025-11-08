@@ -3,7 +3,7 @@
     <h2 class="section-title">Vital Signs</h2>
 
     @if($vitals->isEmpty())
-        <p>No Vital Signs data available.</p>
+        <p class="no-data">No Vital Signs data available.</p>
     @else
         @php
             $currentGroupKey = null;

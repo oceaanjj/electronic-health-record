@@ -4,7 +4,7 @@
     <h2 class="section-title">Intake and Output</h2>
 
     @if($intakeAndOutput->isEmpty())
-        <p>No Intake and Output data available.</p>
+        <p class="no-data">No Intake and Output data available.</p>
     @else
         <table style="width: 100%;">
             <thead>

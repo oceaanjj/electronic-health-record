@@ -3,7 +3,7 @@
     <h2 class="section-title">Medication Administrations</h2>
 
     @if($medicationAdministrations->isEmpty())
-        <p>No Medication Administration data available.</p>
+        <p class="no-data">No Medication Administration data available.</p>
     @else
         <table>
             <thead>

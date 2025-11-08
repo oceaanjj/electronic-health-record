@@ -144,15 +144,14 @@ const initSearchableDropdown = () => {
         }
     });
 
-    const formFieldset = document.querySelector("#form-content-container fieldset");
-    const dateSelector = document.getElementById("date_selector");
-    const dayNoSelector = document.getElementById("day_no_selector");
-    const vitalInputs = document.querySelectorAll(".vital-input");
-    const cdssButton = document.querySelector(".cdss-form button[type='button']");
-    const submitButton = document.querySelector(".cdss-form button[type='submit']");
-    const alertBoxes = document.querySelectorAll(".alert-box");
-
     const disableForm = (isDisabled) => {
+        const formFieldset = document.querySelector("#form-content-container fieldset");
+        const dateSelector = document.getElementById("date_selector");
+        const dayNoSelector = document.getElementById("day_no_selector");
+        const vitalInputs = document.querySelectorAll(".vital-input");
+        const cdssButton = document.querySelector(".cdss-form button[type='button']");
+        const submitButton = document.querySelector(".cdss-form button[type='submit']");
+
         if (formFieldset) {
             formFieldset.disabled = isDisabled;
         }
@@ -174,10 +173,13 @@ const initSearchableDropdown = () => {
     };
 
     const clearFormInputs = () => {
+        const formFieldset = document.querySelector("#form-content-container fieldset");
         if (formFieldset) {
             const inputs = formFieldset.querySelectorAll("input, textarea, textarea.notepad-lines");
             inputs.forEach(input => {
-                input.value = "";
+                if (input.type !== 'hidden') { // Do not clear hidden inputs
+                    input.value = "";
+                }
                 input.style.backgroundColor = ""; // Clear background color
                 input.style.color = ""; // Clear text color
             });
@@ -186,6 +188,7 @@ const initSearchableDropdown = () => {
     };
 
     const clearAlerts = () => {
+        const alertBoxes = document.querySelectorAll(".alert-box");
         alertBoxes.forEach(alertBox => {
             alertBox.innerHTML = '<span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>';
             alertBox.style.backgroundColor = ""; // Clear background color

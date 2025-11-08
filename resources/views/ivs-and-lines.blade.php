@@ -84,7 +84,7 @@
                             <tr>
                                 <td>
                                     <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-                                        <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                                        <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
                                     </div>
                                 </td>
                             </tr>

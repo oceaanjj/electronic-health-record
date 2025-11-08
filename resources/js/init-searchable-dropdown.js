@@ -68,15 +68,24 @@ function initializeSearchableDropdown() {
         }
     });
 
-    searchInput.addEventListener("input", () => {
+    const handleSearchInputChange = () => {
         if (searchInput.value === "") {
             if (hiddenInput) {
                 hiddenInput.value = "";
             }
             disableForm(true);
             clearFormInputs();
+        } else {
+            // If something is typed, but no patient is selected, keep the form disabled
+            // unless a patient is explicitly selected.
+            if (hiddenInput && hiddenInput.value === "") {
+                disableForm(true);
+            }
         }
-    });
+    };
+
+    searchInput.addEventListener("input", handleSearchInputChange);
+    searchInput.addEventListener("change", handleSearchInputChange); // Add change event listener
 
     const selectOption = (option) => {
         if (!option) return;

@@ -34,7 +34,7 @@
             <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
                 DATE :
             </label>
-            <input type="date" id="date_selector" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+            <input type="date" id="date_selector" name="date" value="{{ $selectedDate ?? now()->format('Y-m-d') }}"
                 class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
         </div>
         {{-- MAIN CONTAINER --}}
@@ -168,6 +168,17 @@
                 '18:00:00': 2
             };
 
+            /**
+             * Helper function to get the current date in YYYY-MM-DD format.
+             */
+            function getCurrentDateFormatted() {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                const dd = String(today.getDate()).padStart(2, '0');
+                return `${yyyy}-${mm}-${dd}`;
+            }
+
             function toggleFormElements(enable) {
                 dateInput.disabled = !enable;
                 medicationInputs.forEach(input => input.disabled = !enable);
@@ -259,6 +270,12 @@
                     hiddenPatientIdInput.value = patientId;
                     optionsContainer.classList.add('hidden');
                     toggleFormElements(true);
+
+                    // --- NEW LOGIC: Set date to current date upon patient selection ---
+                    const todayFormatted = getCurrentDateFormatted();
+                    dateInput.value = todayFormatted;
+                    // -----------------------------------------------------------------
+
                     fetchAndDisplayRecords(); // Fetch records when a patient is selected
                 });
             });
@@ -290,6 +307,7 @@
                 e.preventDefault(); // Prevent default form submission
 
                 const formData = new FormData(form);
+                // Note: Assuming meta tag for CSRF token exists in the main layout
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
                 try {

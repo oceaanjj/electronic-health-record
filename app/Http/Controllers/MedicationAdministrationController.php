@@ -15,6 +15,8 @@ class MedicationAdministrationController extends Controller
     {
         $patientId = $request->input('patient_id');
         $request->session()->put('selected_patient_id', $patientId);
+        // Clear the date when changing patients, so it defaults to today
+        $request->session()->forget('last_submitted_date');
         return redirect()->route('medication-administration');
     }
 
@@ -25,36 +27,36 @@ class MedicationAdministrationController extends Controller
         $administrations = collect();
 
         $patientId = $request->session()->get('selected_patient_id');
+        // Retrieve the last submitted date from the session, or default to today's date
+        $selectedDate = $request->session()->get('last_submitted_date', now()->toDateString());
 
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
 
             if ($selectedPatient) {
+                // Fetch administrations only for the selected date
                 $administrations = MedicationAdministration::where('patient_id', $patientId)
-                    ->orderBy('created_at', 'desc')
+                    ->where('date', $selectedDate)
+                    ->orderBy('time')
                     ->get();
             }
         }
 
-        return view('medication-administration', compact('patients', 'selectedPatient', 'administrations'));
+        return view('medication-administration', compact('patients', 'selectedPatient', 'administrations', 'selectedDate'));
     }
 
-    /**
-     * Stores or updates medication administration entries.
-     * Uses patient_id, date, and time as the unique key to determine if it's an update or create operation.
-     */
+
     public function store(Request $request)
     {
-        // Removed validation for 'id.*'
         $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'date' => 'required|date_format:Y-m-d',
+            'date' => 'required|date_format:Y-m-d', // Administration date
             'medication.*' => 'nullable|string',
             'dose.*' => 'nullable|string',
             'route.*' => 'nullable|string',
             'frequency.*' => 'nullable|string',
             'comments.*' => 'nullable|string',
-            'time.*' => 'nullable|string',
+            'time.*' => 'nullable|string', // Time is now part of the unique key
         ]);
 
         try {
@@ -71,7 +73,6 @@ class MedicationAdministrationController extends Controller
 
             for ($i = 0; $i < $count; $i++) {
                 $submittedTime = $request->time[$i] ?? null;
-
 
                 $allEmpty = empty($request->medication[$i]) &&
                     empty($request->dose[$i]) &&
@@ -117,6 +118,9 @@ class MedicationAdministrationController extends Controller
                     ['patient_id' => $request->patient_id]
                 );
             }
+
+            // ------ Store the successfully submitted date in the session 
+            session()->put('last_submitted_date', $administrationDate);
 
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Medication Administration data saved successfully!', 'created' => $createdCount, 'updated' => $updatedCount]);

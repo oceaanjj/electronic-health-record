@@ -70,6 +70,11 @@ class PatientController extends Controller
             'ethnicity' => 'nullable|string',
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
+            'room_no' => 'nullable|string',
+            'bed_no' => 'nullable|string',
+            'contact_name' => 'nullable|string',
+            'contact_relationship' => 'nullable|string',
+            'contact_number' => 'nullable|string',
         ]);
 
         try {
@@ -121,6 +126,11 @@ class PatientController extends Controller
             'ethnicity' => 'nullable|string',
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
+            'room_no' => 'nullable|string',
+            'bed_no' => 'nullable|string',
+            'contact_name' => 'nullable|string',
+            'contact_relationship' => 'nullable|string',
+            'contact_number' => 'nullable|string',
         ]);
 
         try {

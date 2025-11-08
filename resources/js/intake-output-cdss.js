@@ -164,10 +164,18 @@
         // Initial analysis on page load if patient is selected and fields are not empty
         const initialIntakeData = collectInputData();
         const initialAllEmpty = Object.values(initialIntakeData).every(val => val === '');
-        if (!initialAllEmpty && ioForm.querySelector('input[name="patient_id"]').value) {
+        const patientIdInput = ioForm.querySelector('input[name="patient_id"]');
+        const patientSelected = patientIdInput && patientIdInput.value;
+
+        if (!initialAllEmpty && patientSelected) {
             triggerAnalysis();
-        } else if (initialAllEmpty && ioForm.querySelector('input[name="patient_id"]').value) {
+        } else if (initialAllEmpty && patientSelected) {
             // If patient is selected but fields are empty, show "No Alerts"
+            if (typeof showDefaultNoAlertsLocal === 'function') {
+                showDefaultNoAlertsLocal(alertBoxDiv);
+            }
+        } else if (!patientSelected) {
+            // If no patient is selected, ensure "No Alerts" is displayed and unclickable
             if (typeof showDefaultNoAlertsLocal === 'function') {
                 showDefaultNoAlertsLocal(alertBoxDiv);
             }

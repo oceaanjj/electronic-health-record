@@ -37,7 +37,7 @@
     <h3>Patient's Home Medication</h3>
 
     @if($homeMedication->isEmpty())
-        <p>No Home Medication data available.</p>
+        <p class="no-data">No Home Medication data available.</p>
     @else
         <table>
             <thead>
@@ -68,7 +68,7 @@
     <h3>Changes in Medication During Hospitalization</h3>
 
     @if($changesInMedication->isEmpty())
-        <p>No Changes in Medication data available.</p>
+        <p class="no-data">No Changes in Medication data available.</p>
     @else
         <table>
             <thead>

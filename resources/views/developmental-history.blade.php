@@ -31,7 +31,7 @@
 
                 <center>
                     {{-- DEVELOPMENTAL HISTORY --}}
-                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
 
 
                         {{-- GROSS MOTOR --}}
@@ -52,7 +52,7 @@
 
 
                     {{-- FINE MOTOR --}}
-                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">FINE MOTOR</th>
                             <th
@@ -70,7 +70,7 @@
 
 
                     {{-- LANGUAGE --}}
-                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">LANGUAGE</th>
                             <th
@@ -87,7 +87,7 @@
                     </table>
 
                     {{-- COGNITIVE --}}
-                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">COGNITIVE</th>
                             <th
@@ -104,7 +104,7 @@
                     </table>
 
                     {{-- SOCIAL --}}
-                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">SOCIAL</th>
                             <th

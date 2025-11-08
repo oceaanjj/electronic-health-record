@@ -33,41 +33,7 @@ use App\Http\Controllers\NursingDiagnosisController;
 |
 */
 
-// --- ADD THESE NEW ROUTES FOR THE DPIE WIZARD ---
 
-Route::get('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'startDiagnosis'])
-     ->name('nursing-diagnosis.start');
-
-Route::post('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'storeDiagnosis'])
-     ->name('nursing-diagnosis.storeDiagnosis');
-
-Route::get('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])
-     ->name('nursing-diagnosis.showPlanning');
-
-Route::post('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])
-     ->name('nursing-diagnosis.storePlanning');
-
-Route::get('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])
-     ->name('nursing-diagnosis.showIntervention');
-
-Route::post('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])
-     ->name('nursing-diagnosis.storeIntervention');
-
-Route::get('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])
-     ->name('nursing-diagnosis.showEvaluation');
-
-Route::post('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])
-     ->name('nursing-diagnosis.storeEvaluation');
-
-// ===== START OF FIX =====
-// ADD THIS ROUTE for the real-time recommendations
-Route::post('/adpie/physical-exam/diagnosis/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])
-     ->name('nursing-diagnosis.analyze-field');
-// ===== END OF FIX =====
-
-// ... your other routes like showByPatient ...
-Route::get('/nursing-diagnosis/patient/{patientId}', [NursingDiagnosisController::class, 'showByPatient'])
-     ->name('nursing-diagnosis.showByPatient');
 
 
 // Home Page and Authentication Routes
@@ -268,5 +234,57 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         ->name('medication-administration.select-patient');
     Route::get('/medication-administration/records', [MedicationAdministrationController::class, 'getRecords'])
         ->name('medication-administration.get-records');
+
+
+
+
+
+
+
+
+
+
+    // --- ADD THESE NEW ROUTES FOR THE DPIE WIZARD ---
+
+    Route::get('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'startDiagnosis'])
+        ->name('nursing-diagnosis.start');
+
+    Route::post('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'storeDiagnosis'])
+        ->name('nursing-diagnosis.storeDiagnosis');
+
+    Route::get('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])
+        ->name('nursing-diagnosis.showPlanning');
+
+    Route::post('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])
+        ->name('nursing-diagnosis.storePlanning');
+
+    Route::get('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])
+        ->name('nursing-diagnosis.showIntervention');
+
+    Route::post('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])
+        ->name('nursing-diagnosis.storeIntervention');
+
+    Route::get('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])
+        ->name('nursing-diagnosis.showEvaluation');
+
+    Route::post('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])
+        ->name('nursing-diagnosis.storeEvaluation');
+
+    // ===== START OF FIX =====
+// ADD THIS ROUTE for the real-time recommendations
+    Route::post('/adpie/physical-exam/diagnosis/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])
+        ->name('nursing-diagnosis.analyze-field');
+    // ===== END OF FIX =====
+
+    // ... your other routes like showByPatient ...
+    Route::get('/nursing-diagnosis/patient/{patientId}', [NursingDiagnosisController::class, 'showByPatient'])
+        ->name('nursing-diagnosis.showByPatient');
+
+
+
+
+
+    //---- End of Protected Routes for Nurse ----
+
 
 });

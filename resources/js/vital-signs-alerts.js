@@ -166,7 +166,11 @@ function displayAlert(alertCell, alertData) {
         `;
         alertCell.onclick = null; // No modal for "No Findings"
     } else {
-        alertMessageContent = `<span >${alertData.alert}</span>`;
+        // Split the alerts string into an array
+        const alertsArray = alertData.alert.split('; ').filter(alert => alert.trim() !== '');
+        let bulletPoints = alertsArray.map(alert => `<li>${alert.trim()}</li>`).join('');
+        alertMessageContent = `<ul class="text-left list-disc list-inside">${bulletPoints}</ul>`;
+
         alertCell.onclick = () => {
             if (!alertCell.classList.contains("has-no-alert")) {
                 openAlertModal(alertData);
@@ -205,12 +209,17 @@ function openAlertModal(alertData) {
     const overlay = document.createElement("div");
     overlay.className = "alert-modal-overlay";
 
+    // Split the alerts string into an array for the modal
+    const alertsArray = alertData.alert.split('; ').filter(alert => alert.trim() !== '');
+    let bulletPoints = alertsArray.map(alert => `<li>${alert.trim()}</li>`).join('');
+    const modalContent = `<ul class="text-left list-disc list-inside">${bulletPoints}</ul>`;
+
     const modal = document.createElement("div");
     modal.className = "alert-modal fade-in";
     modal.innerHTML = `
         <button class=\"close-btn\">&times;</button>
         <h2>Alert Details</h2>
-        <p>${alertData.alert}</p>
+        ${modalContent}
     `;
 
     overlay.appendChild(modal);

@@ -13,6 +13,14 @@ class NursingDiagnosis extends Model
         'planning',
         'intervention',
         'evaluation',
+        
+        // ===== START OF CHANGE =====
+        // Add the new alert columns
+        'diagnosis_alert',
+        'planning_alert',
+        'intervention_alert',
+        'evaluation_alert',
+        // ===== END OF CHANGE =====
     ];
 
     public function physicalExam()
@@ -23,4 +31,4 @@ class NursingDiagnosis extends Model
     {
         return $this->belongsTo(IntakeAndOutput::class);
     }
-} 
+}

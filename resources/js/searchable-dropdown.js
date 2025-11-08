@@ -145,10 +145,31 @@ const initSearchableDropdown = () => {
     });
 
     const formFieldset = document.querySelector("#form-content-container fieldset");
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
+    const vitalInputs = document.querySelectorAll(".vital-input");
+    const cdssButton = document.querySelector(".cdss-form button[type='button']");
+    const submitButton = document.querySelector(".cdss-form button[type='submit']");
+    const alertBoxes = document.querySelectorAll(".alert-box");
 
     const disableForm = (isDisabled) => {
         if (formFieldset) {
             formFieldset.disabled = isDisabled;
+        }
+        if (dateSelector) {
+            dateSelector.disabled = isDisabled;
+        }
+        if (dayNoSelector) {
+            dayNoSelector.disabled = isDisabled;
+        }
+        vitalInputs.forEach(input => {
+            input.disabled = isDisabled;
+        });
+        if (cdssButton) {
+            cdssButton.disabled = isDisabled;
+        }
+        if (submitButton) {
+            submitButton.disabled = isDisabled;
         }
     };
 
@@ -159,6 +180,19 @@ const initSearchableDropdown = () => {
                 textarea.value = "";
             });
         }
+        vitalInputs.forEach(input => {
+            input.value = "";
+            input.style.backgroundColor = ""; // Clear background color
+            input.style.color = ""; // Clear text color
+        });
+        clearAlerts(); // Call clearAlerts when inputs are cleared
+    };
+
+    const clearAlerts = () => {
+        alertBoxes.forEach(alertBox => {
+            alertBox.innerHTML = '<span class="opacity-70 text-white font-semibold">NO ALERTS</span>';
+            alertBox.style.backgroundColor = ""; // Clear background color
+        });
     };
 
     // Initial state check

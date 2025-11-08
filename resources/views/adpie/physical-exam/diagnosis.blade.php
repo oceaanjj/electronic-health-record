@@ -33,10 +33,7 @@
 
         {{-- We know a patient is selected, so we don't need the 'disabled' attribute --}}
         <fieldset> 
-            <center>
-                
-                {{-- This is your original two-column layout --}}
-                <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
+        <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
                     {{-- Left Column: Diagnosis Input --}}
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
@@ -62,22 +59,19 @@
                         <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
                                 data-alert-for="diagnosis"
                                 style="border-top: none;"> {{-- Remove double border --}}
-                            <span class="opacity-70 text-white font-semibold">No Recommendations</span>
-                        </div>
-                    </div>
-
-                </div>
-            </center>
+                                                                                            <span class="opacity-70 text-white font-semibold">No Recommendations</span>
+                                                                                        </div>
+                                                                                    </div>                </div>
 
             {{-- Button Bar (COPIED FROM physical-exam.blade.php layout) --}}
             <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
-                <div>
-                    <a href="javascript:window.history.back()" class="button-default">
+                <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
+                    <a href="javascript:window.history.back()" class="button-default text-center">
                         GO BACK
                     </a>
                 </div>
                 
-                <div class="flex flex-col items-end space-y-2" style="min-width: 220px;">
+                <div class="flex flex-row items-center justify-end space-x-2">
                     <button type="submit" name="action" value="save_and_exit" class="button-default">
                         SUBMIT
                     </button>

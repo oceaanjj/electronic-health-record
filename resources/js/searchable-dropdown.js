@@ -151,6 +151,8 @@ const initSearchableDropdown = () => {
         const vitalInputs = document.querySelectorAll(".vital-input");
         const cdssButton = document.querySelector(".cdss-form button[type='button']");
         const submitButton = document.querySelector(".cdss-form button[type='submit']");
+        const insertButtons = document.querySelectorAll(".insert-btn"); // Select all insert buttons
+        const clearButtons = document.querySelectorAll(".clear-btn"); // Select all clear buttons
 
         if (formFieldset) {
             formFieldset.disabled = isDisabled;
@@ -170,6 +172,21 @@ const initSearchableDropdown = () => {
         if (submitButton) {
             submitButton.disabled = isDisabled;
         }
+
+        // Explicitly disable/enable insert and clear buttons
+        insertButtons.forEach(button => {
+            if (isDisabled) {
+                button.classList.add('disabled');
+                button.setAttribute('disabled', 'true');
+            } else {
+                button.classList.remove('disabled');
+                button.removeAttribute('disabled');
+            }
+        });
+
+        clearButtons.forEach(button => {
+            button.disabled = isDisabled;
+        });
     };
 
     const clearFormInputs = () => {
@@ -182,6 +199,25 @@ const initSearchableDropdown = () => {
                 }
                 input.style.backgroundColor = ""; // Clear background color
                 input.style.color = ""; // Clear text color
+            });
+
+            // Clear image previews and file inputs
+            const diagnosticPanels = formFieldset.querySelectorAll(".diagnostic-panel");
+            diagnosticPanels.forEach(panel => {
+                const type = panel.dataset.type;
+                const previewContainer = document.getElementById('preview-' + type);
+                if (previewContainer) {
+                    previewContainer.innerHTML = '';
+                }
+                const uploadedFilesContainer = document.getElementById('uploaded-files-' + type);
+                if (uploadedFilesContainer) {
+                    uploadedFilesContainer.innerHTML = '';
+                }
+                // Also clear the file input itself
+                const fileInput = document.getElementById('file-input-' + type);
+                if (fileInput) {
+                    fileInput.value = '';
+                }
             });
         }
         clearAlerts(); // Call clearAlerts when inputs are cleared

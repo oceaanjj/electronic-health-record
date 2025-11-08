@@ -74,14 +74,22 @@ function displayAdlAlert(alertCell, alertData) {
 }
 
 // Show loading state
-function showAlertLoading(alertCell) {
-    alertCell.innerHTML = `
-        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-loading">
+function showAlertLoading(alertCell) { // alertCell is the <td>
+    const alertBox = alertCell.querySelector('.alert-box');
+    if (!alertBox) return;
+
+    // Use a static, non-animated background color. Green is a neutral choice.
+    alertBox.className = "alert-box my-[3px] h-[53px] flex justify-center items-center alert-green";
+    
+    // The spinner itself has its own spin animation, which is desired.
+    // The inner div helps with centering and spacing.
+    alertBox.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
             <div class="loading-spinner"></div>
             <span>Analyzing...</span>
         </div>
     `;
-    delete alertCell.dataset.alerted; // Remove alerted flag while loading
+    delete alertCell.dataset.alerted;
 }
 
 // Show default "No Alerts" state

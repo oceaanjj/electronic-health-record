@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Patient Medical Reconciliation')
-
 @section('content')
 
     <div id="form-content-container">

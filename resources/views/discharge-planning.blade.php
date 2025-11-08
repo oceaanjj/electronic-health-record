@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Patient Discharge Planning')
-
 @section('content')
 
     {{-- PATIENT DROP-DOWN FORM --}}

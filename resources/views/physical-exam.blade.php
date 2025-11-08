@@ -162,8 +162,8 @@
 
                 <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
 
+                    <!-- cdss btn m -->
                     @if (isset($physicalExam))
-                        {{-- IF we are EDITING, link to the start of the wizard --}}
                         <a href="{{ route('nursing-diagnosis.start', $physicalExam->id) }}" class="button-default text-center">
                             CDSS
                         </a>

@@ -115,7 +115,6 @@
             </a>
         </li>
 
-
         <li>
             <a href="{{ route('lab-values.index') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
@@ -130,16 +129,16 @@
         </li>
 
         <li>
-            <a href="{{ route('diagnostics.index') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
+            <a href="{{ route('diagnostics.index') }}"
+                class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
-                         {{ request()->routeIs('diagnostics.show')
-    ? 'bg-dark-green text-white font-bold'
-    : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/diagnostics.png" alt="Lab Icon" class="w-6 h-6 transition duration-200">
+                         {{ request()->routeIs('diagnostics.index') ? 'bg-dark-green text-white font-bold' : 'hover:bg-hover hover:font-bold' }}">
+                <img src="./img/sidebar/lab-values.png" alt="Lab Icon" class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('diagnostics.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Diagnostics</span>
             </a>
         </li>
+
 
 
 

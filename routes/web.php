@@ -225,6 +225,18 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
 
 
+// Add this inside your auth middleware group
+Route::prefix('nursing-diagnosis')->name('nursing-diagnosis.')->group(function () {
+    Route::get('/start/{component}/{id}', [NursingDiagnosisController::class, 'startDiagnosis'])->name('start');
+    Route::post('/diagnosis/{component}/{id}', [NursingDiagnosisController::class, 'storeDiagnosis'])->name('storeDiagnosis');
+    Route::get('/planning/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])->name('showPlanning');
+    Route::post('/planning/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])->name('storePlanning');
+    Route::get('/intervention/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])->name('showIntervention');
+    Route::post('/intervention/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])->name('storeIntervention');
+    Route::get('/evaluation/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])->name('showEvaluation');
+    Route::post('/evaluation/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])->name('storeEvaluation');
+    Route::post('/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');
+});
 
 
     // --- D P I E (DYNAMIC REFACTOR) ---

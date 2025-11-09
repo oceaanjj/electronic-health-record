@@ -15,7 +15,7 @@ class PatientController extends Controller
 
     public function patients(): HasMany
     {
-        return $this->hasMany(Patient::class, 'user_id', 'id');
+        return $this->HasMany(Patient::class, 'user_id', 'id');
     }
 
 

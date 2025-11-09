@@ -59,6 +59,39 @@
                 </tr>
             </tbody>
         </table>
+
+        <h2 class="section-title" style="background-color: #a97c00ff;">ADPIE</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Nurse Assessment</th>
+                    <th>CDSS Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Diagnosis</td>
+                    <td>{{ $item->nurse_diagnosis ?? '-' }}</td>
+                    <td>{{ $item->cdss_diagnosis_recommendation ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Planning</td>
+                    <td>{{ $item->nurse_planning ?? '-' }}</td>
+                    <td>{{ $item->cdss_planning_recommendation ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Interventions</td>
+                    <td>{{ $item->nurse_interventions ?? '-' }}</td>
+                    <td>{{ $item->cdss_interventions_recommendation ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Evaluation</td>
+                    <td>{{ $item->nurse_evaluation ?? '-' }}</td>
+                    <td>{{ $item->cdss_evaluation_recommendation ?? '-' }}</td>
+                </tr>
+            </tbody>
+        </table>
     @else
         <p class="no-data">No Physical Exam data available.</p>
     @endif

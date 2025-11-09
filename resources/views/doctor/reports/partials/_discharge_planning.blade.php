@@ -4,7 +4,7 @@
     <h2 class="section-title">Discharge Planning</h2>
 
     @if($dischargePlanning->isEmpty())
-        <p>No Discharge Planning data available.</p>
+        <p class="no-data">No Discharge Planning data available.</p>
     @else
 
         @foreach($dischargePlanning as $item)

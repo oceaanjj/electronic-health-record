@@ -20,16 +20,16 @@
                 @forelse($presentIllness as $item)
                     <tr>
                         <td>Present Illness</td>
-                        <td>{{$item->condition_name ?? '-' }}</td>
-                        <td>{{ $item->description ?? '-' }}</td>
-                        <td>{{ $item->medication ?? '-' }}</td>
-                        <td>{{ $item->dosage ?? '-' }}</td>
-                        <td>{{ $item->side_effect ?? '-' }}</td>
-                        <td>{{ $item->comment ?? '-' }}</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td>**Present Illness**</td>
+                        <td>Present Illness</td>
                         <td colspan="6" class="no-data">No Present Illness data available.</td>
                     </tr>
                 @endforelse
@@ -38,16 +38,16 @@
                 @forelse($pastMedicalSurgical as $item)
                     <tr>
                         <td>Past Medical / Surgical</td>
-                        <td>{{$item->condition_name ?? '-' }}</td>
-                        <td>{{ $item->description ?? '-' }}</td>
-                        <td>{{ $item->medication ?? '-' }}</td>
-                        <td>{{ $item->dosage ?? '-' }}</td>
-                        <td>{{ $item->side_effect ?? '-' }}</td>
-                        <td>{{ $item->comment ?? '-' }}</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td>**Past Medical / Surgical**</td>
+                        <td>Past Medical / Surgical</td>
                         <td colspan="6" class="no-data">No Past Medical / Surgical data available.</td>
                     </tr>
                 @endforelse
@@ -57,16 +57,16 @@
                 @forelse($allergies as $item)
                     <tr>
                         <td>Known Conditions or Allergies</td>
-                        <td>{{$item->condition_name ?? '-' }}</td>
-                        <td>{{ $item->description ?? '-' }}</td>
-                        <td>{{ $item->medication ?? '-' }}</td>
-                        <td>{{ $item->dosage ?? '-' }}</td>
-                        <td>{{ $item->side_effect ?? '-' }}</td>
-                        <td>{{ $item->comment ?? '-' }}</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td>**Allergies**</td>
+                        <td>Allergies</td>
                         <td colspan="6" class="no-data">No Known Conditions or Allergies data available.</td>
                     </tr>
                 @endforelse
@@ -75,16 +75,16 @@
                 @forelse($vaccination as $item)
                     <tr>
                         <td>Vaccination</td>
-                        <td>{{$item->condition_name ?? '-' }}</td>
-                        <td>{{ $item->description ?? '-' }}</td>
-                        <td>{{ $item->medication ?? '-' }}</td>
-                        <td>{{ $item->dosage ?? '-' }}</td>
-                        <td>{{ $item->side_effect ?? '-' }}</td>
-                        <td>{{ $item->comment ?? '-' }}</td>
+                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->description ?? '' }}</td>
+                        <td>{{ $item->medication ?? '' }}</td>
+                        <td>{{ $item->dosage ?? '' }}</td>
+                        <td>{{ $item->side_effect ?? '' }}</td>
+                        <td>{{ $item->comment ?? '' }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td>**Vaccination**</td>
+                        <td>Vaccination</td>
                         <td colspan="6" class="no-data">No Vaccination data available.</td>
                     </tr>
                 @endforelse

@@ -70,6 +70,11 @@ class PatientController extends Controller
             'ethnicity' => 'nullable|string',
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
+            'room_no' => 'nullable|string',
+            'bed_no' => 'nullable|string',
+            'contact_name' => 'nullable|string',
+            'contact_relationship' => 'nullable|string',
+            'contact_number' => 'nullable|string',
         ]);
 
         try {
@@ -121,6 +126,11 @@ class PatientController extends Controller
             'ethnicity' => 'nullable|string',
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
+            'room_no' => 'nullable|string',
+            'bed_no' => 'nullable|string',
+            'contact_name' => 'nullable|string',
+            'contact_relationship' => 'nullable|string',
+            'contact_number' => 'nullable|string',
         ]);
 
         try {
@@ -151,13 +161,13 @@ class PatientController extends Controller
 
             AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-            return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
+            return response()->json(['success' => true, 'message' => 'Patient set to inactive successfully', 'patient' => $patient->fresh()]);
 
         } catch (ModelNotFoundException $e) {
-            abort(404, 'Patient not found or already inactive');
+            return response()->json(['success' => false, 'message' => 'Patient not found or already inactive'], 404);
         } catch (\Exception $e) {
             Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
-            return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
+            return response()->json(['success' => false, 'message' => 'An error occurred while deactivating the patient.'], 500);
         }
     }
 
@@ -171,12 +181,12 @@ class PatientController extends Controller
             // Log patient activation
             AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
 
-            return redirect()->route('patients.index')->with('success', 'Patient set to active successfully');
+            return response()->json(['success' => true, 'message' => 'Patient set to active successfully', 'patient' => $patient->fresh()]);
         } catch (ModelNotFoundException $e) {
-            abort(404, 'Patient not found');
+            return response()->json(['success' => false, 'message' => 'Patient not found'], 404);
         } catch (\Exception $e) {
             Log::error('Error in PatientController@activate: ' . $e->getMessage());
-            return redirect()->route('patients.index')->with('error', 'An error occurred while activating the patient.');
+            return response()->json(['success' => false, 'message' => 'An error occurred while activating the patient.'], 500);
         }
     }
 

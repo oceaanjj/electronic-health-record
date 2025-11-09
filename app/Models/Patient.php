@@ -41,6 +41,11 @@ class Patient extends Model
         'ethnicity',
         'chief_complaints',
         'admission_date',
+        'room_no',
+        'bed_no',
+        'contact_name',
+        'contact_relationship',
+        'contact_number',
 
         'user_id',
     ];

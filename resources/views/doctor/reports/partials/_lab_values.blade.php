@@ -1,10 +1,10 @@
 <div class="page-break"></div>
 
-<div>
+<div class="section">
     <h2 class="section-title">Lab Values</h2>
 
     @if($labValues->isEmpty())
-        <p>No Lab Values data available.</p>
+        <p class="no-data">No Lab Values data available.</p>
     @else
         @foreach($labValues as $item)
             <table>

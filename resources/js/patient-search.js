@@ -1,53 +1,114 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('patientSearchInput');
-    const patientTableBody = document.getElementById('patientTableBody');
+    const searchInput = document.getElementById('patient-search');
+    const patientTableBody = document.querySelector('.w-full tbody');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    if (searchInput && patientTableBody) {
-        // Function to fetch and display patients
-        const fetchAndDisplayPatients = (filter) => {
-            if (filter.length === 0) {
-                patientTableBody.innerHTML = '<tr><td colspan="3">Please enter a patient ID or Name.</td></tr>'; // Display message when search is empty
-                return;
-            }
+    // Function to render patient rows
+    function renderPatientRows(patients) {
+        patientTableBody.innerHTML = ''; // Clear existing rows
 
-            fetch(`/patients/live-search?input=${filter}`)
-                .then(response => response.json())
-                .then(data => {
-                    patientTableBody.innerHTML = ''; // Clear existing rows
-
-                    if (data.length > 0) {
-                        data.forEach(patient => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${patient.patient_id}</td>
-                                <td>${patient.name}</td>
-                                <td>${patient.age}</td>
-                            `;
-                            patientTableBody.appendChild(row);
-                        });
-                    } else {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `<td colspan="3">No patient found matching "${filter}" in your records.</td>`;
-                        patientTableBody.appendChild(row);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching patient data:', error);
-                    patientTableBody.innerHTML = `<tr><td colspan="3">Error loading patients.</td></tr>`;
-                });
-        };
-
-        // Initial load if there's a pre-filled search input (e.g., from a previous search)
-        if (searchInput.value.length > 0) {
-            fetchAndDisplayPatients(searchInput.value);
+        if (patients.length > 0) {
+            patients.forEach(patient => {
+                const row = `
+                    <tr class="${patient.deleted_at ? 'bg-red-100 text-red-700' : 'bg-beige'} hover:bg-gray-100" data-id="${patient.patient_id}">
+                        <td class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] text-center border-r-2">${patient.patient_id}</td>
+                        <td class="p-3 border-b-2 border-line-brown/70 border-r-2">
+                            <a href="/patients/${patient.patient_id}" class="p-3 font-creato-black font-bold text-brown text-[13px]">
+                                ${patient.name}
+                            </a>
+                        </td>
+                        <td class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] border-r-2 text-center">${patient.age}</td>
+                        <td class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] border-r-2 text-center">${patient.sex}</td>
+                        <td class="p-3 border-b-2 border-line-brown/70 whitespace-nowrap text-center">
+                            ${patient.deleted_at ?
+                                `<button type="button" class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status" data-patient-id="${patient.patient_id}" data-action="activate">SET ACTIVE</button>`
+                                :
+                                `<a href="/patients/${patient.patient_id}/edit" class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
+                                <button type="button" class="inline-block bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status" data-patient-id="${patient.patient_id}" data-action="deactivate">SET INACTIVE</button>`
+                            }
+                        </td>
+                    </tr>
+                `;
+                patientTableBody.insertAdjacentHTML('beforeend', row);
+            });
         } else {
-            // If the input is empty on load, show the initial message
-            patientTableBody.innerHTML = '<tr><td colspan="3">Please enter a patient ID or Name.</td></tr>';
+            patientTableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="p-4 text-center text-gray-500">
+                        No patients found.
+                    </td>
+                </tr>
+            `;
         }
+    }
 
-        // Event listener for input changes
+    // Live search functionality
+    if (searchInput && patientTableBody) {
         searchInput.addEventListener('input', function() {
-            fetchAndDisplayPatients(searchInput.value);
+            const searchTerm = this.value.trim();
+            fetch(`/patients/live-search?input=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.json())
+                .then(patients => {
+                    renderPatientRows(patients);
+                })
+                .catch(error => console.error('Error fetching patients:', error));
         });
     }
+
+    // Activate/Deactivate functionality
+    patientTableBody.addEventListener('click', function(event) {
+        const target = event.target;
+
+        if (target.classList.contains('js-toggle-patient-status')) {
+            event.preventDefault();
+
+            const patientId = target.dataset.patientId;
+            const action = target.dataset.action; // 'activate' or 'deactivate'
+            const url = `/patients/${patientId}/${action}`;
+            const method = action === 'deactivate' ? 'DELETE' : 'POST';
+
+            fetch(url, {
+                method: 'POST', // Always POST for Laravel routes, actual method is spoofed
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-HTTP-Method-Override': method // Spoof DELETE for deactivation
+                },
+                body: JSON.stringify({}) // Empty body for POST/DELETE requests
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.patient) {
+                    const row = target.closest('tr');
+                    if (row) {
+                        // Update row styling
+                        if (data.patient.deleted_at) { // Patient is now inactive
+                            row.classList.remove('bg-beige');
+                            row.classList.add('bg-red-100', 'text-red-700');
+                        } else { // Patient is now active
+                            row.classList.remove('bg-red-100', 'text-red-700');
+                            row.classList.add('bg-beige');
+                        }
+
+                        // Update action buttons
+                        const actionsCell = row.querySelector('td:last-child'); // Assuming actions are in the last td
+                        if (actionsCell) {
+                            actionsCell.innerHTML = `
+                                ${data.patient.deleted_at ?
+                                    `<button type="button" class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status" data-patient-id="${data.patient.patient_id}" data-action="activate">SET ACTIVE</button>`
+                                    :
+                                    `<a href="/patients/${data.patient.patient_id}/edit" class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
+                                    <button type="button" class="inline-block bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status" data-patient-id="${data.patient.patient_id}" data-action="deactivate">SET INACTIVE</button>`
+                                }
+                            `;
+                        }
+                    }
+                    console.log(data.message);
+                } else {
+                    console.error('Error:', data.message);
+                }
+            })
+            .catch(error => console.error('Error toggling patient status:', error));
+        }
+    });
 });

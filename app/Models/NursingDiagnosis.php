@@ -9,11 +9,12 @@ class NursingDiagnosis extends Model
     protected $fillable = [
         'physical_exam_id',
         'intake_and_output_id',
+        'patient_id', // <-- ADD THIS LINE
         'diagnosis',
         'planning',
         'intervention',
         'evaluation',
-        
+
         // ===== START OF CHANGE =====
         // Add the new alert columns
         'diagnosis_alert',
@@ -31,5 +32,11 @@ class NursingDiagnosis extends Model
     public function intakeAndOutput()
     {
         return $this->belongsTo(IntakeAndOutput::class);
+    }
+
+    // --- ADD THIS RELATIONSHIP ---
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
     }
 }

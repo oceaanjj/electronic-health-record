@@ -168,7 +168,6 @@
                             class="button-default text-center">
                             CDSS
                         </a>
-                    @else
                     @endif
 
                     <button type="submit" class="button-default">SUBMIT</button>

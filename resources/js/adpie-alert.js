@@ -14,11 +14,9 @@ window.initializeCdssForForm = function (form) {
         .querySelector('meta[name="csrf-token"]')
         ?.getAttribute("content");
 
-    // --- ADD THIS LINE ---
     const component = form.dataset.component;
 
     if (!analyzeUrl || !csrfToken || !component) {
-        // --- UPDATE THIS LINE ---
         console.error(
             'CDSS form missing "data-analyze-url", "data-component", or CSRF token not found.',
             form
@@ -58,7 +56,7 @@ window.initializeCdssForForm = function (form) {
                         fieldName,
                         finding,
                         patientId,
-                        component, // --- ADD THIS ---
+                        component,
                         analyzeUrl,
                         csrfToken
                     );
@@ -106,7 +104,7 @@ document.addEventListener("cdss:form-reloaded", (event) => {
                         fieldName,
                         finding,
                         patientId,
-                        component, // --- ADD THIS ---
+                        component,
                         analyzeUrl,
                         csrfToken
                     );
@@ -123,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Initialize the typing event listeners
         window.initializeCdssForForm(form);
 
-        // --- THIS IS THE FIX ---
         // Trigger analysis for any data already in the form
         window.triggerInitialCdssAnalysis(form);
     });
@@ -138,6 +135,11 @@ async function analyzeField(
     url,
     token
 ) {
+    // --- DEBUGGING LINE ---
+    console.log(
+        `[CDSS] Analyzing field: ${fieldName} for component: ${component}`
+    );
+
     const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
     if (!alertCell) return;
 
@@ -162,11 +164,11 @@ async function analyzeField(
         });
 
         const responseText = await response.text();
-        console.log("Raw server response:", responseText);
+        console.log("[CDSS] Raw server response:", responseText);
 
         if (!response.ok) {
             console.error(
-                "Server returned non-OK response:",
+                "[CDSS] Server returned non-OK response:",
                 response.status,
                 responseText
             );
@@ -194,7 +196,7 @@ async function analyzeField(
             alertData = JSON.parse(responseText);
         } catch (jsonError) {
             console.error(
-                "Failed to parse JSON from response:",
+                "[CDSS] Failed to parse JSON from response:",
                 jsonError,
                 responseText
             );
@@ -205,7 +207,7 @@ async function analyzeField(
             displayAlert(alertCell, alertData);
         }, 150);
     } catch (error) {
-        console.error("CDSS analysis failed:", error);
+        console.error("[CDSS] analysis failed:", error);
         alertCell.innerHTML = `
       <div class="alert-box alert-red fade-in" style="height:90px;margin:2px;">
         <span class="alert-message">Error: ${error.message}</span>
@@ -227,6 +229,7 @@ function displayAlert(alertCell, alertData) {
     if (alertData.level === "CRITICAL") colorClass = "alert-red";
     else if (alertData.level === "WARNING") colorClass = "alert-orange";
     else if (alertData.level === "INFO") colorClass = "alert-green";
+    else if (alertData.level === "recommendation") colorClass = "alert-green"; // Added this
 
     alertBox.classList.add(colorClass);
 

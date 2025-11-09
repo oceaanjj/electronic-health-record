@@ -178,7 +178,7 @@
     @vite([
         'resources/js/patient-loader.js',
         'resources/js/date-day-loader.js',
-        'resources/js/init-searchable-dropdown.js',
+        'resources/js/searchable-dropdown.js',
         'resources/js/page-initializer.js',
         'resources/js/act-of-daily-living-alerts.js'
     ])
@@ -187,7 +187,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.pageInitializers = [
-                window.initializeSearchableDropdown,
+                window.initSearchableDropdown, // !!!!!
                 window.initializeDateDayLoader,
                 window.initializeAdlAlerts // This is the new, specific initializer
             ];

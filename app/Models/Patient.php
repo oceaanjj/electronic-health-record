@@ -106,4 +106,30 @@ class Patient extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    /**
+     * Determine the age group of the patient.
+     * This is a placeholder and can be expanded for more precise age grouping.
+     *
+     * @return string
+     */
+    public function getAgeGroup(): string
+    {
+        $age = $this->age; // Assuming 'age' attribute is available and an integer
+
+        if ($age === null) {
+            return 'unknown';
+        }
+
+        if ($age <= 0.083) { // Roughly 0-1 month
+            return 'neonate';
+        } elseif ($age >= 0.084 && $age <= 2) { // 1 month to 2 years
+            return 'infant';
+        } elseif ($age > 2 && $age <= 12) { // 2 years to 12 years
+            return 'child';
+        } elseif ($age > 12 && $age <= 18) { // 12 years to 18 years
+            return 'adolescent';
+        } else {
+            return 'adult'; // For ages above 18
+        }
+    }
 }

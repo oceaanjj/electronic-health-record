@@ -20,6 +20,7 @@ class NursingDiagnosis extends Model
         'planning_alert',
         'intervention_alert',
         'evaluation_alert',
+        'rule_file_path',
         // ===== END OF CHANGE =====
     ];
 

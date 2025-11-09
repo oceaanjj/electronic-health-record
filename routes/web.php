@@ -246,40 +246,37 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
     // --- D P I E---
 
+    // ADPIE Step 1: Diagnosis (Start and Store)
     Route::get('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'startDiagnosis'])
         ->name('nursing-diagnosis.start');
-
     Route::post('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'storeDiagnosis'])
         ->name('nursing-diagnosis.storeDiagnosis');
 
+    // ADPIE Step 2: Planning (Show and Store)
     Route::get('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])
         ->name('nursing-diagnosis.showPlanning');
-
     Route::post('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])
         ->name('nursing-diagnosis.storePlanning');
 
+    // ADPIE Step 3: Intervention (Show and Store)
     Route::get('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])
         ->name('nursing-diagnosis.showIntervention');
-
     Route::post('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])
         ->name('nursing-diagnosis.storeIntervention');
 
+    // ADPIE Step 4: Evaluation (Show and Store)
     Route::get('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])
         ->name('nursing-diagnosis.showEvaluation');
-
     Route::post('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])
         ->name('nursing-diagnosis.storeEvaluation');
 
-    // ===== START OF FIX =====
-// ADD THIS ROUTE for the real-time recommendations
-    Route::post('/adpie/physical-exam/diagnosis/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])
+    // Real-Time Analysis Route (The one we just fixed)
+    Route::post('/adpie/analyze-step', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])
         ->name('nursing-diagnosis.analyze-field');
-    // ===== END OF FIX =====
 
-    // ... your other routes like showByPatient ...
+    // Show all DPIE for a specific patient
     Route::get('/nursing-diagnosis/patient/{patientId}', [NursingDiagnosisController::class, 'showByPatient'])
         ->name('nursing-diagnosis.showByPatient');
-
 
 
 

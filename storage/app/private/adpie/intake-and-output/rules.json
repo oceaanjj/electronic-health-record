@@ -1,0 +1,22 @@
+{
+    "rules": [
+        {
+            "name": "Fluid Volume Deficit",
+            "description": "Alerts if CDSS indicates negative fluid balance and nurse input mentions 'dehydration' or 'poor skin turgor'.",
+            "conditions": {
+                "cdss_alerts": ["negative_fluid_balance"],
+                "nurse_input_keywords": ["dehydration", "dry mucous membranes", "poor skin turgor", "decreased urine output"]
+            },
+            "generated_alert": "Risk for fluid volume deficit. Encourage oral intake or administer IV fluids as ordered."
+        },
+        {
+            "name": "Fluid Volume Excess",
+            "description": "Alerts if CDSS indicates positive fluid balance and nurse input mentions 'edema' or 'crackles'.",
+            "conditions": {
+                "cdss_alerts": ["positive_fluid_balance"],
+                "nurse_input_keywords": ["edema", "swelling", "crackles", "shortness of breath"]
+            },
+            "generated_alert": "Risk for fluid volume excess. Monitor for signs of fluid overload and administer diuretics as prescribed."
+        }
+    ]
+}

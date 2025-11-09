@@ -1,0 +1,22 @@
+{
+    "rules": [
+        {
+            "name": "Impaired Mobility",
+            "description": "Alerts if CDSS indicates impaired mobility and nurse input mentions 'falls' or 'difficulty walking'.",
+            "conditions": {
+                "cdss_alerts": ["mobility_impaired"],
+                "nurse_input_keywords": ["falls", "difficulty walking", "weakness", "unsteady gait"]
+            },
+            "generated_alert": "Risk for falls due to impaired mobility. Implement fall precautions and assist with ambulation."
+        },
+        {
+            "name": "Self-Care Deficit",
+            "description": "Alerts if CDSS indicates self-care deficit and nurse input mentions 'unable to bathe' or 'needs assistance feeding'.",
+            "conditions": {
+                "cdss_alerts": ["self_care_deficit"],
+                "nurse_input_keywords": ["unable to bathe", "needs assistance feeding", "difficulty dressing", "poor hygiene"]
+            },
+            "generated_alert": "Self-care deficit identified. Provide assistance with activities of daily living and encourage independence where possible."
+        }
+    ]
+}

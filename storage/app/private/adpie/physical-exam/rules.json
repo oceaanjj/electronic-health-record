@@ -1,0 +1,55 @@
+{
+    "rules": [
+        {
+            "name": "Abnormal Skin Condition",
+            "description": "Alerts if skin condition is noted as abnormal and nurse input mentions 'wound' or 'redness'.",
+            "conditions": {
+                "cdss_alerts": ["skin_condition_abnormal"],
+                "nurse_input_keywords": ["wound", "redness", "lesion"]
+            },
+            "generated_alert": "Potential for impaired skin integrity. Assess wound care needs."
+        },
+        {
+            "name": "Neurological Deficit",
+            "description": "Alerts if CDSS indicates neurological deficit and nurse input mentions 'confusion' or 'weakness'.",
+            "conditions": {
+                "cdss_alerts": ["neurological_deficit"],
+                "nurse_input_keywords": [
+                    "confusion",
+                    "disoriented",
+                    "weakness",
+                    "numbness"
+                ]
+            },
+            "generated_alert": "Neurological deficit identified. Monitor closely for changes in mental status or motor function."
+        },
+        {
+            "name": "Cardiovascular Risk",
+            "description": "Alerts if cardiovascular CDSS alert is present and nurse input mentions 'chest pain' or 'palpitations'.",
+            "conditions": {
+                "cdss_alerts": ["cardiovascular_abnormal"],
+                "nurse_input_keywords": [
+                    "chest pain",
+                    "palpitations",
+                    "shortness of breath",
+                    "edema"
+                ]
+            },
+            "generated_alert": "Cardiovascular risk identified. Assess cardiac status and vital signs frequently."
+        },
+        {
+            "name": "Oral Hygiene Deficit",
+            "description": "Alerts if oral condition CDSS alert is present and nurse input mentions 'poor hygiene' or 'difficulty eating'.",
+            "conditions": {
+                "cdss_alerts": ["oral_condition_poor"],
+                "nurse_input_keywords": [
+                    "poor hygiene",
+                    "difficulty eating",
+                    "gingivitis",
+                    "dental pain"
+                ]
+            },
+            "generated_alert": "Oral hygiene deficit. Implement oral care protocol and consult dentistry if needed."
+        }
+    ]
+}

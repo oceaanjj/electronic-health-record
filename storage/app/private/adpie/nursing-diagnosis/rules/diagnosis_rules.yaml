@@ -1,0 +1,13 @@
+diagnosis:
+  - keywords: ["pain"]
+    alert: "Recommend pain assessment (e.g., PQRST, 0-10 scale)."
+    severity: "INFO"
+  - keywords: ["risk for"]
+    alert: "Ensure preventative interventions are planned."
+    severity: "WARNING"
+  - keywords: ["impaired", "skin"]
+    alert: "Recommend Braden Scale assessment for skin integrity."
+    severity: "WARNING"
+  - keywords: ["fluid volume"]
+    alert: "Monitor Intake & Output (I&O) closely. Check daily weights."
+    severity: "INFO"

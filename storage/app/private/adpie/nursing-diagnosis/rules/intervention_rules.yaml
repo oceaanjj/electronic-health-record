@@ -1,0 +1,10 @@
+intervention:
+  - keywords: ["monitor"]
+    alert: "Specify frequency of monitoring (e.g., 'Monitor vital signs q4h')."
+    severity: "INFO"
+  - keywords: ["assess"]
+    alert: "Be specific: 'Assess lung sounds' instead of 'Assess patient'."
+    severity: "INFO"
+  - keywords: ["educate"]
+    alert: "Include 'teach-back' method to confirm understanding."
+    severity: "INFO"

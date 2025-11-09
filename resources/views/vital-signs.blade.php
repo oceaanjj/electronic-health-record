@@ -132,39 +132,41 @@
                                         {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
                                     </th>
 
-                                    {{-- TEMPERATURE --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" step="0.1" name="temperature_{{ $time }}" placeholder="temperature"
-                                            value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="temperature" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
-                                    </td>
+                                  {{-- TEMPERATURE --}}
+                                <td class="bg-beige {{ $borderClass }}">
+                                    <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
+                                        value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
+                                        class="cdss-input vital-input h-[60px]" data-field-name="temperature" data-time="{{ $time }}">
+                                </td>
 
-                                    {{-- HR --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" name="hr_{{ $time }}" placeholder="bpm"
-                                            value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="hr" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
-                                    </td>
+                                {{-- HR --}}
+                                <td class="bg-beige {{ $borderClass }}">
+                                    <input type="text" name="hr_{{ $time }}" placeholder="bpm"
+                                        value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
+                                        class="cdss-input vital-input h-[60px]" data-field-name="hr" data-time="{{ $time }}">
+                                </td>
 
-                                    {{-- RR --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" name="rr_{{ $time }}" placeholder="bpm"
-                                            value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="rr" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
-                                    </td>
+                                {{-- RR --}}
+                                <td class="bg-beige {{ $borderClass }}">
+                                    <input type="text" name="rr_{{ $time }}" placeholder="bpm"
+                                        value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
+                                        class="cdss-input vital-input h-[60px]" data-field-name="rr" data-time="{{ $time }}">
+                                </td>
 
-                                    {{-- BP --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" name="bp_{{ $time }}" placeholder="mmHg"
-                                            value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="bp" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
-                                    </td>
+                                {{-- BP --}}
+                                <td class="bg-beige {{ $borderClass }}">
+                                    <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
+                                        value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
+                                        class="cdss-input vital-input h-[60px]" data-field-name="bp" data-time="{{ $time }}">
+                                </td>
 
-                                    {{-- SpO₂ --}}
-                                    <td class="bg-beige {{ $borderClass }}">
-                                        <input type="number" name="spo2_{{ $time }}" placeholder="%"
-                                            value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                            class="cdss-input vital-input h-[60px]" data-field-name="spo2" data-time="{{ $time }}" pattern="\d*" inputmode="numeric">
+                                {{-- SpO₂ --}}
+                                <td class="bg-beige {{ $borderClass }}">
+                                    <input type="text" name="spo2_{{ $time }}" placeholder="%"
+                                        value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
+                                        class="cdss-input vital-input h-[60px]" data-field-name="spo2" data-time="{{ $time }}">
+                                </td>
+
                                 </tr>
                             @endforeach
 

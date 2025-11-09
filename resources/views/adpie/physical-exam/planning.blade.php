@@ -88,5 +88,5 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js'])
+    @vite(['resources/js/adpie-alert.js'])
 @endpush

@@ -4,19 +4,33 @@
 
 @section('content')
 
-    <!-- ✅ Success Message -->
-    @if (session('success'))
-        <div id="success-message" style="
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        ">
-            {{ session('success') }}
-        </div>
+    <!-- SweetAlert  -->
+    @if(session('sweetalert'))
+        @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    const opts = @json(session('sweetalert'));
+                    if (typeof showSuccess === 'function' && opts.type === 'success') {
+                        showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
+                    } else if (typeof showError === 'function' && opts.type === 'error') {
+                        showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
+                    } else if (typeof showWarning === 'function' && opts.type === 'warning') {
+                        showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
+                    } else if (typeof showInfo === 'function' && opts.type === 'info') {
+                        showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
+                    } else if (typeof Swal === 'function') {
+                        Swal.fire({
+                            icon: opts.type || 'info',
+                            title: opts.title || '',
+                            text: opts.text || '',
+                            timer: opts.timer || 2000
+                        });
+                    }
+                }, 100); // Small delay to ensure page is fully initialized
+            });
+        </script>
+        @endpush
     @endif
 
     <!-- Dashboard Stats -->

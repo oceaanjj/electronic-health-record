@@ -25,6 +25,12 @@ use App\Http\Controllers\Doctor\ReportController;
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
 
+// Route ko lang for viewing my sweetalerts
+// Route::get('/sweetalert-test', function() {
+//     return view('sweetalert-test-debug');
+// })->name('sweetalert.test');
+
+
 // -- UPDATED LOGIN ROUTES ---
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');

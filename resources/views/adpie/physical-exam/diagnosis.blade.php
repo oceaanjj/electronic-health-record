@@ -51,7 +51,7 @@
 
             <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
                 <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
-                    <a href="javascript:window.history.back()" class="button-default text-center">
+                    <a href="{{ route('physical-exam.index') }}" class="button-default text-center">
                         GO BACK
                     </a>
                 </div>

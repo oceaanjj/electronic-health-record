@@ -129,6 +129,22 @@
             animation: fadeIn 0.3s ease-in-out;
         }
 
+        .toggle-password, 
+        .toggle-password i {
+            height: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .eye-icon {
+            height: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+
+
+
         @keyframes fadeIn {
             from {
                 opacity: 0;

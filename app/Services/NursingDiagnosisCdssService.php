@@ -9,7 +9,7 @@ use App\Services\LabValuesCdssService;
 use App\Services\VitalCdssService;
 use App\Services\IntakeAndOutputCdssService;
 use App\Services\ActOfDailyLivingCdssService;
-use App\Models\Patient; // Assuming Patient model is needed to get ageGroup for LabValues
+use App\Models\Patient;
 
 class NursingDiagnosisCdssService
 {
@@ -18,7 +18,12 @@ class NursingDiagnosisCdssService
     private $vitalCdssService;
     private $intakeAndOutputCdssService;
     private $actOfDailyLivingCdssService;
-    private $adpieRules; // New property for ADPIE rules
+
+    /**
+     * @var array This will act as a cache for loaded rules.
+     * e.g., $adpieRules['physical-exam']['diagnosis']
+     */
+    private $adpieRules;
 
     public function __construct(
         PhysicalExamCdssService $physicalExamCdssService,
@@ -32,37 +37,53 @@ class NursingDiagnosisCdssService
         $this->vitalCdssService = $vitalCdssService;
         $this->intakeAndOutputCdssService = $intakeAndOutputCdssService;
         $this->actOfDailyLivingCdssService = $actOfDailyLivingCdssService;
-        $this->loadAdpieRules(); // Load ADPIE rules on construction
+
+        // --- We no longer load rules on construction ---
+        $this->adpieRules = [];
     }
 
     /**
-     * Loads and merges all YAML rule files for ADPIE steps.
+     * Loads and caches rules for a specific component.
      */
-    private function loadAdpieRules()
+    private function getRulesForComponent(string $componentName)
     {
-        $this->adpieRules = [];
-        $rulesDirectory = storage_path('app/private/adpie/nursing-diagnosis/rules');
+        // 1. Check if rules are already loaded and cached
+        if (isset($this->adpieRules[$componentName])) {
+            return $this->adpieRules[$componentName];
+        }
+
+        // 2. Build the dynamic path based on the component name
+        $rulesDirectory = storage_path('app/private/adpie/' . $componentName . '/rules');
 
         if (!File::isDirectory($rulesDirectory)) {
-            error_log("ADPIE rules directory not found at: " . $rulesDirectory);
-            return;
+            error_log("ADPIE rules directory not found for component: " . $componentName);
+            $this->adpieRules[$componentName] = []; // Cache empty array to prevent re-reads
+            return [];
         }
 
         $files = File::files($rulesDirectory);
+        $mergedRules = [];
 
         foreach ($files as $file) {
             if (in_array($file->getExtension(), ['yaml', 'yml'])) {
                 try {
                     $parsedYaml = Yaml::parseFile($file->getPathname());
                     if (is_array($parsedYaml)) {
-                        $this->adpieRules = array_merge($this->adpieRules, $parsedYaml);
+                        // We merge based on the file name (e.g., diagnosis.yaml, planning.yaml)
+                        $stepName = $file->getFilenameWithoutExtension(); // "diagnosis", "planning", etc.
+                        $mergedRules[$stepName] = $parsedYaml[$stepName] ?? $parsedYaml;
                     }
                 } catch (\Exception $e) {
                     error_log("Failed to parse ADPIE YAML file: " . $file->getPathname() . " - " . $e->getMessage());
                 }
             }
         }
+
+        // 3. Cache the merged rules for this component and return them
+        $this->adpieRules[$componentName] = $mergedRules;
+        return $mergedRules;
     }
+
 
     // --- HELPER FUNCTION ---
     private function createAlert($recommendations)
@@ -85,15 +106,15 @@ class NursingDiagnosisCdssService
 
     /**
      * Runs analysis for a single ADPIE finding against its rules.
-     *
-     * @param string $finding The text input from the nurse.
-     * @param array $rules The set of rules for that specific ADPIE step.
-     * @return array An array of recommendations.
      */
     private function runAdpieAnalysis(string $finding, array $rules): array
     {
         $findingLower = strtolower(trim($finding));
         $recommendations = [];
+
+        if (empty($rules)) {
+            return [];
+        }
 
         foreach ($rules as $rule) {
             $match = true;
@@ -106,10 +127,8 @@ class NursingDiagnosisCdssService
             }
 
             if (isset($rule['negate']) && $rule['negate'] === true) {
-                // If negate is true, the rule matches if keywords are NOT found
                 $match = !$allKeywordsFound;
             } else {
-                // Otherwise, the rule matches if keywords ARE found
                 $match = $allKeywordsFound;
             }
 
@@ -121,13 +140,8 @@ class NursingDiagnosisCdssService
     }
 
     /**
-     * Generates comprehensive nursing diagnosis rules based on component alerts and nurse input.
-     *
-     * @param string $componentName The name of the component (e.g., 'physical-exam').
-     * @param array $componentData Data from the component (e.g., physical exam findings, lab values).
-     * @param array $nurseInput ADPIE input from the nurse for the specific component.
-     * @param Patient $patient The patient model instance.
-     * @return array An array containing the generated alerts and the path to the saved rule file.
+     * Generates comprehensive nursing diagnosis rules (This is the 'on-submit' logic)
+     * This function is already component-aware.
      */
     public function generateNursingDiagnosisRules(string $componentName, array $componentData, array $nurseInput, Patient $patient)
     {
@@ -144,8 +158,7 @@ class NursingDiagnosisCdssService
                 }
                 break;
             case 'lab-values':
-                // Lab values require specific parameter and age group
-                $ageGroup = $patient->getAgeGroup(); // Assuming a method to get age group from patient
+                $ageGroup = $patient->getAgeGroup(); // Assuming a method to get age group
                 foreach ($componentData as $param => $value) {
                     $alert = $this->labValuesCdssService->checkLabResult($param, $value, $ageGroup);
                     if ($alert['severity'] !== LabValuesCdssService::NONE) {
@@ -174,7 +187,6 @@ class NursingDiagnosisCdssService
                 }
                 break;
             default:
-                // Handle unknown component or log an error
                 break;
         }
 
@@ -183,7 +195,7 @@ class NursingDiagnosisCdssService
             'component' => $componentName,
             'patient_id' => $patient->id,
             'component_alerts' => $allAlerts,
-            'nurse_input' => $nurseInput, // This will contain diagnosis, planning, intervention, evaluation
+            'nurse_input' => $nurseInput,
             'generated_at' => now()->toDateTimeString(),
         ];
 
@@ -201,12 +213,17 @@ class NursingDiagnosisCdssService
         ];
     }
 
+    //
+    // --- UPDATED REAL-TIME ANALYSIS METHODS ---
+    //
+
     /**
      * Analyzes Step 1: Diagnosis
      */
-    public function analyzeDiagnosis($finding)
+    public function analyzeDiagnosis(string $componentName, string $finding)
     {
-        $rules = $this->adpieRules['diagnosis'] ?? [];
+        $componentRules = $this->getRulesForComponent($componentName);
+        $rules = $componentRules['diagnosis'] ?? [];
         $recommendations = $this->runAdpieAnalysis($finding, $rules);
         return $this->createAlert($recommendations);
     }
@@ -214,9 +231,10 @@ class NursingDiagnosisCdssService
     /**
      * Analyzes Step 2: Planning
      */
-    public function analyzePlanning($finding)
+    public function analyzePlanning(string $componentName, string $finding)
     {
-        $rules = $this->adpieRules['planning'] ?? [];
+        $componentRules = $this->getRulesForComponent($componentName);
+        $rules = $componentRules['planning'] ?? [];
         $recommendations = $this->runAdpieAnalysis($finding, $rules);
         return $this->createAlert($recommendations);
     }
@@ -224,9 +242,10 @@ class NursingDiagnosisCdssService
     /**
      * Analyzes Step 3: Intervention
      */
-    public function analyzeIntervention($finding)
+    public function analyzeIntervention(string $componentName, string $finding)
     {
-        $rules = $this->adpieRules['intervention'] ?? [];
+        $componentRules = $this->getRulesForComponent($componentName);
+        $rules = $componentRules['intervention'] ?? [];
         $recommendations = $this->runAdpieAnalysis($finding, $rules);
         return $this->createAlert($recommendations);
     }
@@ -234,9 +253,10 @@ class NursingDiagnosisCdssService
     /**
      * Analyzes Step 4: Evaluation
      */
-    public function analyzeEvaluation($finding)
+    public function analyzeEvaluation(string $componentName, string $finding)
     {
-        $rules = $this->adpieRules['evaluation'] ?? [];
+        $componentRules = $this->getRulesForComponent($componentName);
+        $rules = $componentRules['evaluation'] ?? [];
         $recommendations = $this->runAdpieAnalysis($finding, $rules);
         return $this->createAlert($recommendations);
     }

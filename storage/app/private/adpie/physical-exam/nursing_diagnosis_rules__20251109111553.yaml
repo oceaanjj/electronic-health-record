@@ -6,8 +6,8 @@ component_alerts:
     field: general_appearance_alert
     alert: 'Altered level of consciousness detected. This is a critical finding requiring immediate neurological assessment and escalation. See Glasgow Coma Scale.'
 nurse_input:
-  diagnosis: 'Ineffective airway clearance related to thick secretions.'
+  diagnosis: pain
   planning: ''
   intervention: ''
   evaluation: ''
-generated_at: '2025-11-09 10:02:44'
+generated_at: '2025-11-09 11:15:53'

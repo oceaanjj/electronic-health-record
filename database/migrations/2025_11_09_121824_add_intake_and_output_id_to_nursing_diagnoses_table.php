@@ -9,13 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('nursing_diagnoses', function (Blueprint $table) {
-            $table->unsignedBigInteger('intake_and_output_id')->nullable()->after('physical_exam_id');
-            $table->foreign('intake_and_output_id')->references('id')->on('intake_and_outputs')->onDelete('cascade');
-        });
-    }
+    // public function up(): void
+    // {
+    //     Schema::table('nursing_diagnoses', function (Blueprint $table) {
+    //         $table->unsignedBigInteger('intake_and_output_id')->nullable()->after('physical_exam_id');
+    //         $table->foreign('intake_and_output_id')->references('id')->on('intake_and_outputs')->onDelete('cascade');
+    //     });
+    // }
 
     /**
      * Reverse the migrations.

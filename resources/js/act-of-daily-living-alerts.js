@@ -45,7 +45,7 @@ function displayAdlAlert(alertCell, alertData) {
 
     const alertBox = document.createElement("div");
     alertBox.className =
-        "alert-box my-[3px] h-[90px] flex justify-center items-center fade-in";
+        "alert-box my-[3px] h-[53px] flex justify-center items-center fade-in";
 
     let colorClass = "alert-green";
     if (alertData.severity === "CRITICAL") colorClass = "alert-red";

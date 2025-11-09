@@ -150,7 +150,9 @@
                 </div>
                 <div class="w-[70%] mx-auto flex justify-end mt-20 mb-30 space-x-4">
                     <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button>
-                    <button type="button" class="button-default">CDSS</button>
+                    @if ($ioData)
+                        <a href="{{ route('nursing-diagnosis.start', ['component' => 'intake-and-output', 'id' => $ioData->id]) }}" class="button-default">CDSS</a>
+                    @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
             </form>

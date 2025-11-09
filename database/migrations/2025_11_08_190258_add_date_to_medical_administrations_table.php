@@ -9,20 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('medical_administrations', function (Blueprint $table) {
-            $table->date('date')->nullable()->after('time'); // Add the new date column
-        });
-    }
+    // public function up(): void
+    // {
+    //     Schema::table('medical_administrations', function (Blueprint $table) {
+    //         $table->date('date')->nullable()->after('time'); // Add the new date column
+    //     });
+    // }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::table('medical_administrations', function (Blueprint $table) {
-            $table->dropColumn('date'); // Drop the date column if rolling back
-        });
-    }
+    // public function down(): void
+    // {
+    //     Schema::table('medical_administrations', function (Blueprint $table) {
+    //         $table->dropColumn('date'); // Drop the date column if rolling back
+    //     });
+    // }
 };

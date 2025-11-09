@@ -86,6 +86,9 @@ class PhysicalExamComponent implements AdpieComponentInterface
                 'patient_id' => $patient->patient_id,
                 'diagnosis' => $nurseInput['diagnosis'],
                 'diagnosis_alert' => $diagnosisAlert,
+                'planning' => '',
+                'intervention' => '',
+                'evaluation' => '',
                 'rule_file_path' => $ruleFilePath,
             ]
         );

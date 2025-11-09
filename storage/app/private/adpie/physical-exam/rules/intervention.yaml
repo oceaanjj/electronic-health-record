@@ -8,3 +8,745 @@ intervention:
   - keywords: ["educate"]
     alert: "Include 'teach-back' method to confirm understanding."
     severity: "INFO"
+  # Rules based on: general_appearance.yaml
+  - keywords: ["frail", "acutely ill", "chronically ill"]
+    alert: "Notify provider of 'acutely ill' appearance. Place patient in a room visible to the nursing station. Initiate continuous monitoring (pulse oximetry, cardiorespiratory) as per protocol."
+    severity: "warning"
+  - keywords: ["lethargic", "obtunded", "stuporous", "comatose"]
+    alert: "Immediate neurological emergency. Call for rapid response/provider STAT. Assess ABCs (Airway, Breathing, Circulation). Check blood glucose (hypoglycemia) and prepare for emergency intervention."
+    severity: "critical"
+  - keywords: ["labored breathing", "wheezing"]
+    alert: "Position patient for comfort (e.g., elevate head of bed, allow parent to hold). Apply pulse oximetry. Prepare for immediate administration of supplemental oxygen or nebulizer treatment as per protocol."
+    severity: "critical"
+  - keywords: ["wincing", "sweating", "protecting painful area", "fidgety"]
+    alert: "Perform a pediatric pain assessment using an age-appropriate scale (e.g., FLACC, FACES, NIPS). Implement non-pharmacological comfort measures (e.g., positioning, caregiver presence) and administer analgesia as ordered."
+    severity: "warning"
+  - keywords: ["flat affect", "sad affect", "poor eye contact", "psychomotor slowing"]
+    alert: "Document affect and interaction. Involve child life specialist. Screen for psychosocial stressors or potential depression using age-appropriate tools. Ensure provider is aware of findings."
+    severity: "info"
+  - keywords: ["fruity odor", "acetone breath"]
+    alert: "This is a critical sign of potential Diabetic Ketoacidosis (DKA). Perform an immediate point-of-care blood glucose test. Notify provider of findings STAT. Prepare for IV fluid and insulin administration."
+    severity: "critical"
+  - keywords: ["short stature", "loss of height"]
+    alert: "Plot patient's height on an age- and sex-appropriate growth chart. Document percentile. Ensure provider is notified for potential endocrinology or genetics follow-up."
+    severity: "info"
+  - keywords: ["leans forward", "arms braced", "tripod position"]
+    alert: "CRITICAL: Do not force patient to lie down. Allow patient to maintain position of comfort. Apply oxygen immediately. Notify provider STAT for impending respiratory failure. Keep airway cart at bedside."
+    severity: "critical"
+  - keywords: ["alert", "active", "playful", "interactive", "smiling", "cooing", "babbles"]
+    alert: "Reassuring finding. Document that patient is active, alert, and interacting in an age-appropriate manner. Continue routine monitoring."
+    severity: "info"
+  - keywords: ["sleepy but arousable", "drowsy but awakens", "returns to sleep quickly"]
+    alert: "Document current level of arousal. Assess if this is baseline (e.g., normal nap) or a change. Implement continuous pulse oximetry. Re-assess level of consciousness frequently (e.g., every 1-2 hours)."
+    severity: "info"
+  - keywords: ["irritable", "fussy", "difficult to soothe", "not acting like themself"]
+    alert: "Perform a full pain assessment (FLACC/FACES). Assess for other causes (e.g., hunger, wet diaper, fever, hair tourniquet). Attempt comfort measures (e.g., swaddling, pacifier, caregiver). Notify provider if inconsolable."
+    severity: "warning"
+  - keywords: ["inconsolable", "crying continuously", "cannot be comforted", "high-pitched cry"]
+    alert: "This is a critical finding. Assess for signs of neurological irritation (e.g., bulging fontanelle, nuchal rigidity), severe pain (e.g., intussusception, injury), or hypoxia. Notify provider STAT."
+    severity: "critical"
+  - keywords: ["lethargic", "listless", "drowsy", "difficult to arouse", "poor interaction"]
+    alert: "CRITICAL: Altered Level of Consciousness. Call for immediate help/provider. Check ABCs. Perform immediate point-of-care blood glucose. Apply oxygen and cardiac monitor. Prepare for emergency resuscitation."
+    severity: "critical"
+  - keywords: ["obtunded", "responds only to painful stimuli", "responds to pain"]
+    alert: "CRITICAL: Severe neurological depression. Activate rapid response or call provider STAT. Assess and maintain airway (prepare for suction, intubation). Check blood glucose. Do not leave patient unattended."
+    severity: "critical"
+  - keywords: ["unresponsive", "unarousable", "comatose", "no response to pain"]
+    alert: "CRITICAL: Apparent cardiopulmonary arrest or deep coma. Call code/activate emergency response. Begin BLS/PALS protocol immediately. Check for pulse and breathing. Assess airway."
+    severity: "critical"
+  - keywords: ["confused", "disoriented", "not recognizing caregiver", "glassy-eyed stare"]
+    alert: "CRITICAL: Acute change in mental status. Assess ABCs, check blood glucose. Notify provider STAT. Assess for hypoxia, toxin ingestion, or post-ictal state. Implement seizure precautions."
+    severity: "critical"
+  - keywords: ["post-ictal", "postictal"]
+    alert: "Patient is in post-seizure state. Place patient in recovery position (on their side). Maintain patent airway; suction PRN. Apply pulse oximetry. Monitor vital signs and neurological status until fully awake. Ensure seizure precautions are in place."
+    severity: "warning"
+  - keywords: ["parent concerned", "caregiver worried", "just not right"]
+    alert: "Escalate caregiver concern. Acknowledge and document parent's concern verbatim. Perform a full set of vital signs and a focused assessment. Notify provider immediately of the caregiver's concern and your findings."
+    severity: "warning"
+  - keywords: ["good muscle tone", "moving all extremities", "resists examination"]
+    alert: "Reassuring finding. Document normal, active muscle tone and age-appropriate movement in all four extremities."
+    severity: "info"
+  - keywords: ["floppy", "limp", "poor muscle tone", "rag doll", "hypotonic"]
+    alert: "CRITICAL: Hypotonia is a 'red flag' for severe illness (e.g., sepsis, hypoxia, botulism). Assess airway and work of breathing (WOB). Notify provider STAT. Do not 'flex' neck for airway positioning; use jaw-thrust."
+    severity: "critical"
+  - keywords: ["rigid", "stiff", "hypertonic", "opisthotonus", "arched back"]
+    alert: "CRITICAL: Sign of severe neurological irritation (e.g., meningitis, kernicterus). Minimize stimulation (dim lights, quiet room). Notify provider STAT. Implement seizure precautions. Avoid flexion of the neck."
+    severity: "critical"
+  - keywords: ["sniffing position", "head tilted back"]
+    alert: "CRITICAL: Sign of severe upper airway obstruction (e.g., epiglottitis). Do NOT examine throat or make patient lie down. Keep patient calm with caregiver. Administer humidified oxygen. Notify provider STAT. Prepare for emergency airway management."
+    severity: "critical"
+  - keywords: ["guarding", "protecting painful area", "refuses to move a limb"]
+    alert: "Assess for pain using appropriate scale. Notify provider of localized pain. Immobilize the affected limb if trauma is suspected. Assess distal pulses, sensation, and motor function (CSM)."
+    severity: "warning"
+  - keywords: ["nasal flaring"]
+    alert: "Sign of respiratory distress. Position patient to open airway (elevate HOB). Apply pulse oximetry. Assess for other signs of WOB (retractions, grunting). Prepare oxygen."
+    severity: "warning"
+  - keywords: ["head bobbing"]
+    alert: "CRITICAL: Sign of severe respiratory distress/impending failure in an infant. Assess airway immediately. Apply oxygen. Notify provider STAT. Prepare for advanced airway intervention (e.g., non-invasive or invasive ventilation)."
+    severity: "critical"
+  - keywords: ["retractions", "subcostal retractions", "intercostal retractions"]
+    alert: "Sign of increased WOB. Elevate HOB, apply pulse oximetry. Perform focused respiratory assessment (auscultate lungs). Notify provider. Prepare for potential nebulizer or oxygen therapy."
+    severity: "warning"
+  - keywords: ["supraclavicular retractions", "suprasternal retractions", "tracheal tug"]
+    alert: "CRITICAL: Sign of severe respiratory distress, often upper airway obstruction. Keep patient calm and in position of comfort. Apply oxygen. Notify provider STAT. Prepare for emergency airway intervention."
+    severity: "critical"
+  - keywords: ["seesaw breathing", "paradoxical breathing"]
+    alert: "CRITICAL: Ominous sign of diaphragmatic fatigue and impending respiratory failure. Call for rapid response/provider STAT. Open airway, provide bag-valve-mask (BVM) assistance if breathing is inadequate."
+    severity: "critical"
+  - keywords: ["gasping", "agonal breathing"]
+    alert: "CRITICAL: Impending or current cardiopulmonary arrest. Call code/activate emergency response. Check for pulse. Begin BLS/PALS protocol immediately. Provide 100% oxygen via BVM."
+    severity: "critical"
+  - keywords: ["pink", "well-perfused", "warm"]
+    alert: "Reassuring finding. Document normal perfusion, color, and warm skin temperature. Continue routine monitoring."
+    severity: "info"
+  - keywords: ["pale", "pallor", "ashen"]
+    alert: "Sign of potential shock or anemia. Assess vital signs (HR, BP, capillary refill). Check capillary refill time on the sternum. Notify provider of findings. Prepare for potential IV access and fluid bolus."
+    severity: "warning"
+  - keywords: ["mottled", "mottling", "lacy pattern on skin"]
+    alert: "CRITICAL: Sign of poor perfusion and shock. Assess vital signs (especially temperature and BP) and central capillary refill. Notify provider STAT. Prepare for IV access, fluid resuscitation, and warming measures."
+    severity: "critical"
+  - keywords: ["cyanotic", "cyanosis", "blue lips", "blue nail beds", "central cyanosis"]
+    alert: "CRITICAL: Late sign of severe hypoxemia. Assess airway and breathing immediately. Apply 100% oxygen via non-rebreather mask. Call for rapid response/provider STAT. Place on cardiac monitor."
+    severity: "critical"
+  - keywords: ["flushed", "bright red cheeks"]
+    alert: "Assess temperature (fever). Correlate with vital signs (tachycardia, hypotension) to rule out early septic shock. Consider exposure (overheating, slap-cheek/Fifth disease)."
+    severity: "warning"
+  - keywords: ["jaundiced", "jaundice", "yellow skin", "icteric sclera"]
+    alert: "Notify provider. In a neonate, this is urgent; check transcutaneous/serum bilirubin. In an older child, assess for liver dysfunction (e.g., abdominal pain, hepatomegaly). Ensure adequate hydration."
+    severity: "warning"
+  - keywords: ["well-hydrated", "moist mucous membranes"]
+    alert: "Reassuring finding. Document good hydration status. Encourage continued age-appropriate fluid intake."
+    severity: "info"
+  - keywords: ["dry lips", "dry mucous membranes", "tacky mouth"]
+    alert: "Sign of mild to moderate dehydration. Encourage oral rehydration solution (ORS) in small, frequent amounts (e.g., 5-10 mL every 5 min). Monitor intake and output (I&O). Weigh patient."
+    severity: "warning"
+  - keywords: ["sunken eyes", "no tears when crying", "absent tears"]
+    alert: "CRITICAL: Sign of moderate to severe dehydration. Notify provider. Prepare for IV fluid bolus (e.G., 20 mL/kg normal saline). Monitor vital signs and I&O closely."
+    severity: "critical"
+  - keywords: ["sunken fontanelle", "depressed fontanelle"]
+    alert: "CRITICAL: Sign of moderate to severe dehydration in an infant. Notify provider STAT. Prepare for IV fluid resuscitation. Monitor neurological status and vital signs closely."
+    severity: "critical"
+  - keywords: ["well-nourished", "well-developed"]
+    alert: "Reassuring finding. Document patient's nutrition status is appropriate for age."
+    severity: "info"
+  - keywords: ["thin", "underweight", "emaciated", "wasting"]
+    alert: "Weigh patient and plot on growth chart. Assess dietary history with caregiver. Notify provider. Consider consult for dietician and/or social work for Failure to Thrive (FTT) workup."
+    severity: "warning"
+  - keywords: ["cachectic", "chronically ill appearance"]
+    alert: "Document finding. Review history for chronic illness (e.g., cystic fibrosis, malignancy, IBD). Ensure nutritional consult is in place. Implement high-calorie diet as ordered."
+    severity: "warning"
+  - keywords: ["obese", "overweight"]
+    alert: "Document finding. Use appropriately sized equipment (e.g., BP cuff). Be aware of potential for conditions like Slipped Capital Femoral Epiphysis (SCFE) or Type 2 Diabetes."
+    severity: "info"
+  - keywords: ["fecal odor on breath", "feculent breath"]
+    alert: "CRITICAL: Sign of potential bowel obstruction or prolonged vomiting. Notify provider STAT. Place patient NPO. Prepare for nasogastric (NG) tube placement and abdominal X-ray."
+    severity: "critical"
+  - keywords: ["well-groomed", "clean", "good hygiene"]
+    alert: "Reassuring finding. Document good hygiene and appropriate grooming for the situation."
+    severity: "info"
+  - keywords: ["poor hygiene", "disheveled", "malodorous"]
+    alert: "Address immediate hygiene needs (e.g., bathing, clean gown). Assess caregiver's ability to provide care. Notify provider and consider social work consultation to assess for neglect or lack of resources."
+    severity: "info"
+  - keywords: ["dysmorphic features", "unusual facies", "low-set ears", "epicanthal folds"]
+    alert: "Document specific features observed. Notify provider. Be aware of potential associated conditions (e.g., cardiac defects with Down Syndrome, renal issues with low-set ears)."
+    severity: "info"
+  - keywords: ["bruising", "multiple bruises", "bruises in various stages of healing"]
+    alert: "CRITICAL: Potential sign of Non-Accidental Trauma (NAT) or bleeding disorder. Document location, size, and color of all bruises objectively (do not guess age). Notify provider and charge nurse. Follow hospital protocol for NAT/child abuse reporting (Social Work/Child Protective Services consult)."
+    severity: "critical"
+  - keywords: ["petechiae", "purpura", "non-blanching rash"]
+    alert: "CRITICAL: This is a medical emergency. Could be meningococcemia or severe thrombocytopenia. Notify provider STAT. Place patient on droplet precautions immediately. Prepare for IV access, blood cultures, and antibiotic administration."
+    severity: "critical"
+
+  # Rules based on: skin_condition.yaml
+  - keywords: ["mottling", "mottled skin", "cutis marmorata", "lacy pattern"]
+    alert: "If persistent and accompanied by other signs (e.g., lethargy, cool extremities), this is a sign of shock. Assess central capillary refill and vital signs. Notify provider STAT. Prepare for fluid resuscitation."
+    severity: "critical"
+  - keywords: ["harlequin color change"]
+    alert: "Reassure caregiver that this is a benign, transient vascular phenomenon in newborns. Document finding."
+    severity: "info"
+  - keywords: ["doughy skin"]
+    alert: "Sign of hypernatremic dehydration. Notify provider. Check serum sodium levels. Prepare for careful fluid rehydration (rapid correction is dangerous)."
+    severity: "critical"
+  - keywords: ["clammy skin", "diaphoresis", "cold sweat"]
+    alert: "CRITICAL: Sign of shock, hypoglycemia, or severe pain. Check blood glucose immediately. Assess vital signs. Notify provider STAT. Prepare for IV access and interventions."
+    severity: "critical"
+  - keywords: ["burrow"]
+    alert: "Sign of scabies. Implement contact precautions. Notify provider for definitive diagnosis and prescription (e.g., permethrin). Educate caregiver on treating all household contacts and washing linens."
+    severity: "warning"
+  - keywords: ["erythema toxicum neonatorum", "newborn rash"]
+    alert: "Reassure caregiver that this is a common, benign newborn rash ('flea-bitten' appearance) that will resolve on its own. Document finding."
+    severity: "info"
+  - keywords: ["milia", "milk spots"]
+    alert: "Reassure caregiver that these are benign, tiny white bumps (keratin cysts) on the newborn's face and will resolve without treatment. Advise against squeezing."
+    severity: "info"
+  - keywords: ["neonatal acne", "baby acne"]
+    alert: "Reassure caregiver this is common and related to maternal hormones. Advise to clean with water and mild soap; avoid lotions or adult acne products. Will resolve spontaneously."
+    severity: "info"
+  - keywords: ["transient neonatal pustular melanosis"]
+    alert: "Reassure caregiver that this benign rash (pustules leaving dark spots) is common in newborns with darker skin and will fade over time. Document finding."
+    severity: "info"
+  - keywords: ["cradle cap", "infant seborrheic dermatitis"]
+    alert: "Educate caregiver on management: apply emollient (e.g., baby oil) to scales, then gently brush with a soft brush before shampooing. Reassure that it is benign."
+    severity: "info"
+  - keywords: ["miliaria", "heat rash", "prickly heat"]
+    alert: "Advise caregiver to keep infant cool and dry. Dress in light, loose-fitting cotton clothing. Avoid ointments, which can block sweat ducts further."
+    severity: "info"
+  - keywords: ["mongolian spot", "congenital dermal melanocytosis", "slate gray nevus"]
+    alert: "Document the location and size of the benign, flat, blue-gray patch. Reassure caregiver this is a common birthmark, not a bruise, and will fade over years."
+    severity: "info"
+  - keywords: ["salmon patch", "nevus simplex", "stork bite", "angel kiss"]
+    alert: "Reassure caregiver that these common, flat, pink patches on the eyelids, glabella, or nape of the neck are benign and typically fade with time (especially facial ones)."
+    severity: "info"
+  - keywords: ["port-wine stain", "nevus flammeus"]
+    alert: "Document finding. If located on the face (especially V1/V2 trigeminal nerve area), notify provider to evaluate for Sturge-Weber syndrome (which involves brain and eyes)."
+    severity: "warning"
+  - keywords: ["infantile hemangioma", "strawberry hemangioma", "strawberry mark"]
+    alert: "Reassure caregiver. Monitor the lesion for rapid growth, ulceration, or functional impairment (e.g., if near the eye, nose, or mouth). Notify provider of any complications."
+    severity: "info"
+  - keywords: ["cafe-au-lait macule", "cafe-au-lait spot"]
+    alert: "Document number, size, and location of spots. Notify provider if patient has six or more spots >5mm, as this is a criterion for Neurofibromatosis Type 1."
+    severity: "warning"
+  - keywords: ["congenital nevus", "congenital mole"]
+    alert: "Document size (especially if >20cm, 'giant') and location. Notify provider. Large/giant nevi require dermatology referral due to increased melanoma risk."
+    severity: "warning"
+  - keywords: ["chickenpox", "varicella", "dewdrop on a rose petal"]
+    alert: "Implement strict airborne and contact precautions immediately. Notify provider. Assess for complications (e.g., secondary skin infection, pneumonia, encephalitis). Administer supportive care (e.g., oatmeal baths, antipyretics)."
+    severity: "warning"
+  - keywords: ["measles", "rubeola", "Koplik spots"]
+    alert: "CRITICAL: Implement airborne precautions immediately. Notify provider and infection control. Assess for complications (e.g., pneumonia, dehydration). Administer Vitamin A as ordered. This is a reportable disease."
+    severity: "critical"
+  - keywords: ["rubella", "german measles"]
+    alert: "Implement droplet precautions. Notify provider. Assess for postauricular lymphadenopathy. Ensure pregnant staff/visitors are not exposed due to risk of congenital rubella syndrome."
+    severity: "warning"
+  - keywords: ["fifth disease", "erythema infectiosum", "slapped cheek"]
+    alert: "Implement droplet precautions. Reassure caregiver this is typically a mild illness. Notify provider. Screen for and warn pregnant contacts (risk of fetal hydrops)."
+    severity: "warning"
+  - keywords: ["roseola infantum", "sixth disease", "exanthem subitum"]
+    alert: "Implement standard precautions. Reassure caregiver that the rash appears *after* the high fever resolves. Institute febrile seizure precautions during the febrile phase."
+    severity: "info"
+  - keywords: ["hand, foot, and mouth", "HFMD", "coxsackievirus", "oral ulcers"]
+    alert: "Implement contact precautions. Focus on pain control (e.g., acetaminophen) and hydration. Offer bland, soft foods. Reassure caregiver it is self-limited."
+    severity: "warning"
+  - keywords: ["scarlet fever", "scarlatina", "sandpaper rash"]
+    alert: "Implement droplet precautions for 24h after starting antibiotics. Notify provider (associated with Strep throat). Administer antibiotics as ordered to prevent rheumatic fever. Assess for strawberry tongue."
+    severity: "critical"
+  - keywords: ["impetigo", "honey-colored crust"]
+    alert: "Implement contact precautions. Keep child's fingernails short. Administer topical or oral antibiotics as ordered. Educate caregiver that it is highly contagious."
+    severity: "warning"
+  - keywords: ["molluscum contagiosum", "umbilicated papules"]
+    alert: "Implement contact precautions. Reassure caregiver this is a benign, self-limited viral infection but can take months/years to resolve. Advise against scratching to prevent spread."
+    severity: "info"
+  - keywords: ["cellulitis"]
+    alert: "CRITICAL: Mark the borders of the erythema with a pen to monitor spread. Administer IV antibiotics as ordered. Elevate the affected limb. Monitor vital signs closely for sepsis."
+    severity: "critical"
+  - keywords: ["tinea corporis", "ringworm"]
+    alert: "Implement contact precautions. Administer topical antifungal cream as ordered. Educate caregiver to continue treatment even after rash disappears."
+    severity: "info"
+  - keywords: ["tinea capitis", "scalp ringworm", "kerion"]
+    alert: "Notify provider; requires oral antifungal treatment (topicals are not sufficient). Educate caregiver on long duration of therapy and potential to spread via shared hats/combs."
+    severity: "warning"
+  - keywords: ["scabies", "burrows"]
+    alert: "Implement contact precautions. Notify provider for permethrin prescription. Educate caregiver that ALL household contacts must be treated simultaneously. Wash all linens in hot water."
+    severity: "warning"
+  - keywords: ["head lice", "pediculosis capitis", "nits"]
+    alert: "Implement contact precautions. Notify provider for pediculicide shampoo. Educate caregiver on nit combing and washing linens/stuffed animals."
+    severity: "info"
+  - keywords: ["atopic dermatitis", "eczema"]
+    alert: "Educate caregiver on "soak and seal" method (bath followed immediately by thick emollient). Administer topical steroids as ordered. Keep fingernails short. Identify and avoid triggers."
+    severity: "warning"
+  - keywords: ["contact dermatitis", "poison ivy"]
+    alert: "Identify and remove the irritant/allergen. Wash the affected area with mild soap and water. Administer topical steroids or antihistamines as ordered for itching."
+    severity: "warning"
+  - keywords: ["diaper dermatitis", "diaper rash"]
+    alert: "Promote healing: keep area clean and dry, allow air exposure. Apply barrier cream (e.g., zinc oxide) generously. If beefy red with satellite spots (Candida), notify provider for topical antifungal."
+    severity: "info"
+  - keywords: ["hives", "urticaria", "wheals"]
+    alert: "Assess for systemic reaction: check for airway compromise (stridor, wheezing) or hypotension (anaphylaxis). If present, call rapid response. If localized, administer antihistamines as ordered."
+    severity: "warning"
+  - keywords: ["acanthosis nigricans"]
+    alert: "Document finding (velvety, hyperpigmented skin on neck/axillae). Notify provider. This is a sign of insulin resistance; anticipate screening for Type 2 Diabetes."
+    severity: "warning"
+  - keywords: ["Gottron's papules", "heliotrope rash"]
+    alert: "CRITICAL: Pathognomonic for juvenile dermatomyositis. Notify provider immediately. Prepare for rheumatology consult and lab workup (e.g., CK, aldolase)."
+    severity: "critical"
+  - keywords: ["malar rash", "butterfly rash"]
+    alert: "CRITICAL: Classic sign of systemic lupus erythematosus (SLE). Notify provider. Ensure photosensitivity precautions (e.g., avoid direct sun). Prepare for rheumatology consult and lab workup."
+    severity: "critical"
+
+  # Rules based on: eye_condition.yaml
+  - keywords: ["sudden visual loss", "sudden vision loss", "acute vision loss"]
+    alert: "CRITICAL: This is an emergency. Notify provider/ophthalmology STAT. Keep patient calm and in a safe environment. Do not allow to ambulate without assistance."
+    severity: "critical"
+  - keywords: ["blurry vision", "blurred vision", "trouble focusing", "difficulty seeing far"]
+    alert: "Perform a vision screening with an age-appropriate chart (e.g., Snellen, Allen pictures). Notify provider of findings. Ensure patient has prescribed glasses if available."
+    severity: "info"
+  - keywords: ["difficulty reading", "holds objects close", "trouble seeing near"]
+    alert: "Perform a vision screening. Notify provider. This may indicate hyperopia (farsightedness) and require an ophthalmology referral."
+    severity: "info"
+  - keywords: ["field cut", "loss of peripheral vision", "tunnel vision"]
+    alert: "CRITICAL: Sign of optic pathway lesion (e.g., stroke, tumor). Notify provider STAT. Implement safety/fall precautions. Approach patient from their intact visual field."
+    severity: "critical"
+  - keywords: ["flashing lights", "photopsia", "seeing flashes"]
+    alert: "CRITICAL: Potential retinal detachment. Notify provider STAT. Keep patient on bed rest with minimal head movement. Prepare for urgent ophthalmology consult."
+    severity: "critical"
+  - keywords: ["floaters", "seeing spots", "cobwebs in vision"]
+    alert: "If new or a sudden increase, this is a sign of potential vitreous/retinal detachment. Notify provider for ophthalmology consult. Advise patient to rest and avoid strenuous activity."
+    severity: "warning"
+  - keywords: ["double vision", "diplopia"]
+    alert: "CRITICAL: New onset diplopia is a neurologic emergency. Notify provider STAT. Assess pupil equality and extraocular movements (EOMs). Implement fall precautions and patch one eye for comfort if ordered."
+    severity: "critical"
+  - keywords: ["exophthalmos", "proptosis", "bulging eyes", "stare"]
+    alert: "Notify provider; suggestive of hyperthyroidism (Graves' disease). Assess for lid lag. Protect eyes from drying (e.g., artificial tears as ordered)."
+    severity: "warning"
+  - keywords: ["ptosis", "droopy eyelid", "drooping eyelid"]
+    alert: "If new, this is a significant neurologic sign (e.g., CN III palsy, Myasthenia Gravis). Notify provider. Assess pupils, EOMs, and for any associated weakness."
+    severity: "warning"
+  - keywords: ["sty", "hordeolum", "pimple on eyelid"]
+    alert: "Educate caregiver on applying warm, moist compresses for 10-15 minutes, 4 times a day. Advise not to squeeze or pop it. Notify provider if it worsens or doesn't improve."
+    severity: "info"
+  - keywords: ["chalazion", "eyelid bump", "painless eyelid lump"]
+    alert: "Educate caregiver on applying warm compresses. Notify provider, as it may require ophthalmology referral if persistent."
+    severity: "info"
+  - keywords: ["xanthelasma", "yellow plaque on eyelid"]
+    alert: "Document finding. Notify provider. Anticipate an order for a fasting lipid panel to check for hyperlipidemia."
+    severity: "info"
+  - keywords: ["swollen eyelids", "puffy eyelids", "blepharitis", "periorbital edema"]
+    alert: "Assess for cause. If bilateral and pitting (anasarca), assess for systemic illness (e.g., nephrotic syndrome). If red/crusty (blepharitis), apply warm compresses. If allergic, remove allergen."
+    severity: "warning"
+  - keywords: ["excessive tearing", "epiphora", "watery eyes"]
+    alert: "If in an infant, notify provider; likely nasolacrimal duct obstruction. Educate caregiver on lacrimal sac massage. If acute in older child, assess for corneal abrasion or foreign body."
+    severity: "info"
+  - keywords: ["dacryocystitis", "swelling near tear duct"]
+    alert: "Notify provider. This is an infection requiring antibiotics. Apply warm compresses as ordered. Monitor for signs of spreading infection (cellulitis)."
+    severity: "warning"
+  - keywords: ["conjunctivitis", "pink eye", "red eye", "injected conjunctiva"]
+    alert: "Implement contact precautions (highly contagious). If purulent discharge (bacterial), administer antibiotic drops as ordered. If watery (viral/allergic), use cool compresses. Educate on hand hygiene."
+    severity: "warning"
+  - keywords: ["subconjunctival hemorrhage", "blood spot on eye"]
+    alert: "Reassure caregiver this is usually harmless (like a bruise) and will resolve on its own. If from trauma or recurrent, notify provider."
+    severity: "info"
+  - keywords: ["anisocoria", "unequal pupils"]
+    alert: "If new, this is a CRITICAL finding. Assess if pupils are reactive to light (PERRLA). Notify provider STAT. Assess for other neurologic signs (e.g., ptosis, altered LOC, EOM deficits)."
+    severity: "critical"
+  - keywords: ["fixed dilated pupil", "blown pupil", "unilateral mydriasis"]
+    alert: "CRITICAL: Neurosurgical emergency (uncal herniation). Activate rapid response/call provider STAT. Assess ABCs. Prepare for emergency neuro-imaging and intervention (e.g., mannitol)."
+    severity: "critical"
+  - keywords: ["miosis", "pinpoint pupils", "constricted pupils"]
+    alert: "CRITICAL: Sign of narcotic (opiate) overdose or pontine hemorrhage. Assess respiratory status and LOC immediately. Notify provider STAT. Prepare naloxone (Narcan) and airway support."
+    severity: "critical"
+  - keywords: ["mydriasis", "dilated pupils"]
+    alert: "If bilaterally fixed and dilated, this is a CRITICAL sign of severe anoxia or brainstem damage. Call code/activate emergency response. Begin BLS/PALS."
+    severity: "critical"
+  - keywords: ["leukocoria", "white pupil", "white reflex", "cat's eye reflex"]
+    alert: "CRITICAL: This is a key sign of retinoblastoma. Notify provider immediately. Prepare for urgent ophthalmology referral. Provide support to caregiver as this is a very concerning finding."
+    severity: "critical"
+  - keywords: ["strabismus", "misaligned eyes", "crossed eyes", "wandering eye"]
+    alert: "Document finding. Notify provider. If persistent in a child > 6 months, this requires ophthalmology referral to prevent amblyopia (lazy eye)."
+    severity: "warning"
+  - keywords: ["nystagmus", "jiggly eyes", "dancing eyes"]
+    alert: "If new onset, notify provider. Assess for associated vertigo, nausea, or neurologic deficits. Implement fall precautions."
+    severity: "warning"
+  - keywords: ["cataract", "lens opacity", "cloudy lens"]
+    alert: "CRITICAL (in peds): A congenital cataract blocks vision. Notify provider immediately for urgent ophthalmology referral to prevent permanent amblyopia."
+    severity: "critical"
+  - keywords: ["corneal abrasion", "scratched cornea", "foreign body sensation"]
+    alert: "Notify provider. Administer analgesic eye drops as ordered. Prepare for fluorescein staining to confirm. If foreign body, assist with irrigation or removal."
+    severity: "warning"
+  - keywords: ["corneal opacity", "cloudy cornea"]
+    alert: "CRITICAL (in infant): This is a key sign of congenital glaucoma. Notify provider STAT for immediate ophthalmology consult to prevent blindness."
+    severity: "critical"
+  - keywords: ["papilledema", "swollen optic disc", "blurred disc margins"]
+    alert: "CRITICAL: Sign of increased intracranial pressure (ICP). Notify provider STAT. Keep HOB elevated 30 degrees. Prepare for emergency neuro-imaging. Monitor for Cushing's Triad (bradycardia, hypertension, irregular respirations)."
+    severity: "critical"
+  - keywords: ["retinal hemorrhages", "dot and blot hemorrhages", "flame hemorrhages"]
+    alert: "CRITICAL: In an infant, this is a hallmark of non-accidental trauma (Shaken Baby Syndrome). Notify provider and charge nurse STAT. Follow all hospital protocols for mandatory reporting of suspected child abuse."
+    severity: "critical"
+
+  # Rules based on: oral_condition.yaml
+  - keywords: ["blue lips", "cyanotic lips", "blue gums", "blue tongue"]
+    alert: "CRITICAL: Central cyanosis. Assess airway and breathing immediately. Apply 100% oxygen via non-rebreather mask. Call for rapid response/provider STAT. Place on cardiac monitor."
+    severity: "critical"
+  - keywords: ["cracked lips", "dry lips", "fissured lips"]
+    alert: "Sign of dehydration. Encourage age-appropriate fluid intake (e.g., oral rehydration solution). Apply a pediatric-safe lip emollient. Monitor intake and output."
+    severity: "info"
+  - keywords: ["angular cheilitis", "cracks at mouth corners", "angular stomatitis"]
+    alert: "Notify provider. May require topical antifungal (for Candida) or vitamin B supplementation. Keep area clean and dry."
+    severity: "info"
+  - keywords: ["herpes labialis", "fever blister", "cold sore"]
+    alert: "Implement contact precautions (can spread to eyes). Educate caregiver that it is contagious. Administer antiviral (e.g., acyclovir) as ordered. Use comfort measures for pain."
+    severity: "warning"
+  - keywords: ["swollen lips", "lip angioedema"]
+    alert: "CRITICAL: Sign of allergic reaction/anaphylaxis. Assess for airway compromise (stridor, difficulty breathing). Call rapid response/provider STAT. Prepare epinephrine, oxygen, and antihistamines."
+    severity: "critical"
+  - keywords: ["dry mucosa", "tacky oral mucosa"]
+    alert: "Sign of dehydration. Notify provider. Encourage small, frequent sips of oral rehydration solution. Perform regular oral care with a soft sponge to moisten membranes."
+    severity: "warning"
+  - keywords: ["white curd-like plaques", "thrush", "oral candidiasis"]
+    alert: "Notify provider; this is oral thrush (Candida). Administer topical antifungal (e.g., nystatin suspension) as ordered. Educate caregiver to apply *after* feeds and to boil pacifiers/bottle nipples."
+    severity: "warning"
+  - keywords: ["ulcer on buccal mucosa", "aphthous ulcer", "canker sore"]
+    alert: "Implement comfort measures. Offer bland, soft foods. Use a soft-bristle toothbrush. Notify provider, may order a topical analgesic 'magic mouthwash' (ensure it's safe for pediatric use/swallowing)."
+    severity: "info"
+  - keywords: ["Koplik spots", "white grains on red base"]
+    alert: "CRITICAL: Pathognomonic for Measles (Rubeola). Implement airborne precautions immediately. Notify provider and infection control STAT. This is a reportable disease. Assess for fever, cough, conjunctivitis."
+    severity: "critical"
+  - keywords: ["petechiae on palate", "palatal petechiae"]
+    alert: "Notify provider. This is a sign of strep pharyngitis, mononucleosis, or low platelets. Prepare for throat culture and/symptom management."
+    severity: "warning"
+  - keywords: ["bleeding gums", "gingivitis", "red swollen gums"]
+    alert: "Assess for cause (e.g., poor hygiene, medication side effect). Implement gentle oral care with a soft-bristle toothbrush. Notify provider."
+    severity: "info"
+  - keywords: ["dental caries", "tooth decay"]
+    alert: "Document findings. Notify provider. Provide pain management if child reports a toothache. Educate caregiver on oral hygiene and need for dental follow-up."
+    severity: "info"
+  - keywords: ["loose teeth", "tooth mobility"]
+    alert: "If primary (baby) teeth, assess if age-appropriate. If permanent teeth or from trauma, notify provider for urgent dental consult. Place patient on soft diet."
+    severity: "warning"
+  - keywords: ["natal teeth", "teeth at birth"]
+    alert: "Notify provider. Assess if teeth are loose. If loose, they pose an aspiration risk and may need removal. Assess infant for difficulty latching/feeding."
+    severity: "warning"
+  - keywords: ["fractured tooth", "broken tooth", "tooth avulsion"]
+    alert: "CRITICAL (for avulsed tooth): If permanent tooth is avulsed, handle by crown ONLY, rinse gently (do not scrub), and place in milk or 'Save-A-Tooth' solution. Notify provider for immediate dental emergency consult."
+    severity: "critical"
+  - keywords: ["red swollen tongue", "strawberry tongue"]
+    alert: "CRITICAL: This is a key sign of Kawasaki Disease or Scarlet Fever. Notify provider STAT. Assess for other signs (e.g., high fever, rash, cracked lips, conjunctivitis). Prepare for lab work (CRP/ESR) and antibiotics/IVIG."
+    severity: "critical"
+  - keywords: ["geographic tongue", "migratory glossitis"]
+    alert: "Reassure caregiver that this is a benign, harmless condition (map-like patches on tongue). No intervention needed unless causing discomfort."
+    severity: "info"
+  - keywords: ["macroglossia", "enlarged tongue"]
+    alert: "Assess for airway obstruction (e.g., stridor, snoring). Notify provider. Associated with Down Syndrome or Beckwith-Wiedemann. May require positioning to maintain patent airway."
+    severity: "warning"
+  - keywords: ["tongue deviation", "deviated tongue"]
+    alert: "CRITICAL: Sign of hypoglossal nerve (CN XII) palsy or stroke. Notify provider STAT. Assess for other neurologic deficits, facial droop, or weakness. Keep patient NPO until swallow screen is performed."
+    severity: "critical"
+  - keywords: ["red throat", "sore throat", "pharyngitis"]
+    alert: "Assess for pain (use FACES scale) and ability to swallow. Prepare for a rapid strep test. Encourage fluids (e.g., popsicles, cool liquids). Administer analgesics as ordered."
+    severity: "warning"
+  - keywords: ["tonsillar exudate", "white patches tonsils", "exudative pharyngitis"]
+    alert: "Implement droplet precautions. Notify provider; likely strep pharyngitis or mononucleosis. Prepare for throat culture. Assess for airway obstruction if tonsils are very large ('kissing tonsils')."
+    severity: "warning"
+  - keywords: ["asymmetric tonsil swelling", "uvular deviation", "hot potato voice"]
+    alert: "CRITICAL: Sign of peritonsillar abscess. Notify provider STAT. Keep patient in position of comfort (sitting up). Prepare for ENT consult, potential needle aspiration, and IV antibiotics."
+    severity: "critical"
+  - keywords: ["gray membrane throat", "diphtheritic membrane"]
+    alert: "CRITICAL: Suspect diphtheria. Implement droplet precautions immediately. Notify provider and infection control STAT. Do NOT attempt to scrape membrane. Prepare for antitoxin and antibiotics."
+    severity: "critical"
+  - keywords: ["cleft palate", "palatal defect"]
+    alert: "CRITICAL (in newborn): Notify provider. Assess for respiratory distress and feeding difficulty. Implement specialized feeding protocol (e.g., Haberman feeder). Keep suction at bedside. Initiate consults for plastics and feeding team."
+    severity: "critical"
+  - keywords: ["tonsillar hypertrophy", "enlarged tonsils", "kissing tonsils"]
+    alert: "Assess for signs of airway obstruction, especially during sleep (e.g., snoring, apnea). Notify provider. Position HOB elevated to improve air entry."
+    severity: "warning"
+  - keywords: ["drooling", "sialorrhea"]
+    alert: "CRITICAL: If acute onset with fever, sore throat, and 'sniffing position', this is a sign of epiglottitis. Do NOT examine throat. Keep patient calm with caregiver. Notify provider STAT. Prepare for emergency airway management."
+    severity: "critical"
+  - keywords: ["dry mouth", "xerostomia"]
+    alert: "Sign of dehydration or medication side effect. Encourage fluid intake. Perform regular pediatric oral care with moist swabs to maintain membrane integrity."
+    severity: "warning"
+  - keywords: ["parotid swelling painful", "mumps parotitis"]
+    alert: "Implement droplet precautions immediately. Notify provider. Assess for complications (e.g., meningitis, orchitis). Provide supportive care (analgesics, fluids). This is a reportable disease."
+    severity: "warning"
+  - keywords: ["vesicular eruption on oral mucosa", "painful oral vesicles"]
+    alert: "Likely Hand-Foot-Mouth disease or herpetic stomatitis. Implement contact precautions. Prioritize pain control and hydration; offer bland, cool fluids. Notify provider."
+    severity: "warning"
+  - keywords: ["tongue biting marks", "seizure evidence"]
+    alert: "CRITICAL: Sign of a recent tonic-clonic seizure. Place patient in recovery position. Assess airway and vital signs. Implement seizure precautions. Notify provider STAT."
+    severity: "critical"
+
+  # Rules based on: cardiovascular.yaml
+  - keywords: ["differential cyanosis", "blue lower extremities", "pink upper extremities"]
+    alert: "CRITICAL: Sign of ductal-dependent circulation (e.g., severe coarctation). Notify provider/Cardiology STAT. Check 4-extremity blood pressures. Prepare for prostaglandin (PGE1) infusion to keep ductus open."
+    severity: "critical"
+  - keywords: ["weak femoral pulse", "absent femoral pulse", "brachiofemoral delay"]
+    alert: "CRITICAL: Hallmark of Coarctation of the Aorta. Notify provider STAT. Obtain 4-extremity blood pressures immediately. Assess for signs of shock or heart failure in infant."
+    severity: "critical"
+  - keywords: ["bounding pulse", "water-hammer pulse"]
+    alert: "Sign of wide pulse pressure, classic for Patent Ductus Arteriosus (PDA). Notify provider. Assess for respiratory distress and signs of heart failure (e.g., poor feeding)."
+    severity: "warning"
+  - keywords: ["weak pulse", "thready pulse"]
+    alert: "CRITICAL: Sign of low cardiac output/shock. Assess vital signs (HR, BP, capillary refill). Call for rapid response/provider STAT. Prepare for IV access and fluid resuscitation."
+    severity: "critical"
+  - keywords: ["precordial bulge", "asymmetric chest"]
+    alert: "Document finding. This suggests chronic cardiomegaly (enlarged heart). Notify provider. Assess for other signs of heart failure (e.g., poor feeding, edema, tachypnea)."
+    severity: "warning"
+  - keywords: ["precordial heave", "parasternal lift"]
+    alert: "Sign of ventricular hypertrophy. Notify provider. Assess vital signs and presence of murmurs. Prepare for ECG and cardiology consult."
+    severity: "warning"
+  - keywords: ["suprasternal notch thrill"]
+    alert: "Sign of significant heart murmur (e.g., aortic or pulmonic stenosis). Notify provider. Assess for signs of decreased cardiac output or exercise intolerance."
+    severity: "warning"
+  - keywords: ["left sternal border thrill"]
+    alert: "Sign of a loud murmur, characteristic of a Ventricular Septal Defect (VSD) or pulmonic stenosis. Notify provider. Assess for signs of heart failure."
+    severity: "warning"
+  - keywords: ["tachycardia", "persistent tachycardia"]
+    alert: "Check age-specific vital sign ranges. Assess for underlying cause (e.g., fever, pain, dehydration, hypoxia, arrhythmia). Notify provider. If SVT suspected (>220 in infant, >180 in child), prepare for vagal maneuvers or adenosine."
+    severity: "warning"
+  - keywords: ["bradycardia"]
+    alert: "CRITICAL: In a child, bradycardia is an ominous sign, often indicating impending cardiac arrest from hypoxia. Assess airway and breathing. Apply oxygen. Call for rapid response/provider STAT. Begin BLS if unresponsive."
+    severity: "critical"
+  - keywords: ["diastolic murmur"]
+    alert: "CRITICAL: All diastolic murmurs in children are considered pathologic. Notify provider immediately. Prepare for cardiology consult and echocardiogram."
+    severity: "critical"
+  - keywords: ["holosystolic murmur", "pansystolic murmur"]
+    alert: "Pathologic murmur (e.g., VSD, mitral regurgitation). Notify provider. Assess for signs of heart failure (e.g., poor feeding, tachypnea, hepatomegaly). Prepare for cardiology consult."
+    severity: "warning"
+  - keywords: ["continuous murmur", "machinery murmur"]
+    alert: "Classic sign of Patent Ductus Arteriosus (PDA). Notify provider. Assess for bounding pulses and signs of heart failure. Prepare for cardiology consult."
+    severity: "warning"
+  - keywords: ["harsh murmur", "grade 3 murmur", "grade III murmur"]
+    alert: "A loud murmur is more likely to be pathologic. Notify provider. Assess for associated thrills, clicks, and signs of hemodynamic compromise."
+    severity: "warning"
+  - keywords: ["murmur increases with standing"]
+    alert: "CRITICAL: This is the classic finding for Hypertrophic Cardiomyopathy (HOCM). Notify provider STAT. Place patient on cardiac monitor. Keep patient calm and hydrated. Prepare for immediate cardiology consult."
+    severity: "critical"
+  - keywords: ["murmur decreases with standing"]
+    alert: "Reassuring finding. This is characteristic of a benign, innocent Still's murmur. Document finding."
+    severity: "info"
+  - keywords: ["murmur radiates to back", "murmur between scapulae"]
+    alert: "Suggestive of Coarctation of the Aorta or Pulmonic Stenosis. Notify provider. Ensure 4-extremity blood pressures and femoral pulses are checked and documented."
+    severity: "warning"
+  - keywords: ["wide, fixed split S2"]
+    alert: "Pathognomonic for an Atrial Septal Defect (ASD). Notify provider. This is typically not an emergency but requires cardiology follow-up."
+    severity: "warning"
+  - keywords: ["single S2"]
+    alert: "Pathologic finding (e.g., TGA, truncus arteriosus, severe stenosis). Notify provider. Assess for cyanosis and signs of heart failure. Requires cardiology consult."
+    severity: "warning"
+  - keywords: ["loud P2", "accentuated P2"]
+    alert: "Sign of pulmonary hypertension. Notify provider. Assess for hypoxia and respiratory distress. Prepare for cardiology consult and echocardiogram."
+    severity: "warning"
+  - keywords: ["ejection click", "systolic click"]
+    alert: "Sign of semilunar valve (aortic/pulmonic) stenosis or bicuspid aortic valve. Notify provider. Requires cardiology evaluation."
+    severity: "warning"
+  - keywords: ["S3 gallop", "loud S3"]
+    alert: "Sign of volume overload (e.g., large left-to-right shunt) or heart failure. Notify provider. Assess for tachypnea, hepatomegaly, and edema. Monitor I&O."
+    severity: "warning"
+  - keywords: ["S4 gallop", "loud S4"]
+    alert: "Pathologic sign of a non-compliant ventricle (e.g., from hypertrophy, HOCM). Notify provider. Requires cardiology consult."
+    severity: "warning"
+  - keywords: ["hepatomegaly", "enlarged liver"]
+    alert: "Key sign of right-sided heart failure in children. Notify provider. Assess for peripheral or sacral edema. Monitor daily weights and I&O strictly."
+    severity: "warning"
+  - keywords: ["peripheral edema", "pitting edema", "sacral edema", "ascites"]
+    alert: "Sign of systemic venous congestion/heart failure. Notify provider. Elevate extremities. Monitor daily weights and I&O. Assess skin integrity."
+    severity: "warning"
+  - keywords: ["poor feeding", "diaphoresis with feeding", "sweating with feeding"]
+    alert: "Classic sign of heart failure in an infant. Notify provider. Allow for frequent rest periods during feeds. Consider high-calorie formula or NG tube feeding as ordered to reduce work of feeding."
+    severity: "warning"
+  - keywords: ["failure to thrive", "poor weight gain"]
+    alert: "Sign of significant chronic illness, often cardiac. Weigh patient daily. Maintain strict I&O and calorie counts. Notify provider. Prepare for dietician and cardiology consults."
+    severity: "warning"
+  - keywords: ["reduced exercise capacity", "fatigue with exertion"]
+    alert: "Notify provider. Ask patient/caregiver for specific limitations (e.g., "can't keep up with friends"). Cluster nursing care to allow for rest periods. Prepare for cardiology workup."
+    severity: "warning"
+  - keywords: ["syncope on exertion", "presyncope with exercise"]
+    alert: "CRITICAL: Red flag for a life-threatening condition (e.g., HOCM, arrhythmia, severe aortic stenosis). Notify provider STAT. Place patient on bed rest and cardiac monitor. Prepare for immediate cardiology consult."
+    severity: "critical"
+  - keywords: ["chest pain", "chest pain on exertion"]
+    alert: "CRITICAL: Chest pain with exertion is always abnormal in a child. Notify provider STAT. Place patient on cardiac monitor. Obtain ECG. Prepare for cardiology consult to rule out HOCM or anomalous coronary artery."
+    severity: "critical"
+  - keywords: ["Still's murmur", "vibratory murmur"]
+    alert: "Reassuring finding. Document the low-pitched, vibratory murmur at the LLSB that decreases with standing. This is a benign innocent murmur."
+    severity: "info"
+  - keywords: ["venous hum"]
+    alert: "Reassuring finding. Document the continuous hum below the clavicles that disappears when the child lies down or turns their head. This is a benign innocent murmur."
+    severity: "info"
+  - keywords: ["pulmonary flow murmur", "upper left sternal border"]
+    alert: "Reassuring finding. Document the soft, high-pitched systolic ejection murmur at the ULSB in an asymptomatic child. This is a common innocent murmur."
+    severity: "info"
+  - keywords: ["crackles", "rales", "pulmonary congestion"]
+    alert: "Sign of pulmonary edema secondary to left-sided heart failure. Notify provider. Elevate HOB. Apply oxygen if hypoxic. Prepare for diuretic administration as ordered."
+    severity: "warning"
+  - keywords: ["clubbing", "nail clubbing"]
+    alert: "Sign of chronic hypoxia, often from cyanotic heart disease. Notify provider. Assess baseline oxygen saturation. Prepare for cardiology consult."
+    severity: "warning"
+  - keywords: ["maternal diabetes", "gestational diabetes"]
+    alert: "Infant is at high risk for congenital heart defects (e.g., VSD, TGA) and transient hypertrophic cardiomyopathy. Ensure screening echocardiogram is performed as per protocol."
+    severity: "info"
+  - keywords: ["maternal lupus", "maternal SLE"]
+    alert: "Infant is at risk for congenital heart block. Place infant on cardiac monitor. Assess for persistent bradycardia. Notify provider."
+    severity: "info"
+  - keywords: ["family history of sudden death"]
+    alert: "CRITICAL: Red flag for heritable arrhythmia (e.g., Long QT) or cardiomyopathy (HOCM). Notify provider STAT. Place patient on cardiac monitor. Ensure 12-lead ECG is performed."
+    severity: "critical"
+  - keywords: ["Marfan syndrome", "family history of Marfan"]
+    alert: "Patient is at risk for aortic root dilation and mitral valve prolapse. Notify provider. Ensure cardiology follow-up is scheduled. Monitor for chest pain or syncope."
+    severity: "warning"
+  - keywords: ["Trisomy 21", "Down syndrome"]
+    alert: "High risk (50%) for congenital heart defects (e.g., AV septal defects). Ensure patient has had a screening echocardiogram. Monitor closely for signs of heart failure."
+    severity: "info"
+  - keywords: ["Turner syndrome"]
+    alert: "High risk for coarctation of the aorta and bicuspid aortic valve. Ensure 4-extremity blood pressures and femoral pulses are checked and documented. Notify provider."
+    severity: "info"
+  - keywords: ["fever", "new murmur", "arthralgia"]
+    alert: "CRITICAL: Suspect Acute Rheumatic Fever. Notify provider STAT. Prepare for ECG, echocardiogram, and lab work (e.g., strep titers, CRP). Administer antibiotics as ordered."
+    severity: "critical"
+  - keywords: ["squatting behavior"]
+    alert: "Classic sign of Tetralogy of Fallot. Notify provider. During a hypercyanotic ('Tet') spell, place child in knee-chest position, apply oxygen, and keep calm. This requires surgical correction."
+    severity: "warning"
+
+  # Rules based on: abdomen.yaml
+  - keywords: ["distended abdomen", "abdominal distension"]
+    alert: "Assess for tenderness, bowel sounds, and tympany. In a child, this can indicate constipation, ileus, or obstruction. Notify provider. Consider NPO status if obstruction is suspected."
+    severity: "warning"
+  - keywords: ["scaphoid abdomen", "sunken abdomen"]
+    alert: "Sign of malnutrition or severe dehydration. In a newborn, if combined with respiratory distress, suspect diaphragmatic hernia. Notify provider. Assess hydration status."
+    severity: "warning"
+  - keywords: ["visible peristalsis"]
+    alert: "In an infant, if this is a 'wave' moving from left to right in the epigastrium, it is a sign of pyloric stenosis. Notify provider. Assess for 'olive-like' mass."
+    severity: "warning"
+  - keywords: ["abdominal asymmetry", "uneven contour"]
+    alert: "Notify provider. In a child, a palpable flank mass could be a Wilms' tumor or neuroblastoma. Avoid repeated or deep palpation of the mass. Prepare for abdominal ultrasound."
+    severity: "warning"
+  - keywords: ["dilated abdominal veins", "caput medusae"]
+    alert: "Sign of portal hypertension (e.g., from cirrhosis or biliary atresia). Notify provider. Assess for jaundice and hepatosplenomegaly. Prepare for liver function tests."
+    severity: "warning"
+  - keywords: ["ecchymosis around umbilicus", "Cullen sign"]
+    alert: "CRITICAL: Sign of intraperitoneal bleeding (e.g., hemorrhagic pancreatitis, trauma). Notify provider STAT. Assess vital signs for shock. Prepare for IV access and emergency imaging."
+    severity: "critical"
+  - keywords: ["tenderness in right lower quadrant", "RLQ tenderness"]
+    alert: "Suspect appendicitis. Notify provider. Keep patient NPO. Prepare for surgical consult and imaging (ultrasound or CT). Do not apply heat to the abdomen. Assess for rebound tenderness."
+    severity: "warning"
+  - keywords: ["right upper quadrant tenderness", "RUQ tenderness"]
+    alert: "Suspect cholecystitis or hepatitis. Notify provider. Assess for jaundice and check liver function tests as ordered."
+    severity: "warning"
+  - keywords: ["epigastric tenderness", "epigastric pain"]
+    alert: "Notify provider. Could be gastritis, pancreatitis, or peptic ulcer disease. Keep NPO if pancreatitis is suspected. Check amylase/lipase as ordered."
+    severity: "warning"
+  - keywords: ["diffuse abdominal tenderness"]
+    alert: "Notify provider. Assess for guarding or rigidity. Monitor vital signs for sepsis. Could be peritonitis or severe gastroenteritis."
+    severity: "warning"
+  - keywords: ["rebound tenderness", "pain on release"]
+    alert: "CRITICAL: Sign of peritonitis (e.g., from ruptured appendix). Notify provider STAT. Keep patient NPO. Prepare for immediate surgical consultation and IV antibiotics."
+    severity: "critical"
+  - keywords: ["guarding", "rigidity", "board-like abdomen"]
+    alert: "CRITICAL: Sign of peritonitis. Call provider STAT. Keep NPO. Do not administer pain medication until surgical evaluation is complete. Prepare for OR."
+    severity: "critical"
+  - keywords: ["localized tenderness at McBurney’s point", "RLQ pain McBurney"]
+    alert: "CRITICAL: Highly suggestive of appendicitis. Notify provider immediately. Keep patient NPO. Prepare for surgical consult."
+    severity: "critical"
+  - keywords: ["tenderness over suprapubic area"]
+    alert: "Suspect urinary tract infection (UTI) or cystitis. Notify provider. Obtain a clean-catch urine sample for urinalysis and culture."
+    severity: "warning"
+  - keywords: ["tympanic abdomen", "increased tympany"]
+    alert: "Indicates gaseous distension. If associated with vomiting and no stool, suspect bowel obstruction. If associated with constipation, prepare for laxative/enema as ordered."
+    severity: "info"
+  - keywords: ["dullness in flanks", "shifting dullness"]
+    alert: "Sign of ascites. In a child, this can be from nephrotic syndrome or liver failure. Notify provider. Measure abdominal girth at the umbilicus. Monitor daily weight and I&O."
+    severity: "warning"
+  - keywords: ["dullness in suprapubic area"]
+    alert: "Sign of bladder distension. Assess for urinary retention (ask when patient last voided). Perform bladder scan. Notify provider; may need to catheterize."
+    severity: "warning"
+  - keywords: ["hypoactive bowel sounds", "diminished bowel sounds"]
+    alert: "Common after surgery (ileus) or with peritonitis. Notify provider. Keep patient NPO. Monitor for return of flatus or bowel movements."
+    severity: "warning"
+  - keywords: ["absent bowel sounds"]
+    alert: "CRITICAL: Must listen for 5 full minutes. Sign of paralytic ileus or peritonitis. Notify provider STAT. Keep patient NPO. Prepare for NG tube placement."
+    severity: "critical"
+  - keywords: ["hyperactive bowel sounds", "tinkling sounds", "borborygmi"]
+    alert: "Sign of gastroenteritis or early/partial bowel obstruction. Notify provider. Assess for diarrhea, vomiting, and abdominal pain. Monitor I&O."
+    severity: "warning"
+  - keywords: ["abdominal bruit"]
+    alert: "Notify provider. In a child, a bruit may suggest renal artery stenosis (a cause of hypertension) or an arteriovenous malformation. Prepare for ultrasound."
+    severity: "warning"
+  - keywords: ["friction rub over liver", "friction rub over spleen"]
+    alert: "Sign of inflammation (e.g., perihepatitis) or tumor. Notify provider. Assess for associated pain and fever."
+    severity: "warning"
+  - keywords: ["palpable liver edge", "hepatomegaly"]
+    alert: "Notify provider. In a child, can be caused by heart failure, hepatitis, or mononucleosis. Document distance below costal margin. Assess for jaundice and splenomegaly."
+    severity: "warning"
+  - keywords: ["palpable spleen", "splenomegaly"]
+    alert: "Notify provider. Can be caused by mononucleosis, portal hypertension, or hematologic disorders. Implement activity restrictions (no contact sports) as ordered to prevent splenic rupture."
+    severity: "warning"
+  - keywords: ["palpable kidney", "renal mass"]
+    alert: "CRITICAL (in a child): Avoid repeated palpation. Notify provider STAT. This could be a Wilms' tumor or hydronephrosis. Prepare for abdominal ultrasound. Post a sign at the bedside: 'DO NOT PALPATE ABDOMEN'."
+    severity: "critical"
+  - keywords: ["Murphy’s sign positive", "RUQ pain on inspiration"]
+    alert: "Sign of acute cholecystitis (gallbladder inflammation). Notify provider. Keep patient NPO. Prepare for abdominal ultrasound and potential surgical consult."
+    severity: "warning"
+  - keywords: ["Rovsing’s sign positive"]
+    alert: "CRITICAL: Sign of appendicitis. Notify provider STAT. Keep patient NPO. Prepare for surgical consult."
+    severity: "critical"
+  - keywords: ["Psoas sign positive", "pain on hip extension"]
+    alert: "CRITICAL: Sign of appendicitis (especially retrocecal). Notify provider STAT. Keep patient NPO. Prepare for surgical consult."
+    severity: "critical"
+  - keywords: ["Obturator sign positive"]
+    alert: "CRITICAL: Sign of pelvic appendicitis or abscess. Notify provider STAT. Keep patient NPO. Prepare for surgical consult."
+    severity: "critical"
+  - keywords: ["Grey Turner’s sign", "flank ecchymosis"]
+    alert: "CRITICAL: Sign of retroperitoneal bleeding (e.g., hemorrhagic pancreatitis, severe trauma). Notify provider STAT. Assess vital signs for shock. Prepare for IV access and emergency imaging."
+    severity: "critical"
+  - keywords: ["mass in right lower quadrant", "RLQ mass palpable"]
+    alert: "CRITICAL: In a child, could be appendiceal abscess, intussusception ('sausage-shaped' mass), or Crohn's disease. Notify provider STAT. Keep NPO. Prepare for ultrasound."
+    severity: "critical"
+  - keywords: ["mass in left upper quadrant", "LUQ mass palpable"]
+    alert: "Notify provider. Could be splenomegaly (e.g., from mono) or a renal mass. Avoid deep palpation. Prepare for ultrasound. Implement activity restrictions if splenomegaly is suspected."
+    severity: "warning"
+  - keywords: ["umbilical hernia", "bulge at umbilicus"]
+    alert: "Assess if hernia is reducible (can be pushed back in). If reducible and soft, reassure caregiver (common in infants, usually closes spontaneously). If hard, tender, or non-reducible (incarcerated), notify provider STAT."
+    severity: "info"
+  - keywords: ["inguinal hernia right", "groin bulge right"]
+    alert: "Assess for reducibility. If tender, firm, or non-reducible (incarcerated), notify provider STAT as this is a surgical emergency. If reducible, notify provider for routine surgical consult."
+    severity: "warning"
+  - keywords: ["irreducible hernia", "incarcerated hernia"]
+    alert: "CRITICAL: This is a surgical emergency (incarceration). Notify provider STAT. Keep patient NPO. Prepare for immediate surgical intervention to prevent strangulation."
+    severity: "critical"
+  - keywords: ["strangulated hernia", "tender discolored hernia"]
+    alert: "CRITICAL: Surgical emergency (compromised blood flow). Notify provider STAT. Keep NPO. Prepare for immediate surgery. Monitor vital signs for sepsis/shock."
+    severity: "critical"
+  - keywords: ["bloody stool", "hematochezia"]
+    alert: "CRITICAL: Notify provider. Assess vital signs for shock. Obtain stool sample for testing. Prepare for IV access. In an infant, consider anal fissure; in a child, consider infectious colitis or Meckel's diverticulum."
+    severity: "critical"
+  - keywords: ["tarry stool", "melena"]
+    alert: "CRITICAL: Sign of upper GI bleeding. Notify provider STAT. Assess vital signs for shock. Prepare for IV access and potential blood transfusion."
+    severity: "critical"
+  - keywords: ["abdominal cramping", "colicky pain"]
+    alert: "CRITICAL: If colicky, intermittent abdominal pain where child draws up knees and then acts normal, suspect intussusception. Notify provider STAT. Ask caregiver about 'currant jelly' stools."
+    severity: "critical"
+  - keywords: ["steatorrhea", "greasy foul-smelling stool"]
+    alert: "Sign of fat malabsorption. Notify provider. Assess dietary history. This is a classic sign of Cystic Fibrosis or Celiac disease. Prepare for stool studies."
+    severity: "warning"
+  - keywords: ["abdominal distension in newborn"]
+    alert: "CRITICAL: Could be meconium ileus (Cystic Fibrosis), Hirschsprung’s disease, or atresia. Notify provider STAT. Keep NPO. Prepare for NG tube placement and abdominal X-ray."
+    severity: "critical"
+  - keywords: ["projectile vomiting infant"]
+    alert: "CRITICAL: Classic sign of pyloric stenosis. Notify provider. Keep patient NPO. Assess for 'olive-like' mass in epigastrium. Prepare for IV fluid rehydration and surgical consult."
+    severity: "critical"
+  - keywords: ["abdominal mass in child", "palpable mass pediatric"]
+    alert: "CRITICAL: Suspect Wilms' tumor or neuroblastoma. DO NOT re-palpate the abdomen. Post a sign at bedside: 'DO NOT PALPATE ABDOMEN'. Notify provider STAT. Prepare for ultrasound."
+    severity: "critical"
+  - keywords: ["umbilical redness newborn", "omphalitis"]
+    alert: "CRITICAL: Sign of omphalitis (umbilical cord infection), which can rapidly progress to sepsis. Notify provider STAT. Monitor vital signs (especially temperature). Prepare for IV antibiotics."
+    severity: "critical"
+  - keywords: ["jaundice with distended abdomen", "ascites with jaundice"]
+    alert: "CRITICAL: Sign of decompensated liver failure (e.g., biliary atresia). Notify provider STAT. Measure abdominal girth. Prepare for LFTs and ultrasound."
+    severity: "critical"
+  - keywords: ["CVA tenderness", "costovertebral angle tenderness"]
+    alert: "CRITICAL: Sign of pyelonephritis (kidney infection). Notify provider. Obtain urine sample for culture. Administer antipyretics for fever and antibiotics as ordered."
+    severity: "critical"
+  - keywords: ["flank pain radiating to groin", "renal colic"]
+    alert: "CRITICAL: Sign of kidney stone. Notify provider. Strain all urine. Administer pain medication as ordered. Encourage fluids (if not NPO)."
+    severity: "critical"
+  - keywords: ["flank pain with hematuria"]
+    alert: "CRITICAL: Sign of kidney stone or renal trauma/injury. Notify provider STAT. Strain all urine. Prepare for renal ultrasound or CT scan."
+    severity: "critical"
+
+  # Rules based on: neurological.yaml
+  - keywords: ["drowsy but arousable", "lethargic", "somnolent"]
+    alert: "Assess if this is a change from baseline. Check blood glucose. Notify provider. Implement continuous pulse oximetry. Re-assess level of consciousness frequently (e.g., every 1-2 hours) using pediatric GCS."
+    severity: "warning"
+  - keywords: ["confused", "disoriented", "not oriented to time place person"]
+    alert: "Acute confusion (delirium) is a critical sign in children. Assess for hypoxia, hypoglycemia, or infection. Notify provider STAT. Implement seizure precautions. Re-orient patient frequently."
+    severity: "warning"
+  - keywords: ["GCS less than 8", "Glasgow Coma Scale 7"]
+    alert: "CRITICAL: Pediatric GCS < 8 indicates severe brain injury and loss of airway reflexes. Call for rapid response/provider STAT. Prepare for immediate intubation and airway management."
+    severity: "critical"
+  - keywords: ["GCS 15", "alert and oriented x3"]
+    alert: "Reassuring finding. Document that patient is alert, oriented, and following commands appropriately for age."
+    severity: "info"
+  - keywords: ["agitated", "restless", "irritable behavior"]
+    alert: "Assess for cause: Pain (use FLACC/FACES), Hypoxia (check O2 sat), or neurological irritation. Notify provider. Minimize stimulation. Involve caregiver for comfort."
+    severity: "warning"
+  - keywords: ["ptosis", "drooping eyelid"]
+    alert: "If new onset, notify provider STAT. This is a neurologic sign (CN III palsy, Horner's syndrome, Myasthenia Gravis). Assess pupils and extraocular movements (EOMs)."
+    severity: "warning"

@@ -28,19 +28,19 @@
                 <thead>
                     <tr>
                         <th
-                            class="bg-yellow-light text-brown text-[13px] p-2 border-b-2 border-r-2 border-line-brown font-bold text-center">
+                            class="main-header text-center">
                             PATIENT ID</th>
                         <th
-                            class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-r-2 border-line-brown font-bold text-center">
+                            class="main-header text-center">
                             NAME</th>
                         <th
-                            class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-r-2 border-line-brown font-bold text-center">
+                            class="main-header text-center">
                             AGE</th>
                         <th
-                            class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-r-2 border-line-brown font-bold text-center">
+                            class="main-header text-center">
                             SEX</th>
                         <th
-                            class="bg-yellow-light text-brown text-[13px] p-3 border-b-2 border-line-brown font-bold text-center">
+                            class="main-header text-center">
                             ACTIONS</th>
                     </tr>
                 </thead>
@@ -50,11 +50,11 @@
                         <tr class="{{ $patient->trashed() ? 'bg-red-100 text-red-700' : 'bg-beige' }} hover:bg-white hover:bg-opacity-50 transition-all duration-300"
                             data-id="{{ $patient->patient_id }}">
                             <td
-                                class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] text-center border-r-2">
+                                class="bg-yellow-light p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] text-center border-r-2">
                                 {{ $patient->patient_id }}</td>
                             <td class="p-3 border-b-2 border-line-brown/70 border-r-2">
                                 <a href="{{ route('patients.show', $patient->patient_id) }}"
-                                    class="p-3 font-creato-black font-bold text-brown text-[13px]">
+                                    class="p-3 font-creato-black font-bold text-brown text-[13px] hover:underline hover:text-brown transition-colors duration-150">
                                     {{ $patient->name }}
                                 </a>
                             </td>
@@ -77,7 +77,7 @@
                                         class="inline-block  bg-green-500 hover:bg-green-600  text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
 
                                     <button type="button"
-                                        class="inline-block bg-red-500 cursor-pointer hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
+                                        class="inline-block bg-red-600 cursor-pointer hover:bg-dark-red text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
                                         data-patient-id="{{ $patient->patient_id }}" data-action="deactivate">SET INACTIVE</button>
                                 @endif
 

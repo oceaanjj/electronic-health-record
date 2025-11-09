@@ -22,27 +22,29 @@
     @endif
 
     {{-- Main Container: Spacious width --}}
-    <div class="w-[90%] md:w-[80%] lg:w-[65%] mx-auto my-12">
+    <div class="w-[100%] md:w-[90%] lg:w-[75%] xl:w-[65%] mx-auto my-12">
 
         <form action="{{ route('patients.update', $patient->patient_id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            {{-- Combined Form Card --}}
-            <div class="shadow-xl rounded-xl overflow-hidden mb-10 border border-gray-100">
-
-                {{-- CARD HEADER: EDIT PATIENT RECORD (Dark Green Background, White Text, Custom Font) --}}
-                <div class="bg-dark-green font-neometric p-6 sm:p-8">
-                    <h1 class="text-2xl font-creato-black font-black text-white tracking-wider">
+            {{-- Main Title --}}
+            <h1 class="text-dark-green text-4xl font-extrabold mb-5 pb-1 tracking-tight">
                         EDIT PATIENT RECORD
+                </h1>
+
+            {{-- Combined Form Card --}}
+            <div class="shadow-2xl rounded-xl overflow-hidden mb-10 border border-gray-100">
+
+                {{-- CARD HEADER: PATIENT DETAILS (Strong Indigo Background) --}}
+                <div class="bg-dark-green font-bold py-2 text-white p-4 pl-10 text-xl tracking-wider">
+                    <h1>
+                        PATIENT DETAILS
                     </h1>
                 </div>
 
                 {{-- 1. Patient Information Body (White Background) --}}
-                <div class="bg-white p-6 sm:p-8 ">
-
-                    {{-- The old "Patient Details" content starts here, keeping the grid layout --}}
-                    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b border-dark-green pb-3">Patient Details</h2>
+                <div class="bg-white p-6 sm:p-8">
 
                     <div class="grid grid-cols-1 md:grid-cols-6 gap-6 ">
 
@@ -51,7 +53,7 @@
                             <label for="first_name" class="block text-sm font-semibold text-gray-700 mb-1">First Name <span
                                     class="text-red-500">*</span></label>
                             <input type="text" id="first_name" name="first_name" value="{{ $patient->first_name }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
                                 placeholder="e.g. Juan" required>
                         </div>
 
@@ -60,7 +62,7 @@
                             <label for="middle_name" class="block text-sm font-semibold text-gray-700 mb-1">Middle
                                 Name</label>
                             <input type="text" id="middle_name" name="middle_name" value="{{ $patient->middle_name }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
                                 placeholder="Optional">
                         </div>
 
@@ -69,7 +71,7 @@
                             <label for="last_name" class="block text-sm font-semibold text-gray-700 mb-1">Last Name <span
                                     class="text-red-500">*</span></label>
                             <input type="text" id="last_name" name="last_name" value="{{ $patient->last_name }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
                                 placeholder="e.g. Dela Cruz" required>
                         </div>
 
@@ -79,7 +81,7 @@
                                     class="text-red-500">*</span></label>
                             <input type="date" id="birthdate" name="birthdate"
                                 value="{{ $patient->birthdate ? \Carbon\Carbon::parse($patient->birthdate)->format('Y-m-d') : '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
                                 required>
                         </div>
 
@@ -88,7 +90,7 @@
                             <label for="age" class="block text-sm font-semibold text-gray-700 mb-1">Age <span
                                     class="text-red-500">*</span></label>
                             <input type="number" id="age" name="age" value="{{ $patient->age }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
                                 placeholder="e.g. 35" required>
                         </div>
 
@@ -97,7 +99,7 @@
                             <label for="sex" class="block text-sm font-semibold text-gray-700 mb-1">Sex <span
                                     class="text-red-500">*</span></label>
                             <select id="sex" name="sex"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
                                 required>
                                 <option value="" disabled selected>Select Gender</option>
                                 <option value="Male" {{ $patient->sex == 'Male' ? 'selected' : '' }}>Male</option>
@@ -110,7 +112,7 @@
                         <div class="col-span-6">
                             <label for="address" class="block text-sm font-semibold text-gray-700 mb-1">Address</label>
                             <input type="text" id="address" name="address" value="{{ $patient->address }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
                                 placeholder="Street, City, Province/State, Country">
                         </div>
 
@@ -119,7 +121,7 @@
                             <label for="birthplace" class="block text-sm font-semibold text-gray-700 mb-1">Birth
                                 Place</label>
                             <input type="text" id="birthplace" name="birthplace" value="{{ $patient->birthplace }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
                                 placeholder="City/Municipality">
                         </div>
 
@@ -127,14 +129,14 @@
                         <div class="col-span-6 md:col-span-2">
                             <label for="religion" class="block text-sm font-semibold text-gray-700 mb-1">Religion</label>
                             <input type="text" id="religion" name="religion" value="{{ $patient->religion }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
                         </div>
 
                         {{-- Ethnicity --}}
                         <div class="col-span-6 md:col-span-2">
                             <label for="ethnicity" class="block text-sm font-semibold text-gray-700 mb-1">Ethnicity</label>
                             <input type="text" id="ethnicity" name="ethnicity" value="{{ $patient->ethnicity }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
                         </div>
 
                         {{-- Chief Complaints --}}
@@ -142,7 +144,7 @@
                             <label for="chief_complaints" class="block text-sm font-semibold text-gray-700 mb-1">Chief of
                                 Complaints</label>
                             <textarea id="chief_complaints" name="chief_complaints" rows="4"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400 resize-none"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400 resize-none"
                                 placeholder="Describe the patient's primary symptoms or issues.">{{ $patient->chief_complaints }}</textarea>
                         </div>
 
@@ -152,29 +154,39 @@
                                 Date</label>
                             <input type="date" id="admission_date" name="admission_date"
                                 value="{{ $patient->admission_date ? $patient->admission_date->format('Y-m-d') : '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
                         </div>
 
                         <div class="col-span-6 md:col-span-2">
                             <label for="room_no" class="block text-sm font-semibold text-gray-700 mb-1">Room No.</label>
                             <input type="text" id="room_no" name="room_no" placeholder="Enter room number"
                                 value="{{ $patient->room_no ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
                         </div>
 
                         <div class="col-span-6 md:col-span-2">
                             <label for="bed_no" class="block text-sm font-semibold text-gray-700 mb-1">Bed No.</label>
                             <input type="text" id="bed_no" name="bed_no" placeholder="Enter bed number"
                                 value="{{ $patient->bed_no ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
                         </div>
                     </div>
                 </div> {{-- End of Patient Info Body --}}
 
+                </div>
+
+                <div class="shadow-2xl rounded-xl overflow-hidden mb-10 border border-gray-100">
                 {{-- 2. Emergency Contact Section --}}
-                <div class="bg-white p-6 sm:p-8 pt-0">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6 border-b pb-3  border-dark-green mt-4">Emergency Contact
-                    </h2>
+
+                {{-- CARD HEADER: EMERGENCY CONTACT (Strong Indigo Background) --}}
+                <div class="bg-dark-green font-bold py-2 text-white p-4 pl-10 text-xl tracking-wider">
+                    <h1>
+                        EMERGENCY CONTACT
+                    </h1>
+                </div>
+
+                {{-- ⚠️ Minor fix: Added missing opening <div> tag here for proper structure and styling --}}
+                <div class="bg-white p-6 sm:p-8">
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -183,7 +195,7 @@
                             <label for="contact_name" class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
                             <input type="text" id="contact_name" name="contact_name"
                                 placeholder="Contact person's full name" value="{{ $patient->contact_name ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
                         </div>
 
                         {{-- Contact Relationship --}}
@@ -192,7 +204,7 @@
                                 class="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
                             <input type="text" id="contact_relationship" name="contact_relationship"
                                 placeholder="e.g. Spouse, Parent" value="{{ $patient->contact_relationship ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
                         </div>
 
                         {{-- Contact Number --}}
@@ -201,25 +213,33 @@
                                 Number</label>
                             <input type="text" id="contact_number" name="contact_number" placeholder="e.g. 0912-345-6789"
                                 value="{{ $patient->contact_number ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400">
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
                         </div>
                     </div>
-                </div> {{-- End of Emergency Contact Section --}}
+                    
+                </div> {{-- End of Emergency Contact Section Body --}}
 
-            </div> {{-- End of Combined Form Card --}}
+            </div> 
+       {{-- End of Combined Form Card --}}
 
             {{-- Action Buttons (Outside the card for clear final action) --}}
             <div class="flex justify-end items-center mt-10 space-x-4">
 
-                {{-- Styled "Back" Button (Original Class) --}}
-                <button type="button" onclick="window.history.back()" class="button-default">
-                    Back
+                {{-- Styled "Back" Button (Secondary/Outline Style) --}}
+                <button type="button" onclick="window.history.back()" 
+                    class="button-default">
+                    BACK
                 </button>
 
-                {{-- Styled "Update" Button (Original Class) --}}
-                <button type="submit" class="button-default">Update</button>
+                {{-- Styled "Update" Button (Primary/Solid Indigo Style) --}}
+                <button type="submit" 
+                    class="button-default">
+                    UPDATE
+                </button>
             </div>
+            
         </form>
+        
     </div>
 @endsection
 

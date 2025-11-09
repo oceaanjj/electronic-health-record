@@ -73,12 +73,7 @@ const initSearchableDropdown = () => {
 
     searchInput.addEventListener("focus", filterAndShowOptions);
 
-    // --- START: THE FIX ---
-    // REMOVED the conflicting 'keyup' listener.
-
-    // This 'input' listener now handles ALL logic:
-    // 1. It filters the dropdown on every key press.
-    // 2. It checks if the input is empty to clear and disable the form.
+    // This 'input' listener handles filtering AND clearing
     searchInput.addEventListener("input", () => {
         // 1. Always filter and show options
         filterAndShowOptions();
@@ -88,11 +83,10 @@ const initSearchableDropdown = () => {
             if (hiddenInput) {
                 hiddenInput.value = "";
             }
-            disableForm(true);
-            clearFormInputs();
+            disableForm(true); // Disable the form
+            clearFormInputs(); // Clear the inputs
         }
     });
-    // --- END: THE FIX ---
 
     const selectOption = (option) => {
         if (!option) return;
@@ -148,12 +142,15 @@ const initSearchableDropdown = () => {
         }
     });
 
+    // --- START: THE FIX ---
+    // This function will NO LONGER touch the date and day selectors.
+    // Their state is controlled ONLY by the controller and patient-loader.
     const disableForm = (isDisabled) => {
         const formFieldset = document.querySelector(
             "#form-content-container fieldset"
         );
-        const dateSelector = document.getElementById("date_selector");
-        const dayNoSelector = document.getElementById("day_no_selector");
+        // const dateSelector = document.getElementById("date_selector"); // REMOVED
+        // const dayNoSelector = document.getElementById("day_no_selector"); // REMOVED
         const vitalInputs = document.querySelectorAll(".vital-input");
         const cdssButton = document.querySelector(
             ".cdss-form button[type='button']"
@@ -167,14 +164,12 @@ const initSearchableDropdown = () => {
         if (formFieldset) {
             formFieldset.disabled = isDisabled;
         }
-        if (dateSelector) {
-            dateSelector.disabled = isDisabled;
-        }
-
-        // Handle both input (I/O page) and select (other pages)
-        if (dayNoSelector) {
-            dayNoSelector.disabled = isDisabled;
-        }
+        // if (dateSelector) { // REMOVED
+        //     dateSelector.disabled = isDisabled;
+        // }
+        // if (dayNoSelector) { // REMOVED
+        //     dayNoSelector.disabled = isDisabled;
+        // }
 
         vitalInputs.forEach((input) => {
             input.disabled = isDisabled;
@@ -201,6 +196,7 @@ const initSearchableDropdown = () => {
             button.disabled = isDisabled;
         });
     };
+    // --- END: THE FIX ---
 
     const clearFormInputs = () => {
         const formFieldset = document.querySelector(

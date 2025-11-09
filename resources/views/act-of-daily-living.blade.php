@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR (from vital-signs) --}}
+    {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR --}}
     <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
         <div class="flex items-center gap-6 w-full">
             @csrf
@@ -56,32 +56,30 @@
                 id="date_selector"
                 name="date"
                 value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-                @if (!$selectedPatient) disabled @endif
+                disabled {{-- <-- SET TO DISABLED --}}
                 class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm
+                       disabled:bg-gray-100 disabled:text-black disabled:opacity-100 cursor-not-allowed"
             >
 
             {{-- DAY NO --}}
             <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
                 DAY NO :
             </label>
-            <select
-                id="day_no_selector"
+            
+            {{-- START: REPLACED <select> WITH <input> --}}
+            <input
+                type="text"
+                id="day_no_selector" {{-- ID is the same, JS will work --}}
                 name="day_no"
-                @if (!$selectedPatient) disabled @endif
+                value="{{ $currentDayNo ?? 1 }}"
+                disabled {{-- <-- SET TO DISABLED --}}
                 class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                       text-center outline-none shadow-sm
+                       disabled:bg-gray-100 disabled:text-black disabled:opacity-100 cursor-not-allowed"
             >
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
-                    <option
-                        value="{{ $i }}"
-                        @if(($currentDayNo ?? 1) == $i) selected @endif
-                    >
-                        {{ $i }}
-                    </option>
-                @endfor
-            </select>
+            {{-- END: REPLACEMENT --}}
+
         </div>
        </div>
         
@@ -92,9 +90,9 @@
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
             @csrf
 
-            <input type="hidden" name="patient_id" class="patient-id-input" value="{{ session('selected_patient_id') }}">
-            <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? session('selected_date') }}">
-            <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? session('selected_day_no') }}">
+            <input type="hidden" name="patient_id" class="patient-id-input" value="{{ $selectedPatient->patient_id ?? '' }}">
+            <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
+            <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? 1 }}">
 
             <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
                 {{-- LEFT SIDE TABLE (INPUTS) --}}
@@ -174,23 +172,22 @@
 @endsection
 
 @push('scripts')
-    {{-- Load all necessary script files, replacing generic alert.js with the specific one --}}
     @vite([
         'resources/js/patient-loader.js',
-        'resources/js/date-day-loader.js',
         'resources/js/searchable-dropdown.js',
-        'resources/js/page-initializer.js',
         'resources/js/act-of-daily-living-alerts.js'
     ])
 
-    {{-- Define the specific initializers for this page, following the vital-signs pattern --}}
+    {{-- Define the specific initializers for this page --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.pageInitializers = [
-                window.initSearchableDropdown, // !!!!!
-                window.initializeDateDayLoader,
-                window.initializeAdlAlerts // This is the new, specific initializer
+                window.initSearchableDropdown,
+                window.initializeAdlAlerts
             ];
+            
+            // Run initializers on first load
+            window.pageInitializers.forEach(init => init && init());
         });
     </script>
 @endpush

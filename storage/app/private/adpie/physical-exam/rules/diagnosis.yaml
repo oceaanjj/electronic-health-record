@@ -1,92 +1,1561 @@
-# -----------------------------------------------------------------
-# 1. GOAL STRUCTURE (SMART)
-# -----------------------------------------------------------------
-- keywords: ["smart"]
+- keywords: ["crackles", "rales"]
   match_type: any
-  alert: "Ensure goals are Specific, Measurable, Achievable, Relevant, and Time-bound."
-  severity: "INFO"
-- keywords: ["measurable"]
-  match_type: any
-  alert: "How will this be measured? (e.g., '...as evidenced by...', '...pain < 3/10', '...ambulate 50 feet')."
-  severity: "INFO"
-- keywords: ["understand", "know", "learn", "appreciate"]
-  match_type: any
-  alert: "Avoid non-measurable verbs like 'understand' or 'know'. Use action verbs like 'demonstrate', 'state', 'list', or 'verbalize'."
+  alert: "Document location and timing (e.g., bilateral bases on inspiration). Consider nursing diagnosis: Impaired gas exchange; evaluate O2 saturation and respiratory effort. :contentReference[oaicite:0]{index=0}"
   severity: "WARNING"
-- keywords:
-    ["by discharge", "by end of shift", "within 24 hours", "within 8 hours"]
+- keywords: ["wheez","wheezing"]
   match_type: any
-  alert: "Good! A time frame makes the goal measurable."
-  severity: "INFO"
-- keywords: ["goal", "outcome"]
+  alert: "Specify distribution and inspiratory vs expiratory. Consider airway constriction (Risk for ineffective airway clearance / Ineffective breathing pattern). Monitor SpO2 and respiratory rate."
+  severity: "WARNING"
+- keywords: ["absent breath sounds","decreased breath sounds"]
   match_type: any
-  alert: "Ensure the goal has a measurable outcome and a time frame (e.g., '...by 11/10')."
-  severity: "INFO"
-
-# -----------------------------------------------------------------
-# 2. PATIENT-CENTERED
-# -----------------------------------------------------------------
-- keywords: ["patient will"]
-  match_type: any
-  alert: "Good! Goals should be patient-centered. Ensure it is measurable and has a time frame."
-  severity: "INFO"
-- keywords: ["nurse will", "i will"]
-  match_type: any
-  alert: "This sounds like a nurse intervention, not a patient goal. Goals must be patient-centered (e.g., 'Patient will...')."
+  alert: "Localize area and document related findings (eg decreased expansion, dullness). Consider diagnosis: Ineffective airway clearance or risk for atelectasis/consolidation."
   severity: "CRITICAL"
-- keywords: ["patient and family"]
+- keywords: ["bronchial","bronchial breath sounds"]
   match_type: any
-  alert: "Good job involving the family/caregiver in the plan of care."
+  alert: "If bronchial sounds are heard peripherally, suspect consolidation (pneumonia). Consider Impaired gas exchange and notify provider."
+  severity: "WARNING"
+- keywords: ["stridor"]
+  match_type: any
+  alert: "Stridor suggests upper airway obstruction. Consider Airway obstruction risk and escalate per facility protocol."
+  severity: "CRITICAL"
+- keywords: ["use of accessory muscles","accessory muscles"]
+  match_type: any
+  alert: "Document severity and respiratory rate. Consider Ineffective breathing pattern or respiratory distress; initiate continuous monitoring and oxygen per protocol."
+  severity: "CRITICAL"
+- keywords: ["tachypnea","increased respiratory rate"]
+  match_type: any
+  alert: "Quantify RR and associated signs (SpO2, work of breathing). Consider Altered respiratory status (Ineffective breathing pattern)."
+  severity: "WARNING"
+- keywords: ["dyspnea","shortness of breath","SOB"]
+  match_type: any
+  alert: "Assess onset, triggers, and oxygenation. Consider Impaired gas exchange or Activity intolerance; document interventions and response."
+  severity: "CRITICAL"
+- keywords: ["cyanosis","central cyanosis"]
+  match_type: any
+  alert: "Central cyanosis indicates hypoxemia. Consider Impaired gas exchange; notify provider immediately and document oxygen therapy given."
+  severity: "CRITICAL"
+- keywords: ["diminished breath sounds","poor air entry"]
+  match_type: any
+  alert: "Localize and correlate with chest expansion and percussion. Consider risk for atelectasis or pleural effusion."
+  severity: "WARNING"
+- keywords: ["pleural rub","pleuritic rub"]
+  match_type: any
+  alert: "Document timing with respiration and pain. Consider pain related to pleuritis and monitor for respiratory compromise."
+  severity: "WARNING"
+- keywords: ["orthopnea"]
+  match_type: any
+  alert: "Orthopnea suggests cardiac or pulmonary etiology. Consider Activity intolerance and risk for fluid overload; assess BNP and edema if within scope."
+  severity: "WARNING"
+- keywords: ["paroxysmal nocturnal dyspnea","PND"]
+  match_type: any
+  alert: "Document timing and impact on sleep. Consider Risk for decreased cardiac output/Impaired gas exchange due to pulmonary edema."
+  severity: "CRITICAL"
+- keywords: ["s3 gallop","s3"]
+  match_type: any
+  alert: "S3 may indicate volume overload/heart failure. Consider Nursing diagnosis: Excess fluid volume or decreased cardiac output; monitor vitals and weight trends."
+  severity: "WARNING"
+- keywords: ["murmur","heart murmur"]
+  match_type: any
+  alert: "Document timing (systolic/diastolic), location, and radiation. Consider referral for further cardiac evaluation and diagnosis: Altered cardiac output risk."
   severity: "INFO"
-
-# -----------------------------------------------------------------
-# 3. CLINICAL GOALS (Related to Physical Exam)
-# -----------------------------------------------------------------
-- keywords: ["pain"]
+- keywords: ["tachycardia","heart rate >100"]
   match_type: any
-  alert: "Make the pain goal measurable (e.g., 'Patient will report pain < 3/10 on 0-10 scale within 1 hour of intervention')."
+  alert: "Assess for causes (pain, anxiety, dehydration, arrhythmia). Consider Risk for decreased cardiac output; document interventions and response."
   severity: "WARNING"
-- keywords: ["ambulate", "walk"]
+- keywords: ["bradycardia","heart rate <60"]
   match_type: any
-  alert: "Make the mobility goal measurable. Specify distance, frequency, and assistance level (e.g., 'Patient will ambulate 100 feet with walker TID by 11/10')."
+  alert: "Assess for symptoms (syncope, dizziness). Consider Risk for decreased cardiac output; notify provider if symptomatic."
+  severity: "CRITICAL"
+- keywords: ["jugular venous distension","JVD"]
+  match_type: any
+  alert: "JVD suggests elevated central venous pressure/volume overload. Consider Excess fluid volume or risk for decreased cardiac output."
   severity: "WARNING"
-- keywords: ["skin", "wound", "incision"]
+- keywords: ["edema","pitting edema"]
   match_type: any
-  alert: "Specify the goal: 'Patient's skin will remain intact' or 'Patient's wound will show signs of healing (e.g., no redness, no drainage) by 11/10'."
+  alert: "Document location, pitting grade, and symmetry. Consider Excess fluid volume; measure limb circumference and monitor skin integrity. :contentReference[oaicite:1]{index=1}"
+  severity: "WARNING"
+- keywords: ["unilateral swelling","asymmetric swelling"]
+  match_type: any
+  alert: "Unilateral limb swelling raises concern for DVT or localized process. Consider Risk for impaired tissue perfusion/thrombus evaluation and limb protection."
+  severity: "CRITICAL"
+- keywords: ["capillary refill >3s","delayed capillary refill"]
+  match_type: any
+  alert: "Delayed capillary refill suggests poor perfusion. Consider Impaired peripheral tissue perfusion and document limb temperature and pulses."
+  severity: "WARNING"
+- keywords: ["absent dorsalis pedis pulse","absent posterior tibial pulse"]
+  match_type: any
+  alert: "Absent peripheral pulses suggest compromised circulation. Consider Impaired tissue perfusion (peripheral) and notify provider."
+  severity: "CRITICAL"
+- keywords: ["weak peripheral pulses","diminished pulses"]
+  match_type: any
+  alert: "Document pulse grade and assess for coolness, pallor. Consider Impaired peripheral tissue perfusion."
+  severity: "WARNING"
+- keywords: ["unequal pupils","anisocoria"]
+  match_type: any
+  alert: "Unequal pupils may indicate neurologic injury. Consider Risk for ineffective cerebral tissue perfusion; perform neurological checks and notify provider."
+  severity: "CRITICAL"
+- keywords: ["pupil nonreactive","fixed pupil"]
+  match_type: any
+  alert: "Nonreactive or fixed pupil is emergent. Consider Acute brain injury; escalate immediately."
+  severity: "CRITICAL"
+- keywords: ["glasgow coma scale","GCS"]
+  match_type: any
+  alert: "Document exact GCS score and trends. Low or declining GCS suggests Risk for ineffective cerebral tissue perfusion and need for urgent assessment."
+  severity: "CRITICAL"
+- keywords: ["altered mental status","confused","disoriented"]
+  match_type: any
+  alert: "Specify onset and baseline. Consider Risk for injury and ineffective cerebral tissue perfusion; check glucose and medications, notify provider if new."
+  severity: "CRITICAL"
+- keywords: ["slurred speech","dysarthria"]
+  match_type: any
+  alert: "New speech changes suggest stroke/TIA. Consider Risk for cerebrovascular accident; perform stroke protocol (FAST) and notify provider emergently."
+  severity: "CRITICAL"
+- keywords: ["facial droop","facial asymmetry"]
+  match_type: any
+  alert: "Document side and onset. Consider Acute neurological deficit (possible stroke) and initiate stroke pathway per facility."
+  severity: "CRITICAL"
+- keywords: ["hemiparesis","weakness one side"]
+  match_type: any
+  alert: "Document strength grading and side. Consider Risk for injury, impaired physical mobility, and need for fall precautions and PT/OT consult."
+  severity: "CRITICAL"
+- keywords: ["muscle weakness","generalized weakness"]
+  match_type: any
+  alert: "Quantify strength (0-5) and functional impact. Consider Activity intolerance, risk for falls, or neuromuscular disorder; arrange mobility support."
+  severity: "WARNING"
+- keywords: ["ataxia","coordination deficit"]
+  match_type: any
+  alert: "Document gait and coordination tests. Consider Risk for falls and impaired physical mobility; implement safety measures and PT referral."
+  severity: "WARNING"
+- keywords: ["brisk reflexes","hyperreflexia"]
+  match_type: any
+  alert: "Hyperreflexia can indicate upper motor neuron lesion. Consider Neurologic deficit diagnosis and further neuro evaluation."
+  severity: "WARNING"
+- keywords: ["absent reflexes","hyporeflexia"]
+  match_type: any
+  alert: "Hyporeflexia can indicate peripheral nerve involvement. Consider Neuromuscular impairment and document pattern."
+  severity: "WARNING"
+- keywords: ["numbness","paresthesia","tingling"]
+  match_type: any
+  alert: "Localize distribution (dermatomal vs peripheral). Consider Risk for peripheral neurovascular compromise or sensory perception alteration."
+  severity: "WARNING"
+- keywords: ["swallowing difficulty","dysphagia"]
+  match_type: any
+  alert: "Assess cough during swallowing, drooling, and voice quality. Consider Risk for aspiration; implement NPO/aspiration precautions and SLP consult."
+  severity: "CRITICAL"
+- keywords: ["abdominal distension","distended abdomen"]
+  match_type: any
+  alert: "Measure abdominal girth and assess bowel sounds. Consider Risk for bowel obstruction or ascites; document pain and bowel movement pattern. :contentReference[oaicite:2]{index=2}"
+  severity: "WARNING"
+- keywords: ["absent bowel sounds"]
+  match_type: any
+  alert: "Absent bowel sounds may indicate ileus or obstruction. Consider Risk for constipation/obstruction and notify provider if associated with pain or vomiting."
+  severity: "CRITICAL"
+- keywords: ["high pitched bowel sounds","tinkling bowel sounds"]
+  match_type: any
+  alert: "High-pitched sounds may suggest early bowel obstruction. Consider Risk for bowel obstruction and document related findings."
+  severity: "WARNING"
+- keywords: ["tender abdomen","abdominal tenderness"]
+  match_type: any
+  alert: "Localize tenderness and note guarding or rebound. Consider Acute pain and potential intra-abdominal process; notify provider if severe or worsening."
+  severity: "CRITICAL"
+- keywords: ["guarding","rebound tenderness"]
+  match_type: any
+  alert: "Peritoneal signs require urgent evaluation. Consider Acute pain and potential surgical abdomen; escalate per protocol."
+  severity: "CRITICAL"
+- keywords: ["melena","black tarry stool"]
+  match_type: any
+  alert: "Melena suggests upper GI bleeding. Consider Risk for ineffective tissue perfusion (decreased) and notify provider; monitor vitals and labs."
+  severity: "CRITICAL"
+- keywords: ["hematochezia","bright red blood per rectum"]
+  match_type: any
+  alert: "Document amount and associated symptoms. Consider Acute blood loss risk and notify provider immediately."
+  severity: "CRITICAL"
+- keywords: ["jaundice","icteric sclera"]
+  match_type: any
+  alert: "Jaundice suggests hepatic dysfunction or hemolysis. Consider Risk for impaired liver function and monitor labs and skin integrity."
+  severity: "WARNING"
+- keywords: ["pale conjunctiva","pallor"]
+  match_type: any
+  alert: "Pallor may indicate anemia. Consider Risk for decreased cardiac output or activity intolerance; correlate with Hgb and report clinically significant findings."
+  severity: "WARNING"
+- keywords: ["lymphadenopathy","enlarged lymph nodes"]
+  match_type: any
+  alert: "Document size, tenderness, and location. Consider Infection risk or related systemic process and correlate with vitals and labs."
   severity: "INFO"
-- keywords: ["fall"]
+- keywords: ["fever","temperature >38"]
   match_type: any
-  alert: "Goal should be 'Patient will remain free from falls during hospital stay'."
+  alert: "Document highest temperature and trend. Consider Infection risk and implement fever protocol (antipyretics, cultures) per policy."
   severity: "WARNING"
-- keywords: ["safe"]
+- keywords: ["hypothermia","temperature <35"]
   match_type: any
-  alert: "How will safety be measured? (e.g., 'Patient will remain free from injury', 'Patient will demonstrate correct use of call light')."
+  alert: "Hypothermia can be life-threatening. Consider Risk for ineffective thermoregulation and initiate warming measures."
+  severity: "CRITICAL"
+- keywords: ["oral thrush","white plaques mouth"]
+  match_type: any
+  alert: "Oral candidiasis—document and consider impaired nutrition or mucous membrane integrity; implement oral care and antifungal per orders."
   severity: "WARNING"
-- keywords: ["nutrition", "eat", "consume"]
+- keywords: ["dry mucous membranes","dehydration signs"]
   match_type: any
-  alert: "Make this measurable (e.g., 'Patient will consume > 75% of all meals', '...gain 1 lb per week')."
+  alert: "Dry mucous membranes suggest dehydration. Consider Fluid volume deficit and monitor intake/output, vitals, and orthostatic changes."
   severity: "WARNING"
-- keywords: ["intake", "fluids", "drink"]
+- keywords: ["poor skin turgor","decreased skin turgor"]
   match_type: any
-  alert: "Make this measurable (e.g., 'Patient will drink 1500 mL of fluids per 24 hours')."
+  alert: "Poor turgor indicates potential dehydration. Consider Fluid volume deficit and assess orthostatics and urine output."
   severity: "WARNING"
-- keywords: ["o2 sat", "spo2", "oxygen"]
+- keywords: ["pressure injury","pressure ulcer","decubitus"]
   match_type: any
-  alert: "Specify the target (e.g., 'Patient will maintain O2 sat > 92% on room air at all times')."
+  alert: "Document stage, size, and location. Consider Impaired skin integrity and implement pressure injury prevention and wound care consults. :contentReference[oaicite:3]{index=3}"
+  severity: "CRITICAL"
+- keywords: ["nonblanching erythema","non-blanchable erythema"]
+  match_type: any
+  alert: "Nonblanchable redness suggests Stage I pressure injury. Consider Impaired skin integrity and repositioning/pressure redistribution measures."
   severity: "WARNING"
-- keywords: ["anxiety", "calm"]
+- keywords: ["open wound","skin breakdown"]
   match_type: any
-  alert: "Make this measurable (e.g., 'Patient will rate anxiety < 4/10', '...identify and state 2 coping mechanisms')."
+  alert: "Document wound characteristics, exudate, and surrounding skin. Consider Impaired skin integrity and wound care interventions."
   severity: "WARNING"
-- keywords: ["airway", "breath sounds", "lungs"]
+- keywords: ["warm skin","localized warmth","erythema"]
   match_type: any
-  alert: "Specify goal (e.g., 'Patient will maintain clear and patent airway', '...breath sounds clear to auscultation')."
+  alert: "Localized warmth and erythema may indicate infection or inflammation. Consider Risk for infection and monitor for systemic signs."
+  severity: "WARNING"
+- keywords: ["cold extremities","cool to touch"]
+  match_type: any
+  alert: "Cool extremities suggest poor perfusion. Consider Impaired peripheral tissue perfusion and perform vascular assessment."
+  severity: "WARNING"
+- keywords: ["bruising","ecchymosis"]
+  match_type: any
+  alert: "Document size, location, and timing. Consider Risk for bleeding or coagulation disorders; correlate with medications (anticoagulants)."
   severity: "INFO"
-- keywords: ["constipation"]
+- keywords: ["tenderness to palpation","localized pain on palpation"]
   match_type: any
-  alert: "Specify goal and time frame (e.g., 'Patient will have a soft, formed bowel movement within 48 hours')."
-  severity: "INFO"
-- keywords: ["edema"]
-  match_type: any
-  alert: "Make this measurable (e.g., 'Patient's edema will decrease to +1 in BLE by 11/10', 'Patient's weight will return to baseline')."
+  alert: "Localize and quantify pain. Consider Acute pain related to underlying tissue injury and implement pain management and further assessment."
   severity: "WARNING"
+- keywords: ["joint swelling","joint effusion"]
+  match_type: any
+  alert: "Document joints involved and ROM limitation. Consider Impaired physical mobility and joint protection measures."
+  severity: "INFO"
+- keywords: ["limited range of motion","decreased ROM"]
+  match_type: any
+  alert: "Specify joints and degree. Consider Impaired physical mobility and plan for ROM exercises or OT/PT consult."
+  severity: "WARNING"
+- keywords: ["crepitus","joint crepitus"]
+  match_type: any
+  alert: "Crepitus with movement may indicate joint degeneration. Consider Chronic pain and impaired mobility; document functional impact."
+  severity: "INFO"
+- keywords: ["muscle atrophy","wasting"]
+  match_type: any
+  alert: "Muscle wasting suggests disuse or chronic disease. Consider Risk for disuse syndrome and initiate mobility/strengthening plan."
+  severity: "WARNING"
+- keywords: ["sarcopenia","loss of muscle mass"]
+  match_type: any
+  alert: "Document functional limitations and consider nutrition and exercise interventions; refer to PT/OT and dietitian."
+  severity: "INFO"
+- keywords: ["sputum purulent","purulent sputum"]
+  match_type: any
+  alert: "Purulent sputum suggests infection. Consider Infection risk and document color, amount, and odor; obtain cultures per policy."
+  severity: "WARNING"
+- keywords: ["hemoptysis","coughing blood"]
+  match_type: any
+  alert: "Hemoptysis is urgent. Consider Risk for ineffective airway clearance and notify provider immediately."
+  severity: "CRITICAL"
+- keywords: ["tachycardia with hypotension","low bp and fast hr"]
+  match_type: all
+  alert: "Combination suggests possible hypovolemia or sepsis. Consider Risk for shock/decreased cardiac output and escalate per sepsis protocol."
+  severity: "CRITICAL"
+- keywords: ["low urine output","oliguria","urine <30ml/h"]
+  match_type: any
+  alert: "Oliguria may indicate renal hypoperfusion. Consider Fluid volume deficit or Risk for renal impairment; monitor I&O and notify provider."
+  severity: "CRITICAL"
+- keywords: ["creatinine elevated","rising creatinine"]
+  match_type: any
+  alert: "Rising creatinine suggests impaired renal function. Consider Risk for renal dysfunction and adjust meds per provider; monitor fluids."
+  severity: "WARNING"
+- keywords: ["urinary retention","unable to void"]
+  match_type: any
+  alert: "Document bladder scan results if available and consider Risk for urinary retention; catheterization per protocol may be needed."
+  severity: "WARNING"
+- keywords: ["incontinent of urine","urinary incontinence"]
+  match_type: any
+  alert: "Assess pattern and triggers. Consider Impaired skin integrity risk and implement containment/skin care and bladder training as appropriate."
+  severity: "INFO"
+- keywords: ["fecal incontinence","bowel incontinence"]
+  match_type: any
+  alert: "Fecal incontinence increases skin breakdown risk. Consider Impaired skin integrity and bowel management strategies."
+  severity: "INFO"
+- keywords: ["constipation","no bowel movement >3 days"]
+  match_type: any
+  alert: "Assess stool characteristics and bowel sounds. Consider Risk for constipation and implement bowel regimen as ordered."
+  severity: "INFO"
+- keywords: ["abdominal rebound","peritoneal signs"]
+  match_type: any
+  alert: "Peritoneal signs suggest surgical abdomen. Consider Acute pain and potential surgical emergency; escalate."
+  severity: "CRITICAL"
+- keywords: ["ileus","paralytic ileus"]
+  match_type: any
+  alert: "Document absent bowel sounds and distension. Consider Risk for decreased GI motility and manage per orders, NPO/NG as indicated."
+  severity: "WARNING"
+- keywords: ["nasal flaring"]
+  match_type: any
+  alert: "Nasal flaring indicates increased work of breathing. Consider Respiratory distress and escalate monitoring and oxygen as needed."
+  severity: "CRITICAL"
+- keywords: ["intercostal retractions","subcostal retractions"]
+  match_type: any
+  alert: "Retractions indicate severe respiratory effort. Consider Respiratory distress and initiate emergency measures per protocol."
+  severity: "CRITICAL"
+- keywords: ["bulging fontanelle"]
+  match_type: any
+  alert: "In infants, bulging fontanelle may indicate increased intracranial pressure or infection. Consider Urgent neurologic evaluation."
+  severity: "CRITICAL"
+- keywords: ["sunken fontanelle"]
+  match_type: any
+  alert: "Sunken fontanelle suggests dehydration. Consider Fluid volume deficit and manage fluids per orders."
+  severity: "WARNING"
+- keywords: ["tachycardia newborn","neonatal tachycardia"]
+  match_type: any
+  alert: "Document and correlate with temperature and oxygenation. Consider Neonatal distress and notify neonatal team."
+  severity: "CRITICAL"
+- keywords: ["crackles bibasilar"]
+  match_type: all
+  alert: "Bibasilar crackles often occur with heart failure or pneumonia. Consider Excess fluid volume or Impaired gas exchange; review diuretics and oxygenation. :contentReference[oaicite:4]{index=4}"
+  severity: "WARNING"
+- keywords: ["decreased oxygen saturation","SpO2 <90"]
+  match_type: any
+  alert: "SpO2 <90% is clinically significant. Consider Impaired gas exchange; apply supplemental oxygen and notify provider per protocol."
+  severity: "CRITICAL"
+- keywords: ["orthostatic hypotension","postural hypotension"]
+  match_type: any
+  alert: "Document BP changes with position and symptoms. Consider Risk for falls and Fluid volume deficit; implement fall precautions."
+  severity: "WARNING"
+- keywords: ["fall on exam","recent fall"]
+  match_type: any
+  alert: "Recent fall requires injury assessment and potential Risk for injury diagnosis; evaluate for head injury and implement fall prevention."
+  severity: "CRITICAL"
+- keywords: ["bruising spontaneous","spontaneous bruising"]
+  match_type: any
+  alert: "Spontaneous bruising may indicate coagulopathy. Consider Risk for bleeding and review medications and labs."
+  severity: "WARNING"
+- keywords: ["lymph leakage","lymphorrhea"]
+  match_type: any
+  alert: "Document drainage and skin status. Consider Risk for impaired skin integrity and infection; consult wound/lymphedema services."
+  severity: "WARNING"
+- keywords: ["drainage purulent","wound purulent drainage"]
+  match_type: any
+  alert: "Purulent drainage indicates wound infection. Consider Risk for infection; obtain cultures and follow wound care protocol."
+  severity: "WARNING"
+- keywords: ["surgical wound dehiscence","wound separation"]
+  match_type: any
+  alert: "Wound separation is urgent. Consider Impaired skin integrity and surgical review; apply protective dressing and notify surgical team."
+  severity: "CRITICAL"
+- keywords: ["new onset tremor","tremor"]
+  match_type: any
+  alert: "Tremor may indicate neurologic or metabolic causes. Consider Neurologic deficit and document onset, pattern, and triggers."
+  severity: "INFO"
+- keywords: ["restless","agitated"]
+  match_type: any
+  alert: "Agitation may signal hypoxia, pain, or delirium. Consider Risk for injury and assess for underlying causes (meds, hypoxia, infection)."
+  severity: "WARNING"
+- keywords: ["confusion at night","sundowning"]
+  match_type: any
+  alert: "Sundowning suggests delirium risk. Consider Risk for injury and implement orientation and safety measures; evaluate for reversible causes."
+  severity: "WARNING"
+- keywords: ["hallucinations","visual hallucination"]
+  match_type: any
+  alert: "Document content and timing. Consider Altered thought processes/delirium and evaluate medications, withdrawal, or metabolic causes."
+  severity: "CRITICAL"
+- keywords: ["increased intracranial pressure signs","ICP signs"]
+  match_type: any
+  alert: "Signs (changed LOC, vomiting, pupillary changes) suggest elevated ICP. Consider Risk for ineffective cerebral tissue perfusion and escalate immediately."
+  severity: "CRITICAL"
+- keywords: ["rigidity","decorticate","decerebrate"]
+  match_type: any
+  alert: "Abnormal posturing indicates severe neurologic compromise. Consider Immediate neurologic escalation and ICU-level care."
+  severity: "CRITICAL"
+- keywords: ["hyperglycemia on exam","high blood sugar"]
+  match_type: any
+  alert: "Document glucose value and symptoms. Consider Risk for unstable glucose levels and Diabetes management per orders."
+  severity: "WARNING"
+- keywords: ["hypoglycemia on exam","low blood sugar"]
+  match_type: any
+  alert: "Hypoglycemia is urgent. Provide glucose per protocol and consider Risk for injury and altered mental status."
+  severity: "CRITICAL"
+- keywords: ["poor dentition","dental caries","broken teeth"]
+  match_type: any
+  alert: "Poor oral health can impact nutrition and infection risk. Consider Impaired oral mucous membrane integrity and nutrition risk; refer dental/oral care."
+  severity: "INFO"
+- keywords: ["weight loss unintended","unintended weight loss"]
+  match_type: any
+  alert: "Unintended weight loss indicates nutrition risk. Consider Imbalanced nutrition: less than body requirements and plan nutritional support."
+  severity: "WARNING"
+- keywords: ["BMI <18.5","underweight"]
+  match_type: any
+  alert: "Low BMI suggests malnutrition risk. Consider Nutrition deficit diagnosis and dietitian referral."
+  severity: "WARNING"
+- keywords: ["poor appetite","anorexia"]
+  match_type: any
+  alert: "Document intake and contributing factors. Consider Risk for imbalanced nutrition and implement appetite-promoting interventions."
+  severity: "INFO"
+- keywords: ["nasogastric tube","NG tube present"]
+  match_type: any
+  alert: "Document tube type, placement confirmation, and tolerance. Consider Risk for aspiration and ensure appropriate feeding protocols."
+  severity: "WARNING"
+- keywords: ["enteral feeding intolerance","high residuals","vomiting with feeds"]
+  match_type: any
+  alert: "Feeding intolerance may indicate GI dysfunction. Consider Risk for aspiration and nutrition deficit; notify provider and adjust per protocol."
+  severity: "WARNING"
+- keywords: ["ileostomy output high","stoma high output"]
+  match_type: any
+  alert: "High ostomy output risks fluid and electrolyte imbalance. Consider Risk for deficient fluid volume and monitor labs."
+  severity: "WARNING"
+- keywords: ["wheezes unilateral","unilateral wheeze"]
+  match_type: any
+  alert: "Unilateral wheeze may indicate localized obstruction (aspiration, foreign body). Consider Immediate airway assessment and escalation."
+  severity: "CRITICAL"
+- keywords: ["asymmetrical chest expansion","unequal chest rise"]
+  match_type: any
+  alert: "Asymmetry may indicate pneumothorax, atelectasis, or pleural effusion. Consider Respiratory compromise and urgent evaluation."
+  severity: "CRITICAL"
+- keywords: ["tracheal deviation"]
+  match_type: any
+  alert: "Tracheal deviation is an emergency (tension pneumothorax or large volume). Consider Immediate escalation and emergency interventions."
+  severity: "CRITICAL"
+- keywords: ["hyperresonance on percussion"]
+  match_type: any
+  alert: "Hyperresonance suggests pneumothorax or hyperinflation. Consider Respiratory distress and notify provider."
+  severity: "CRITICAL"
+- keywords: ["dullness on percussion"]
+  match_type: any
+  alert: "Dullness locally suggests consolidation or effusion. Consider Impaired gas exchange and correlate with breath sounds and imaging."
+  severity: "WARNING"
+- keywords: ["sputum foul smelling","malodorous sputum"]
+  match_type: any
+  alert: "Foul-smelling sputum may indicate anaerobic infection or aspiration pneumonia. Consider Infection risk and obtain cultures as indicated."
+  severity: "WARNING"
+- keywords: ["new murmurs","change in murmur"]
+  match_type: any
+  alert: "New or changing murmurs warrant further cardiac assessment. Consider Altered cardiac output and notify provider for echocardiography."
+  severity: "WARNING"
+- keywords: ["pain chest","chest pain"]
+  match_type: any
+  alert: "Chest pain requires immediate assessment (cardiac vs pulmonary vs GI). Consider Acute pain and rule out cardiac ischemia; follow chest pain protocol."
+  severity: "CRITICAL"
+- keywords: ["leg pain with ambulation","claudication"]
+  match_type: any
+  alert: "Claudication suggests peripheral arterial disease. Consider Impaired peripheral tissue perfusion and vascular assessment including ABI if available."
+  severity: "WARNING"
+- keywords: ["skin temperature hot","warm to touch"]
+  match_type: any
+  alert: "Localized warmth often indicates inflammation/infection. Consider Risk for infection and monitor for systemic signs."
+  severity: "WARNING"
+- keywords: ["skin moisture increased","diaphoresis"]
+  match_type: any
+  alert: "Diaphoresis may indicate sympathetic activation (pain, anxiety, hypoglycemia). Consider Assessment for underlying cause and monitor vitals."
+  severity: "INFO"
+- keywords: ["delirium","acute confusion"]
+  match_type: any
+  alert: "Acute confusion requires assessment for reversible causes. Consider Risk for injury and implement safety and delirium prevention measures."
+  severity: "CRITICAL"
+- keywords: ["positive brudzinski","meningeal signs"]
+  match_type: any
+  alert: "Meningeal signs suggest central nervous system infection. Consider Immediate escalation and infection control measures."
+  severity: "CRITICAL"
+- keywords: ["positive kernig sign"]
+  match_type: any
+  alert: "Positive meningeal signs require urgent evaluation. Consider Risk for central nervous system infection."
+  severity: "CRITICAL"
+- keywords: ["eye drainage purulent","conjunctival exudate"]
+  match_type: any
+  alert: "Purulent eye drainage indicates conjunctivitis. Consider Infection control precautions and topical therapy per orders."
+  severity: "INFO"
+- keywords: ["visual change sudden","loss of vision sudden"]
+  match_type: any
+  alert: "Sudden visual loss is emergent (retinal detachment, stroke). Consider Immediate ophthalmologic/neuro evaluation."
+  severity: "CRITICAL"
+- keywords: ["visual blurring chronic","blurred vision"]
+  match_type: any
+  alert: "Document onset and impact on function. Consider Referral for ophthalmology and assess for diabetes-related changes."
+  severity: "INFO"
+- keywords: ["hearing loss sudden","acute hearing loss"]
+  match_type: any
+  alert: "Acute hearing loss warrants prompt evaluation. Consider Risk for communication impairment and ENT consult."
+  severity: "WARNING"
+- keywords: ["otorrhea","ear drainage"]
+  match_type: any
+  alert: "Ear drainage may indicate infection or perforation. Consider Infection risk and ENT referral as needed."
+  severity: "INFO"
+- keywords: ["sore throat","pharyngitis signs"]
+  match_type: any
+  alert: "Document exudate, fever, and lymphadenopathy. Consider Infection risk and symptomatic treatment/antibiotics per provider."
+  severity: "INFO"
+- keywords: ["neck stiffness","cervical rigidity"]
+  match_type: any
+  alert: "Neck stiffness with fever may indicate meningitis. Consider Immediate neurologic/infectious evaluation."
+  severity: "CRITICAL"
+- keywords: ["goiter","enlarged thyroid"]
+  match_type: any
+  alert: "Document size and tenderness. Consider Endocrine disorder risk and thyroid function testing referral."
+  severity: "INFO"
+- keywords: ["bruits","vascular bruit"]
+  match_type: any
+  alert: "Bruit suggests turbulent flow from vascular stenosis. Consider Risk for impaired perfusion and vascular assessment/referral."
+  severity: "WARNING"
+- keywords: ["cool extremity with pallor","pale cool limb"]
+  match_type: all
+  alert: "Pale, cool extremity indicates possible arterial occlusion. Consider Impaired peripheral tissue perfusion and urgent vascular evaluation."
+  severity: "CRITICAL"
+- keywords: ["warm swollen limb with redness","red warm leg"]
+  match_type: all
+  alert: "Red, warm, swollen limb suggests cellulitis or DVT. Consider Infection risk and thrombosis evaluation; D-dimer/ultrasound per protocol."
+  severity: "CRITICAL"
+- keywords: ["new onset chest wall tenderness","localized chest wall pain"]
+  match_type: any
+  alert: "Localized chest wall tenderness may be musculoskeletal. Consider Acute pain and document exacerbating movements; rule out cardiac causes as indicated."
+  severity: "INFO"
+- keywords: ["polyuria","increased urine output"]
+  match_type: any
+  alert: "Polyuria can indicate hyperglycemia or DI. Consider Fluid and electrolyte imbalance and assess glucose and electrolytes."
+  severity: "WARNING"
+- keywords: ["polydipsia","increased thirst"]
+  match_type: any
+  alert: "Polydipsia suggests hyperglycemia or dehydration. Consider Risk for unstable glucose and assess serum glucose."
+  severity: "INFO"
+- keywords: ["peripheral neuropathy signs","loss of protective sensation"]
+  match_type: any
+  alert: "Loss of protective sensation increases injury risk (esp. diabetic foot). Consider Risk for peripheral neurovascular compromise and foot care interventions."
+  severity: "WARNING"
+- keywords: ["plantar ulcer","foot ulcer"]
+  match_type: any
+  alert: "Foot ulcer requires wound care and infection prevention. Consider Impaired skin integrity and vascular assessment."
+  severity: "CRITICAL"
+- keywords: ["pulsatile abdominal mass"]
+  match_type: any
+  alert: "Pulsatile abdominal mass may indicate AAA. Consider Immediate vascular/cardiac evaluation and urgent notification of provider."
+  severity: "CRITICAL"
+- keywords: ["new heart failure signs","increasing SOB edema bibasilar crackles"]
+  match_type: all
+  alert: "Combination of dyspnea, edema, and crackles suggests heart failure exacerbation. Consider Excess fluid volume and coordinate diuretic and cardiology care."
+  severity: "CRITICAL"
+- keywords: ["cool mottled skin","mottling"]
+  match_type: any
+  alert: "Mottling may indicate poor perfusion or shock. Consider Risk for shock and escalate care."
+  severity: "CRITICAL"
+- keywords: ["skin maceration","macerated skin"]
+  match_type: any
+  alert: "Maceration increases breakdown risk. Consider Impaired skin integrity and moisture management interventions."
+  severity: "WARNING"
+- keywords: ["fungal rash intertriginous","intertrigo"]
+  match_type: any
+  alert: "Intertriginous fungal rash requires topical care and skin barriers. Consider Impaired skin integrity and hygiene measures."
+  severity: "INFO"
+- keywords: ["eczematous rash widespread","dermatitis widespread"]
+  match_type: any
+  alert: "Document distribution and triggers. Consider Risk for impaired skin integrity and dermatology referral if chronic."
+  severity: "INFO"
+- keywords: ["alopecia","hair loss"]
+  match_type: any
+  alert: "Document pattern and timing. Consider Nutrition/Endocrine or medication-related causes and refer as appropriate."
+  severity: "INFO"
+- keywords: ["paralysis lower extremities","paraplegia"]
+  match_type: any
+  alert: "Document level and onset. Consider Impaired physical mobility and high risk for pressure injury; initiate repositioning and skin checks."
+  severity: "CRITICAL"
+- keywords: ["flaccid limb","limb flaccidity"]
+  match_type: any
+  alert: "Flaccidity suggests lower motor neuron injury. Consider Neurologic deficit and protective measures for limb."
+  severity: "CRITICAL"
+- keywords: ["spasticity","increased muscle tone"]
+  match_type: any
+  alert: "Spasticity impacts mobility and care. Consider Impaired physical mobility and contracture prevention interventions."
+  severity: "WARNING"
+- keywords: ["heel redness","red heel"]
+  match_type: any
+  alert: "Redness over bony prominences may be early pressure injury. Consider Impaired skin integrity and repositioning/pressure relief."
+  severity: "WARNING"
+- keywords: ["nasogastric tube absent bowel sounds","enteric tube with absent bowel sounds"]
+  match_type: all
+  alert: "Enteral feeding with absent bowel sounds increases aspiration risk. Consider Hold feeds and reassess GI status; consult provider."
+  severity: "WARNING"
+- keywords: ["coffee ground emesis"]
+  match_type: any
+  alert: "Coffee-ground emesis suggests upper GI bleed. Consider Acute blood loss risk and urgent notification of provider."
+  severity: "CRITICAL"
+- keywords: ["hematemesis","vomiting blood"]
+  match_type: any
+  alert: "Active GI bleeding requires immediate assessment. Consider Risk for ineffective tissue perfusion and escalate care."
+  severity: "CRITICAL"
+- keywords: ["peripheral cyanosis","acrocyanosis"]
+  match_type: any
+  alert: "Peripheral cyanosis may be benign in infants but concerning if associated with hypoxia. Consider Assess oxygenation and perfusion."
+  severity: "WARNING"
+- keywords: ["new pedal pulses absent","no foot pulses"]
+  match_type: all
+  alert: "Absent pedal pulses indicate arterial insufficiency. Consider Impaired peripheral tissue perfusion and urgent vascular consult."
+  severity: "CRITICAL"
+- keywords: ["capillary refill prolonged toes","cap refill toes >3s"]
+  match_type: any
+  alert: "Prolonged toe capillary refill suggests distal perfusion deficit. Consider Peripheral perfusion impairment and vascular assessment."
+  severity: "WARNING"
+- keywords: ["asymmetric limb length","leg length discrepancy"]
+  match_type: any
+  alert: "Document functional impact. Consider Mobility impairment and PT assessment for gait and safety."
+  severity: "INFO"
+- keywords: ["new onset diaphoresis with chest pain","diaphoresis chest pain"]
+  match_type: all
+  alert: "Diaphoresis with chest pain is ominous for ischemia. Consider Acute coronary syndrome and initiate chest pain protocol."
+  severity: "CRITICAL"
+- keywords: ["peripheral pulses bounding","bounding pulses"]
+  match_type: any
+  alert: "Bounding pulses may indicate hyperdynamic circulation. Consider Assess for fever, sepsis, or AV fistula; correlate clinically."
+  severity: "INFO"
+- keywords: ["bruits renal","renal artery bruit"]
+  match_type: any
+  alert: "Renal bruits may indicate renal artery stenosis. Consider Renal perfusion risk and notify provider for imaging/labs."
+  severity: "WARNING"
+- keywords: ["palpable thrill cardiac","thrill"]
+  match_type: any
+  alert: "A palpable thrill suggests significant valvular lesion. Consider Cardiac output alteration and cardiology evaluation."
+  severity: "WARNING"
+- keywords: ["hepatomegaly on palpation","enlarged liver"]
+  match_type: any
+  alert: "Hepatomegaly may indicate congestion or hepatic disease. Consider Impaired hepatic function risk and document related symptoms."
+  severity: "WARNING"
+- keywords: ["splenomegaly","enlarged spleen"]
+  match_type: any
+  alert: "Splenomegaly increases risk for rupture. Consider Hematologic disorder and avoid palpation force; notify provider."
+  severity: "CRITICAL"
+- keywords: ["ascites with shifting dullness","shifting dullness positive"]
+  match_type: all
+  alert: "Shifting dullness confirms ascites. Consider Excess fluid volume and monitor respiratory compromise and abdominal girth. :contentReference[oaicite:5]{index=5}"
+  severity: "WARNING"
+- keywords: ["hepatojugular reflux positive","positive HJR"]
+  match_type: any
+  alert: "Positive HJR suggests right heart failure. Consider Excess fluid volume and cardiac evaluation."
+  severity: "WARNING"
+- keywords: ["diastolic murmur","diastolic murmur new"]
+  match_type: any
+  alert: "Diastolic murmurs are often pathologic. Consider Cardiac consult and diagnosis of altered cardiac output risk."
+  severity: "WARNING"
+- keywords: ["systolic murmur loud grade >3/6","loud systolic murmur"]
+  match_type: any
+  alert: "Loud systolic murmur may indicate significant valvular disease. Consider Cardiac evaluation and monitor for hemodynamic compromise."
+  severity: "WARNING"
+- keywords: ["weak gag reflex","absent gag reflex"]
+  match_type: any
+  alert: "Absent gag reflex increases aspiration risk. Consider Risk for aspiration and implement NPO/aspiration precautions; SLP consult."
+  severity: "CRITICAL"
+- keywords: ["nasal mucosa dry","dry nose"]
+  match_type: any
+  alert: "Dry mucosa contributes to discomfort and infection risk. Consider Moisture deficit and oral/nasal care measures."
+  severity: "INFO"
+- keywords: ["oral lesions ulcer","oral ulcer"]
+  match_type: any
+  alert: "Oral ulcers can impair nutrition and increase infection risk. Consider Impaired oral mucous membrane integrity and pain management."
+  severity: "INFO"
+- keywords: ["breast lump palpated","breast mass"]
+  match_type: any
+  alert: "Palpable breast mass requires timely evaluation. Consider Referral for imaging and risk for tissue integrity issues."
+  severity: "WARNING"
+- keywords: ["gynecologic bleeding abnormal","abnormal vaginal bleeding"]
+  match_type: any
+  alert: "Abnormal bleeding may indicate gynecologic pathology. Consider Risk for blood loss and notify provider for evaluation."
+  severity: "CRITICAL"
+- keywords: ["testicular swelling","scrotal swelling"]
+  match_type: any
+  alert: "Testicular swelling requires urgent assessment for torsion/infection. Consider Acute pain and escalate per protocol."
+  severity: "CRITICAL"
+- keywords: ["edema hands","hand swelling"]
+  match_type: any
+  alert: "Hand edema can impair function and indicate systemic fluid overload. Consider Excess fluid volume and document impact on ADLs."
+  severity: "INFO"
+- keywords: ["new onset urinary retention after surgery","postop urinary retention"]
+  match_type: all
+  alert: "Post-op urinary retention is common and may require bladder scan/catheterization. Consider Urinary retention and implement facility catheter protocol."
+  severity: "WARNING"
+- keywords: ["surgical incision erythema","incision red warm"]
+  match_type: any
+  alert: "Redness around incision suggests infection. Consider Risk for surgical site infection and notify surgical team with cultures per policy."
+  severity: "WARNING"
+- keywords: ["drain output increased","increased surgical drain output"]
+  match_type: any
+  alert: "Increased drain output may indicate bleeding or leak. Consider Risk for impaired tissue perfusion and notify surgeon."
+  severity: "CRITICAL"
+- keywords: ["newly jaundiced infant","neonatal jaundice severe"]
+  match_type: all
+  alert: "Significant neonatal jaundice requires bilirubin assessment and phototherapy consideration. Consider Risk for neurologic damage and escalate."
+  severity: "CRITICAL"
+- keywords: ["umbilical cord red","cord infection"]
+  match_type: any
+  alert: "Umbilical cord inflammation suggests omphalitis in neonates. Consider Infection risk and neonatal team notification."
+  severity: "CRITICAL"
+- keywords: ["thrush infant mouth","white patches infant"]
+  match_type: any
+  alert: "Infant oral thrush affects feeding. Consider Impaired nutrition risk and treat per neonatal protocols."
+  severity: "INFO"
+- keywords: ["capillary haemangioma bleeding","hemangioma bleeding"]
+  match_type: any
+  alert: "Bleeding hemangioma requires wound care and hemostatic measures. Consider Risk for blood loss and consult dermatology/pediatrics."
+  severity: "WARNING"
+- keywords: ["nasal septal hematoma"]
+  match_type: any
+  alert: "Septal hematoma requires ENT evaluation to prevent necrosis. Consider Immediate ENT referral."
+  severity: "CRITICAL"
+- keywords: ["pedal pulses bounding","bounding dorsalis pedis"]
+  match_type: any
+  alert: "Bounding peripheral pulses may indicate systemic vasodilation or high-output states. Consider Correlate with vitals and clinical picture."
+  severity: "INFO"
+- keywords: ["peripheral temperature gradient present","temperature gradient limb trunk"]
+  match_type: any
+  alert: "A temperature gradient (cool extremity vs warm trunk) suggests peripheral perfusion deficit. Consider Impaired peripheral tissue perfusion."
+  severity: "WARNING"
+- keywords: ["skin turgor normal","good turgor"]
+  match_type: any
+  alert: "Documented normal turgor supports adequate hydration. Consider Continue monitoring."
+  severity: "INFO"
+- keywords: ["new onset scrotal pain","acute scrotal pain"]
+  match_type: any
+  alert: "Acute scrotal pain can indicate torsion. Consider Urgent urologic evaluation and escalate immediately."
+  severity: "CRITICAL"
+- keywords: ["breath odor fetid","fetor oris"]
+  match_type: any
+  alert: "Fetor oris (foul breath) may indicate poor oral hygiene, infection, or GI bleed. Consider Oral care and evaluate for infection."
+  severity: "INFO"
+- keywords: ["scleral icterus pronounced","marked scleral icterus"]
+  match_type: any
+  alert: "Marked scleral icterus suggests significant bilirubin elevation. Consider Hepatic dysfunction and correlate with labs."
+  severity: "WARNING"
+- keywords: ["edema sacral","sacral edema"]
+  match_type: any
+  alert: "Sacral edema places patient at risk for pressure injury. Consider Impaired skin integrity and repositioning schedule."
+  severity: "WARNING"
+- keywords: ["peripheral pulses thready","thready pulse"]
+  match_type: any
+  alert: "A thready pulse may indicate hypovolemia or shock. Consider Risk for decreased cardiac output and escalate monitoring."
+  severity: "CRITICAL"
+- keywords: ["new onset anuria","no urine output"]
+  match_type: any
+  alert: "Anuria is critical. Consider Acute renal failure and immediate escalation for fluid management and diagnostics."
+  severity: "CRITICAL"
+- keywords: ["ascites tense abdomen","tense ascites"]
+  match_type: any
+  alert: "Tense ascites can impair respiration and nutrition. Consider Excess fluid volume and paracentesis evaluation."
+  severity: "WARNING"
+- keywords: ["pleural effusion signs","dullness decreased breath sounds effusion"]
+  match_type: any
+  alert: "Findings suggesting pleural effusion require imaging confirmation. Consider Impaired gas exchange and coordinate thoracentesis if ordered."
+  severity: "WARNING"
+- keywords: ["peripheral edema bilateral","bilateral lower extremity edema"]
+  match_type: any
+  alert: "Bilateral edema often indicates systemic causes (heart, renal, hepatic). Consider Excess fluid volume and review meds, weights, and labs."
+  severity: "WARNING"
+- keywords: ["sharp localized chest pain reproducible with palpation"]
+  match_type: all
+  alert: "Reproducible chest wall pain is likely musculoskeletal, but rule out cardiac causes as indicated. Consider Acute pain and treat symptomatically."
+  severity: "INFO"
+- keywords: ["ecchymosis around eyes","periorbital ecchymosis"]
+  match_type: any
+  alert: "Periorbital ecchymosis may indicate facial trauma or basilar skull fracture. Consider Head injury risk and neuro evaluation."
+  severity: "CRITICAL"
+- keywords: ["otitis media signs","bulging tympanic membrane"]
+  match_type: any
+  alert: "Bulging tympanic membrane suggests otitis media. Consider Infection risk and treat per pediatric protocol."
+  severity: "INFO"
+- keywords: ["cervical lymphadenopathy tender","tender neck nodes"]
+  match_type: all
+  alert: "Tender cervical nodes often accompany infection. Consider Infection risk and monitor systemic signs."
+  severity: "INFO"
+- keywords: ["unilateral decreased breath sounds with hyperresonance","pneumothorax signs"]
+  match_type: all
+  alert: "Unilateral decreased sounds with hyperresonance suggests pneumothorax. Consider Immediate escalation and chest decompression per protocol."
+  severity: "CRITICAL"
+- keywords: ["systolic ejection click","valvular click"]
+  match_type: any
+  alert: "Valvular clicks indicate structural valve issues. Consider Cardiac consult and monitor for symptoms of altered cardiac output."
+  severity: "INFO"
+- keywords: ["perianal fissure","perianal pain bleeding"]
+  match_type: any
+  alert: "Perianal fissures cause pain with defecation and risk for infection. Consider Pain management and local wound care."
+  severity: "INFO"
+- keywords: ["rectal tone decreased","reduced anal sphincter tone"]
+  match_type: any
+  alert: "Reduced rectal tone suggests neurologic involvement. Consider Neurologic deficit and bowel management planning."
+  severity: "WARNING"
+- keywords: ["hectic pattern fever","spiking fevers"]
+  match_type: any
+  alert: "Spiking fevers may suggest sepsis or systemic infection. Consider Infection risk and follow sepsis screening protocols."
+  severity: "CRITICAL"
+- keywords: ["new onset hypotension","systolic <90"]
+  match_type: any
+  alert: "Hypotension requires urgent evaluation for hypovolemia, sepsis, or cardiac causes. Consider Risk for shock and escalate care."
+  severity: "CRITICAL"
+- keywords: ["wound erythema tracking","cellulitis spreading"]
+  match_type: any
+  alert: "Spreading erythema indicates progression of infection. Consider Infection risk and escalate antibiotics/wound care per orders."
+  severity: "CRITICAL"
+- keywords: ["erythema migrans rash","tick bite rash"]
+  match_type: any
+  alert: "Erythema migrans suggests early Lyme disease. Consider Infection risk and notify provider for appropriate testing and treatment."
+  severity: "WARNING"
+- keywords: ["needle track marks IV drug use","track marks"]
+  match_type: any
+  alert: "Track marks increase infectious risk and social/behavioral concerns. Consider Infection risk and coordinate harm-reduction services."
+  severity: "INFO"
+- keywords: ["purpura non-blanching","petechiae widespread"]
+  match_type: any
+  alert: "Non-blanching purpura/petechiae may indicate thrombocytopenia or vasculitis. Consider Risk for bleeding and urgent labs and hematology consult."
+  severity: "CRITICAL"
+- keywords: ["palpable crepitus subcutaneous","subcutaneous emphysema"]
+  match_type: any
+  alert: "Subcutaneous emphysema suggests air leak (pneumothorax or trauma). Consider Immediate evaluation and imaging."
+  severity: "CRITICAL"
+- keywords: ["decreased breath sounds with tracheal shift away from affected side","tension pneumothorax signs"]
+  match_type: all
+  alert: "Combination strongly suggests tension pneumothorax. Consider Immediate life-saving intervention per emergency protocol."
+  severity: "CRITICAL"
+- keywords: ["new onset left bundle branch block","LBBB new"]
+  match_type: any
+  alert: "New conduction abnormality warrants cardiology evaluation for ischemia. Consider Altered cardiac output and notify provider."
+  severity: "CRITICAL"
+- keywords: ["new murmur with fever","murmur + fever"]
+  match_type: all
+  alert: "New murmur in febrile patient raises endocarditis concern. Consider Infection risk and blood cultures/echocardiography per orders."
+  severity: "CRITICAL"
+- keywords: ["neck mass rapidly enlarging","rapidly enlarging neck mass"]
+  match_type: any
+  alert: "Rapid growth suggests malignancy or infection. Consider Urgent evaluation and imaging/ENT referral."
+  severity: "WARNING"
+- keywords: ["diffuse abdominal tenderness","tenderness diffuse"]
+  match_type: any
+  alert: "Diffuse tenderness may indicate peritonitis or systemic process. Consider Acute pain and urgent assessment."
+  severity: "CRITICAL"
+- keywords: ["guarding with involuntary rigidity","boardlike abdomen"]
+  match_type: any
+  alert: "Rigid abdomen is a surgical emergency. Consider Immediate escalation for operative evaluation."
+  severity: "CRITICAL"
+- keywords: ["bilateral crackles with elevated BNP","crackles + BNP elevated"]
+  match_type: all
+  alert: "This combination supports heart failure exacerbation. Consider Excess fluid volume and coordinate diuretic therapy and cardiology input."
+  severity: "CRITICAL"
+- keywords: ["sudden severe headache worst ever","thunderclap headache"]
+  match_type: any
+  alert: "Thunderclap headache may indicate subarachnoid hemorrhage. Consider Immediate neuroimaging and urgent escalation."
+  severity: "CRITICAL"
+- keywords: ["neck stiffness and photophobia with fever","meningitis triad"]
+  match_type: all
+  alert: "Clinical triad suggests meningitis; initiate sepsis/meningitis protocols and urgent lumbar puncture/imaging per provider."
+  severity: "CRITICAL"
+- keywords: ["gait instability new","new unsteady gait"]
+  match_type: any
+  alert: "New gait instability increases fall risk. Consider Risk for falls and implement mobility assistance and PT referral."
+  severity: "WARNING"
+- keywords: ["positive romberg test","romberg positive"]
+  match_type: any
+  alert: "Positive Romberg indicates proprioceptive or vestibular dysfunction. Consider Neurologic deficit and fall precautions."
+  severity: "WARNING"
+- keywords: ["cold sweat","clammy skin"]
+  match_type: any
+  alert: "Clammy skin with other signs may indicate shock or ischemia. Consider Immediate assessment for hemodynamic instability."
+  severity: "CRITICAL"
+- keywords: ["new onset periorbital edema","eye swelling"]
+  match_type: any
+  alert: "Periorbital edema may indicate allergic reaction or renal disease. Consider Risk for airway compromise if allergic; evaluate renal function."
+  severity: "WARNING"
+- keywords: ["anaphylactic signs hives tongue swelling hypotension","anaphylaxis"]
+  match_type: any
+  alert: "Any signs of anaphylaxis require immediate treatment (epi). Consider Immediate life-saving measures and airway support."
+  severity: "CRITICAL"
+- keywords: ["new petechial rash with fever","petechiae fever"]
+  match_type: all
+  alert: "Petechiae with fever may indicate meningococcemia or severe sepsis. Consider Immediate isolation and urgent escalation."
+  severity: "CRITICAL"
+- keywords: ["hypoxia not corrected by low-flow O2","persistent hypoxia"]
+  match_type: any
+  alert: "Hypoxia refractory to low-flow oxygen requires higher-level respiratory support evaluation (HFNC, NIV, intubation). Consider Respiratory failure risk."
+  severity: "CRITICAL"
+- keywords: ["new onset seizure","first seizure"]
+  match_type: any
+  alert: "Document seizure activity and postictal state. Consider Risk for injury and neurologic evaluation; check glucose and meds."
+  severity: "CRITICAL"
+- keywords: ["involuntary movement focal","new focal seizure signs"]
+  match_type: any
+  alert: "Focal seizure activity suggests localized brain lesion. Consider Neurologic deficit and urgent neuro consult."
+  severity: "CRITICAL"
+- keywords: ["ocular hemorrhage subconjunctival extensive","large subconjunctival hemorrhage"]
+  match_type: any
+  alert: "Document visual changes and pain. Consider Ophthalmology referral if vision affected."
+  severity: "INFO"
+- keywords: ["orbital cellulitis signs","eye pain swelling fever"]
+  match_type: all
+  alert: "Orbital cellulitis threatens vision and requires urgent IV antibiotics and ophthalmology consult."
+  severity: "CRITICAL"
+- keywords: ["severe localized bone pain with swelling","osteomyelitis suspicion"]
+  match_type: any
+  alert: "Suspected osteomyelitis merits imaging and labs. Consider Infection risk and orthopedic/infectious disease referral."
+  severity: "WARNING"
+- keywords: ["new onset erythema multiforme","target lesions"]
+  match_type: any
+  alert: "Target lesions may indicate drug reaction or infection. Consider Risk for systemic reaction and dermatology/ID consult."
+  severity: "WARNING"
+- keywords: ["fixed flexion contracture","contracture present"]
+  match_type: any
+  alert: "Contractures limit mobility and increase pressure injury risk. Consider Impaired physical mobility and implement ROM and splinting."
+  severity: "WARNING"
+- keywords: ["cushingoid features new","moon facies new"]
+  match_type: any
+  alert: "New cushingoid features suggest steroid effect or endocrine disorder. Consider Endocrine imbalance and medication review."
+  severity: "INFO"
+- keywords: ["eczematous weeping lesion","weeping dermatitis"]
+  match_type: any
+  alert: "Weeping lesions increase infection risk and fluid loss. Consider Impaired skin integrity and moisture control."
+  severity: "WARNING"
+- keywords: ["family reports feeding difficulty infant","infant feeding difficulty"]
+  match_type: all
+  alert: "Feeding difficulties in infants increase risk for dehydration and growth impairment. Consider Nutrition risk and neonatal team involvement."
+  severity: "CRITICAL"
+- keywords: ["new onset hypotonia infant","infant hypotonia"]
+  match_type: any
+  alert: "Infant hypotonia may indicate neuromuscular disease or metabolic disorder. Consider Urgent pediatric/neonatal assessment."
+  severity: "CRITICAL"
+- keywords: ["flushing episodes","intermittent flushing"]
+  match_type: any
+  alert: "Flushing may indicate autonomic instability, carcinoid, or reaction. Consider Assess triggers and endocrine/ID evaluation if recurrent."
+  severity: "INFO"
+- keywords: ["fixed rash in pressure area due to moisture","incontinence associated dermatitis"]
+  match_type: any
+  alert: "Incontinence-associated dermatitis increases skin breakdown risk. Consider Impaired skin integrity and implement skin-care bundle. :contentReference[oaicite:6]{index=6}"
+  severity: "WARNING"
+- keywords: ["systolic blood pressure difference >20 between arms","bp difference arms"]
+  match_type: any
+  alert: "Significant inter-arm BP difference may indicate vascular disease or dissection. Consider Urgent vascular/cardiac evaluation."
+  severity: "CRITICAL"
+- keywords: ["cyanotic nail beds","blue nails"]
+  match_type: any
+  alert: "Cyanotic nails suggest hypoxemia. Consider Impaired gas exchange and assess oxygenation immediately."
+  severity: "CRITICAL"
+- keywords: ["new onset decreased speech comprehension","receptive aphasia"]
+  match_type: any
+  alert: "Receptive aphasia suggests dominant hemisphere stroke. Consider Immediate stroke pathway activation."
+  severity: "CRITICAL"
+- keywords: ["new expressive aphasia","motor aphasia"]
+  match_type: any
+  alert: "Expressive aphasia indicates cortical involvement; initiate stroke evaluation and protection measures."
+  severity: "CRITICAL"
+- keywords: ["oral bleeding heavy","active oral bleed"]
+  match_type: any
+  alert: "Active oral bleeding risks airway compromise and blood loss. Consider Immediate hemostatic measures and escalate to provider."
+  severity: "CRITICAL"
+- keywords: ["ventilator high pressure alarms","ventilator high Ppeak"]
+  match_type: any
+  alert: "High ventilator pressures suggest obstruction, bronchospasm, or decreased compliance. Consider Respiratory compromise and respiratory therapy/ICU input."
+  severity: "CRITICAL"
+- keywords: ["drain tube dislodged","dislodged drain"]
+  match_type: any
+  alert: "Dislodged surgical drain may lead to bleeding or fluid accumulation. Consider Immediate surgical notification and containment."
+  severity: "CRITICAL"
+- keywords: ["jugular thrill","palpable JVD thrill"]
+  match_type: any
+  alert: "Palpable JVD thrill suggests vascular anomaly or high-output state. Consider Cardiac evaluation."
+  severity: "INFO"
+- keywords: ["newly decreased breath sounds with fever and chest pain","empyema suspicion"]
+  match_type: all
+  alert: "Findings suggest possible empyema or complicated pneumonia. Consider Infection risk and thoracic surgery/pulmonology consult."
+  severity: "CRITICAL"
+- keywords: ["new onset lactic acidosis signs hypotension tachycardia"]
+  match_type: all
+  alert: "Signs consistent with poor perfusion and metabolic derangement. Consider Sepsis/shock pathway and urgent resuscitation."
+  severity: "CRITICAL"
+- keywords: ["spontaneous vaginal bleeding heavy","postpartum hemorrhage signs"]
+  match_type: all
+  alert: "Heavy postpartum bleeding is emergent. Consider Hemorrhage protocol and immediate obstetric escalation."
+  severity: "CRITICAL"
+- keywords: ["shoulder shrug weakness","CN XI weakness"]
+  match_type: any
+  alert: "Accessory nerve weakness affects shoulder function. Consider Neurologic deficit and PT referral for function and safety."
+  severity: "INFO"
+- keywords: ["facial droop with tongue deviation","cranial nerve deficit"]
+  match_type: any
+  alert: "Cranial nerve deficits suggest focal neurologic lesion. Consider Immediate neuro evaluation and stroke pathway."
+  severity: "CRITICAL"
+- keywords: ["new onset drooling and difficulty handling secretions","bulbar weakness"]
+  match_type: any
+  alert: "Bulbar weakness increases aspiration risk. Consider Airway protection and NPO/aspiration precautions with urgent evaluation."
+  severity: "CRITICAL"
+- keywords: ["bronchial breath sounds over peripheral lung field","consolidation sign"]
+  match_type: all
+  alert: "Bronchial sounds peripherally suggest lung consolidation/pneumonia. Consider Impaired gas exchange and antibiotic/respiratory interventions."
+  severity: "WARNING"
+- keywords: ["stridor in child","pediatric stridor"]
+  match_type: any
+  alert: "Pediatric stridor may rapidly progress; consider Airway compromise and urgent ENT/pediatric escalation."
+  severity: "CRITICAL"
+- keywords: ["abdominal bruit palpable","abdominal bruit"]
+  match_type: any
+  alert: "Abdominal bruit may indicate vascular pathology; consider Vascular assessment and imaging referral."
+  severity: "WARNING"
+- keywords: ["foul smelling vaginal discharge","vaginal malodorous discharge"]
+  match_type: any
+  alert: "Foul discharge suggests infection. Consider Infection risk and obtain cultures and gynecologic consult if indicated."
+  severity: "WARNING"
+- keywords: ["hematoma expanding at IV site","expanding hematoma"]
+  match_type: any
+  alert: "Expanding hematoma at vascular access site risks compartment syndrome and blood loss. Consider Immediate pressure, vascular/ surgical escalation."
+  severity: "CRITICAL"
+- keywords: ["cremasteric reflex absent","absent cremasteric reflex"]
+  match_type: any
+  alert: "Absent cremasteric reflex may indicate testicular torsion in appropriate context. Consider Urgent urology evaluation."
+  severity: "CRITICAL"
+- keywords: ["fixed dilated pupil unilateral","unilateral fixed dilated pupil"]
+  match_type: any
+  alert: "Unilateral fixed dilated pupil suggests uncal herniation or oculomotor nerve compression. Consider Immediate neurosurgical escalation."
+  severity: "CRITICAL"
+- keywords: ["new onset unilateral visual field cut","homonymous hemianopia"]
+  match_type: any
+  alert: "Visual field cut indicates cortical lesion; consider Immediate stroke/neurologic workup and protective measures."
+  severity: "CRITICAL"
+- keywords: ["ischemic toe ulcer","necrotic toe"]
+  match_type: any
+  alert: "Ischemic necrosis of digits requires vascular assessment and wound care. Consider Impaired peripheral tissue perfusion and surgical consultation."
+  severity: "CRITICAL"
+- keywords: ["skin temperature asymmetry","one limb warmer than other"]
+  match_type: any
+  alert: "Temperature asymmetry may indicate inflammation or perfusion abnormality. Consider Document and assess vascular/ infectious causes."
+  severity: "WARNING"
+- keywords: ["persistently low oxygen saturation despite intervention","refractory hypoxemia"]
+  match_type: any
+  alert: "Refractory hypoxemia suggests severe respiratory failure; consider ICU transfer and advanced respiratory support."
+  severity: "CRITICAL"
+- keywords: ["new onset hypotonia stroke neonate","neonate hypotonia new"]
+  match_type: any
+  alert: "Neonatal hypotonia demands urgent neonatal team review for metabolic or neurologic causes."
+  severity: "CRITICAL"
+- keywords: ["wound undermining present","wound undermining"]
+  match_type: any
+  alert: "Undermining increases complexity of wound care. Consider Impaired skin integrity and wound care specialist referral."
+  severity: "WARNING"
+- keywords: ["fistula present wound","enterocutaneous fistula"]
+  match_type: any
+  alert: "Fistula management requires multidisciplinary care. Consider Risk for fluid/electrolyte imbalance and nutrition deficit; consult specialists."
+  severity: "CRITICAL"
+- keywords: ["urine cloudy foul smelling","urine malodorous cloudy"]
+  match_type: any
+  alert: "Urine with cloudiness and foul odor suggests UTI. Consider Infection risk and obtain UA/culture per protocol."
+  severity: "WARNING"
+- keywords: ["new ptosis unilateral","one-sided ptosis"]
+  match_type: any
+  alert: "Unilateral ptosis may indicate CN III palsy or Horner's syndrome. Consider Neurologic urgent assessment."
+  severity: "CRITICAL"
+- keywords: ["atypical rash with mucosal involvement","mucocutaneous lesions"]
+  match_type: any
+  alert: "Mucocutaneous lesions may indicate Stevens-Johnson or severe drug reaction. Consider Immediate dermatology/ID and discontinue offending agents."
+  severity: "CRITICAL"
+- keywords: ["akinetic limb","limb akinesia"]
+  match_type: any
+  alert: "Akinetic limb indicates severe motor deficit requiring protection and mobility planning. Consider Impaired physical mobility and fall risk."
+  severity: "CRITICAL"
+- keywords: ["new onset hypotonia focal","focal hypotonia"]
+  match_type: any
+  alert: "Focal hypotonia corresponds to localized neurologic injury. Consider Neurologic evaluation and PT/OT for support."
+  severity: "WARNING"
+- keywords: ["skin blistering large","tense bullae"]
+  match_type: any
+  alert: "Tense bullae may indicate bullous disorders or burns. Consider Impaired skin integrity and dermatology/burn consult as appropriate."
+  severity: "WARNING"
+- keywords: ["malaise severe with lymphadenopathy","systemic symptoms lymphadenopathy"]
+  match_type: all
+  alert: "Systemic symptoms with lymphadenopathy raise systemic infection or malignancy. Consider Infection/oncologic workup and labs."
+  severity: "WARNING"
+- keywords: ["new onset sore throat drooling difficulty breathing","epiglottitis signs"]
+  match_type: all
+  alert: "Epiglottitis is a pediatric emergency. Consider Immediate airway protection and urgent ENT/pediatric care."
+  severity: "CRITICAL"
+- keywords: ["stridor biphasic","biphasic stridor"]
+  match_type: any
+  alert: "Biphasic stridor suggests subglottic obstruction. Consider Urgent airway evaluation and ENT involvement."
+  severity: "CRITICAL"
+- keywords: ["nasal bleeding heavy uncontrollable","epistaxis uncontrolled"]
+  match_type: any
+  alert: "Uncontrolled epistaxis may cause significant blood loss. Consider Hemorrhage control measures and ENT/surgical escalation."
+  severity: "CRITICAL"
+- keywords: ["sudden unilateral leg pallor coldness pain","acute limb ischemia"]
+  match_type: all
+  alert: "Acute limb ischemia demands immediate vascular assessment and possible revascularization. Consider Emergency escalation."
+  severity: "CRITICAL"
+- keywords: ["worsening shortness of breath on exertion","progressive dyspnea exertional"]
+  match_type: any
+  alert: "Progressive exertional dyspnea may indicate cardiac or pulmonary decline. Consider Activity intolerance and further cardiopulmonary testing."
+  severity: "WARNING"
+- keywords: ["voice change hoarseness progressive","persistent hoarseness"]
+  match_type: any
+  alert: "Persistent hoarseness may indicate laryngeal pathology. Consider ENT referral and documentation of duration and associated symptoms."
+  severity: "INFO"
+- keywords: ["new onset increased intracranial pressure with pupil changes and vomiting","ICP triad"]
+  match_type: all
+  alert: "Signs of raised ICP require immediate neurosurgical evaluation and stabilization."
+  severity: "CRITICAL"
+- keywords: ["newly noted change in gait with focal limb weakness and urinary incontinence","cauda equina signs"]
+  match_type: all
+  alert: "Combination suggests cauda equina syndrome. Consider Immediate surgical spine evaluation and escalation."
+  severity: "CRITICAL"
+- keywords: ["testicular torsion signs pain swelling absent cremasteric reflex","testicular torsion"}
+  match_type: all
+  alert: "Testicular torsion is a urologic emergency; expedite scrotal ultrasound and urology consult."
+  severity: "CRITICAL"
+- keywords: ["new onset severe leg pain after immobilization","compartment syndrome concern"]
+  match_type: any
+  alert: "Severe pain out of proportion with tense compartment suggests compartment syndrome. Consider Emergent surgical evaluation."
+  severity: "CRITICAL"
+- keywords: ["skin sloughing widespread","toxic epidermal necrolysis suspicion"]
+  match_type: any
+  alert: "Widespread epidermal sloughing is life-threatening. Consider Immediate burn/dermatology and transfer to specialized care."
+  severity: "CRITICAL"
+- keywords: ["new onset severe abdominal pain radiating to back with elevated amylase/lipase","acute pancreatitis signs"]
+  match_type: all
+  alert: "Findings consistent with acute pancreatitis. Consider Acute pain and GI/surgical consult and fluid resuscitation."
+  severity: "CRITICAL"
+- keywords: ["new localized swelling after insect bite with rapidly spreading erythema","necrotizing infection concern"]
+  match_type: all
+  alert: "Rapidly spreading erythema and severe pain may indicate necrotizing infection; consider Immediate surgical and ID escalation."
+  severity: "CRITICAL"
+- keywords: ["erythema nodosum painful nodules","erythema nodosum"]
+  match_type: any
+  alert: "Painful subcutaneous nodules suggest systemic inflammatory process. Consider Document and refer rheumatology/ID as indicated."
+  severity: "INFO"
+- keywords: ["new onset unilateral facial weakness with hyperacusis","bell's palsy features"]
+  match_type: all
+  alert: "Facial nerve palsy characteristics require neurologic and possibly ENT evaluation. Consider Facial nerve impairment and eye protection."
+  severity: "WARNING"
+- keywords: ["sudden painless vision loss monocular","retinal artery occlusion suspicion"]
+  match_type: any
+  alert: "Painless monocular vision loss may indicate retinal artery occlusion; consider Immediate ophthalmology and stroke pathway consideration."
+  severity: "CRITICAL"
+- keywords: ["child prolonged high fever rash petechiae","meningococcemia concern pediatric"]
+  match_type: all
+  alert: "Combination suggests life-threatening infection; initiate emergency sepsis/meningococcemia protocols and isolation."
+  severity: "CRITICAL"
+- keywords: ["sudden unilateral ear discharge bright red","aural bleeding"]
+  match_type: any
+  alert: "Ear bleeding requires ENT evaluation for trauma or skull base fracture if accompanied by other signs. Consider Urgent assessment."
+  severity: "CRITICAL"
+- keywords: ["non-healing surgical wound >2 weeks","chronic wound non-healing"]
+  match_type: any
+  alert: "Non-healing wound requires wound care and possible infectious/vascular evaluation. Consider Impaired skin integrity and specialist referral."
+  severity: "WARNING"
+- keywords: ["tachypnea with hypocapnia","rapid shallow breathing with low CO2"]
+  match_type: any
+  alert: "Hyperventilation can cause respiratory alkalosis; assess for pain, anxiety, sepsis, or pulmonary embolism. Consider Respiratory compromise evaluation."
+  severity: "WARNING"
+- keywords: ["sudden severe calf pain swelling after long flight","DVT suspicion"]
+  match_type: all
+  alert: "Classic DVT presentation—assess with duplex ultrasound and consider anticoagulation per protocol. Consider Risk for thromboembolism."
+  severity: "CRITICAL"
+- keywords: ["sudden pleuritic chest pain with dyspnea after immobilization","pulmonary embolism suspicion"]
+  match_type: all
+  alert: "Consider Pulmonary embolism risk; expedite imaging (CTPA) and activate thromboembolism protocol."
+  severity: "CRITICAL"
+- keywords: ["new gastric bleeding with hypotension tachycardia","massive GI bleed signs"]
+  match_type: all
+  alert: "Massive GI bleed requires immediate resuscitation and GI/surgical escalation."
+  severity: "CRITICAL"
+- keywords: ["medication patch site irritation severe","topical patch reaction"]
+  match_type: any
+  alert: "Local reaction to transdermal therapy may require removal and alternative delivery. Consider Impaired skin integrity and medication review."
+  severity: "INFO"
+- keywords: ["cheyne-stokes respiration pattern","periodic breathing"]
+  match_type: any
+  alert: "Cheyne-Stokes respirations often indicate severe cardiac or neurologic disease. Consider End-of-life or advanced care evaluation and respiratory support."
+  severity: "CRITICAL"
+- keywords: ["new palpable pulsatile mass in groin","femoral aneurysm suspicion"]
+  match_type: any
+  alert: "Palpable pulsatile groin mass may signify aneurysm; consider Vascular surgery referral."
+  severity: "WARNING"
+- keywords: ["progressive dysphagia solids then liquids","progressive swallowing difficulty"]
+  match_type: any
+  alert: "Progressive dysphagia suggests obstructive lesion; consider GI/ENT referral and risk for aspiration and nutrition deficit."
+  severity: "WARNING"
+- keywords: ["new onset severe back pain with bowel/bladder dysfunction","spinal cord compression signs"]
+  match_type: all
+  alert: "Red flag for spinal cord compression; urgent MRI and neurosurgical consultation required."
+  severity: "CRITICAL"
+- keywords: ["sudden unilateral facial swelling with urticaria","angioedema signs"]
+  match_type: all
+  alert: "Angioedema risks airway compromise; consider Immediate airway management and antihistamine/epi per protocol."
+  severity: "CRITICAL"
+- keywords: ["ulnar deviation of fingers","rheumatoid deformity"]
+  match_type: any
+  alert: "Joint deformities suggest chronic inflammatory arthritis. Consider Chronic pain and mobility impairment; rheumatology referral."
+  severity: "INFO"
+- keywords: ["new painful laceration with tendon involvement suspected","tendon injury signs"]
+  match_type: any
+  alert: "Tendon injury requires immobilization and surgical evaluation. Consider Impaired physical mobility and urgent referral."
+  severity: "CRITICAL"
+- keywords: ["wound with exposed bone","osteomyelitis risk open bone"]
+  match_type: any
+  alert: "Exposure of bone in wound increases osteomyelitis risk. Consider Urgent orthopedic/wound specialist consultation and infection management."
+  severity: "CRITICAL"
+- keywords: ["severe dehydration signs with sunken eyes tachycardia hypotension","dehydration triad"]
+  match_type: all
+  alert: "Severe dehydration needs prompt fluid resuscitation. Consider Fluid volume deficit and electrolyte correction."
+  severity: "CRITICAL"
+- keywords: ["new onset fever in neutropenic patient","neutropenic fever"]
+  match_type: all
+  alert: "Neutropenic fever is oncologic emergency; initiate neutropenic fever protocol and empiric antibiotics per guidelines."
+  severity: "CRITICAL"
+- keywords: ["new ulcer with foul odor diabetic foot","diabetic foot infection"]
+  match_type: all
+  alert: "Diabetic foot infection risks limb loss. Consider Immediate wound care, cultures, antibiotics, and vascular/ID consult."
+  severity: "CRITICAL"
+- keywords: ["non-healing pressure ulcer stage 3 or 4","deep pressure injury"]
+  match_type: any
+  alert: "Advanced pressure injury requires multidisciplinary wound care and possible surgical intervention. Consider Impaired skin integrity and specialist consult."
+  severity: "CRITICAL"
+- keywords: ["postpartum fever >38 within 24h","postpartum infection signs"]
+  match_type: all
+  alert: "Postpartum fever may indicate endometritis or other infection. Consider Infection risk and obstetric review."
+  severity: "CRITICAL"
+- keywords: ["significant tooth avulsion","dental avulsion"]
+  match_type: any
+  alert: "Avulsed tooth management impacts recovery; consider dental/oral surgery referral and pain control."
+  severity: "INFO"
+- keywords: ["lymphangitic streaking from wound","lymphangitis sign"]
+  match_type: any
+  alert: "Lymphangitic streaking indicates spreading infection; consider IV antibiotics and urgent evaluation."
+  severity: "CRITICAL"
+- keywords: ["dysphonia with neck mass rapidly progressive","rapid voice change with mass"]
+  match_type: all
+  alert: "Rapid voice change and neck mass may indicate malignancy or aggressive infection. Consider Urgent ENT evaluation."
+  severity: "WARNING"
+- keywords: ["new onset point tenderness over vertebrae with fever","vertebral osteomyelitis sign"]
+  match_type: all
+  alert: "Vertebral osteomyelitis requires imaging and infectious disease/orthopedics input. Consider Infection risk and urgent workup."
+  severity: "CRITICAL"
+- keywords: ["pulsatile varicosity bleeding","bleeding varicose vein"]
+  match_type: any
+  alert: "Bleeding varicosity may require local pressure and vascular surgery referral if recurrent. Consider Hemorrhage control and wound care."
+  severity: "WARNING"
+- keywords: ["severe osmotic diarrhea with hypotension","volume-depletion diarrhea"]
+  match_type: all
+  alert: "Severe diarrheal losses risk hypovolemia and electrolyte imbalance. Consider Fluid volume deficit and replacement therapy."
+  severity: "CRITICAL"
+- keywords: ["sudden inability to move limb with severe pain after fracture","complicated fracture with neurovascular compromise"]
+  match_type: all
+  alert: "Neurovascular compromise with fracture is emergent; immobilize and urgent orthopedic evaluation required."
+  severity: "CRITICAL"
+- keywords: ["clubbing of fingers new","digital clubbing"]
+  match_type: any
+  alert: "New clubbing suggests chronic hypoxia or pulmonary disease. Consider Chronic respiratory/cardiac evaluation and baseline imaging."
+  severity: "INFO"
+- keywords: ["subungual hematoma extensive","large nail bed hematoma"]
+  match_type: any
+  alert: "Large subungual hematoma may require decompression to relieve pain. Consider Local wound care and possible minor procedure."
+  severity: "INFO"
+- keywords: ["acute change in functional status elderly","sudden decline elderly"]
+  match_type: any
+  alert: "Acute functional decline in older adults often indicates an underlying acute illness. Consider Comprehensive assessment and fall/skin precautions."
+  severity: "CRITICAL"
+- keywords: ["delayed cap refill infant >4s","infant delayed cap refill"]
+  match_type: any
+  alert: "Delayed capillary refill in infants signals poor perfusion. Consider Immediate neonatal/pediatric escalation."
+  severity: "CRITICAL"
+- keywords: ["sudden unilateral hearing loss with vertigo","labyrinthitis vs stroke"]
+  match_type: all
+  alert: "Acute vestibular-symptom complex requires urgent ENT/neuro evaluation to rule out central causes."
+  severity: "CRITICAL"
+- keywords: ["massive hematuria bright red clots","significant urinary bleeding"]
+  match_type: any
+  alert: "Massive hematuria can cause hemodynamic instability. Consider Urgent urology and hemodynamic resuscitation."
+  severity: "CRITICAL"
+- keywords: ["prolonged bleeding from minor cuts","bleeding disorder signs"]
+  match_type: any
+  alert: "Excess bleeding with minor trauma suggests coagulopathy. Consider Risk for bleeding and labs including PT/PTT/platelets."
+  severity: "WARNING"
+- keywords: ["bilateral crackles with orthopnea and weight gain","acute decompensated heart failure signs"]
+  match_type: all
+  alert: "Findings support heart failure exacerbation; consider Diuresis, oxygen, and cardiology involvement."
+  severity: "CRITICAL"
+- keywords: ["new cyanosis around mouth","perioral cyanosis new"]
+  match_type: any
+  alert: "Perioral cyanosis suggests severe hypoxia. Consider Immediate escalation and airway/oxygen interventions."
+  severity: "CRITICAL"
+- keywords: ["skin tenting elderly","skin turgor elderly decreased"]
+  match_type: any
+  alert: "Decreased turgor in elderly may reflect dehydration or decreased skin elasticity; consider Assess hydration and provide fluids as appropriate."
+  severity: "WARNING"
+- keywords: ["new onset oral bleeding with anticoagulant use","bleeding on anticoagulation"]
+  match_type: all
+  alert: "Bleeding while on anticoagulant therapy requires medication review and possible reversal per protocol. Consider Hemorrhage risk."
+  severity: "CRITICAL"
+- keywords: ["thrush in immunocompromised patient","oral candidiasis immunocompromised"]
+  match_type: all
+  alert: "Immunocompromised status with thrush increases risk for systemic infection; consider Antifungal therapy and ID consult."
+  severity: "CRITICAL"
+- keywords: ["new onset hyperreflexia with clonus","upper motor neuron signs"]
+  match_type: any
+  alert: "Hyperreflexia with clonus suggests upper motor neuron lesion. Consider Neurologic urgent assessment and imaging."
+  severity: "CRITICAL"
+- keywords: ["skin vesicles in dermatomal distribution","shingles zoster"]
+  match_type: any
+  alert: "Dermatomal vesicular rash suggests herpes zoster. Consider Pain control, antiviral therapy, and infection precautions."
+  severity: "WARNING"
+- keywords: ["active bleeding from central line site","central line bleeding"]
+  match_type: any
+  alert: "Central line bleeding poses significant risk; apply pressure and notify provider for hemostasis and possible line revision."
+  severity: "CRITICAL"
+- keywords: ["new onset hypotension with abdominal distension","possible intraabdominal bleed"]
+  match_type: all
+  alert: "Hypotension with distension may indicate intra-abdominal hemorrhage; consider Immediate surgical/trauma response."
+  severity: "CRITICAL"
+- keywords: ["blanching maculopapular rash after new med","drug rash new"]
+  match_type: all
+  alert: "New drug-related rash may require medication cessation and dermatology consult if progressive or systemic."
+  severity: "WARNING"
+- keywords: ["delayed cap refill neonate","neonate cap refill >4s"]
+  match_type: any
+  alert: "Delayed neonatal capillary refill requires immediate neonatal team notification for perfusion support."
+  severity: "CRITICAL"
+- keywords: ["significant bradycardia newborn","neonatal bradycardia symptomatic"]
+  match_type: any
+  alert: "Symptomatic neonatal bradycardia requires immediate neonatal resuscitation measures."
+  severity: "CRITICAL"
+- keywords: ["profuse vomiting with coffee-ground material","upper GI bleed vomit"]
+  match_type: all
+  alert: "Suggests upper GI bleeding; consider Hemorrhage protocol and urgent gastroenterology evaluation."
+  severity: "CRITICAL"
+- keywords: ["rapidly progressive jaundice with altered mental status","hepatic failure signs"]
+  match_type: all
+  alert: "Signs suggest acute liver failure; consider ICU-level care and hepatic service consultation."
+  severity: "CRITICAL"
+- keywords: ["new onset focal weakness with headache and vomiting","space-occupying lesion suspicion"]
+  match_type: all
+  alert: "Focal neuro signs with headache/vomiting require urgent neuroimaging for mass/hemorrhage."
+  severity: "CRITICAL"
+- keywords: ["worsening stridor after extubation","post-extubation stridor"]
+  match_type: any
+  alert: "Post-extubation stridor risks airway compromise. Consider Reintubation readiness and ENT/respiratory support."
+  severity: "CRITICAL"
+- keywords: ["peripheral temperature cool with mottling and hypotension","shock peripheral signs"]
+  match_type: all
+  alert: "Peripheral coolness/mottling with hypotension suggests shock; initiate resuscitation and critical care involvement."
+  severity: "CRITICAL"
+- keywords: ["new onset hemiplegia flaccid","acute flaccid hemiplegia"]
+  match_type: any
+  alert: "Acute flaccid hemiplegia demands stroke protocol activation and urgent neuroimaging."
+  severity: "CRITICAL"
+- keywords: ["purulent eye drainage with eyelid swelling","orbital cellulitis suspicion"]
+  match_type: all
+  alert: "Orbital cellulitis threatens vision and requires immediate IV antibiotics and ophthalmology consult."
+  severity: "CRITICAL"
+- keywords: ["necrotic tissue black eschar wound","eschar present"]
+  match_type: any
+  alert: "Eschar may indicate full-thickness tissue loss; consider Wound care and possible surgical debridement/consult."
+  severity: "WARNING"
+- keywords: ["rapidly progressive limb swelling with pain and systemic signs","necrotizing fasciitis suspicion"]
+  match_type: all
+  alert: "Necrotizing infection is life-threatening; consider Immediate surgical and ID escalation."
+  severity: "CRITICAL"
+- keywords: ["new onset severe unilateral headache with neck stiffness","possible SAH/meningitis"]
+  match_type: all
+  alert: "Urgent neuroimaging and lumbar puncture per provider are indicated for evaluation."
+  severity: "CRITICAL"
+- keywords: ["incompatible blood transfusion signs fever hypotension hemoglobinuria","transfusion reaction"]
+  match_type: all
+  alert: "Suspected transfusion reaction requires immediate transfusion stop, supportive measures, and notification of transfusion service."
+  severity: "CRITICAL"
+- keywords: ["acute blanching livedo reticularis with limb pain","embolic phenomenon suspicion"]
+  match_type: all
+  alert: "Livedo with limb ischemia may indicate embolic event. Consider Vascular emergency and urgent evaluation."
+  severity: "CRITICAL"
+- keywords: ["sudden severe flank pain with hematuria","renal colic or renal infarct suspicion"]
+  match_type: all
+  alert: "Flank pain with hematuria requires urgent imaging and urology/nephrology input as indicated."
+  severity: "CRITICAL"
+- keywords: ["new onset febrile neutropenia with mucositis","cancer treatment complication"]
+  match_type: all
+  alert: "Febrile neutropenia necessitates immediate empiric antibiotics and oncology notification."
+  severity: "CRITICAL"
+- keywords: ["significant drug extravasation with skin necrosis risk","IV extravasation severe"]
+  match_type: any
+  alert: "Extravasation of vesicant medications requires immediate local measures and specialty consult per extravasation protocol."
+  severity: "CRITICAL"
+- keywords: ["sudden loss of pulses distal to cast","compartment concern after casting"]
+  match_type: all
+  alert: "Loss of distal pulses after casting suggests compartment syndrome; consider Immediate cast removal and orthopedic emergency."
+  severity: "CRITICAL"
+- keywords: ["new cyanotic lips infant feeding difficulty","infant cyanosis during feeds"]
+  match_type: all
+  alert: "Cyanosis during feeds in infants is alarming; consider Cardiorespiratory compromise and urgent neonatal evaluation."
+  severity: "CRITICAL"
+- keywords: ["progressive painless jaundice","painless obstructive jaundice"]
+  match_type: any
+  alert: "Painless progressive jaundice raises concern for biliary obstruction or malignancy. Consider Urgent imaging and hepatobiliary referral."
+  severity: "WARNING"
+- keywords: ["sudden severe eye pain with vision loss","acute glaucoma or severe ocular event"]
+  match_type: any
+  alert: "Acute severe ocular pain with vision loss is emergent; consider Immediate ophthalmology evaluation."
+  severity: "CRITICAL"
+- keywords: ["new onset bulging proptotic eye","proptosis new"]
+  match_type: any
+  alert: "Proptosis may indicate orbital mass/infection; consider Urgent ophthalmology/ENT referral."
+  severity: "WARNING"
+- keywords: ["significant weight gain >2kg in 24h with edema and dyspnea","acute volume overload"]
+  match_type: all
+  alert: "Rapid weight gain with edema/dyspnea suggests acute volume overload/heart failure exacerbation; consider Diuresis and cardiology input."
+  severity: "CRITICAL"
+- keywords: ["blood pressure >180/120 with end organ signs","hypertensive crisis"]
+  match_type: all
+  alert: "Hypertensive emergency requires immediate BP control and organ-specific management."
+  severity: "CRITICAL"
+- keywords: ["new oliguria with rising creatinine and edema","acute kidney injury signs"]
+  match_type: all
+  alert: "AKI with oliguria and edema requires prompt nephrology input and fluid/medication review."
+  severity: "CRITICAL"
+- keywords: ["sudden diffuse petechiae after heparin","HIT suspicion or DIC"}
+  match_type: all
+  alert: "Diffuse petechiae post-anticoagulant may indicate DIC or HIT; consider Immediate hematology consult and lab evaluation."
+  severity: "CRITICAL"
+- keywords: ["rapid progressive weakness ascending","guillain-barre suspicion"]
+  match_type: any
+  alert: "Rapidly ascending weakness can indicate Guillain-Barré syndrome; consider Respiratory monitoring and neurology/ICU involvement."
+  severity: "CRITICAL"
+- keywords: ["new bulging wound hematoma with skin discoloration","deep wound hematoma expanding"]
+  match_type: any
+  alert: "Expanding wound hematoma warrants surgical review for hemostasis and evacuation."
+  severity: "CRITICAL"
+- keywords: ["severe metabolic disturbance signs arrhythmia altered mental status","electrolyte emergency"]
+  match_type: any
+  alert: "Electrolyte derangement manifesting with arrhythmia/AMS requires urgent correction and monitoring."
+  severity: "CRITICAL"
+- keywords: ["new onset petechial rash after meningococcal exposure","possible meningococcemia"]
+  match_type: all
+  alert: "Suspected meningococcemia requires immediate isolation and empiric therapy per protocol."
+  severity: "CRITICAL"
+- keywords: ["sudden loss of consciousness with head trauma","head injury LOC"]
+  match_type: all
+  alert: "Loss of consciousness after head trauma necessitates neuroimaging and close neurologic monitoring."
+  severity: "CRITICAL"
+- keywords: ["sudden onset vertigo with nystagmus and vomiting","vestibular crisis vs stroke"}
+  match_type: all
+  alert: "Severe vertigo with neurologic signs may be central; consider Urgent neuroimaging and ENT/neuro consult."
+  severity: "CRITICAL"
+- keywords: ["rapidly enlarging hematoma on anticoagulation with hypotension","major bleed anticoagulation"]
+  match_type: all
+  alert: "Major hemorrhage on anticoagulation requires reversal per protocol and urgent hemostatic measures."
+  severity: "CRITICAL"
+- keywords: ["acute vision loss with painful red eye and fixed mid-dilated pupil","acute angle-closure glaucoma"]
+  match_type: all
+  alert: "Suspect acute angle-closure glaucoma; consider Immediate ophthalmology treatment to lower intraocular pressure."
+  severity: "CRITICAL"
+- keywords: ["progressive memory loss sudden change","acute cognitive decline"]
+  match_type: any
+  alert: "Acute cognitive decline may indicate delirium, stroke, or metabolic cause; consider Immediate assessment and reversible cause workup."
+  severity: "CRITICAL"
+- keywords: ["new deep venous thrombosis while on prophylaxis","DVT on prophylaxis"]
+  match_type: all
+  alert: "DVT despite prophylaxis requires therapeutic anticoagulation and evaluation for failure of prophylaxis."
+  severity: "CRITICAL"
+- keywords: ["ischemic changes black digits with severe pain","critical limb ischemia"]
+  match_type: all
+  alert: "Critical limb ischemia necessitates urgent vascular surgery intervention to salvage limb."
+  severity: "CRITICAL"
+- keywords: ["sudden severe abdominal pain with rigid abdomen and hypotension post-op","post-op hemorrhage or leak"]
+  match_type: all
+  alert: "Postoperative rigid abdomen and hypotension demand immediate reoperation evaluation and resuscitation."
+  severity: "CRITICAL"
+- keywords: ["new onset severe sore throat with drooling muffled voice and trismus","peritonsillar abscess suspicion"]
+  match_type: all
+  alert: "Peritonsillar abscess can obstruct airway; consider ENT evaluation and possible drainage."
+  severity: "CRITICAL"
+- keywords: ["markedly elevated bilirubin with encephalopathy","acute liver failure coma"]
+  match_type: all
+  alert: "Acute liver failure with encephalopathy is life-threatening; consider ICU care and hepatology consultation."
+  severity: "CRITICAL"
+- keywords: ["progressive shortness of breath with pink frothy sputum","pulmonary edema with hemoptysis"]
+  match_type: all
+  alert: "Pink frothy sputum suggests pulmonary edema and possible cardiogenic pulmonary edema; consider Immediate diuresis and advanced cardiac care."
+  severity: "CRITICAL"
+- keywords: ["sudden inability to speak with right-sided weakness","left hemisphere stroke signs"]
+  match_type: all
+  alert: "Classic stroke presentation; activate acute stroke protocol and expedite imaging and reperfusion decisions."
+  severity: "CRITICAL"
+- keywords: ["new hypoxia with decreased breath sounds and asymmetric chest movement after central line placement","iatrogenic pneumothorax suspicion"]
+  match_type: all
+  alert: "Suspect iatrogenic pneumothorax; obtain chest imaging and manage per pneumothorax protocol."
+  severity: "CRITICAL"
+- keywords: ["rapid-onset blistering and mucosal sloughing after new medication","SJS/TEN suspicion"]
+  match_type: all
+  alert: "Stevens-Johnson syndrome/toxic epidermal necrolysis is life-threatening; stop offending drugs and transfer to higher-level/burn care."
+  severity: "CRITICAL"
+- keywords: ["severe limb swelling with erythema and bullae after minor trauma","compartment or necrotizing infection"}
+  match_type: all
+  alert: "Severe swelling with bullae and pain post-trauma requires immediate surgical evaluation for compartment syndrome or necrotizing infection."
+  severity: "CRITICAL"
+- keywords: ["pulseless limb after arterial line placement","iatrogenic arterial occlusion"]
+  match_type: all
+  alert: "Loss of pulses after arterial instrumentation demands immediate removal and vascular surgery evaluation."
+  severity: "CRITICAL"
+- keywords: ["sudden severe respiratory distress in hospitalized patient with recent immobilization","suspected pulmonary embolus"]
+  match_type: all
+  alert: "High suspicion for PE; initiate emergency pathways including oxygen, hemodynamic support, and diagnostic imaging."
+  severity: "CRITICAL"
+- keywords: ["new onset delirium with fever and urinary symptoms in elderly","UTI delirium"]
+  match_type: all
+  alert: "Elderly delirium with UTI signs suggests infection-triggered delirium; consider Infection risk and start appropriate workup/treatment."
+  severity: "CRITICAL"
+- keywords: ["rapid deterioration with multi-organ signs","severe sepsis septic shock"]
+  match_type: any
+  alert: "Severe sepsis/septic shock requires immediate bundle care (fluids, antibiotics, source control) and ICU-level support."
+  severity: "CRITICAL"
+- keywords: ["new onset facial swelling with difficulty breathing after medication infusion","anaphylaxis during infusion"]
+  match_type: all
+  alert: "Suspected anaphylaxis during infusion requires immediate cessation, epinephrine administration, and advanced life support."
+  severity: "CRITICAL"
+- keywords: ["massive soft tissue bleeding expanding hematoma on anticoagulants","major soft tissue hemorrhage"]
+  match_type: all
+  alert: "Major soft tissue hemorrhage on anticoagulant therapy requires reversal and surgical/interventional radiology input."
+  severity: "CRITICAL"
+- keywords: ["acute oliguria with mottling hypotension and lactic acidosis","multi-system hypoperfusion"]
+  match_type: all
+  alert: "Signs of systemic hypoperfusion indicate shock; initiate resuscitation and critical care team involvement."
+  severity: "CRITICAL"
+- keywords: ["new severe hypoxemia during transfusion","transfusion-related acute lung injury suspicion"]
+  match_type: all
+  alert: "TRALI suspected—stop transfusion, support oxygenation, and notify transfusion service immediately."
+  severity: "CRITICAL"
+- keywords: ["sudden severe chest pain with ST elevation on ECG","STEMI signs"]
+  match_type: all
+  alert: "STEMI requires immediate reperfusion strategy (PCI/thrombolysis) per facility protocol."
+  severity: "CRITICAL"
+- keywords: ["rapidly progressive respiratory failure on ward","decompensating respiratory failure"]
+  match_type: any
+  alert: "Escalate to ICU/respiratory therapy for advanced support and prepare for possible intubation."
+  severity: "CRITICAL"
+- keywords: ["new bilateral lower extremity weakness with sensory level","transverse myelitis suspicion"]
+  match_type: all
+  alert: "Transverse myelitis/cord lesion suspected; urgent MRI and neurology consult required."
+  severity: "CRITICAL"
+- keywords: ["large area of full-thickness burn","full-thickness burn large TBSA"]
+  match_type: any
+  alert: "Major burns require burn center transfer and fluid resuscitation per protocol."
+  severity: "CRITICAL"
+- keywords: ["acute onset severe pancreatitis with hypotension and hypoxemia","severe pancreatitis complications"]
+  match_type: all
+  alert: "Severe pancreatitis with systemic signs merits ICU care and multispecialty involvement."
+  severity: "CRITICAL"
+- keywords: ["sudden bilateral vision loss with headache and jaw claudication in elderly","giant cell arteritis suspicion"]
+  match_type: all
+  alert: "Giant cell arteritis is sight-threatening; urgent steroid therapy and rheumatology/ophthalmology input indicated."
+  severity: "CRITICAL"
+- keywords: ["rapidly progressive encephalopathy with focal signs and fever","acute encephalitis suspicion"]
+  match_type: all
+  alert: "Acute encephalitis requires urgent neuroinfectious workup and empiric therapy as per guidelines."
+  severity: "CRITICAL"
+- keywords: ["new macular rash with high fever and hypotension","toxic shock syndrome suspicion"]
+  match_type: all
+  alert: "Toxic shock syndrome requires immediate source control and aggressive supportive care."
+  severity: "CRITICAL"
+- keywords: ["abrupt onset severe leg swelling with chest pain and hypoxia","DVT/PE catastrophic combination"]
+  match_type: all
+  alert: "Combination suggests massive thromboembolism; urgent anticoagulation/thrombolysis evaluation and critical care."
+  severity: "CRITICAL"
+- keywords: ["documented physical exam normal no concerns"]
+  match_type: all
+  negate: true
+  alert: "If notable abnormal findings are described elsewhere but not in the physical exam, prompt the nurse to reconcile documentation: 'Please ensure abnormal findings are captured in Physical Exam (location, severity).' "
+  severity: "INFO"

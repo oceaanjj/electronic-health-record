@@ -64,7 +64,7 @@
                     <button type="submit" name="action" value="save_and_exit" class="button-default">
                         SUBMIT
                     </button>
-                    <button type="submit" name="action" value="save_and_exit" class="button-default">
+                    <button type="submit" name="action" value="save_and_finish" class="button-default">
                         FINISH
                     </button>
                 </div>

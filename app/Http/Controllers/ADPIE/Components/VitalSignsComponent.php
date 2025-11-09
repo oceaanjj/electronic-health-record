@@ -21,6 +21,7 @@ class VitalSignsComponent implements AdpieComponentInterface
     // Helper to get component data
     private function getComponentData(Request $request, Patient $patient)
     {
+        // Placeholder: Fetch or get from request
         return [
             'temperature' => $request->input('temperature'),
             'hr' => $request->input('hr'),
@@ -81,18 +82,31 @@ class VitalSignsComponent implements AdpieComponentInterface
         $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
-        $newDiagnosis = NursingDiagnosis::create([
-            'patient_id' => $patient->patient_id,
-            'diagnosis' => $nurseInput['diagnosis'],
-            'planning' => '',
-            'intervention' => '',
-            'evaluation' => '',
-            'diagnosis_alert' => $diagnosisAlert,
-            'rule_file_path' => $ruleFilePath,
-        ]);
+        // --- THIS IS THE CHANGE ---
+        // Find the "patient-level" diagnosis (where physical_exam_id is null)
+        // and update it, or create a new one.
+        $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
+            [
+                // Attributes to find
+                'patient_id' => $patient->patient_id,
+                'physical_exam_id' => null,
+                // Add other foreign key checks if needed
+                // 'intake_and_output_id' => null, 
+            ],
+            [
+                // Values to update or create
+                'diagnosis' => $nurseInput['diagnosis'],
+                'planning' => '', // Reset planning
+                'intervention' => '', // Reset intervention
+                'evaluation' => '', // Reset evaluation
+                'diagnosis_alert' => $diagnosisAlert,
+                'rule_file_path' => $ruleFilePath,
+            ]
+        );
+        // --- END OF CHANGE ---
 
         if ($request->input('action') == 'save_and_proceed') {
-            return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $newDiagnosis->id])
+            return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $nursingDiagnosis->id])
                 ->with('success', 'Diagnosis saved. Now, please enter the plan.');
         }
 
@@ -259,6 +273,14 @@ class VitalSignsComponent implements AdpieComponentInterface
             'rule_file_path' => $ruleFilePath,
         ]);
 
+        // --- UPDATED REDIRECT LOGIC ---
+        if ($request->input('action') == 'save_and_finish') {
+            // 'FINISH' button was clicked
+            return redirect()->route('vital-signs.show') // Assumed route from web.php
+                ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
+        }
+
+        // 'SUBMIT' button was clicked (save_and_exit)
         return redirect()->back()->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
     }
 }

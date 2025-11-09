@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\ADPIE\Components;
-
 use App\Http\Controllers\ADPIE\AdpieComponentInterface;
 use App\Models\NursingDiagnosis;
 use App\Models\PhysicalExam;
@@ -20,7 +19,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
     }
 
     /**
-     * Logic from
+     * Step 1: Show the Diagnosis form.
      */
     public function startDiagnosis(string $component, $id)
     {
@@ -35,12 +34,12 @@ class PhysicalExamComponent implements AdpieComponentInterface
             'physicalExamId' => $physicalExam->id,
             'patient' => $physicalExam->patient,
             'component' => $component,
-            'diagnosis' => $diagnosis  // --- ADD THIS LINE ---
+            'diagnosis' => $diagnosis  // Pass the found diagnosis (or null)
         ]);
     }
 
     /**
-     * Logic from
+     * Step 1: Store the Diagnosis.
      */
     public function storeDiagnosis(Request $request, string $component, $id)
     {
@@ -78,29 +77,38 @@ class PhysicalExamComponent implements AdpieComponentInterface
         $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
-        $newDiagnosis = NursingDiagnosis::create([
-            'physical_exam_id' => $physicalExamId,
-            'patient_id' => $patient->patient_id, // Store patient ID for all
-            'diagnosis' => $nurseInput['diagnosis'],
-            'planning' => '',
-            'intervention' => '',
-            'evaluation' => '',
-            'diagnosis_alert' => $diagnosisAlert,
-            'rule_file_path' => $ruleFilePath,
-        ]);
+        // --- THIS IS THE CHANGE ---
+        // Use updateOrCreate to find the diagnosis by physical_exam_id
+        // or create a new one if it doesn't exist.
+        $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
+            [
+                // Attributes to find
+                'physical_exam_id' => $physicalExamId,
+            ],
+            [
+                // Values to update or create
+                'patient_id' => $patient->patient_id,
+                'diagnosis' => $nurseInput['diagnosis'],
+                'planning' => '', // Reset planning
+                'intervention' => '', // Reset intervention
+                'evaluation' => '', // Reset evaluation
+                'diagnosis_alert' => $diagnosisAlert,
+                'rule_file_path' => $ruleFilePath,
+            ]
+        );
+        // --- END OF CHANGE ---
 
         if ($request->input('action') == 'save_and_proceed') {
-            return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $newDiagnosis->id])
+            return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $nursingDiagnosis->id])
                 ->with('success', 'Diagnosis saved. Now, please enter the plan.');
         }
 
-        // --- CHANGED THIS LINE ---
         return redirect()->back()
             ->with('success', 'Diagnosis saved.');
     }
 
     /**
-     * Logic from
+     * Step 2: Show the Planning form.
      */
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
@@ -113,7 +121,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
     }
 
     /**
-     * Logic from
+     * Step 2: Store the Planning.
      */
     public function storePlanning(Request $request, string $component, $nursingDiagnosisId)
     {
@@ -162,13 +170,12 @@ class PhysicalExamComponent implements AdpieComponentInterface
                 ->with('success', 'Plan saved. Now, please enter interventions.');
         }
 
-        // --- CHANGED THIS LINE ---
         return redirect()->back()
             ->with('success', 'Plan saved.');
     }
 
     /**
-     * Logic from
+     * Step 3: Show the Intervention form.
      */
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
@@ -181,7 +188,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
     }
 
     /**
-     * Logic from
+     * Step 3: Store the Intervention.
      */
     public function storeIntervention(Request $request, string $component, $nursingDiagnosisId)
     {
@@ -230,13 +237,12 @@ class PhysicalExamComponent implements AdpieComponentInterface
                 ->with('success', 'Intervention saved. Now, please enter evaluation.');
         }
 
-        // --- CHANGED THIS LINE ---
         return redirect()->back()
             ->with('success', 'Intervention saved.');
     }
 
     /**
-     * Logic from
+     * Step 4: Show the Evaluation form.
      */
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
@@ -249,7 +255,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
     }
 
     /**
-     * Logic from
+     * Step 4: Store the Evaluation.
      */
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)
     {
@@ -293,7 +299,14 @@ class PhysicalExamComponent implements AdpieComponentInterface
             'rule_file_path' => $ruleFilePath,
         ]);
 
-        // --- CHANGED THIS LINE ---
+        // Check which button was clicked
+        if ($request->input('action') == 'save_and_finish') {
+            // 'FINISH' button was clicked
+            return redirect()->route('physical-exam.index')
+                ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
+        }
+
+        // 'SUBMIT' button was clicked (or default 'save_and_exit')
         return redirect()->back()
             ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
     }

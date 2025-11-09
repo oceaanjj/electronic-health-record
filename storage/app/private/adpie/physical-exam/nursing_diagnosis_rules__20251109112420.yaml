@@ -1,0 +1,13 @@
+component: physical-exam
+patient_id: null
+component_alerts:
+  -
+    source: 'Physical Exam'
+    field: general_appearance_alert
+    alert: 'Altered level of consciousness detected. This is a critical finding requiring immediate neurological assessment and escalation. See Glasgow Coma Scale.'
+nurse_input:
+  diagnosis: pain
+  planning: ''
+  intervention: ''
+  evaluation: ''
+generated_at: '2025-11-09 11:24:20'

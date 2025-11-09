@@ -7,7 +7,7 @@ component_alerts:
     alert: 'Altered level of consciousness detected. This is a critical finding requiring immediate neurological assessment and escalation. See Glasgow Coma Scale.'
 nurse_input:
   diagnosis: pain
-  planning: ''
+  planning: understand
   intervention: ''
   evaluation: ''
-generated_at: '2025-11-09 11:15:53'
+generated_at: '2025-11-09 11:17:42'

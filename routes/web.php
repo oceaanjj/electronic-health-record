@@ -238,6 +238,11 @@ Route::prefix('nursing-diagnosis')->name('nursing-diagnosis.')->group(function (
     Route::post('/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');
 });
 
+    Route::get('/lab-values/nursing-diagnosis/{id}', [
+        'uses' => 'App\Http\Controllers\ADPIE\NursingDiagnosisController@startDiagnosis',
+        'as' => 'lab-values.nursing-diagnosis.start'
+    ]);
+
 
     // --- D P I E (DYNAMIC REFACTOR) ---
 

@@ -48,6 +48,15 @@ class LabValuesController extends Controller
         return view('lab-values', compact('patients', 'selectedPatient', 'labValue', 'alerts'));
     }
 
+    public function startCdss($id)
+    {
+        $labValues = LabValues::findOrFail($id);
+        return redirect()->route('nursing-diagnosis.start', [
+            'component' => 'lab-values',
+            'id' => $labValues->id
+        ]);
+    }
+
     public function store(Request $request)
     {
          $request->validate([

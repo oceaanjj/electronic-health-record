@@ -7,6 +7,7 @@ use App\Models\NursingDiagnosis;
 use App\Models\Patient;
 use App\Services\NursingDiagnosisCdssService;
 use Illuminate\Http\Request;
+use App\Models\LabValues;
 
 class LabValuesComponent implements AdpieComponentInterface
 {
@@ -30,13 +31,12 @@ class LabValuesComponent implements AdpieComponentInterface
     public function startDiagnosis(string $component, $id)
     {
         $patient = Patient::findOrFail($id);
-
+        $labValues = LabValues::where('patient_id', $id)->first();
+        
         $diagnosis = NursingDiagnosis::where('patient_id', $id)
             ->whereNull('physical_exam_id')
             ->latest()
             ->first();
-
-        $labValues = [];
 
         return view('adpie.lab-values.diagnosis', [
             'patient' => $patient,
@@ -49,41 +49,30 @@ class LabValuesComponent implements AdpieComponentInterface
     public function storeDiagnosis(Request $request, string $component, $id)
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
+        
         $patient = Patient::findOrFail($id);
+        $diagnosisText = $request->input('diagnosis');
+        
+        // Get alert by analyzing the diagnosis text
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
+        $diagnosisAlert = $alertObject['message'] ?? null;
 
-        $componentData = $this->getComponentData($request, $patient);
-
-        $nurseInput = [
-            'diagnosis' => $request->input('diagnosis'),
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
-
-        // --- THIS IS THE FIX ---
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
                 'patient_id' => $patient->patient_id,
-                'physical_exam_id' => null,
+                'physical_exam_id' => null, 
             ],
             [
-                'diagnosis' => $nurseInput['diagnosis'],
+                'diagnosis' => $diagnosisText,
                 'diagnosis_alert' => $diagnosisAlert,
-                'rule_file_path' => $ruleFilePath,
             ]
         );
-        // --- END OF FIX ---
 
         if ($request->input('action') == 'save_and_proceed') {
-            return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $nursingDiagnosis->id])
-                ->with('success', 'Diagnosis saved. Now, please enter the plan.');
+            return redirect()->route('nursing-diagnosis.showPlanning', [
+                'component' => $component,
+                'nursingDiagnosisId' => $nursingDiagnosis->id
+            ])->with('success', 'Diagnosis saved. Now, please enter the plan.');
         }
 
         return redirect()->back()->with('success', 'Diagnosis saved.');

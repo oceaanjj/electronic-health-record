@@ -18,10 +18,8 @@ class VitalSignsComponent implements AdpieComponentInterface
         $this->nursingDiagnosisCdssService = $nursingDiagnosisCdssService;
     }
 
-    // Helper to get component data
     private function getComponentData(Request $request, Patient $patient)
     {
-        // Placeholder: Fetch or get from request
         return [
             'temperature' => $request->input('temperature'),
             'hr' => $request->input('hr'),
@@ -31,33 +29,25 @@ class VitalSignsComponent implements AdpieComponentInterface
         ];
     }
 
-    /**
-     * Step 1: Show the Diagnosis form.
-     */
     public function startDiagnosis(string $component, $id)
     {
         $patient = Patient::findOrFail($id);
 
-        // Find the latest "patient-level" diagnosis
         $diagnosis = NursingDiagnosis::where('patient_id', $id)
             ->whereNull('physical_exam_id')
-            // ->whereNull('intake_and_output_id') // Add other foreign keys
             ->latest()
             ->first();
 
-        $vitals = []; // Your original logic to fetch vitals
+        $vitals = [];
 
         return view('adpie.vital-signs.diagnosis', [
             'patient' => $patient,
             'vitals' => $vitals,
             'component' => $component,
-            'diagnosis' => $diagnosis // Pass the found diagnosis (or null)
+            'diagnosis' => $diagnosis
         ]);
     }
 
-    /**
-     * Step 1: Store the Diagnosis.
-     */
     public function storeDiagnosis(Request $request, string $component, $id)
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
@@ -67,13 +57,10 @@ class VitalSignsComponent implements AdpieComponentInterface
 
         $nurseInput = [
             'diagnosis' => $request->input('diagnosis'),
-            'planning' => '',
-            'intervention' => '',
-            'evaluation' => '',
         ];
 
         $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component, // 'vital-signs'
+            $component,
             $componentData,
             $nurseInput,
             $patient
@@ -82,28 +69,19 @@ class VitalSignsComponent implements AdpieComponentInterface
         $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
-        // --- THIS IS THE CHANGE ---
-        // Find the "patient-level" diagnosis (where physical_exam_id is null)
-        // and update it, or create a new one.
+        // --- THIS IS THE FIX ---
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                // Attributes to find
                 'patient_id' => $patient->patient_id,
                 'physical_exam_id' => null,
-                // Add other foreign key checks if needed
-                // 'intake_and_output_id' => null, 
             ],
             [
-                // Values to update or create
                 'diagnosis' => $nurseInput['diagnosis'],
-                'planning' => '', // Reset planning
-                'intervention' => '', // Reset intervention
-                'evaluation' => '', // Reset evaluation
                 'diagnosis_alert' => $diagnosisAlert,
                 'rule_file_path' => $ruleFilePath,
             ]
         );
-        // --- END OF CHANGE ---
+        // --- END OF FIX ---
 
         if ($request->input('action') == 'save_and_proceed') {
             return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $nursingDiagnosis->id])
@@ -113,9 +91,6 @@ class VitalSignsComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Diagnosis saved.');
     }
 
-    /**
-     * Step 2: Show the Planning form.
-     */
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
@@ -126,9 +101,6 @@ class VitalSignsComponent implements AdpieComponentInterface
         ]);
     }
 
-    /**
-     * Step 2: Store the Planning.
-     */
     public function storePlanning(Request $request, string $component, $nursingDiagnosisId)
     {
         $request->validate(['planning' => 'required|string|max:1000']);
@@ -141,8 +113,8 @@ class VitalSignsComponent implements AdpieComponentInterface
         $nurseInput = [
             'diagnosis' => $diagnosis->diagnosis,
             'planning' => $request->input('planning'),
-            'intervention' => '',
-            'evaluation' => '',
+            'intervention' => $diagnosis->intervention,
+            'evaluation' => $diagnosis->evaluation,
         ];
 
         $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
@@ -169,9 +141,6 @@ class VitalSignsComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Plan saved.');
     }
 
-    /**
-     * Step 3: Show the Intervention form.
-     */
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
@@ -182,9 +151,6 @@ class VitalSignsComponent implements AdpieComponentInterface
         ]);
     }
 
-    /**
-     * Step 3: Store the Intervention.
-     */
     public function storeIntervention(Request $request, string $component, $nursingDiagnosisId)
     {
         $request->validate(['intervention' => 'required|string|max:1000']);
@@ -198,7 +164,7 @@ class VitalSignsComponent implements AdpieComponentInterface
             'diagnosis' => $diagnosis->diagnosis,
             'planning' => $diagnosis->planning,
             'intervention' => $request->input('intervention'),
-            'evaluation' => '',
+            'evaluation' => $diagnosis->evaluation,
         ];
 
         $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
@@ -225,9 +191,6 @@ class VitalSignsComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Intervention saved.');
     }
 
-    /**
-     * Step 4: Show the Evaluation form.
-     */
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
@@ -238,9 +201,6 @@ class VitalSignsComponent implements AdpieComponentInterface
         ]);
     }
 
-    /**
-     * Step 4: Store the Evaluation.
-     */
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)
     {
         $request->validate(['evaluation' => 'required|string|max:1000']);
@@ -273,14 +233,11 @@ class VitalSignsComponent implements AdpieComponentInterface
             'rule_file_path' => $ruleFilePath,
         ]);
 
-        // --- UPDATED REDIRECT LOGIC ---
         if ($request->input('action') == 'save_and_finish') {
-            // 'FINISH' button was clicked
-            return redirect()->route('vital-signs.show') // Assumed route from web.php
+            return redirect()->route('vital-signs.show')
                 ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
         }
 
-        // 'SUBMIT' button was clicked (save_and_exit)
         return redirect()->back()->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
     }
 }

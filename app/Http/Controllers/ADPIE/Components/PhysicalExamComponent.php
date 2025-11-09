@@ -77,26 +77,18 @@ class PhysicalExamComponent implements AdpieComponentInterface
         $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
-        // --- THIS IS THE CHANGE ---
-        // Use updateOrCreate to find the diagnosis by physical_exam_id
-        // or create a new one if it doesn't exist.
+
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                // Attributes to find
                 'physical_exam_id' => $physicalExamId,
             ],
             [
-                // Values to update or create
                 'patient_id' => $patient->patient_id,
                 'diagnosis' => $nurseInput['diagnosis'],
-                'planning' => '', // Reset planning
-                'intervention' => '', // Reset intervention
-                'evaluation' => '', // Reset evaluation
                 'diagnosis_alert' => $diagnosisAlert,
                 'rule_file_path' => $ruleFilePath,
             ]
         );
-        // --- END OF CHANGE ---
 
         if ($request->input('action') == 'save_and_proceed') {
             return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $nursingDiagnosis->id])

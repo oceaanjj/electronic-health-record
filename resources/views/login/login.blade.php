@@ -43,7 +43,7 @@
                     <div class="password-wrapper">
                         <input type="password" name="password" id="password" class="h-[50px]" placeholder="Enter your password">
                         <span id="togglePassword" class="toggle-password" onclick="togglePassword()">
-                            <i data-lucide="eye-off"></i>
+                            <i data-lucide="eye-off" class="h-[20px] mr-2 mb-2"></i>
                         </span>
                     </div>
                      @error('password')

@@ -44,7 +44,6 @@ class ReportController extends Controller
             'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->first(),
-            'physicalExam' => PhysicalExam::where('patient_id', $patient_id)->get(),
             'vitals' => Vitals::where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
             'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
@@ -56,6 +55,11 @@ class ReportController extends Controller
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
+
+            //CDSS RELATED:
+            'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+            //DITOILALAGAY YUNG LUMANG TABLE SA TAAS KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS
+
         ];
 
         return view('doctor.reports.patient-report-web', $data);
@@ -72,7 +76,6 @@ class ReportController extends Controller
             'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->first(),
-            'physicalExam' => PhysicalExam::where('patient_id', $patient_id)->get(),
             'vitals' => Vitals::where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
             'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
@@ -84,6 +87,11 @@ class ReportController extends Controller
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
+
+            //CDSS RELATED:
+            'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+            //DITOILALAGAY YUNG LUMANG TABLE SA TAAS KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS 
+
         ];
 
         $pdf = Pdf::loadView('doctor.reports.patient-report-pdf', $data);

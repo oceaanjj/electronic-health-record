@@ -92,15 +92,23 @@ class NursingDiagnosisCdssService
             return null;
         }
 
+        // --- THIS IS THE FIX ---
+        // 1. Create the HTML message for the UI
         $messageHtml = '<ul class="list-disc list-inside text-left">';
         foreach ($recommendations as $rec) {
             $messageHtml .= '<li>' . htmlspecialchars($rec) . '</li>';
         }
         $messageHtml .= '</ul>';
 
+        // 2. Create the plain-text message for the database
+        // This joins all recommendations with a space.
+        $plainTextMessage = implode(' ', $recommendations);
+        // --- END OF FIX ---
+
         return (object) [
-            'level' => 'recommendation', // Or 'warning', 'info'
-            'message' => $messageHtml
+            'level' => 'recommendation',
+            'message' => $messageHtml,       // For the UI
+            'raw_message' => $plainTextMessage // For the database
         ];
     }
 
@@ -200,16 +208,16 @@ class NursingDiagnosisCdssService
         ];
 
         // 3. Save the combined rules to a YAML file
-        $directory = storage_path('app/private/adpie/' . $componentName);
-        if (!File::isDirectory($directory)) {
-            File::makeDirectory($directory, 0755, true);
-        }
-        $filename = $directory . '/nursing_diagnosis_rules_' . $patient->id . '_' . now()->format('YmdHis') . '.yaml';
-        File::put($filename, Yaml::dump($combinedRules, 4, 2));
+        // $directory = storage_path('app/private/adpie/' . $componentName);
+        // if (!File::isDirectory($directory)) {
+        //     File::makeDirectory($directory, 0755, true);
+        // }
+        // $filename = $directory . '/nursing_diagnosis_rules_' . $patient->id . '_' . now()->format('YmdHis') . '.yaml';
+        // File::put($filename, Yaml::dump($combinedRules, 4, 2));
 
         return [
             'alerts' => $allAlerts,
-            'rule_file_path' => $filename
+            'rule_file_path' => null
         ];
     }
 

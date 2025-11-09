@@ -1,3 +1,14 @@
+// Imports
+import { showSuccess, showError, showWarning, showInfo, showConfirm, showLoginRequired } from './sweetalert.js';
+import '../css/app.css';
+// globally available
+window.showSuccess = showSuccess;
+window.showError = showError;
+window.showWarning = showWarning;
+window.showInfo = showInfo;
+window.showConfirm = showConfirm;
+window.showLoginRequired = showLoginRequired;
+
 //ALERTS Fade out
 document.addEventListener("DOMContentLoaded", function () {
     const alerts = document.querySelectorAll(

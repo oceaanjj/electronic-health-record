@@ -631,3 +631,100 @@
         opacity: 1;
     }
 }
+
+
+/* Sweetalerts */
+
+.swal-ehr-popup {
+	border-radius: 1.5rem !important;
+	padding: 2rem !important;
+	background-color: var(--color-white) !important;
+	/* border: 3px solid var(--color-brown) !important; */
+	box-shadow: 0 10px 40px rgba(116, 75, 19, 0.3) !important;
+}
+
+.swal-ehr-title {
+	font-family: var(--font-creato-bold) !important;
+	color: var(--color-dark-green) !important;
+	font-weight: 700 !important;
+	font-size: 1.75rem !important;
+	margin-bottom: 1rem !important;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.swal-ehr-button {
+	border-radius: 50px !important;
+	padding: 0.75rem 2.5rem !important;
+	font-family: var(--font-creato-bold) !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	font-size: 0.875rem !important;
+	letter-spacing: 0.5px !important;
+	transition: all 0.3s ease !important;
+	background-color: var(--color-button-green) !important;
+	border: 2px solid var(--color-dark-green) !important;
+	color: var(--color-white) !important;
+	box-shadow: 0 4px 8px rgba(26, 106, 36, 0.2) !important;
+}
+
+.swal-ehr-button:hover {
+	background: var(--color-yellow) !important;
+	color: var(--color-dark-green) !important;
+	transform: translateY(-2px) !important;
+	border: transparent !important;
+    box-shadow: 0 6px 16px rgba(26, 106, 36, 0.4) !important;
+}
+
+.swal-ehr-cancel-button {
+	border-radius: 50px !important;
+	padding: 0.75rem 2.5rem !important;
+	font-family: var(--font-creato-bold) !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	font-size: 0.875rem !important;
+	letter-spacing: 0.5px !important;
+	transition: all 0.3s ease !important;
+	background-color: var(--color-white) !important;
+	border: 2px solid var(--color-brown) !important;
+	color: var(--color-brown) !important;
+	box-shadow: 0 4px 8px rgba(116, 75, 19, 0.2) !important;
+}
+
+.swal-ehr-cancel-button:hover {
+	background-color: var(--color-brown) !important;
+	border-color: var(--color-brown) !important;
+	color: var(--color-white) !important;
+	transform: translateY(-2px) !important;
+	box-shadow: 0 6px 16px rgba(116, 75, 19, 0.4) !important;
+}
+
+.swal2-html-container {
+	font-family: var(--font-creato-bold) !important;
+	color: var(--color-black) !important;
+	font-size: 1rem !important;
+	line-height: 1.6 !important;
+}
+
+.swal2-timer-progress-bar {
+	background: linear-gradient(to right, var(--color-yellow), var(--color-yellow-light)) !important;
+}
+
+.swal2-icon {
+	border-color: var(--color-dark-green) !important;
+}
+
+.swal2-success-ring {
+	border-color: var(--color-button-middle-green) !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+	background-color: var(--color-dark-green) !important;
+}
+
+.swal2-icon.swal2-error {
+	border-color: var(--color-dark-red) !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+	background-color: var(--color-dark-red) !important;
+}

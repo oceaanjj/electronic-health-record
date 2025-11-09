@@ -30,8 +30,8 @@
                         <div class="w-[68%] rounded-[15px] overflow-hidden">
                             <table class="w-full border-separate border-spacing-0">
                                 <tr>
-                                    <th class="w-[20%] main-header rounded-tl-lg">SYSTEM</th>
-                                    <th class="w-[45%] main-header rounded-tr-lg">FINDINGS</th>
+                                    <th class="w-[20%] bg-dark-green py-2 text-white rounded-tl-lg">SYSTEM</th>
+                                    <th class="w-[45%] bg-dark-green py-2 text-white rounded-tr-lg">FINDINGS</th>
                                 </tr>
 
                                 {{-- GENERAL APPEARANCE --}}
@@ -126,8 +126,8 @@
                         </div>
 
                         {{-- ALERTS TABLE--}}
-                        <div class="w-[25%] ml-1 rounded-[15px] overflow-hidden">
-                            <div class="main-header text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="w-[25%] rounded-[15px] overflow-hidden">
+                            <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                                 ALERTS
                             </div>
                             <table class="w-full border-collapse">
@@ -168,7 +168,6 @@
                             class="button-default text-center">
                             CDSS
                         </a>
-                    @else
                     @endif
 
                     <button type="submit" class="button-default">SUBMIT</button>

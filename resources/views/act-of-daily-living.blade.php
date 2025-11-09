@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR (from vital-signs) --}}
+    {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR --}}
     <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
         <div class="flex items-center gap-6 w-full">
             @csrf
@@ -56,32 +56,30 @@
                 id="date_selector"
                 name="date"
                 value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-                @if (!$selectedPatient) disabled @endif
+                disabled {{-- <-- SET TO DISABLED --}}
                 class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm
+                       disabled:bg-gray-100 disabled:text-black disabled:opacity-100 cursor-not-allowed"
             >
 
             {{-- DAY NO --}}
             <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
                 DAY NO :
             </label>
-            <select
-                id="day_no_selector"
+            
+            {{-- START: REPLACED <select> WITH <input> --}}
+            <input
+                type="text"
+                id="day_no_selector" {{-- ID is the same, JS will work --}}
                 name="day_no"
-                @if (!$selectedPatient) disabled @endif
+                value="{{ $currentDayNo ?? 1 }}"
+                disabled {{-- <-- SET TO DISABLED --}}
                 class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                       text-center outline-none shadow-sm
+                       disabled:bg-gray-100 disabled:text-black disabled:opacity-100 cursor-not-allowed"
             >
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
-                    <option
-                        value="{{ $i }}"
-                        @if(($currentDayNo ?? 1) == $i) selected @endif
-                    >
-                        {{ $i }}
-                    </option>
-                @endfor
-            </select>
+            {{-- END: REPLACEMENT --}}
+
         </div>
        </div>
         
@@ -92,17 +90,17 @@
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
             @csrf
 
-            <input type="hidden" name="patient_id" class="patient-id-input" value="{{ session('selected_patient_id') }}">
-            <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? session('selected_date') }}">
-            <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? session('selected_day_no') }}">
+            <input type="hidden" name="patient_id" class="patient-id-input" value="{{ $selectedPatient->patient_id ?? '' }}">
+            <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
+            <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? 1 }}">
 
-            <div class="w-[80%] mx-auto flex justify-center items-start gap-1 mt-6">
+            <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
                 {{-- LEFT SIDE TABLE (INPUTS) --}}
-                <div class="w-[60%] rounded-[15px] overflow-hidden">
+                <div class="w-[68%] rounded-[15px] overflow-hidden">
                     <table class="w-full table-fixed border-collapse border-spacing-y-0">
                         <tr>
-                            <th class="w-[25%] main-header rounded-tl-lg">CATEGORY</th>
-                            <th class="w-[75%] main-header rounded-tr-lg">ASSESSMENT</th>
+                            <th class="w-[40%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">CATEGORY</th>
+                            <th class="w-[60%] bg-dark-green text-white rounded-tr-lg">ASSESSMENT</th>
                         </tr>
 
                         @foreach ([
@@ -114,14 +112,13 @@
                             'sleep_pattern_assessment' => 'SLEEP PATTERN',
                             'pain_level_assessment' => 'PAIN LEVEL',
                         ] as $field => $label)
-                            <tr class="border-b-2 border-line-brown/70 h-[100px]">
+                            <tr class="border-b-2 border-line-brown/70">
                                 <th class="text-center font-semibold py-2 bg-yellow-light text-brown">
                                     {{ $label }}
                                 </th>
                                 <td class="bg-beige">
                                     <input type="text" name="{{ $field }}" placeholder="Type here..."
-                                        class="notepad-lines cdss-input w-full h-[90px] border-none"
-
+                                        class="cdss-input vital-input h-[60px] w-full border-none bg-transparent focus:ring-0"
                                         data-field-name="{{ $field }}"
                                         value="{{ old($field, $adlData->$field ?? '') }}">
                                 </td>
@@ -131,8 +128,8 @@
                 </div>
 
                 {{-- ALERTS TABLE (JAVASCRIPT-CONTROLLED) --}}
-                <div class="w-[30%] rounded-[15px] overflow-hidden">
-                    <div class="main-header mb-1 text-center rounded-[15px]">
+                <div class="w-[25%] rounded-[15px] overflow-hidden">
+                    <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                         ALERTS
                     </div>
                     <table class="w-full border-collapse">
@@ -148,12 +145,12 @@
                             <tr>
                                 <td class="align-middle" data-alert-for="{{ $field }}">
                                     @if (isset($isLoading) && $isLoading && old($field, $adlData->$field ?? ''))
-                                        <div class="alert-box my-[3px] h-[90px] flex justify-center items-center alert-loading">
+                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-loading">
                                             <div class="loading-spinner"></div>
                                             <span>Analyzing...</span>
                                         </div>
                                     @else
-                                        <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center w-full h-[90px]">
+                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
                                             <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
                                         </div>
                                     @endif
@@ -175,24 +172,22 @@
 @endsection
 
 @push('scripts')
-    {{-- Load all necessary script files, replacing generic alert.js with the specific one --}}
     @vite([
         'resources/js/patient-loader.js',
-        'resources/js/date-day-loader.js',
-        'resources/js/init-searchable-dropdown.js',
-        'resources/js/page-initializer.js',
+        'resources/js/searchable-dropdown.js',
         'resources/js/act-of-daily-living-alerts.js'
     ])
 
-    {{-- Define the specific initializers for this page, following the vital-signs pattern --}}
+    {{-- Define the specific initializers for this page --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.pageInitializers = [
-                window.initializeSearchableDropdown,
-                window.initializeDateDayLoader,
-                window.initializeAdlAlerts // This is the new, specific initializer
+                window.initSearchableDropdown,
+                window.initializeAdlAlerts
             ];
+            
+            // Run initializers on first load
+            window.pageInitializers.forEach(init => init && init());
         });
     </script>
 @endpush
-

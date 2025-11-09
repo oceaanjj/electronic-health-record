@@ -8,6 +8,7 @@ use App\Services\IntakeAndOutputCdssService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class IntakeAndOutputController extends Controller
 {
@@ -35,9 +36,6 @@ class IntakeAndOutputController extends Controller
             'patients' => $patients,
             'cdss_alerts' => $alerts,
         ]);
-
-
-
     }
 
     public function selectPatientAndDate(Request $request)
@@ -45,7 +43,7 @@ class IntakeAndOutputController extends Controller
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $selectedPatient = null;
         $ioData = null;
-        $dayNo = 1;
+        $currentDayNo = 1; // Default day no
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
@@ -53,37 +51,36 @@ class IntakeAndOutputController extends Controller
             $selectedPatient = Patient::find($patientId);
             if (!$selectedPatient) {
                 $request->session()->forget(['selected_patient_id', 'selected_day_no']);
-                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData'));
+                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData', 'currentDayNo'));
             }
             $request->session()->put('selected_patient_id', $patientId);
 
-            $dayNo = $request->input('day_no');
+            // --- START: MODIFIED DAY NO LOGIC ---
+            // Calculate Day No. based on admission date
+            if ($selectedPatient && $selectedPatient->admission_date) {
+                $admissionDate = Carbon::parse($selectedPatient->admission_date)->startOfDay();
+                $today = Carbon::today();
 
-            if (is_null($dayNo)) {
-                // Try to get day from session first
-                $dayNo = $request->session()->get('selected_day_no', 1);
+                // diffInDays returns the difference. Add 1 because admission day is Day 1.
+                $calculatedDayNo = $admissionDate->diffInDays($today) + 1;
 
-                // If still no day (e.g., first load, or session cleared), then try latest IO
-                if ($dayNo === 1) { // Check if defaults were used from session
-                    $latestIo = IntakeAndOutput::where('patient_id', $patientId)
-                        ->orderBy('day_no', 'desc')
-                        ->first();
-
-                    if ($latestIo) {
-                        $dayNo = $latestIo->day_no;
-                    }
-                }
+                // Ensure day is at least 1 (e.g., if admission date is in the future)
+                $currentDayNo = ($calculatedDayNo > 0) ? $calculatedDayNo : 1;
+            } else {
+                // Fallback if no admission date
+                $currentDayNo = 1;
             }
 
-            $request->session()->put('selected_day_no', $dayNo);
+            $request->session()->put('selected_day_no', $currentDayNo);
+            // --- END: MODIFIED DAY NO LOGIC ---
 
             $ioData = IntakeAndOutput::where('patient_id', $patientId)
-                ->where('day_no', (int) $dayNo)
+                ->where('day_no', $currentDayNo) // Use the calculated day_no
                 ->first();
 
             Log::info('IntakeAndOutputController@selectPatientAndDate Debug:', [
                 'patient_id' => $patientId,
-                'day_no' => $dayNo,
+                'day_no' => $currentDayNo,
                 'ioData_found' => $ioData ? 'true' : 'false',
                 'ioData_content' => $ioData ? $ioData->toArray() : null,
             ]);
@@ -92,7 +89,7 @@ class IntakeAndOutputController extends Controller
             Log::info('IntakeAndOutputController@selectPatientAndDate Debug: No patient ID found, session cleared.');
         }
 
-        $currentDayNo = $dayNo;
+        // $currentDayNo is already set from the logic above
 
         if ($request->ajax() && $request->header('X-Fetch-Form-Content')) {
             // Render the full view and extract the specific section
@@ -119,7 +116,7 @@ class IntakeAndOutputController extends Controller
         } elseif ($request->ajax()) {
             return response()->json([
                 'ioData' => $ioData,
-                'currentDayNo' => $currentDayNo,
+                'currentDayNo' => $currentDayNo, // Pass the calculated day no
             ]);
         }
 
@@ -160,15 +157,29 @@ class IntakeAndOutputController extends Controller
         //****
 
 
+        // --- START: MODIFIED DAY NO LOGIC FOR STORE ---
+        // Calculate Day No. authoritatively from server-side
+        $currentDayNo = 1; // Default
+        if ($patient && $patient->admission_date) {
+            $admissionDate = Carbon::parse($patient->admission_date)->startOfDay();
+            $today = Carbon::today();
+            $calculatedDayNo = $admissionDate->diffInDays($today) + 1;
+            $currentDayNo = ($calculatedDayNo > 0) ? $calculatedDayNo : 1;
+        }
+        // --- END: MODIFIED DAY NO LOGIC FOR STORE ---
+
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
+            // 'day_no' is removed from validation, we set it manually
             'oral_intake' => 'nullable|integer',
             'iv_fluids_volume' => 'nullable|integer',
             'iv_fluids_type' => 'nullable|string',
             'urine_output' => 'nullable|integer',
             'other_output' => 'nullable|integer',
         ]);
+
+        // Manually add the server-calculated day_no
+        $validatedData['day_no'] = $currentDayNo;
 
         // Analyze the data to get the alert
         $cdss = new IntakeAndOutputCdssService();
@@ -222,11 +233,4 @@ class IntakeAndOutputController extends Controller
 
         return response()->json($result);
     }
-
-
-
-
-
-
-
 }

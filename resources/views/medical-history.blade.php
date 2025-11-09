@@ -27,7 +27,7 @@
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         {{-- PRESENT ILLNESS --}}
                         <tr>
-                            <th colspan="6" class="main-header rounded-t-lg">PRESENT ILLNESS</th>
+                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PRESENT ILLNESS</th>
                         </tr>
 
                         <tr>
@@ -76,7 +76,7 @@
 
                         {{-- PAST MEDICAL / SURGICAL --}}
                         <tr>
-                            <th colspan="6" class="main-header rounded-t-lg">PAST MEDICAL / SURGICAL</th>
+                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
                         </tr>
                         <tr>
 
@@ -123,7 +123,7 @@
                         {{-- KNOWN CONDITION OR ALLERGIES --}}
 
                         <tr>
-                            <th colspan="6" class="main-header rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
+                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
                         </tr>
 
                         <tr>
@@ -169,7 +169,7 @@
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         {{-- VACCINATION --}}
                         <tr>
-                            <th colspan="6" class="main-header rounded-t-lg">VACCINATION</th>
+                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">VACCINATION</th>
                         </tr>
                         <tr>
 

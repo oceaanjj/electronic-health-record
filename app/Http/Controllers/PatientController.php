@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\ModelNotFoundException; // <-- Import this
 use Illuminate\Support\Facades\Log; // <-- Import this for logging errors
+use Carbon\Carbon;
 
 class PatientController extends Controller
 {
@@ -35,7 +36,6 @@ class PatientController extends Controller
 
             // Log patient viewing
             AuditLogController::log('Patient Viewed', 'User ' . Auth::user()->username . ' viewed patient record.', ['patient_id' => $patient->patient_id]);
-
             return view('patients.show', compact('patient'));
 
         } catch (ModelNotFoundException $e) {
@@ -51,7 +51,8 @@ class PatientController extends Controller
     // redirect sa form na magiinput ng patient
     public function create()
     {
-        return view('patients.create');
+        $currentDate = Carbon::today()->format('Y-m-d');
+        return view('patients.create', compact('currentDate'));
     }
 
     // SAVE

@@ -39,7 +39,7 @@ class PhysicalExam extends Model
     ];
 
     // Relationship sa patient table
-   public function patient()
+    public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');
     }
@@ -47,13 +47,13 @@ class PhysicalExam extends Model
     // You should also have this one
     public function nursingDiagnoses()
     {
-        return $this->hasMany(NursingDiagnosis::class);
+        return $this->hasOne(NursingDiagnosis::class);
     }
 }
 
-    // Relationship sa CDSS physical exam table (optional for later use)
-    // public function cdssAssessment()
-    // {
-    //     return $this->hasOne(CdssPhysicalExam::class);
-    // }
+// Relationship sa CDSS physical exam table (optional for later use)
+// public function cdssAssessment()
+// {
+//     return $this->hasOne(CdssPhysicalExam::class);
+// }
 

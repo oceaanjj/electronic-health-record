@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\ActOfDailyLivingCdssService;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon; // <-- Import Carbon
 
 class ActOfDailyLivingController extends Controller
 {
@@ -16,7 +17,7 @@ class ActOfDailyLivingController extends Controller
      */
     private function getAdlRecord($patientId, $date, $dayNo)
     {
-        if (!$patientId || (!$date && $date !== 0) || (!$dayNo && $dayNo !== 0)) {
+        if (!$patientId || !$date || !$dayNo) {
             return null;
         }
 
@@ -27,61 +28,52 @@ class ActOfDailyLivingController extends Controller
     }
 
     /**
-     * Handles the AJAX request for both patient selection AND date/day change.
+     * Calculates the correct Day No. based on admission date.
      */
-            public function selectPatient(Request $request)
-            {
-                $patientId = $request->input('patient_id');
-                $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();        $selectedPatient = Patient::find($patientId);
+    private function getCalculatedDayNo($patient)
+    {
+        if ($patient && $patient->admission_date) {
+            $admissionDate = Carbon::parse($patient->admission_date)->startOfDay();
+            $today = Carbon::today();
+            $calculatedDayNo = $admissionDate->diffInDays($today) + 1;
+            // Ensure day is at least 1
+            return ($calculatedDayNo > 0) ? $calculatedDayNo : 1;
+        }
+        return 1; // Default to 1
+    }
+
+
+    /**
+     * Handles the AJAX request for patient selection.
+     */
+    public function selectPatient(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
+        $selectedPatient = Patient::find($patientId);
         $adlData = null;
 
-        // Default values for rendering the view if selection fails
-        $currentDate = now()->format('Y-m-d');
-        $currentDayNo = 1;
+        // --- START: MODIFIED LOGIC ---
+        // Force date to today and calculate Day No.
+        $currentDate = Carbon::today()->format('Y-m-d');
+        $currentDayNo = 1; // Default
 
         if ($selectedPatient) {
             $request->session()->put('selected_patient_id', $patientId);
 
-            // 1.Get date/day from request (for date/day change) or from session (for page reload or fresh patient selection)
-            $date = $request->input('date');
-            $dayNo = $request->input('day_no');
+            $currentDayNo = $this->getCalculatedDayNo($selectedPatient);
 
-            // Check if the request is ONLY a patient selection (no date/day change)
-            $isNewPatientSelection = is_null($date) && is_null($dayNo);
+            // Store the authoritative values in the session
+            $request->session()->put('selected_date', $currentDate);
+            $request->session()->put('selected_day_no', $currentDayNo);
 
-            if ($isNewPatientSelection) {
-                // If a patient is newly selected (no date/day in request), reset to admission date and day 1
-                // Determine the correct default date (Admission Date)
-                $date = now()->format('Y-m-d');
-                $dayNo = 1;
-            } else {
-                // This is a date/day change request. Fallback to session if request values are missing.
-                $date = $date ?? $request->session()->get('selected_date');
-                $dayNo = $dayNo ?? $request->session()->get('selected_day_no');
-
-                // Final fallback if session is also empty (unlikely after the above block)
-                if (!$date || !$dayNo) {
-                    $date = $selectedPatient->admission_date ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : now()->format('Y-m-d');
-                    $dayNo = 1;
-                }
-            }
-
-
-            // 2. Store the determined date/day selection in the session (CRITICAL STEP)
-            $request->session()->put('selected_date', $date);
-            $request->session()->put('selected_day_no', $dayNo);
-
-            // Set variables for the view
-            $currentDate = $date;
-            $currentDayNo = $dayNo;
-
-            // 3. Fetch the ADL record
+            // Fetch the ADL record using these new values
             $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
 
-            // 4. Run CDSS analysis on fetched data to display alerts
+            // Run CDSS analysis on fetched data to display alerts
             $alerts = [];
             if ($adlData) {
-                $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+                $cdssService = new ActOfDailyLivingCdssService();
                 $alerts = $cdssService->analyzeFindings($adlData->toArray());
             }
             $request->session()->flash('cdss', $alerts);
@@ -90,16 +82,14 @@ class ActOfDailyLivingController extends Controller
             // If patient isn't found, clear the session
             $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
         }
+        // --- END: MODIFIED LOGIC ---
 
-        // Check if this is an AJAX request for a content refresh
         $isLoading = $request->header('X-Fetch-Form-Content') === 'true';
 
-        // Return the rendered view. JS extracts the #form-content-container from this.
         return view('act-of-daily-living', [
             'patients' => $patients,
             'adlData' => $adlData,
             'selectedPatient' => $selectedPatient,
-            // Pass the explicit variables for the Blade template to ensure immediate update
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
             'isLoading' => $isLoading,
@@ -114,29 +104,26 @@ class ActOfDailyLivingController extends Controller
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $adlData = null;
         $selectedPatient = null;
-        $currentDate = now()->format('Y-m-d'); // Default
+
+        // --- START: MODIFIED LOGIC ---
+        $currentDate = Carbon::today()->format('Y-m-d'); // Always today
         $currentDayNo = 1; // Default
 
         $patientId = $request->session()->get('selected_patient_id');
-        $date = $request->session()->get('selected_date');
-        $dayNo = $request->session()->get('selected_day_no');
 
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
             if ($selectedPatient) {
-                // Ensure default date is set if patient is selected but date/day is missing (e.g., initial load)
-                if (!$date || !$dayNo) {
-                    $date = now()->format('Y-m-d');
-                    $dayNo = 1;
-                    $request->session()->put('selected_date', $date);
-                    $request->session()->put('selected_day_no', $dayNo);
-                }
+                $currentDayNo = $this->getCalculatedDayNo($selectedPatient);
 
-                $currentDate = $date;
-                $currentDayNo = $dayNo;
+                // Store authoritative values
+                $request->session()->put('selected_date', $currentDate);
+                $request->session()->put('selected_day_no', $currentDayNo);
+
                 $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
             }
         }
+        // --- END: MODIFIED LOGIC ---
 
         return view('act-of-daily-living', [
             'patients' => $patients,
@@ -157,7 +144,7 @@ class ActOfDailyLivingController extends Controller
             'finding' => 'nullable|string',
         ]);
 
-        $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+        $cdssService = new ActOfDailyLivingCdssService();
 
         $alert = $cdssService->analyzeSingleFinding($data['fieldName'], $data['finding'] ?? '');
 
@@ -189,8 +176,7 @@ class ActOfDailyLivingController extends Controller
 
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
-            'date' => 'required|date',
+            // 'day_no' and 'date' are removed from validation
             'mobility_assessment' => 'nullable|string',
             'hygiene_assessment' => 'nullable|string',
             'toileting_assessment' => 'nullable|string',
@@ -199,6 +185,12 @@ class ActOfDailyLivingController extends Controller
             'sleep_pattern_assessment' => 'nullable|string',
             'pain_level_assessment' => 'nullable|string',
         ]);
+
+        // --- START: MODIFIED LOGIC ---
+        // Set authoritative date and day_no
+        $validatedData['date'] = Carbon::today()->format('Y-m-d');
+        $validatedData['day_no'] = $this->getCalculatedDayNo($patient);
+        // --- END: MODIFIED LOGIC ---
 
         // Run CDSS Analysis
         $cdssService = new ActOfDailyLivingCdssService();
@@ -254,37 +246,4 @@ class ActOfDailyLivingController extends Controller
         return redirect()->route('adl.show')
             ->with('success', $message);
     }
-
-
-
-    public function runCdssAnalysis(Request $request)
-    {
-        $validatedData = $request->validate([
-            'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
-            'date' => 'required|date',
-            'mobility_assessment' => 'nullable|string',
-            'hygiene_assessment' => 'nullable|string',
-            'toileting_assessment' => 'nullable|string',
-            'feeding_assessment' => 'nullable|string',
-            'hydration_assessment' => 'nullable|string',
-            'sleep_pattern_assessment' => 'nullable|string',
-            'pain_level_assessment' => 'nullable|string',
-        ]);
-
-        $adl = ActOfDailyLiving::updateOrCreate(
-            ['patient_id' => $validatedData['patient_id'], 'date' => $validatedData['date']],
-            $validatedData
-        );
-
-        $cdssService = new ActOfDailyLivingCdssService(); // Use the dedicated service
-        $analysisResults = $cdssService->analyzeFindings($adl->toArray());
-
-        return redirect()->route('adl.show', [
-            'patient_id' => $validatedData['patient_id'],
-            'date' => $validatedData['date']
-        ])->with('cdss', $analysisResults)
-            ->with('success', 'CDSS Analysis complete!');
-    }
-
 }

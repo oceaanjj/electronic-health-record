@@ -4,7 +4,7 @@
  * 1. Listens for a custom "patient:selected" event on the document.
  * 2. This event is dispatched by UI components like the searchable-dropdown.
  * 3. The event's 'detail' contains the patient ID and the URL to fetch.
- * 4. It shows a loading state and fetches the new form content.
+ * 4. It fetches the new form content.
  * 5. It replaces the old content and re-initializes all necessary scripts.
  */
 
@@ -15,14 +15,6 @@ document.addEventListener("patient:selected", async (event) => {
         .querySelector('meta[name="csrf-token"]')
         ?.getAttribute("content");
 
-    // Get header elements on the current page (may or may not exist)
-    const patientSearchInput = document.getElementById("patient_search_input");
-    const dateSelector = document.getElementById("date_selector");
-    const dayNoSelector = document.getElementById("day_no_selector");
-
-    // Check if this form *has* date/day selectors (e.g., ADL form)
-    const isDateDayForm = dateSelector && dayNoSelector;
-
     if (!formContainer || !selectUrl || !patientId) {
         console.error(
             "Intake/Output Patient Loader: Missing required data for fetch or patientId.",
@@ -30,10 +22,6 @@ document.addEventListener("patient:selected", async (event) => {
         );
         return;
     }
-
-    // Show loading state
-    const overlay = formContainer.querySelector(".form-overlay");
-    if (overlay) overlay.style.display = "flex";
 
     try {
         const response = await fetch(selectUrl, {
@@ -54,69 +42,78 @@ document.addEventListener("patient:selected", async (event) => {
         const parser = new DOMParser();
         const newHtml = parser.parseFromString(htmlText, "text/html");
 
-        // --- Step 1: Update Header Elements (Date, Day) from the Response ---
-
-        // 1. Update patient search input
-        const newPatientSearchInput = newHtml.getElementById(
-            "patient_search_input"
-        );
-        if (patientSearchInput && newPatientSearchInput) {
-            patientSearchInput.value = newPatientSearchInput.value;
-        }
-
-        // 2. Only process Date/Day if the selectors exist on the current page
-        if (isDateDayForm) {
-            const newDateSelector = newHtml.getElementById("date_selector");
-            const newDayNoSelector = newHtml.getElementById("day_no_selector");
-
-            if (newDateSelector) {
-                // Set the value based on the admission date provided by the server response
-                dateSelector.value = newDateSelector.value;
-                dateSelector.disabled = false;
-            }
-            if (newDayNoSelector) {
-                // Set the default day value (Day 1) provided by the server response
-                dayNoSelector.value = newDayNoSelector.value;
-                dayNoSelector.disabled = false;
-            }
-        }
-
-        // --- Step 2: Replace the Main Form Content ---
+        // --- Step 1: Replace the Main Form Content ---
         const newContent = newHtml.getElementById("form-content-container");
 
         if (newContent) {
             formContainer.innerHTML = newContent.innerHTML;
 
-            // Re-initialize the searchable dropdown if it exists in the new content
-            if (typeof window.initSearchableDropdown === "function") {
-                window.initSearchableDropdown();
-            }
+            // --- START: "CLONE" FIX ---
+            // This "clone" logic is CORRECT and NECESSARY for this page.
+            // It strips old event listeners from the dropdown
+            // which is outside the reloaded content.
 
-            // --- Step 3: Re-initialize Scripts ---
-            // Re-initialize the date-day loader
-            if (typeof window.initializeDateDayLoader === "function") {
-                window.initializeDateDayLoader();
-            }
+            // 1. Find the dropdown (which still has old, buggy listeners).
+            const oldDropdown = document.querySelector(".searchable-dropdown");
+            if (oldDropdown) {
+                // 2. Clone it. A clone does NOT copy event listeners.
+                const newDropdown = oldDropdown.cloneNode(true);
 
-            // Re-initialize the intake-output CDSS
-            // Assuming intakeOutputCdss is a function or object with an init method
-            if (typeof window.intakeOutputCdss === "function") {
-                window.intakeOutputCdss();
-            } else if (typeof window.intakeOutputCdss?.init === "function") {
-                window.intakeOutputCdss.init();
-            }
+                // 3. Remove the 'initialized' flag from the clone.
+                delete newDropdown.dataset.initialized;
 
-            // Re-initialize the intake-output data loader
-            if (typeof window.initializeIntakeOutputDataLoader === "function") {
-                window.initializeIntakeOutputDataLoader();
+                // 4. Replace the old dropdown with the clean clone.
+                oldDropdown.parentNode.replaceChild(newDropdown, oldDropdown);
             }
+            // --- END: "CLONE" FIX ---
 
+            // --- Step 2: Re-initialize Scripts ---
+            // Now, when the loop runs, initializeSearchableDropdown
+            // will find the clean clone and attach the NEW, fixed listeners.
+            if (
+                window.pageInitializers &&
+                Array.isArray(window.pageInitializers)
+            ) {
+                console.log("Re-initializing scripts...");
+                window.pageInitializers.forEach((init) => {
+                    if (typeof init === "function") {
+                        init();
+                    }
+                });
+            } else {
+                // Fallback if global array isn't set (though it should be)
+                console.warn(
+                    "window.pageInitializers not found, running fallback initializers."
+                );
+
+                // --- START: TYPO FIX ---
+                if (typeof window.initSearchableDropdown === "function") {
+                    window.initSearchableDropdown(); // Fixed: init
+                }
+                // --- END: TYPO FIX ---
+
+                if (
+                    typeof window.initializeIntakeOutputDataLoader ===
+                    "function"
+                ) {
+                    window.initializeIntakeOutputDataLoader();
+                }
+                if (typeof window.intakeOutputCdss === "function") {
+                    window.intakeOutputCdss();
+                } else if (
+                    typeof window.intakeOutputCdss?.init === "function"
+                ) {
+                    window.intakeOutputCdss.init();
+                }
+            }
 
             // Dispatch a custom event to signal that the form content has been reloaded
-            document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {
-                bubbles: true,
-                detail: { formContainer: formContainer }
-            }));
+            document.dispatchEvent(
+                new CustomEvent("cdss:form-reloaded", {
+                    bubbles: true,
+                    detail: { formContainer: formContainer },
+                })
+            );
         } else {
             throw new Error(
                 "Intake/Output Patient Loader: Could not find '#form-content-container' in response."

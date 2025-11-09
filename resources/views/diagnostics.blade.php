@@ -176,12 +176,12 @@ button[type=submit][disabled] {
 <div id="form-content-container">
 
     {{-- Styled Alerts --}}
-    @if (session('success'))
+    {{-- @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6">{{ session('success') }}</div>
     @endif
     @if (session('error'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6">{{ session('error') }}</div>
-    @endif
+    @endif --}}
 
     <x-searchable-patient-dropdown
         :patients="$patients"
@@ -302,21 +302,81 @@ function clearPreview(type) {
 }
 
 function deleteImage(url) {
-    if (!confirm('Delete this image?')) return; 
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: new URLSearchParams({ _method: 'DELETE' })
-    })
-    .then(res => {
-        if (res.ok) location.reload();
-        else alert('Failed to delete image.');
-    })
-    .catch(() => alert('Error deleting image.'));
+    if (typeof showConfirm === 'function') {
+        showConfirm('Do you really want to delete this image?', 'Delete Image?', 'Yes, delete', 'Cancel')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: new URLSearchParams({ _method: 'DELETE' })
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            location.reload();
+                        } else {
+                            if (typeof showError === 'function') {
+                                showError('Failed to delete image.', 'Error');
+                            } else {
+                                alert('Failed to delete image.');
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        if (typeof showError === 'function') {
+                            showError('Error deleting image.', 'Error');
+                        } else {
+                            alert('Error deleting image.');
+                        }
+                    });
+                }
+            });
+    } else if (typeof Swal === 'function') {
+        Swal.fire({
+            title: 'Delete Image?',
+            text: 'Do you really want to delete this image?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#2A1C0F',
+            cancelButtonColor: '#6c757d'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: new URLSearchParams({ _method: 'DELETE' })
+                })
+                .then(res => {
+                    if (res.ok) location.reload();
+                    else alert('Failed to delete image.');
+                })
+                .catch(() => alert('Error deleting image.'));
+            }
+        });
+    } else {
+        if (!confirm('Delete this image?')) return;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: new URLSearchParams({ _method: 'DELETE' })
+        })
+        .then(res => {
+            if (res.ok) location.reload();
+            else alert('Failed to delete image.');
+        })
+        .catch(() => alert('Error deleting image.'));
+    }
 }
 
 function handleClearButtonClick(type) {
@@ -331,25 +391,93 @@ function handleClearButtonClick(type) {
 }
 
 function deleteAllImages(type, imageIds) {
-    if (!confirm('Delete ALL images for ' + type.toUpperCase() + '?')) return;
-
-    fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
-        .replace('__TYPE__', type)
-        .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) location.reload();
-        else alert('Failed to delete images.');
-    })
-    .catch(() => alert('Error deleting images.'));
+    if (typeof showConfirm === 'function') {
+        showConfirm('Do you really want to delete ALL images for ' + type.toUpperCase() + '?', 'Delete All Images?', 'Yes', 'Cancel')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
+                        .replace('__TYPE__', type)
+                        .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            if (typeof showError === 'function') {
+                                showError('Failed to delete images.', 'Error');
+                            } else {
+                                alert('Failed to delete images.');
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        if (typeof showError === 'function') {
+                            showError('Error deleting images.', 'Error');
+                        } else {
+                            alert('Error deleting images.');
+                        }
+                    });
+                }
+            });
+    } else if (typeof Swal === 'function') {
+        Swal.fire({
+            title: 'Delete All Images?',
+            text: 'Do you really want to delete ALL images for ' + type.toUpperCase() + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#2A1C0F',
+            cancelButtonColor: '#6c757d'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
+                    .replace('__TYPE__', type)
+                    .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) location.reload();
+                    else alert('Failed to delete images.');
+                })
+                .catch(() => alert('Error deleting images.'));
+            }
+        });
+    } else {
+        if (!confirm('Delete ALL images for ' + type.toUpperCase() + '?')) return;
+        fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
+            .replace('__TYPE__', type)
+            .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) location.reload();
+            else alert('Failed to delete images.');
+        })
+        .catch(() => alert('Error deleting images.'));
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

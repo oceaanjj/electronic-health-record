@@ -45,7 +45,7 @@ function displayAdlAlert(alertCell, alertData) {
 
     const alertBox = document.createElement("div");
     alertBox.className =
-        "alert-box my-[3px] h-[90px] flex justify-center items-center fade-in";
+        "alert-box my-[3px] h-[53px] flex justify-center items-center fade-in";
 
     let colorClass = "alert-green";
     if (alertData.severity === "CRITICAL") colorClass = "alert-red";
@@ -78,13 +78,22 @@ function displayAdlAlert(alertCell, alertData) {
 }
 
 // Show loading state
-function showAlertLoading(alertCell) { // alertCell is the <td>
-    const alertBox = alertCell.querySelector('.alert-box');
-    if (!alertBox) return;
+function showAlertLoading(alertCell) {
+    // alertCell is the <td>
+    // --- Start Fix: Ensure alertBox is created if it doesn't exist ---
+    let alertBox = alertCell.querySelector(".alert-box");
+    if (!alertBox) {
+        alertCell.innerHTML = `
+            <div class="alert-box my-[3px] h-[53px] flex justify-center items-center"></div>
+        `;
+        alertBox = alertCell.querySelector(".alert-box");
+    }
+    // --- End Fix ---
 
     // Use a static, non-animated background color. Green is a neutral choice.
-    alertBox.className = "alert-box my-[3px] h-[90px] flex justify-center items-center alert-green";
-    
+    alertBox.className =
+        "alert-box my-[3px] h-[53px] flex justify-center items-center alert-green";
+
     // The spinner itself has its own spin animation, which is desired.
     // The inner div helps with centering and spacing.
     alertBox.innerHTML = `
@@ -98,13 +107,14 @@ function showAlertLoading(alertCell) { // alertCell is the <td>
 
 // Show default "No Alerts" state
 function showDefaultNoAlerts(alertCell) {
-    alertCell.classList.remove("alert-loading", "alert-red", "alert-orange", "alert-green"); // Remove loading and severity classes
-    alertCell.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
+    // --- Start Fix: Ensure innerHTML is set on the cell, not the classList ---
     alertCell.innerHTML = `
-        <div class="alert-box my-[3px] h-[90px] flex justify-center items-center">
+        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center has-no-alert alert-green">
             <span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>
         </div>
     `;
+    // --- End Fix ---
+
     // Get the newly created alert-box div and set its onclick to null
     const alertBoxDiv = alertCell.querySelector(".alert-box");
     if (alertBoxDiv) {
@@ -209,3 +219,15 @@ window.initializeAdlAlerts = function () {
     // Trigger the initial analysis for any pre-filled data
     triggerInitialAdlAnalysis();
 };
+
+// --- START: THE FIX ---
+// Listen for the 'cdss:form-reloaded' event dispatched by patient-loader.js
+// This will re-run the initializer after the new form content is loaded.
+document.addEventListener("cdss:form-reloaded", (event) => {
+    // Check if the new form is the ADL form
+    if (event.detail.formContainer.querySelector("#adl-form")) {
+        console.log("ADL form reloaded, re-initializing alerts...");
+        window.initializeAdlAlerts();
+    }
+});
+// --- END: THE FIX ---

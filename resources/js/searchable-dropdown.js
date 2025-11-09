@@ -9,7 +9,9 @@ const initSearchableDropdown = () => {
 
     const searchInput = document.getElementById("patient_search_input");
     const hiddenInput = document.getElementById("patient_id_hidden");
-    const optionsContainer = document.getElementById("patient_options_container");
+    const optionsContainer = document.getElementById(
+        "patient_options_container"
+    );
 
     if (!searchInput || !optionsContainer) return;
 
@@ -71,23 +73,18 @@ const initSearchableDropdown = () => {
 
     searchInput.addEventListener("focus", filterAndShowOptions);
 
-    searchInput.addEventListener("keyup", (event) => {
-        if (
-            event.key !== "ArrowUp" &&
-            event.key !== "ArrowDown" &&
-            event.key !== "Enter"
-        ) {
-            filterAndShowOptions();
-        }
-    });
-
+    // This 'input' listener handles filtering AND clearing
     searchInput.addEventListener("input", () => {
+        // 1. Always filter and show options
+        filterAndShowOptions();
+
+        // 2. Check if the form needs to be cleared
         if (searchInput.value === "") {
             if (hiddenInput) {
                 hiddenInput.value = "";
             }
-            disableForm(true);
-            clearFormInputs();
+            disableForm(true); // Disable the form
+            clearFormInputs(); // Clear the inputs
         }
     });
 
@@ -128,7 +125,8 @@ const initSearchableDropdown = () => {
             addActive(currentFocus + direction);
         } else if (event.key === "Enter") {
             event.preventDefault();
-            const activeOption = optionsContainer.querySelector(".option.active");
+            const activeOption =
+                optionsContainer.querySelector(".option.active");
             if (activeOption) {
                 selectOption(activeOption);
             } else if (visibleOptions.length > 0) {
@@ -144,26 +142,36 @@ const initSearchableDropdown = () => {
         }
     });
 
+    // --- START: THE FIX ---
+    // This function will NO LONGER touch the date and day selectors.
+    // Their state is controlled ONLY by the controller and patient-loader.
     const disableForm = (isDisabled) => {
-        const formFieldset = document.querySelector("#form-content-container fieldset");
-        const dateSelector = document.getElementById("date_selector");
-        const dayNoSelector = document.getElementById("day_no_selector");
+        const formFieldset = document.querySelector(
+            "#form-content-container fieldset"
+        );
+        // const dateSelector = document.getElementById("date_selector"); // REMOVED
+        // const dayNoSelector = document.getElementById("day_no_selector"); // REMOVED
         const vitalInputs = document.querySelectorAll(".vital-input");
-        const cdssButton = document.querySelector(".cdss-form button[type='button']");
-        const submitButton = document.querySelector(".cdss-form button[type='submit']");
+        const cdssButton = document.querySelector(
+            ".cdss-form button[type='button']"
+        );
+        const submitButton = document.querySelector(
+            ".cdss-form button[type='submit']"
+        );
         const insertButtons = document.querySelectorAll(".insert-btn"); // Select all insert buttons
         const clearButtons = document.querySelectorAll(".clear-btn"); // Select all clear buttons
 
         if (formFieldset) {
             formFieldset.disabled = isDisabled;
         }
-        if (dateSelector) {
-            dateSelector.disabled = isDisabled;
-        }
-        if (dayNoSelector) {
-            dayNoSelector.disabled = isDisabled;
-        }
-        vitalInputs.forEach(input => {
+        // if (dateSelector) { // REMOVED
+        //     dateSelector.disabled = isDisabled;
+        // }
+        // if (dayNoSelector) { // REMOVED
+        //     dayNoSelector.disabled = isDisabled;
+        // }
+
+        vitalInputs.forEach((input) => {
             input.disabled = isDisabled;
         });
         if (cdssButton) {
@@ -174,27 +182,33 @@ const initSearchableDropdown = () => {
         }
 
         // Explicitly disable/enable insert and clear buttons
-        insertButtons.forEach(button => {
+        insertButtons.forEach((button) => {
             if (isDisabled) {
-                button.classList.add('disabled');
-                button.setAttribute('disabled', 'true');
+                button.classList.add("disabled");
+                button.setAttribute("disabled", "true");
             } else {
-                button.classList.remove('disabled');
-                button.removeAttribute('disabled');
+                button.classList.remove("disabled");
+                button.removeAttribute("disabled");
             }
         });
 
-        clearButtons.forEach(button => {
+        clearButtons.forEach((button) => {
             button.disabled = isDisabled;
         });
     };
+    // --- END: THE FIX ---
 
     const clearFormInputs = () => {
-        const formFieldset = document.querySelector("#form-content-container fieldset");
+        const formFieldset = document.querySelector(
+            "#form-content-container fieldset"
+        );
         if (formFieldset) {
-            const inputs = formFieldset.querySelectorAll("input, textarea, textarea.notepad-lines");
-            inputs.forEach(input => {
-                if (input.type !== 'hidden') { // Do not clear hidden inputs
+            const inputs = formFieldset.querySelectorAll(
+                "input, textarea, textarea.notepad-lines"
+            );
+            inputs.forEach((input) => {
+                if (input.type !== "hidden") {
+                    // Do not clear hidden inputs
                     input.value = "";
                 }
                 input.style.backgroundColor = ""; // Clear background color
@@ -202,21 +216,26 @@ const initSearchableDropdown = () => {
             });
 
             // Clear image previews and file inputs
-            const diagnosticPanels = formFieldset.querySelectorAll(".diagnostic-panel");
-            diagnosticPanels.forEach(panel => {
+            const diagnosticPanels =
+                formFieldset.querySelectorAll(".diagnostic-panel");
+            diagnosticPanels.forEach((panel) => {
                 const type = panel.dataset.type;
-                const previewContainer = document.getElementById('preview-' + type);
+                const previewContainer = document.getElementById(
+                    "preview-" + type
+                );
                 if (previewContainer) {
-                    previewContainer.innerHTML = '';
+                    previewContainer.innerHTML = "";
                 }
-                const uploadedFilesContainer = document.getElementById('uploaded-files-' + type);
+                const uploadedFilesContainer = document.getElementById(
+                    "uploaded-files-" + type
+                );
                 if (uploadedFilesContainer) {
-                    uploadedFilesContainer.innerHTML = '';
+                    uploadedFilesContainer.innerHTML = "";
                 }
                 // Also clear the file input itself
-                const fileInput = document.getElementById('file-input-' + type);
+                const fileInput = document.getElementById("file-input-" + type);
                 if (fileInput) {
-                    fileInput.value = '';
+                    fileInput.value = "";
                 }
             });
         }
@@ -225,8 +244,9 @@ const initSearchableDropdown = () => {
 
     const clearAlerts = () => {
         const alertBoxes = document.querySelectorAll(".alert-box");
-        alertBoxes.forEach(alertBox => {
-            alertBox.innerHTML = '<span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>';
+        alertBoxes.forEach((alertBox) => {
+            alertBox.innerHTML =
+                '<span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>';
             alertBox.style.backgroundColor = ""; // Clear background color
             alertBox.onclick = null; // Ensure the alert box is not clickable
         });
@@ -244,9 +264,13 @@ const initSearchableDropdown = () => {
 // It's self-contained and only added once.
 if (!window.searchableDropdownDocumentListener) {
     document.addEventListener("click", (event) => {
-        const dropdownContainer = document.querySelector(".searchable-dropdown");
+        const dropdownContainer = document.querySelector(
+            ".searchable-dropdown"
+        );
         if (dropdownContainer && !dropdownContainer.contains(event.target)) {
-            const optionsContainer = document.getElementById("patient_options_container");
+            const optionsContainer = document.getElementById(
+                "patient_options_container"
+            );
             if (optionsContainer) {
                 optionsContainer.style.display = "none";
             }
@@ -262,4 +286,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Expose the function to be called from other scripts
 window.initSearchableDropdown = initSearchableDropdown;
-

@@ -71,8 +71,7 @@
             This ADPIE table is now INSIDE the loop,
             so it shows the diagnosis for THIS exam.
             --}}
-            <h2 class="section-title" style="background-color: #a97c00ff;">ADPIE (for Exam on
-                {{ $item->created_at->format('M d, Y') }})
+            <h2 class="section-title">ADPIE
             </h2>
             <table class="data-table">
                 <thead>

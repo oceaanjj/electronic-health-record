@@ -50,13 +50,13 @@
                         <p class="text-red-600 mt-1 text-sm">{{ $message }}</p>
                     @enderror
 
-                    <p class="forgot">Forgot password?</p>
+                    {{-- <p class="forgot">Forgot password?</p> --}}
 
                     <!-- This will now show "Invalid login details." or "Unrecognized role." -->
                    {{--@error('username') <p style="color:red;">{{ $message }}</p> @enderror
                     @error('password') <p style="color:red;">{{ $message }}</p> @enderror--}}
 
-                    <button type="submit" class="btn-login">Sign in</button>
+                    <button type="submit" class="btn-login mt-6">Sign in</button>
                 </form>
 
                

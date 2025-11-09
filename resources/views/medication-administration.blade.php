@@ -56,79 +56,79 @@
                         <tr class="border-b-2 border-line-brown/70 h-[100px]">
                             <td class="bg-beige text-center">
                                 <input type="text" name="medication[]" placeholder="Medication"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                                 <input type="hidden" name="time[]" value="10:00:00">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="dose[]" placeholder="Dose"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] focus:outline-none text-center medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="route[]" placeholder="Route"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] focus:outline-none text-center medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="frequency[]" placeholder="Frequency"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] focus:outline-none text-center medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="comments[]" placeholder="Comments"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] focus:outline-none text-center medication-input">
                             </td>
-                            <th class="bg-beige text-brown font-semibold">10:00 AM</th>
+                            <th class="bg-yellow-light text-brown font-semibold">10:00 AM</th>
                         </tr>
 
                         {{-- Row 2 (2:00 PM) --}}
                         <tr class="border-b-2 border-line-brown/70 h-[100px]">
                             <td class="bg-beige text-center">
                                 <input type="text" name="medication[]" placeholder="Medication"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                                 <input type="hidden" name="time[]" value="14:00:00">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="dose[]" placeholder="Dose"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="route[]" placeholder="Route"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="frequency[]" placeholder="Frequency"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="comments[]" placeholder="Comments"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
-                            <th class="bg-beige text-brown font-semibold">2:00 PM</th>
+                            <th class="bg-yellow-light text-brown font-semibold">2:00 PM</th>
                         </tr>
 
                         {{-- Row 3 (6:00 PM) --}}
                         <tr>
                             <td class="bg-beige text-center h-[100px]">
                                 <input type="text" name="medication[]" placeholder="Medication"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
 
                                 <input type="hidden" name="time[]" value="18:00:00">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="dose[]" placeholder="Dose"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="route[]" placeholder="Route"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="frequency[]" placeholder="Frequency"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
                             <td class="bg-beige text-center">
                                 <input type="text" name="comments[]" placeholder="Comments"
-                                    class="w-full h-[45px] text-center medication-input">
+                                    class="w-full h-[45px] text-center focus:outline-none medication-input">
                             </td>
-                            <th class="bg-beige text-brown font-semibold">6:00 PM</th>
+                            <th class=" text-brown font-semibold bg-yellow-light">6:00 PM</th>
                         </tr>
                     </table>
                 </div>

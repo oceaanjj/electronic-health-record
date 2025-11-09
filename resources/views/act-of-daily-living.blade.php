@@ -96,13 +96,13 @@
             <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? session('selected_date') }}">
             <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? session('selected_day_no') }}">
 
-            <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+            <div class="w-[80%] mx-auto flex justify-center items-start gap-1 mt-6">
                 {{-- LEFT SIDE TABLE (INPUTS) --}}
-                <div class="w-[68%] rounded-[15px] overflow-hidden">
+                <div class="w-[60%] rounded-[15px] overflow-hidden">
                     <table class="w-full table-fixed border-collapse border-spacing-y-0">
                         <tr>
-                            <th class="w-[40%] main-header rounded-tl-lg">CATEGORY</th>
-                            <th class="w-[60%] main-header rounded-tr-lg">ASSESSMENT</th>
+                            <th class="w-[25%] main-header rounded-tl-lg">CATEGORY</th>
+                            <th class="w-[75%] main-header rounded-tr-lg">ASSESSMENT</th>
                         </tr>
 
                         @foreach ([
@@ -114,13 +114,14 @@
                             'sleep_pattern_assessment' => 'SLEEP PATTERN',
                             'pain_level_assessment' => 'PAIN LEVEL',
                         ] as $field => $label)
-                            <tr class="border-b-2 border-line-brown/70">
+                            <tr class="border-b-2 border-line-brown/70 h-[100px]">
                                 <th class="text-center font-semibold py-2 bg-yellow-light text-brown">
                                     {{ $label }}
                                 </th>
                                 <td class="bg-beige">
                                     <input type="text" name="{{ $field }}" placeholder="Type here..."
-                                        class="cdss-input vital-input h-[60px] w-full border-none bg-transparent focus:ring-0"
+                                        class="notepad-lines cdss-input w-full h-[90px] border-none"
+
                                         data-field-name="{{ $field }}"
                                         value="{{ old($field, $adlData->$field ?? '') }}">
                                 </td>
@@ -130,7 +131,7 @@
                 </div>
 
                 {{-- ALERTS TABLE (JAVASCRIPT-CONTROLLED) --}}
-                <div class="w-[25%] rounded-[15px] overflow-hidden">
+                <div class="w-[30%] rounded-[15px] overflow-hidden">
                     <div class="main-header mb-1 text-center rounded-[15px]">
                         ALERTS
                     </div>
@@ -147,12 +148,12 @@
                             <tr>
                                 <td class="align-middle" data-alert-for="{{ $field }}">
                                     @if (isset($isLoading) && $isLoading && old($field, $adlData->$field ?? ''))
-                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-loading">
+                                        <div class="alert-box my-[3px] h-[90px] flex justify-center items-center alert-loading">
                                             <div class="loading-spinner"></div>
                                             <span>Analyzing...</span>
                                         </div>
                                     @else
-                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+                                        <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center w-full h-[90px]">
                                             <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
                                         </div>
                                     @endif
@@ -194,3 +195,4 @@
         });
     </script>
 @endpush
+

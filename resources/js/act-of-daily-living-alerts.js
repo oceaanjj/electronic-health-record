@@ -45,7 +45,7 @@ function displayAdlAlert(alertCell, alertData) {
 
     const alertBox = document.createElement("div");
     alertBox.className =
-        "alert-box my-[3px] h-[53px] flex justify-center items-center fade-in";
+        "alert-box my-[3px] h-[90px] flex justify-center items-center fade-in";
 
     let colorClass = "alert-green";
     if (alertData.severity === "CRITICAL") colorClass = "alert-red";
@@ -83,7 +83,7 @@ function showAlertLoading(alertCell) { // alertCell is the <td>
     if (!alertBox) return;
 
     // Use a static, non-animated background color. Green is a neutral choice.
-    alertBox.className = "alert-box my-[3px] h-[53px] flex justify-center items-center alert-green";
+    alertBox.className = "alert-box my-[3px] h-[90px] flex justify-center items-center alert-green";
     
     // The spinner itself has its own spin animation, which is desired.
     // The inner div helps with centering and spacing.
@@ -101,7 +101,7 @@ function showDefaultNoAlerts(alertCell) {
     alertCell.classList.remove("alert-loading", "alert-red", "alert-orange", "alert-green"); // Remove loading and severity classes
     alertCell.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
     alertCell.innerHTML = `
-        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
+        <div class="alert-box my-[3px] h-[90px] flex justify-center items-center">
             <span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>
         </div>
     `;

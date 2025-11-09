@@ -31,8 +31,8 @@
             {{-- Combined Form Card --}}
             <div class="shadow-xl rounded-xl overflow-hidden mb-10 border border-gray-100">
 
-                {{-- CARD HEADER: EDIT PATIENT RECOR (Dark Green Background, White Text, Custom Font) --}}
-                <div class="bg-dark-green p-6 sm:p-8">
+                {{-- CARD HEADER: EDIT PATIENT RECORD (Dark Green Background, White Text, Custom Font) --}}
+                <div class="bg-dark-green font-neometric p-6 sm:p-8">
                     <h1 class="text-2xl font-creato-black font-black text-white tracking-wider">
                         EDIT PATIENT RECORD
                     </h1>

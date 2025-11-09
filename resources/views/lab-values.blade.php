@@ -32,7 +32,7 @@
                             <tr>
                                 <th class="w-[30%] main-header rounded-tl-[15px]">LAB TEST</th>
                                 <th class="w-[30%] main-header">RESULT</th>
-                                <th class="w-[50%] main-header rounded-tr-[15px]">PEDIATRIC
+                                <th class="w-[50%] main-header rounded-tr-[15px]">
                                     NORMAL RANGE
                                 </th>
                             </tr>
@@ -64,12 +64,12 @@
                                     <td class="p-2 bg-beige text-center">
                                         <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
                                             value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
-                                            class="w-full h-[40px] text-center cdss-input" data-field-name="{{ $name }}_result">
+                                            class="w-full h-[40px] focus:outline-none text-center cdss-input" data-field-name="{{ $name }}_result">
                                     </td>
                                     <td class="p-2 bg-beige text-center">
                                         <input type="text" name="{{ $name }}_normal_range" placeholder="Normal Range"
                                             value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}"
-                                            class="w-full h-[40px] text-center">
+                                            class="w-full h-[40px] focus:outline-none text-center">
                                     </td>
                                 </tr>
                             @endforeach

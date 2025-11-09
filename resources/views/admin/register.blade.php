@@ -4,10 +4,33 @@
     <h1 class="register">Register New User</h1>
 
     {{-- ✅ Success Message --}}
-    @if (session('success'))
-        <div id="success-message" style="color: green; font-weight: bold; margin-bottom: 15px;">
-            {{ session('success') }}
-        </div>
+   @if(session('sweetalert'))
+        @push('scripts')
+        <script>
+            // Use setTimeout to ensure this doesn't block form validation JS
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    const opts = @json(session('sweetalert'));
+                    if (typeof showSuccess === 'function' && opts.type === 'success') {
+                        showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
+                    } else if (typeof showError === 'function' && opts.type === 'error') {
+                        showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
+                    } else if (typeof showWarning === 'function' && opts.type === 'warning') {
+                        showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
+                    } else if (typeof showInfo === 'function' && opts.type === 'info') {
+                        showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
+                    } else if (typeof Swal === 'function') {
+                        Swal.fire({
+                            icon: opts.type || 'info',
+                            title: opts.title || '',
+                            text: opts.text || '',
+                            timer: opts.timer || 2000
+                        });
+                    }
+                }, 100); // Small delay to ensure form validation JS is ready
+            });
+        </script>
+        @endpush
     @endif
 
     {{-- ❌ Error messages --}}

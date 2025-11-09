@@ -33,11 +33,11 @@ use Illuminate\Support\Facades\Auth;
     </header>
 
     <!-- test alert -->
-    @if (session('success'))
+    {{-- @if (session('success'))
         <div style="background-color:green; color:white; padding:1rem; text-align:center; margin:1rem;">
             {{ session('success') }}
         </div>
-    @endif
+    @endif --}}
     <!-- test alert -->
 
     <section class="welcome">

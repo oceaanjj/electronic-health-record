@@ -24,7 +24,7 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <p class="mb-1 w-[72%] flex justify-center bg-dark-green text-white rounded-lg">DEVELOPMENTAL HISTORY
+                    <p class="mb-1 w-[72%] main-header rounded-lg">DEVELOPMENTAL HISTORY
                     </p>
                 </center>
 
@@ -36,9 +36,9 @@
 
                         {{-- GROSS MOTOR --}}
                         <tr>
-                            <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">GROSS MOTOR</th>
+                            <th rowspan="2" class="w-[200px] main-header rounded-l-lg">GROSS MOTOR</th>
                             <th
-                                class="bg-yellow-light text-brown text-[13px] border-l-2 border-r-2 border-t-2 border-line-brown rounded-tr-lg">
+                                class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -54,9 +54,9 @@
                     {{-- FINE MOTOR --}}
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
-                            <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">FINE MOTOR</th>
+                            <th rowspan="2" class="w-[200px] main-header rounded-l-lg">FINE MOTOR</th>
                             <th
-                                class="bg-yellow-light text-brown text-[13px] border-l-2 border-r-2 border-t-2 border-line-brown rounded-tr-lg">
+                                class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -72,9 +72,9 @@
                     {{-- LANGUAGE --}}
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
-                            <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">LANGUAGE</th>
+                            <th rowspan="2" class="w-[200px] main-header rounded-l-lg">LANGUAGE</th>
                             <th
-                                class="bg-yellow-light text-brown text-[13px] border-l-2 border-r-2 border-t-2 border-line-brown rounded-tr-lg">
+                                class="bg-yellow-light text-brown text-[13px]  border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -89,9 +89,9 @@
                     {{-- COGNITIVE --}}
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
-                            <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">COGNITIVE</th>
+                            <th rowspan="2" class="w-[200px] main-header rounded-l-lg">COGNITIVE</th>
                             <th
-                                class="bg-yellow-light text-brown text-[13px] border-l-2 border-r-2 border-t-2 border-line-brown rounded-tr-lg">
+                                class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -106,9 +106,9 @@
                     {{-- SOCIAL --}}
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
-                            <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">SOCIAL</th>
+                            <th rowspan="2" class="w-[200px] main-header rounded-l-lg">SOCIAL</th>
                             <th
-                                class="bg-yellow-light text-brown text-[13px] border-l-2 border-r-2 border-t-2 border-line-brown rounded-tr-lg">
+                                class="bg-yellow-light text-brown text-[13px]  border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 

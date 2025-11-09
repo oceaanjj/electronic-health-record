@@ -5,96 +5,74 @@
 @section('content')
 
 <style>
-.container { padding: 1rem; }
-.alert { padding: 10px; border-radius: 6px; margin-bottom: 1rem; }
+.container { 
+    padding: 1.5rem; 
+}
+
+/* Add outer margin for breathing room */
+#form-content-container {
+    margin: 2rem auto;
+    max-width: 1200px;
+}
+
+/* Alerts */
+.alert { 
+    padding: 10px; 
+    border-radius: 6px; 
+    margin-bottom: 1rem; 
+}
 .alert-success { background: #d1e7dd; color: #0f5132; }
 .alert-error { background: #f8d7da; color: #842029; }
 
+/* --- GRID --- */
 .diagnostic-grid { 
-    margin-top: 1rem; 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 1rem; 
+    margin-top: 2rem; 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 2rem; /* Added more spacing between cards */
 }
 
+/* --- CARD PANEL --- */
 .diagnostic-panel {
-    border-radius: 12px;
-    box-shadow: 0 0 5px #b0a87e;
-    flex: 1 1 300px;
-    display: flex;
-    flex-direction: column;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
     overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    margin: 0.5rem; /* Added margin around individual panels */
+}
+.diagnostic-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
 }
 
+/* --- HEADER AREA --- */
 .panel-body {
-    background: linear-gradient(135deg, #5a9c5a, #4a8c4a);
-    padding: 1rem;
-    flex-grow: 1;
-    min-height: 250px;
+    background: #f9fafb;
+    padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+    position: relative;
 }
 
 .panel-body h2 {
-    color: white;
-    font-weight: bold;
+    color: #374151;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
     text-align: center;
-    font-size: 1.5rem;
-    margin: 0;
-    padding: 1rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
 }
 
-.panel-footer {
-    background: #f7edc9;
-    padding: 0.75rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.insert-btn {
-    background: green;
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.clear-btn {
-    background: red;
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-}
-
-button[type=submit] { 
-    background: #007bff; 
-    color: white; 
-    padding: 8px 16px; 
-    border: none; 
-    border-radius: 6px; 
-    cursor: pointer; 
-    font-weight: bold; 
-}
-
-.file-input {
-    display: none;
-}
-
+/* --- PREVIEW GRID --- */
 .preview-grid { 
     display: flex; 
     flex-wrap: wrap; 
     gap: 8px; 
     margin-top: 1rem;
+    justify-content: center;
 }
 .preview-item { 
     position: relative; 
@@ -105,14 +83,14 @@ button[type=submit] {
     width: 100%; 
     height: 100%; 
     object-fit: cover; 
-    border-radius: 8px; 
-    border: 2px solid #ccc; 
+    border-radius: 12px; 
+    border: 2px solid #e5e7eb; 
 }
 .delete-btn { 
     position: absolute; 
     top: -6px; 
     right: -6px; 
-    background: red; 
+    background: #ef4444; 
     color: white; 
     border: none; 
     border-radius: 50%; 
@@ -122,40 +100,88 @@ button[type=submit] {
     cursor: pointer; 
 }
 
+/* --- UPLOADED FILES TITLE --- */
 .uploaded-title {
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: white;
-    font-weight: bold;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    color: #111827;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e7eb;
     padding-bottom: 5px;
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: left;
 }
 
-/* --- button disabledd --- */
+/* --- FOOTER BUTTON AREA --- */
+.panel-footer {
+    background: #f3f4f6;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* --- BUTTONS --- */
+.insert-btn {
+    background: #2563eb;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+}
+.insert-btn:hover {
+    background: #1e40af;
+}
+
+.clear-btn {
+    background: #ef4444;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: none;
+    transition: background 0.3s ease;
+}
+.clear-btn:hover {
+    background: #b91c1c;
+}
+
+/* --- FILE INPUT HIDDEN --- */
+.file-input {
+    display: none;
+}
+
+/* --- DISABLED STATES --- */
 .insert-btn.disabled,
 .insert-btn[disabled],
 button.clear-btn[disabled],
 button[type=submit][disabled] {
     opacity: 0.5;
     cursor: not-allowed;
-    background-color: #e0e0e0;
-    color: #999;
-}
-button.clear-btn[disabled] {
-    background: none;
-    opacity: 0.4;
+    background-color: #d1d5db;
+    color: #9ca3af;
 }
 </style>
+
 
 <div id="form-content-container">
 
     {{-- Styled Alerts --}}
-    @if (session('success'))
+    {{-- @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6">{{ session('success') }}</div>
     @endif
     @if (session('error'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6">{{ session('error') }}</div>
-    @endif
+    @endif --}}
 
     <x-searchable-patient-dropdown
         :patients="$patients"
@@ -238,25 +264,28 @@ button.clear-btn[disabled] {
                 @endforeach
             </div>
 
-            <div style="margin-top: 1rem;">
-                <button type="submit" {{ !$selectedPatient ? 'disabled' : '' }}>Submit</button>
+            {{-- Use the global button-default class --}}
+            <div style="margin-top: 2rem; text-align:center;">
+                <button type="submit" class="button-default" {{ !$selectedPatient ? 'disabled' : '' }}>
+                    SUBMIT 
+                </button>
             </div>
         </fieldset>
     </form>
 </div>
 
-    <script>
+<script>
 function previewImages(event, type) {
     const input = event.target;
     const previewContainer = document.getElementById('preview-' + type);
-    previewContainer.innerHTML = ''; // Clear existing new previews
+    previewContainer.innerHTML = '';
 
     if (input.files) {
         Array.from(input.files).forEach(file => {
             const reader = new FileReader();
             reader.onload = e => {
                 const div = document.createElement('div');
-                div.classList.add('relative', 'w-full', 'aspect-square'); // Use Tailwind classes for consistency
+                div.classList.add('relative', 'w-full', 'aspect-square');
                 div.innerHTML = `<img src="${e.target.result}" alt="preview" class="w-full h-full object-cover rounded-lg border-2 border-gray-300">`;
                 previewContainer.appendChild(div);
             };
@@ -269,31 +298,85 @@ function clearPreview(type) {
     const previewContainer = document.getElementById('preview-' + type);
     const input = document.getElementById('file-input-' + type); 
     previewContainer.innerHTML = '';
-    input.value = ''; // Clear the file input
+    input.value = '';
 }
 
 function deleteImage(url) {
-    // Note: The user's instructions mention avoiding confirm().
-    // This would require a custom modal, which is a larger change.
-    // Keeping the original logic for now as requested by the file.
-    if (!confirm('Delete this image?')) return; 
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: new URLSearchParams({ _method: 'DELETE' })
-    })
-    .then(res => {
-        if (res.ok) {
-            location.reload();
-        } else {
-            alert('Failed to delete image.');
-        }
-    })
-    .catch(() => alert('Error deleting image.'));
+    if (typeof showConfirm === 'function') {
+        showConfirm('Do you really want to delete this image?', 'Delete Image?', 'Yes, delete', 'Cancel')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: new URLSearchParams({ _method: 'DELETE' })
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            location.reload();
+                        } else {
+                            if (typeof showError === 'function') {
+                                showError('Failed to delete image.', 'Error');
+                            } else {
+                                alert('Failed to delete image.');
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        if (typeof showError === 'function') {
+                            showError('Error deleting image.', 'Error');
+                        } else {
+                            alert('Error deleting image.');
+                        }
+                    });
+                }
+            });
+    } else if (typeof Swal === 'function') {
+        Swal.fire({
+            title: 'Delete Image?',
+            text: 'Do you really want to delete this image?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#2A1C0F',
+            cancelButtonColor: '#6c757d'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: new URLSearchParams({ _method: 'DELETE' })
+                })
+                .then(res => {
+                    if (res.ok) location.reload();
+                    else alert('Failed to delete image.');
+                })
+                .catch(() => alert('Error deleting image.'));
+            }
+        });
+    } else {
+        if (!confirm('Delete this image?')) return;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: new URLSearchParams({ _method: 'DELETE' })
+        })
+        .then(res => {
+            if (res.ok) location.reload();
+            else alert('Failed to delete image.');
+        })
+        .catch(() => alert('Error deleting image.'));
+    }
 }
 
 function handleClearButtonClick(type) {
@@ -301,47 +384,104 @@ function handleClearButtonClick(type) {
     const uploadedImageIds = JSON.parse(panel.dataset.uploadedImageIds || '[]');
 
     if (uploadedImageIds.length > 0) {
-        // If there are uploaded images, trigger bulk delete
         deleteAllImages(type, uploadedImageIds);
     } else {
-        // Otherwise, just clear the client-side preview
         clearPreview(type);
     }
 }
 
 function deleteAllImages(type, imageIds) {
-    if (!confirm('Delete ALL images for ' + type.toUpperCase() + '? This action cannot be undone.')) return;
-
-    fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
-        .replace('__TYPE__', type)
-        .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
-        method: 'POST', // Laravel uses POST for DELETE via _method
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            location.reload(); // Reload page to reflect changes
-        } else {
-            alert('Failed to delete images: ' + (data.message || 'Unknown error.'));
-        }
-    })
-    .catch(error => {
-        console.error('Error deleting images:', error);
-        alert('Error deleting images.');
-    });
+    if (typeof showConfirm === 'function') {
+        showConfirm('Do you really want to delete ALL images for ' + type.toUpperCase() + '?', 'Delete All Images?', 'Yes', 'Cancel')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
+                        .replace('__TYPE__', type)
+                        .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            if (typeof showError === 'function') {
+                                showError('Failed to delete images.', 'Error');
+                            } else {
+                                alert('Failed to delete images.');
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        if (typeof showError === 'function') {
+                            showError('Error deleting images.', 'Error');
+                        } else {
+                            alert('Error deleting images.');
+                        }
+                    });
+                }
+            });
+    } else if (typeof Swal === 'function') {
+        Swal.fire({
+            title: 'Delete All Images?',
+            text: 'Do you really want to delete ALL images for ' + type.toUpperCase() + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#2A1C0F',
+            cancelButtonColor: '#6c757d'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
+                    .replace('__TYPE__', type)
+                    .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) location.reload();
+                    else alert('Failed to delete images.');
+                })
+                .catch(() => alert('Error deleting images.'));
+            }
+        });
+    } else {
+        if (!confirm('Delete ALL images for ' + type.toUpperCase() + '?')) return;
+        fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
+            .replace('__TYPE__', type)
+            .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) location.reload();
+            else alert('Failed to delete images.');
+        })
+        .catch(() => alert('Error deleting images.'));
+    }
 }
 
-// Initialize searchable dropdown on page load
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.initSearchableDropdown) {
-        window.initSearchableDropdown();
-    }
+    if (window.initSearchableDropdown) window.initSearchableDropdown();
 });
 </script>
 

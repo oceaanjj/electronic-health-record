@@ -28,7 +28,7 @@
                     <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
                         value="@isset($selectedPatient){{ trim($selectedPatient->name) }}@endisset" autocomplete="off"
                         class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
 
                     {{-- Dropdown list --}}
                     <div id="patient_options_container"
@@ -53,7 +53,7 @@
                 {{-- START: REPLACED SELECT WITH INPUT --}}
                 <input type="text" id="day_no_selector" {{-- Kept ID for JS compatibility --}} name="day_no_display" {{--
                     Name is not needed for form, but good for clarity --}} value="{{ $currentDayNo ?? 1 }}" class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                               outline-none shadow-sm text-center bg-gray-100 text-black cursor-not-allowed" disabled>
+                                   outline-none shadow-sm text-center bg-gray-100 text-black cursor-not-allowed" disabled>
                 {{-- END: REPLACEMENT --}}
             </form>
         </div>
@@ -74,11 +74,9 @@
 
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">ORAL
-                                    INTAKE (mL)</th>
-                                <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center">IV FLUIDS (mL)</th>
-                                <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tr-lg">URINE
-                                    OUTPUT (mL)</th>
+                                <th class="w-[33%] main-header rounded-tl-lg">ORAL INTAKE (mL)</th>
+                                <th class="w-[33%] main-header">IV FLUIDS (mL)</th>
+                                <th class="w-[33%] main-header rounded-tr-lg">URINE OUTPUT (mL)</th>
                             </tr>
 
                             <tr class="bg-beige text-brown">
@@ -110,7 +108,7 @@
                     </div>
 
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main main-header rounded-[15px]">
                             ALERTS
                         </div>
 

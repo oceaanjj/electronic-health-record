@@ -1,10 +1,127 @@
-intervention:
-  - keywords: ["monitor"]
-    alert: "Specify frequency of monitoring (e.g., 'Monitor vital signs q4h')."
-    severity: "INFO"
-  - keywords: ["assess"]
-    alert: "Be specific: 'Assess lung sounds' instead of 'Assess patient'."
-    severity: "INFO"
-  - keywords: ["educate"]
-    alert: "Include 'teach-back' method to confirm understanding."
-    severity: "INFO"
+# -----------------------------------------------------------------
+# 1. ASSESSMENT & MONITORING
+# -----------------------------------------------------------------
+- keywords: ["monitor", "assess", "check", "observe"]
+  match_type: any
+  alert: "Be specific and include frequency (e.g., 'Monitor vital signs q4h', 'Assess lung sounds q shift')."
+  severity: "INFO"
+- keywords: ["vital signs"]
+  match_type: all
+  alert: "Specify frequency (e.g., '...q4h', '...per post-op protocol')."
+  severity: "INFO"
+- keywords: ["pain"]
+  match_type: any
+  alert: "Use a validated scale (e.g., 'Assess pain using 0-10 scale') and ensure you reassess after intervention."
+  severity: "WARNING"
+- keywords: ["neuro", "gcs"]
+  match_type: any
+  alert: "Specify assessment type and frequency (e.g., '...neuro checks q1h', '...assess GCS q4h', '...assess PERRLA')."
+  severity: "WARNING"
+- keywords: ["skin", "braden"]
+  match_type: any
+  alert: "Specify location and frequency (e.g., 'Assess sacrum q2h', 'Monitor Braden scale daily')."
+  severity: "INFO"
+- keywords: ["reassess"]
+  match_type: any
+  alert: "Specify frequency and what to reassess (e.g., 'Reassess pain 30 min after IV med', 'Reassess lung sounds after breathing treatment')."
+  severity: "INFO"
+- keywords: ["lung sounds", "breath sounds"]
+  match_type: any
+  alert: "Specify frequency (e.g., '...q4h and PRN', '...with vital signs')."
+  severity: "INFO"
+- keywords: ["pulses", "peripheral pulses"]
+  match_type: any
+  alert: "Specify location and frequency (e.g., 'Assess bilateral pedal pulses q4h')."
+  severity: "INFO"
+
+# -----------------------------------------------------------------
+# 2. ACTION / "DOING" INTERVENTIONS
+# -----------------------------------------------------------------
+- keywords: ["administer"]
+  match_type: any
+  alert: "Specify med, dose, route, and reason (e.g., 'Administer Morphine 2mg IV for pain')."
+  severity: "WARNING"
+- keywords: ["pain med", "analgesic"]
+  match_type: any
+  alert: "Critical safety prompt: Ensure pain is assessed using a scale before and after administration."
+  severity: "WARNING"
+- keywords: ["prn"]
+  match_type: any
+  alert: "Ensure PRN medication includes an indication (e.g., '...for pain > 6/10', '...for nausea')."
+  severity: "INFO"
+- keywords: ["turn", "reposition"]
+  match_type: any
+  alert: "Specify frequency (e.g., 'Turn patient q2h and PRN')."
+  severity: "INFO"
+- keywords: ["elevate"]
+  match_type: any
+  alert: "Specify what and why (e.g., 'Elevate head of bed 30 degrees to prevent aspiration', 'Elevate edematous extremity on 2 pillows')."
+  severity: "INFO"
+- keywords: ["hob"]
+  match_type: any
+  alert: "Specify angle (e.g., '...HOB 30 degrees') to prevent aspiration or improve breathing."
+  severity: "INFO"
+- keywords: ["dressing"]
+  match_type: any
+  alert: "Specify action and frequency: 'Change dressing daily and PRN', 'Reinforce dressing'."
+  severity: "INFO"
+- keywords: ["ambulate", "walk"]
+  match_type: any
+  alert: "Specify frequency, distance, and assistance level (e.g., '...ambulate 50 feet with walker TID')."
+  severity: "WARNING"
+- keywords: ["rom"]
+  match_type: any
+  alert: "Specify Active or Passive and frequency (e.g., 'Passive ROM to all extremities q8h')."
+  severity: "INFO"
+- keywords: ["encourage"]
+  match_type: any
+  alert: "Be specific. What are you encouraging? (e.g., '...encourage deep breathing', '...encourage fluid intake')."
+  severity: "INFO"
+- keywords: ["oxygen", "o2"]
+  match_type: any
+  alert: "Specify delivery method and flow rate (e.g., 'Administer O2 2L via nasal cannula', 'Titrate O2 to maintain SpO2 > 92%')."
+  severity: "WARNING"
+- keywords: ["precautions"]
+  match_type: any
+  alert: "Specify which type (e.g., 'Implement Fall precautions', 'Aspiration precautions', 'Seizure precautions')."
+  severity: "WARNING"
+- keywords: ["aspiration"]
+  match_type: any
+  alert: "Specify interventions (e.g., 'HOB > 30 degrees', 'check residuals q4h', 'request swallow eval')."
+  severity: "WARNING"
+- keywords: ["suction"]
+  match_type: any
+  alert: "Specify type and frequency (e.g., 'Oral suction PRN', 'Nasotracheal suction PRN for coarse rhonchi')."
+  severity: "INFO"
+
+# -----------------------------------------------------------------
+# 3. TEACHING INTERVENTIONS
+# -----------------------------------------------------------------
+- keywords: ["educate", "teach", "instruct", "provide education"]
+  match_type: any
+  alert: "Specify *what* you are teaching (e.g., 'Educate patient on new medication side effects') and use 'teach-back'."
+  severity: "INFO"
+- keywords: ["teach-back", "return demonstration"]
+  match_type: any
+  alert: "Excellent! This is the best practice for education."
+  severity: "INFO"
+- keywords: ["discharge"]
+  match_type: any
+  alert: "Specify discharge teaching (e.g., '...discharge teaching on wound care', '...medication reconciliation')."
+  severity: "INFO"
+
+# -----------------------------------------------------------------
+# 4. MANAGEMENT & COLLABORATION
+# -----------------------------------------------------------------
+- keywords: ["notify", "call", "page"]
+  match_type: any
+  alert: "Specify *who* to notify and *what* parameters (e.g., 'Notify MD if SBP < 90 or > 160', '...if pain unresolved')."
+  severity: "WARNING"
+- keywords: ["consult", "refer"]
+  match_type: any
+  alert: "Specify which service (e.g., 'Consult PT for mobility', 'Consult Nutrition for diet', 'Refer to social work')."
+  severity: "INFO"
+- keywords: ["document"]
+  match_type: any
+  alert: "Specify what and where (e.g., 'Document I&O on flow sheet', 'Document wound appearance')."
+  severity: "INFO"

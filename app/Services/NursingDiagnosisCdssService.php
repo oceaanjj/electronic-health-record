@@ -18,11 +18,6 @@ class NursingDiagnosisCdssService
     private $vitalCdssService;
     private $intakeAndOutputCdssService;
     private $actOfDailyLivingCdssService;
-
-    /**
-     * @var array This will act as a cache for loaded rules.
-     * e.g., $adpieRules['physical-exam']['diagnosis']
-     */
     private $adpieRules;
 
     public function __construct(
@@ -37,27 +32,24 @@ class NursingDiagnosisCdssService
         $this->vitalCdssService = $vitalCdssService;
         $this->intakeAndOutputCdssService = $intakeAndOutputCdssService;
         $this->actOfDailyLivingCdssService = $actOfDailyLivingCdssService;
-
-        // --- We no longer load rules on construction ---
         $this->adpieRules = [];
     }
 
     /**
      * Loads and caches rules for a specific component.
+     * This version is robust and handles YAML with or without a top-level key.
      */
     private function getRulesForComponent(string $componentName)
     {
-        // 1. Check if rules are already loaded and cached
         if (isset($this->adpieRules[$componentName])) {
             return $this->adpieRules[$componentName];
         }
 
-        // 2. Build the dynamic path based on the component name
         $rulesDirectory = storage_path('app/private/adpie/' . $componentName . '/rules');
 
         if (!File::isDirectory($rulesDirectory)) {
             error_log("ADPIE rules directory not found for component: " . $componentName);
-            $this->adpieRules[$componentName] = []; // Cache empty array to prevent re-reads
+            $this->adpieRules[$componentName] = [];
             return [];
         }
 
@@ -69,9 +61,16 @@ class NursingDiagnosisCdssService
                 try {
                     $parsedYaml = Yaml::parseFile($file->getPathname());
                     if (is_array($parsedYaml)) {
-                        // We merge based on the file name (e.g., diagnosis.yaml, planning.yaml)
-                        $stepName = $file->getFilenameWithoutExtension(); // "diagnosis", "planning", etc.
-                        $mergedRules[$stepName] = $parsedYaml[$stepName] ?? $parsedYaml;
+                        $stepName = $file->getFilenameWithoutExtension(); // e.g., "diagnosis"
+
+                        // Check if the YAML file has a top-level key (e.g., "diagnosis:")
+                        if (isset($parsedYaml[$stepName]) && is_array($parsedYaml[$stepName])) {
+                            // Case 1: YAML has top-level key (e.g., diagnosis: - keywords: [...])
+                            $mergedRules[$stepName] = $parsedYaml[$stepName];
+                        } else {
+                            // Case 2: YAML is just a list (e.g., - keywords: [...])
+                            $mergedRules[$stepName] = $parsedYaml;
+                        }
                     }
                 } catch (\Exception $e) {
                     error_log("Failed to parse ADPIE YAML file: " . $file->getPathname() . " - " . $e->getMessage());
@@ -79,7 +78,6 @@ class NursingDiagnosisCdssService
             }
         }
 
-        // 3. Cache the merged rules for this component and return them
         $this->adpieRules[$componentName] = $mergedRules;
         return $mergedRules;
     }
@@ -92,18 +90,13 @@ class NursingDiagnosisCdssService
             return null;
         }
 
-        // --- THIS IS THE FIX ---
-        // 1. Create the HTML message for the UI
         $messageHtml = '<ul class="list-disc list-inside text-left">';
         foreach ($recommendations as $rec) {
             $messageHtml .= '<li>' . htmlspecialchars($rec) . '</li>';
         }
         $messageHtml .= '</ul>';
 
-        // 2. Create the plain-text message for the database
-        // This joins all recommendations with a space.
         $plainTextMessage = implode(' ', $recommendations);
-        // --- END OF FIX ---
 
         return (object) [
             'level' => 'recommendation',
@@ -113,7 +106,9 @@ class NursingDiagnosisCdssService
     }
 
     /**
+     * --- THIS IS THE NEW, BETTER ALGORITHM ---
      * Runs analysis for a single ADPIE finding against its rules.
+     * Supports 'match_type: any' (OR) and 'match_type: all' (AND).
      */
     private function runAdpieAnalysis(string $finding, array $rules): array
     {
@@ -125,19 +120,41 @@ class NursingDiagnosisCdssService
         }
 
         foreach ($rules as $rule) {
-            $match = true;
-            $allKeywordsFound = true;
-            foreach ($rule['keywords'] as $keyword) {
-                if (!str_contains($findingLower, strtolower($keyword))) {
-                    $allKeywordsFound = false;
-                    break;
+            // Add a check to ensure $rule is a valid array with 'keywords'
+            if (!is_array($rule) || !isset($rule['keywords'])) {
+                continue; // Skip this invalid rule
+            }
+
+            // Default to 'all' (AND) if 'match_type' isn't specified
+            $matchType = $rule['match_type'] ?? 'all';
+            $negate = $rule['negate'] ?? false;
+            $match = false;
+
+            if ($matchType === 'any') {
+                // --- "OR" LOGIC ---
+                // If *any* keyword is found, the rule matches.
+                $match = false; // Start with no match
+                foreach ($rule['keywords'] as $keyword) {
+                    if (str_contains($findingLower, strtolower($keyword))) {
+                        $match = true; // Found one!
+                        break; // Stop searching
+                    }
+                }
+            } else {
+                // --- "AND" LOGIC (Your old logic) ---
+                // *All* keywords must be found.
+                $match = true; // Start assuming it matches
+                foreach ($rule['keywords'] as $keyword) {
+                    if (!str_contains($findingLower, strtolower($keyword))) {
+                        $match = false; // Missing one!
+                        break; // Stop searching
+                    }
                 }
             }
 
-            if (isset($rule['negate']) && $rule['negate'] === true) {
-                $match = !$allKeywordsFound;
-            } else {
-                $match = $allKeywordsFound;
+            // Apply negation if set
+            if ($negate) {
+                $match = !$match;
             }
 
             if ($match) {
@@ -149,7 +166,6 @@ class NursingDiagnosisCdssService
 
     /**
      * Generates comprehensive nursing diagnosis rules (This is the 'on-submit' logic)
-     * This function is already component-aware.
      */
     public function generateNursingDiagnosisRules(string $componentName, array $componentData, array $nurseInput, Patient $patient)
     {
@@ -160,7 +176,8 @@ class NursingDiagnosisCdssService
             case 'physical-exam':
                 $componentAlerts = $this->physicalExamCdssService->analyzeFindings($componentData);
                 foreach ($componentAlerts as $key => $alert) {
-                    if ($alert !== 'No Findings') {
+                    // --- FIX: Check for "No Findings" and skip ---
+                    if ($alert !== 'No Findings' && $alert !== null) {
                         $allAlerts[] = ['source' => 'Physical Exam', 'field' => $key, 'alert' => $alert];
                     }
                 }
@@ -168,6 +185,8 @@ class NursingDiagnosisCdssService
             case 'lab-values':
                 $ageGroup = $patient->getAgeGroup(); // Assuming a method to get age group
                 foreach ($componentData as $param => $value) {
+                    if ($value === null)
+                        continue; // Skip null values
                     $alert = $this->labValuesCdssService->checkLabResult($param, $value, $ageGroup);
                     if ($alert['severity'] !== LabValuesCdssService::NONE) {
                         $allAlerts[] = ['source' => 'Lab Values', 'field' => $param, 'alert' => $alert['alert'], 'severity' => $alert['severity']];
@@ -198,22 +217,11 @@ class NursingDiagnosisCdssService
                 break;
         }
 
-        // 2. Combine with nurse's ADPIE input
-        $combinedRules = [
-            'component' => $componentName,
-            'patient_id' => $patient->id,
-            'component_alerts' => $allAlerts,
-            'nurse_input' => $nurseInput,
-            'generated_at' => now()->toDateTimeString(),
-        ];
-
-        // 3. Save the combined rules to a YAML file
-        // $directory = storage_path('app/private/adpie/' . $componentName);
-        // if (!File::isDirectory($directory)) {
-        //     File::makeDirectory($directory, 0755, true);
-        // }
-        // $filename = $directory . '/nursing_diagnosis_rules_' . $patient->id . '_' . now()->format('YmdHis') . '.yaml';
-        // File::put($filename, Yaml::dump($combinedRules, 4, 2));
+        // --- FIX: Handle the case where there are NO alerts ---
+        if (empty($allAlerts)) {
+            $allAlerts[] = ['source' => $componentName, 'field' => 'general', 'alert' => 'No Findings'];
+        }
+        // --- END OF FIX ---
 
         return [
             'alerts' => $allAlerts,
@@ -225,9 +233,6 @@ class NursingDiagnosisCdssService
     // --- UPDATED REAL-TIME ANALYSIS METHODS ---
     //
 
-    /**
-     * Analyzes Step 1: Diagnosis
-     */
     public function analyzeDiagnosis(string $componentName, string $finding)
     {
         $componentRules = $this->getRulesForComponent($componentName);
@@ -236,9 +241,6 @@ class NursingDiagnosisCdssService
         return $this->createAlert($recommendations);
     }
 
-    /**
-     * Analyzes Step 2: Planning
-     */
     public function analyzePlanning(string $componentName, string $finding)
     {
         $componentRules = $this->getRulesForComponent($componentName);
@@ -247,9 +249,6 @@ class NursingDiagnosisCdssService
         return $this->createAlert($recommendations);
     }
 
-    /**
-     * Analyzes Step 3: Intervention
-     */
     public function analyzeIntervention(string $componentName, string $finding)
     {
         $componentRules = $this->getRulesForComponent($componentName);
@@ -258,9 +257,6 @@ class NursingDiagnosisCdssService
         return $this->createAlert($recommendations);
     }
 
-    /**
-     * Analyzes Step 4: Evaluation
-     */
     public function analyzeEvaluation(string $componentName, string $finding)
     {
         $componentRules = $this->getRulesForComponent($componentName);

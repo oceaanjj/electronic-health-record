@@ -140,35 +140,30 @@ class NursingDiagnosisController extends Controller
     public function analyzeDiagnosisField(Request $request)
     {
         try {
-            // --- UPDATED VALIDATION ---
             $data = $request->validate([
                 'fieldName' => 'required|string',
                 'finding' => 'nullable|string',
                 'patient_id' => 'nullable|exists:patients,patient_id',
-                'component' => 'required|string', // --- ADD THIS ---
+                'component' => 'required|string',
             ]);
 
             $recommendation = null;
             $finding = $data['finding'] ?? '';
             $patientId = $data['patient_id'] ?? null;
-            $component = $data['component']; // --- ADD THIS ---
+            $component = $data['component'];
 
             // Route the analysis based on the field name
             switch ($data['fieldName']) {
                 case 'diagnosis':
-                    // --- UPDATE CALL ---
                     $recommendation = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $finding);
                     break;
                 case 'planning':
-                    // --- UPDATE CALL ---
                     $recommendation = $this->nursingDiagnosisCdssService->analyzePlanning($component, $finding);
                     break;
                 case 'intervention':
-                    // --- UPDATE CALL ---
                     $recommendation = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $finding);
                     break;
                 case 'evaluation':
-                    // --- UPDATE CALL ---
                     $recommendation = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $finding);
                     break;
             }

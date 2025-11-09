@@ -1,46 +1,92 @@
-diagnosis:
-  # --- Your Original Rules ---
-  - keywords: ["pain"]
-    alert: "Recommend pain assessment (e.g., PQRST, 0-10 scale)."
-    severity: "INFO"
-  - keywords: ["risk for"]
-    alert: "Ensure preventative interventions are planned. (e.g., risk for falls, risk for aspiration)"
-    severity: "WARNING"
-  - keywords: ["impaired", "skin"]
-    alert: "Recommend Braden Scale assessment for skin integrity."
-    severity: "WARNING"
-  - keywords: ["fluid volume"]
-    alert: "Monitor Intake & Output (I&O) closely. Check daily weights."
-    severity: "INFO"
+# -----------------------------------------------------------------
+# 1. GOAL STRUCTURE (SMART)
+# -----------------------------------------------------------------
+- keywords: ["smart"]
+  match_type: any
+  alert: "Ensure goals are Specific, Measurable, Achievable, Relevant, and Time-bound."
+  severity: "INFO"
+- keywords: ["measurable"]
+  match_type: any
+  alert: "How will this be measured? (e.g., '...as evidenced by...', '...pain < 3/10', '...ambulate 50 feet')."
+  severity: "INFO"
+- keywords: ["understand", "know", "learn", "appreciate"]
+  match_type: any
+  alert: "Avoid non-measurable verbs like 'understand' or 'know'. Use action verbs like 'demonstrate', 'state', 'list', or 'verbalize'."
+  severity: "WARNING"
+- keywords:
+    ["by discharge", "by end of shift", "within 24 hours", "within 8 hours"]
+  match_type: any
+  alert: "Good! A time frame makes the goal measurable."
+  severity: "INFO"
+- keywords: ["goal", "outcome"]
+  match_type: any
+  alert: "Ensure the goal has a measurable outcome and a time frame (e.g., '...by 11/10')."
+  severity: "INFO"
 
-  # --- New Clinical Rules ---
-  - keywords: ["ineffective", "airway"]
-    alert: "Assess breath sounds (auscultate), check O2 saturation, and encourage cough/deep breathing."
-    severity: "CRITICAL"
-  - keywords: ["impaired", "gas exchange"]
-    alert: "Monitor respiratory rate, O2 saturation, and work of breathing. Check ABG results if available."
-    severity: "CRITICAL"
-  - keywords: ["infection"] # Catches both "risk for infection" and "infection"
-    alert: "Monitor for signs of infection: check temperature, WBC count, and assess any wounds/sites."
-    severity: "WARNING"
-  - keywords: ["risk for", "falls"]
-    alert: "Implement high fall risk precautions. Assess environment for hazards. Use Morse Fall Scale."
-    severity: "WARNING"
-  - keywords: ["imbalanced", "nutrition"]
-    alert: "Monitor food intake (calorie count). Assess for swallowing difficulties. Consider nutritional consult."
-    severity: "INFO"
-  - keywords: ["impaired", "mobility"]
-    alert: "Assess Range of Motion (ROM) and need for assistive devices. Consider Physical Therapy consult. Implement turn schedule if bedbound."
-    severity: "INFO"
-  - keywords: ["tissue", "perfusion"] # Catches "ineffective peripheral/cardiac/etc. tissue perfusion"
-    alert: "Assess peripheral pulses, capillary refill, skin color, and temperature. Monitor blood pressure."
-    severity: "CRITICAL"
-  - keywords: ["acute", "confusion"]
-    alert: "Assess for new-onset confusion (e.g., CAM score). Check for underlying causes (UTI, hypoxia, meds). Re-orient patient."
-    severity: "WARNING"
-  - keywords: ["constipation"]
-    alert: "Assess last bowel movement and bowel sounds. Encourage fluid intake and ambulation. Consider laxative/stool softener."
-    severity: "INFO"
-  - keywords: ["anxiety"]
-    alert: "Assess level of anxiety. Use therapeutic communication. Provide a calm environment and simple instructions."
-    severity: "INFO"
+# -----------------------------------------------------------------
+# 2. PATIENT-CENTERED
+# -----------------------------------------------------------------
+- keywords: ["patient will"]
+  match_type: any
+  alert: "Good! Goals should be patient-centered. Ensure it is measurable and has a time frame."
+  severity: "INFO"
+- keywords: ["nurse will", "i will"]
+  match_type: any
+  alert: "This sounds like a nurse intervention, not a patient goal. Goals must be patient-centered (e.g., 'Patient will...')."
+  severity: "CRITICAL"
+- keywords: ["patient and family"]
+  match_type: any
+  alert: "Good job involving the family/caregiver in the plan of care."
+  severity: "INFO"
+
+# -----------------------------------------------------------------
+# 3. CLINICAL GOALS (Related to Physical Exam)
+# -----------------------------------------------------------------
+- keywords: ["pain"]
+  match_type: any
+  alert: "Make the pain goal measurable (e.g., 'Patient will report pain < 3/10 on 0-10 scale within 1 hour of intervention')."
+  severity: "WARNING"
+- keywords: ["ambulate", "walk"]
+  match_type: any
+  alert: "Make the mobility goal measurable. Specify distance, frequency, and assistance level (e.g., 'Patient will ambulate 100 feet with walker TID by 11/10')."
+  severity: "WARNING"
+- keywords: ["skin", "wound", "incision"]
+  match_type: any
+  alert: "Specify the goal: 'Patient's skin will remain intact' or 'Patient's wound will show signs of healing (e.g., no redness, no drainage) by 11/10'."
+  severity: "INFO"
+- keywords: ["fall"]
+  match_type: any
+  alert: "Goal should be 'Patient will remain free from falls during hospital stay'."
+  severity: "WARNING"
+- keywords: ["safe"]
+  match_type: any
+  alert: "How will safety be measured? (e.g., 'Patient will remain free from injury', 'Patient will demonstrate correct use of call light')."
+  severity: "WARNING"
+- keywords: ["nutrition", "eat", "consume"]
+  match_type: any
+  alert: "Make this measurable (e.g., 'Patient will consume > 75% of all meals', '...gain 1 lb per week')."
+  severity: "WARNING"
+- keywords: ["intake", "fluids", "drink"]
+  match_type: any
+  alert: "Make this measurable (e.g., 'Patient will drink 1500 mL of fluids per 24 hours')."
+  severity: "WARNING"
+- keywords: ["o2 sat", "spo2", "oxygen"]
+  match_type: any
+  alert: "Specify the target (e.g., 'Patient will maintain O2 sat > 92% on room air at all times')."
+  severity: "WARNING"
+- keywords: ["anxiety", "calm"]
+  match_type: any
+  alert: "Make this measurable (e.g., 'Patient will rate anxiety < 4/10', '...identify and state 2 coping mechanisms')."
+  severity: "WARNING"
+- keywords: ["airway", "breath sounds", "lungs"]
+  match_type: any
+  alert: "Specify goal (e.g., 'Patient will maintain clear and patent airway', '...breath sounds clear to auscultation')."
+  severity: "INFO"
+- keywords: ["constipation"]
+  match_type: any
+  alert: "Specify goal and time frame (e.g., 'Patient will have a soft, formed bowel movement within 48 hours')."
+  severity: "INFO"
+- keywords: ["edema"]
+  match_type: any
+  alert: "Make this measurable (e.g., 'Patient's edema will decrease to +1 in BLE by 11/10', 'Patient's weight will return to baseline')."
+  severity: "WARNING"

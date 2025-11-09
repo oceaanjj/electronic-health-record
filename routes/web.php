@@ -19,22 +19,8 @@ use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
 use App\Http\Controllers\MedicationAdministrationController;
-
-use App\Http\Controllers\NursingDiagnosisController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
-
+use App\Http\Controllers\ADPIE\NursingDiagnosisController;
+use App\Http\Controllers\Doctor\ReportController;
 
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
@@ -85,7 +71,6 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // No delete routes!
 });
 
-use App\Http\Controllers\Doctor\ReportController;
 
 //-------------------------------------------------------------
 // Protected Routes for Doctor
@@ -242,49 +227,39 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
 
 
+    // --- D P I E (DYNAMIC REFACTOR) ---
 
+    // Real-Time Analysis Route (Uses unique URL from previous fix)
+    Route::post('/adpie/analyze-step', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])
+        ->name('nursing-diagnosis.analyze-field');
 
-    // --- D P I E---
-
-    Route::get('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'startDiagnosis'])
+    // ADPIE Step 1: Diagnosis (Start and Store)
+    Route::get('/adpie/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'startDiagnosis'])
         ->name('nursing-diagnosis.start');
-
-    Route::post('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'storeDiagnosis'])
+    Route::post('/adpie/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'storeDiagnosis'])
         ->name('nursing-diagnosis.storeDiagnosis');
 
-    Route::get('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])
+    // ADPIE Step 2: Planning (Show and Store)
+    Route::get('/adpie/{component}/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])
         ->name('nursing-diagnosis.showPlanning');
-
-    Route::post('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])
+    Route::post('/adpie/{component}/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])
         ->name('nursing-diagnosis.storePlanning');
 
-    Route::get('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])
+    // ADPIE Step 3: Intervention (Show and Store)
+    Route::get('/adpie/{component}/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])
         ->name('nursing-diagnosis.showIntervention');
-
-    Route::post('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])
+    Route::post('/adpie/{component}/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])
         ->name('nursing-diagnosis.storeIntervention');
 
-    Route::get('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])
+    // ADPIE Step 4: Evaluation (Show and Store)
+    Route::get('/adpie/{component}/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])
         ->name('nursing-diagnosis.showEvaluation');
-
-    Route::post('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])
+    Route::post('/adpie/{component}/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])
         ->name('nursing-diagnosis.storeEvaluation');
 
-    // ===== START OF FIX =====
-// ADD THIS ROUTE for the real-time recommendations
-    Route::post('/adpie/physical-exam/diagnosis/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])
-        ->name('nursing-diagnosis.analyze-field');
-    // ===== END OF FIX =====
-
-    // ... your other routes like showByPatient ...
+    // Show all DPIE for a specific patient
     Route::get('/nursing-diagnosis/patient/{patientId}', [NursingDiagnosisController::class, 'showByPatient'])
         ->name('nursing-diagnosis.showByPatient');
-
-
-
-
-
-    //---- End of Protected Routes for Nurse ----
 
 
 });

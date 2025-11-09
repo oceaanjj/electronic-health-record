@@ -1,0 +1,7 @@
+evaluation:
+  - keywords: ["met"]
+    alert: "Ensure evaluation directly addresses the goal from the Planning step."
+    severity: "INFO"
+  - keywords: ["not met"]
+    alert: "If goal is not met, a new plan/re-evaluation is needed. Document it."
+    severity: "WARNING"

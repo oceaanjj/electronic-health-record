@@ -1,0 +1,11 @@
+planning:
+  - keywords: ["patient will"]
+    alert: "Goals are often patient-centered. Start with 'Patient will...'."
+    severity: "INFO"
+    negate: true # This rule applies if "patient will" is NOT present
+  - keywords: ["smart"]
+    alert: "Ensure goals are Specific, Measurable, Achievable, Relevant, and Time-bound."
+    severity: "INFO"
+  - keywords: ["understand"]
+    alert: "Avoid 'understand' or 'know'. Use measurable verbs like 'demonstrate', 'state', or 'list'."
+    severity: "WARNING"

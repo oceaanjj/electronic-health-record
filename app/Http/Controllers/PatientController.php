@@ -73,13 +73,39 @@ class PatientController extends Controller
             'admission_date' => 'required|date',
             'room_no' => 'nullable|string',
             'bed_no' => 'nullable|string',
-            'contact_name' => 'nullable|string',
-            'contact_relationship' => 'nullable|string',
-            'contact_number' => 'nullable|string',
+            'contact_name' => 'nullable|array',
+            'contact_name.*' => 'nullable|string',
+            'contact_relationship' => 'nullable|array',
+            'contact_relationship.*' => 'nullable|string',
+            'contact_number' => 'nullable|array',
+            'contact_number.*' => 'nullable|string',
         ]);
 
         try {
             $data['user_id'] = Auth::id();
+            
+            // Filter out empty contact values and ensure proper array structure
+            if (isset($data['contact_name'])) {
+                $data['contact_name'] = array_filter($data['contact_name'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_name'] = !empty($data['contact_name']) ? array_values($data['contact_name']) : null;
+            }
+            
+            if (isset($data['contact_relationship'])) {
+                $data['contact_relationship'] = array_filter($data['contact_relationship'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_relationship'] = !empty($data['contact_relationship']) ? array_values($data['contact_relationship']) : null;
+            }
+            
+            if (isset($data['contact_number'])) {
+                $data['contact_number'] = array_filter($data['contact_number'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_number'] = !empty($data['contact_number']) ? array_values($data['contact_number']) : null;
+            }
+            
             $patient = Patient::create($data);
 
             // Log patient creation
@@ -129,12 +155,37 @@ class PatientController extends Controller
             'admission_date' => 'required|date',
             'room_no' => 'nullable|string',
             'bed_no' => 'nullable|string',
-            'contact_name' => 'nullable|string',
-            'contact_relationship' => 'nullable|string',
-            'contact_number' => 'nullable|string',
+            'contact_name' => 'nullable|array',
+            'contact_name.*' => 'nullable|string',
+            'contact_relationship' => 'nullable|array',
+            'contact_relationship.*' => 'nullable|string',
+            'contact_number' => 'nullable|array',
+            'contact_number.*' => 'nullable|string',
         ]);
 
         try {
+            // Filter out empty contact values and ensure proper array structure
+            if (isset($data['contact_name'])) {
+                $data['contact_name'] = array_filter($data['contact_name'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_name'] = !empty($data['contact_name']) ? array_values($data['contact_name']) : null;
+            }
+            
+            if (isset($data['contact_relationship'])) {
+                $data['contact_relationship'] = array_filter($data['contact_relationship'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_relationship'] = !empty($data['contact_relationship']) ? array_values($data['contact_relationship']) : null;
+            }
+            
+            if (isset($data['contact_number'])) {
+                $data['contact_number'] = array_filter($data['contact_number'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_number'] = !empty($data['contact_number']) ? array_values($data['contact_number']) : null;
+            }
+            
             // Find patient, even if inactive
             $patient = Patient::withTrashed()->findOrFail($id);
             $patient->update($data);

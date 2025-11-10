@@ -6,7 +6,14 @@
 
     {{-- ⚠️ Alerts: Using clean, modern styles --}}
     @if (session('success'))
-        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-green-200 dark:text-green-900" role="alert">
+        <div class="p-4 mb-4 text-sm text-green-800 ro                                        focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                        placeholder="e.g. 09123456789">
+                                    @if($i > 0)
+                                    <button type="button" onclick="removeContactRow(this)" class="remove-contact text-red-600 font-bold text-xl pb-2 hover:text-red-800">×</button>
+                                    @else
+                                    <button type="button" class="remove-contact hidden text-red-600 font-bold text-xl pb-2 hover:text-red-800">×</button>
+                                    @endif
+                                </div>bg-green-50 dark:bg-green-200 dark:text-green-900" role="alert">
             <span class="font-medium">Success!</span> {{ session('success') }}
         </div>
     @endif
@@ -179,42 +186,53 @@
                 {{-- 2. Emergency Contact Section --}}
 
                 {{-- CARD HEADER: EMERGENCY CONTACT (Strong Indigo Background) --}}
-                <div class="bg-dark-green font-bold py-2 text-white p-4 pl-10 text-xl tracking-wider">
-                    <h1>
-                        EMERGENCY CONTACT
-                    </h1>
+                <div class="bg-dark-green font-bold py-2 text-white p-4 pl-10 text-xl tracking-wider flex justify-between items-center">
+                    <h1>EMERGENCY CONTACTS</h1>
+                     <button type="button" onclick="addContactRow()" id="add-contact" class="bg-white text-dark-green px-3 py-1 rounded-md font-bold hover:bg-gray-200">
+                        +
+                    </button>
                 </div>
 
                 {{-- ⚠️ Minor fix: Added missing opening <div> tag here for proper structure and styling --}}
                 <div class="bg-white p-6 sm:p-8">
+                    <div id="contacts-container">
+                        @php
+                            $contactNames = is_array($patient->contact_name) ? $patient->contact_name : ($patient->contact_name ? [$patient->contact_name] : []);
+                            $contactRelationships = is_array($patient->contact_relationship) ? $patient->contact_relationship : ($patient->contact_relationship ? [$patient->contact_relationship] : []);
+                            $contactNumbers = is_array($patient->contact_number) ? $patient->contact_number : ($patient->contact_number ? [$patient->contact_number] : []);
+                            $maxContacts = max(count($contactNames), count($contactRelationships), count($contactNumbers), 1);
+                        @endphp
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                        {{-- Contact Name --}}
-                        <div>
-                            <label for="contact_name" class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
-                            <input type="text" id="contact_name" name="contact_name"
-                                placeholder="Contact person's full name" value="{{ $patient->contact_name ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
+                        @for($i = 0; $i < $maxContacts; $i++)
+                        <div class="contact-row grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 pb-4 border-b border-gray-200">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
+                                <input type="text" name="contact_name[]" value="{{ $contactNames[$i] ?? '' }}"
+                                    class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                    placeholder="Contact person's full name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
+                                <input type="text" name="contact_relationship[]" value="{{ $contactRelationships[$i] ?? '' }}"
+                                    class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                    placeholder="e.g. Spouse, Parent">
+                            </div>
+                            <div class="relative">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+                                <div class="flex gap-2">
+                                    <input type="text" name="contact_number[]" value="{{ $contactNumbers[$i] ?? '' }}"
+                                        class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                        placeholder="e.g. 09123456789">
+                                    @if($i > 0)
+                                    <button type="button" onclick="removeContactRow(this)" 
+                                        class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                                        ×
+                                    </button>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-
-                        {{-- Contact Relationship --}}
-                        <div>
-                            <label for="contact_relationship"
-                                class="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
-                            <input type="text" id="contact_relationship" name="contact_relationship"
-                                placeholder="e.g. Spouse, Parent" value="{{ $patient->contact_relationship ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
-                        </div>
-
-                        {{-- Contact Number --}}
-                        <div>
-                            <label for="contact_number" class="block text-sm font-semibold text-gray-700 mb-1">Contact
-                                Number</label>
-                            <input type="text" id="contact_number" name="contact_number" placeholder="e.g. 0912-345-6789"
-                                value="{{ $patient->contact_number ?? '' }}"
-                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400">
-                        </div>
+                        @endfor
                     </div>
                     
                 </div> {{-- End of Emergency Contact Section Body --}}
@@ -245,4 +263,47 @@
 
 @push('scripts')
     @vite(['resources/js/compute-age.js'])
+    <script>
+        function addContactRow() {
+            const container = document.getElementById('contacts-container');
+            
+            const newRow = document.createElement('div');
+            newRow.className = 'contact-row grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 pb-4 border-b border-gray-200';
+            newRow.innerHTML = `
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
+                    <input type="text" name="contact_name[]"
+                        class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                    focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                        placeholder="Contact person's full name">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
+                    <input type="text" name="contact_relationship[]"
+                        class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                    focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                        placeholder="e.g. Spouse, Parent">
+                </div>
+                <div class="relative">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+                    <div class="flex gap-2">
+                        <input type="text" name="contact_number[]"
+                            class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                        focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                            placeholder="e.g. 09123456789">
+                        <button type="button" onclick="removeContactRow(this)" class="remove-contact text-red-600 font-bold text-xl pb-2 hover:text-red-800">×</button>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+        
+        function removeContactRow(button) {
+            const container = document.getElementById('contacts-container');
+            if (container.children.length > 1) {
+                button.closest('.contact-row').remove();
+            }
+        }
+    </script>
 @endpush

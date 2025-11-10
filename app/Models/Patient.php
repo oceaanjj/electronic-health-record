@@ -66,8 +66,12 @@ class Patient extends Model
     {
         return $this->hasMany(\App\Models\DiagnosticImage::class, 'patient_id');
     }
+    
     protected $casts = [
         'admission_date' => 'datetime',
+        'contact_name' => 'array',
+        'contact_relationship' => 'array',
+        'contact_number' => 'array',
     ];
 
     public function setFirstNameAttribute($value)

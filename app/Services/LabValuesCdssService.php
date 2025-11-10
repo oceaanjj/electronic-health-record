@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use Carbon\Carbon; 
+use Illuminate\Support\Facades\Log; 
+
 class LabValuesCdssService
 {
     const CRITICAL = 'CRITICAL';
@@ -262,18 +265,95 @@ class LabValuesCdssService
 
         return ['alert' => 'No findings.', 'severity' => self::INFO];
     }
+
+    public function runLabCdss($labValue, $ageGroup)
+    {
+        $alerts = [];
+        $lab = [
+            'wbc' => 'wbc_result',
+            'rbc' => 'rbc_result',
+            'hgb' => 'hgb_result',
+            'hct' => 'hct_result',
+            'platelets' => 'platelets_result',
+            'mcv' => 'mcv_result',
+            'mch' => 'mch_result',
+            'mchc' => 'mchc_result',
+            'rdw' => 'rdw_result',
+            'neutrophils' => 'neutrophils_result',
+            'lymphocytes' => 'lymphocytes_result',
+            'monocytes' => 'monocytes_result',
+            'eosinophils' => 'eosinophils_result',
+            'basophils' => 'basophils_result',
+        ];
+
+        foreach ($lab as $param => $field) {
+            if (property_exists($labValue, $field) && $labValue->$field !== null) {
+                 $result = $this->checkLabResult($param, $labValue->$field, $ageGroup);
+                 if ($result['severity'] !== LabValuesCdssService::NONE) {
+                    $alerts[$param . '_alerts'][] = [
+                        'text' => $result['alert'],
+                        'severity' => $result['severity'],
+                    ];
+                 } else {
+                     $alerts[$param . '_alerts'][] = [
+                        'text' => $result['alert'], 
+                        'severity' => $result['severity'], 
+                    ];
+                 }
+            }
+        }
+        return $alerts;
+    }
+
+    public function getAgeGroup(\App\Models\Patient $patient): string
+    {
+        if (empty($patient->date_of_birth)) {
+            return $this->getAgeGroupFromInteger($patient->age ?? 0);
+        }
+
+        try {
+            $dob = Carbon::parse($patient->date_of_birth);
+            $now = Carbon::now();
+
+            $ageInDays = $dob->diffInDays($now);
+            $ageInMonths = $dob->diffInMonths($now);
+            $ageInYears = $dob->diffInYears($now);
+
+            if ($ageInDays <= 30) {
+                return 'neonate';
+            }
+            if ($ageInMonths < 24) {
+                return 'infant';
+            }
+            if ($ageInYears < 12) {
+                return 'child';
+            }
+            if ($ageInYears <= 18) {
+                return 'adolescent';
+            }
+            return 'adult'; 
+
+        } catch (\Exception $e) {
+            Log::error("Error parsing date_of_birth for patient ID {$patient->patient_id}: " . $e->getMessage());
+            return $this->getAgeGroupFromInteger($patient->age ?? 0);
+        }
+    }
+
+    public function getAgeGroupFromInteger(int $ageInYears): string
+    {
+         if ($ageInYears === 0) {
+             Log::warning("Cannot accurately determine age group for patient with age 0 years. Assuming 'infant'.");
+             return 'infant';
+         }
+        if ($ageInYears < 2) {
+            return 'infant';
+        }
+        if ($ageInYears < 12) { 
+            return 'child';
+        }
+        if ($ageInYears <= 18) { 
+            return 'adolescent';
+        }
+        return 'adult'; 
+    }
 }
-// ['min' => 30, 'max' => null, 'alert' => 'Severe leukocytosis in neonate: High risk of sepsis!', 'severity' => self::CRITICAL, 'ageGroup' => 'neonate'],
-// ['min' => 9, 'max' => 29, 'alert' => 'Normal WBC (neonate).', 'severity' => self::NONE, 'ageGroup' => 'neonate'],
-// ['min' => 7, 'max' => 8.9, 'alert' => 'Mild leukopenia (neonate).', 'severity' => self::WARNING, 'ageGroup' => 'neonate'],
-// ['min' => null, 'max' => 6.9, 'alert' => 'Severe leukopenia (neonate): Risk of infection!', 'severity' => self::CRITICAL, 'ageGroup' => 'neonate'],
-// // Infants
-// ['min' => 20, 'max' => null, 'alert' => 'High WBC (infant): Possible infection.', 'severity' => self::CRITICAL, 'ageGroup' => 'infant'],
-// ['min' => 6, 'max' => 19.9, 'alert' => 'Normal WBC (infant).', 'severity' => self::NONE, 'ageGroup' => 'infant'],
-// ['min' => 4, 'max' => 5.9, 'alert' => 'Mild leukopenia (infant).', 'severity' => self::WARNING, 'ageGroup' => 'infant'],
-// ['min' => null, 'max' => 3.9, 'alert' => 'Severe leukopenia (infant).', 'severity' => self::CRITICAL, 'ageGroup' => 'infant'],
-// // Child
-// ['min' => 15, 'max' => null, 'alert' => 'High WBC (child): Possible infection.', 'severity' => self::CRITICAL, 'ageGroup' => 'child'],
-// ['min' => 5, 'max' => 14.9, 'alert' => 'Normal WBC (child).', 'severity' => self::NONE, 'ageGroup' => 'child'],
-// ['min' => 3, 'max' => 4.9, 'alert' => 'Mild leukopenia (child).', 'severity' => self::WARNING, 'ageGroup' => 'child'],
-// ['min' => null, 'max' => 2.9, 'alert' => 'Severe leukopenia (child).', 'severity' => self::CRITICAL, 'ageGroup' => 'child'],

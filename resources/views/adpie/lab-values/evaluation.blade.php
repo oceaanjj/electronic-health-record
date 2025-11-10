@@ -1,8 +1,8 @@
-
 @extends('layouts.app')
-@section('title', 'Step 1: Nursing Diagnosis')
+@section('title', 'Step 4: Evaluation')
 
 @section('content')
+
     <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
         <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
             PATIENT NAME :
@@ -13,7 +13,8 @@
         </div>
     </div>
 
-    <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $patient->patient_id]) }}"
+    <form
+        action="{{ route('nursing-diagnosis.storeEvaluation', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
         method="POST" class="h-full flex flex-col cdss-form"
         data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}" data-patient-id="{{ $patient->patient_id }}"
         data-component="{{ $component }}">
@@ -21,16 +22,17 @@
 
         <fieldset>
             <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
+
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
                     <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
-                        DIAGNOSIS (STEP 4 of 4)
+                        EVALUATION (STEP 4 of 4)
                     </div>
-                    <textarea id="diagnosis" name="diagnosis"
-                        class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input" data-field-name="diagnosis"
+                    <textarea id="evaluation" name="evaluation"
+                        class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input" data-field-name="evaluation"
                         style="border-top: none;"
-                        placeholder="Enter diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
+                        placeholder="Enter evaluation (e.g., Goal met, Goal not met...)...">{{ old('evaluation', $diagnosis->evaluation ?? '') }}</textarea>
 
-                    @error('diagnosis')
+                    @error('evaluation')
                         <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                     @enderror
                 </div>
@@ -40,7 +42,7 @@
                         RECOMMENDATIONS
                     </div>
                     <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
-                        data-alert-for="diagnosis" style="border-top: none;">
+                        data-alert-for="evaluation" style="border-top: none;">
                         <span class="opacity-70 text-white font-semibold">No Recommendations</span>
                     </div>
                 </div>
@@ -48,7 +50,8 @@
 
             <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
                 <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
-                    <a href="{{ route('lab-values.index') }}" class="button-default text-center">
+                    <a href="{{ route('nursing-diagnosis.showIntervention', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
+                        class="button-default text-center">
                         GO BACK
                     </a>
                 </div>
@@ -57,13 +60,15 @@
                     <button type="submit" name="action" value="save_and_exit" class="button-default">
                         SUBMIT
                     </button>
-                    <button type="submit" name="action" value="save_and_proceed" class="button-default">
-                        PLANNING
+                    <button type="submit" name="action" value="save_and_finish" class="button-default">
+                        FINISH
                     </button>
                 </div>
             </div>
+
         </fieldset>
     </form>
+
 @endsection
 
 @push('scripts')

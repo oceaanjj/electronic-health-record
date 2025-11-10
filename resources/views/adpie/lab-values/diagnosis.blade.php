@@ -1,6 +1,5 @@
-
 @extends('layouts.app')
-@section('title', 'Step 1: Nursing Diagnosis')
+@section('title', 'Step 1: Diagnosis')
 
 @section('content')
     <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
@@ -15,7 +14,8 @@
 
     <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $patient->patient_id]) }}"
         method="POST" class="h-full flex flex-col cdss-form"
-        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}" data-patient-id="{{ $patient->patient_id }}"
+        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
+        data-patient-id="{{ $patient->patient_id }}"
         data-component="{{ $component }}">
         @csrf
 
@@ -26,13 +26,10 @@
                         DIAGNOSIS (STEP 1 of 4)
                     </div>
                     <textarea id="diagnosis" name="diagnosis"
-                        class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input" data-field-name="diagnosis"
+                        class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input"
+                        data-field-name="diagnosis"
                         style="border-top: none;"
-                        placeholder="Enter diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
-
-                    @error('diagnosis')
-                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                    @enderror
+                        placeholder="Enter nursing diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
                 </div>
 
                 <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">

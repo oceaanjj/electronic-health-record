@@ -38,11 +38,14 @@ class LabValuesComponent implements AdpieComponentInterface
             ->latest()
             ->first();
 
+        $findings = session('findings', []);
+
         return view('adpie.lab-values.diagnosis', [
             'patient' => $patient,
             'labValues' => $labValues,
             'component' => $component,
-            'diagnosis' => $diagnosis
+            'diagnosis' => $diagnosis,
+            'findings' => $findings
         ]);
     }
 
@@ -53,9 +56,13 @@ class LabValuesComponent implements AdpieComponentInterface
         $patient = Patient::findOrFail($id);
         $diagnosisText = $request->input('diagnosis');
         
+        // Fetch the LabValues record for the patient
+        $labValues = LabValues::where('patient_id', $id)->first();
+        $componentData = $labValues ? $labValues->toArray() : [];
+
         // Get alert by analyzing the diagnosis text
         $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
-        $diagnosisAlert = $alertObject['message'] ?? null;
+        $diagnosisAlert = $alertObject->raw_message ?? null;
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
@@ -95,7 +102,9 @@ class LabValuesComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
         $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        // Fetch the LabValues record for the patient
+        $labValues = LabValues::where('patient_id', $patient->patient_id)->first();
+        $componentData = $labValues ? $labValues->toArray() : [];
 
         $nurseInput = [
             'diagnosis' => $diagnosis->diagnosis,
@@ -145,7 +154,9 @@ class LabValuesComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
         $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        // Fetch the LabValues record for the patient
+        $labValues = LabValues::where('patient_id', $patient->patient_id)->first();
+        $componentData = $labValues ? $labValues->toArray() : [];
 
         $nurseInput = [
             'diagnosis' => $diagnosis->diagnosis,
@@ -195,7 +206,9 @@ class LabValuesComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
         $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        // Fetch the LabValues record for the patient
+        $labValues = LabValues::where('patient_id', $patient->patient_id)->first();
+        $componentData = $labValues ? $labValues->toArray() : [];
 
         $nurseInput = [
             'diagnosis' => $diagnosis->diagnosis,

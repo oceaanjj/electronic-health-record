@@ -228,6 +228,15 @@ class NursingDiagnosisCdssService
                     }
                 }
                 break;
+                        case 'lab-values':
+                            $ageGroup = $this->labValuesCdssService->getAgeGroup($patient);
+                            $results = $this->labValuesCdssService->runLabCdss((object) $componentData, $ageGroup);
+                            foreach ($results as $key => $result) {
+                                if ($result[0]['severity'] !== LabValuesCdssService::NONE) {
+                                    $allAlerts[] = ['source' => 'Lab Values', 'field' => $key, 'alert' => $result[0]['text']];
+                                }
+                            }
+                            break;
             // ... (rest of your cases) ...
         }
 

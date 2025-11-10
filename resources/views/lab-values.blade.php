@@ -83,7 +83,7 @@
                         </div>
 
                         <table class="w-full border-collapse text-center">
-                            @foreacha ($labTests as $label => $name)
+                            @foreach ($labTests as $label => $name)
                                 <tr>
                                     <td class="align-middle">
                                         <div class="alert-box my-1 h-[53px] flex justify-center items-center flex-col px-2"
@@ -99,11 +99,10 @@
 
                 {{-- BUTTONS --}}
                 <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-@if (isset($labValue) && isset($selectedPatient))
-        <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $selectedPatient->patient_id]) }}"
-            class="button-default text-center">
+@if (isset($selectedPatient))
+        <button type="submit" formaction="{{ route('lab-values.cdss') }}" class="button-default text-center">
             CDSS
-        </a>
+        </button>
     @else
         {{-- disable link if no selected patient --}}
         <button class="button-default" disabled>CDSS</button>

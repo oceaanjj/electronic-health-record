@@ -60,12 +60,14 @@ window.initializeVitalSignsDateSync = function () {
                 date: date,
                 day_no: dayNo,
             });
-            const response = await axios.get(fetchUrl, {
-                params: {
-                    patient_id: patientId,
-                    date: date,
-                    day_no: dayNo,
-                },
+            const response = await axios.post(fetchUrl, {
+                patient_id: patientId,
+                date: date,
+                day_no: dayNo,
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
             });
 
             const fetchedData = response.data;

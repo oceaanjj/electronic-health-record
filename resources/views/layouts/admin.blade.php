@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electronic Health Record</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 
     <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- !important for instant alerts-->
@@ -18,6 +18,9 @@
 
     {{-- Header --}}
     @include('components.header')
+
+    {{-- SweetAlert Messages Component --}}
+    <x-sweetalert-messages />
 
 
     {{--  

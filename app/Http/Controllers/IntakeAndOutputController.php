@@ -8,6 +8,7 @@ use App\Services\IntakeAndOutputCdssService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class IntakeAndOutputController extends Controller
 {
@@ -46,6 +47,7 @@ class IntakeAndOutputController extends Controller
         $selectedPatient = null;
         $ioData = null;
         $dayNo = 1;
+        $daysSinceAdmission = 30; // Default value
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
@@ -53,9 +55,14 @@ class IntakeAndOutputController extends Controller
             $selectedPatient = Patient::find($patientId);
             if (!$selectedPatient) {
                 $request->session()->forget(['selected_patient_id', 'selected_day_no']);
-                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData'));
+                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData', 'daysSinceAdmission'));
             }
             $request->session()->put('selected_patient_id', $patientId);
+
+            // Calculate days since admission
+            $admissionDate = Carbon::parse($selectedPatient->admission_date);
+            $daysSinceAdmission = $admissionDate->diffInDays(Carbon::now()) + 1;
+
 
             $dayNo = $request->input('day_no');
 
@@ -101,6 +108,7 @@ class IntakeAndOutputController extends Controller
                 'ioData' => $ioData,
                 'selectedPatient' => $selectedPatient,
                 'currentDayNo' => $currentDayNo,
+                'daysSinceAdmission' => $daysSinceAdmission,
             ])->render();
 
             // Use DOMDocument to parse and extract the form-content-container
@@ -128,6 +136,7 @@ class IntakeAndOutputController extends Controller
             'ioData' => $ioData,
             'selectedPatient' => $selectedPatient,
             'currentDayNo' => $currentDayNo,
+            'daysSinceAdmission' => $daysSinceAdmission,
         ]);
     }
 
@@ -159,10 +168,12 @@ class IntakeAndOutputController extends Controller
         }
         //****
 
+        $admissionDate = Carbon::parse($patient->admission_date);
+        $daysSinceAdmission = $admissionDate->diffInDays(Carbon::now()) + 1;
 
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
+            'day_no' => 'required|integer|between:1,' . $daysSinceAdmission,
             'oral_intake' => 'nullable|integer',
             'iv_fluids_volume' => 'nullable|integer',
             'iv_fluids_type' => 'nullable|string',

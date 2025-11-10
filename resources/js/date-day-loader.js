@@ -29,18 +29,10 @@ window.initializeDateDayLoader = function (selectUrl) {
     const initialDayNoSelector = document.getElementById("day_no_selector");
     const initialPatientIdHidden = document.getElementById("patient_id_hidden");
 
-    // Check if ALL required ADL elements are present initially
-    const isADLForm =
-        initialDateSelector && initialDayNoSelector && initialPatientIdHidden && formContainer;
-
-    if (!selectUrl || !isADLForm) {
-        console.warn(
-            "Date/Day Loader: Missing required ADL elements or selectUrl. Not initializing date/day change listeners."
-        );
-        return;
-    }
-
     const handleDateDayChange = async () => {
+        // Introduce a micro-delay to allow other event handlers (like date-sync) to finish.
+        await new Promise(resolve => setTimeout(resolve, 0));
+
         // Re-query elements to ensure they are fresh after potential DOM updates
         const patientIdHidden = document.getElementById("patient_id_hidden");
         const dateSelector = document.getElementById("date_selector");
@@ -132,6 +124,17 @@ window.initializeDateDayLoader = function (selectUrl) {
             if (overlay) overlay.style.display = "none";
         }
     };
+
+    // Check if ALL required ADL elements are present initially
+    const isADLForm =
+        initialDateSelector && initialDayNoSelector && initialPatientIdHidden && formContainer;
+
+    if (!selectUrl || !isADLForm) {
+        console.warn(
+            "Date/Day Loader: Missing required ADL elements or selectUrl. Not initializing date/day change listeners."
+        );
+        return;
+    }
 
     // Attach event listeners to the initial elements
     initialDateSelector.addEventListener("change", handleDateDayChange);

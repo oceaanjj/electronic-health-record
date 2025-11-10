@@ -4,6 +4,10 @@
 
     {{-- NOTE : sa css ko a-add pa ko my-1 py-4 px-3 each alerts tenks wag niyo burahin to makakalimutan ko --}}
 
+    <h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        PHYSICAL EXAM
+    </h2>
+
     {{-- FORM OVERLAY (ALERT) & DYNAMIC CONTENT --}}
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
@@ -27,11 +31,11 @@
                 <center>
                     <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
-                        <div class="w-[68%] rounded-[15px] overflow-hidden">
+                        <div class="w-[68%] rounded-[15px] overflow-hidden mr-1">
                             <table class="w-full border-separate border-spacing-0">
                                 <tr>
-                                    <th class="w-[20%] bg-dark-green py-2 text-white rounded-tl-lg">SYSTEM</th>
-                                    <th class="w-[45%] bg-dark-green py-2 text-white rounded-tr-lg">FINDINGS</th>
+                                    <th class="w-[20%] main-header py-2 text-white rounded-tl-lg">SYSTEM</th>
+                                    <th class="w-[45%] main-header py-2 text-white rounded-tr-lg">FINDINGS</th>
                                 </tr>
 
                                 {{-- GENERAL APPEARANCE --}}
@@ -127,7 +131,7 @@
 
                         {{-- ALERTS TABLE--}}
                         <div class="w-[25%] rounded-[15px] overflow-hidden">
-                            <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                            <div class="main-header text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                                 ALERTS
                             </div>
                             <table class="w-full border-collapse">

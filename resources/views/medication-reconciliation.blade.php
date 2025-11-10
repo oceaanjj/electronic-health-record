@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Patient Medical Reconciliation')
 @section('content')
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        MEDICATION RECONCILIATION
+    </h2>
 
     <div id="form-content-container">
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
@@ -15,18 +18,20 @@
 
                 {{-- ..... Patient's Current Medication --}}
                 <center>
-                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
+                    <table class="mb-2 w-[80%] border-collapse border-spacing-0">
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">Patient's Current Medication (Upon
-                                Admission)</th>
+                            <th colspan="6" class="main-header rounded-t-lg">PATIENT'S CURRENT MEDICATION 
+                                <div style="margin-top: 0px; font-size: 10px; color: rgb(173, 173, 173);">
+                                    ( UPON ADMISSION )
+                                </div></th>
                         </tr>
                         <tr>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Medication</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Dose</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Route</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Frequency</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Indication</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Administered During Stay?
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">ROUTE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">FREQUENCY</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">INDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[12px] border-line-brown">ADMINISTERED DURING STAY?</th>
                             </th>
                         </tr>
                         <tr class="bg-beige">
@@ -60,18 +65,22 @@
 
                 {{-- TABLE 2: Patient's Home Medication --}}
                 <center>
-                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
+                    <table class="mb-2 w-[80%] border-collapse border-spacing-0">
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">Patient's Home Medication (If Any)
+                            <th colspan="6" class="main-header rounded-t-lg">
+                                PATIENT'S HOME MEDICATION
+                                <div style="margin-top: 0px; font-size: 10px; color: rgb(173, 173, 173);">
+                                    ( IF ANY )
+                                </div>
                             </th>
-                        </tr>
+                        </tr>   
                         <tr>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Medication</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Dose</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Route</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Frequency</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Indication</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Discontinued on Admission?
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">ROUTE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">FREQUENCY</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">INDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[12px] border-line-brown">DISCONTINUED ON ADMISSION?</th>
                             </th>
                         </tr>
                         <tr class="bg-beige">
@@ -105,18 +114,17 @@
 
                 {{-- TABLE 3: Changes in Medication --}}
                 <center>
-                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
+                    <table class="mb-2 w-[80%] border-collapse border-spacing-0">
                         {{-- Note: colspan is 5 here --}}
                         <tr>
-                            <th colspan="5" class="bg-dark-green text-white rounded-t-lg">Changes in Medication During
-                                Hospitalization</th>
+                                <th colspan="5" class="main-header rounded-t-lg">CHANGES IN MEDICATION DURING HOSPITALIZATION </th>
                         </tr>
                         <tr>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Medication</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Dose</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Route</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">Frequency</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Reason for Change</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">ROUTE</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">FREQUENCY</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">REASON FOR CHANGE</th>
                         </tr>
                         <tr class="bg-beige">
                             <td class="border-r-2 border-line-brown/70">
@@ -144,9 +152,9 @@
                 </center>
 
                 {{-- SUBMIT BUTTON --}}
-                <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
+                <div class="w-[80%] mx-auto flex justify-end mt-5 mb-30">
                     {{-- Styled just like your "NEXT" button, but it's a submit type --}}
-                    <button type="submit" class="button-default">Submit</button>
+                    <button type="submit" class="button-default">SUBMIT</button>
                 </div>
 
         </form>

@@ -4,6 +4,10 @@
 
 @section('content')
 
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        VITAL SIGNS
+    </h2>
+
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
@@ -23,7 +27,7 @@
             PATIENT NAME :
         </label>
 
-        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}">
+        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}" data-admission-date="{{ $selectedPatient->admission_date ?? '' }}">
             {{-- Text input for search --}}
             <input
                 type="text"
@@ -65,7 +69,7 @@
             value="{{ $currentDate ?? now()->format('Y-m-d') }}"
             @if (!$selectedPatient) disabled @endif
             class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100" readonly
         >
 
         {{-- DAY NO --}}
@@ -79,8 +83,7 @@
             class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                    focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
-            <option value="">-- Select number --</option>
-            @for ($i = 1; $i <= 30; $i++)
+            @for ($i = 1; $i <= ($totalDaysSinceAdmission ?? 30); $i++)
                 <option
                     value="{{ $i }}"
                     @if(($currentDayNo ?? 1) == $i) selected @endif
@@ -106,13 +109,13 @@
 
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[15%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">TIME
+                                <th class="w-[15%] main-header rounded-tl-lg">TIME
                                 </th>
-                                <th class="w-[13%] bg-dark-green text-white">TEMPERATURE</th>
-                                <th class="w-[10%] bg-dark-green text-white">HR</th>
-                                <th class="w-[10%] bg-dark-green text-white">RR</th>
-                                <th class="w-[10%] bg-dark-green text-white">BP</th>
-                                <th class="w-[10%] bg-dark-green text-white rounded-tr-lg">SpO₂</th>
+                                <th class="w-[18%] main-header">TEMPERATURE</th>
+                                <th class="w-[10%] main-header">HR</th>
+                                <th class="w-[10%] main-header">RR</th>
+                                <th class="w-[10%] main-header">BP</th>
+                                <th class="w-[10%] main-header">SpO₂</th>
 
                             {{-- NOTE: paki-explain saakin ito kasi gagawin kong input text ito--}}
                             @php
@@ -174,7 +177,7 @@
                     </div>
 
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header rounded-[15px]">
                             ALERTS
                         </div>
 
@@ -353,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function () {
 @endsection
 @push('scripts')
     {{-- Load all necessary script files --}}
-    @vite(['resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
+    @vite(['resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js', 'resources/js/vital-signs-date-sync.js'])
 
     {{-- Define the specific initializers for this page --}}
     <script>
@@ -361,7 +364,8 @@ document.addEventListener("DOMContentLoaded", function () {
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                window.initializeVitalSignsAlerts
+                window.initializeVitalSignsAlerts,
+                window.initializeVitalSignsDateSync
             ];
         });
     </script>

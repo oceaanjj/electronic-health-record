@@ -2,6 +2,10 @@
 @section('title', 'Patient Discharge Planning')
 @section('content')
 
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        DISCHARGE PLANNING
+    </h2>
+
     <!-- Ito yung tama, ewan ko san galing yung nasa baba  -->
     {{-- PATIENT DROP-DOWN FORM --}}
     <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient ?? null"
@@ -34,38 +38,37 @@
                 <center>
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         <tr>
-                            <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">Discharge Planning
+                            <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">DISCHARGE PLANNING
                             </th>
                         </tr>
                         <tr>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">Discharge
-                                Criteria</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Required Action</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">DISCHARGE CRITERIA</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">REQUIRED ACTION</th>
                         </tr>
 
                         <tr class="bg-beige">
-                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Fever Resolution</td>
+                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">FEVER RESOLUTION</td>
                             <td><textarea class="notepad-lines h-[100px]"
                                     name="criteria_feverRes">{{ old('criteria_feverRes', $dischargePlan->criteria_feverRes ?? '') }}</textarea>
                             </td>
                         </tr>
                         <tr class="bg-beige">
-                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Normalization of
-                                Patient Count</td>
+                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">NORMALIZATION OF
+                                PATIENT COUNT</td>
                             <td><textarea class="notepad-lines h-[100px]"
                                     name="criteria_patientCount">{{ old('criteria_patientCount', $dischargePlan->criteria_patientCount ?? '') }}</textarea>
                             </td>
                         </tr>
                         <tr class="bg-beige">
-                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Manage Fever
-                                Effectively</td>
+                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">MANAGE FEVER
+                                EFFECTIVELY</td>
                             <td><textarea class="notepad-lines h-[100px]"
                                     name="criteria_manageFever">{{ old('criteria_manageFever', $dischargePlan->criteria_manageFever ?? '') }}</textarea>
                             </td>
                         </tr>
                         <tr class="bg-beige">
-                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Manage Fever
-                                Effectively</td>
+                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">MANAGE FEVER
+                                EFFECTIVELY</td>
                             <td><textarea class="notepad-lines h-[100px]"
                                     name="criteria_manageFever2">{{ old('criteria_manageFever2', $dischargePlan->criteria_manageFever2 ?? '') }}</textarea>
                             </td>
@@ -77,22 +80,22 @@
                 <center>
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         <tr>
-                            <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">Discharge Instruction
+                            <th colspan="2" class="bg-dark-green text-white rounded-t-lg text-center">DISCHARGE INSTRUCTION
                             </th>
                         </tr>
                         <tr>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">
-                                Instruction</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">Details</th>
+                                INSTRUCTION</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown">DETAILS</th>
                         </tr>
                         <tr class="bg-beige">
-                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">Medications</td>
+                            <td class="criteria-cell text-center border-r-2 border-line-brown w-1/3">MEDICATIONS</td>
                             <td><textarea class="notepad-lines h-[100px]"
                                     name="instruction_med">{{ old('instruction_med', $dischargePlan->instruction_med ?? '') }}</textarea>
                             </td>
                         </tr>
                         <tr class="bg-beige text-center">
-                            <td class="criteria-cell border-r-2 border-line-brown w-1/3">Follow-Up Appointment</td>
+                            <td class="criteria-cell border-r-2 border-line-brown w-1/3">FOLLOW-UP APPOINTMENT</td>
                             <td><textarea class="notepad-lines h-[100px]"
                                     name="instruction_appointment">{{ old('instruction_appointment', $dischargePlan->instruction_appointment ?? '') }}</textarea>
                             </td>
@@ -122,7 +125,7 @@
 
                 {{-- SUBMIT BUTTON --}}
                 <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
-                    <button class="button-default" type="submit">Submit</button>
+                    <button class="button-default" type="submit">SUBMIT</button>
                 </div>
 
             </fieldset>

@@ -488,7 +488,7 @@
   severity: "INFO"
 - keywords: ["PERRLA"]
   match_type: all
-  negate: true
+  # negate: true
   alert: "Finding suggests neuro deficit. Specify which part of PERRLA is abnormal. E.g., 'Ineffective Cerebral Tissue Perfusion'."
   severity: "WARNING"
 - keywords: ["weakness", "paresis"]

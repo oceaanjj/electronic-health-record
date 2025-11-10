@@ -183,7 +183,11 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/patient-loader.js',
+        'resources/js/searchable-dropdown.js'
+    ])
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

@@ -115,6 +115,7 @@ async function analyzeField(fieldName, finding, url, token) {
     const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
     if (!alertCell) return;
 
+    console.log(`[CDSS] Analyzing field: ${fieldName}, finding: "${finding}"`);
     showAlertLoading(alertCell);
 
     try {
@@ -130,6 +131,7 @@ async function analyzeField(fieldName, finding, url, token) {
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         const alertData = await response.json();
+        console.log("[CDSS] Received alert data:", alertData);
 
         setTimeout(() => {
             displayAlert(alertCell, alertData);
@@ -146,6 +148,7 @@ async function analyzeField(fieldName, finding, url, token) {
 
 // --- Display alert content ---
 function displayAlert(alertCell, alertData) {
+    console.log("[CDSS] Displaying alert:", alertData);
     alertCell.innerHTML = "";
 
     const alertBox = document.createElement("div");

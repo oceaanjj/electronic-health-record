@@ -158,7 +158,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
     Route::post('/lab-values/select', [LabValuesController::class, 'selectPatient'])->name('lab-values.select');
     Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
-    Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.cdss');
     Route::post('/lab-values/analyze-field', [LabValuesController::class, 'runSingleCdssAnalysis'])->name('lab-values.run-cdss-field');
 
     // IVS AND LINES:

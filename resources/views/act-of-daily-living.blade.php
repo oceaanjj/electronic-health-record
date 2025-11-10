@@ -55,10 +55,10 @@
                 type="date"
                 id="date_selector"
                 name="date"
-                value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+                value="{{ $currentDate  ?? now()->format('Y-m-d') }}"
                 @if (!$selectedPatient) disabled @endif
                 class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 bg-gray-100 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm" readonly
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
             >
 
             {{-- DAY NO --}}
@@ -179,7 +179,8 @@
         'resources/js/date-day-loader.js',
         'resources/js/init-searchable-dropdown.js',
         'resources/js/page-initializer.js',
-        'resources/js/act-of-daily-living-alerts.js'
+        'resources/js/act-of-daily-living-alerts.js',
+        'resources/js/act-of-daily-living-date-sync.js'
     ])
 
     {{-- Define the specific initializers for this page, following the vital-signs pattern --}}
@@ -188,7 +189,8 @@
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                window.initializeAdlAlerts // This is the new, specific initializer
+                window.initializeAdlAlerts, // This is the new, specific initializer
+                window.initializeAdlDateSync
             ];
         });
     </script>

@@ -29,10 +29,11 @@ class ActOfDailyLivingController extends Controller
     /**
      * Handles the AJAX request for both patient selection AND date/day change.
      */
-            public function selectPatient(Request $request)
-            {
-                $patientId = $request->input('patient_id');
-                $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();        $selectedPatient = Patient::find($patientId);
+    public function selectPatient(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
+        $selectedPatient = Patient::find($patientId);
         $adlData = null;
 
         // Default values for rendering the view if selection fails
@@ -53,7 +54,8 @@ class ActOfDailyLivingController extends Controller
                 // If a patient is newly selected (no date/day in request), reset to admission date and day 1
                 // Determine the correct default date (Admission Date)
                 $date = now()->format('Y-m-d');
-                $dayNo = 1;
+                $admissionDate = \Carbon\Carbon::parse($selectedPatient->admission_date);
+                $dayNo = $admissionDate->diffInDays(now()) + 1;
             } else {
                 // This is a date/day change request. Fallback to session if request values are missing.
                 $date = $date ?? $request->session()->get('selected_date');
@@ -62,7 +64,8 @@ class ActOfDailyLivingController extends Controller
                 // Final fallback if session is also empty (unlikely after the above block)
                 if (!$date || !$dayNo) {
                     $date = $selectedPatient->admission_date ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : now()->format('Y-m-d');
-                    $dayNo = 1;
+                    $admissionDate = \Carbon\Carbon::parse($selectedPatient->admission_date);
+                    $dayNo = $admissionDate->diffInDays(now()) + 1;
                 }
             }
 
@@ -127,7 +130,8 @@ class ActOfDailyLivingController extends Controller
                 // Ensure default date is set if patient is selected but date/day is missing (e.g., initial load)
                 if (!$date || !$dayNo) {
                     $date = now()->format('Y-m-d');
-                    $dayNo = 1;
+                    $admissionDate = \Carbon\Carbon::parse($selectedPatient->admission_date);
+                    $dayNo = $admissionDate->diffInDays(now()) + 1;
                     $request->session()->put('selected_date', $date);
                     $request->session()->put('selected_day_no', $dayNo);
                 }

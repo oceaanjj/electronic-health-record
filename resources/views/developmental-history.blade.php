@@ -2,6 +2,10 @@
 @section('title', 'Patient Medical History')
 @section('content')
 
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        DEVELOPMENTAL HISTORY
+    </h2>
+
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
             <div

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Patient Medical Reconciliation')
 @section('content')
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        MEDICATION RECONCILIATION
+    </h2>
 
     <div id="form-content-container">
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"

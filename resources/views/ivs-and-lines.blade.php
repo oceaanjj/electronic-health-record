@@ -2,6 +2,9 @@
 @section('title', 'Patient IVs and Lines')
 @section('content')
 
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        IVs AND LINES
+    </h2>
 
     </style>
 

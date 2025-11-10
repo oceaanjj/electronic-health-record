@@ -4,9 +4,6 @@
 
 @section('content')
 
-<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        INTAKE AND OUTPUT
-    </h2>
 
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">

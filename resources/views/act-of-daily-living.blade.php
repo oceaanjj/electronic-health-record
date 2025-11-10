@@ -2,9 +2,6 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
-<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        ACTIVITIES OF DAILY LIVING
-    </h2>
 
 <div id="form-content-container">
     {{-- This container is now the main wrapper for all dynamic content --}}

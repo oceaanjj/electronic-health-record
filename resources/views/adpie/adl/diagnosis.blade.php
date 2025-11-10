@@ -23,20 +23,7 @@
             <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
                     {{-- Display Findings --}}
-                    <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
-                        CDSS FINDINGS
-                    </div>
-                    <div class="bg-beige p-4 rounded-b-lg shadow-sm mb-6">
-                        @if (!empty($findings))
-                            <ul class="list-disc list-inside text-gray-700">
-                                @foreach ($findings as $finding)
-                                    <li>{{ $finding }}</li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="text-gray-500">No specific findings from Act of Daily Living.</p>
-                        @endif
-                    </div>
+
 
                     <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
                         DIAGNOSIS (STEP 1 of 4)

@@ -274,9 +274,20 @@ class ActOfDailyLivingController extends Controller
 
     public function runCdssAnalysis(Request $request)
     {
+        $patient = Patient::where('patient_id', $request->patient_id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (!$patient) {
+            return back()->with('error', 'Unauthorized patient access.');
+        }
+
+        $admissionDate = \Carbon\Carbon::parse($patient->admission_date);
+        $daysSinceAdmission = $admissionDate->diffInDays(now()) + 1;
+
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
+            'day_no' => 'required|integer|between:1,' . $daysSinceAdmission,
             'date' => 'required|date',
             'mobility_assessment' => 'nullable|string',
             'hygiene_assessment' => 'nullable|string',

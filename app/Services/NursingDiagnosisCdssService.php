@@ -214,6 +214,12 @@ class NursingDiagnosisCdssService
                     $allAlerts[] = ['source' => 'Vital Signs', 'field' => 'summary', 'alert' => $finding];
                 }
                 break;
+            case 'intake-and-output':
+                $result = $this->intakeAndOutputCdssService->analyzeIntakeOutput($componentData);
+                if ($result['severity'] !== IntakeAndOutputCdssService::NONE) {
+                    $allAlerts[] = ['source' => 'Intake and Output', 'field' => 'summary', 'alert' => $result['alert']];
+                }
+                break;
             // ... (rest of your cases) ...
         }
 

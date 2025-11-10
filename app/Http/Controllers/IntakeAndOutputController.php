@@ -223,10 +223,38 @@ class IntakeAndOutputController extends Controller
         return response()->json($result);
     }
 
+    public function runCdssAnalysis(Request $request)
+    {
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'day_no' => 'required|integer|between:1,30',
+        ]);
 
+        $ioData = [
+            'oral_intake' => $request->input('oral_intake'),
+            'iv_fluids_volume' => $request->input('iv_fluids_volume'),
+            'urine_output' => $request->input('urine_output'),
+        ];
 
+        $cdssService = new IntakeAndOutputCdssService();
+        $result = $cdssService->analyzeIntakeOutput($ioData);
 
+        $findings = [];
+        if ($result['severity'] !== IntakeAndOutputCdssService::NONE) {
+            $findings[] = $result['alert'];
+        }
 
+        $ioRecord = IntakeAndOutput::firstOrCreate(
+            [
+                'patient_id' => $validatedData['patient_id'],
+                'day_no' => $validatedData['day_no'],
+            ],
+            $ioData
+        );
 
-
+        return redirect()->route('nursing-diagnosis.start', [
+            'component' => 'intake-and-output',
+            'id' => $ioRecord->id
+        ])->with('findings', $findings);
+    }
 }

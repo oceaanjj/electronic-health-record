@@ -23,7 +23,6 @@
         <fieldset>
             <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
-                {{-- Left Column: Evaluation Input --}}
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
                     <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
                         EVALUATION (STEP 4 of 4)
@@ -38,7 +37,6 @@
                     @enderror
                 </div>
 
-                {{-- Right Column: Recommendations --}}
                 <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">
                     <div class="bg-dark-green text-white font-bold py-2 mb-0 text-center rounded-t-lg">
                         RECOMMENDATIONS
@@ -50,10 +48,10 @@
                 </div>
             </div>
 
-            {{-- Button Bar --}}
             <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
                 <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
-                    <a href="javascript:window.history.back()" class="button-default text-center">
+                    <a href="{{ route('nursing-diagnosis.showIntervention', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
+                        class="button-default text-center">
                         GO BACK
                     </a>
                 </div>

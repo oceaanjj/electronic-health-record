@@ -31,11 +31,14 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
             ->latest()
             ->first();
 
+        $findings = session('findings', []);
+
         return view('adpie.intake-and-output.diagnosis', [
             'intakeAndOutputId' => $intakeAndOutput->id,
             'patient' => $intakeAndOutput->patient,
             'component' => $component,
-            'diagnosis' => $diagnosis
+            'diagnosis' => $diagnosis,
+            'findings' => $findings
         ]);
     }
 

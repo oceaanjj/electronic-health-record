@@ -210,6 +210,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
     Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
+    Route::post('/intake-and-output/cdss', [IntakeAndOutputController::class, 'runCdssAnalysis'])->name('io.cdss');
 
     //MEDICATION-ADMINISTRATION:
     Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])

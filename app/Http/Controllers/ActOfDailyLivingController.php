@@ -273,38 +273,29 @@ class ActOfDailyLivingController extends Controller
             'pain_level_assessment' => 'nullable|string',
         ]);
 
-        $adl = ActOfDailyLiving::updateOrCreate(
-            ['patient_id' => $validatedData['patient_id'], 'date' => $validatedData['date']],
+        $cdssService = new ActOfDailyLivingCdssService();
+        $analysisResults = $cdssService->analyzeFindings($validatedData);
+
+        $findings = [];
+        foreach ($analysisResults as $result) {
+            if ($result['severity'] !== ActOfDailyLivingCdssService::NONE) {
+                $findings[] = $result['alert'];
+            }
+        }
+
+        $adlRecord = ActOfDailyLiving::firstOrCreate(
+            [
+                'patient_id' => $validatedData['patient_id'],
+                'date' => $validatedData['date'],
+                'day_no' => $validatedData['day_no'],
+            ],
             $validatedData
         );
 
-        $cdssService = new ActOfDailyLivingCdssService(); // Use the dedicated service
-        $analysisResults = $cdssService->analyzeFindings($adl->toArray());
-
-        return redirect()->route('adl.show', [
-            'patient_id' => $validatedData['patient_id'],
-            'date' => $validatedData['date']
-        ])->with('cdss', $analysisResults)
-            ->with('success', 'CDSS Analysis complete!');
+        return redirect()->route('nursing-diagnosis.start', [
+            'component' => 'adl',
+            'id' => $adlRecord->id
+        ])->with('findings', $findings);
     }
     
-    public function cdssToDiagnosis(Request $request)
-    {
-        $validatedData = $request->validate([
-            'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
-            'date' => 'required|date',
-        ]);
-
-        // Store current selection in session
-        $request->session()->put('selected_patient_id', $validatedData['patient_id']);
-        $request->session()->put('selected_date', $validatedData['date']);
-        $request->session()->put('selected_day_no', $validatedData['day_no']);
-
-        // Redirect to nursing diagnosis for ADL component
-        return redirect()->action(
-            [NursingDiagnosisController::class, 'startDiagnosis'],
-            ['component' => 'adl', 'id' => $validatedData['patient_id']]
-        );
-    }
 }

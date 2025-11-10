@@ -1,6 +1,6 @@
-
 @extends('layouts.app')
-@section('title', 'Step 1: Nursing Diagnosis')
+@section('title', 'Step 1: Diagnosis')
+
 @section('content')
     <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
         <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
@@ -18,20 +18,34 @@
         data-patient-id="{{ $patient->patient_id }}"
         data-component="{{ $component }}">
         @csrf
+
         <fieldset>
             <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
+                    {{-- Display Findings --}}
+                    <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
+                        CDSS FINDINGS
+                    </div>
+                    <div class="bg-beige p-4 rounded-b-lg shadow-sm mb-6">
+                        @if (!empty($findings))
+                            <ul class="list-disc list-inside text-gray-700">
+                                @foreach ($findings as $finding)
+                                    <li>{{ $finding }}</li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-gray-500">No specific findings from Act of Daily Living.</p>
+                        @endif
+                    </div>
+
                     <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
                         DIAGNOSIS (STEP 1 of 4)
                     </div>
-                    <textarea id="diagnosis" name="diagnosis" 
+                    <textarea id="diagnosis" name="diagnosis"
                         class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input"
-                        data-field-name="diagnosis" style="border-top: none;"
-                        placeholder="Enter diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
-
-                    @error('diagnosis')
-                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                    @enderror
+                        data-field-name="diagnosis"
+                        style="border-top: none;"
+                        placeholder="Enter nursing diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
                 </div>
 
                 <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">

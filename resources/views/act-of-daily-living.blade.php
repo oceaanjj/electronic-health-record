@@ -166,12 +166,7 @@
 
 <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
     @if (isset($adlData))
-        <form action="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $selectedPatient->patient_id]) }}" 
-              method="GET" 
-              class="inline">
-            @csrf
-            <button type="submit" class="button-default">CDSS</button>
-        </form>
+        <button type="submit" form="adl-form" formaction="{{ route('adl.runCdssAnalysis') }}" class="button-default">CDSS</button>
     @endif
     <button type="submit" form="adl-form" class="button-default">SUBMIT</button>
 </div>

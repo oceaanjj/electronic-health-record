@@ -47,11 +47,14 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
             ->latest()
             ->first();
 
+        $findings = session('findings', []);
+
         return view('adpie.adl.diagnosis', [
             'patient' => $patient,
             'adlData' => $adlData,
             'component' => $component,
-            'diagnosis' => $diagnosis
+            'diagnosis' => $diagnosis,
+            'findings' => $findings
         ]);
     }
 

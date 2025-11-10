@@ -186,8 +186,6 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/select-date-day', [ActOfDailyLivingController::class, 'selectDateAndDay'])->name('select-date-day');
         Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
     });
-    Route::post('/adl/cdss', [ActOfDailyLivingController::class, 'cdssToDiagnosis'])
-         ->name('adl.cdss');
 
     Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
     Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');

@@ -220,6 +220,14 @@ class NursingDiagnosisCdssService
                     $allAlerts[] = ['source' => 'Intake and Output', 'field' => 'summary', 'alert' => $result['alert']];
                 }
                 break;
+            case 'act-of-daily-living':
+                $results = $this->actOfDailyLivingCdssService->analyzeFindings($componentData);
+                foreach ($results as $key => $result) {
+                    if ($result['severity'] !== ActOfDailyLivingCdssService::NONE) {
+                        $allAlerts[] = ['source' => 'Act of Daily Living', 'field' => $key, 'alert' => $result['alert']];
+                    }
+                }
+                break;
             // ... (rest of your cases) ...
         }
 

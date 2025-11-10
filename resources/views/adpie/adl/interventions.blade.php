@@ -1,6 +1,6 @@
-
 @extends('layouts.app')
-@section('title', 'Step 1: Nursing Diagnosis')
+@section('title', 'Step 3: Intervention')
+
 @section('content')
 
     <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
@@ -13,46 +13,45 @@
         </div>
     </div>
 
-    <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $adlId]) }}"
+    <form
+        action="{{ route('nursing-diagnosis.storeIntervention', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
         method="POST" class="h-full flex flex-col cdss-form"
-        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}" 
-        data-patient-id="{{ $patient->patient_id }}"
+        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}" data-patient-id="{{ $patient->patient_id }}"
         data-component="{{ $component }}">
         @csrf
 
         <fieldset>
             <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
-                {{-- Left Column: Diagnosis Input --}}
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
                     <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
-                        DIAGNOSIS (STEP 3 of 4)
+                        INTERVENTION (STEP 3 of 4)
                     </div>
-                    <textarea id="diagnosis" name="diagnosis" class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input"
-                        data-field-name="diagnosis" style="border-top: none;"
-                        placeholder="Enter diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
+                    <textarea id="intervention" name="intervention"
+                        class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input" data-field-name="intervention"
+                        style="border-top: none;"
+                        placeholder="Enter intervention (e.g., Nursing actions, treatments)...">{{ old('intervention', $diagnosis->intervention ?? '') }}</textarea>
 
-                    @error('diagnosis')
+                    @error('intervention')
                         <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                     @enderror
                 </div>
 
-                {{-- Right Column: Recommendations --}}
                 <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">
                     <div class="bg-dark-green text-white font-bold py-2 mb-0 text-center rounded-t-lg">
                         RECOMMENDATIONS
                     </div>
                     <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
-                        data-alert-for="diagnosis" style="border-top: none;">
+                        data-alert-for="intervention" style="border-top: none;">
                         <span class="opacity-70 text-white font-semibold">No Recommendations</span>
                     </div>
                 </div>
             </div>
 
-            {{-- Button Bar --}}
             <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
                 <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
-                    <a href="{{ route('adl.show') }}" class="button-default text-center">
+                    <a href="{{ route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
+                        class="button-default text-center">
                         GO BACK
                     </a>
                 </div>
@@ -62,7 +61,7 @@
                         SUBMIT
                     </button>
                     <button type="submit" name="action" value="save_and_proceed" class="button-default">
-                        PLANNING
+                        EVALUATION
                     </button>
                 </div>
             </div>

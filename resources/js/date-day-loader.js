@@ -30,6 +30,9 @@ window.initializeDateDayLoader = function (selectUrl) {
     const initialPatientIdHidden = document.getElementById("patient_id_hidden");
 
     const handleDateDayChange = async () => {
+        // Introduce a micro-delay to allow other event handlers (like date-sync) to finish.
+        await new Promise(resolve => setTimeout(resolve, 0));
+
         // Re-query elements to ensure they are fresh after potential DOM updates
         const patientIdHidden = document.getElementById("patient_id_hidden");
         const dateSelector = document.getElementById("date_selector");

@@ -31,7 +31,6 @@ window.initializeAdlDateSync = function () {
         const day = String(newDate.getDate()).padStart(2, '0');
 
         dateSelector.value = `${year}-${month}-${day}`;
-        dateSelector.dispatchEvent(new Event('change'));
     }
 
     function updateDayNo() {

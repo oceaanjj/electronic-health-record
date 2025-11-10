@@ -9,7 +9,10 @@ class NursingDiagnosis extends Model
     protected $fillable = [
         'physical_exam_id',
         'intake_and_output_id',
-        'patient_id', // <-- ADD THIS LINE
+        'lab_values_id', // Added for Lab Values
+        'adl_id', // Added for Act of Daily Living
+        'vitals_id', // Added for Vitals
+        'patient_id',
         'diagnosis',
         'planning',
         'intervention',
@@ -34,7 +37,21 @@ class NursingDiagnosis extends Model
         return $this->belongsTo(IntakeAndOutput::class);
     }
 
-    // --- ADD THIS RELATIONSHIP ---
+    public function labValues()
+    {
+        return $this->belongsTo(LabValues::class);
+    }
+
+    public function actOfDailyLiving() // New relationship
+    {
+        return $this->belongsTo(ActOfDailyLiving::class, 'adl_id');
+    }
+
+    public function vitals() // New relationship
+    {
+        return $this->belongsTo(Vitals::class);
+    }
+
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');

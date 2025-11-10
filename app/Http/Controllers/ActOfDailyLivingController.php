@@ -80,12 +80,8 @@ class ActOfDailyLivingController extends Controller
             $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
 
             // 4. Run CDSS analysis on fetched data to display alerts
-            $alerts = [];
-            if ($adlData) {
-                $cdssService = new \App\Services\ActOfDailyLivingCdssService();
-                $alerts = $cdssService->analyzeFindings($adlData->toArray());
-            }
-            $request->session()->flash('cdss', $alerts);
+            // Alerts will be displayed from the stored data in the view.
+
 
         } else {
             // If patient isn't found, clear the session
@@ -117,6 +113,7 @@ class ActOfDailyLivingController extends Controller
         $selectedPatient = null;
         $currentDate = now()->format('Y-m-d'); // Default
         $currentDayNo = 1; // Default
+        $alerts = []; // Initialize alerts array
 
         $patientId = $request->session()->get('selected_patient_id');
         $date = $request->session()->get('selected_date');
@@ -136,6 +133,12 @@ class ActOfDailyLivingController extends Controller
                 $currentDate = $date;
                 $currentDayNo = $dayNo;
                 $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
+
+                // Run CDSS analysis on fetched data to display alerts
+                if ($adlData) {
+                    $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+                    $alerts = $cdssService->analyzeFindings($adlData->toArray());
+                }
             }
         }
 
@@ -145,6 +148,7 @@ class ActOfDailyLivingController extends Controller
             'selectedPatient' => $selectedPatient,
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
+            'alerts' => $alerts, // Pass alerts to the view
         ]);
     }
 
@@ -258,44 +262,4 @@ class ActOfDailyLivingController extends Controller
 
 
 
-    public function runCdssAnalysis(Request $request)
-    {
-        $validatedData = $request->validate([
-            'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
-            'date' => 'required|date',
-            'mobility_assessment' => 'nullable|string',
-            'hygiene_assessment' => 'nullable|string',
-            'toileting_assessment' => 'nullable|string',
-            'feeding_assessment' => 'nullable|string',
-            'hydration_assessment' => 'nullable|string',
-            'sleep_pattern_assessment' => 'nullable|string',
-            'pain_level_assessment' => 'nullable|string',
-        ]);
-
-        $cdssService = new ActOfDailyLivingCdssService();
-        $analysisResults = $cdssService->analyzeFindings($validatedData);
-
-        $findings = [];
-        foreach ($analysisResults as $result) {
-            if ($result['severity'] !== ActOfDailyLivingCdssService::NONE) {
-                $findings[] = $result['alert'];
-            }
-        }
-
-        $adlRecord = ActOfDailyLiving::firstOrCreate(
-            [
-                'patient_id' => $validatedData['patient_id'],
-                'date' => $validatedData['date'],
-                'day_no' => $validatedData['day_no'],
-            ],
-            $validatedData
-        );
-
-        return redirect()->route('nursing-diagnosis.start', [
-            'component' => 'adl',
-            'id' => $adlRecord->id
-        ])->with('findings', $findings);
-    }
-    
 }

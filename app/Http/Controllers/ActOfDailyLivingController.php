@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 use App\Services\ActOfDailyLivingCdssService;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< HEAD
 use Carbon\Carbon; // <-- Import Carbon
+=======
+use app\Http\Controllers\ADPIE\NursingDiagnosisController;
+>>>>>>> 28c04b6046e9f0787dd0954890a7c4be784e68a5
 
 class ActOfDailyLivingController extends Controller
 {
@@ -70,6 +74,7 @@ class ActOfDailyLivingController extends Controller
             // Fetch the ADL record using these new values
             $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
 
+<<<<<<< HEAD
             // Run CDSS analysis on fetched data to display alerts
             $alerts = [];
             if ($adlData) {
@@ -77,6 +82,11 @@ class ActOfDailyLivingController extends Controller
                 $alerts = $cdssService->analyzeFindings($adlData->toArray());
             }
             $request->session()->flash('cdss', $alerts);
+=======
+            // 4. Run CDSS analysis on fetched data to display alerts
+            // Alerts will be displayed from the stored data in the view.
+
+>>>>>>> 28c04b6046e9f0787dd0954890a7c4be784e68a5
 
         } else {
             // If patient isn't found, clear the session
@@ -108,6 +118,7 @@ class ActOfDailyLivingController extends Controller
         // --- START: MODIFIED LOGIC ---
         $currentDate = Carbon::today()->format('Y-m-d'); // Always today
         $currentDayNo = 1; // Default
+        $alerts = []; // Initialize alerts array
 
         $patientId = $request->session()->get('selected_patient_id');
 
@@ -121,6 +132,12 @@ class ActOfDailyLivingController extends Controller
                 $request->session()->put('selected_day_no', $currentDayNo);
 
                 $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
+
+                // Run CDSS analysis on fetched data to display alerts
+                if ($adlData) {
+                    $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+                    $alerts = $cdssService->analyzeFindings($adlData->toArray());
+                }
             }
         }
         // --- END: MODIFIED LOGIC ---
@@ -131,6 +148,7 @@ class ActOfDailyLivingController extends Controller
             'selectedPatient' => $selectedPatient,
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
+            'alerts' => $alerts, // Pass alerts to the view
         ]);
     }
 
@@ -246,4 +264,11 @@ class ActOfDailyLivingController extends Controller
         return redirect()->route('adl.show')
             ->with('success', $message);
     }
+<<<<<<< HEAD
 }
+=======
+
+
+
+}
+>>>>>>> 28c04b6046e9f0787dd0954890a7c4be784e68a5

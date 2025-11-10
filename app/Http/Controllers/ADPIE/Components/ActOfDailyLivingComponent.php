@@ -6,6 +6,7 @@ use App\Http\Controllers\ADPIE\AdpieComponentInterface;
 use App\Models\NursingDiagnosis;
 use App\Models\Patient;
 use App\Services\NursingDiagnosisCdssService;
+use App\Models\ActOfDailyLiving;
 use Illuminate\Http\Request;
 
 class ActOfDailyLivingComponent implements AdpieComponentInterface
@@ -18,116 +19,100 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         $this->nursingDiagnosisCdssService = $nursingDiagnosisCdssService;
     }
 
+    /**
+     * Prepare component data if needed (placeholder for future use).
+     */
     private function getComponentData(Request $request, Patient $patient)
     {
-        // Placeholder
+        // You can extract ADL-specific context here if needed by the CDSS
         return [
-            // 'bathing' => $request->input('bathing'),
+            // e.g. admission_date => $patient->admission_date
         ];
     }
 
-    public function startDiagnosis(string $component, $id)
+    /**
+     * Show the Diagnosis form. $id is patient id for ADL component.
+     */
+   public function startDiagnosis(string $component, $adlId)
     {
-        $patient = Patient::findOrFail($id);
+        $adlData = ActOfDailyLiving::findOrFail($adlId); // Find ADL record by its ID
+        $patient = Patient::findOrFail($adlData->patient_id); // Get patient from ADL record
 
-        $diagnosis = NursingDiagnosis::where('patient_id', $id)
-            ->whereNull('physical_exam_id')
+        $diagnosis = NursingDiagnosis::where('adl_id', $adlId) // Query by adl_id
             ->latest()
             ->first();
 
-        $adlData = [];
+        $findings = session('findings', []);
 
-        return view('adpie.adl.diagnosis', [ // Assumed view name
+        return view('adpie.adl.diagnosis', [
             'patient' => $patient,
             'adlData' => $adlData,
             'component' => $component,
-            'diagnosis' => $diagnosis
+            'diagnosis' => $diagnosis,
+            'findings' => $findings
         ]);
     }
 
     public function storeDiagnosis(Request $request, string $component, $id)
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
+        
         $patient = Patient::findOrFail($id);
+        $diagnosisText = $request->input('diagnosis');
 
-        $componentData = $this->getComponentData($request, $patient);
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
+        $diagnosisAlert = $alertObject->raw_message ?? null;
 
-        $nurseInput = [
-            'diagnosis' => $request->input('diagnosis'),
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
-
-        // --- THIS IS THE FIX ---
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                'patient_id' => $patient->patient_id,
+                'patient_id' => $id,
                 'physical_exam_id' => null,
             ],
             [
-                'diagnosis' => $nurseInput['diagnosis'],
+                'diagnosis' => $diagnosisText,
                 'diagnosis_alert' => $diagnosisAlert,
-                'rule_file_path' => $ruleFilePath,
             ]
         );
-        // --- END OF FIX ---
 
         if ($request->input('action') == 'save_and_proceed') {
-            return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $nursingDiagnosis->id])
-                ->with('success', 'Diagnosis saved. Now, please enter the plan.');
+            return redirect()->route('nursing-diagnosis.showPlanning', [
+                'component' => $component, 
+                'nursingDiagnosisId' => $nursingDiagnosis->id
+            ])->with('success', 'Diagnosis saved. Now, please enter the plan.');
         }
 
         return redirect()->back()->with('success', 'Diagnosis saved.');
     }
 
+    /**
+     * Show Planning (STEP 2)
+     */
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.planning', [ // Assumed view name
+        return view('adpie.adl.planning', [
             'diagnosis' => $diagnosis,
             'patient' => $diagnosis->patient,
             'component' => $component
         ]);
     }
 
+    /**
+     * Store Planning (STEP 2)
+     */
     public function storePlanning(Request $request, string $component, $nursingDiagnosisId)
     {
         $request->validate(['planning' => 'required|string|max:1000']);
-
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        $planningText = $request->input('planning');
 
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $request->input('planning'),
-            'intervention' => $diagnosis->intervention,
-            'evaluation' => $diagnosis->evaluation,
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $planningAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzePlanning($component, $planningText);
+        $planningAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'planning' => $nurseInput['planning'],
+            'planning' => $planningText,
             'planning_alert' => $planningAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -138,46 +123,35 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Plan saved.');
     }
 
+    /**
+     * Show Intervention (STEP 3)
+     */
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.intervention', [ // Assumed view name
+        return view('adpie.adl.interventions', [
             'diagnosis' => $diagnosis,
             'patient' => $diagnosis->patient,
             'component' => $component
         ]);
     }
 
+    /**
+     * Store Intervention (STEP 3)
+     */
     public function storeIntervention(Request $request, string $component, $nursingDiagnosisId)
     {
         $request->validate(['intervention' => 'required|string|max:1000']);
-
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        $interventionText = $request->input('intervention');
 
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $diagnosis->planning,
-            'intervention' => $request->input('intervention'),
-            'evaluation' => $diagnosis->evaluation,
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $interventionAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $interventionText);
+        $interventionAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'intervention' => $nurseInput['intervention'],
+            'intervention' => $interventionText,
             'intervention_alert' => $interventionAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -188,46 +162,35 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Intervention saved.');
     }
 
+    /**
+     * Show Evaluation (STEP 4)
+     */
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.evaluation', [ // Assumed view name
+        return view('adpie.adl.evaluation', [
             'diagnosis' => $diagnosis,
             'patient' => $diagnosis->patient,
             'component' => $component
         ]);
     }
 
+    /**
+     * Store Evaluation (STEP 4)
+     */
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)
     {
         $request->validate(['evaluation' => 'required|string|max:1000']);
-
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        $evaluationText = $request->input('evaluation');
 
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $diagnosis->planning,
-            'intervention' => $diagnosis->intervention,
-            'evaluation' => $request->input('evaluation'),
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $evaluationAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $evaluationText);
+        $evaluationAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'evaluation' => $nurseInput['evaluation'],
+            'evaluation' => $evaluationText,
             'evaluation_alert' => $evaluationAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_finish') {

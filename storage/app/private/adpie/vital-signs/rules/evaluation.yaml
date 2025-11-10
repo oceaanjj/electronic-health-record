@@ -1,0 +1,16 @@
+evaluation:
+  # Temperature evaluation
+  - keywords: ["temperature", "normalized"]
+    alert: "Temperature returned to normal range, continue monitoring for changes"
+    severity: "INFO"
+
+  # Cardiac evaluation
+  - keywords: ["heart rate", "stable"]
+    alert: "Heart rate maintained within normal parameters, continue current plan"
+    severity: "INFO"
+
+  # Blood pressure evaluation
+  - keywords: ["blood pressure", "improved"]
+    alert: "Blood pressure stabilized within target range, maintain interventions"
+    severity: "INFO"
+

@@ -1,3 +1,1805 @@
+diagnosis:
+  # --- Your Original Rules ---
+  - keywords: ["pain"]
+    alert: "Recommend pain assessment (e.g., PQRST, 0-10 scale)."
+    severity: "INFO"
+  - keywords: ["risk for"]
+    alert: "Ensure preventative interventions are planned. (e.g., risk for falls, risk for aspiration)"
+    severity: "WARNING"
+  - keywords: ["impaired", "skin"]
+    alert: "Recommend Braden Scale assessment for skin integrity."
+    severity: "WARNING"
+  - keywords: ["fluid volume"]
+    alert: "Monitor Intake & Output (I&O) closely. Check daily weights."
+    severity: "INFO"
+
+  # --- New Clinical Rules ---
+  - keywords: ["ineffective", "airway"]
+    alert: "Assess breath sounds (auscultate), check O2 saturation, and encourage cough/deep breathing."
+    severity: "CRITICAL"
+  - keywords: ["impaired", "gas exchange"]
+    alert: "Monitor respiratory rate, O2 saturation, and work of breathing. Check ABG results if available."
+    severity: "CRITICAL"
+  - keywords: ["infection"] # Catches both "risk for infection" and "infection"
+    alert: "Monitor for signs of infection: check temperature, WBC count, and assess any wounds/sites."
+    severity: "WARNING"
+  - keywords: ["risk for", "falls"]
+    alert: "Implement high fall risk precautions. Assess environment for hazards. Use Morse Fall Scale."
+    severity: "WARNING"
+  - keywords: ["imbalanced", "nutrition"]
+    alert: "Monitor food intake (calorie count). Assess for swallowing difficulties. Consider nutritional consult."
+    severity: "INFO"
+  - keywords: ["impaired", "mobility"]
+    alert: "Assess Range of Motion (ROM) and need for assistive devices. Consider Physical Therapy consult. Implement turn schedule if bedbound."
+    severity: "INFO"
+  - keywords: ["tissue", "perfusion"] # Catches "ineffective peripheral/cardiac/etc. tissue perfusion"
+    alert: "Assess peripheral pulses, capillary refill, skin color, and temperature. Monitor blood pressure."
+    severity: "CRITICAL"
+  - keywords: ["acute", "confusion"]
+    alert: "Assess for new-onset confusion (e.g., CAM score). Check for underlying causes (UTI, hypoxia, meds). Re-orient patient."
+    severity: "WARNING"
+  - keywords: ["constipation"]
+    alert: "Assess last bowel movement and bowel sounds. Encourage fluid intake and ambulation. Consider laxative/stool softener."
+    severity: "INFO"
+  - keywords: ["anxiety"]
+    alert: "Assess level of anxiety. Use therapeutic communication. Provide a calm environment and simple instructions."
+    severity: "INFO"
+
+  # Rules based on: general_appearance.yaml
+  - keywords: ["frail", "acutely ill", "chronically ill"]
+    alert: "Activity Intolerance related to generalized weakness or chronic illness."
+    severity: "warning"
+  - keywords: ["lethargic", "obtunded", "stuporous", "comatose"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to altered level of consciousness."
+    severity: "critical"
+  - keywords: ["clutching chest", "labored breathing", "wheezing"]
+    alert: "Ineffective Breathing Pattern related to respiratory distress."
+    severity: "critical"
+  - keywords: ["wincing", "sweating", "protecting painful area", "fidgety"]
+    alert: "Acute Pain related to underlying condition."
+    severity: "warning"
+  - keywords: ["flat affect", "sad affect", "poor eye contact", "psychomotor slowing"]
+    alert: "Risk for Delayed Development related to suspected psychosocial impairment or depression."
+    severity: "info"
+  - keywords: ["fruity odor", "acetone breath"]
+    alert: "Risk for Unstable Blood Glucose Level related to suspected diabetic ketoacidosis."
+    severity: "critical"
+  - keywords: ["short stature", "loss of height"]
+    alert: "Delayed Growth and Development related to suspected endocrine disorder or nutritional deficit."
+    severity: "info"
+  - keywords: ["barrel chest", "increased AP diameter"]
+    alert: "Ineffective Airway Clearance related to chronic respiratory condition (e.g., cystic fibrosis, chronic asthma)."
+    severity: "warning"
+  - keywords: ["leans forward", "arms braced", "tripod position"]
+    alert: "Ineffective Breathing Pattern related to severe respiratory distress."
+    severity: "critical"
+  - keywords: ["alert", "active", "playful", "interactive", "smiling", "cooing", "babbles"]
+    alert: "Readiness for Enhanced Growth and Development."
+    severity: "info"
+  - keywords: ["sleepy but arousable", "drowsy but awakens", "returns to sleep quickly"]
+    alert: "Sleep Deprivation related to illness or hospital environment."
+    severity: "info"
+  - keywords: ["irritable", "fussy", "difficult to soothe", "not acting like themself"]
+    alert: "Acute Pain related to unidentified cause."
+    severity: "warning"
+  - keywords: ["inconsolable", "crying continuously", "cannot be comforted", "high-pitched cry"]
+    alert: "Risk for Ineffective Cerebral Tissue Perfusion related to suspected increased intracranial pressure or severe pain."
+    severity: "critical"
+  - keywords: ["lethargic", "listless", "drowsy", "difficult to arouse", "poor interaction"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe illness, hypoxia, or CNS depression."
+    severity: "critical"
+  - keywords: ["obtunded", "responds only to painful stimuli", "responds to pain"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe CNS depression."
+    severity: "critical"
+  - keywords: ["unresponsive", "unarousable", "comatose", "no response to pain"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to coma or severe brain injury."
+    severity: "critical"
+  - keywords: ["confused", "disoriented", "not recognizing caregiver", "glassy-eyed stare"]
+    alert: "Acute Confusion related to hypoxia, metabolic disturbance, or CNS pathology."
+    severity: "critical"
+  - keywords: ["post-ictal", "postictal"]
+    alert: "Risk for Injury related to post-seizure state."
+    severity: "warning"
+  - keywords: ["parent concerned", "caregiver worried", "just not right"]
+    alert: "Risk for Impaired Parent/Infant Attachment related to caregiver anxiety."
+    severity: "warning"
+  - keywords: ["good muscle tone", "moving all extremities", "resists examination"]
+    alert: "Normal Growth and Development."
+    severity: "info"
+  - keywords: ["floppy", "limp", "poor muscle tone", "rag doll", "hypotonic"]
+    alert: "Impaired Physical Mobility related to hypotonia."
+    severity: "critical"
+  - keywords: ["rigid", "stiff", "hypertonic", "opisthotonus", "arched back"]
+    alert: "Risk for Ineffective Cerebral Tissue Perfusion related to severe neurological irritation or injury."
+    severity: "critical"
+  - keywords: ["tripod position", "tripoding", "leaning forward", "arms braced"]
+    alert: "Ineffective Breathing Pattern related to severe respiratory distress (e.g., severe asthma exacerbation)."
+    severity: "critical"
+  - keywords: ["sniffing position", "head tilted back"]
+    alert: "Ineffective Airway Clearance related to severe upper airway obstruction (e.g., epiglottitis)."
+    severity: "critical"
+  - keywords: ["guarding", "protecting painful area", "refuses to move a limb"]
+    alert: "Acute Pain related to localized injury (e.g., fracture, septic arthritis)."
+    severity: "warning"
+  - keywords: ["labored breathing", "working hard to breathe", "respiratory distress"]
+    alert: "Ineffective Breathing Pattern related to respiratory distress."
+    severity: "critical"
+  - keywords: ["nasal flaring"]
+    alert: "Ineffective Breathing Pattern related to increased work of breathing."
+    severity: "warning"
+  - keywords: ["head bobbing"]
+    alert: "Ineffective Breathing Pattern related to use of accessory muscles and severe respiratory distress."
+    severity: "critical"
+  - keywords: ["retractions", "subcostal retractions", "intercostal retractions"]
+    alert: "Ineffective Breathing Pattern related to increased respiratory effort."
+    severity: "warning"
+  - keywords: ["supraclavicular retractions", "suprasternal retractions", "tracheal tug"]
+    alert: "Ineffective Breathing Pattern related to severe respiratory distress and accessory muscle use."
+    severity: "critical"
+  - keywords: ["seesaw breathing", "paradoxical breathing"]
+    alert: "Ineffective Breathing Pattern related to diaphragmatic fatigue and impending respiratory failure."
+    severity: "critical"
+  - keywords: ["gasping", "agonal breathing"]
+    alert: "Ineffective Breathing Pattern related to impending cardiopulmonary arrest."
+    severity: "critical"
+  - keywords: ["pink", "well-perfused", "warm"]
+    alert: "Effective Tissue Perfusion (Peripheral)."
+    severity: "info"
+  - keywords: ["pale", "pallor", "ashen"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to suspected shock or anemia."
+    severity: "warning"
+  - keywords: ["mottled", "mottling", "lacy pattern on skin"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to poor perfusion and shock."
+    severity: "critical"
+  - keywords: ["cyanotic", "cyanosis", "blue lips", "blue nail beds", "central cyanosis"]
+    alert: "Impaired Gas Exchange related to severe hypoxemia."
+    severity: "critical"
+  - keywords: ["flushed", "bright red cheeks"]
+    alert: "Risk for Imbalanced Body Temperature related to fever or vasodilation (sepsis)."
+    severity: "warning"
+  - keywords: ["jaundiced", "jaundice", "yellow skin", "icteric sclera"]
+    alert: "Risk for Neonatal Jaundice (if infant) or Risk for Impaired Liver Function (if child)."
+    severity: "warning"
+  - keywords: ["well-hydrated", "moist mucous membranes"]
+    alert: "Fluid Balance, adequate."
+    severity: "info"
+  - keywords: ["dry lips", "dry mucous membranes", "tacky mouth"]
+    alert: "Risk for Deficient Fluid Volume related to dehydration."
+    severity: "warning"
+  - keywords: ["sunken eyes", "no tears when crying", "absent tears"]
+    alert: "Deficient Fluid Volume related to moderate dehydration."
+    severity: "critical"
+  - keywords: ["sunken fontanelle", "depressed fontanelle"]
+    alert: "Deficient Fluid Volume related to severe dehydration."
+    severity: "critical"
+  - keywords: ["well-nourished", "well-developed"]
+    alert: "Readiness for Enhanced Nutrition."
+    severity: "info"
+  - keywords: ["thin", "underweight", "emaciated", "wasting"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to chronic illness or malnutrition."
+    severity: "warning"
+  - keywords: ["cachectic", "chronically ill appearance"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to severe chronic illness."
+    severity: "warning"
+  - keywords: ["obese", "overweight"]
+    alert: "Imbalanced Nutrition: More Than Body Requirements."
+    severity: "info"
+  - keywords: ["fecal odor on breath", "feculent breath"]
+    alert: "Risk for Dysfunctional Gastrointestinal Motility related to suspected bowel obstruction."
+    severity: "critical"
+  - keywords: ["well-groomed", "clean", "good hygiene"]
+    alert: "Readiness for Enhanced Self-Care."
+    severity: "info"
+  - keywords: ["poor hygiene", "disheveled", "malodorous"]
+    alert: "Bathing Self-Care Deficit related to illness or impaired caregiver function."
+    severity: "info"
+  - keywords: ["dysmorphic features", "unusual facies", "low-set ears", "epicanthal folds"]
+    alert: "Risk for Delayed Development related to suspected genetic syndrome."
+    severity: "info"
+  - keywords: ["bruising", "multiple bruises", "bruises in various stages of healing"]
+    alert: "Risk for Injury related to suspected non-accidental trauma or bleeding disorder."
+    severity: "warning"
+  - keywords: ["petechiae", "purpura", "non-blanching rash"]
+    alert: "Risk for Bleeding related to suspected coagulopathy or sepsis (e.g., meningococcemia)."
+    severity: "critical"
+
+  # Rules based on: skin_condition.yaml
+  - keywords: ["cyanosis", "cyanotic", "blue skin"]
+    alert: "Impaired Gas Exchange related to hypoxia."
+    severity: "critical"
+  - keywords: ["jaundice", "yellow skin", "icteric sclera"]
+    alert: "Risk for Impaired Liver Function or Risk for Neonatal Jaundice."
+    severity: "warning"
+  - keywords: ["pallor", "pale skin"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to anemia or shock."
+    severity: "warning"
+  - keywords: ["decreased turgor", "tenting", "slow recoil"]
+    alert: "Deficient Fluid Volume related to dehydration."
+    severity: "warning"
+  - keywords: ["petechiae", "purpura"]
+    alert: "Risk for Bleeding related to suspected thrombocytopenia or vasculitis."
+    severity: "critical"
+  - keywords: ["ecchymosis", "unexplained bruising"]
+    alert: "Risk for Bleeding related to coagulopathy or non-accidental trauma."
+    severity: "warning"
+  - keywords: ["macule", "patch"]
+    alert: "Impaired Skin Integrity, documentation of lesion required."
+    severity: "info"
+  - keywords: ["papule", "plaque"]
+    alert: "Impaired Skin Integrity related to inflammatory dermatosis (e.g., psoriasis)."
+    severity: "info"
+  - keywords: ["vesicle", "bulla"]
+    alert: "Impaired Skin Integrity related to vesicular eruption (e.g., herpes, contact dermatitis)."
+    severity: "warning"
+  - keywords: ["pustule"]
+    alert: "Impaired Skin Integrity related to pustular lesion (e.g., acne, folliculitis)."
+    severity: "info"
+  - keywords: ["nodule", "cyst"]
+    alert: "Risk for Impaired Skin Integrity related to subcutaneous lesion."
+    severity: "warning"
+  - keywords: ["ulcer", "erosion"]
+    alert: "Impaired Skin Integrity related to skin breakdown or vascular insufficiency."
+    severity: "warning"
+  - keywords: ["actinic keratosis"]
+    alert: "Risk for Impaired Skin Integrity (Pre-malignant) related to sun damage. (Note: Rare in peds, consider genetic predisposition)."
+    severity: "warning"
+  - keywords: ["basal cell carcinoma", "translucent papule", "telangiectasia"]
+    alert: "Impaired Skin Integrity related to suspected skin malignancy. (Note: Extremely rare in peds, suspect genetic syndrome like Gorlin)."
+    severity: "warning"
+  - keywords: ["squamous cell carcinoma", "firm red nodule", "crusted lesion"]
+    alert: "Impaired Skin Integrity related to suspected skin malignancy. (Note: Extremely rare in peds, suspect genetic syndrome)."
+    severity: "critical"
+  - keywords: ["asymmetry", "irregular border", "color variation", "diameter >6mm", "evolving"]
+    alert: "Risk for Impaired Skin Integrity related to suspected melanoma (ABCDE criteria met). Urgent referral."
+    severity: "critical"
+  - keywords: ["clubbing", "nail clubbing"]
+    alert: "Ineffective Tissue Perfusion (Cardiopulmonary) related to chronic hypoxia."
+    severity: "warning"
+  - keywords: ["mottling", "mottled skin", "cutis marmorata", "lacy pattern"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to poor perfusion or shock."
+    severity: "warning"
+  - keywords: ["flushed", "erythema", "bright red skin"]
+    alert: "Hyperthermia related to fever or vasodilation."
+    severity: "warning"
+  - keywords: ["harlequin color change"]
+    alert: "Benign vascular phenomenon in newborn. Readiness for Enhanced Caregiver Knowledge."
+    severity: "info"
+  - keywords: ["doughy skin"]
+    alert: "Deficient Fluid Volume (Hypernatremic) related to suspected hypernatremic dehydration."
+    severity: "critical"
+  - keywords: ["dry skin", "xerosis"]
+    alert: "Impaired Skin Integrity related to dryness."
+    severity: "info"
+  - keywords: ["clammy skin", "diaphoresis", "cold sweat"]
+    alert: "Ineffective Tissue Perfusion (Systemic) related to shock or hypoglycemia."
+    severity: "critical"
+  - keywords: ["wheal", "hive", "weal"]
+    alert: "Risk for Allergy Response related to urticaria."
+    severity: "warning"
+  - keywords: ["burrow"]
+    alert: "Impaired Skin Integrity related to scabies infestation."
+    severity: "warning"
+  - keywords: ["comedone", "blackhead", "whitehead"]
+    alert: "Impaired Skin Integrity related to acne vulgaris."
+    severity: "info"
+  - keywords: ["scale", "scaling", "flaking skin"]
+    alert: "Impaired Skin Integrity related to scaling dermatosis (e.g., eczema, psoriasis)."
+    severity: "info"
+  - keywords: ["crust", "scab"]
+    alert: "Impaired Skin Integrity related to infection (e.g., impetigo) or healing lesion."
+    severity: "warning"
+  - keywords: ["fissure", "skin crack"]
+    alert: "Impaired Skin Integrity related to excessive dryness (e.g., hand eczema)."
+    severity: "info"
+  - keywords: ["excoriation", "scratch mark"]
+    alert: "Impaired Comfort related to pruritus."
+    severity: "info"
+  - keywords: ["atrophy", "thin skin"]
+    alert: "Risk for Impaired Skin Integrity related to skin thinning (e.g., chronic steroid use)."
+    severity: "info"
+  - keywords: ["lichenification"]
+    alert: "Impaired Skin Integrity related to chronic scratching (e.g., atopic dermatitis)."
+    severity: "warning"
+  - keywords: ["scar"]
+    alert: "Impaired Skin Integrity (Healed). Document location."
+    severity: "info"
+  - keywords: ["keloid"]
+    alert: "Risk for Disturbed Body Image related to keloid formation."
+    severity: "info"
+  - keywords: ["cherry angioma"]
+    alert: "Benign skin lesion. No nursing diagnosis required."
+    severity: "info"
+  - keywords: ["spider angioma", "spider nevus"]
+    alert: "Risk for Impaired Liver Function (if multiple) related to suspected liver disease."
+    severity: "warning"
+  - keywords: ["erythema toxicum neonatorum", "newborn rash"]
+    alert: "Benign newborn rash. Readiness for Enhanced Parental Knowledge."
+    severity: "info"
+  - keywords: ["milia", "milk spots"]
+    alert: "Benign newborn finding. Readiness for Enhanced Parental Knowledge."
+    severity: "info"
+  - keywords: ["neonatal acne", "baby acne"]
+    alert: "Benign newborn rash. Readiness for Enhanced Parental Knowledge."
+    severity: "info"
+  - keywords: ["transient neonatal pustular melanosis"]
+    alert: "Benign newborn finding. Readiness for Enhanced Parental Knowledge."
+    severity: "info"
+  - keywords: ["cradle cap", "infant seborrheic dermatitis"]
+    alert: "Impaired Skin Integrity related to seborrheic dermatitis."
+    severity: "info"
+  - keywords: ["miliaria", "heat rash", "prickly heat"]
+    alert: "Impaired Skin Integrity related to blocked sweat ducts."
+    severity: "info"
+  - keywords: ["mongolian spot", "congenital dermal melanocytosis", "slate gray nevus"]
+    alert: "Benign finding. Document to prevent confusion with bruising."
+    severity: "info"
+  - keywords: ["salmon patch", "nevus simplex", "stork bite", "angel kiss"]
+    alert: "Benign vascular finding. Readiness for Enhanced Parental Knowledge."
+    severity: "info"
+  - keywords: ["port-wine stain", "nevus flammeus"]
+    alert: "Risk for Disturbed Body Image. (If V1 distribution, Risk for Ineffective Cerebral Tissue Perfusion related to Sturge-Weber syndrome)."
+    severity: "warning"
+  - keywords: ["infantile hemangioma", "strawberry hemangioma", "strawberry mark"]
+    alert: "Risk for Impaired Skin Integrity (ulceration) or Risk for Impaired Vision (if periocular)."
+    severity: "info"
+  - keywords: ["cafe-au-lait macule", "cafe-au-lait spot"]
+    alert: "Risk for Delayed Development (if >= 6 spots) related to suspected Neurofibromatosis Type 1."
+    severity: "warning"
+  - keywords: ["congenital nevus", "congenital mole"]
+    alert: "Risk for Impaired Skin Integrity (Malignancy) related to large/giant congenital nevus."
+    severity: "warning"
+  - keywords: ["chickenpox", "varicella", "dewdrop on a rose petal"]
+    alert: "Risk for Infection related to viral illness (Varicella)."
+    severity: "warning"
+  - keywords: ["measles", "rubeola", "Koplik spots"]
+    alert: "Risk for Infection related to viral illness (Rubeola). Critical, reportable."
+    severity: "critical"
+  - keywords: ["rubella", "german measles"]
+    alert: "Risk for Infection related to viral illness (Rubella). Note risk to pregnant contacts."
+    severity: "warning"
+  - keywords: ["fifth disease", "erythema infectiosum", "slapped cheek"]
+    alert: "Risk for Ineffective Hematologic Perfusion related to potential aplastic crisis (if high-risk) secondary to Parvovirus B19."
+    severity: "warning"
+  - keywords: ["roseola infantum", "sixth disease", "exanthem subitum"]
+    alert: "Risk for Injury related to potential febrile seizure secondary to high fever (Roseola)."
+    severity: "warning"
+  - keywords: ["hand foot mouth", "HFM", "oral vesicles", "palmar rash", "plantar rash"]
+    alert: "Acute Pain related to oral vesicles secondary to Coxsackievirus."
+    severity: "warning"
+  - keywords: ["scarlet fever", "scarlatina"]
+    alert: "Risk for Decreased Cardiac Output related to potential for rheumatic fever secondary to Group A Strep infection."
+    severity: "critical"
+  - keywords: ["impetigo", "honey-colored crust"]
+    alert: "Impaired Skin Integrity related to bacterial infection (Impetigo)."
+    severity: "warning"
+  - keywords: ["molluscum contagiosum", "umbilicated papules"]
+    alert: "Impaired Skin Integrity related to viral infection (Molluscum)."
+    severity: "info"
+  - keywords: ["cellulitis"]
+    alert: "Impaired Skin Integrity related to bacterial infection (Cellulitis)."
+    severity: "critical"
+  - keywords: ["tinea corporis", "ringworm"]
+    alert: "Impaired Skin Integrity related to fungal infection (Tinea Corporis)."
+    severity: "info"
+  - keywords: ["tinea capitis", "scalp ringworm", "kerion"]
+    alert: "Impaired Skin Integrity (Scalp) related to fungal infection. Risk for Disturbed Body Image."
+    severity: "warning"
+  - keywords: ["tinea pedis", "athlete's foot"]
+    alert: "Impaired Skin Integrity related to fungal infection (Tinea Pedis)."
+    severity: "info"
+  - keywords: ["scabies", "burrows"]
+    alert: "Impaired Comfort related to intense pruritus secondary to scabies infestation."
+    severity: "warning"
+  - keywords: ["head lice", "pediculosis capitis", "nits"]
+    alert: "Impaired Comfort related to pruritus secondary to head lice."
+    severity: "info"
+  - keywords: ["atopic dermatitis", "eczema"]
+    alert: "Impaired Skin Integrity related to chronic inflammation and pruritus (Eczema)."
+    severity: "warning"
+  - keywords: ["contact dermatitis", "poison ivy"]
+    alert: "Impaired Skin Integrity related to allergic contact dermatitis."
+    severity: "warning"
+  - keywords: ["diaper dermatitis", "diaper rash"]
+    alert: "Impaired Skin Integrity related to irritant contact dermatitis or secondary candidiasis."
+    severity: "info"
+  - keywords: ["hives", "urticaria", "wheals"]
+    alert: "Risk for Allergy Response. (If airway signs, "Ineffective Breathing Pattern related to anaphylaxis")."
+    severity: "warning"
+  - keywords: ["psoriasis", "silvery scale"]
+    alert: "Impaired Skin Integrity related to chronic inflammatory plaques (Psoriasis)."
+    severity: "warning"
+  - keywords: ["keratosis pilaris", "chicken skin"]
+    alert: "Benign skin finding. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["pityriasis rosea", "herald patch", "christmas tree rash"]
+    alert: "Impaired Skin Integrity related to self-limited viral exanthem."
+    severity: "info"
+  - keywords: ["pyogenic granuloma"]
+    alert: "Risk for Bleeding related to friable vascular lesion."
+    severity: "warning"
+  - keywords: ["dermatofibroma"]
+    alert: "Benign skin finding. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["alopecia areata"]
+    alert: "Disturbed Body Image related to hair loss."
+    severity: "warning"
+  - keywords: ["trichotillomania"]
+    alert: "Ineffective Coping related to compulsive hair-pulling."
+    severity: "warning"
+  - keywords: ["paronychia"]
+    alert: "Impaired Skin Integrity related to nail fold infection."
+    severity: "warning"
+  - keywords: ["onycholysis"]
+    alert: "Risk for Infection related to nail plate separation."
+    severity: "info"
+  - keywords: ["leukonychia", "white spots on nails"]
+    alert: "Benign finding. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["Beau's lines"]
+    alert: "Indicates past systemic illness. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["acanthosis nigricans"]
+    alert: "Risk for Unstable Blood Glucose Level related to suspected insulin resistance."
+    severity: "warning"
+  - keywords: ["erythema nodosum"]
+    alert: "Acute Pain related to tender subcutaneous nodules. (Investigate underlying systemic illness)."
+    severity: "warning"
+  - keywords: ["Gottron's papules", "heliotrope rash"]
+    alert: "Activity Intolerance related to suspected juvenile dermatomyositis."
+    severity: "critical"
+  - keywords: ["malar rash", "butterfly rash"]
+    alert: "Risk for Impaired Skin Integrity and Activity Intolerance related to suspected Systemic Lupus Erythematosus (SLE)."
+    severity: "critical"
+  - keywords: ["sclerodactyly", "tight finger skin"]
+    alert: "Impaired Physical Mobility related to skin tightening secondary to suspected scleroderma."
+    severity: "warning"
+
+  # Rules based on: eye_condition.yaml
+  - keywords: ["sudden visual loss", "sudden vision loss", "acute vision loss"]
+    alert: "Risk for Injury related to acute vision loss. (Emergency referral)."
+    severity: "critical"
+  - keywords: ["blurry vision", "blurred vision", "trouble focusing", "difficulty seeing far", "myopia"]
+    alert: "Disturbed Sensory Perception (Visual) related to refractive error."
+    severity: "info"
+  - keywords: ["difficulty reading", "holds objects close", "trouble seeing near", "hyperopia"]
+    alert: "Disturbed Sensory Perception (Visual) related to refractive error."
+    severity: "info"
+  - keywords: ["hemianopsia", "quadrantanopsia", "field cut", "loss of peripheral vision", "tunnel vision"]
+    alert: "Risk for Injury related to visual field defect secondary to suspected CNS lesion."
+    severity: "critical"
+  - keywords: ["flashing lights", "photopsia", "seeing flashes"]
+    alert: "Risk for Injury related to visual disturbance secondary to suspected retinal detachment."
+    severity: "critical"
+  - keywords: ["floaters", "seeing spots", "cobwebs in vision"]
+    alert: "Risk for Injury related to new onset of floaters (suspected vitreous/retinal detachment)."
+    severity: "warning"
+  - keywords: ["double vision", "diplopia"]
+    alert: "Disturbed Sensory Perception (Visual) related to new onset diplopia (suspected CN palsy)."
+    severity: "critical"
+  - keywords: ["exophthalmos", "proptosis", "bulging eyes", "stare"]
+    alert: "Risk for Dry Eye related to exophthalmos (suspected hyperthyroidism)."
+    severity: "warning"
+  - keywords: ["ptosis", "droopy eyelid", "drooping eyelid"]
+    alert: "Risk for Injury related to visual impairment; (If acute) Risk for Ineffective Cerebral Tissue Perfusion related to suspected CN III palsy."
+    severity: "warning"
+  - keywords: ["lid retraction", "scleral show"]
+    alert: "Risk for Dry Eye related to lid retraction (suspected hyperthyroidism)."
+    severity: "warning"
+  - keywords: ["ectropion", "eyelid turned out"]
+    alert: "Risk for Dry Eye related to ectropion."
+    severity: "info"
+  - keywords: ["entropion", "eyelid turned in"]
+    alert: "Risk for Impaired Tissue Integrity (Corneal) related to entropion and eyelash abrasion."
+    severity: "warning"
+  - keywords: ["sty", "hordeolum", "pimple on eyelid"]
+    alert: "Impaired Tissue Integrity (Eyelid) related to localized infection."
+    severity: "info"
+  - keywords: ["chalazion", "eyelid bump", "painless eyelid lump"]
+    alert: "Impaired Tissue Integrity (Eyelid) related to blocked meibomian gland."
+    severity: "info"
+  - keywords: ["xanthelasma", "yellow plaque on eyelid"]
+    alert: "Risk for Ineffective Cardiovascular Perfusion related to suspected hyperlipidemia."
+    severity: "info"
+  - keywords: ["swollen eyelids", "puffy eyelids", "blepharitis", "periorbital edema"]
+    alert: "Risk for Impaired Tissue Integrity (Eyelid). (If systemic) Risk for Excess Fluid Volume."
+    severity: "warning"
+  - keywords: ["excessive tearing", "epiphora", "watery eyes"]
+    alert: "Risk for Impaired Skin Integrity (Periorbital) related to excessive tearing (suspected nasolacrimal duct obstruction in infant)."
+    severity: "info"
+  - keywords: ["dacryocystitis", "swelling near tear duct", "inflammation of lacrimal sac"]
+    alert: "Risk for Infection related to dacryocystitis."
+    severity: "warning"
+  - keywords: ["conjunctivitis", "pink eye", "red eye", "injected conjunctiva"]
+    alert: "Risk for Infection (Bacterial/Viral) or Risk for Allergy Response."
+    severity: "warning"
+  - keywords: ["icteric sclera", "yellow eyes", "scleral icterus"]
+    alert: "Risk for Impaired Liver Function or Risk for Neonatal Jaundice."
+    severity: "warning"
+  - keywords: ["subconjunctival hemorrhage", "blood spot on eye"]
+    alert: "Benign finding. (If traumatic in infant, Risk for Injury related to non-accidental trauma)."
+    severity: "info"
+  - keywords: ["pinguecula"]
+    alert: "Benign finding. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["episcleritis"]
+    alert: "Acute Pain related to episcleral inflammation."
+    severity: "warning"
+  - keywords: ["anisocoria", "unequal pupils"]
+    alert: "Risk for Ineffective Cerebral Tissue Perfusion related to new-onset anisocoria."
+    severity: "warning"
+  - keywords: ["fixed dilated pupil", "blown pupil", "unilateral mydriasis"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to suspected uncal herniation."
+    severity: "critical"
+  - keywords: ["miosis", "pinpoint pupils", "constricted pupils"]
+    alert: "Risk for Ineffective Breathing Pattern related to suspected opiate overdose or pontine hemorrhage."
+    severity: "critical"
+  - keywords: ["mydriasis", "dilated pupils"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe anoxia or brainstem damage."
+    severity: "critical"
+  - keywords: ["irregular pupil", "abnormal pupil shape"]
+    alert: "Documentation of finding required. (May indicate past trauma)."
+    severity: "info"
+  - keywords: ["leukocoria", "white pupil", "white reflex", "cat's eye reflex"]
+    alert: "Disturbed Sensory Perception (Visual) related to suspected retinoblastoma or congenital cataract."
+    severity: "critical"
+  - keywords: ["strabismus", "misaligned eyes", "crossed eyes", "wandering eye"]
+    alert: "Risk for Disturbed Sensory Perception (Visual) related to amblyopia secondary to strabismus."
+    severity: "warning"
+  - keywords: ["esotropia", "eyes turn in"]
+    alert: "Risk for Disturbed Sensory Perception (Visual) related to amblyopia secondary to esotropia."
+    severity: "warning"
+  - keywords: ["exotropia", "eyes turn out"]
+    alert: "Risk for Disturbed Sensory Perception (Visual) related to amblyopia secondary to exotropia."
+    severity: "warning"
+  - keywords: ["nystagmus", "jiggly eyes", "dancing eyes"]
+    alert: "Disturbed Sensory Perception (Visual) related to nystagmus (suspected vestibular or CNS lesion)."
+    severity: "warning"
+  - keywords: ["lid lag"]
+    alert: "Finding consistent with hyperthyroidism. (Risk for Dry Eye)."
+    severity: "warning"
+  - keywords: ["cataract", "lens opacity", "cloudy lens"]
+    alert: "Disturbed Sensory Perception (Visual) related to congenital cataract."
+    severity: "critical"
+  - keywords: ["corneal abrasion", "scratched cornea", "foreign body sensation"]
+    alert: "Acute Pain related to corneal abrasion."
+    severity: "warning"
+  - keywords: ["corneal opacity", "cloudy cornea"]
+    alert: "Disturbed Sensory Perception (Visual) related to suspected congenital glaucoma."
+    severity: "critical"
+  - keywords: ["arcus senilis"]
+    alert: "Benign finding (in older adult). (If child, Risk for Ineffective Cardiovascular Perfusion related to hyperlipidemia)."
+    severity: "info"
+  - keywords: ["papilledema", "swollen optic disc", "blurred disc margins"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to increased intracranial pressure."
+    severity: "critical"
+  - keywords: ["increased cup-to-disc ratio", "glaucomatous cupping", "large optic cup"]
+    alert: "Risk for Disturbed Sensory Perception (Visual) related to suspected glaucoma."
+    severity: "warning"
+  - keywords: ["optic atrophy", "pale optic disc"]
+    alert: "Disturbed Sensory Perception (Visual) related to optic nerve damage."
+    severity: "warning"
+  - keywords: ["AV nicking", "arteriovenous nicking"]
+    alert: "Ineffective Tissue Perfusion (Systemic) related to chronic hypertension."
+    severity: "warning"
+  - keywords: ["copper wiring", "silver wiring"]
+    alert: "Ineffective Tissue Perfusion (Systemic) related to chronic hypertensive retinopathy."
+    severity: "warning"
+  - keywords: ["retinal hemorrhages", "dot and blot hemorrhages", "flame hemorrhages"]
+    alert: "Risk for Injury (Non-Accidental Trauma) or Risk for Unstable Blood Glucose Level (Diabetic Retinopathy)."
+    severity: "critical"
+  - keywords: ["cotton wool spots", "soft exudates"]
+    alert: "Ineffective Tissue Perfusion (Retinal) related to microinfarctions (suspected diabetes/hypertension)."
+    severity: "warning"
+  - keywords: ["hard exudates"]
+    alert: "Ineffective Tissue Perfusion (Retinal) related to diabetic retinopathy."
+    severity: "warning"
+  - keywords: ["microaneurysms"]
+    alert: "Ineffective Tissue Perfusion (Retinal) related to diabetic retinopathy."
+    severity: "warning"
+
+  # Rules based on: oral_condition.yaml
+  - keywords: ["blue lips", "cyanotic lips", "blue gums", "blue tongue"]
+    alert: "Impaired Gas Exchange related to central cyanosis."
+    severity: "critical"
+  - keywords: ["pale lips", "lip pallor"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to suspected anemia or hypoperfusion."
+    severity: "warning"
+  - keywords: ["cracked lips", "dry lips", "fissured lips"]
+    alert: "Deficient Fluid Volume related to dehydration."
+    severity: "info"
+  - keywords: ["angular cheilitis", "cracks at mouth corners", "angular stomatitis"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to suspected B vitamin or iron deficiency."
+    severity: "info"
+  - keywords: ["herpes labialis", "fever blister", "cold sore"]
+    alert: "Impaired Tissue Integrity (Oral) related to herpes simplex virus."
+    severity: "warning"
+  - keywords: ["swollen lips", "lip angioedema"]
+    alert: "Ineffective Airway Clearance related to angioedema and potential airway compromise."
+    severity: "critical"
+  - keywords: ["cheilitis", "lip inflammation", "lip scaling"]
+    alert: "Impaired Tissue Integrity (Oral) related to lip inflammation."
+    severity: "warning"
+  - keywords: ["ulcer on lip", "lip ulcer", "non-healing lip lesion"]
+    alert: "Impaired Tissue Integrity (Oral) related to non-healing lesion (suspected malignancy)."
+    severity: "critical"
+  - keywords: ["microstomia", "small mouth opening"]
+    alert: "Risk for Imbalanced Nutrition: Less Than Body Requirements related to feeding difficulty."
+    severity: "info"
+  - keywords: ["fish mouth appearance", "smooth philtrum", "thin upper lip"]
+    alert: "Risk for Delayed Development related to suspected fetal alcohol spectrum disorder."
+    severity: "info"
+  - keywords: ["dry mucosa", "tacky oral mucosa"]
+    alert: "Deficient Fluid Volume related to dehydration."
+    severity: "warning"
+  - keywords: ["bright red mucosa", "erythematous oral mucosa"]
+    alert: "Impaired Oral Mucous Membrane related to stomatitis."
+    severity: "info"
+  - keywords: ["white plaques on mucosa", "leukoplakia", "white patch cannot be scraped off"]
+    alert: "Impaired Oral Mucous Membrane related to leukoplakia (premalignant lesion)."
+    severity: "critical"
+  - keywords: ["white curd-like plaques", "thrush", "oral candidiasis"]
+    alert: "Impaired Oral Mucous Membrane related to Candida infection (Thrush)."
+    severity: "warning"
+  - keywords: ["ulcer on buccal mucosa", "aphthous ulcer", "canker sore"]
+    alert: "Acute Pain related to aphthous ulcer."
+    severity: "info"
+  - keywords: ["Koplik spots", "white grains on red base"]
+    alert: "Risk for Infection (Measles) related to pathognomonic sign of Rubeola."
+    severity: "critical"
+  - keywords: ["petechiae on palate", "palatal petechiae"]
+    alert: "Risk for Infection related to suspected streptococcal pharyngitis or mononucleosis."
+    severity: "warning"
+  - keywords: ["ulcerative lesions with gray membrane", "necrotic gingivostomatitis"]
+    alert: "Impaired Oral Mucous Membrane related to acute necrotizing ulcerative gingivitis."
+    severity: "critical"
+  - keywords: ["burned mucosa", "white slough oral burn"]
+    alert: "Risk for Ineffective Airway Clearance related to chemical ingestion and oral burn."
+    severity: "critical"
+  - keywords: ["pigmented oral mucosa", "melanotic macule"]
+    alert: "Risk for Impaired Endocrine Function related to suspected Addison's disease (if generalized)."
+    severity: "info"
+  - keywords: ["bleeding gums", "gingivitis", "red swollen gums"]
+    alert: "Impaired Oral Mucous Membrane related to gingivitis."
+    severity: "info"
+  - keywords: ["spongy bleeding gums", "vitamin C deficiency"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to suspected Scurvy."
+    severity: "warning"
+  - keywords: ["hyperplastic gums", "gingival overgrowth"]
+    alert: "Impaired Oral Mucous Membrane related to medication side effect (e.g., phenytoin)."
+    severity: "warning"
+  - keywords: ["bluish gum line", "Burton line", "lead poisoning sign"]
+    alert: "Risk for Poisoning related to suspected chronic lead exposure."
+    severity: "critical"
+  - keywords: ["ulcerative gingivitis", "bleeding necrotic gums"]
+    alert: "Impaired Oral Mucous Membrane related to acute necrotizing gingivitis."
+    severity: "warning"
+  - keywords: ["receding gums", "tooth root exposure"]
+    alert: "Impaired Oral Mucous Membrane related to periodontal disease."
+    severity: "info"
+  - keywords: ["gingival mass", "epulis", "gum tumor"]
+    alert: "Risk for Impaired Oral Mucous Membrane."
+    severity: "warning"
+  - keywords: ["bleeding gums during pregnancy", "pregnancy gingivitis"]
+    alert: "Impaired Oral Mucous Membrane related to hormonal changes."
+    severity: "info"
+  - keywords: ["ulcerated gum lesion unhealed", "indurated gum ulcer"]
+    alert: "Impaired Oral Mucous Membrane related to suspected malignancy."
+    severity: "critical"
+  - keywords: ["gingival pallor", "pale gums"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to suspected anemia."
+    severity: "warning"
+  - keywords: ["dental caries", "tooth decay"]
+    alert: "Impaired Dentition related to dental caries."
+    severity: "info"
+  - keywords: ["brown mottled enamel", "fluorosis"]
+    alert: "Impaired Dentition related to fluorosis."
+    severity: "info"
+  - keywords: ["chalky white enamel spots", "early caries lesion"]
+    alert: "Risk for Impaired Dentition related to early demineralization."
+    severity: "info"
+  - keywords: ["loose teeth", "tooth mobility"]
+    alert: "Impaired Dentition related to advanced periodontal disease."
+    severity: "warning"
+  - keywords: ["missing teeth", "edentulous"]
+    alert: "Impaired Dentition. Risk for Imbalanced Nutrition."
+    severity: "info"
+  - keywords: ["natal teeth", "teeth at birth"]
+    alert: "Risk for Aspiration related to loose natal teeth."
+    severity: "warning"
+  - keywords: ["delayed eruption", "late tooth eruption"]
+    alert: "Risk for Delayed Growth and Development related to suspected hypothyroidism or rickets."
+    severity: "warning"
+  - keywords: ["malocclusion", "crooked teeth", "crowding"]
+    alert: "Risk for Impaired Dentition related to malocclusion."
+    severity: "info"
+  - keywords: ["tooth discoloration", "yellow teeth", "tetracycline staining"]
+    alert: "Disturbed Body Image related to tooth discoloration."
+    severity: "info"
+  - keywords: ["fractured tooth", "broken tooth", "tooth avulsion"]
+    alert: "Impaired Dentition related to trauma. Risk for Infection."
+    severity: "critical"
+  - keywords: ["red swollen tongue", "strawberry tongue"]
+    alert: "Risk for Infection related to suspected Scarlet Fever or Kawasaki Disease."
+    severity: "critical"
+  - keywords: ["smooth glossy tongue", "atrophic glossitis"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to suspected B12, folate, or iron deficiency."
+    severity: "warning"
+  - keywords: ["geographic tongue", "migratory glossitis"]
+    alert: "Benign finding. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["fissured tongue", "scrotal tongue"]
+    alert: "Benign finding. Risk for Impaired Oral Mucous Membrane (if debris trapped)."
+    severity: "info"
+  - keywords: ["white patches side of tongue", "hairy leukoplakia"]
+    alert: "Ineffective Health Maintenance related to suspected HIV infection (Hairy Leukoplakia)."
+    severity: "warning"
+  - keywords: ["black hairy tongue", "elongated papillae"]
+    alert: "Benign finding. Readiness for Enhanced Self-Care (Oral Hygiene)."
+    severity: "info"
+  - keywords: ["macroglossia", "enlarged tongue"]
+    alert: "Risk for Ineffective Airway Clearance related to macroglossia (suspected Down syndrome, hypothyroidism)."
+    severity: "warning"
+  - keywords: ["tongue deviation", "deviated tongue"]
+    alert: "Risk for Ineffective Cerebral Tissue Perfusion related to suspected CN XII (Hypoglossal) palsy."
+    severity: "critical"
+  - keywords: ["ulcer on tongue", "indurated tongue lesion", "non-healing tongue sore"]
+    alert: "Impaired Oral Mucous Membrane related to suspected malignancy."
+    severity: "critical"
+  - keywords: ["coated tongue", "white film on tongue"]
+    alert: "Risk for Deficient Fluid Volume related to dehydration or poor hygiene."
+    severity: "info"
+  - keywords: ["red throat", "sore throat", "pharyngitis"]
+    alert: "Acute Pain related to pharyngitis."
+    severity: "warning"
+  - keywords: ["tonsillar exudate", "white patches tonsils", "exudative pharyngitis"]
+    alert: "Risk for Infection related to suspected streptococcal pharyngitis."
+    severity: "warning"
+  - keywords: ["asymmetric tonsil swelling", "uvular deviation", "hot potato voice"]
+    alert: "Risk for Ineffective Airway Clearance related to suspected peritonsillar abscess."
+    severity: "critical"
+  - keywords: ["gray membrane throat", "diphtheritic membrane"]
+    alert: "Ineffective Airway Clearance related to suspected Diphtheria."
+    severity: "critical"
+  - keywords: ["palatal ulcer", "roof of mouth sore"]
+    alert: "Impaired Oral Mucous Membrane related to palatal ulceration."
+    severity: "warning"
+  - keywords: ["high arched palate"]
+    alert: "Finding associated with congenital syndromes (e.g., Marfan). Risk for Impaired Swallowing."
+    severity: "info"
+  - keywords: ["cleft palate", "palatal defect"]
+    alert: "Risk for Imbalanced Nutrition: Less Than Body Requirements related to feeding difficulties secondary to cleft palate."
+    severity: "critical"
+  - keywords: ["tonsillar hypertrophy", "enlarged tonsils"]
+    alert: "Risk for Sleep Deprivation or Risk for Ineffective Breathing Pattern (Sleep Apnea) related to tonsillar hypertrophy."
+    severity: "warning"
+  - keywords: ["post-tonsillectomy bleeding", "fresh blood in mouth"]
+    alert: "Risk for Deficient Fluid Volume (Hemorrhage) related to post-operative bleeding."
+    severity: "critical"
+  - keywords: ["palatal petechiae after cough", "minor trauma from suction"]
+    alert: "Benign finding. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["foul breath", "halitosis"]
+    alert: "Readiness for Enhanced Self-Care (Oral Hygiene) or potential sign of infection."
+    severity: "info"
+  - keywords: ["acetone odor", "fruity breath"]
+    alert: "Risk for Unstable Blood Glucose Level related to suspected diabetic ketoacidosis."
+    severity: "critical"
+  - keywords: ["ammonia odor breath", "uremic fetor"]
+    alert: "Risk for Impaired Renal Function related to uremia."
+    severity: "warning"
+  - keywords: ["musty sweet odor", "hepatic fetor"]
+    alert: "Risk for Impaired Liver Function related to hepatic failure."
+    severity: "warning"
+  - keywords: ["putrid odor", "anaerobic infection smell"]
+    alert: "Risk for Infection related to suspected anaerobic abscess (e.g., lung abscess)."
+    severity: "critical"
+  - keywords: ["drooling", "sialorrhea"]
+    alert: "Risk for Ineffective Airway Clearance related to suspected epiglottitis or inability to swallow."
+    severity: "critical"
+  - keywords: ["dry mouth", "xerostomia"]
+    alert: "Deficient Fluid Volume or medication side effect."
+    severity: "warning"
+  - keywords: ["salivary gland swelling", "parotid swelling"]
+    alert: "Risk for Infection related to suspected mumps or parotitis."
+    severity: "warning"
+  - keywords: ["purulent discharge from Stensen duct", "salivary duct pus"]
+    alert: "Risk for Infection related to suppurative parotitis."
+    severity: "critical"
+  - keywords: ["pain before meals relieved after", "salivary colic"]
+    alert: "Acute Pain related to suspected salivary duct stone (sialolithiasis)."
+    severity: "info"
+  - keywords: ["ulcerated lip lesion", "bleeding lip nodule"]
+    alert: "Risk for Bleeding related to friable lip lesion."
+    severity: "warning"
+  - keywords: ["pigmented macule lip", "dark spot lower lip"]
+    alert: "Benign finding. No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["crusting lip ulcer", "scabbed lesion on lip"]
+    alert: "Impaired Tissue Integrity (Oral) related to herpes simplex."
+    severity: "info"
+  - keywords: ["painful lip fissure", "ulcer at vermilion border"]
+    alert: "Impaired Tissue Integrity (Oral) related to nutritional deficiency or trauma."
+    severity: "info"
+  - keywords: ["blistering lip lesion", "vesicular eruption on lip"]
+    alert: "Impaired Tissue Integrity (Oral) related to herpes simplex infection."
+    severity: "warning"
+  - keywords: ["lip swelling after new medication", "angioedema medication reaction"]
+    alert: "Ineffective Airway Clearance related to drug-induced angioedema."
+    severity: "critical"
+  - keywords: ["lip laceration", "traumatic mouth injury"]
+    alert: "Impaired Tissue Integrity (Oral) related to trauma."
+    severity: "warning"
+  - keywords: ["crusted yellow lesion on lip", "impetigo on lip"]
+    alert: "Impaired Skin Integrity related to bacterial infection (Impetigo)."
+    severity: "warning"
+  - keywords: ["white thickened lip patch", "leukoplakia on lip"]
+    alert: "Impaired Tissue Integrity (Oral) related to non-healing lesion (suspected leukoplakia)."
+    severity: "critical"
+  - keywords: ["lip fissure in newborn", "cleft lip"]
+    alert: "Risk for Imbalanced Nutrition: Less Than Body Requirements related to cleft lip."
+    severity: "critical"
+  - keywords: ["ulcer with red border on buccal mucosa", "minor aphthous ulcer"]
+    alert: "Acute Pain related to aphthous ulcer."
+    severity: "info"
+  - keywords: ["multiple oral ulcers", "major aphthae"]
+    alert: "Acute Pain related to severe aphthous stomatitis (Suspect systemic cause, e.g., Behçet's)."
+    severity: "warning"
+  - keywords: ["white lacy pattern on mucosa", "reticular white streaks"]
+    alert: "Impaired Oral Mucous Membrane related to suspected Lichen Planus."
+    severity: "warning"
+  - keywords: ["grayish pseudomembrane", "membranous stomatitis"]
+    alert: "Risk for Infection related to Diphtheria or severe necrotizing infection."
+    severity: "critical"
+  - keywords: ["vesicular eruption on oral mucosa", "painful oral vesicles"]
+    alert: "Acute Pain related to viral stomatitis (e.g., Coxsackievirus)."
+    severity: "warning"
+  - keywords: ["painful hemorrhagic vesicles", "oral erythema multiforme"]
+    alert: "Impaired Oral Mucous Membrane related to suspected Erythema Multiforme/Stevens-Johnson syndrome."
+    severity: "critical"
+  - keywords: ["mucosal ulcer with yellow base", "necrotic oral ulcer"]
+    alert: "Risk for Infection related to suspected agranulocytosis or leukemia."
+    severity: "critical"
+  - keywords: ["pigmented mucosal patch", "melanotic pigmentation"]
+    alert: "Risk for Impaired Endocrine Function (if multiple) related to suspected Peutz-Jeghers or Addison's."
+    severity: "warning"
+  - keywords: ["white plaque scrapable", "milk residue confusion"]
+    alert: "Differentiate milk residue (benign) from thrush. No diagnosis if milk."
+    severity: "info"
+  - keywords: ["pseudomembrane with foul odor", "necrotic debris"]
+    alert: "Impaired Oral Mucous Membrane related to acute necrotizing infection."
+    severity: "critical"
+  - keywords: ["painful bleeding gums", "necrotic gingiva"]
+    alert: "Impaired Oral Mucous Membrane related to acute necrotizing gingivitis (Vincent's angina)."
+    severity: "warning"
+  - keywords: ["swollen spongy gums", "gingival edema"]
+    alert: "Impaired Oral Mucous Membrane related to gingivitis."
+    severity: "info"
+  - keywords: ["purplish gums", "cyanotic gums"]
+    alert: "Impaired Gas Exchange related to central cyanosis."
+    severity: "warning"
+  - keywords: ["pale atrophic gums", "gums receding"]
+    alert: "Impaired Oral Mucous Membrane related to chronic periodontal disease."
+    severity: "info"
+  - keywords: ["gingival ulceration after chemotherapy", "chemotherapy mucositis"]
+    alert: "Impaired Oral Mucous Membrane related to chemotherapy side effects."
+    severity: "warning"
+  - keywords: ["painful gum swelling with pus", "gingival abscess"]
+    alert: "Acute Pain related to gingival abscess."
+    severity: "warning"
+  - keywords: ["fibrous gingival overgrowth", "drug-induced gingival hyperplasia"]
+    alert: "Impaired Oral Mucous Membrane related to medication side effect (e.g., phenytoin)."
+    severity: "warning"
+  - keywords: ["ulcerated gum mass", "bleeding gum lesion"]
+    alert: "Impaired Oral Mucous Membrane related to suspected malignancy."
+    severity: "critical"
+  - keywords: ["gum hypertrophy in child", "leukemic infiltration"]
+    alert: "Risk for Ineffective Protection related to suspected leukemia."
+    severity: "critical"
+  - keywords: ["metallic taste and blue gum line", "lead line"]
+    alert: "Risk for Poisoning related to chronic lead toxicity."
+    severity: "critical"
+  - keywords: ["yellow-brown teeth", "fluorosis teeth"]
+    alert: "Impaired Dentition. No acute diagnosis."
+    severity: "info"
+  - keywords: ["black discoloration tooth", "dead tooth"]
+    alert: "Risk for Infection related to nonvital tooth."
+    severity: "warning"
+  - keywords: ["attrition", "worn teeth", "grinding damage"]
+    alert: "Risk for Impaired Dentition related to bruxism."
+    severity: "info"
+  - keywords: ["tooth erosion", "acid wear", "bulimia enamel loss"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to suspected bulimia or GERD."
+    severity: "warning"
+  - keywords: ["tooth pain", "sensitive tooth"]
+    alert: "Acute Pain related to dental caries or abscess."
+    severity: "info"
+  - keywords: ["swelling over tooth root", "periapical abscess"]
+    alert: "Risk for Infection (Systemic) related to periapical abscess."
+    severity: "critical"
+  - keywords: ["bleeding after tooth extraction", "post-extraction hemorrhage"]
+    alert: "Risk for Bleeding."
+    severity: "warning"
+  - keywords: ["pain 3 days after extraction", "dry socket", "alveolar osteitis"]
+    alert: "Acute Pain related to dry socket."
+    severity: "warning"
+  - keywords: ["malformed teeth", "enamel hypoplasia"]
+    alert: "Impaired Dentition. (Indicates past systemic illness or nutritional deficiency)."
+    severity: "info"
+  - keywords: ["tooth abscess swelling face", "odontogenic infection"]
+    alert: "Risk for Ineffective Airway Clearance related to facial swelling from odontogenic infection."
+    severity: "critical"
+  - keywords: ["tooth displacement trauma", "luxated tooth"]
+    alert: "Impaired Dentition related to trauma."
+    severity: "critical"
+  - keywords: ["tooth loss early child", "premature exfoliation"]
+    alert: "Risk for Delayed Development related to suspected systemic condition (e.g., hypophosphatasia)."
+    severity: "warning"
+  - keywords: ["jaw pain clicking", "temporomandibular disorder"]
+    alert: "Chronic Pain related to temporomandibular disorder (TMD)."
+    severity: "info"
+  - keywords: ["tongue tremor resting", "tremulous tongue Parkinson"]
+    alert: "Impaired Physical Mobility related to suspected Parkinsonism (Rare in peds) or hyperthyroidism."
+    severity: "warning"
+  - keywords: ["purple tongue lesion", "vascular malformation tongue"]
+    alert: "Benign finding. (Risk for Bleeding if traumatic)."
+    severity: "info"
+  - keywords: ["tongue ulcer nonhealing", "ulcerated nodule tongue"]
+    alert: "Impaired Oral Mucous Membrane related to suspected malignancy."
+    severity: "critical"
+  - keywords: ["yellow coating tongue", "poor oral hygiene tongue"]
+    alert: "Readiness for Enhanced Self-Care (Oral Hygiene)."
+    severity: "info"
+  - keywords: ["loss of tongue papillae", "smooth red tongue"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to suspected vitamin deficiency."
+    severity: "warning"
+  - keywords: ["ulcer under tongue", "floor of mouth ulcer"]
+    alert: "Impaired Oral Mucous Membrane related to suspected malignancy."
+    severity: "critical"
+  - keywords: ["tongue biting marks", "seizure evidence"]
+    alert: "Risk for Injury related to seizure activity."
+    severity: "critical"
+  - keywords: ["uvula midline deviation after stroke", "vagus palsy sign"]
+    alert: "Impaired Swallowing related to suspected CN X (Vagus) palsy."
+    severity: "critical"
+  - keywords: ["palatal ulcer with yellow base", "herpetic lesion palate"]
+    alert: "Acute Pain related to viral stomatitis."
+    severity: "warning"
+  - keywords: ["uvula edema", "swollen uvula"]
+    alert: "Risk for Ineffective Airway Clearance related to uvular edema."
+    severity: "critical"
+  - keywords: ["white spots tonsils without fever", "tonsillar concretions"]
+    alert: "Benign finding (Tonsilloliths). No active nursing diagnosis."
+    severity: "info"
+  - keywords: ["ulcer posterior pharynx", "pharyngeal ulcer"]
+    alert: "Impaired Oral Mucous Membrane (suspected viral infection or TB)."
+    severity: "warning"
+  - keywords: ["asymmetric soft palate elevation", "CN X lesion"]
+    alert: "Impaired Swallowing related to suspected CN X (Vagus) palsy."
+    severity: "critical"
+  - keywords: ["gray necrotic patch tonsil", "peritonsillar necrosis"]
+    alert: "Risk for Infection (Systemic) related to necrotizing tonsillitis or Diphtheria."
+    severity: "critical"
+  - keywords: ["white patches on palate scrape off", "oral candidiasis palate"]
+    alert: "Impaired Oral Mucous Membrane related to Candida infection."
+    severity: "warning"
+  - keywords: ["petechiae soft palate", "infectious mononucleosis"]
+    alert: "Risk for Infection related to suspected Mononucleosis or Group A Strep."
+    severity: "warning"
+
+  # Rules based on: cardiovascular.yaml
+  - keywords: ["central cyanosis", "blue lips", "blue tongue"]
+    alert: "Impaired Gas Exchange related to central hypoxemia (suspected cyanotic congenital heart disease)."
+    severity: "critical"
+  - keywords: ["peripheral cyanosis", "acrocyanosis", "blue hands", "blue feet"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to cold stress or poor perfusion. (Acrocyanosis is normal in newborns)."
+    severity: "warning"
+  - keywords: ["differential cyanosis", "blue lower extremities", "pink upper extremities"]
+    alert: "Decreased Cardiac Output related to right-to-left shunting (suspected PDA with severe coarctation)."
+    severity: "critical"
+  - keywords: ["weak femoral pulse", "absent femoral pulse", "brachiofemoral delay"]
+    alert: "Decreased Cardiac Output related to aortic obstruction (suspected Coarctation of the Aorta)."
+    severity: "critical"
+  - keywords: ["bounding pulse", "water-hammer pulse"]
+    alert: "Risk for Ineffective Cardiovascular Perfusion related to wide pulse pressure (suspected large PDA)."
+    severity: "warning"
+  - keywords: ["weak pulse", "thready pulse"]
+    alert: "Ineffective Tissue Perfusion (Systemic) related to low cardiac output or shock."
+    severity: "critical"
+  - keywords: ["precordial bulge", "asymmetric chest"]
+    alert: "Decreased Cardiac Output (Chronic) related to long-standing cardiomegaly."
+    severity: "warning"
+  - keywords: ["precordial heave", "parasternal lift"]
+    alert: "Decreased Cardiac Output related to ventricular hypertrophy."
+    severity: "warning"
+  - keywords: ["suprasternal notch thrill"]
+    alert: "Decreased Cardiac Output related to turbulent blood flow (suspected aortic/pulmonic stenosis)."
+    severity: "warning"
+  - keywords: ["apical thrill"]
+    alert: "Decreased Cardiac Output related to turbulent blood flow (suspected mitral regurgitation)."
+    severity: "warning"
+  - keywords: ["left sternal border thrill"]
+    alert: "Decreased Cardiac Output related to turbulent blood flow (suspected VSD or pulmonic stenosis)."
+    severity: "warning"
+  - keywords: ["tachycardia", "persistent tachycardia"]
+    alert: "Decreased Cardiac Output related to compensatory mechanism for heart failure, hypoxia, or arrhythmia."
+    severity: "warning"
+  - keywords: ["bradycardia"]
+    alert: "Decreased Cardiac Output related to bradycardia (suspected severe hypoxia or heart block)."
+    severity: "critical"
+  - keywords: ["irregular rhythm", "arrhythmia"]
+    alert: "Decreased Cardiac Output related to arrhythmia."
+    severity: "warning"
+  - keywords: ["diastolic murmur"]
+    alert: "Decreased Cardiac Output related to pathologic diastolic murmur (suspected valve regurgitation/stenosis)."
+    severity: "critical"
+  - keywords: ["holosystolic murmur", "pansystolic murmur"]
+    alert: "Decreased Cardiac Output related to pathologic murmur (suspected VSD or mitral regurgitation)."
+    severity: "warning"
+  - keywords: ["continuous murmur", "machinery murmur"]
+    alert: "Decreased Cardiac Output related to left-to-right shunting (suspected PDA)."
+    severity: "warning"
+  - keywords: ["harsh murmur", "grade 3 murmur", "grade III murmur"]
+    alert: "Risk for Decreased Cardiac Output related to significant turbulent flow (pathologic murmur)."
+    severity: "warning"
+  - keywords: ["murmur increases with standing"]
+    alert: "Risk for Decreased Cardiac Output related to suspected hypertrophic cardiomyopathy (HOCM)."
+    severity: "critical"
+  - keywords: ["murmur decreases with standing"]
+    alert: "Finding consistent with benign innocent murmur."
+    severity: "info"
+  - keywords: ["murmur radiates to back", "murmur between scapulae"]
+    alert: "Risk for Decreased Cardiac Output related to suspected Coarctation of the Aorta or pulmonic stenosis."
+    severity: "warning"
+  - keywords: ["murmur radiates to axilla"]
+    alert: "Risk for Decreased Cardiac Output related to suspected mitral regurgitation."
+    severity: "warning"
+  - keywords: ["murmur radiates to neck", "murmur radiates to carotids"]
+    alert: "Risk for Decreased Cardiac Output related to suspected aortic stenosis."
+    severity: "warning"
+  - keywords: ["fixed split S2", "wide fixed split S2"]
+    alert: "Risk for Decreased Cardiac Output related to left-to-right shunt (suspected Atrial Septal Defect - ASD)."
+    severity: "warning"
+  - keywords: ["wide split S2", "persistent split S2"]
+    alert: "Risk for Decreased Cardiac Output related to delayed pulmonic valve closure (suspected pulmonic stenosis)."
+    severity: "warning"
+  - keywords: ["single S2", "single second heart sound"]
+    alert: "Risk for Decreased Cardiac Output related to complex congenital heart defect (e.g., TGA, severe PS)."
+    severity: "warning"
+  - keywords: ["loud P2", "accentuated P2"]
+    alert: "Risk for Decreased Cardiac Output related to suspected pulmonary hypertension."
+    severity: "warning"
+  - keywords: ["ejection click", "systolic click"]
+    alert: "Risk for Decreased Cardiac Output related to semilunar valve pathology (aortic/pulmonic)."
+    severity: "warning"
+  - keywords: ["mid-systolic click", "late systolic murmur"]
+    alert: "Risk for Decreased Cardiac Output related to suspected mitral valve prolapse."
+    severity: "warning"
+  - keywords: ["S3 gallop", "third heart sound"]
+    alert: "Decreased Cardiac Output or Excess Fluid Volume related to volume overload or heart failure."
+    severity: "warning"
+  - keywords: ["S4 gallop", "fourth heart sound"]
+    alert: "Decreased Cardiac Output related to decreased ventricular compliance (pathologic finding)."
+    severity: "warning"
+  - keywords: ["hepatomegaly", "enlarged liver"]
+    alert: "Excess Fluid Volume related to systemic venous congestion (right-sided heart failure)."
+    severity: "warning"
+  - keywords: ["peripheral edema", "pitting edema", "sacral edema", "ascites"]
+    alert: "Excess Fluid Volume related to right-sided heart failure."
+    severity: "warning"
+  - keywords: ["poor feeding", "diaphoresis with feeding", "sweating with feeding"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to feeding fatigue secondary to congestive heart failure."
+    severity: "warning"
+  - keywords: ["failure to thrive", "poor weight gain"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to increased metabolic demand from congenital heart disease."
+    severity: "warning"
+  - keywords: ["reduced exercise capacity", "fatigue with exertion"]
+    alert: "Activity Intolerance related to underlying cardiac disease."
+    severity: "warning"
+  - keywords: ["syncope on exertion", "presyncope with exercise"]
+    alert: "Risk for Decreased Cardiac Output related to suspected HOCM, severe aortic stenosis, or arrhythmia."
+    severity: "critical"
+  - keywords: ["chest pain", "chest pain on exertion"]
+    alert: "Risk for Decreased Cardiac Output related to suspected anomalous coronary arteries or HOCM."
+    severity: "critical"
+  - keywords: ["Still's murmur", "vibratory murmur", "musical murmur"]
+    alert: "Benign finding (Innocent Still's Murmur)."
+    severity: "info"
+  - keywords: ["venous hum"]
+    alert: "Benign finding (Innocent Venous Hum)."
+    severity: "info"
+  - keywords: ["pulmonary flow murmur", "systolic ejection murmur", "upper left sternal border"]
+    alert: "Benign finding (Innocent Pulmonary Flow Murmur)."
+    severity: "info"
+  - keywords: ["holosystolic murmur", "lower left sternal border"]
+    alert: "Risk for Decreased Cardiac Output related to suspected Ventricular Septal Defect (VSD)."
+    severity: "warning"
+  - keywords: ["systolic ejection murmur", "upper left sternal border", "radiates to back"]
+    alert: "Risk for Decreased Cardiac Output related to suspected Pulmonic Stenosis."
+    severity: "warning"
+  - keywords: ["systolic ejection murmur", "upper right sternal border", "radiates to neck"]
+    alert: "Risk for Decreased Cardiac Output related to suspected Aortic Stenosis."
+    severity: "warning"
+  - keywords: ["crackles", "rales", "pulmonary congestion"]
+    alert: "Excess Fluid Volume related to pulmonary edema secondary to left-sided heart failure."
+    severity: "warning"
+  - keywords: ["maternal diabetes", "gestational diabetes"]
+    alert: "Risk for Impaired Cardiovascular Function (Infant) related to maternal diabetes."
+    severity: "info"
+  - keywords: ["maternal lupus", "maternal SLE"]
+    alert: "Risk for Decreased Cardiac Output (Infant) related to potential congenital heart block."
+    severity: "info"
+  - keywords: ["family history of sudden death"]
+    alert: "Risk for Decreased Cardiac Output related to potential heritable cardiomyopathy or channelopathy."
+    severity: "critical"
+  - keywords: ["Marfan syndrome", "family history of Marfan"]
+    alert: "Risk for Decreased Cardiac Output related to potential aortic root dilation or mitral valve prolapse."
+    severity: "warning"
+  - keywords: ["Trisomy 21", "Down syndrome"]
+    alert: "Risk for Decreased Cardiac Output related to high incidence of atrioventricular septal defects."
+    severity: "info"
+  - keywords: ["Turner syndrome", "XO syndrome"]
+    alert: "Risk for Decreased Cardiac Output related to high incidence of coarctation of the aorta."
+    severity: "info"
+  - keywords: ["fever", "new murmur", "arthralgia"]
+    alert: "Risk for Decreased Cardiac Output related to suspected Acute Rheumatic Fever."
+    severity: "critical"
+  - keywords: ["fever", "unexplained shock", "new murmur"]
+    alert: "Risk for Decreased Cardiac Output related to suspected infective endocarditis or sepsis."
+    severity: "critical"
+  - keywords: ["long systolic murmur", "pansystolic murmur (PSM)"]
+    alert: "Risk for Decreased Cardiac Output (Pathologic murmur suspected)."
+    severity: "warning"
+  - keywords: ["opening snap"]
+    alert: "Risk for Decreased Cardiac Output related to suspected mitral stenosis."
+    severity: "warning"
+  - keywords: ["displaced PMI", "displaced apical impulse"]
+    alert: "Decreased Cardiac Output related to left ventricular enlargement."
+    severity: "warning"
+  - keywords: ["respiratory distress", "tachypnea"]
+    alert: "Ineffective Breathing Pattern related to pulmonary overcirculation or heart failure."
+    severity: "warning"
+  - keywords: ["palpitations"]
+    alert: "Risk for Decreased Cardiac Output related to suspected arrhythmia."
+    severity: "warning"
+  - keywords: ["squatting behavior"]
+    alert: "Ineffective Tissue Perfusion (Systemic) related to right-to-left shunting (classic for Tetralogy of Fallot)."
+    severity: "warning"
+  - keywords: ["boot-shaped heart", "coeur en sabot"]
+    alert: "Finding consistent with Tetralogy of Fallot. (Supports Ineffective Tissue Perfusion diagnosis)."
+    severity: "info"
+  - keywords: ["egg on a string", "egg on its side"]
+    alert: "Finding consistent with Transposition of the Great Arteries (TGA)."
+    severity: "info"
+  - keywords: ["early diastolic murmur", "blowing murmur", "left sternal border"]
+    alert: "Risk for Decreased Cardiac Output related to suspected aortic regurgitation."
+    severity: "warning"
+  - keywords: ["mid-diastolic rumble", "apex"]
+    alert: "Risk for Decreased Cardiac Output related to suspected mitral stenosis."
+    severity: "warning"
+
+  # Rules based on: abdomen.yaml (Pediatric Focus)
+  - keywords: ["flat abdomen", "non-distended", "soft on palpation"]
+    alert: "Normal abdominal finding. No acute nursing diagnosis."
+    severity: "none"
+  - keywords: ["distended abdomen", "abdominal distension"]
+    alert: "Risk for Dysfunctional Gastrointestinal Motility related to gas, ascites, or obstruction."
+    severity: "warning"
+  - keywords: ["scaphoid abdomen", "sunken abdomen"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to malnutrition."
+    severity: "info"
+  - keywords: ["visible peristalsis"]
+    alert: "Risk for Dysfunctional Gastrointestinal Motility related to suspected intestinal obstruction (e.g., Pyloric Stenosis in infant)."
+    severity: "warning"
+  - keywords: ["abdominal asymmetry", "uneven contour"]
+    alert: "Risk for Impaired Tissue Integrity related to suspected mass or organomegaly (e.g., Wilms' tumor)."
+    severity: "warning"
+  - keywords: ["pulsating mass midline", "expansile pulsation abdomen"]
+    alert: "Ineffective Tissue Perfusion (Aortic) related to suspected Abdominal Aortic Aneurysm (Rare in peds, consider Marfan)."
+    severity: "critical"
+  - keywords: ["abdominal scars", "surgical scars"]
+    alert: "Risk for Dysfunctional Gastrointestinal Motility (Adhesions)."
+    severity: "info"
+  - keywords: ["dilated abdominal veins", "caput medusae"]
+    alert: "Risk for Impaired Liver Function related to suspected portal hypertension."
+    severity: "warning"
+  - keywords: ["ecchymosis around umbilicus", "Cullen sign"]
+    alert: "Risk for Bleeding (Internal) related to suspected pancreatitis or trauma."
+    severity: "critical"
+  - keywords: ["tenderness in right lower quadrant", "RLQ tenderness"]
+    alert: "Acute Pain related to suspected appendicitis or ovarian issue."
+    severity: "warning"
+  - keywords: ["right upper quadrant tenderness", "RUQ tenderness"]
+    alert: "Acute Pain related to suspected cholecystitis or hepatitis."
+    severity: "warning"
+  - keywords: ["left lower quadrant tenderness", "LLQ tenderness"]
+    alert: "Acute Pain related to suspected diverticulitis (rare in peds) or constipation."
+    severity: "warning"
+  - keywords: ["epigastric tenderness", "epigastric pain"]
+    alert: "Acute Pain related to suspected gastritis or pancreatitis."
+    severity: "warning"
+  - keywords: ["diffuse abdominal tenderness"]
+    alert: "Acute Pain related to suspected peritonitis or gastroenteritis."
+    severity: "warning"
+  - keywords: ["rebound tenderness", "pain on release"]
+    alert: "Acute Pain related to peritoneal irritation (suspected surgical abdomen)."
+    severity: "critical"
+  - keywords: ["guarding", "rigidity", "board-like abdomen"]
+    alert: "Acute Pain related to peritonitis (suspected surgical abdomen)."
+    severity: "critical"
+  - keywords: ["localized tenderness at McBurney’s point", "RLQ pain McBurney"]
+    alert: "Acute Pain related to suspected appendicitis."
+    severity: "critical"
+  - keywords: ["tenderness over suprapubic area"]
+    alert: "Risk for Impaired Urinary Elimination related to suspected UTI or bladder distension."
+    severity: "warning"
+  - keywords: ["left upper quadrant tenderness", "LUQ pain"]
+    alert: "Acute Pain related to suspected splenic issue or gastritis."
+    severity: "warning"
+  - keywords: ["tympanic abdomen", "increased tympany"]
+    alert: "Dysfunctional Gastrointestinal Motility related to gaseous distension."
+    severity: "info"
+  - keywords: ["dullness in flanks", "shifting dullness"]
+    alert: "Excess Fluid Volume related to ascites (suspected liver or renal disease)."
+    severity: "warning"
+  - keywords: ["dullness in suprapubic area"]
+    alert: "Urinary Retention."
+    severity: "warning"
+  - keywords: ["hyperresonance abdomen"]
+    alert: "Dysfunctional Gastrointestinal Motility related to excessive gas."
+    severity: "info"
+  - keywords: ["dullness over liver", "liver span percussion"]
+    alert: "Risk for Impaired Liver Function related to hepatomegaly."
+    severity: "warning"
+  - keywords: ["dullness over spleen", "Traube space dullness"]
+    alert: "Risk for Ineffective Protection related to splenomegaly (suspected infection or hematologic disorder)."
+    severity: "warning"
+  - keywords: ["normal bowel sounds", "active bowel sounds"]
+    alert: "Normal gastrointestinal motility."
+    severity: "none"
+  - keywords: ["hypoactive bowel sounds", "diminished bowel sounds"]
+    alert: "Risk for Dysfunctional Gastrointestinal Motility related to suspected ileus."
+    severity: "warning"
+  - keywords: ["absent bowel sounds"]
+    alert: "Dysfunctional Gastrointestinal Motility (Paralytic Ileus) or peritonitis."
+    severity: "critical"
+  - keywords: ["hyperactive bowel sounds", "tinkling sounds"]
+    alert: "Dysfunctional Gastrointestinal Motility related to suspected mechanical bowel obstruction."
+    severity: "warning"
+  - keywords: ["abdominal bruit", "renal artery bruit"]
+    alert: "Risk for Ineffective Tissue Perfusion (Renal) related to suspected renal artery stenosis."
+    severity: "warning"
+  - keywords: ["venous hum", "epigastric hum"]
+    alert: "Risk for Impaired Liver Function related to portal hypertension."
+    severity: "info"
+  - keywords: ["friction rub over liver", "friction rub over spleen"]
+    alert: "Acute Pain related to inflammation of liver/spleen capsule."
+    severity: "warning"
+  - keywords: ["succussion splash"]
+    alert: "Risk for Dysfunctional Gastrointestinal Motility related to suspected gastric outlet obstruction."
+    severity: "warning"
+  - keywords: ["borborygmi", "loud gurgling sounds"]
+    alert: "Dysfunctional Gastrointestinal Motility (Hypermotility) related to gastroenteritis."
+    severity: "info"
+  - keywords: ["high-pitched bowel sounds with cramping"]
+    alert: "Acute Pain related to suspected mechanical small-bowel obstruction."
+    severity: "critical"
+  - keywords: ["palpable liver edge", "hepatomegaly"]
+    alert: "Risk for Impaired Liver Function or Excess Fluid Volume (Heart Failure)."
+    severity: "warning"
+  - keywords: ["tender enlarged liver"]
+    alert: "Acute Pain related to hepatitis or right heart failure."
+    severity: "warning"
+  - keywords: ["non-tender enlarged liver", "firm nodular liver"]
+    alert: "Risk for Impaired Liver Function (Chronic) related to suspected cirrhosis."
+    severity: "critical"
+  - keywords: ["palpable spleen", "splenomegaly"]
+    alert: "Risk for Ineffective Protection related to splenomegaly (suspected infection, e.g., Mono)."
+    severity: "warning"
+  - keywords: ["enlarged kidney palpable", "renal mass"]
+    alert: "Risk for Impaired Renal Function related to suspected hydronephrosis or tumor."
+    severity: "warning"
+  - keywords: ["palpable gallbladder", "Courvoisier sign"]
+    alert: "Risk for Impaired Liver Function related to obstructive jaundice (suspected malignancy)."
+    severity: "critical"
+  - keywords: ["Murphy’s sign positive", "RUQ pain on inspiration"]
+    alert: "Acute Pain related to suspected acute cholecystitis."
+    severity: "warning"
+  - keywords: ["Rovsing’s sign positive"]
+    alert: "Acute Pain related to suspected appendicitis."
+    severity: "critical"
+  - keywords: ["Psoas sign positive", "pain on hip extension"]
+    alert: "Acute Pain related to suspected appendicitis (retrocecal)."
+    severity: "critical"
+  - keywords: ["Obturator sign positive"]
+    alert: "Acute Pain related to suspected appendicitis (pelvic)."
+    severity: "critical"
+  - keywords: ["Grey Turner’s sign", "flank ecchymosis"]
+    alert: "Risk for Bleeding related to retroperitoneal hemorrhage (suspected pancreatitis/trauma)."
+    severity: "critical"
+  - keywords: ["Blumberg sign positive"]
+    alert: "Acute Pain related to peritonitis."
+    severity: "critical"
+  - keywords: ["abdominal mass in child", "palpable mass pediatric"]
+    alert: "Risk for Injury related to suspected Wilms' tumor or neuroblastoma. (Do not over-palpate)."
+    severity: "critical"
+  - keywords: ["projectile vomiting infant"]
+    alert: "Deficient Fluid Volume related to persistent vomiting (suspected Pyloric Stenosis)."
+    severity: "critical"
+  - keywords: ["umbilical redness newborn", "omphalitis"]
+    alert: "Risk for Infection (Sepsis) related to omphalitis."
+    severity: "critical"
+  - keywords: ["olive-shaped mass", "palpable olive RUQ"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to gastric outlet obstruction (Pyloric Stenosis)."
+    severity: "critical"
+  - keywords: ["currant jelly stool", "red jelly stool"]
+    alert: "Risk for Deficient Fluid Volume related to bleeding secondary to intussusception."
+    severity: "critical"
+  - keywords: ["sausage-shaped mass abdomen"]
+    alert: "Dysfunctional Gastrointestinal Motility related to suspected intussusception."
+    severity: "critical"
+  - keywords: ["abdominal distension in newborn", "failure to pass meconium"]
+    alert: "Dysfunctional Gastrointestinal Motility related to suspected Hirschsprung’s disease or meconium ileus."
+    severity: "critical"
+  - keywords: ["constipation", "no bowel movement for days"]
+    alert: "Constipation."
+    severity: "info"
+  - keywords: ["diarrhea", "frequent loose stools"]
+    alert: "Risk for Deficient Fluid Volume related to diarrhea."
+    severity: "warning"
+  - keywords: ["bloody stool", "hematochezia"]
+    alert: "Risk for Deficient Fluid Volume (Hemorrhage) related to lower GI bleeding."
+    severity: "critical"
+  - keywords: ["tarry stool", "melena"]
+    alert: "Risk for Deficient Fluid Volume (Hemorrhage) related to upper GI bleeding."
+    severity: "critical"
+  - keywords: ["absent flatus", "no gas passage"]
+    alert: "Dysfunctional Gastrointestinal Motility related to suspected ileus or obstruction."
+    severity: "warning"
+  - keywords: ["steatorrhea", "greasy foul-smelling stool"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to fat malabsorption (suspected cystic fibrosis, celiac)."
+    severity: "warning"
+  - keywords: ["CVA tenderness", "costovertebral angle tenderness"]
+    alert: "Risk for Impaired Urinary Elimination related to suspected pyelonephritis."
+    severity: "warning"
+  - keywords: ["flank pain radiating to groin", "renal colic"]
+    alert: "Acute Pain related to suspected renal calculi."
+    severity: "critical"
+
+  # Rules based on: extremities.yaml (Pediatric Focus)
+  - keywords: ["calf tenderness", "pitting 2+", "brown pigmentation"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to chronic venous insufficiency."
+    severity: "info"
+  - keywords: ["dependent rubor", "pallor on elevation", "temperature asymmetry"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to arterial insufficiency."
+    severity: "warning"
+  - keywords: ["unilateral calf swelling", "tender varix", "positive calf squeeze test"]
+    alert: "Ineffective Tissue Perfusion (Venous) related to suspected Deep Vein Thrombosis (DVT)."
+    severity: "critical"
+  - keywords: ["pitting edema", "pedal edema"]
+    alert: "Excess Fluid Volume (Systemic) or Ineffective Tissue Perfusion (Venous)."
+    severity: "warning"
+  - keywords: ["absent pulses", "cold extremities"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to critical limb ischemia."
+    severity: "critical"
+  - keywords: ["weak dorsalis pedis pulse", "weak posterior tibial pulse"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to peripheral arterial disease."
+    severity: "warning"
+  - keywords: ["stasis dermatitis", "hemosiderin staining", "brown pigmentation"]
+    alert: "Impaired Skin Integrity related to chronic venous insufficiency."
+    severity: "info"
+  - keywords: ["arterial ulcer", "toe ulcer", "painful ulcer"]
+    alert: "Impaired Tissue Integrity related to arterial insufficiency."
+    severity: "critical"
+  - keywords: ["venous ulcer", "medial malleolus ulcer", "edema"]
+    alert: "Impaired Tissue Integrity related to venous stasis."
+    severity: "warning"
+  - keywords: ["lymphedema", "non-pitting edema"]
+    alert: "Impaired Tissue Integrity related to lymphedema."
+    severity: "info"
+  - keywords: ["intermittent claudication", "exertional leg pain"]
+    alert: "Activity Intolerance related to peripheral arterial disease."
+    severity: "warning"
+  - keywords: ["shiny skin", "muscle wasting", "loss of hair on lower leg"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to chronic arterial insufficiency."
+    severity: "warning"
+  - keywords: ["delayed capillary refill", "capillary refill >3s"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to impaired perfusion or shock."
+    severity: "warning"
+  - keywords: ["cold pale foot", "pain at rest"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to critical limb ischemia."
+    severity: "critical"
+  - keywords: ["warm swollen leg", "erythema tracking up leg"]
+    alert: "Risk for Infection related to cellulitis."
+    severity: "warning"
+  - keywords: ["palpable cord", "tender varix", "localized erythema"]
+    alert: "Ineffective Tissue Perfusion (Venous) related to superficial thrombophlebitis."
+    severity: "warning"
+  - keywords: ["crepitus in joint", "joint effusion", "erythema"]
+    alert: "Risk for Infection related to suspected septic arthritis."
+    severity: "critical"
+  - keywords: ["cold extremities", "mottled extremity", "shock signs"]
+    alert: "Ineffective Tissue Perfusion (Systemic) related to shock."
+    severity: "critical"
+  - keywords: ["clubbing of toes", "onycholysis"]
+    alert: "Impaired Gas Exchange (Chronic) related to chronic hypoxemia."
+    severity: "warning"
+  - keywords: ["erythematous streaking", "lymphangitic streak", "red streaks toward groin"]
+    alert: "Risk for Infection (Systemic) related to lymphangitis."
+    severity: "warning"
+  - keywords: ["tender warm localized area", "fluctuant mass", "abscess"]
+    alert: "Risk for Infection related to abscess."
+    severity: "critical"
+  - keywords: ["boggy synovium", "joint warmth", "severe pain with ROM"]
+    alert: "Risk for Infection related to suspected septic arthritis."
+    severity: "critical"
+  - keywords: ["ecchymosis after trauma", "bruising around joint", "swelling after injury"]
+    alert: "Risk for Impaired Physical Mobility related to trauma (suspected fracture/sprain)."
+    severity: "warning"
+  - keywords: ["hematoma with expanding size", "sentinel hemorrhage", "rapid swelling"]
+    alert: "Risk for Bleeding (Internal) related to expanding hematoma."
+    severity: "critical"
+  - keywords: ["open wound with exposed bone", "open fracture", "compound fracture"]
+    alert: "Risk for Infection related to open fracture."
+    severity: "critical"
+  - keywords: ["shortened externally rotated lower limb", "leg shortened", "external rotation deformity"]
+    alert: "Impaired Physical Mobility related to suspected hip fracture."
+    severity: "critical"
+  - keywords: ["positive Thompson test", "absent plantar flexion on squeeze"]
+    alert: "Impaired Physical Mobility related to suspected Achilles tendon rupture."
+    severity: "warning"
+  - keywords: ["pain on passive stretch of compartment", "pain out of proportion", "paresthesia"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to suspected compartment syndrome."
+    severity: "critical"
+  - keywords: ["loss of two-point discrimination", "decreased protective sensation", "monofilament abnormal"]
+    alert: "Risk for Injury related to peripheral sensory loss (suspected neuropathy)."
+    severity: "warning"
+  - keywords: ["erysipelas pattern raised border", "skin sharply demarcated", "hot bright erythema"]
+    alert: "Risk for Infection related to erysipelas."
+    severity: "warning"
+  - keywords: ["tenderness over fibular head", "lateral knee swelling", "peroneal nerve symptoms"]
+    alert: "Risk for Impaired Physical Mobility related to suspected peroneal nerve injury."
+    severity: "warning"
+  - keywords: ["tender swelling behind knee", "posterior knee mass", "popliteal cyst"]
+    alert: "Acute Pain related to Baker's cyst."
+    severity: "info"
+  - keywords: ["pain at base of thumb", "tender anatomic snuffbox", "scaphoid tenderness"]
+    alert: "Risk for Impaired Physical Mobility related to suspected scaphoid fracture."
+    severity: "warning"
+  - keywords: ["localized bone tenderness", "focal bony tenderness", "suspected osteomyelitis"]
+    alert: "Risk for Infection related to suspected osteomyelitis."
+    severity: "critical"
+  - keywords: ["hot swollen toe", "great toe erythema", "intense pain at MTP joint"]
+    alert: "Acute Pain related to suspected gout or septic arthritis."
+    severity: "critical"
+  - keywords: ["crepitant subcutaneous air", "surgical emphysema after wound", "crackling sensation"]
+    alert: "Risk for Infection related to gas-forming bacteria (gas gangrene) or trauma."
+    severity: "critical"
+  - keywords: ["stiff cold fingers with color change on exposure", "episodic pallor and cyanosis", "Raynaud phenomenon"]
+    alert: "Ineffective Tissue Perfusion (Peripheral) related to Raynaud's phenomenon."
+    severity: "info"
+  - keywords: ["hot swollen foot without erythema", "Charcot suspicion in diabetic"]
+    alert: "Risk for Impaired Physical Mobility related to acute Charcot neuroarthropathy."
+    severity: "critical"
+  - keywords: ["splinter hemorrhages under nail", "nail fold hemorrhage", "infective endocarditis sign"]
+    alert: "Risk for Ineffective Cardiovascular Perfusion related to suspected infective endocarditis."
+    severity: "warning"
+
+  # Rules based on: neurological.yaml (Pediatric Focus)
+  - keywords: ["unresponsive", "no response to voice", "no response to pain"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to coma."
+    severity: "critical"
+  - keywords: ["drowsy but arousable", "lethargic", "somnolent"]
+    alert: "Risk for Ineffective Cerebral Tissue Perfusion related to declining level of consciousness."
+    severity: "warning"
+  - keywords: ["confused", "disoriented", "not oriented to time place person"]
+    alert: "Acute Confusion related to suspected delirium or metabolic encephalopathy."
+    severity: "warning"
+  - keywords: ["GCS less than 8", "Glasgow Coma Scale 7"]
+    alert: "Ineffective Airway Clearance related to severe brain injury and loss of protective reflexes."
+    severity: "critical"
+  - keywords: ["GCS 15", "alert and oriented x3"]
+    alert: "Normal neurological status. No acute diagnosis."
+    severity: "none"
+  - keywords: ["agitated", "restless", "irritable behavior"]
+    alert: "Acute Confusion or Risk for Injury related to agitation (suspect hypoxia, pain, or ICP)."
+    severity: "warning"
+  - keywords: ["obtunded", "difficult to arouse", "responds only to pain"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to significant CNS depression."
+    severity: "critical"
+  - keywords: ["delirium", "acute confusion", "hallucinations"]
+    alert: "Acute Confusion related to delirium (suspect infection, drugs, or metabolic imbalance)."
+    severity: "critical"
+  - keywords: ["ptosis", "drooping eyelid"]
+    alert: "Risk for Ineffective Cerebral Tissue Perfusion related to suspected CN III palsy."
+    severity: "warning"
+  - keywords: ["anisocoria", "unequal pupils"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to suspected increased intracranial pressure."
+    severity: "critical"
+  - keywords: ["pupils equal and reactive", "PERRLA"]
+    alert: "Normal pupillary response."
+    severity: "none"
+  - keywords: ["fixed dilated pupil"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to brain herniation."
+    severity: "critical"
+  - keywords: ["diplopia", "double vision"]
+    alert: "Risk for Injury related to diplopia (suspected CN palsy)."
+    severity: "warning"
+  - keywords: ["facial numbness", "reduced sensation face"]
+    alert: "Disturbed Sensory Perception (Tactile) related to suspected CN V lesion."
+    severity: "warning"
+  - keywords: ["hearing loss", "decreased hearing one ear"]
+    alert: "Disturbed Sensory Perception (Auditory) related to suspected CN VIII lesion."
+    severity: "warning"
+  - keywords: ["absent corneal reflex"]
+    alert: "Risk for Impaired Tissue Integrity (Corneal) related to CN V/VII dysfunction (suspect brainstem injury)."
+    severity: "critical"
+  - keywords: ["hoarse voice", "uvula deviates"]
+    alert: "Impaired Swallowing related to suspected CN X (Vagus) lesion."
+    severity: "warning"
+  - keywords: ["paraplegia", "bilateral leg weakness"]
+    alert: "Impaired Physical Mobility related to suspected spinal cord lesion."
+    severity: "critical"
+  - keywords: ["quadriplegia", "paralysis all limbs"]
+    alert: "Impaired Physical Mobility related to suspected cervical spinal cord injury."
+    severity: "critical"
+  - keywords: ["muscle wasting", "atrophy", "reduced bulk"]
+    alert: "Impaired Physical Mobility related to chronic lower motor neuron disease or disuse."
+    severity: "info"
+  - keywords: ["increased tone", "spasticity", "stiff limbs"]
+    alert: "Impaired Physical Mobility related to upper motor neuron lesion."
+    severity: "warning"
+  - keywords: ["decreased tone", "flaccid limbs"]
+    alert: "Impaired Physical Mobility related to lower motor neuron damage or acute spinal shock."
+    severity: "warning"
+  - keywords: ["muscle fasciculations"]
+    alert: "Disturbed Body Image related to fasciculations (suspect motor neuron disease)."
+    severity: "warning"
+  - keywords: ["foot drop", "difficulty dorsiflexing foot"]
+    alert: "Impaired Physical Mobility related to peroneal nerve palsy or L5 radiculopathy."
+    severity: "warning"
+  - keywords: ["loss of sensation", "numbness"]
+    alert: "Risk for Injury related to peripheral sensory loss."
+    severity: "warning"
+  - keywords: ["paresthesia", "tingling sensation"]
+    alert: "Disturbed Sensory Perception (Tactile) related to nerve irritation."
+    severity: "info"
+  - keywords: ["stocking distribution numbness"]
+    alert: "Risk for Injury related to peripheral neuropathy (suspected diabetes)."
+    severity: "warning"
+  - keywords: ["loss of vibration sense", "loss of proprioception", "poor joint position sense"]
+    alert: "Risk for Injury related to sensory ataxia secondary to posterior column lesion."
+    severity: "warning"
+  - keywords: ["loss of pain and temperature"]
+    alert: "Risk for Injury related to sensory loss secondary to spinothalamic tract lesion."
+    severity: "warning"
+  - keywords: ["sensory level at umbilicus"]
+    alert: "Impaired Physical Mobility related to thoracic spinal cord lesion (T10 level)."
+    severity: "critical"
+  - keywords: ["saddle anesthesia"]
+    alert: "Risk for Bowel Incontinence and Urinary Retention related to cauda equina syndrome."
+    severity: "critical"
+  - keywords: ["absent ankle jerk"]
+    alert: "Impaired Physical Mobility related to S1 nerve root lesion or neuropathy."
+    severity: "warning"
+  - keywords: ["brisk reflexes", "3+ reflexes"]
+    alert: "Finding consistent with upper motor neuron lesion."
+    severity: "warning"
+  - keywords: ["asymmetric reflexes"]
+    alert: "Impaired Physical Mobility (Unilateral) related to focal neurologic lesion."
+    severity: "warning"
+  - keywords: ["Babinski positive", "upgoing plantar"]
+    alert: "Impaired Physical Mobility related to corticospinal tract lesion."
+    severity: "warning"
+  - keywords: ["clonus present"]
+    alert: "Impaired Physical Mobility related to severe upper motor neuron hyperreflexia."
+    severity: "warning"
+  - keywords: ["reflexes 2+ and equal"]
+    alert: "Normal reflex finding."
+    severity: "none"
+  - keywords: ["finger to nose test abnormal", "dysmetria", "overshoot on finger nose test"]
+    alert: "Impaired Coordination related to suspected cerebellar dysfunction."
+    severity: "warning"
+  - keywords: ["heel to shin impaired"]
+    alert: "Impaired Coordination related to suspected cerebellar dysfunction or sensory ataxia."
+    severity: "warning"
+  - keywords: ["unsteady gait", "broad-based gait", "ataxic gait", "staggering gait"]
+    alert: "Risk for Injury (Fall) related to ataxic gait (suspected cerebellar dysfunction)."
+    severity: "warning"
+  - keywords: ["festinating gait", "shuffling steps"]
+    alert: "Impaired Physical Mobility related to suspected Parkinsonism (rare in peds)."
+    severity: "warning"
+  - keywords: ["spastic gait", "scissoring gait"]
+    alert: "Impaired Physical Mobility related to spastic paraparesis (e.g., cerebral palsy)."
+    severity: "warning"
+  - keywords: ["high stepping gait", "foot slapping gait"]
+    alert: "Impaired Physical Mobility related to foot drop or sensory ataxia."
+    severity: "warning"
+  - keywords: ["Romberg positive"]
+    alert: "Risk for Injury (Fall) related to sensory ataxia (proprioceptive loss)."
+    severity: "warning"
+  - keywords: ["slurred speech", "dysarthria"]
+    alert: "Impaired Verbal Communication related to dysarthria (suspected brainstem or cerebellar lesion)."
+    severity: "warning"
+  - keywords: ["aphasia", "unable to speak", "word finding difficulty"]
+    alert: "Impaired Verbal Communication (Aphasia) related to suspected dominant hemisphere lesion (e.g., stroke)."
+    severity: "critical"
+  - keywords: ["receptive aphasia", "cannot understand speech"]
+    alert: "Impaired Verbal Communication (Receptive) related to temporal lobe lesion."
+    severity: "warning"
+  - keywords: ["expressive aphasia", "Broca’s aphasia"]
+    alert: "Impaired Verbal Communication (Expressive) related to frontal lobe lesion."
+    severity: "warning"
+  - keywords: ["dysphonia", "hoarse voice", "weak voice"]
+    alert: "Impaired Verbal Communication related to laryngeal or CN X dysfunction."
+    severity: "warning"
+  - keywords: ["mutism", "no verbal output"]
+    alert: "Impaired Verbal Communication related to severe aphasia or psychiatric condition."
+    severity: "critical"
+  - keywords: ["nasal speech", "hypernasal voice"]
+    alert: "Impaired Swallowing related to palatal weakness (suspected CN X palsy)."
+    severity: "warning"
+  - keywords: ["short term memory impaired"]
+    alert: "Acute or Chronic Confusion related to memory impairment."
+    severity: "info"
+  - keywords: ["poor attention", "cannot concentrate"]
+    alert: "Acute Confusion related to inattention (suspected delirium)."
+    severity: "warning"
+  - keywords: ["flat affect", "no facial expression"]
+    alert: "Ineffective Coping or Disturbed Thought Process (suspected depression)."
+    severity: "info"
+  - keywords: ["generalized tonic clonic", "convulsion"]
+    alert: "Risk for Injury related to generalized seizure activity."
+    severity: "critical"
+  - keywords: ["focal seizure", "partial seizure"]
+    alert: "Risk for Injury related to focal seizure activity."
+    severity: "warning"
+  - keywords: ["absence seizure", "blank stare"]
+    alert: "Risk for Injury related to absence seizures."
+    severity: "info"
+  - keywords: ["postictal confusion", "drowsy after seizure"]
+    alert: "Risk for Ineffective Airway Clearance related to postictal state."
+    severity: "warning"
+  - keywords: ["tongue bite", "urinary incontinence during episode"]
+    alert: "Evidence supports generalized seizure. Risk for Injury."
+    severity: "warning"
+  - keywords: ["status epilepticus", "continuous seizure activity"]
+    alert: "Ineffective Breathing Pattern related to status epilepticus."
+    severity: "critical"
+  - keywords: ["myoclonic jerks", "sudden muscle twitch"]
+    alert: "Risk for Injury related to myoclonic seizures."
+    severity: "warning"
+  - keywords: ["drop attack", "sudden collapse"]
+    alert: "Risk for Injury (Fall) related to atonic seizures."
+    severity: "warning"
+  - keywords: ["decorticate posturing", "flexor posture"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe brain injury (lesion above brainstem)."
+    severity: "critical"
+  - keywords: ["decerebrate posturing", "extensor posture"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe brainstem injury."
+    severity: "critical"
+  - keywords: ["rigidity", "lead pipe rigidity", "cogwheel rigidity"]
+    alert: "Impaired Physical Mobility related to rigidity (suspected Parkinsonism)."
+    severity: "warning"
+  - keywords: ["opisthotonus", "arched back spasm"]
+    alert: "Risk for Injury related to severe muscle spasm (suspected tetanus or meningeal irritation)."
+    severity: "critical"
+  - keywords: ["chorea", "rapid jerky movements"]
+    alert: "Risk for Injury related to choreiform movements (suspected Huntington's or Sydenham's)."
+    severity: "warning"
+  - keywords: ["athetosis", "slow writhing movements"]
+    alert: "Impaired Physical Mobility related to athetoid movements (e.g., cerebral palsy)."
+    severity: "warning"
+  - keywords: ["dystonia", "sustained muscle contraction"]
+    alert: "Acute Pain related to dystonic reaction."
+    severity: "warning"
+  - keywords: ["hemiballismus", "flinging limb movements"]
+    alert: "Risk for Injury related to hemiballismus."
+    severity: "critical"
+  - keywords: ["tics", "involuntary facial twitch"]
+    alert: "Disturbed Body Image or Ineffective Coping related to tics."
+    severity: "info"
+  - keywords: ["tremor at rest"]
+    alert: "Impaired Physical Mobility related to rest tremor."
+    severity: "warning"
+  - keywords: ["intention tremor"]
+    alert: "Impaired Coordination related to cerebellar dysfunction."
+    severity: "warning"
+  - keywords: ["asterixis", "flapping tremor"]
+    alert: "Acute Confusion related to metabolic encephalopathy (e.g., hepatic)."
+    severity: "critical"
+  - keywords: ["akathisia", "cannot stay still"]
+    alert: "Impaired Comfort related to medication side effect (akathisia)."
+    severity: "info"
+  - keywords: ["vertigo", "spinning sensation"]
+    alert: "Risk for Injury (Fall) related to vertigo."
+    severity: "warning"
+  - keywords: ["nystagmus", "involuntary eye movement"]
+    alert: "Disturbed Sensory Perception (Visual) related to nystagmus."
+    severity: "warning"
+  - keywords: ["pupils pinpoint", "pinpoint pupils"]
+    alert: "Ineffective Breathing Pattern related to suspected pontine hemorrhage or opioid intoxication."
+    severity: "critical"
+  - keywords: ["bilateral dilated pupils unreactive"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe anoxic brain injury or death."
+    severity: "critical"
+  - keywords: ["one dilated pupil", "unequal pupil after head injury"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to uncal herniation."
+    severity: "critical"
+  - keywords: ["absent doll's eye reflex", "no oculocephalic response"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe brainstem dysfunction."
+    severity: "critical"
+  - keywords: ["abnormal vestibulo-ocular reflex", "no eye movement with caloric test"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to severe brainstem injury."
+    severity: "critical"
+  - keywords: ["absent gag reflex"]
+    alert: "Risk for Aspiration related to loss of protective gag reflex."
+    severity: "critical"
+  - keywords: ["absent cough reflex"]
+    alert: "Ineffective Airway Clearance related to loss of protective cough reflex."
+    severity: "critical"
+  - keywords: ["Cheyne-Stokes respiration"]
+    alert: "Ineffective Breathing Pattern related to bilateral cerebral dysfunction or heart failure."
+    severity: "critical"
+  - keywords: ["bradycardia with hypertension", "Cushing reflex"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to increased intracranial pressure (Cushing's Triad)."
+    severity: "critical"
+  - keywords: ["irregular respirations", "neurogenic breathing pattern"]
+    alert: "Ineffective Breathing Pattern related to brainstem compromise."
+    severity: "critical"
+  - keywords: ["flushing with headache after SCI"]
+    alert: "Risk for Autonomic Dysreflexia."
+    severity: "critical"
+  - keywords: ["bulging fontanelle"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to increased intracranial pressure (suspected meningitis or hydrocephalus)."
+    severity: "critical"
+  - keywords: ["sunset eyes"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to increased intracranial pressure (hydrocephalus)."
+    severity: "critical"
+  - keywords: ["high pitched cry", "shrill cry"]
+    alert: "Acute Pain or Risk for Ineffective Cerebral Tissue Perfusion related to neurologic irritation."
+    severity: "warning"
+  - keywords: ["loss of developmental milestones"]
+    alert: "Delayed Growth and Development related to progressive neurologic disease."
+    severity: "critical"
+  - keywords: ["persistent primitive reflexes"]
+    alert: "Delayed Growth and Development related to suspected cerebral palsy."
+    severity: "warning"
+  - keywords: ["asymmetric Moro reflex"]
+    alert: "Risk for Impaired Physical Mobility related to suspected brachial plexus or clavicular injury."
+    severity: "warning"
+  - keywords: ["absent rooting reflex", "absent suck reflex"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to ineffective suck reflex."
+    severity: "critical"
+  - keywords: ["seizure in neonate", "twitching newborn"]
+    alert: "Risk for Injury related to neonatal seizure (suspect hypoxia or metabolic disturbance)."
+    severity: "critical"
+  - keywords: ["head lag persistent after 6 months"]
+    alert: "Delayed Growth and Development related to hypotonia."
+    severity: "warning"
+  - keywords: ["microcephaly"]
+    alert: "Delayed Growth and Development related to microcephaly."
+    severity: "info"
+  - keywords: ["positive grasp reflex adult"]
+    alert: "Finding consistent with frontal lobe lesion."
+    severity: "warning"
+  - keywords: ["cremasteric reflex absent"]
+    alert: "Risk for Impaired Tissue Integrity (Testicular) related to suspected testicular torsion."
+    severity: "critical"
+  - keywords: ["anal wink absent"]
+    alert: "Risk for Bowel Incontinence related to suspected cauda equina lesion."
+    severity: "warning"
+  - keywords: ["flaccid coma"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to profound brain injury or brain death."
+    severity: "critical"
+  - keywords: ["no brainstem reflexes", "absent pupillary and corneal reflex"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to brain death."
+    severity: "critical"
+  - keywords: ["agonal respirations", "gasping breathing"]
+    alert: "Ineffective Breathing Pattern related to impending brain death."
+    severity: "critical"
+  - keywords: ["papilledema", "blurred optic disc margin"]
+    alert: "Ineffective Cerebral Tissue Perfusion related to increased intracranial pressure."
+    severity: "critical"
 - keywords: ["pain", "sore", "aching", "discomfort"]
   match_type: any
   alert: "Finding suggests 'Acute Pain' or 'Chronic Pain'. Correlate with patient report and history."

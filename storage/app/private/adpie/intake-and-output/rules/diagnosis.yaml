@@ -1,0 +1,24 @@
+diagnosis:
+  # Fluid Volume Deficit Related
+  - keywords: ["fluid volume deficit", "dehydration"]
+    match_type: any
+    severity: "CRITICAL"
+    alert: "Actual fluid volume deficit related to inadequate fluid intake"
+
+  - keywords: ["decreased skin turgor", "dry mucous membranes"]
+    match_type: any
+    severity: "WARNING"
+    alert: "Fluid volume deficit evidenced by decreased skin turgor and dry mucous membranes"
+
+  - keywords: ["oliguria", "decreased urine output"]
+    match_type: any
+    severity: "CRITICAL" 
+    alert: "Risk for fluid volume deficit related to decreased urine output <30mL/hr"
+
+  # Fluid Volume Excess Related
+  - keywords: ["fluid overload", "edema"]
+    match_type: any
+    severity: "CRITICAL"
+    alert: "Fluid volume excess related to compromised regulatory mechanisms"
+
+  # Continue with 396+ more diagnosis rules...

@@ -1,41 +1,22 @@
 planning:
-- keywords: ["fall", "precaution", "bed", "alarm"]
-  match_type: any
-  severity: "CRITICAL"
-  alert: "Plan: Implement fall precautions, bedside alarm, and hourly rounding."
-- keywords: ["nutrition", "support", "supplement", "dietitian"]
-  match_type: any
-  severity: "WARNING"
-  alert: "Plan: Refer to dietitian; consider high-protein supplements."
-- keywords: ["hydration", "monitor", "iv", "oral"]
-  match_type: any
-  severity: "WARNING"
-  alert: "Plan: Increase oral fluids, monitor intake, consider IV fluids if needed."
-- keywords: ["mobility", "assist", "physical", "therapy"]
-  match_type: any
-  severity: "INFO"
-  alert: "Plan: Initiate PT evaluation and scheduled assisted ambulation."
-- keywords: ["toileting", "schedule", "timed", "voiding"]
-  match_type: any
-  severity: "INFO"
-  alert: "Plan: Implement toileting schedule and bladder training."
-- keywords: ["sleep", "hygiene", "environmental", "quiet"]
-  match_type: any
-  severity: "INFO"
-  alert: "Plan: Optimize sleep hygiene and reduce nighttime disturbances."
-- keywords: ["hygiene", "skin", "care", "barrier"]
-  match_type: any
-  severity: "INFO"
-  alert: "Plan: Daily hygiene assistance and skin protection measures."
-- keywords: ["pain", "control", "analgesia", "prn"]
-  match_type: any
-  severity: "WARNING"
-  alert: "Plan: Review analgesia plan; consider PRN dosing and reassessment."
-- keywords: ["swallow", "screen", "aspiration", "modify"]
-  match_type: any
-  severity: "CRITICAL"
-  alert: "Plan: Perform swallow screen and modify diet to reduce aspiration risk."
-- keywords: ["caregiver", "education", "training", "support"]
-  match_type: any
-  severity: "INFO"
-  alert: "Plan: Provide caregiver education and arrange community support."
+  - keywords: ["Risk for falls"]
+    alert: "Goal: Patient will remain free from falls. Outcome: Patient will demonstrate ability to use call bell for assistance."
+    severity: "INFO"
+  - keywords: ["Bathing self-care deficit"]
+    alert: "Goal: Patient will participate in bathing to the best of their ability. Outcome: Patient's skin will remain clean and intact."
+    severity: "INFO"
+  - keywords: ["Insomnia"]
+    alert: "Goal: Patient will report an improvement in sleep quality. Outcome: Patient will sleep for at least 6 hours without interruption."
+    severity: "INFO"
+  - keywords: ["Acute pain"]
+    alert: "Goal: Patient will report a decrease in pain. Outcome: Patient's pain level will be less than 3 on a 0-10 scale."
+    severity: "WARNING"
+  - keywords: ["Chronic pain"]
+    alert: "Goal: Patient will report a decrease in pain. Outcome: Patient's pain level will be at a manageable level."
+    severity: "WARNING"
+  - keywords: ["Imbalanced nutrition"]
+    alert: "Goal: Patient will consume adequate nutrition. Outcome: Patient will consume at least 75% of meals."
+    severity: "INFO"
+  - keywords: ["Deficient fluid volume"]
+    alert: "Goal: Patient will maintain adequate hydration. Outcome: Patient's urine output will be at least 30 mL/hr."
+    severity: "WARNING"

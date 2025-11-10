@@ -1,41 +1,22 @@
 intervention:
-- keywords: ["assist", "ambulate", "assist x1", "assist x2"]
-  match_type: any
-  severity: "INFO"
-  alert: "Intervention: Provide assistance for ambulation and use gait belt."
-- keywords: ["apply", "barrier", "cream", "skin", "protect"]
-  match_type: any
-  severity: "INFO"
-  alert: "Intervention: Apply protective skin barriers and reposition regularly."
-- keywords: ["offer", "supplement", "high-protein", "sip"]
-  match_type: any
-  severity: "INFO"
-  alert: "Intervention: Offer oral nutrition supplements between meals."
-- keywords: ["encourage", "fluids", "oral", "sip"]
-  match_type: any
-  severity: "INFO"
-  alert: "Intervention: Encourage frequent small sips of fluid; document intake."
-- keywords: ["toileting", "assist", "scheduled", "reminders"]
-  match_type: any
-  severity: "INFO"
-  alert: "Intervention: Assist with scheduled toileting and cueing."
-- keywords: ["administer", "analgesic", "pain", "prn"]
-  match_type: any
-  severity: "WARNING"
-  alert: "Intervention: Administer analgesic per orders and reassess pain."
-- keywords: ["implement", "fall", "precautions", "non-slip"]
-  match_type: any
-  severity: "CRITICAL"
-  alert: "Intervention: Apply non-slip footwear and ensure clear walking paths."
-- keywords: ["position", "turn", "q2h", "reposition"]
-  match_type: any
-  severity: "INFO"
-  alert: "Intervention: Reposition patient every two hours to protect skin integrity."
-- keywords: ["swallow", "chin", "tuck", "aspiration", "supervise"]
-  match_type: any
-  severity: "CRITICAL"
-  alert: "Intervention: Supervise oral intake and use chin tuck technique as indicated."
-- keywords: ["refer", "pt", "occupational", "therapy"]
-  match_type: any
-  severity: "INFO"
-  alert: "Intervention: Refer to PT/OT for mobility and ADL training."
+  - keywords: ["Risk for falls"]
+    alert: "Implement fall precautions. Keep bed in low position. Ensure call bell is within reach. Provide non-skid footwear."
+    severity: "INFO"
+  - keywords: ["Bathing self-care deficit"]
+    alert: "Assist with bathing as needed. Provide privacy. Encourage patient to perform as much self-care as possible."
+    severity: "INFO"
+  - keywords: ["Insomnia"]
+    alert: "Provide a quiet environment. Cluster care to minimize interruptions. Offer a warm beverage before sleep."
+    severity: "INFO"
+  - keywords: ["Acute pain"]
+    alert: "Administer pain medication as ordered. Assess pain level before and after medication administration. Provide non-pharmacological pain relief measures."
+    severity: "WARNING"
+  - keywords: ["Chronic pain"]
+    alert: "Administer pain medication as ordered. Assess pain level regularly. Explore alternative pain management strategies."
+    severity: "WARNING"
+  - keywords: ["Imbalanced nutrition"]
+    alert: "Offer small, frequent meals. Provide high-calorie, high-protein snacks. Monitor food intake."
+    severity: "INFO"
+  - keywords: ["Deficient fluid volume"]
+    alert: "Encourage fluid intake. Offer fluids that the patient prefers. Monitor intake and output."
+    severity: "WARNING"

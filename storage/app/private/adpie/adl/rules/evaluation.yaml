@@ -1,41 +1,22 @@
 evaluation:
-- keywords: ["goal met", "achieved", "improved"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Goal met — continue current plan and follow-up as scheduled."
-- keywords: ["no improvement", "unchanged", "worsened"]
-  match_type: any
-  severity: "WARNING"
-  alert: "Evaluation: No improvement — re-evaluate plan and consider escalation."
-- keywords: ["reduced", "falls", "frequency"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Falls decreased — continue interventions and monitor."
-- keywords: ["skin", "healed", "improved", "integrity"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Skin condition improved — continue skin care regimen."
-- keywords: ["increased", "intake", "hydration", "improved"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Hydration improved — maintain monitoring and education."
-- keywords: ["requires", "more", "support", "caregiver", "training"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Additional caregiver training required; schedule teaching."
-- keywords: ["pain", "resolved", "decreased"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Pain decreased — reassess analgesia plan."
-- keywords: ["aspiration", "episode", "coughing", "during", "feeding"]
-  match_type: any
-  severity: "CRITICAL"
-  alert: "Evaluation: Possible aspiration event — hold oral intake and notify provider."
-- keywords: ["transfer", "independence", "improved"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Transfer independence improved — progress mobility plan."
-- keywords: ["sleep", "quality", "improved", "rest"]
-  match_type: any
-  severity: "INFO"
-  alert: "Evaluation: Sleep quality improved — continue sleep hygiene measures."
+  - keywords: ["Risk for falls"]
+    alert: "Evaluate for any falls or near-falls. Assess patient's ability to use call bell. Goal met if no falls occurred."
+    severity: "INFO"
+  - keywords: ["Bathing self-care deficit"]
+    alert: "Evaluate patient's participation in bathing. Assess skin condition. Goal met if patient's skin is clean and intact."
+    severity: "INFO"
+  - keywords: ["Insomnia"]
+    alert: "Evaluate patient's report of sleep quality. Assess number of awakenings. Goal met if patient reports improved sleep."
+    severity: "INFO"
+  - keywords: ["Acute pain"]
+    alert: "Evaluate pain level. Assess for any side effects of pain medication. Goal met if pain is less than 3 on a 0-10 scale."
+    severity: "WARNING"
+  - keywords: ["Chronic pain"]
+    alert: "Evaluate pain level. Assess for any side effects of pain medication. Goal met if pain is at a manageable level."
+    severity: "WARNING"
+  - keywords: ["Imbalanced nutrition"]
+    alert: "Evaluate food intake. Assess patient's weight. Goal met if patient is consuming at least 75% of meals and weight is stable."
+    severity: "INFO"
+  - keywords: ["Deficient fluid volume"]
+    alert: "Evaluate intake and output. Assess for signs of dehydration. Goal met if urine output is adequate and there are no signs of dehydration."
+    severity: "WARNING"

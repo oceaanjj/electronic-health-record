@@ -99,14 +99,12 @@
 
                 {{-- BUTTONS --}}
                 <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-@if (isset($selectedPatient))
-        <button type="submit" formaction="{{ route('lab-values.cdss') }}" class="button-default text-center">
-            CDSS
-        </button>
-    @else
-        {{-- disable link if no selected patient --}}
-        <button class="button-default" disabled>CDSS</button>
-    @endif
+                    @if (isset($labValue))
+                        <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
+                            class="button-default text-center">
+                            CDSS
+                        </a>
+                    @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
 

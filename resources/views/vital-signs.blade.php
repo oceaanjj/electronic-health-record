@@ -204,10 +204,10 @@
         </div>        
     <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                 @if (isset($vitalsData) && $vitalsData->count() > 0)
-        <a href="{{ route('nursing-diagnosis.start', ['component' => 'vital-signs', 'id' => $selectedPatient->patient_id]) }}"
+        <button type="submit" formaction="{{ route('vital-signs.cdss') }}"
             class="button-default text-center">
             CDSS
-        </a>
+        </button>
     @endif
             <button type="submit" class="button-default">SUBMIT</button>       
     </div>

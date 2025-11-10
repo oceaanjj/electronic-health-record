@@ -38,11 +38,11 @@ class VitalSignsComponent implements AdpieComponentInterface
             ->latest()
             ->first();
 
-        $vitals = [];
+        $findings = session('findings', []);
 
         return view('adpie.vital-signs.diagnosis', [
             'patient' => $patient,
-            'vitals' => $vitals,
+            'findings' => $findings,
             'component' => $component,
             'diagnosis' => $diagnosis
         ]);
@@ -54,14 +54,8 @@ public function storeDiagnosis(Request $request, string $component, $id)
     
     $patient = Patient::findOrFail($id);
     
-    // Get vital signs data
-    $vitalsData = [
-        'temperature' => $request->input('temperature'),
-        'hr' => $request->input('hr'),
-        'rr' => $request->input('rr'),
-        'bp' => $request->input('bp'),
-        'spo2' => $request->input('spo2')
-    ];
+    // Get findings from the request
+    $findings = $request->input('findings', []);
 
     $nurseInput = [
         'diagnosis' => $request->input('diagnosis'),
@@ -70,7 +64,7 @@ public function storeDiagnosis(Request $request, string $component, $id)
     // Generate recommendations using CDSS service
     $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
         $component,
-        $vitalsData,
+        $findings,
         $nurseInput,
         $patient
     );
@@ -243,11 +237,7 @@ public function storeDiagnosis(Request $request, string $component, $id)
             'rule_file_path' => $ruleFilePath,
         ]);
 
-        if ($request->input('action') == 'save_and_finish') {
-            return redirect()->route('vital-signs.show')
-                ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
-        }
-
-        return redirect()->back()->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
+        return redirect()->route('vital-signs.show')
+            ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
     }
 }

@@ -255,6 +255,43 @@ class VitalSignsController extends Controller
         return response()->json($result);
     }
 
+    public function runCdssAnalysis(Request $request)
+    {
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'date' => 'required|date',
+            'day_no' => 'required|integer|between:1,30',
+        ]);
+
+        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+        $cdssService = new VitalCdssService();
+        $allFindings = [];
+
+        foreach ($times as $time) {
+            $vitalsForTime = [
+                'temperature' => $request->input("temperature_{$time}"),
+                'hr' => $request->input("hr_{$time}"),
+                'rr' => $request->input("rr_{$time}"),
+                'bp' => $request->input("bp_{$time}"),
+                'spo2' => $request->input("spo2_{$time}"),
+            ];
+
+            // Only run analysis if there's at least one piece of data for the time slot
+            if (count(array_filter($vitalsForTime)) > 0) {
+                $result = $cdssService->analyzeVitalsForAlerts($vitalsForTime);
+                if ($result['severity'] !== VitalCdssService::NONE) {
+                    $allFindings[] = "At " . \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') . ": " . $result['alert'];
+                }
+            }
+        }
+
+        // Redirect to the nursing diagnosis page with the findings
+        return redirect()->route('nursing-diagnosis.start', [
+            'component' => 'vital-signs',
+            'id' => $validatedData['patient_id']
+        ])->with('findings', $allFindings);
+    }
+
         public function analyzeDiagnosisForNursing(Request $request)
     {
         $vitals = $request->input('vitals', []);

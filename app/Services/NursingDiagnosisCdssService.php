@@ -209,6 +209,11 @@ class NursingDiagnosisCdssService
                     }
                 }
                 break;
+            case 'vital-signs':
+                foreach ($componentData as $finding) {
+                    $allAlerts[] = ['source' => 'Vital Signs', 'field' => 'summary', 'alert' => $finding];
+                }
+                break;
             // ... (rest of your cases) ...
         }
 

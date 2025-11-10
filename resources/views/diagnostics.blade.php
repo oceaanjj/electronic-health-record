@@ -175,6 +175,10 @@ button[type=submit][disabled] {
 
 <div id="form-content-container">
 
+    <h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        DIAGNOSTICS
+    </h2>
+
     {{-- Styled Alerts --}}
     {{-- @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6">{{ session('success') }}</div>

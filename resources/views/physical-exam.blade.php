@@ -4,6 +4,10 @@
 
     {{-- NOTE : sa css ko a-add pa ko my-1 py-4 px-3 each alerts tenks wag niyo burahin to makakalimutan ko --}}
 
+    <h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        PHYSICAL EXAM
+    </h2>
+
     {{-- FORM OVERLAY (ALERT) & DYNAMIC CONTENT --}}
     <div id="form-content-container">
         @if (!session('selected_patient_id'))

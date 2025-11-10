@@ -5,13 +5,25 @@ window.initializeVitalSignsDateSync = function () {
     const dayNoSelector = document.getElementById("day_no_selector");
     const dropdownContainer = document.querySelector(".searchable-dropdown");
     const hiddenPatientIdInput = document.getElementById("patient_id_hidden"); // Get patient ID
-        const vitalsForm = document.getElementById("vitals-form");
-        const hiddenDayNoForVitalsFormInput = document.getElementById("hidden_day_no_for_vitals_form");
-        const hiddenDateForVitalsFormInput = document.getElementById("hidden_date_for_vitals_form");
-    
-        if (!dateSelector || !dayNoSelector || !dropdownContainer || !hiddenPatientIdInput || !vitalsForm || !hiddenDayNoForVitalsFormInput || !hiddenDateForVitalsFormInput) {
-            return;
-        }
+    const vitalsForm = document.getElementById("vitals-form");
+    const hiddenDayNoForVitalsFormInput = document.getElementById(
+        "hidden_day_no_for_vitals_form"
+    );
+    const hiddenDateForVitalsFormInput = document.getElementById(
+        "hidden_date_for_vitals_form"
+    );
+
+    if (
+        !dateSelector ||
+        !dayNoSelector ||
+        !dropdownContainer ||
+        !hiddenPatientIdInput ||
+        !vitalsForm ||
+        !hiddenDayNoForVitalsFormInput ||
+        !hiddenDateForVitalsFormInput
+    ) {
+        return;
+    }
 
     const admissionDateStr = dropdownContainer.dataset.admissionDate;
     const times = JSON.parse(vitalsForm.dataset.times);
@@ -60,15 +72,21 @@ window.initializeVitalSignsDateSync = function () {
                 date: date,
                 day_no: dayNo,
             });
-            const response = await axios.post(fetchUrl, {
-                patient_id: patientId,
-                date: date,
-                day_no: dayNo,
-            }, {
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            const response = await axios.post(
+                fetchUrl,
+                {
+                    patient_id: patientId,
+                    date: date,
+                    day_no: dayNo,
+                },
+                {
+                    headers: {
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                    },
                 }
-            });
+            );
 
             const fetchedData = response.data;
             console.log("Fetched data:", fetchedData);
@@ -149,21 +167,26 @@ window.initializeVitalSignsDateSync = function () {
         }
 
         const newDate = new Date(admissionDate.getTime());
-        newDate.setDate(newDate.getDate() + dayNo - 1); // Subtract 1 because day 1 is admission date
+        newDate.setDate(newDate.getDate() + dayNo); // Subtract 1 because day 1 is admission date
 
         const year = newDate.getFullYear();
         const month = String(newDate.getMonth() + 1).padStart(2, "0");
         const day = String(newDate.getDate()).padStart(2, "0");
 
-                const formattedDate = `${year}-${month}-${day}`;
+        const formattedDate = `${year}-${month}-${day}`;
 
-                dateSelector.value = formattedDate;
+        dateSelector.value = formattedDate;
 
-                hiddenDateForVitalsFormInput.value = formattedDate; // Update the hidden input for the main form
+        hiddenDateForVitalsFormInput.value = formattedDate; // Update the hidden input for the main form
 
-                hiddenDayNoForVitalsFormInput.value = dayNo; // Update the hidden input for the main form
+        hiddenDayNoForVitalsFormInput.value = dayNo; // Update the hidden input for the main form
 
-                console.log("updateDate: Setting date to:", formattedDate, "and dayNo to:", dayNo);
+        console.log(
+            "updateDate: Setting date to:",
+            formattedDate,
+            "and dayNo to:",
+            dayNo
+        );
 
         // Load data for the new date/day
         const patientId = hiddenPatientIdInput.value;
@@ -185,13 +208,18 @@ window.initializeVitalSignsDateSync = function () {
         const diffTime = Math.abs(selectedDate - admissionDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Add 1 for day number
 
-                dayNoSelector.value = diffDays;
+        dayNoSelector.value = diffDays;
 
-                hiddenDayNoForVitalsFormInput.value = diffDays; // Update the hidden input for the main form
+        hiddenDayNoForVitalsFormInput.value = diffDays; // Update the hidden input for the main form
 
-                hiddenDateForVitalsFormInput.value = dateSelector.value; // Update the hidden input for the main form
+        hiddenDateForVitalsFormInput.value = dateSelector.value; // Update the hidden input for the main form
 
-                console.log("updateDayNo: Setting dayNo to:", diffDays, "and date to:", dateSelector.value);
+        console.log(
+            "updateDayNo: Setting dayNo to:",
+            diffDays,
+            "and date to:",
+            dateSelector.value
+        );
 
         // Load data for the new date/day
         const patientId = hiddenPatientIdInput.value;

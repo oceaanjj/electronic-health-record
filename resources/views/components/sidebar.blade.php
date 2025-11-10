@@ -219,14 +219,56 @@
                 @csrf
             </form>
 
-            <a href="#" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
-                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold 
-                        " onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
+                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
                 <img src="{{ asset('img/sidebar/logout.png') }}" alt="Discharge Icon"
                     class="w-6 h-6 transition duration-200">
                 <span>LOG OUT</span>
             </a>
         </li>
+
+        @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const logoutBtn = document.getElementById('logout-btn');
+                const logoutForm = document.getElementById('logout-form');
+                
+                if (logoutBtn && logoutForm) {
+                    logoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        if (typeof showConfirm === 'function') {
+                            showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel')
+                                .then((result) => {
+                                    if (result.isConfirmed) {
+                                        logoutForm.submit();
+                                    }
+                                });
+                        } else if (typeof Swal === 'function') {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: 'Do you really want to logout?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Yes',
+                                cancelButtonText: 'Cancel',
+                                confirmButtonColor: '#2A1C0F',
+                                cancelButtonColor: '#6c757d'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    logoutForm.submit();
+                                }
+                            });
+                        } else {
+                            if (confirm('Are you sure you want to logout?')) {
+                                logoutForm.submit();
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+        @endpush
 
 
         {{--

@@ -4,6 +4,10 @@
 
 @section('content')
 
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        VITAL SIGNS
+    </h2>
+
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
@@ -105,13 +109,13 @@
 
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[15%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">TIME
+                                <th class="w-[15%] main-header rounded-tl-lg">TIME
                                 </th>
-                                <th class="w-[13%] bg-dark-green text-white">TEMPERATURE</th>
-                                <th class="w-[10%] bg-dark-green text-white">HR</th>
-                                <th class="w-[10%] bg-dark-green text-white">RR</th>
-                                <th class="w-[10%] bg-dark-green text-white">BP</th>
-                                <th class="w-[10%] bg-dark-green text-white rounded-tr-lg">SpO₂</th>
+                                <th class="w-[18%] main-header">TEMPERATURE</th>
+                                <th class="w-[10%] main-header">HR</th>
+                                <th class="w-[10%] main-header">RR</th>
+                                <th class="w-[10%] main-header">BP</th>
+                                <th class="w-[10%] main-header">SpO₂</th>
 
                             {{-- NOTE: paki-explain saakin ito kasi gagawin kong input text ito--}}
                             @php
@@ -173,7 +177,7 @@
                     </div>
 
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header rounded-[15px]">
                             ALERTS
                         </div>
 

@@ -106,15 +106,20 @@ document.addEventListener("patient:selected", async (event) => {
 
             // Re-initialize the CDSS alerts for the new form
             const newCdssForm = formContainer.querySelector(".cdss-form");
-            if (newCdssForm && typeof window.initializeCdssForForm === "function") {
+            if (
+                newCdssForm &&
+                typeof window.initializeCdssForForm === "function"
+            ) {
                 window.initializeCdssForForm(newCdssForm);
             }
 
             // Dispatch a custom event to signal that the form content has been reloaded
-            document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {
-                bubbles: true,
-                detail: { formContainer: formContainer }
-            }));
+            document.dispatchEvent(
+                new CustomEvent("cdss:form-reloaded", {
+                    bubbles: true,
+                    detail: { formContainer: formContainer },
+                })
+            );
         } else {
             throw new Error(
                 "Could not find '#form-content-container' in response."

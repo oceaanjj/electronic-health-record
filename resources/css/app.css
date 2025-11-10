@@ -35,6 +35,12 @@
         format("truetype");
     font-weight: normal;
     font-style: normal;
+
+    font-family: "neometric";
+    src: url("/public/font/neometric/Neometric-Regular.otf")
+        format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @theme {
@@ -46,7 +52,7 @@
     --color-black: #000000;
     --color-yellow: #eeaa00;
     --color-dark-green: #1a6a24;
-    --color-beige: #fff6cf;
+    --color-beige: #fcfaf0;
     --color-light-beige: #fffced;
     --color-yellow-light: #edb62c;
     --color-brown: #744b13;
@@ -63,6 +69,7 @@
     --font-creato-black: "Creato Display Black", arial;
     --font-trajan-bold: "Trajan Pro", serif;
     --font-typewriter: "typewriter", monospace;
+    --font-neometric: "neometric", sans-serif;
 
     --radius-oval: 50%;
 }
@@ -70,11 +77,92 @@
 @layer components {
     .bg-yellow-light {
         background: linear-gradient(180deg, #ffd966, #f4b400);
+        font-family: var(--font-creato-bold);
     }
 
-    /* === VITAL SIGNS 3D STYLE === */
+    .main-header {
+    @apply bg-dark-green text-center text-white font-bold py-2; 
+        background: linear-gradient(180deg, #006400, #004d00);
+        @apply font-creato-bold font-black text-[15px];
+    }
 
-    /* 3D background container */
+    .gradient-gray {
+        background: linear-gradient(180deg,white, #e0e0e0);
+    }
+
+
+    /* for login */
+    .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 2.5rem; /* space for eye */
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover {
+            color: #000;
+        }
+
+        /* Error message design */
+        .error-box {
+            background: #ffe6e6;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .toggle-password, 
+        .toggle-password i {
+            height: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .eye-icon {
+            height: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    /* end for login */
+
+
     .vital-section {
         background: linear-gradient(180deg, #fff6e5 0%, #fddf9b 100%);
         border-radius: 20px;
@@ -210,8 +298,9 @@
     td {
         /* background-color: var(--color-beige);*/
         border-color: var(--color-line-brown);
-        font-family: var(--font-typewriter);
+        font-family: var(--font-neometric);
         font-size: 12px;
+        font-weight: bold;
     }
 
     .pe {
@@ -275,7 +364,8 @@
 
         background: linear-gradient(to bottom, #8fd89a, #0c5f1c);
         width: 100%;
-        max-height: 90px;
+        /*max-height: 200px;*/
+
 
         display: flex;
         align-items: flex-start;
@@ -561,4 +651,101 @@
         transform: scale(1) translateX(-50%);
         opacity: 1;
     }
+}
+
+
+/* Sweetalerts */
+
+.swal-ehr-popup {
+	border-radius: 1.5rem !important;
+	padding: 2rem !important;
+	background-color: var(--color-white) !important;
+	/* border: 3px solid var(--color-brown) !important; */
+	box-shadow: 0 10px 40px rgba(116, 75, 19, 0.3) !important;
+}
+
+.swal-ehr-title {
+	font-family: var(--font-creato-bold) !important;
+	color: var(--color-dark-green) !important;
+	font-weight: 700 !important;
+	font-size: 1.75rem !important;
+	margin-bottom: 1rem !important;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.swal-ehr-button {
+	border-radius: 50px !important;
+	padding: 0.75rem 2.5rem !important;
+	font-family: var(--font-creato-bold) !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	font-size: 0.875rem !important;
+	letter-spacing: 0.5px !important;
+	transition: all 0.3s ease !important;
+	background-color: var(--color-button-green) !important;
+	border: 2px solid var(--color-dark-green) !important;
+	color: var(--color-white) !important;
+	box-shadow: 0 4px 8px rgba(26, 106, 36, 0.2) !important;
+}
+
+.swal-ehr-button:hover {
+	background: var(--color-yellow) !important;
+	color: var(--color-dark-green) !important;
+	transform: translateY(-2px) !important;
+	border: transparent !important;
+    box-shadow: 0 6px 16px rgba(26, 106, 36, 0.4) !important;
+}
+
+.swal-ehr-cancel-button {
+	border-radius: 50px !important;
+	padding: 0.75rem 2.5rem !important;
+	font-family: var(--font-creato-bold) !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	font-size: 0.875rem !important;
+	letter-spacing: 0.5px !important;
+	transition: all 0.3s ease !important;
+	background-color: var(--color-white) !important;
+	border: 2px solid var(--color-brown) !important;
+	color: var(--color-brown) !important;
+	box-shadow: 0 4px 8px rgba(116, 75, 19, 0.2) !important;
+}
+
+.swal-ehr-cancel-button:hover {
+	background-color: var(--color-brown) !important;
+	border-color: var(--color-brown) !important;
+	color: var(--color-white) !important;
+	transform: translateY(-2px) !important;
+	box-shadow: 0 6px 16px rgba(116, 75, 19, 0.4) !important;
+}
+
+.swal2-html-container {
+	font-family: var(--font-creato-bold) !important;
+	color: var(--color-black) !important;
+	font-size: 1rem !important;
+	line-height: 1.6 !important;
+}
+
+.swal2-timer-progress-bar {
+	background: linear-gradient(to right, var(--color-yellow), var(--color-yellow-light)) !important;
+}
+
+.swal2-icon {
+	border-color: var(--color-dark-green) !important;
+}
+
+.swal2-success-ring {
+	border-color: var(--color-button-middle-green) !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+	background-color: var(--color-dark-green) !important;
+}
+
+.swal2-icon.swal2-error {
+	border-color: var(--color-dark-red) !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+	background-color: var(--color-dark-red) !important;
 }

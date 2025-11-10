@@ -2,6 +2,10 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        ACTIVITIES OF DAILY LIVING
+    </h2>
+
 <div id="form-content-container">
     {{-- This container is now the main wrapper for all dynamic content --}}
 
@@ -58,7 +62,7 @@
                 value="{{ $currentDate  ?? now()->format('Y-m-d') }}"
                 @if (!$selectedPatient) disabled @endif
                 class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100" readonly
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
             >
 
             {{-- DAY NO --}}
@@ -81,7 +85,6 @@
                     </option>
                 @endfor
             </select>
-            
         </div>
        </div>
         

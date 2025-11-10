@@ -23,7 +23,7 @@
             PATIENT NAME :
         </label>
 
-        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}">
+        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}" data-admission-date="{{ $selectedPatient->admission_date ?? '' }}">
             {{-- Text input for search --}}
             <input
                 type="text"
@@ -65,7 +65,7 @@
             value="{{ $currentDate ?? now()->format('Y-m-d') }}"
             @if (!$selectedPatient) disabled @endif
             class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm" readonly
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100" readonly
         >
 
         {{-- DAY NO --}}
@@ -79,8 +79,7 @@
             class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                    focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
         >
-            <option value="">-- Select number --</option>
-            @for ($i = 1; $i <= 30; $i++)
+            @for ($i = 1; $i <= ($totalDaysSinceAdmission ?? 30); $i++)
                 <option
                     value="{{ $i }}"
                     @if(($currentDayNo ?? 1) == $i) selected @endif
@@ -348,7 +347,7 @@ document.addEventListener("DOMContentLoaded", function () {
 @endsection
 @push('scripts')
     {{-- Load all necessary script files --}}
-    @vite(['resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
+    @vite(['resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js', 'resources/js/vital-signs-date-sync.js'])
 
     {{-- Define the specific initializers for this page --}}
     <script>
@@ -356,7 +355,8 @@ document.addEventListener("DOMContentLoaded", function () {
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                window.initializeVitalSignsAlerts
+                window.initializeVitalSignsAlerts,
+                window.initializeVitalSignsDateSync
             ];
         });
     </script>

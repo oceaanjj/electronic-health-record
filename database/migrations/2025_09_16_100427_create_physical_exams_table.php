@@ -22,14 +22,14 @@ return new class extends Migration {
             $table->string('extremities')->nullable();
             $table->string('neurological')->nullable();
             //    Alerts columns
-            // $table->string('general_appearance_alert')->nullable();
-            // $table->string('skin_alert')->nullable();
-            // $table->string('eye_alert')->nullable();
-            // $table->string('oral_alert')->nullable();
-            // $table->string('cardiovascular_alert')->nullable();
-            // $table->string('abdomen_alert')->nullable();
-            // $table->string('extremities_alert')->nullable();
-            // $table->string('neurological_alert')->nullable();
+            $table->string('general_appearance_alert')->nullable();
+            $table->string('skin_alert')->nullable();
+            $table->string('eye_alert')->nullable();
+            $table->string('oral_alert')->nullable();
+            $table->string('cardiovascular_alert')->nullable();
+            $table->string('abdomen_alert')->nullable();
+            $table->string('extremities_alert')->nullable();
+            $table->string('neurological_alert')->nullable();
 
 
 

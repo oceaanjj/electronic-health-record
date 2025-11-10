@@ -2,6 +2,10 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
+<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
+        ACTIVITIES OF DAILY LIVING
+    </h2>
+
 <div id="form-content-container">
     {{-- This container is now the main wrapper for all dynamic content --}}
 
@@ -21,7 +25,7 @@
                 PATIENT NAME :
             </label>
 
-            <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('adl.select') }}">
+            <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('adl.select') }}" data-admission-date="{{ $selectedPatient->admission_date ?? '' }}">
                 <input
                     type="text"
                     id="patient_search_input"
@@ -55,7 +59,7 @@
                 type="date"
                 id="date_selector"
                 name="date"
-                value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+                value="{{ $currentDate  ?? now()->format('Y-m-d') }}"
                 @if (!$selectedPatient) disabled @endif
                 class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                        focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
@@ -72,13 +76,12 @@
                 class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                        focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
             >
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
+                @for ($i = 1; $i <= ($totalDaysSinceAdmission ?? 30); $i++)
                     <option
                         value="{{ $i }}"
                         @if(($currentDayNo ?? 1) == $i) selected @endif
                     >
-                        {{ $i }}
+                        {{  $i }}
                     </option>
                 @endfor
             </select>
@@ -145,9 +148,17 @@
                             'pain_level_assessment',
                         ] as $field)
                             <tr>
-                                <td class="align-middle">
-                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center" data-alert-for="{{ $field }}">
-                                        <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                                <td class="align-middle" data-alert-for="{{ $field }}">
+                                    @php
+                                        $alertText = 'NO ALERTS';
+                                        $alertSeverity = 'none';
+                                        if (isset($alerts[$field]) && $alerts[$field]['alert'] !== 'No Findings') {
+                                            $alertText = $alerts[$field]['alert'];
+                                            $alertSeverity = strtolower($alerts[$field]['severity']);
+                                        }
+                                    @endphp
+                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-{{ $alertSeverity }}">
+                                        <span class="opacity-70 text-white font-semibold">{{ $alertText }}</span>
                                     </div>
                                 </td>
                             </tr>
@@ -156,10 +167,16 @@
                 </div>
             </div>
 
-           <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                    <button type="button" class="button-default">CDSS</button>
-                    <button type="submit" class="button-default">SUBMIT</button>
-                </div>
+
+<div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+    @if (isset($adlData))
+        <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
+            class="button-default text-center">
+            CDSS
+        </a>
+    @endif
+    <button type="submit" form="adl-form" class="button-default">SUBMIT</button>
+</div>
                 
         </fieldset>
     </form>
@@ -167,21 +184,24 @@
 @endsection
 
 @push('scripts')
-    {{-- Load all necessary script files --}}
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js'])
+    {{-- Load all necessary script files, replacing generic alert.js with the specific one --}}
+    @vite([
+        'resources/js/patient-loader.js',
+        'resources/js/date-day-loader.js',
+        'resources/js/init-searchable-dropdown.js',
+        'resources/js/page-initializer.js',
+        'resources/js/act-of-daily-living-alerts.js',
+        'resources/js/act-of-daily-living-date-sync.js'
+    ])
 
-    {{-- Define the specific initializers for this page --}}
+    {{-- Define the specific initializers for this page, following the vital-signs pattern --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                () => { // Wrap the CDSS initializer to pass the correct form element
-                    const cdssForm = document.querySelector('.cdss-form');
-                    if (cdssForm && window.initializeCdssForForm) {
-                        window.initializeCdssForForm(cdssForm);
-                    }
-                }
+                window.initializeAdlAlerts, // This is the new, specific initializer
+                window.initializeAdlDateSync
             ];
         });
     </script>

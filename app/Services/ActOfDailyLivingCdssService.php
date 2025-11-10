@@ -25,7 +25,7 @@ class ActOfDailyLivingCdssService
     private function loadRules()
     {
         $this->rules = [];
-        $rulesDirectory = storage_path('app/private/act_of_daily_living'); // Path to your directory
+        $rulesDirectory = storage_path('app/private/adl_rules'); // Path to your directory
 
         if (!File::isDirectory($rulesDirectory)) {
             error_log("CDSS rules directory not found at: " . $rulesDirectory);

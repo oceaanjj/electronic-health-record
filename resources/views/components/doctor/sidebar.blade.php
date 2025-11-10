@@ -43,15 +43,22 @@
             </a>
         </li>
         <li>
+            <center>
+                <hr class="w-full mt-[530px] border-dark-green border-t-1">
+            </center>
+
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-4 pb-2 pt-2
-                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
-                <img src="{{ asset('img/sidebar/about.png') }}" alt="Logout Icon"
-                    class="w-5 h-5 transition duration-200">
-                <span class="group-hover:text-white group-hover:font-bold">Logout</span>
+            <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
+                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
+               <img src="{{ asset('img/sidebar/logout.png') }}" alt="Discharge Icon"
+                    class="w-6 h-6 transition duration-200">
+                <span>LOG OUT</span>
             </a>
+        
+
+
         </li>
     </ul>
 </div>

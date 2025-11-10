@@ -1,13 +1,14 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="register">Register New User</h1>
 
-    {{-- ✅ Success Message --}}
-   @if(session('sweetalert'))
+<h2 class="text-[50px] font-black mb-8 text-dark-green mt-18 text-center font-alte">REGISTER NEW USER</h2>
+
+<div class="w-[100%] md:w-[80%] lg:w-[60%] mx-auto my-12">
+
+    @if(session('sweetalert'))
         @push('scripts')
         <script>
-            // Use setTimeout to ensure this doesn't block form validation JS
             document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(function() {
                     const opts = @json(session('sweetalert'));
@@ -15,10 +16,6 @@
                         showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
                     } else if (typeof showError === 'function' && opts.type === 'error') {
                         showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
-                    } else if (typeof showWarning === 'function' && opts.type === 'warning') {
-                        showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
-                    } else if (typeof showInfo === 'function' && opts.type === 'info') {
-                        showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
                     } else if (typeof Swal === 'function') {
                         Swal.fire({
                             icon: opts.type || 'info',
@@ -27,61 +24,95 @@
                             timer: opts.timer || 2000
                         });
                     }
-                }, 100); // Small delay to ensure form validation JS is ready
+                }, 100);
             });
         </script>
         @endpush
     @endif
 
-    {{-- ❌ Error messages --}}
     @if ($errors->any())
-        <div style="color:red; margin-bottom: 15px;">
-            <ul>
+        <div class="bg-red-50 border border-red-300 text-red-700 rounded-xl p-4 mb-6">
+            <ul class="list-disc pl-6">
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li class="text-sm">{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
     @endif
 
-    <form method="POST" action="{{ route('register.attempt') }}">
+    <form method="POST" action="{{ route('register.attempt') }}" 
+          class="bg-white shadow-2xl rounded-[20px] border border-gray-100 p-10 space-y-6">
         @csrf
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username" required>
-            <span id="username-status"></span>
+
+        <div class="flex flex-col space-y-2">
+            <label for="username" class="font-semibold text-gray-700">Username</label>
+            <input type="text" 
+                   name="username" 
+                   id="username" 
+                   required
+                   class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full">
+            <span id="username-status" class="text-sm"></span>
         </div>
-        <div>
-            <label>Email:</label>
-            <input type="email" name="email" id="email" required>
-            <span id="email-status"></span>
+
+        <div class="flex flex-col space-y-2">
+            <label for="email" class="font-semibold text-gray-700">Email</label>
+            <input type="email" 
+                   name="email" 
+                   id="email" 
+                   required
+                   class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full">
+            <span id="email-status" class="text-sm"></span>
         </div>
-        <div>
-            <label>Password:</label>
-            <input type="password" name="password" id="password" required>
+
+        <div class="flex flex-col space-y-2">
+            <label for="password" class="font-semibold text-gray-700">Password</label>
+            <input type="password" 
+                   name="password" 
+                   id="password" 
+                   required
+                   class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full">
         </div>
-        <div>
-            <label>Confirm Password:</label>
-            <input type="password" name="password_confirmation" id="password_confirmation" required>
-            <span id="password-status"></span>
+
+        <div class="flex flex-col space-y-2">
+            <label for="password_confirmation" class="font-semibold text-gray-700">Confirm Password</label>
+            <input type="password" 
+                   name="password_confirmation" 
+                   id="password_confirmation" 
+                   required
+                   class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full">
+            <span id="password-status" class="text-sm leading-relaxed"></span>
         </div>
-        <div>
-            <label>Role:</label>
-            <select name="role" required>
+
+        <div class="flex flex-col space-y-2">
+            <label for="role" class="font-semibold text-gray-700">Role</label>
+            <select name="role" 
+                    id="role" 
+                    required
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full">
                 @foreach ($roles as $role)
                     <option value="{{ $role }}">{{ ucfirst($role) }}</option>
                 @endforeach
             </select>
+
+        <div class="flex justify-center mt-8">
+            <button type="submit" id="registerBtn" 
+                class="button-default w-[200px] text-center disabled:opacity-50 disabled:cursor-not-allowed">
+                Register User
+            </button>
         </div>
-        <button type="submit" id="registerBtn">Register User</button>
     </form>
 
-    <a class="back" href="{{ route('admin-home') }}">Back to Dashboard</a>
-@endsection
+    {{-- Back Button --}}
+    <div class="mt-10 text-center">
+        <a href="{{ route('admin-home') }}" 
+           class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-2.5 rounded-full shadow-sm transition-all duration-300">
+           Back to Dashboard
+        </a>
+    </div>
 
-@push('styles')
-    @vite(['resources/css/admin-register.css'])
-@endpush
+</div>
+
+@endsection
 
 @push('scripts')
     <script>

@@ -27,11 +27,11 @@
                 <center>
                     <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
-                        <div class="w-[68%] rounded-[15px] overflow-hidden">
+                        <div class="w-[68%] rounded-[15px] overflow-hidden mr-1">
                             <table class="w-full border-separate border-spacing-0">
                                 <tr>
-                                    <th class="w-[20%] bg-dark-green py-2 text-white rounded-tl-lg">SYSTEM</th>
-                                    <th class="w-[45%] bg-dark-green py-2 text-white rounded-tr-lg">FINDINGS</th>
+                                    <th class="w-[20%] main-header py-2 text-white rounded-tl-lg">SYSTEM</th>
+                                    <th class="w-[45%] main-header py-2 text-white rounded-tr-lg">FINDINGS</th>
                                 </tr>
 
                                 {{-- GENERAL APPEARANCE --}}

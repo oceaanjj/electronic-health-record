@@ -86,6 +86,10 @@
         @apply font-creato-bold font-black text-[15px];
     }
 
+    .gradient-gray {
+        background: linear-gradient(180deg,white, #e0e0e0);
+    }
+
 
     /* for login */
     .password-wrapper {

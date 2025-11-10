@@ -76,6 +76,8 @@
                     </div>
 
                     {{-- ALERTS TABLE--}}
+
+                    {{--
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
                         <div class="main-header rounded-[15px]">
                             ALERTS
@@ -90,6 +92,7 @@
                             </tr>
                         </table>
                     </div>
+                    --}}
                 </div>
 
                 {{-- BUTTONS --}}

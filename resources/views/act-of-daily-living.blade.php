@@ -72,13 +72,12 @@
                 class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                        focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
             >
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
+                @for ($i = 1; $i <= ($totalDaysSinceAdmission ?? 30); $i++)
                     <option
                         value="{{ $i }}"
                         @if(($currentDayNo ?? 1) == $i) selected @endif
                     >
-                        {{ $i }}
+                        {{  $i }}
                     </option>
                 @endfor
             </select>

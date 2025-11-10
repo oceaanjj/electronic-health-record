@@ -77,6 +77,11 @@ class ActOfDailyLivingController extends Controller
             // Set variables for the view
             $currentDate = $date;
             $currentDayNo = $dayNo;
+            $totalDaysSinceAdmission = 0;
+            if ($selectedPatient && $selectedPatient->admission_date) {
+                $admissionDate = \Carbon\Carbon::parse($selectedPatient->admission_date);
+                $totalDaysSinceAdmission = $admissionDate->diffInDays(now()) + 1;
+            }
 
             // 3. Fetch the ADL record
             $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
@@ -106,6 +111,7 @@ class ActOfDailyLivingController extends Controller
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
             'isLoading' => $isLoading,
+            'totalDaysSinceAdmission' => $totalDaysSinceAdmission,
         ]);
     }
 
@@ -119,6 +125,7 @@ class ActOfDailyLivingController extends Controller
         $selectedPatient = null;
         $currentDate = now()->format('Y-m-d'); // Default
         $currentDayNo = 1; // Default
+        $totalDaysSinceAdmission = 0;
 
         $patientId = $request->session()->get('selected_patient_id');
         $date = $request->session()->get('selected_date');
@@ -127,10 +134,11 @@ class ActOfDailyLivingController extends Controller
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
             if ($selectedPatient) {
+                $admissionDate = \Carbon\Carbon::parse($selectedPatient->admission_date);
+                $totalDaysSinceAdmission = $admissionDate->diffInDays(now()) + 1;
                 // Ensure default date is set if patient is selected but date/day is missing (e.g., initial load)
                 if (!$date || !$dayNo) {
                     $date = now()->format('Y-m-d');
-                    $admissionDate = \Carbon\Carbon::parse($selectedPatient->admission_date);
                     $dayNo = $admissionDate->diffInDays(now()) + 1;
                     $request->session()->put('selected_date', $date);
                     $request->session()->put('selected_day_no', $dayNo);
@@ -148,6 +156,7 @@ class ActOfDailyLivingController extends Controller
             'selectedPatient' => $selectedPatient,
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
+            'totalDaysSinceAdmission' => $totalDaysSinceAdmission,
         ]);
     }
 

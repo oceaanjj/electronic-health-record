@@ -31,10 +31,6 @@
                         data-field-name="diagnosis"
                         style="border-top: none;"
                         placeholder="Enter nursing diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
-
-                    @error('diagnosis')
-                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                    @enderror
                 </div>
 
                 <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">
@@ -50,7 +46,7 @@
 
             <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
                 <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
-                    <a href="{{ route('vital-signs.show') }}" class="button-default text-center">
+                    <a href="{{ route('adl.show') }}" class="button-default text-center">
                         GO BACK
                     </a>
                 </div>

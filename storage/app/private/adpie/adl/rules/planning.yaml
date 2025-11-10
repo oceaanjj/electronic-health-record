@@ -1,0 +1,41 @@
+planning:
+- keywords: ["fall", "precaution", "bed", "alarm"]
+  match_type: any
+  severity: "CRITICAL"
+  alert: "Plan: Implement fall precautions, bedside alarm, and hourly rounding."
+- keywords: ["nutrition", "support", "supplement", "dietitian"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Plan: Refer to dietitian; consider high-protein supplements."
+- keywords: ["hydration", "monitor", "iv", "oral"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Plan: Increase oral fluids, monitor intake, consider IV fluids if needed."
+- keywords: ["mobility", "assist", "physical", "therapy"]
+  match_type: any
+  severity: "INFO"
+  alert: "Plan: Initiate PT evaluation and scheduled assisted ambulation."
+- keywords: ["toileting", "schedule", "timed", "voiding"]
+  match_type: any
+  severity: "INFO"
+  alert: "Plan: Implement toileting schedule and bladder training."
+- keywords: ["sleep", "hygiene", "environmental", "quiet"]
+  match_type: any
+  severity: "INFO"
+  alert: "Plan: Optimize sleep hygiene and reduce nighttime disturbances."
+- keywords: ["hygiene", "skin", "care", "barrier"]
+  match_type: any
+  severity: "INFO"
+  alert: "Plan: Daily hygiene assistance and skin protection measures."
+- keywords: ["pain", "control", "analgesia", "prn"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Plan: Review analgesia plan; consider PRN dosing and reassessment."
+- keywords: ["swallow", "screen", "aspiration", "modify"]
+  match_type: any
+  severity: "CRITICAL"
+  alert: "Plan: Perform swallow screen and modify diet to reduce aspiration risk."
+- keywords: ["caregiver", "education", "training", "support"]
+  match_type: any
+  severity: "INFO"
+  alert: "Plan: Provide caregiver education and arrange community support."

@@ -287,30 +287,24 @@ class ActOfDailyLivingController extends Controller
         ])->with('cdss', $analysisResults)
             ->with('success', 'CDSS Analysis complete!');
     }
-public function cdssToDiagnosis(Request $request)
-{
-    $validatedData = $request->validate([
-        'patient_id' => 'required|exists:patients,patient_id',
-        'day_no' => 'required|integer|between:1,30',
-        'date' => 'required|date',
-        'mobility_assessment' => 'nullable|string',
-        'hygiene_assessment' => 'nullable|string',
-        'toileting_assessment' => 'nullable|string',
-        'feeding_assessment' => 'nullable|string',
-        'hydration_assessment' => 'nullable|string',
-        'sleep_pattern_assessment' => 'nullable|string',
-        'pain_level_assessment' => 'nullable|string',
-    ]);
+    
+    public function cdssToDiagnosis(Request $request)
+    {
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'day_no' => 'required|integer|between:1,30',
+            'date' => 'required|date',
+        ]);
 
-    // store CDSS results and current selection in session
-    $request->session()->put('selected_patient_id', $validatedData['patient_id']);
-    $request->session()->put('selected_date', $validatedData['date']);
-    $request->session()->put('selected_day_no', $validatedData['day_no']);
+        // Store current selection in session
+        $request->session()->put('selected_patient_id', $validatedData['patient_id']);
+        $request->session()->put('selected_date', $validatedData['date']);
+        $request->session()->put('selected_day_no', $validatedData['day_no']);
 
-    // Redirect to nursing-diagnosis start for ADL component
-    return redirect()->action(
-        [NursingDiagnosisController::class, 'startDiagnosis'],
-        ['component' => 'adl', 'id' => $validatedData['patient_id']]
-    );
-}
+        // Redirect to nursing diagnosis for ADL component
+        return redirect()->action(
+            [NursingDiagnosisController::class, 'startDiagnosis'],
+            ['component' => 'adl', 'id' => $validatedData['patient_id']]
+        );
+    }
 }

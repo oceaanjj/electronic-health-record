@@ -33,11 +33,10 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
     /**
      * Show the Diagnosis form. $id is patient id for ADL component.
      */
-  public function startDiagnosis(string $component, $id)
+   public function startDiagnosis(string $component, $id)
     {
         $patient = Patient::findOrFail($id);
         
-        // Get latest ADL record for context
         $adlData = ActOfDailyLiving::where('patient_id', $id)
             ->orderBy('date', 'desc')
             ->orderBy('day_no', 'desc')

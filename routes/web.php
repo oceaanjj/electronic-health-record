@@ -237,14 +237,27 @@ Route::prefix('nursing-diagnosis')->name('nursing-diagnosis.')->group(function (
     Route::get('/evaluation/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])->name('showEvaluation');
     Route::post('/evaluation/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])->name('storeEvaluation');
     Route::post('/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');
-        Route::post('/nursing-diagnosis/analyze-field', [NursingDiagnosisController::class, 'analyzeField'])
-        ->name('nursing-diagnosis.analyze-field');
+    Route::post('/analyze-field', [NursingDiagnosisController::class, 'analyzeField'])->name('nursing-diagnosis.analyze-field');
+    Route::get('/fetch-from-io/{ioId}', [NursingDiagnosisController::class, 'fetchFromIO'])->name('nursing-diagnosis.fetchFromIO');
+    Route::get('/start/{component}/{id}', [NursingDiagnosisController::class, 'startDiagnosis'])
+        ->name('nursing-diagnosis.start');
+    Route::post('/{component}/{id}', [NursingDiagnosisController::class, 'storeDiagnosis'])->name('nursing-diagnosis.store');
 });
+
+    Route::get('/nursing-diagnosis/start/{component}/{id}', 
+        [NursingDiagnosisController::class, 'startDiagnosis'])
+        ->name('nursing-diagnosis.start');
+    
+    Route::post('/nursing-diagnosis/{component}/{id}', 
+        [NursingDiagnosisController::class, 'storeDiagnosis'])
+        ->name('nursing-diagnosis.store');
 
     Route::get('/lab-values/nursing-diagnosis/{id}', [
         'uses' => 'App\Http\Controllers\ADPIE\NursingDiagnosisController@startDiagnosis',
         'as' => 'lab-values.nursing-diagnosis.start'
     ]);
+
+    
 
         Route::post('/adpie/vitals/analyze-diagnosis', [VitalSignsController::class, 'analyzeDiagnosisForNursing'])
         ->name('adpie.vitals.analyzeDiagnosis');

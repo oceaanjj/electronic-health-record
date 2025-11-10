@@ -163,15 +163,18 @@
                 </div>
             </div>
 
-                    <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                        @if (isset($adlData) && $adlData->count() > 0)
-                            <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $selectedPatient->patient_id]) }}"
-                                class="button-default text-center">
-                                CDSS
-                            </a>
-                        @endif
-                    <button type="submit" class="button-default">SUBMIT</button>
-                </div>
+
+<div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+    @if (isset($adlData))
+        <form action="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $selectedPatient->patient_id]) }}" 
+              method="GET" 
+              class="inline">
+            @csrf
+            <button type="submit" class="button-default">CDSS</button>
+        </form>
+    @endif
+    <button type="submit" form="adl-form" class="button-default">SUBMIT</button>
+</div>
                 
         </fieldset>
     </form>

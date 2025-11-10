@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-@section('title', 'Step 1: Diagnosis')
+@section('title', 'Step 2: Planning')
 
 @section('content')
     <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $patient->patient_id]) }}"
+    <form action="{{ route('nursing-diagnosis.storePlanning', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
         method="POST" class="h-full flex flex-col cdss-form"
         data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
         data-patient-id="{{ $patient->patient_id }}"
@@ -24,17 +24,13 @@
             <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
                     <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
-                        DIAGNOSIS (STEP 2 of 4)
+                        PLANNING (STEP 2 of 4)
                     </div>
-                    <textarea id="diagnosis" name="diagnosis"
+                    <textarea id="planning" name="planning"
                         class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input"
-                        data-field-name="diagnosis"
+                        data-field-name="planning"
                         style="border-top: none;"
-                        placeholder="Enter nursing diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
-
-                    @error('diagnosis')
-                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                    @enderror
+                        placeholder="Enter nursing plan...">{{ old('planning', $diagnosis->planning ?? '') }}</textarea>
                 </div>
 
                 <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">
@@ -42,7 +38,7 @@
                         RECOMMENDATIONS
                     </div>
                     <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
-                        data-alert-for="diagnosis" style="border-top: none;">
+                        data-alert-for="planning" style="border-top: none;">
                         <span class="opacity-70 text-white font-semibold">No Recommendations</span>
                     </div>
                 </div>

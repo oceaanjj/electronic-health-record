@@ -1,0 +1,41 @@
+intervention:
+- keywords: ["assist", "ambulate", "assist x1", "assist x2"]
+  match_type: any
+  severity: "INFO"
+  alert: "Intervention: Provide assistance for ambulation and use gait belt."
+- keywords: ["apply", "barrier", "cream", "skin", "protect"]
+  match_type: any
+  severity: "INFO"
+  alert: "Intervention: Apply protective skin barriers and reposition regularly."
+- keywords: ["offer", "supplement", "high-protein", "sip"]
+  match_type: any
+  severity: "INFO"
+  alert: "Intervention: Offer oral nutrition supplements between meals."
+- keywords: ["encourage", "fluids", "oral", "sip"]
+  match_type: any
+  severity: "INFO"
+  alert: "Intervention: Encourage frequent small sips of fluid; document intake."
+- keywords: ["toileting", "assist", "scheduled", "reminders"]
+  match_type: any
+  severity: "INFO"
+  alert: "Intervention: Assist with scheduled toileting and cueing."
+- keywords: ["administer", "analgesic", "pain", "prn"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Intervention: Administer analgesic per orders and reassess pain."
+- keywords: ["implement", "fall", "precautions", "non-slip"]
+  match_type: any
+  severity: "CRITICAL"
+  alert: "Intervention: Apply non-slip footwear and ensure clear walking paths."
+- keywords: ["position", "turn", "q2h", "reposition"]
+  match_type: any
+  severity: "INFO"
+  alert: "Intervention: Reposition patient every two hours to protect skin integrity."
+- keywords: ["swallow", "chin", "tuck", "aspiration", "supervise"]
+  match_type: any
+  severity: "CRITICAL"
+  alert: "Intervention: Supervise oral intake and use chin tuck technique as indicated."
+- keywords: ["refer", "pt", "occupational", "therapy"]
+  match_type: any
+  severity: "INFO"
+  alert: "Intervention: Refer to PT/OT for mobility and ADL training."

@@ -1,0 +1,41 @@
+diagnosis:
+- keywords: ["unable", "ambulate", "independently"]
+  match_type: all
+  severity: "WARNING"
+  alert: "Patient requires assistance to ambulate — assess fall risk and mobility aids."
+- keywords: ["frequent", "falls", "history", "fall"]
+  match_type: any
+  severity: "CRITICAL"
+  alert: "History of falls — implement fall precautions and notify physician."
+- keywords: ["unable", "feed", "self"]
+  match_type: all
+  severity: "WARNING"
+  alert: "Patient unable to feed self — consider feeding assistance and swallow screen."
+- keywords: ["incontinent", "urine", "bowel"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Incontinence noted — assess for cause and toileting schedule."
+- keywords: ["poor", "hygiene", "unkempt"]
+  match_type: any
+  severity: "INFO"
+  alert: "Hygiene deficit detected — consider hygiene assistance and skin care."
+- keywords: ["decreased", "oral", "intake"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Low oral intake — monitor hydration and consider nutrition consult."
+- keywords: ["sleep", "poorly", "insomnia"]
+  match_type: any
+  severity: "INFO"
+  alert: "Sleep disturbance — assess sleep hygiene and environmental factors."
+- keywords: ["pain", "limiting", "mobility"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Pain affecting mobility — reassess pain control and consult provider."
+- keywords: ["confused", "disoriented", "agitated"]
+  match_type: any
+  severity: "CRITICAL"
+  alert: "Altered mental status — ensure patient safety and escalate per protocol."
+- keywords: ["needs", "hoyer", "lift", "mechanical"]
+  match_type: any
+  severity: "WARNING"
+  alert: "Requires mechanical lift — arrange assistive device and staff training."

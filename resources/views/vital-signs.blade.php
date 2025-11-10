@@ -272,85 +272,60 @@
 <!-- vital sign charts -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const timePoints = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+    const timePoints = @json($times); // from PHP
+    const vitalsData = @json($vitalsData); // convert your PHP collection to JSON safely
 
     const lineColors = [
         '#0D47A1', '#7B1FA2', '#1B5E20', '#B71C1C',
         '#37474F', '#4E342E', '#006064', '#512DA8'
     ];
 
+    // Define all vitals
     const vitals = {
-        temperature: {
-            label: 'Temperature (°C)',
-            elementId: 'tempChart',
-            field: 'temperature'
-        },
-        hr: {
-            label: 'Heart Rate (bpm)',
-            elementId: 'hrChart',
-            field: 'hr'
-        },
-        rr: {
-            label: 'Respiratory Rate (bpm)',
-            elementId: 'rrChart',
-            field: 'rr'
-        },
-        bp: {
-            label: 'Blood Pressure (mmHg)',
-            elementId: 'bpChart',
-            field: 'bp'
-        },
-        spo2: {
-            label: 'SpO₂ (%)',
-            elementId: 'spo2Chart',
-            field: 'spo2'
-        }
+        temperature: { label: 'Temperature (°C)', elementId: 'tempChart', field: 'temperature' },
+        hr:          { label: 'Heart Rate (bpm)', elementId: 'hrChart', field: 'hr' },
+        rr:          { label: 'Respiratory Rate (bpm)', elementId: 'rrChart', field: 'rr' },
+        bp:          { label: 'Blood Pressure (mmHg)', elementId: 'bpChart', field: 'bp' },
+        spo2:        { label: 'SpO₂ (%)', elementId: 'spo2Chart', field: 'spo2' }
     };
 
-    // For each vital type, create a chart
+    // Create chart for each vital type
     Object.entries(vitals).forEach(([key, vital]) => {
-        const ctx = document.getElementById(vital.elementId).getContext('2d');
+        const ctx = document.getElementById(vital.elementId)?.getContext('2d');
+        if (!ctx) return;
 
-        // Build data values for this vital
-        const dataValues = [
-            @foreach ($times as $time)
-                @php
-                    $record = $vitalsData->get($time);
-                    $value = $record ? $record->$key : 'null';
-                @endphp
-                {{ $value ?? 'null' }},
-            @endforeach
-        ];
-const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: timePoints.map(t => {
-            if (!t) return 'N/A';
-            const [hour, minute] = t.split(':');
-            if (hour === undefined || minute === undefined) return t; // fallback
-            const h = ((+hour + 11) % 12) + 1;
-            const suffix = +hour >= 12 ? 'PM' : 'AM';
-            return `${h}:${minute} ${suffix}`;
-        }),
-        datasets: [{
-            label: vital.label,
-            data: dataValues,
-            borderColor: lineColors[0],
-            backgroundColor: lineColors[0],
-            borderWidth: 2.5,
-            tension: 0.3,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            fill: false
-        }]
-    },
+        // Build data values for this vital from PHP JSON
+        const dataValues = timePoints.map(time => {
+            const record = vitalsData?.[time];
+            return record ? parseFloat(record[vital.field]) || null : null;
+        });
 
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timePoints.map(t => {
+                    if (!t) return 'N/A';
+                    const [hour, minute] = t.split(':');
+                    if (hour === undefined || minute === undefined) return t;
+                    const h = ((+hour + 11) % 12) + 1;
+                    const suffix = +hour >= 12 ? 'PM' : 'AM';
+                    return `${h}:${minute} ${suffix}`;
+                }),
+                datasets: [{
+                    label: vital.label,
+                    data: dataValues,
+                    borderColor: lineColors[0],
+                    backgroundColor: lineColors[0],
+                    borderWidth: 2.5,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: false
+                }]
+            },
             options: {
                 responsive: true,
-                animation: {
-                    duration: 800,
-                    easing: 'easeOutQuart'
-                },
+                animation: { duration: 800, easing: 'easeOutQuart' },
                 plugins: {
                     legend: {
                         position: 'top',
@@ -376,14 +351,14 @@ const chart = new Chart(ctx, {
             }
         });
 
-        // Live update inputs to each chart
+        // 🔄 Live update chart when user edits input fields
         document.querySelectorAll(`input[data-field-name="${vital.field}"]`).forEach(input => {
             input.addEventListener('input', () => {
                 const time = input.getAttribute('data-time');
                 const value = parseFloat(input.value) || null;
-                const timeIndex = timePoints.indexOf(time);
-                if (timeIndex !== -1) {
-                    chart.data.datasets[0].data[timeIndex] = value;
+                const index = timePoints.indexOf(time);
+                if (index !== -1) {
+                    chart.data.datasets[0].data[index] = value;
                     chart.update('active');
                 }
             });
@@ -391,11 +366,7 @@ const chart = new Chart(ctx, {
     });
 });
 </script>
-<!-- end of vital sign charts -->
 
-<!-- end of vital sign charts -->
-
-<!-- end of vital sign chart  -->
 
 
 @endpush

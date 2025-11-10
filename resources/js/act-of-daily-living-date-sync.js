@@ -1,7 +1,6 @@
-
 window.initializeAdlDateSync = function () {
-    const dateSelector = document.getElementById('date_selector');
-    const dayNoSelector = document.getElementById('day_no_selector');
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
     const dropdownContainer = document.querySelector(".searchable-dropdown");
 
     if (!dateSelector || !dayNoSelector || !dropdownContainer) {
@@ -14,8 +13,9 @@ window.initializeAdlDateSync = function () {
     }
     const admissionDate = new Date(admissionDateStr);
     // to account for timezone differences
-    admissionDate.setMinutes(admissionDate.getMinutes() + admissionDate.getTimezoneOffset());
-
+    admissionDate.setMinutes(
+        admissionDate.getMinutes() + admissionDate.getTimezoneOffset()
+    );
 
     function updateDate() {
         const dayNo = parseInt(dayNoSelector.value, 10);
@@ -24,7 +24,7 @@ window.initializeAdlDateSync = function () {
         }
 
         const newDate = new Date(admissionDate.getTime());
-        newDate.setDate(admissionDate.getDate() + dayNo - 1);
+        newDate.setDate(newDate.getDate() + dayNo);
 
         const year = newDate.getFullYear();
         const month = String(newDate.getMonth() + 1).padStart(2, '0');
@@ -45,9 +45,9 @@ window.initializeAdlDateSync = function () {
         const diffTime = Math.abs(selectedDate - admissionDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-        dayNoSelector.value = diffDays + 1;
+        dayNoSelector.value = diffDays;
     }
 
-    dayNoSelector.addEventListener('change', updateDate);
-    dateSelector.addEventListener('change', updateDayNo);
+    dayNoSelector.addEventListener("change", updateDate);
+    dateSelector.addEventListener("change", updateDayNo);
 };

@@ -199,10 +199,12 @@ class ActOfDailyLivingController extends Controller
             return back()->with('error', 'No patient selected.');
         }
         //****
+        $admissionDate = \Carbon\Carbon::parse($patient->admission_date);
+        $daysSinceAdmission = $admissionDate->diffInDays(now()) + 1;
 
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
+            'day_no' => 'required|integer|between:1,' . $daysSinceAdmission,
             'date' => 'required|date',
             'mobility_assessment' => 'nullable|string',
             'hygiene_assessment' => 'nullable|string',

@@ -48,6 +48,7 @@ class VitalSignsController extends Controller
         // Default values for rendering the view if selection fails
         $currentDate = now()->format('Y-m-d');
         $currentDayNo = 1;
+        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
@@ -117,6 +118,7 @@ class VitalSignsController extends Controller
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
             'totalDaysSinceAdmission' => $totalDaysSinceAdmission,
+            'times' => $times,
         ]);
     }
 
@@ -228,5 +230,38 @@ class VitalSignsController extends Controller
         $result['severity'] = strtoupper($result['severity']);
 
         return response()->json($result);
+    }
+
+    /**
+     * Fetches vital signs data for a given patient, date, and day number.
+     * Used for AJAX requests to dynamically update the form.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchVitalSignsData(Request $request)
+    {
+        $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'date' => 'required|date_format:Y-m-d',
+            'day_no' => 'required|integer',
+        ]);
+
+        $patientId = $request->input('patient_id');
+        $date = $request->input('date');
+        $dayNo = $request->input('day_no');
+
+        $vitalsData = $this->getVitalsRecord($patientId, $date, (int) $dayNo);
+
+        // Re-run CDSS analysis on fetched data
+        $cdssService = new VitalCdssService();
+        foreach ($vitalsData as $time => $vitalRecord) {
+            $vitalsArray = $vitalRecord->toArray();
+            $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsArray);
+            $vitalsData[$time]->alerts = $alertResult['alert'];
+            $vitalsData[$time]->news_severity = $alertResult['severity'];
+        }
+
+        return response()->json($vitalsData);
     }
 }

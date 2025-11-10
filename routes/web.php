@@ -208,6 +208,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/select', [VitalSignsController::class, 'selectPatient'])->name('select');
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
         Route::post('/check', [VitalSignsController::class, 'checkVitals'])->name('check');
+        Route::get('/fetch-data', [VitalSignsController::class, 'fetchVitalSignsData'])->name('fetch-data');
     });
 
     //Intake and Output

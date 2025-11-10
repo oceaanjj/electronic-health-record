@@ -27,8 +27,8 @@ window.initializeAdlDateSync = function () {
         newDate.setDate(newDate.getDate() + dayNo);
 
         const year = newDate.getFullYear();
-        const month = String(newDate.getMonth() + 1).padStart(2, '0');
-        const day = String(newDate.getDate()).padStart(2, '0');
+        const month = String(newDate.getMonth() + 1).padStart(2, "0");
+        const day = String(newDate.getDate()).padStart(2, "0");
 
         dateSelector.value = `${year}-${month}-${day}`;
     }
@@ -39,7 +39,9 @@ window.initializeAdlDateSync = function () {
             return;
         }
         // to account for timezone differences
-        selectedDate.setMinutes(selectedDate.getMinutes() + selectedDate.getTimezoneOffset());
+        selectedDate.setMinutes(
+            selectedDate.getMinutes() + selectedDate.getTimezoneOffset()
+        );
 
         const diffTime = Math.abs(selectedDate - admissionDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

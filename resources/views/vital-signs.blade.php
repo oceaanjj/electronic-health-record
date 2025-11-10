@@ -69,7 +69,7 @@
             value="{{ $currentDate ?? now()->format('Y-m-d') }}"
             @if (!$selectedPatient) disabled @endif
             class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100" readonly
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100"
         >
 
         {{-- DAY NO --}}
@@ -97,12 +97,15 @@
 {{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
-            <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}" data-analyze-url="{{ route('vital-signs.check') }}">
+            <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}"
+                data-analyze-url="{{ route('vital-signs.check') }}"
+                data-times="{{ json_encode($times) }}"
+                data-fetch-url="{{ route('vital-signs.fetch-data') }}">
                 @csrf
 
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
-                <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
-                <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
+                <input type="hidden" id="hidden_date_for_vitals_form" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
+                <input type="hidden" id="hidden_day_no_for_vitals_form" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
                 <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
                     <div class="w-[68%] rounded-[15px] overflow-hidden">

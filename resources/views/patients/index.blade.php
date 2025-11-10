@@ -50,21 +50,21 @@
                         <tr class="{{ $patient->trashed() ? 'bg-red-100 text-red-700' : 'bg-beige' }} hover:bg-white hover:bg-opacity-50 transition-all duration-300"
                             data-id="{{ $patient->patient_id }}">
                             <td
-                                class="bg-yellow-light p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] text-center border-r-2">
+                                class="p-3 border-b-2 border-line-brown/30 font-creato-black font-bold text-brown text-[13px] text-center">
                                 {{ $patient->patient_id }}</td>
-                            <td class="p-3 border-b-2 border-line-brown/70 border-r-2">
+                            <td class="p-3 border-b-2 border-line-brown/30">
                                 <a href="{{ route('patients.show', $patient->patient_id) }}"
                                     class="p-3 font-creato-black font-bold text-brown text-[13px] hover:underline hover:text-brown transition-colors duration-150">
                                     {{ $patient->name }}
                                 </a>
                             </td>
                             <td
-                                class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] border-r-2 text-center">
+                                class="p-3 border-b-2 border-line-brown/30 font-creato-black font-bold text-brown text-[13px] text-center">
                                 {{ $patient->age }}</td>
                             <td
-                                class="p-3 border-b-2 border-line-brown/70 font-creato-black font-bold text-brown text-[13px] border-r-2 text-center">
+                                class="p-3 border-b-2 border-line-brown/30 font-creato-black font-bold text-brown text-[13px] text-center">
                                 {{ $patient->sex }}</td>
-                            <td class="p-3 border-b-2 border-line-brown/70 whitespace-nowrap text-center">
+                            <td class="p-3 border-b-2 border-line-brown/30 whitespace-nowrap text-center">
 
                                 @if($patient->trashed())
                                     {{-- This is an INACTIVE patient. Show "Set Active" button. --}}

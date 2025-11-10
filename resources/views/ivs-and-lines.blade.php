@@ -25,11 +25,10 @@
                 value="{{ $selectedPatient->patient_id ?? session('selected_patient_id') }}">
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
 
-                {{-- MAIN CONTENT (Vital Signs Layout Style) --}}
                 <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
 
-                    {{-- LEFT SIDE: INPUT TABLE --}}
-                    <div class="w-[68%] rounded-[15px] overflow-hidden">
+
+                    <div class="w-full rounded-[15px] overflow-hidden">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
                                 <th class="w-[25%] main-header rounded-tl-[15px]">IV FLUID</th>
@@ -96,7 +95,7 @@
                 </div>
 
                 {{-- BUTTONS --}}
-                <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
         </form>

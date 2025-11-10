@@ -237,6 +237,8 @@ Route::prefix('nursing-diagnosis')->name('nursing-diagnosis.')->group(function (
     Route::get('/evaluation/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])->name('showEvaluation');
     Route::post('/evaluation/{component}/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])->name('storeEvaluation');
     Route::post('/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');
+        Route::post('/nursing-diagnosis/analyze-field', [NursingDiagnosisController::class, 'analyzeField'])
+        ->name('nursing-diagnosis.analyze-field');
 });
 
     Route::get('/lab-values/nursing-diagnosis/{id}', [

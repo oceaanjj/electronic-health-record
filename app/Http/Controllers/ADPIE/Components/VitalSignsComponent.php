@@ -48,48 +48,58 @@ class VitalSignsComponent implements AdpieComponentInterface
         ]);
     }
 
-    public function storeDiagnosis(Request $request, string $component, $id)
-    {
-        $request->validate(['diagnosis' => 'required|string|max:1000']);
-        $patient = Patient::findOrFail($id);
+public function storeDiagnosis(Request $request, string $component, $id)
+{
+    $request->validate(['diagnosis' => 'required|string|max:1000']);
+    
+    $patient = Patient::findOrFail($id);
+    
+    // Get vital signs data
+    $vitalsData = [
+        'temperature' => $request->input('temperature'),
+        'hr' => $request->input('hr'),
+        'rr' => $request->input('rr'),
+        'bp' => $request->input('bp'),
+        'spo2' => $request->input('spo2')
+    ];
 
-        $componentData = $this->getComponentData($request, $patient);
+    $nurseInput = [
+        'diagnosis' => $request->input('diagnosis'),
+    ];
 
-        $nurseInput = [
-            'diagnosis' => $request->input('diagnosis'),
-        ];
+    // Generate recommendations using CDSS service
+    $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
+        $component,
+        $vitalsData,
+        $nurseInput,
+        $patient
+    );
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
+    $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
+    $ruleFilePath = $generatedRules['rule_file_path'];
 
-        $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+    // Create or update diagnosis record
+    $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
+        [
+            'patient_id' => $patient->patient_id,
+            'physical_exam_id' => null,
+        ],
+        [
+            'diagnosis' => $nurseInput['diagnosis'],
+            'diagnosis_alert' => $diagnosisAlert,
+            'rule_file_path' => $ruleFilePath,
+        ]
+    );
 
-        // --- THIS IS THE FIX ---
-        $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
-            [
-                'patient_id' => $patient->patient_id,
-                'physical_exam_id' => null,
-            ],
-            [
-                'diagnosis' => $nurseInput['diagnosis'],
-                'diagnosis_alert' => $diagnosisAlert,
-                'rule_file_path' => $ruleFilePath,
-            ]
-        );
-        // --- END OF FIX ---
-
-        if ($request->input('action') == 'save_and_proceed') {
-            return redirect()->route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $nursingDiagnosis->id])
-                ->with('success', 'Diagnosis saved. Now, please enter the plan.');
-        }
-
-        return redirect()->back()->with('success', 'Diagnosis saved.');
+    if ($request->input('action') == 'save_and_proceed') {
+        return redirect()->route('nursing-diagnosis.showPlanning', [
+            'component' => $component,
+            'nursingDiagnosisId' => $nursingDiagnosis->id
+        ])->with('success', 'Diagnosis saved. Now, please enter the plan.');
     }
+
+    return redirect()->back()->with('success', 'Diagnosis saved.');
+}
 
     public function showPlanning(string $component, $nursingDiagnosisId)
     {

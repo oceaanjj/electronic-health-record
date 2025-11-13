@@ -2,20 +2,151 @@
  * act-of-daily-living-alerts.js
  *
  * Handles CDSS alerts for the ADL form.
- * Mimics the structure of vital-signs-alerts.js to work with page-initializer.js
- * and prevent infinite loops.
+ * This script is structured to co-exist with the global `alert.js`
+ * by hooking into the same functions but *only* acting on the form
+ * with the ID `#adl-form`.
+ *
+ * It preserves the custom styling/display functions for ADL.
  */
-
-// --- Functions copied/adapted from alert.js ---
 
 let adlDebounceTimer;
 
-// Analyze a single ADL field
+/**
+ * This function name MUST match the one called by patient-loader.js
+ * We add a check for 'form.id' to ensure this logic only
+ * runs for the ADL form.
+ */
+window.initializeCdssForForm = function (form) {
+    // Only execute this logic for the ADL form
+    if (form.id !== "adl-form") {
+        return;
+    }
+
+    const analyzeUrl = form.dataset.analyzeUrl;
+    const csrfToken = document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute("content");
+
+    if (!analyzeUrl || !csrfToken) {
+        console.error(
+            'ADL CDSS form missing "data-analyze-url" or CSRF token not found.',
+            form
+        );
+        return;
+    }
+
+    const inputs = form.querySelectorAll(".cdss-input");
+
+    // --- Analyze while typing ---
+    inputs.forEach((input) => {
+        // Remove any old listeners just in case
+        input.removeEventListener("input", handleAdlInput);
+        // Add the new listener
+        input.addEventListener("input", (e) =>
+            handleAdlInput(e, analyzeUrl, csrfToken)
+        );
+    });
+};
+
+/**
+ * Handles the 'input' event for debouncing.
+ */
+function handleAdlInput(e, analyzeUrl, csrfToken) {
+    clearTimeout(adlDebounceTimer);
+
+    const fieldName = e.target.dataset.fieldName;
+    const finding = e.target.value.trim();
+    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+
+    if (alertCell) {
+        if (finding === "") {
+            showDefaultNoAlerts(alertCell);
+        } else {
+            // Show loading spinner immediately on type
+            showAlertLoading(alertCell);
+        }
+    }
+
+    adlDebounceTimer = setTimeout(() => {
+        if (fieldName && finding !== "") {
+            analyzeAdlField(fieldName, finding, analyzeUrl, csrfToken);
+        }
+    }, 800); // 800ms debounce
+}
+
+/**
+ * This function runs the analysis for pre-filled fields.
+ * It's called on DOMContentLoaded and by the 'cdss:form-reloaded' event.
+ */
+function runInitialAdlAnalysis(form) {
+    // Only execute this logic for the ADL form
+    if (!form || form.id !== "adl-form") {
+        return;
+    }
+
+    const analyzeUrl = form.dataset.analyzeUrl;
+    const csrfToken = document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute("content");
+
+    if (!analyzeUrl || !csrfToken) {
+        console.error("ADL initial analysis missing URL or CSRF token.", form);
+        return;
+    }
+
+    const inputs = form.querySelectorAll(".cdss-input");
+
+    inputs.forEach((input) => {
+        const fieldName = input.dataset.fieldName;
+        const finding = input.value.trim();
+        const alertCell = document.querySelector(
+            `[data-alert-for="${fieldName}"]`
+        );
+
+        if (alertCell) {
+            if (finding === "") {
+                showDefaultNoAlerts(alertCell);
+            } else {
+                analyzeAdlField(fieldName, finding, analyzeUrl, csrfToken);
+            }
+        }
+    });
+}
+
+// --- Listen for form reload event (from patient-loader.js) ---
+document.addEventListener("cdss:form-reloaded", (event) => {
+    const adlForm = event.detail.formContainer.querySelector("#adl-form");
+    if (adlForm) {
+        // The initializeCdssForForm() is already called by patient-loader.js
+        // We just need to trigger the initial analysis for pre-filled fields.
+        runInitialAdlAnalysis(adlForm);
+    }
+});
+
+// --- Initialize CDSS on first page load ---
+document.addEventListener("DOMContentLoaded", () => {
+    const adlForm = document.getElementById("adl-form");
+    if (adlForm) {
+        // This check is in case alert.js is also loaded.
+        // We want the ADL-specific intializer to run.
+        if (typeof window.initializeCdssForForm === "function") {
+            window.initializeCdssForForm(adlForm);
+        }
+        runInitialAdlAnalysis(adlForm);
+    }
+});
+
+// -------------------------------------------------------------------
+// --- HELPER FUNCTIONS (ADL-SPECIFIC) ---
+// --- (These functions are mostly from your original file) ---
+// -------------------------------------------------------------------
+
+// --- Function: Analyze input with backend ---
 async function analyzeAdlField(fieldName, finding, url, token) {
     const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
     if (!alertCell) return;
 
-    showAlertLoading(alertCell);
+    showAlertLoading(alertCell); // Show loading state
 
     try {
         const response = await fetch(url, {
@@ -39,7 +170,7 @@ async function analyzeAdlField(fieldName, finding, url, token) {
     }
 }
 
-// Display alert content in the ADL view
+// --- Display alert content (ADL View) ---
 function displayAdlAlert(alertCell, alertData) {
     alertCell.innerHTML = ""; // Clear previous content
 
@@ -53,9 +184,6 @@ function displayAdlAlert(alertCell, alertData) {
 
     alertBox.classList.add(colorClass);
 
-    // Mark that an alert state has been set
-    alertCell.dataset.alerted = "true";
-
     let messageContainerHTML;
     if (
         alertData.alert &&
@@ -63,56 +191,41 @@ function displayAdlAlert(alertCell, alertData) {
     ) {
         messageContainerHTML = `<div class="alert-message" style="padding:1rem;"><span>${alertData.alert}</span></div>`;
         alertBox.onclick = () => {
-            if (!alertBox.classList.contains("has-no-alert")) {
-                openAlertModal(alertData);
-            }
+            openAlertModal(alertData);
         };
     } else {
+        alertBox.classList.add("has-no-alert");
         messageContainerHTML = `<div class="alert-message text-center"><span class="opacity-70 text-white font-semibold">NO FINDINGS</span></div>`;
         alertCell.onclick = null;
     }
 
     alertBox.innerHTML = messageContainerHTML;
-
     alertCell.appendChild(alertBox);
 }
 
-// Show loading state
-function showAlertLoading(alertCell) { // alertCell is the <td>
-    const alertBox = alertCell.querySelector('.alert-box');
-    if (!alertBox) return;
-
-    // Use a static, non-animated background color. Green is a neutral choice.
-    alertBox.className = "alert-box my-[3px] h-[53px] flex justify-center items-center alert-green";
-    
-    // The spinner itself has its own spin animation, which is desired.
-    // The inner div helps with centering and spacing.
-    alertBox.innerHTML = `
+// --- Loading spinner (ADL View) ---
+//removed fade-in dahil sa parang stutter effect
+function showAlertLoading(alertCell) {
+    alertCell.innerHTML = `
+    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-green"> 
         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <div class="loading-spinner"></div>
+            <div class="loading-spinner"></div> 
             <span>Analyzing...</span>
         </div>
-    `;
-    delete alertCell.dataset.alerted;
+    </div>`;
+    alertCell.onclick = null;
 }
 
-// Show default "No Alerts" state
+// --- Default NO ALERTS state (ADL View) ---
 function showDefaultNoAlerts(alertCell) {
-    alertCell.classList.remove("alert-loading", "alert-red", "alert-orange", "alert-green"); // Remove loading and severity classes
-    alertCell.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
     alertCell.innerHTML = `
-        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-            <span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>
-        </div>
-    `;
-    // Get the newly created alert-box div and set its onclick to null
-    const alertBoxDiv = alertCell.querySelector(".alert-box");
-    if (alertBoxDiv) {
-        alertBoxDiv.onclick = null;
-    }
+    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-green has-no-alert">
+        <span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>
+    </div>`;
+    alertCell.onclick = null;
 }
 
-// --- Modal popup for details (from vital-signs-alerts.js) ---
+// --- Modal popup for details ---
 function openAlertModal(alertData) {
     const overlay = document.createElement("div");
     overlay.className = "alert-modal-overlay";
@@ -134,78 +247,3 @@ function openAlertModal(alertData) {
     });
     modal.querySelector(".close-btn").addEventListener("click", closeModal);
 }
-
-// --- Logic adapted from vital-signs-alerts.js ---
-
-// Trigger analysis for all pre-filled fields
-function triggerInitialAdlAnalysis() {
-    const adlForm = document.getElementById("adl-form");
-    if (!adlForm) return;
-
-    const analyzeUrl = adlForm.dataset.analyzeUrl;
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
-    if (!analyzeUrl || !csrfToken) return;
-
-    const inputs = adlForm.querySelectorAll(".cdss-input");
-
-    inputs.forEach((input) => {
-        const fieldName = input.dataset.fieldName;
-        const finding = input.value.trim();
-        const alertCell = document.querySelector(
-            `[data-alert-for="${fieldName}"]`
-        );
-
-        // This is the anti-loop condition
-        if (alertCell && !alertCell.dataset.alerted && finding !== "") {
-            analyzeAdlField(fieldName, finding, analyzeUrl, csrfToken);
-        } else if (alertCell && finding === "") {
-            showDefaultNoAlerts(alertCell);
-        }
-    });
-}
-
-// Main initializer function attached to the window
-window.initializeAdlAlerts = function () {
-    const adlForm = document.getElementById("adl-form");
-    if (!adlForm) return;
-
-    // Check if listeners have already been attached to this element
-    if (adlForm.dataset.listenersAttached) return;
-
-    const analyzeUrl = adlForm.dataset.analyzeUrl;
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
-    if (!analyzeUrl || !csrfToken) return;
-
-    const inputs = adlForm.querySelectorAll(".cdss-input");
-
-    inputs.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            clearTimeout(adlDebounceTimer);
-            const fieldName = e.target.dataset.fieldName;
-            const finding = e.target.value.trim();
-            const alertCell = document.querySelector(
-                `[data-alert-for="${fieldName}"]`
-            );
-
-            if (alertCell && finding === "") {
-                showDefaultNoAlerts(alertCell);
-            }
-
-            adlDebounceTimer = setTimeout(() => {
-                if (fieldName && finding !== "") {
-                    analyzeAdlField(fieldName, finding, analyzeUrl, csrfToken);
-                }
-            }, 300);
-        });
-    });
-
-    // Mark that listeners have been attached to this specific form instance
-    adlForm.dataset.listenersAttached = "true";
-
-    // Trigger the initial analysis for any pre-filled data
-    triggerInitialAdlAnalysis();
-};

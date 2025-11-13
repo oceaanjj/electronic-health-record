@@ -1,13 +1,28 @@
 /**
+ * ===================================================================
+ * DYNAMIC CDSS ALERT SYSTEM
+ * ===================================================================
+ * This single script handles CDSS alerts for all forms.
+ *
  * How it works:
- * ... (same as before) ...
- * * MODIFICATION: The initializeCdssForForm function is attached to the 'window'
- * object so that other scripts (like patient-loader.js) can call it
- * after replacing page content.
+ * 1.  It relies on a 'data-alert-height-class' attribute on the
+ * <form class="cdss-form"> tag (e.g., "h-[90px]" or "h-[53px]").
+ * 2.  A helper function, getAlertHeightClass(), finds the form
+ * and gets this class.
+ * 3.  All display functions (loading, default, alert) are
+ * standardized to replace the innerHTML of the alert cell (<td>)
+ * and use this dynamic height class.
+ * 4.  It attaches to window.initializeCdssForForm and the
+ * "cdss:form-reloaded" event, just like before.
  */
 
 let debounceTimer;
 
+/**
+ * Attaches real-time listeners to a form's inputs.
+ * This is the main initialization function called by patient-loader.js
+ * and on DOMContentLoaded.
+ */
 window.initializeCdssForForm = function (form) {
     const analyzeUrl = form.dataset.analyzeUrl;
     const csrfToken = document
@@ -24,21 +39,10 @@ window.initializeCdssForForm = function (form) {
 
     const inputs = form.querySelectorAll(".cdss-input");
 
-    // --- Initialize fields on load (removed to prevent redundant analysis on re-initialization) ---
-    // inputs.forEach((input) => {
-    //   const fieldName = input.dataset.fieldName;
-    //   const finding = input.value.trim();
-    //   const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
-
-    //   if (alertCell) {
-    //     if (finding === "") showDefaultNoAlerts(alertCell);
-    //     else analyzeField(fieldName, finding, analyzeUrl, csrfToken);
-    //   }
-    // });
-
     // --- Analyze while typing ---
     inputs.forEach((input) => {
-        input.addEventListener("input", (e) => {
+        // Debounced input handler
+        const handleInput = (e) => {
             clearTimeout(debounceTimer);
 
             const fieldName = e.target.dataset.fieldName;
@@ -51,9 +55,8 @@ window.initializeCdssForForm = function (form) {
                 if (finding === "") {
                     showDefaultNoAlerts(alertCell);
                 } else {
-                    if (!alertCell.classList.contains("alert-loading")) {
-                        showAlertLoading(alertCell);
-                    }
+                    // Show loading state immediately on type
+                    showAlertLoading(alertCell);
                 }
             }
 
@@ -61,140 +64,20 @@ window.initializeCdssForForm = function (form) {
                 if (fieldName && finding !== "") {
                     analyzeField(fieldName, finding, analyzeUrl, csrfToken);
                 }
-            }, 300);
-        });
+            }, 800);
+        };
+
+        // Remove old listener to prevent duplicates, then add new one
+        input.removeEventListener("input", handleInput);
+        input.addEventListener("input", handleInput);
     });
 };
 
-// --- Listen for form reload event to trigger initial analysis for pre-filled fields ---
-document.addEventListener("cdss:form-reloaded", (event) => {
-    const formContainer = event.detail.formContainer;
-    const cdssForm = formContainer.querySelector(".cdss-form");
-
-    if (cdssForm) {
-        const analyzeUrl = cdssForm.dataset.analyzeUrl;
-        const csrfToken = document
-            .querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
-
-        if (!analyzeUrl || !csrfToken) {
-            console.error(
-                'CDSS form reloaded: Missing "data-analyze-url" or CSRF token.',
-                cdssForm
-            );
-            return;
-        }
-
-        const inputs = cdssForm.querySelectorAll(".cdss-input");
-        inputs.forEach((input) => {
-            const fieldName = input.dataset.fieldName;
-            const finding = input.value.trim();
-            const alertCell = document.querySelector(
-                `[data-alert-for="${fieldName}"]`
-            );
-
-            if (alertCell) {
-                if (finding === "") {
-                    showDefaultNoAlerts(alertCell);
-                } else {
-                    analyzeField(fieldName, finding, analyzeUrl, csrfToken);
-                }
-            }
-        });
-    }
-});
-
-// --- Initialize CDSS forms on page load ---
-document.addEventListener("DOMContentLoaded", () => {
-    const cdssForms = document.querySelectorAll(".cdss-form");
-    cdssForms.forEach((form) => window.initializeCdssForForm(form));
-});
-
-// --- Function: Analyze input with backend ---
-async function analyzeField(fieldName, finding, url, token) {
-    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
-    if (!alertCell) return;
-
-    console.log(`[CDSS] Analyzing field: ${fieldName}, finding: "${finding}"`);
-    showAlertLoading(alertCell);
-
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": token,
-            },
-            body: JSON.stringify({ fieldName, finding }),
-        });
-
-        if (!response.ok) throw new Error(`Server error: ${response.status}`);
-
-        const alertData = await response.json();
-        console.log("[CDSS] Received alert data:", alertData);
-
-        setTimeout(() => {
-            displayAlert(alertCell, alertData);
-        }, 150);
-    } catch (error) {
-        console.error("CDSS analysis failed:", error);
-        alertCell.innerHTML = `
-      <div class="alert-box alert-red fade-in" style="height:90px;margin:2px;">
-        <span class="alert-message">Error analyzing...</span>
-      </div>
-    `;
-    }
-}
-
-// --- Display alert content ---
-function displayAlert(alertCell, alertData) {
-    console.log("[CDSS] Displaying alert:", alertData);
-    alertCell.innerHTML = "";
-
-    const alertBox = document.createElement("div");
-    alertBox.className = "alert-box fade-in";
-    alertBox.style.height = "90px";
-    alertBox.style.margin = "2px";
-
-    // Set color by severity
-    let colorClass = "alert-green";
-    if (alertData.severity === "CRITICAL") colorClass = "alert-red";
-    else if (alertData.severity === "WARNING") colorClass = "alert-orange";
-    else if (alertData.severity === "INFO") colorClass = "alert-green";
-
-    alertBox.classList.add(colorClass);
-
-    const alertMessage = document.createElement("div");
-    alertMessage.className = "alert-message";
-    alertMessage.style.padding = "1px"; //
-
-    // --- Handle NO FINDINGS ---
-    if (alertData.alert?.toLowerCase().includes("no findings")) {
-        alertBox.classList.add("has-no-alert");
-        alertMessage.innerHTML = `
-      <span class="text-white text-center uppercase font-semibold opacity-80">
-        NO FINDINGS
-      </span>
-    `;
-    } else {
-        alertMessage.innerHTML = `<span>${alertData.alert}</span>`;
-    }
-
-    alertBox.appendChild(alertMessage);
-    alertCell.appendChild(alertBox);
-
-    // --- Simple scroll behavior without gradient ---
-    alertMessage.addEventListener("scroll", () => {
-        // No visual fade — clean scroll only
-    });
-
-    if (!alertData.alert?.toLowerCase().includes("no findings")) {
-        alertBox.addEventListener("click", () => openAlertModal(alertData));
-    }
-}
-
-// --- Function: Trigger initial CDSS analysis for pre-filled fields ---
-window.triggerInitialCdssAnalysis = function (form) {
+/**
+ * Triggers analysis for all fields that have pre-filled values.
+ * Called on page load and after a patient is loaded.
+ */
+function triggerInitialCdssAnalysis(form) {
     const analyzeUrl = form.dataset.analyzeUrl;
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
@@ -216,52 +99,215 @@ window.triggerInitialCdssAnalysis = function (form) {
             `[data-alert-for="${fieldName}"]`
         );
 
-        if (alertCell && finding !== "") {
-            analyzeField(fieldName, finding, analyzeUrl, csrfToken);
-        } else if (alertCell && finding === "") {
-            showDefaultNoAlerts(alertCell);
+        if (alertCell) {
+            if (finding === "") {
+                showDefaultNoAlerts(alertCell);
+            } else {
+                analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+            }
         }
     });
-};
-
-// --- Default NO ALERTS state ---
-function showDefaultNoAlerts(alertCell) {
-    alertCell.className = "alert-box has-no-alert alert-green fade-in";
-    alertCell.style.height = "90px";
-    alertCell.style.margin = "2.8px";
-    alertCell.innerHTML = `
-    <span class="alert-message opacity-80 text-white text-center font-semibold uppercase">
-      NO ALERTS
-    </span>
-  `;
-    alertCell.onclick = null;
 }
 
-// --- Loading spinner (continuous) ---
-function showAlertLoading(alertCell) {
-    alertCell.className = "alert-box alert-green alert-loading fade-in";
-    alertCell.style.height = "90px";
-    alertCell.style.margin = "2px";
+// --- GLOBAL EVENT LISTENERS ---
+
+// 1. Listen for form reload (patient-loader.js)
+document.addEventListener("cdss:form-reloaded", (event) => {
+    const formContainer = event.detail.formContainer;
+    const cdssForm = formContainer.querySelector(".cdss-form");
+
+    if (cdssForm) {
+        // Re-attach listeners for typing
+        window.initializeCdssForForm(cdssForm);
+        // Run analysis for pre-filled data
+        triggerInitialCdssAnalysis(cdssForm);
+    }
+});
+
+// 2. Initialize on first page load
+document.addEventListener("DOMContentLoaded", () => {
+    const cdssForms = document.querySelectorAll(".cdss-form");
+    cdssForms.forEach((form) => {
+        window.initializeCdssForForm(form);
+        triggerInitialCdssAnalysis(form);
+    });
+});
+
+// --- API & DISPLAY FUNCTIONS ---
+
+/**
+ * Gets the dynamic height class (e.g., "h-[90px]") from the
+ * <form> tag's data attribute.
+ * @param {HTMLElement} alertCell - The <td> element for the alert.
+ * @returns {string} The height class or a default.
+ */
+function getAlertHeightClass(alertCell) {
+    const form = alertCell.closest(".cdss-form");
+    if (form && form.dataset.alertHeightClass) {
+        return form.dataset.alertHeightClass;
+    }
+    console.warn(
+        "CDSS: No data-alert-height-class found on form. Defaulting to h-[90px]."
+    );
+    return "h-[90px]"; // Fallback default
+}
+
+/**
+ * Calls the backend to analyze a single field.
+ */
+async function analyzeField(fieldName, finding, url, token) {
+    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+    if (!alertCell) return;
+
+    // This call is necessary for the initial page load analysis
+    showAlertLoading(alertCell); // Show loading state
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": token,
+            },
+            body: JSON.stringify({ fieldName, finding }),
+        });
+
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+        const alertData = await response.json();
+        console.log("[CDSS] Received alert data:", alertData);
+
+        setTimeout(() => {
+            displayAlert(alertCell, alertData);
+        }, 800); // Short delay to prevent loading flash
+    } catch (error) {
+        console.error("CDSS analysis failed:", error);
+        // Display an error *using the same displayAlert function*
+        displayAlert(alertCell, {
+            alert: "Error analyzing...",
+            severity: "CRITICAL",
+        });
+    }
+}
+
+/**
+ * [REFACTORED] Displays the API alert result.
+ * Replaces the innerHTML of the alert cell.
+ */
+function displayAlert(alertCell, alertData) {
+    console.log("[CDSS] Displaying alert:", alertData);
+    const heightClass = getAlertHeightClass(alertCell);
+
+    // Set color by severity
+    let colorClass = "alert-green";
+    if (alertData.severity === "CRITICAL") colorClass = "alert-red";
+    else if (alertData.severity === "WARNING") colorClass = "alert-orange";
+    else if (alertData.severity === "INFO") colorClass = "alert-green";
+
+    let alertContentHTML = "";
+    let hasNoAlertsClass = "";
+    let isClickable = false;
+
+    // --- Handle NO FINDINGS ---
+    if (
+        !alertData.alert ||
+        alertData.alert.toLowerCase().includes("no findings")
+    ) {
+        hasNoAlertsClass = "has-no-alert";
+        alertContentHTML = `
+      <span class="text-white text-center uppercase font-semibold opacity-80">
+        NO FINDINGS
+      </span>
+    `;
+    } else {
+        alertContentHTML = `<span>${alertData.alert}</span>`;
+        isClickable = true;
+    }
+
+    // Set the entire innerHTML of the <td>
+    // 'fade-in' is kept for the final result
     alertCell.innerHTML = `
-    <div class="alert-loading">
-      <div class="loading-spinner"></div>
-      <span>Analyzing...</span>
+    <div class="alert-box fade-in ${heightClass} ${colorClass} ${hasNoAlertsClass}" 
+         style="margin: 2px;">
+      <div class="alert-message" style="padding: 1px;">
+        ${alertContentHTML}
+      </div>
     </div>
   `;
-    alertCell.onclick = null;
+
+    // Add click listener only if it's a real alert
+    if (isClickable) {
+        const alertBox = alertCell.querySelector(".alert-box");
+        if (alertBox) {
+            alertBox.addEventListener("click", () => openAlertModal(alertData));
+        }
+    }
 }
 
-// --- Modal popup for details ---
+/**
+ * [REFACTORED] Displays the default "No Alerts" state.
+ * Replaces the innerHTML of the alert cell.
+ */
+function showDefaultNoAlerts(alertCell) {
+    const heightClass = getAlertHeightClass(alertCell);
+
+    // 'fade-in' is REMOVED to prevent stutter on delete
+    alertCell.innerHTML = `
+    <div class="alert-box has-no-alert alert-green ${heightClass}" 
+         style="margin: 2.8px;">
+      <span class="alert-message opacity-80 text-white text-center font-semibold uppercase">
+        NO ALERTS
+      </span>
+    </div>
+  `;
+    alertCell.onclick = null; // Clear any old click handlers on the <td>
+}
+
+/**
+ * [REFACTORED] Displays the loading spinner state.
+ * Replaces the innerHTML of the alert cell.
+ */
+function showAlertLoading(alertCell) {
+    const heightClass = getAlertHeightClass(alertCell);
+
+    // --- THIS IS THE FIX ---
+    // This HTML structure now mimics your "smooth" adl.js file.
+    // It does NOT add the '.alert-loading' class, which bypasses the
+    // fade-in animation in your app.css and stops the stutter.
+    alertCell.innerHTML = `
+    <div class="alert-box alert-green ${heightClass} flex justify-center items-center" 
+         style="margin: 2px;">
+      
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #ffffffcc; font-weight: 600;">
+        <div class="loading-spinner"></div>
+        <span>Analyzing...</span>
+      </div>
+
+    </div>
+  `;
+    alertCell.onclick = null; // Clear any old click handlers on the <td>
+}
+
+// --- MODAL ---
+
 function openAlertModal(alertData) {
+    // Check if a modal is already open
+    if (document.querySelector(".alert-modal-overlay")) return;
+
     const overlay = document.createElement("div");
     overlay.className = "alert-modal-overlay";
 
     const modal = document.createElement("div");
-    modal.className = "alert-modal fade-in";
+    modal.className = "alert-modal fade-in"; // 'fade-in' kept for modal
     modal.innerHTML = `
     <button class="close-btn">&times;</button>
     <h2>Alert Details</h2>
     <p>${alertData.alert}</p>
+    ${
+        alertData.recommendation
+            ? `<h3>Recommendation:</h3><p>${alertData.recommendation}</p>`
+            : ""
+    }
   `;
 
     overlay.appendChild(modal);
@@ -274,13 +320,16 @@ function openAlertModal(alertData) {
     modal.querySelector(".close-btn").addEventListener("click", closeModal);
 }
 
-// --- Fade-in animation ---
-const style = document.createElement("style");
-style.textContent = `
-  .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
-  }
-`;
-document.head.appendChild(style);
+// --- DYNAMIC STYLES ---
+// (Inject fade-in animation)
+(function () {
+    const style = document.createElement("style");
+    style.textContent = `
+    .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  `;
+    document.head.appendChild(style);
+})();

@@ -1,72 +1,13 @@
 import axios from "axios";
 
 window.initializeVitalSignsDateSync = function () {
-    const dateSelector = document.getElementById("date_selector");
-    const dayNoSelector = document.getElementById("day_no_selector");
-    const dropdownContainer = document.querySelector(".searchable-dropdown");
-    const hiddenPatientIdInput = document.getElementById("patient_id_hidden");
-    const vitalsForm = document.getElementById("vitals-form");
-    const hiddenDayNoForVitalsFormInput = document.getElementById(
-        "hidden_day_no_for_vitals_form"
-    );
-    const hiddenDateForVitalsFormInput = document.getElementById(
-        "hidden_date_for_vitals_form"
-    );
+    // Prevent multiple global listeners if this function is called multiple times
+    if (window.vitalSignsSyncInitialized) return;
+    window.vitalSignsSyncInitialized = true;
 
-    // 1. Check Elements
-    if (!dateSelector || !dayNoSelector || !dropdownContainer || !vitalsForm) {
-        console.warn(
-            "[VitalSignsDateSync] Aborting: Required DOM elements not found."
-        );
-        return;
-    }
+    console.log("[VitalSignsDateSync] Initializing Global Event Delegation.");
 
-    // 2. Check Data Attributes
-    const admissionDateStr = dropdownContainer.dataset.admissionDate;
-    // Handle cases where times might be missing or malformed
-    let times = [];
-    try {
-        times = vitalsForm.dataset.times
-            ? JSON.parse(vitalsForm.dataset.times)
-            : null;
-    } catch (e) {
-        console.error("[VitalSignsDateSync] Error parsing data-times:", e);
-    }
-    const fetchUrl = vitalsForm.dataset.fetchUrl;
-
-    if (!admissionDateStr) {
-        console.error(
-            "[VitalSignsDateSync] Missing 'data-admission-date' on .searchable-dropdown"
-        );
-        return;
-    }
-    if (!times) {
-        console.error(
-            "[VitalSignsDateSync] Missing or invalid 'data-times' on #vitals-form"
-        );
-        return;
-    }
-    if (!fetchUrl) {
-        console.error(
-            "[VitalSignsDateSync] Missing 'data-fetch-url' on #vitals-form"
-        );
-        return;
-    }
-
-    // --- Logic Starts Here ---
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayStr = today.toISOString().split("T")[0];
-
-    // Manual Parse for Admission Date (Y-m-d)
-    const dateParts = admissionDateStr.split("-");
-    const admissionDate = new Date(
-        parseInt(dateParts[0], 10),
-        parseInt(dateParts[1], 10) - 1,
-        parseInt(dateParts[2], 10)
-    );
-    admissionDate.setHours(0, 0, 0, 0);
-
+    // --- Helper: Format Date Y-m-d ---
     const formatLocalDate = (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -74,32 +15,25 @@ window.initializeVitalSignsDateSync = function () {
         return `${year}-${month}-${day}`;
     };
 
-    const admissionDateOnlyStr = formatLocalDate(admissionDate);
-    dateSelector.max = todayStr;
-    dateSelector.min = admissionDateOnlyStr;
-
-    // Calculate Max Day No based on existing options
-    const dayOptions = dayNoSelector.querySelectorAll("option");
-    const maxDayNo =
-        dayOptions.length > 0
-            ? parseInt(dayOptions[dayOptions.length - 1].value, 10)
-            : 1;
-
-    // --- Data Fetching Logic ---
+    // --- Core Function: Fetch & Update Vitals ---
     async function loadVitalSignsData(patientId, date, dayNo) {
-        if (!patientId || !date || !dayNo) return;
+        const vitalsForm = document.getElementById("vitals-form");
+        if (!vitalsForm || !patientId || !date || !dayNo) return;
+
+        const fetchUrl = vitalsForm.dataset.fetchUrl;
+        let times = [];
+        try {
+            times = vitalsForm.dataset.times
+                ? JSON.parse(vitalsForm.dataset.times)
+                : [];
+        } catch (e) {
+            console.error("Error parsing times", e);
+        }
 
         try {
-            console.log(
-                `Fetching vitals for PatID: ${patientId}, Date: ${date}, Day: ${dayNo}`
-            );
             const response = await axios.post(
                 fetchUrl,
-                {
-                    patient_id: patientId,
-                    date: date,
-                    day_no: dayNo,
-                },
+                { patient_id: patientId, date: date, day_no: dayNo },
                 {
                     headers: {
                         "X-CSRF-TOKEN": document
@@ -131,7 +65,6 @@ window.initializeVitalSignsDateSync = function () {
                                 ? record[fieldName]
                                 : "";
                     });
-
                     if (alertBox) {
                         let alertContent = "NO ALERTS";
                         let bgColor = "";
@@ -163,92 +96,146 @@ window.initializeVitalSignsDateSync = function () {
                 }
             });
         } catch (error) {
-            console.error("Error fetching vital signs:", error);
+            console.error("[VitalSignsDateSync] Fetch error:", error);
         }
     }
 
-    // --- Sync Logic ---
-    function updateDate() {
-        let dayNo = parseInt(dayNoSelector.value, 10);
-        if (isNaN(dayNo)) return;
+    // --- Event Delegation: Listen for changes on document ---
+    document.addEventListener("change", (e) => {
+        const targetId = e.target.id;
 
-        if (dayNo > maxDayNo) {
-            dayNo = maxDayNo;
-            dayNoSelector.value = maxDayNo;
-        }
-        if (dayNo < 1) {
-            dayNo = 1;
-            dayNoSelector.value = 1;
-        }
+        // Only react to our specific selectors
+        if (targetId !== "day_no_selector" && targetId !== "date_selector")
+            return;
 
-        const newDate = new Date(admissionDate.getTime());
-        newDate.setDate(newDate.getDate() + (dayNo - 1));
-        const formattedDate = formatLocalDate(newDate);
-
-        dateSelector.value = formattedDate;
-        if (hiddenDateForVitalsFormInput)
-            hiddenDateForVitalsFormInput.value = formattedDate;
-        if (hiddenDayNoForVitalsFormInput)
-            hiddenDayNoForVitalsFormInput.value = dayNo;
-
-        const patientId = hiddenPatientIdInput
-            ? hiddenPatientIdInput.value
-            : null;
-        if (patientId) loadVitalSignsData(patientId, formattedDate, dayNo);
-    }
-
-    function updateDayNo() {
-        const selectedDateStr = dateSelector.value;
-        if (!selectedDateStr) return;
-
-        const selectedDateParts = selectedDateStr.split("-");
-        const selectedDate = new Date(
-            parseInt(selectedDateParts[0], 10),
-            parseInt(selectedDateParts[1], 10) - 1,
-            parseInt(selectedDateParts[2], 10)
+        // Dynamic DOM Lookups (Get fresh elements every time)
+        const dropdownContainer = document.querySelector(
+            ".searchable-dropdown"
         );
-        selectedDate.setHours(0, 0, 0, 0);
+        const dateSelector = document.getElementById("date_selector");
+        const dayNoSelector = document.getElementById("day_no_selector");
+        const hiddenPatientIdInput =
+            document.getElementById("patient_id_hidden");
+        const hiddenDateInput = document.getElementById(
+            "hidden_date_for_vitals_form"
+        );
+        const hiddenDayInput = document.getElementById(
+            "hidden_day_no_for_vitals_form"
+        );
 
-        if (selectedDate.getTime() > today.getTime()) {
-            selectedDate.setTime(today.getTime());
-            dateSelector.value = todayStr;
-        } else if (selectedDate.getTime() < admissionDate.getTime()) {
-            selectedDate.setTime(admissionDate.getTime());
-            dateSelector.value = admissionDateOnlyStr;
+        if (!dropdownContainer || !dateSelector || !dayNoSelector) return;
+
+        // Parse Admission Date
+        const admissionDateStr = dropdownContainer.dataset.admissionDate;
+        if (!admissionDateStr) return;
+
+        const dateParts = admissionDateStr.split("-");
+        const admissionDate = new Date(
+            parseInt(dateParts[0], 10),
+            parseInt(dateParts[1], 10) - 1,
+            parseInt(dateParts[2], 10)
+        );
+        admissionDate.setHours(0, 0, 0, 0);
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayStr = today.toISOString().split("T")[0];
+        const admissionDateOnlyStr = formatLocalDate(admissionDate);
+
+        // Logic: Handle Day No Change
+        if (targetId === "day_no_selector") {
+            let dayNo = parseInt(dayNoSelector.value, 10);
+
+            // Calculate Max Day
+            const dayOptions = dayNoSelector.querySelectorAll("option");
+            const maxDayNo =
+                dayOptions.length > 0
+                    ? parseInt(dayOptions[dayOptions.length - 1].value, 10)
+                    : 30;
+
+            if (isNaN(dayNo)) return;
+            if (dayNo > maxDayNo) {
+                dayNo = maxDayNo;
+                dayNoSelector.value = maxDayNo;
+            }
+            if (dayNo < 1) {
+                dayNo = 1;
+                dayNoSelector.value = 1;
+            }
+
+            const newDate = new Date(admissionDate.getTime());
+            newDate.setDate(newDate.getDate() + (dayNo - 1));
+            const formattedDate = formatLocalDate(newDate);
+
+            dateSelector.value = formattedDate;
+
+            if (hiddenDateInput) hiddenDateInput.value = formattedDate;
+            if (hiddenDayInput) hiddenDayInput.value = dayNo;
+
+            if (hiddenPatientIdInput && hiddenPatientIdInput.value) {
+                loadVitalSignsData(
+                    hiddenPatientIdInput.value,
+                    formattedDate,
+                    dayNo
+                );
+            }
         }
 
-        const diffTime = selectedDate.getTime() - admissionDate.getTime();
-        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        // Logic: Handle Date Change
+        if (targetId === "date_selector") {
+            const selectedDateStr = dateSelector.value;
+            if (!selectedDateStr) return;
 
-        if (diffDays > maxDayNo) dayNoSelector.value = maxDayNo;
-        else dayNoSelector.value = diffDays;
+            const sParts = selectedDateStr.split("-");
+            const selectedDate = new Date(
+                parseInt(sParts[0], 10),
+                parseInt(sParts[1], 10) - 1,
+                parseInt(sParts[2], 10)
+            );
+            selectedDate.setHours(0, 0, 0, 0);
 
-        const finalDayNo = dayNoSelector.value;
-        const finalDate = dateSelector.value;
+            // Bounds Check
+            if (selectedDate.getTime() > today.getTime()) {
+                selectedDate.setTime(today.getTime());
+                dateSelector.value = todayStr;
+            } else if (selectedDate.getTime() < admissionDate.getTime()) {
+                selectedDate.setTime(admissionDate.getTime());
+                dateSelector.value = admissionDateOnlyStr;
+            }
 
-        if (hiddenDayNoForVitalsFormInput)
-            hiddenDayNoForVitalsFormInput.value = finalDayNo;
-        if (hiddenDateForVitalsFormInput)
-            hiddenDateForVitalsFormInput.value = finalDate;
+            // Calculate Diff
+            const diffTime = selectedDate.getTime() - admissionDate.getTime();
+            const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-        const patientId = hiddenPatientIdInput
-            ? hiddenPatientIdInput.value
-            : null;
-        if (patientId) loadVitalSignsData(patientId, finalDate, finalDayNo);
-    }
+            // Get Max Day
+            const dayOptions = dayNoSelector.querySelectorAll("option");
+            const maxDayNo =
+                dayOptions.length > 0
+                    ? parseInt(dayOptions[dayOptions.length - 1].value, 10)
+                    : 30;
 
-    // Remove existing listeners to prevent duplicates if script runs twice
-    dayNoSelector.removeEventListener("change", updateDate);
-    dateSelector.removeEventListener("change", updateDayNo);
+            if (diffDays > maxDayNo) dayNoSelector.value = maxDayNo;
+            else if (diffDays < 1) dayNoSelector.value = 1;
+            else dayNoSelector.value = diffDays;
 
-    // Attach listeners
-    dayNoSelector.addEventListener("change", updateDate);
-    dateSelector.addEventListener("change", updateDayNo);
+            const finalDayNo = dayNoSelector.value;
+            const finalDate = dateSelector.value;
 
-    console.log("[VitalSignsDateSync] Initialized successfully.");
+            if (hiddenDayInput) hiddenDayInput.value = finalDayNo;
+            if (hiddenDateInput) hiddenDateInput.value = finalDate;
+
+            if (hiddenPatientIdInput && hiddenPatientIdInput.value) {
+                loadVitalSignsData(
+                    hiddenPatientIdInput.value,
+                    finalDate,
+                    finalDayNo
+                );
+            }
+        }
+    });
 };
 
-// Auto-run if DOM is ready
+// Auto-run
 if (document.readyState === "loading") {
     document.addEventListener(
         "DOMContentLoaded",

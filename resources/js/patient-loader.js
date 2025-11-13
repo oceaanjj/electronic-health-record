@@ -1,10 +1,6 @@
 /**
- *
- * How it works:
- * 1. Listens for a custom "patient:selected" event on the document.
- * 2. Shows loading state and fetches new content.
- * 3. Updates header elements (Date, Day, Search) and Form Content.
- * 4. Re-initializes scripts.
+ * patient-loader.js
+ * Handles the AJAX loading of form content when a patient is selected via the dropdown.
  */
 
 if (!window.patientSelectedListenerAttached) {
@@ -25,7 +21,7 @@ if (!window.patientSelectedListenerAttached) {
         const dateSelector = document.getElementById("date_selector");
         const dayNoSelector = document.getElementById("day_no_selector");
 
-        // Check if we are on a page that has date/day selectors
+        // Check if we are on a page that has date/day selectors (like Vital Signs or ADL)
         const isDateDayForm =
             dateSelector && dayNoSelector && dropdownContainer;
 
@@ -57,7 +53,9 @@ if (!window.patientSelectedListenerAttached) {
             const parser = new DOMParser();
             const newHtml = parser.parseFromString(htmlText, "text/html");
 
-            // --- Step 1: Update Header Elements ---
+            // --- Step 1: Update Header Elements (Search, Date, Day) ---
+
+            // 1a. Update Search Input (Visually keep the name)
             const newPatientSearchInput = newHtml.getElementById(
                 "patient_search_input"
             );
@@ -76,7 +74,7 @@ if (!window.patientSelectedListenerAttached) {
                 const newDayNoSelector =
                     newHtml.getElementById("day_no_selector");
 
-                // FIX: Ensure admission date dataset is updated
+                // 1b. Update Admission Date Dataset (Crucial for sync script)
                 if (
                     newDropdownContainer &&
                     newDropdownContainer.dataset.admissionDate
@@ -85,39 +83,31 @@ if (!window.patientSelectedListenerAttached) {
                         newDropdownContainer.dataset.admissionDate;
                 }
 
-                // Update Date Selector
+                // 1c. Update Date Selector
                 if (newDateSelector) {
-                    dateSelector.value = newDateSelector.value;
                     dateSelector.disabled = false;
+                    // Directly take the value from the server response
+                    dateSelector.value = newDateSelector.value;
                 }
 
-                // FIX: Robust Day Selector Update
+                // 1d. Update Day Selector (The Fix)
                 if (newDayNoSelector) {
-                    // 1. Swap the options HTML
-                    dayNoSelector.innerHTML = newDayNoSelector.innerHTML;
                     dayNoSelector.disabled = false;
+                    // Replace options entirely
+                    dayNoSelector.innerHTML = newDayNoSelector.innerHTML;
 
-                    // 2. Find the correct value
-                    const selectedOpt =
-                        newDayNoSelector.querySelector("option[selected]");
-                    if (selectedOpt) {
-                        dayNoSelector.value = selectedOpt.value;
-                    } else {
-                        // Fallback: Default to the LATEST day (last option), not Day 1
-                        const options =
-                            newDayNoSelector.querySelectorAll("option");
-                        if (options.length > 0) {
-                            dayNoSelector.value =
-                                options[options.length - 1].value;
-                        }
-                    }
+                    // Directly take the value that the server marked as selected
+                    // The controller calculates the latest day, so newDayNoSelector.value IS the latest day.
+                    dayNoSelector.value = newDayNoSelector.value;
+
                     console.log(
-                        `[PatientLoader] Updated Day No to: ${dayNoSelector.value}`
+                        `[PatientLoader] Set Day No to: ${dayNoSelector.value}`
                     );
                 }
             }
 
             // --- Step 2: Replace Main Form Content ---
+            // The form content returned by the server corresponds to the Date/Day set above
             const newContent = newHtml.getElementById("form-content-container");
             if (newContent) {
                 formContainer.innerHTML = newContent.innerHTML;
@@ -129,17 +119,18 @@ if (!window.patientSelectedListenerAttached) {
                     window.initializeSearchableDropdown();
                 }
 
-                // FIX: Re-initialize Sync Script
+                // Re-initialize Sync Script
                 if (window.initializeVitalSignsDateSync) {
                     console.log(
                         "[PatientLoader] Re-initializing vital signs date sync."
                     );
-                    // Small timeout to ensure DOM updates have settled before script runs
+                    // Wait for DOM to paint before re-initializing sync to prevent calculation overrides
                     setTimeout(() => {
                         window.initializeVitalSignsDateSync();
                     }, 50);
                 }
 
+                // Re-initialize Date/Day Loader for other forms (ADL etc)
                 if (window.initializeDateDayLoader) {
                     const headerDropdown = document.querySelector(
                         ".searchable-dropdown"
@@ -150,6 +141,7 @@ if (!window.patientSelectedListenerAttached) {
                     window.initializeDateDayLoader(newSelectUrl);
                 }
 
+                // Dispatch event for other listeners
                 document.dispatchEvent(
                     new CustomEvent("cdss:form-reloaded", {
                         bubbles: true,
@@ -159,6 +151,7 @@ if (!window.patientSelectedListenerAttached) {
             }
         } catch (error) {
             console.error("Patient loading failed:", error);
+            // Fallback to full reload if AJAX fails
             window.location.reload();
         }
     });

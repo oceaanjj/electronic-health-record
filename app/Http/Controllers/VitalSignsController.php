@@ -33,21 +33,14 @@ class VitalSignsController extends Controller
             });
     }
 
-    /**
-     * Handles the AJAX request for patient selection and date/day changes.
-     * Also displays the initial page, loading data based on session state.
-     *
-     * @param Request $request
-     * @return \Illuminate\View\View
-     */
     public function selectPatient(Request $request)
     {
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $selectedPatient = null;
         $vitalsData = collect();
-        $totalDaysSinceAdmission = 0;
+        $totalDaysSinceAdmission = 1; // Default to 1
 
-        // Default values for rendering the view if selection fails
+        // Default values
         $currentDate = now()->format('Y-m-d');
         $currentDayNo = 1;
         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
@@ -60,52 +53,58 @@ class VitalSignsController extends Controller
             if ($selectedPatient) {
                 $request->session()->put('selected_patient_id', $patientId);
 
-                $admissionDate = Carbon::parse($selectedPatient->admission_date);
-                $totalDaysSinceAdmission = $admissionDate->diffInDays(now()) + 1;
+                $admissionDate = Carbon::parse($selectedPatient->admission_date)->startOfDay();
+                $today = now()->startOfDay();
 
-                // Get date/day from request or session
-                $date = $request->input('date');
-                $dayNo = $request->input('day_no');
+                // Calculate exact days since admission (1-based index)
+                // If admitted today, diff is 0, so Day No is 1.
+                $totalDaysSinceAdmission = intval($admissionDate->diffInDays($today)) + 1;
+                // Safety check: ensure it's at least 1
+                if ($totalDaysSinceAdmission < 1)
+                    $totalDaysSinceAdmission = 1;
 
-                $isNewPatientSelection = is_null($date) && is_null($dayNo) && $request->has('patient_id');
+                // Check inputs
+                $reqDate = $request->input('date');
+                $reqDayNo = $request->input('day_no');
+
+                // Logic: Is this a fresh patient selection? (No date/day in request)
+                $isNewPatientSelection = is_null($reqDate) && is_null($reqDayNo) && $request->has('patient_id');
 
                 if ($isNewPatientSelection) {
-                    // --- MODIFIED: Default to Today / Latest Day ---
+                    // CASE 1: User just selected a patient. 
+                    // FORCE "Latest Day" (Today) and calculated Day No.
+                    $date = $today->format('Y-m-d');
                     $dayNo = $totalDaysSinceAdmission;
-                    $date = now()->format('Y-m-d');
                 } else {
-                    // Use date/day from request or fall back to session
-                    $date = $date ?? $request->session()->get('selected_date');
-                    $dayNo = $dayNo ?? $request->session()->get('selected_day_no');
+                    // CASE 2: User is navigating (changing date/day or loading from session)
+                    $date = $reqDate ?? $request->session()->get('selected_date');
+                    $dayNo = $reqDayNo ?? $request->session()->get('selected_day_no');
 
-                    // Final fallback if session is also empty
+                    // Fallback if session empty
                     if (!$date || !$dayNo) {
+                        $date = $today->format('Y-m-d');
                         $dayNo = $totalDaysSinceAdmission;
-                        $date = $admissionDate->copy()->addDays($dayNo - 1)->format('Y-m-d');
                     }
                 }
 
-                // Ensure date and day are capped at today
-                $today = now();
-                $selectedDateCarbon = Carbon::parse($date);
+                // Ensure we don't go into the future
+                $selectedDateCarbon = Carbon::parse($date)->startOfDay();
                 if ($selectedDateCarbon->isAfter($today)) {
                     $date = $today->format('Y-m-d');
                     $dayNo = $totalDaysSinceAdmission;
                 }
 
-
-                // Store the determined date/day in the session
+                // Save to session
                 $request->session()->put('selected_date', $date);
                 $request->session()->put('selected_day_no', $dayNo);
 
-                // Set variables for the view
                 $currentDate = $date;
                 $currentDayNo = $dayNo;
 
-                // Fetch the Vitals record
+                // Fetch Data
                 $vitalsData = $this->getVitalsRecord($patientId, $currentDate, (int) $currentDayNo);
 
-                // Re-run CDSS analysis on fetched data
+                // CDSS Analysis
                 $cdssService = new VitalCdssService();
                 foreach ($vitalsData as $time => $vitalRecord) {
                     $vitalsArray = $vitalRecord->toArray();
@@ -114,11 +113,9 @@ class VitalSignsController extends Controller
                     $vitalsData[$time]->news_severity = $alertResult['severity'];
                 }
             } else {
-                // Patient not found, clear session
                 $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
             }
         } else {
-            // No patient selected, clear session
             $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
         }
 

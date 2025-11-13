@@ -32,11 +32,10 @@ class LabValuesController extends Controller
 
             if ($selectedPatient) {
                 $labValue = LabValues::where('patient_id', $patientId)->first();
-
-                $ageGroup = $this->getAgeGroup($selectedPatient);
+                $cdssService = new LabValuesCdssService();
+                $ageGroup = $cdssService->getAgeGroup($selectedPatient);
 
                 if ($labValue) {
-                    $cdssService = new LabValuesCdssService();
                     $alerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
                 }
             } else {
@@ -46,6 +45,15 @@ class LabValuesController extends Controller
         }
 
         return view('lab-values', compact('patients', 'selectedPatient', 'labValue', 'alerts'));
+    }
+
+    public function startCdss($id)
+    {
+        $labValues = LabValues::findOrFail($id);
+        return redirect()->route('nursing-diagnosis.start', [
+            'component' => 'lab-values',
+            'id' => $labValues->id
+        ]);
     }
 
     public function store(Request $request)
@@ -95,8 +103,8 @@ class LabValuesController extends Controller
             'basophils_normal_range' => 'nullable|string|max:50',
         ]);
 
-        $ageGroup = $this->getAgeGroup($patient);
         $cdssService = new LabValuesCdssService();
+        $ageGroup = $this->getAgeGroup($patient);
         $alerts = $this->runLabCdss((object) $data, $cdssService, $ageGroup);
 
         // Add alerts to the data array
@@ -130,6 +138,56 @@ class LabValuesController extends Controller
         return redirect()->route('lab-values.index')
             ->with('alerts', $viewAlerts)
             ->with('success', $message);
+    }
+
+    public function runSingleCdssAnalysis(Request $request)
+    {
+        $data = $request->validate([
+            'fieldName' => 'required|string',
+            'finding' => 'nullable|numeric',
+        ]);
+
+        $patientId = $request->session()->get('selected_patient_id');
+        if (!$patientId) {
+            return response()->json(['alert' => 'No patient selected.', 'severity' => LabValuesCdssService::NONE], 400);
+        }
+
+        $patient = Auth::user()->patients()->find($patientId);
+        if (!$patient) {
+            return response()->json(['alert' => 'Patient not found or unauthorized.', 'severity' => LabValuesCdssService::NONE], 403);
+        }
+
+        $cdssService = new LabValuesCdssService();
+        $ageGroup = $cdssService->getAgeGroup($patient);
+
+        // Map fieldName to the parameter expected by checkLabResult
+        $labParamMap = [
+            'wbc_result' => 'wbc',
+            'rbc_result' => 'rbc',
+            'hgb_result' => 'hgb',
+            'hct_result' => 'hct',
+            'platelets_result' => 'platelets',
+            'mcv_result' => 'mcv',
+            'mch_result' => 'mch',
+            'mchc_result' => 'mchc',
+            'rdw_result' => 'rdw',
+            'neutrophils_result' => 'neutrophils',
+            'lymphocytes_result' => 'lymphocytes',
+            'monocytes_result' => 'monocytes',
+            'eosinophils_result' => 'eosinophils',
+            'basophils_result' => 'basophils',
+        ];
+
+        $param = $labParamMap[$data['fieldName']] ?? null;
+        $value = $data['finding'];
+
+        if ($param && $value !== null) {
+            $alert = $cdssService->checkLabResult($param, $value, $ageGroup);
+        } else {
+            $alert = ['alert' => '', 'severity' => LabValuesCdssService::NONE];
+        }
+
+        return response()->json($alert);
     }
 
     private function runLabCdss($labValue, $cdssService, $ageGroup)
@@ -231,55 +289,5 @@ class LabValuesController extends Controller
             return 'adolescent';
         }
         return 'adult'; 
-    }
-
-    public function runSingleCdssAnalysis(Request $request)
-    {
-        $data = $request->validate([
-            'fieldName' => 'required|string',
-            'finding' => 'nullable|numeric',
-        ]);
-
-        $patientId = $request->session()->get('selected_patient_id');
-        if (!$patientId) {
-            return response()->json(['alert' => 'No patient selected.', 'severity' => LabValuesCdssService::NONE], 400);
-        }
-
-        $patient = Auth::user()->patients()->find($patientId);
-        if (!$patient) {
-            return response()->json(['alert' => 'Patient not found or unauthorized.', 'severity' => LabValuesCdssService::NONE], 403);
-        }
-
-        $ageGroup = $this->getAgeGroup($patient);
-        $cdssService = new LabValuesCdssService();
-
-        // Map fieldName to the parameter expected by checkLabResult
-        $labParamMap = [
-            'wbc_result' => 'wbc',
-            'rbc_result' => 'rbc',
-            'hgb_result' => 'hgb',
-            'hct_result' => 'hct',
-            'platelets_result' => 'platelets',
-            'mcv_result' => 'mcv',
-            'mch_result' => 'mch',
-            'mchc_result' => 'mchc',
-            'rdw_result' => 'rdw',
-            'neutrophils_result' => 'neutrophils',
-            'lymphocytes_result' => 'lymphocytes',
-            'monocytes_result' => 'monocytes',
-            'eosinophils_result' => 'eosinophils',
-            'basophils_result' => 'basophils',
-        ];
-
-        $param = $labParamMap[$data['fieldName']] ?? null;
-        $value = $data['finding'];
-
-        if ($param && $value !== null) {
-            $alert = $cdssService->checkLabResult($param, $value, $ageGroup);
-        } else {
-            $alert = ['alert' => '', 'severity' => LabValuesCdssService::NONE];
-        }
-
-        return response()->json($alert);
     }
 }

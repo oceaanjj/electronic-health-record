@@ -1,0 +1,16 @@
+intervention:
+  - keywords: ["Risk for Infection"]
+    alert: "Monitor vital signs, especially temperature, every 4 hours. Assess for any signs of infection such as redness, swelling, or drainage. Monitor WBC count trends. Teach patient and family about the importance of hand hygiene."
+    severity: "INFO"
+  - keywords: ["Activity Intolerance"]
+    alert: "Plan care to allow for rest periods. Assist with ADLs as needed. Monitor patient's response to activity, noting any signs of increased fatigue, shortness of breath, or changes in vital signs."
+    severity: "INFO"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Implement bleeding precautions. Monitor for signs of bleeding such as petechiae, ecchymosis, or bleeding from gums. Avoid unnecessary venipuncture. Apply pressure to sites for longer than usual."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Monitor for signs of poor tissue perfusion such as pallor, cyanosis, or cool extremities. Monitor hemoglobin and hematocrit levels. Administer blood products as ordered."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Provide a diet rich in iron, vitamin B12, and folate. Administer nutritional supplements as ordered. Monitor dietary intake and tolerance."
+    severity: "INFO"

@@ -4,9 +4,7 @@
 
 @section('content')
 
-<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        LAB VALUES
-    </h2>
+
 
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
@@ -103,7 +101,12 @@
 
                 {{-- BUTTONS --}}
                 <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                    <button type="button" class="button-default">CDSS</button>
+                    @if (isset($labValue))
+                        <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
+                            class="button-default text-center">
+                            CDSS
+                        </a>
+                    @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
 

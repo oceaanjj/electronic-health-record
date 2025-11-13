@@ -195,6 +195,8 @@
             </a>
         </li>
 
+
+        {{---
         <li>
             <a href="{{ route('discharge-planning') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
@@ -207,7 +209,7 @@
                     class="{{ request()->routeIs('discharge-planning') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Discharge
                     Planning</span>
             </a>
-        </li>
+        </li>--}}
 
 
         <li>

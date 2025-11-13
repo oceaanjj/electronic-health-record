@@ -1,27 +1,40 @@
 /**
  * ===================================================================
- * DYNAMIC CDSS ALERT SYSTEM
+ * DYNAMIC CDSS ALERT SYSTEM (Universal)
  * ===================================================================
  * This single script handles CDSS alerts for all forms.
  *
- * How it works:
- * 1.  It relies on a 'data-alert-height-class' attribute on the
- * <form class="cdss-form"> tag (e.g., "h-[90px]" or "h-[53px]").
- * 2.  A helper function, getAlertHeightClass(), finds the form
- * and gets this class.
- * 3.  All display functions (loading, default, alert) are
- * standardized to replace the innerHTML of the alert cell (<td>)
- * and use this dynamic height class.
- * 4.  It attaches to window.initializeCdssForForm and the
- * "cdss:form-reloaded" event, just like before.
+ * It is now compatible with two types of pages:
+ * 1. Single-Field: (e.g., physical-exam, adl)
+ * - Sends: { fieldName: "...", finding: "..." }
+ * 2. Time-Based Row: (e.g., vital-signs)
+ * - Sends: { time: "...", vitals: { field1: "...", field2: "..." } }
  */
 
 let debounceTimer;
 
 /**
+ * Finds the correct alert cell for a given input.
+ * @param {HTMLElement} input - The input element.
+ * @returns {HTMLElement|null} The-corresponding alert cell.
+ */
+function findAlertCellForInput(input) {
+    const fieldName = input.dataset.fieldName;
+    const time = input.dataset.time;
+
+    if (time) {
+        // Vital-Signs logic: Find cell by time
+        return document.querySelector(`[data-alert-for-time="${time}"]`);
+    }
+    if (fieldName) {
+        // ADL / Physical-Exam logic: Find cell by field name
+        return document.querySelector(`[data-alert-for="${fieldName}"]`);
+    }
+    return null;
+}
+
+/**
  * Attaches real-time listeners to a form's inputs.
- * This is the main initialization function called by patient-loader.js
- * and on DOMContentLoaded.
  */
 window.initializeCdssForForm = function (form) {
     const analyzeUrl = form.dataset.analyzeUrl;
@@ -39,7 +52,6 @@ window.initializeCdssForForm = function (form) {
 
     const inputs = form.querySelectorAll(".cdss-input");
 
-    // --- Analyze while typing ---
     inputs.forEach((input) => {
         // Debounced input handler
         const handleInput = (e) => {
@@ -47,27 +59,49 @@ window.initializeCdssForForm = function (form) {
 
             const fieldName = e.target.dataset.fieldName;
             const finding = e.target.value.trim();
-            const alertCell = document.querySelector(
-                `[data-alert-for="${fieldName}"]`
-            );
+            const time = e.target.dataset.time;
+            const alertCell = findAlertCellForInput(e.target);
 
-            if (alertCell) {
-                if (finding === "") {
-                    showDefaultNoAlerts(alertCell);
-                } else {
-                    // Show loading state immediately on type
-                    showAlertLoading(alertCell);
-                }
+            if (alertCell && finding === "") {
+                // User deleted text. Show "No Alerts" immediately.
+                console.log("[ALERT] Input empty. Showing 'No Alerts'.");
+                showDefaultNoAlerts(alertCell);
+                delete alertCell.dataset.startTime; // Clear any pending timer
+                return; // Stop here
             }
 
+            // User is typing. Set a timer.
             debounceTimer = setTimeout(() => {
+                // User has stopped typing for 300ms.
                 if (fieldName && finding !== "") {
-                    analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+                    // Now, show the loading spinner...
+                    if (alertCell) {
+                        console.log(
+                            "[ALERT] Debounce over. Showing loading spinner."
+                        );
+                        showAlertLoading(alertCell);
+                        alertCell.dataset.startTime = performance.now(); // <-- START TIMER
+                    }
+                    // ...and make the API call.
+                    console.log("[ALERT] Calling analyzeField...");
+                    analyzeField(
+                        fieldName,
+                        finding,
+                        time,
+                        alertCell,
+                        analyzeUrl,
+                        csrfToken
+                    );
                 }
-            }, 1000);
+
+                console.log(
+                    `[ALERT] Typing... Field: ${fieldName || "N/A"}, Time: ${
+                        time || "N/A"
+                    }, Value: "${finding}"`
+                );
+            }, 300); // 300ms delay.
         };
 
-        // Remove old listener to prevent duplicates, then add new one
         input.removeEventListener("input", handleInput);
         input.addEventListener("input", handleInput);
     });
@@ -75,9 +109,8 @@ window.initializeCdssForForm = function (form) {
 
 /**
  * Triggers analysis for all fields that have pre-filled values.
- * Called on page load and after a patient is loaded.
  */
-function triggerInitialCdssAnalysis(form) {
+window.triggerInitialCdssAnalysis = function (form) {
     const analyzeUrl = form.dataset.analyzeUrl;
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
@@ -92,22 +125,76 @@ function triggerInitialCdssAnalysis(form) {
     }
 
     const inputs = form.querySelectorAll(".cdss-input");
+
+    // --- THIS LOGIC IS NOW TIME-AWARE ---
+
+    // 1. Group inputs by time (for vitals) or handle as individuals (for adl/pe)
+    const analysisGroups = new Map();
+
     inputs.forEach((input) => {
         const fieldName = input.dataset.fieldName;
         const finding = input.value.trim();
-        const alertCell = document.querySelector(
-            `[data-alert-for="${fieldName}"]`
-        );
+        const time = input.dataset.time;
+        const alertCell = findAlertCellForInput(input);
 
-        if (alertCell) {
-            if (finding === "") {
-                showDefaultNoAlerts(alertCell);
-            } else {
-                analyzeField(fieldName, finding, analyzeUrl, csrfToken);
+        if (!alertCell || finding === "") {
+            if (alertCell) showDefaultNoAlerts(alertCell);
+            return;
+        }
+
+        let key = null;
+        let data = null;
+
+        if (time) {
+            // It's a vitals input, group by time
+            key = `time-${time}`;
+            if (!analysisGroups.has(key)) {
+                analysisGroups.set(key, { time, alertCell, fields: {} });
             }
+            analysisGroups.get(key).fields[fieldName] = finding;
+        } else {
+            // It's a standard (ADL/PE) input, handle individually
+            key = `field-${fieldName}`;
+            analysisGroups.set(key, {
+                time: null,
+                alertCell,
+                fieldName,
+                finding,
+            });
         }
     });
-}
+
+    // 2. Run analysis for each group
+    analysisGroups.forEach((group) => {
+        console.log("[ALERT] Initial load. Showing loading spinner.");
+        showAlertLoading(group.alertCell);
+        group.alertCell.dataset.startTime = performance.now(); // <-- START TIMER
+
+        console.log("[ALERT] Calling analyzeField for initial load.");
+        if (group.time) {
+            // Vitals logic
+            analyzeField(
+                null,
+                null,
+                group.time,
+                group.alertCell,
+                analyzeUrl,
+                csrfToken,
+                group.fields
+            );
+        } else {
+            // Standard logic
+            analyzeField(
+                group.fieldName,
+                group.finding,
+                null,
+                group.alertCell,
+                analyzeUrl,
+                csrfToken
+            );
+        }
+    });
+};
 
 // --- GLOBAL EVENT LISTENERS ---
 
@@ -117,10 +204,9 @@ document.addEventListener("cdss:form-reloaded", (event) => {
     const cdssForm = formContainer.querySelector(".cdss-form");
 
     if (cdssForm) {
-        // Re-attach listeners for typing
+        console.log("[ALERT] Form reloaded. Initializing alerts.");
         window.initializeCdssForForm(cdssForm);
-        // Run analysis for pre-filled data
-        triggerInitialCdssAnalysis(cdssForm);
+        window.triggerInitialCdssAnalysis(cdssForm);
     }
 });
 
@@ -128,18 +214,19 @@ document.addEventListener("cdss:form-reloaded", (event) => {
 document.addEventListener("DOMContentLoaded", () => {
     const cdssForms = document.querySelectorAll(".cdss-form");
     cdssForms.forEach((form) => {
+        console.log(
+            "[ALERT] DOM loaded. Initializing alerts for form:",
+            form.id
+        );
         window.initializeCdssForForm(form);
-        triggerInitialCdssAnalysis(form);
+        window.triggerInitialCdssAnalysis(form);
     });
 });
 
 // --- API & DISPLAY FUNCTIONS ---
 
 /**
- * Gets the dynamic height class (e.g., "h-[90px]") from the
- * <form> tag's data attribute.
- * @param {HTMLElement} alertCell - The <td> element for the alert.
- * @returns {string} The height class or a default.
+ * Gets the dynamic height class from the <form> tag.
  */
 function getAlertHeightClass(alertCell) {
     const form = alertCell.closest(".cdss-form");
@@ -154,13 +241,60 @@ function getAlertHeightClass(alertCell) {
 
 /**
  * Calls the backend to analyze a single field.
+ * @param {string|null} fieldName - The single field name (for ADL/PE)
+ * @param {string|null} finding - The single finding (for ADL/PE)
+ * @param {string|null} time - The time slot (for Vitals)
+ * @param {HTMLElement} alertCell - The <td> cell to update
+ * @param {string} url - The analysis URL
+ * @param {string} token - The CSRF token
+ * @param {Object|null} vitalsOverride - Pre-grouped vitals for initial load
  */
-async function analyzeField(fieldName, finding, url, token) {
-    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
+async function analyzeField(
+    fieldName,
+    finding,
+    time,
+    alertCell,
+    url,
+    token,
+    vitalsOverride = null
+) {
+    // We already found the cell, so just check if it exists
     if (!alertCell) return;
 
-    // This call is necessary for the initial page load analysis
-    showAlertLoading(alertCell); // Show loading state
+    let bodyData = {};
+
+    // --- Vitals Signs ---
+    if (time) {
+        console.log(`[ALERT] Vitals logic triggered for time: ${time}`);
+        let vitalsToSend = {};
+
+        if (vitalsOverride) {
+            // Use pre-grouped vitals from initial load
+            vitalsToSend = vitalsOverride;
+        } else {
+            // Gather all vitals for this time slot from the DOM
+            const form = alertCell.closest(".cdss-form");
+            if (form) {
+                const vitalInputsForTime = form.querySelectorAll(
+                    `.cdss-input[data-time="${time}"]`
+                );
+                vitalInputsForTime.forEach((input) => {
+                    const currentFieldName = input.dataset.fieldName;
+                    vitalsToSend[currentFieldName] = input.value.trim();
+                });
+            }
+            1;
+        }
+        bodyData = { time: time, vitals: vitalsToSend };
+        // --- End Vitals Signs ---
+    } else {
+        // --- Physical Exam / ADL---
+        console.log(`[ALERT] Standard logic triggered for field: ${fieldName}`);
+        bodyData = { fieldName: fieldName, finding: finding };
+        // --- End Standard Physical Exam ---
+    }
+
+    console.log("[ALERT] Sending body:", bodyData);
 
     try {
         const response = await fetch(url, {
@@ -169,20 +303,19 @@ async function analyzeField(fieldName, finding, url, token) {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": token,
             },
-            body: JSON.stringify({ fieldName, finding }),
+            body: JSON.stringify(bodyData), // This is now dynamic
         });
 
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         const alertData = await response.json();
-        console.log("[CDSS] Received alert data:", alertData);
+        console.log("[ALERT] Received alert data:", alertData);
 
         setTimeout(() => {
             displayAlert(alertCell, alertData);
-        }, 800); // Short delay to prevent loading flash
+        }, 300); // Short delay to prevent loading flash
     } catch (error) {
         console.error("CDSS analysis failed:", error);
-        // Display an error *using the same displayAlert function*
         displayAlert(alertCell, {
             alert: "Error analyzing...",
             severity: "CRITICAL",
@@ -191,11 +324,21 @@ async function analyzeField(fieldName, finding, url, token) {
 }
 
 /**
- * [REFACTORED] Displays the API alert result.
- * Replaces the innerHTML of the alert cell.
+ * Displays the API alert result.
  */
 function displayAlert(alertCell, alertData) {
-    console.log("[CDSS] Displaying alert:", alertData);
+    // --- ADDED TIMER LOG ---
+    const startTime = parseFloat(alertCell.dataset.startTime || 0);
+    const endTime = performance.now();
+    const timeSpent = startTime ? (endTime - startTime).toFixed(2) : "N/A";
+
+    console.log(
+        `[ALERT] Displaying alert:`,
+        alertData,
+        `(Time taken: ${timeSpent}ms)`
+    );
+    // --- END TIMER LOG ---
+
     const heightClass = getAlertHeightClass(alertCell);
 
     // Set color by severity
@@ -220,7 +363,20 @@ function displayAlert(alertCell, alertData) {
       </span>
     `;
     } else {
-        alertContentHTML = `<span>${alertData.alert}</span>`;
+        // --- Handle Vitals Signs (bullet points) vs Standard (single line) ---
+        if (alertData.alert.includes(";")) {
+            // Vitals-style: split by semicolon
+            const alertsArray = alertData.alert
+                .split("; ")
+                .filter((alert) => alert.trim() !== "");
+            let bulletPoints = alertsArray
+                .map((alert) => `<li>${alert.trim()}</li>`)
+                .join("");
+            alertContentHTML = `<ul class="text-left list-disc list-inside">${bulletPoints}</ul>`;
+        } else {
+            // Standard-style: single line
+            alertContentHTML = `<span>${alertData.alert}</span>`;
+        }
         isClickable = true;
     }
 
@@ -235,18 +391,19 @@ function displayAlert(alertCell, alertData) {
     </div>
   `;
 
-    // Add click listener only if it's a real alert
     if (isClickable) {
         const alertBox = alertCell.querySelector(".alert-box");
         if (alertBox) {
             alertBox.addEventListener("click", () => openAlertModal(alertData));
         }
     }
+
+    // Clean up the timer data
+    delete alertCell.dataset.startTime;
 }
 
 /**
- * [REFACTORED] Displays the default "No Alerts" state.
- * Replaces the innerHTML of the alert cell.
+ * Displays the default "No Alerts" state.
  */
 function showDefaultNoAlerts(alertCell) {
     const heightClass = getAlertHeightClass(alertCell);
@@ -260,20 +417,17 @@ function showDefaultNoAlerts(alertCell) {
       </span>
     </div>
   `;
-    alertCell.onclick = null; // Clear any old click handlers on the <td>
+    alertCell.onclick = null;
 }
 
 /**
- * [REFACTORED] Displays the loading spinner state.
- * Replaces the innerHTML of the alert cell.
+ * Displays the loading spinner state.
  */
 function showAlertLoading(alertCell) {
     const heightClass = getAlertHeightClass(alertCell);
 
-    // --- THIS IS THE FIX ---
-    // This HTML structure now mimics your "smooth" adl.js file.
-    // It does NOT add the '.alert-loading' class, which bypasses the
-    // fade-in animation in your app.css and stops the stutter.
+    // This HTML structure does NOT use the '.alert-loading' class
+    // This bypasses the CSS fade-in animation and stops the stutter
     alertCell.innerHTML = `
     <div class="alert-box alert-green ${heightClass} flex justify-center items-center" 
          style="margin: 2px;">
@@ -285,24 +439,40 @@ function showAlertLoading(alertCell) {
 
     </div>
   `;
-    alertCell.onclick = null; // Clear any old click handlers on the <td>
+    alertCell.onclick = null;
 }
 
 // --- MODAL ---
 
 function openAlertModal(alertData) {
-    // Check if a modal is already open
     if (document.querySelector(".alert-modal-overlay")) return;
 
     const overlay = document.createElement("div");
     overlay.className = "alert-modal-overlay";
+
+    let modalContent = "";
+
+    // --- Handle Vitals Signs (bullet points) vs Standard (single line) ---
+    if (alertData.alert.includes(";")) {
+        // Vitals-style: split by semicolon
+        const alertsArray = alertData.alert
+            .split("; ")
+            .filter((alert) => alert.trim() !== "");
+        let bulletPoints = alertsArray
+            .map((alert) => `<li>${alert.trim()}</li>`)
+            .join("");
+        modalContent = `<ul class="text-left list-disc list-inside">${bulletPoints}</ul>`;
+    } else {
+        // Standard-style: single paragraph
+        modalContent = `<p>${alertData.alert}</p>`;
+    }
 
     const modal = document.createElement("div");
     modal.className = "alert-modal fade-in"; // 'fade-in' kept for modal
     modal.innerHTML = `
     <button class="close-btn">&times;</button>
     <h2>Alert Details</h2>
-    <p>${alertData.alert}</p>
+    ${modalContent}
     ${
         alertData.recommendation
             ? `<h3>Recommendation:</h3><p>${alertData.recommendation}</p>`
@@ -321,7 +491,6 @@ function openAlertModal(alertData) {
 }
 
 // --- DYNAMIC STYLES ---
-// (Inject fade-in animation)
 (function () {
     const style = document.createElement("style");
     style.textContent = `

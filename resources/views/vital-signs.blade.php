@@ -4,10 +4,7 @@
 
 @section('content')
 
-<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        VITAL SIGNS
-    </h2>
-
+<!-- HEADER -->
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
@@ -94,15 +91,16 @@
         </select>
     </form>
 </div>
-{{-- END SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
+{{-- END OF HEADER--}}
 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
             <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}"
                 data-analyze-url="{{ route('vital-signs.check') }}"
                 data-times="{{ json_encode($times) }}"
                 data-fetch-url="{{ route('vital-signs.fetch-data') }}"
-                data-alert-height-class="h-[90px]">
+                data-alert-height-class="h-[55px]">
                 @csrf
+
 
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
                 <input type="hidden" id="hidden_date_for_vitals_form" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
@@ -210,15 +208,63 @@
             </div>
         </div>        
     <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-            <button type="button" class="button-default">CDSS</button>
+                @if (isset($vitalsData) && $vitalsData->count() > 0)
+        <button type="submit" formaction="{{ route('vital-signs.cdss') }}"
+            class="button-default text-center">
+            CDSS
+        </button>
+    @endif
             <button type="submit" class="button-default">SUBMIT</button>       
     </div>
+
+
  </form>
 
-    <div class="vital-chart-container w-[50%] mx-auto mt-0 mb-20">
+ {{--  <div class="vital-chart-container w-[50%] mx-auto mt-0 mb-20">
             <h2 class="text-center text-dark-green font-bold text-xl mb-4">Vital Sign Trend</h2>
             <canvas id="vitalSignChart" height="120"></canvas>
-    </div>
+    </div> --}}
+    
+
+
+            <div class="vital-chart-container w-[50%] mx-auto mt-10 mb-20 space-y-12">
+                <div>
+                    <h2 class="text-center text-dark-green font-bold text-xl mb-4">Temperature Trend</h2>
+                    <canvas id="tempChart" height="120"></canvas>
+                </div>
+            </div>
+
+            <div class="vital-chart-container w-[50%] mx-auto mt-10 mb-20 space-y-12">
+                <div>
+                    <h2 class="text-center text-dark-green font-bold text-xl mb-4">Heart Rate Trend</h2>
+                    <canvas id="hrChart" height="120"></canvas>
+                </div>
+            </div>
+
+            <div class="vital-chart-container w-[50%] mx-auto mt-10 mb-20 space-y-12">
+                <div>
+                    <h2 class="text-center text-dark-green font-bold text-xl mb-4">Respiratory Rate Trend</h2>
+                    <canvas id="rrChart" height="120"></canvas>
+                </div>
+            </div>
+
+            <div class="vital-chart-container w-[50%] mx-auto mt-10 mb-20 space-y-12">
+                <div>
+                    <h2 class="text-center text-dark-green font-bold text-xl mb-4">Blood Pressure Trend</h2>
+                    <canvas id="bpChart" height="120"></canvas>
+                </div>
+            </div>
+
+
+            <div class="vital-chart-container w-[50%] mx-auto mt-10 mb-20 space-y-12">
+                <div>
+                    <h2 class="text-center text-dark-green font-bold text-xl mb-4">SpO₂ Trend</h2>
+                    <canvas id="spo2Chart" height="120"></canvas>
+                </div>
+            </div>
+
+
+
 </div>
 
 @push('scripts')
@@ -226,131 +272,108 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- vital sign chart  -->
+<!-- vital sign charts -->
+<!-- vital sign charts -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const ctx = document.getElementById('vitalSignChart').getContext('2d');
-    const labels = ['TEMP', 'HR (bpm)', 'RR (bpm)', 'BP (mmHg)', 'SpO₂ (%)'];
-    const timePoints = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+    const timePoints = @json($times); // from PHP
+    const vitalsData = @json($vitalsData); // convert your PHP collection to JSON safely
 
     const lineColors = [
-        '#0D47A1', // rich deep blue
-        '#7B1FA2', // royal violet
-        '#1B5E20', // dark green
-        '#B71C1C', // rich red
-        '#37474F', // steel gray
-        '#4E342E', // cocoa brown
-        '#006064', // deep cyan
-        '#512DA8'  // indigo
+        '#0D47A1', '#7B1FA2', '#1B5E20', '#B71C1C',
+        '#37474F', '#4E342E', '#006064', '#512DA8'
     ];
 
-    const datasets = [
-        @foreach ($times as $index => $time)
-        {
-            label: '{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}',
-            data: [
-                {{ optional($vitalsData->get($time))->temperature ?? 'null' }},
-                {{ optional($vitalsData->get($time))->hr ?? 'null' }},
-                {{ optional($vitalsData->get($time))->rr ?? 'null' }},
-                {{ optional($vitalsData->get($time))->bp ?? 'null' }},
-                {{ optional($vitalsData->get($time))->spo2 ?? 'null' }},
-            ],
-            borderColor: lineColors[{{ $index }} % lineColors.length],
-            backgroundColor: lineColors[{{ $index }} % lineColors.length],
-            borderWidth: 2.5,
-            tension: 0, 
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            fill: false
-        },
-        @endforeach
-    ];
+    // Define all vitals
+    const vitals = {
+        temperature: { label: 'Temperature (°C)', elementId: 'tempChart', field: 'temperature' },
+        hr:          { label: 'Heart Rate (bpm)', elementId: 'hrChart', field: 'hr' },
+        rr:          { label: 'Respiratory Rate (bpm)', elementId: 'rrChart', field: 'rr' },
+        bp:          { label: 'Blood Pressure (mmHg)', elementId: 'bpChart', field: 'bp' },
+        spo2:        { label: 'SpO₂ (%)', elementId: 'spo2Chart', field: 'spo2' }
+    };
 
+    // Create chart for each vital type
+    Object.entries(vitals).forEach(([key, vital]) => {
+        const ctx = document.getElementById(vital.elementId)?.getContext('2d');
+        if (!ctx) return;
 
-    const vitalChart = new Chart(ctx, {
-        type: 'line',
-        data: { labels, datasets },
-        options: {
-            responsive: true,
-            animation: {
-                duration: 800,
-                easing: 'easeOutQuart'
+        // Build data values for this vital from PHP JSON
+        const dataValues = timePoints.map(time => {
+            const record = vitalsData?.[time];
+            return record ? parseFloat(record[vital.field]) || null : null;
+        });
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timePoints.map(t => {
+                    if (!t) return 'N/A';
+                    const [hour, minute] = t.split(':');
+                    if (hour === undefined || minute === undefined) return t;
+                    const h = ((+hour + 11) % 12) + 1;
+                    const suffix = +hour >= 12 ? 'PM' : 'AM';
+                    return `${h}:${minute} ${suffix}`;
+                }),
+                datasets: [{
+                    label: vital.label,
+                    data: dataValues,
+                    borderColor: lineColors[0],
+                    backgroundColor: lineColors[0],
+                    borderWidth: 2.5,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: false
+                }]
             },
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: { color: '#2c3e50', font: { size: 13, weight: 'bold' } }
+            options: {
+                responsive: true,
+                animation: { duration: 800, easing: 'easeOutQuart' },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#2c3e50', font: { size: 13, weight: 'bold' } }
+                    },
+                    tooltip: {
+                        backgroundColor: '#333',
+                        titleColor: '#fff',
+                        bodyColor: '#f0f0f0'
+                    }
                 },
-                tooltip: {
-                    backgroundColor: '#333',
-                    titleColor: '#fff',
-                    bodyColor: '#f0f0f0'
-                }
-            },
-            scales: {
-                x: {
-                    ticks: { color: '#2c3e50', font: { weight: 'bold' } },
-                    grid: { color: 'rgba(0,0,0,0.1)' }
-                },
-                y: {
-                    beginAtZero: true,
-                    ticks: { color: '#2c3e50', font: { weight: 'bold' } },
-                    grid: { color: 'rgba(0,0,0,0.1)' }
+                scales: {
+                    x: {
+                        ticks: { color: '#2c3e50', font: { weight: 'bold' } },
+                        grid: { color: 'rgba(0,0,0,0.1)' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#2c3e50', font: { weight: 'bold' } },
+                        grid: { color: 'rgba(0,0,0,0.1)' }
+                    }
                 }
             }
-        }
+        });
+
+        // 🔄 Live update chart when user edits input fields
+        document.querySelectorAll(`input[data-field-name="${vital.field}"]`).forEach(input => {
+            input.addEventListener('input', () => {
+                const time = input.getAttribute('data-time');
+                const value = parseFloat(input.value) || null;
+                const index = timePoints.indexOf(time);
+                if (index !== -1) {
+                    chart.data.datasets[0].data[index] = value;
+                    chart.update('active');
+                }
+            });
+        });
     });
-
-    document.querySelectorAll('.vital-input').forEach(input => {
-        input.addEventListener('input', () => {
-            const time = input.getAttribute('data-time');
-            const param = input.getAttribute('data-field-name');
-            const value = parseFloat(input.value) || null;
-            const paramIndex = { temperature: 0, hr: 1, rr: 2, bp: 3, spo2: 4 }[param];
-            const datasetIndex = timePoints.indexOf(time);
-
-            if (datasetIndex !== -1 && paramIndex !== undefined) {
-                vitalChart.data.datasets[datasetIndex].data[paramIndex] = value;
-                vitalChart.update('active');
-            }
-
-
-                let bg = '';
-                let color = '#000';
-
-                if (param === 'temperature') {
-                    if (value > 37.0) { bg = '#B71C1C'; color = '#fff'; }          
-                    else if (value >= 36.3 && value <= 37.0) { bg = '#fff6cf'; }  
-                }
-                if (param === 'hr') {
-                    if (value > 110) { bg = '#B71C1C'; color = '#fff'; }
-                    else if (value >= 70 && value <= 110) { bg = '#fff6cf'; }
-                }
-                if (param === 'rr') {
-                    if (value > 22) { bg = '#B71C1C'; color = '#fff'; }
-                    else if (value >= 16 && value <= 22) { bg = '#fff6cf'; }
-                }
-                if (param === 'bp') {
-                    if (value > 120) { bg = '#B71C1C'; color = '#fff'; }
-                    else if (value >= 90 && value <= 120) { bg = '#fff6cf'; }
-                }
-                if (param === 'spo2') {
-                    if (value < 95) { bg = '#B71C1C'; color = '#fff'; }
-                    else if (value >= 95 && value <= 100) { bg = '#fff6cf'; }
-                }
-
-                input.style.backgroundColor = bg;
-                input.style.color = color;
-
-                        });
-                    });
 });
 </script>
-<!-- end of vital sign chart  -->
 @endpush
-
-   
-
 @endsection
+
+
 @push('scripts')
     {{-- Load all necessary script files --}}
     @vite([
@@ -358,7 +381,6 @@ document.addEventListener("DOMContentLoaded", function () {
     'resources/js/date-day-loader.js', 
     'resources/js/alert.js', 
     'resources/js/init-searchable-dropdown.js', 
-    'resources/js/page-initializer.js', 
     'resources/js/vital-signs-date-sync.js'
     ])
 
@@ -368,7 +390,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                window.initializeVitalSignsAlerts,
+                // window.initializeVitalSignsAlerts,
                 window.initializeVitalSignsDateSync
             ];
         });

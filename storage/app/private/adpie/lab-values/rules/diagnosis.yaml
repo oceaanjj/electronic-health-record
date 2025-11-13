@@ -1,0 +1,44 @@
+diagnosis:
+  - keywords: ["Leukopenia"]
+    alert: "Risk for Infection related to low white blood cell count."
+    severity: "CRITICAL"
+  - keywords: ["Leukocytosis"]
+    alert: "Risk for Infection related to elevated white blood cell count."
+    severity: "WARNING"
+  - keywords: ["Anemia"]
+    alert: "Activity Intolerance related to decreased oxygen-carrying capacity of the blood."
+    severity: "WARNING"
+  - keywords: ["Polycythemia", "Erythrocytosis"]
+    alert: "Risk for Ineffective Tissue Perfusion related to increased blood viscosity."
+    severity: "WARNING"
+  - keywords: ["Thrombocytopenia"]
+    alert: "Risk for Bleeding related to low platelet count."
+    severity: "CRITICAL"
+  - keywords: ["Thrombocytosis"]
+    alert: "Risk for Ineffective Tissue Perfusion related to potential for abnormal blood clotting."
+    severity: "WARNING"
+  - keywords: ["Neutropenia"]
+    alert: "Risk for Infection related to low neutrophil count."
+    severity: "CRITICAL"
+  - keywords: ["Neutrophilia"]
+    alert: "Risk for Infection related to elevated neutrophil count, possibly indicating a bacterial infection."
+    severity: "WARNING"
+  - keywords_match: any
+    keywords: ["Lymphopenia"]
+    alert: "Risk for Infection related to low lymphocyte count, possibly indicating immunodeficiency."
+    severity: "WARNING"
+  - keywords: ["Lymphocytosis"]
+    alert: "Risk for Infection related to elevated lymphocyte count, possibly indicating a viral infection."
+    severity: "WARNING"
+  - keywords: ["Microcytosis"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to potential iron deficiency anemia."
+    severity: "WARNING"
+  - keywords: ["Macrocytosis"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to potential B12 or folate deficiency."
+    severity: "WARNING"
+  - keywords: ["Hypochromia"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to potential iron deficiency."
+    severity: "WARNING"
+  - keywords: ["High RDW", "Anisocytosis"]
+    alert: "Risk for Ineffective Tissue Perfusion related to variation in red blood cell size, possibly indicating a nutritional deficiency."
+    severity: "WARNING"

@@ -72,7 +72,7 @@ class NursingDiagnosisController extends Controller
                 return new IntakeAndOutputComponent(
                     $this->nursingDiagnosisCdssService
                 );
-            case 'act-of-daily-living':
+            case 'adl': // Corrected to match the component name used in the view
                 return new ActOfDailyLivingComponent(
                     $this->nursingDiagnosisCdssService
                 );

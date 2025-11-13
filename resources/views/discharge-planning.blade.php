@@ -2,9 +2,6 @@
 @section('title', 'Patient Discharge Planning')
 @section('content')
 
-<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        DISCHARGE PLANNING
-    </h2>
 
     <!-- Ito yung tama, ewan ko san galing yung nasa baba  -->
     {{-- PATIENT DROP-DOWN FORM --}}

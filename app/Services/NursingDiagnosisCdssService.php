@@ -307,7 +307,35 @@ class NursingDiagnosisCdssService
                     }
                 }
                 break;
-            // Add other component cases here...
+            case 'vital-signs':
+                foreach ($componentData as $finding) {
+                    $allAlerts[] = ['source' => 'Vital Signs', 'field' => 'summary', 'alert' => $finding];
+                }
+                break;
+            case 'intake-and-output':
+                $result = $this->intakeAndOutputCdssService->analyzeIntakeOutput($componentData);
+                if ($result['severity'] !== IntakeAndOutputCdssService::NONE) {
+                    $allAlerts[] = ['source' => 'Intake and Output', 'field' => 'summary', 'alert' => $result['alert']];
+                }
+                break;
+            case 'act-of-daily-living':
+                $results = $this->actOfDailyLivingCdssService->analyzeFindings($componentData);
+                foreach ($results as $key => $result) {
+                    if ($result['severity'] !== ActOfDailyLivingCdssService::NONE) {
+                        $allAlerts[] = ['source' => 'Act of Daily Living', 'field' => $key, 'alert' => $result['alert']];
+                    }
+                }
+                break;
+            case 'lab-values':
+                $ageGroup = $this->labValuesCdssService->getAgeGroup($patient);
+                $results = $this->labValuesCdssService->runLabCdss((object) $componentData, $ageGroup);
+                foreach ($results as $key => $result) {
+                    if ($result[0]['severity'] !== LabValuesCdssService::NONE) {
+                        $allAlerts[] = ['source' => 'Lab Values', 'field' => $key, 'alert' => $result[0]['text']];
+                    }
+                }
+                break;
+            // ... (rest of your cases) ...
         }
 
         if (empty($allAlerts)) {

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\ActOfDailyLivingCdssService;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
+use app\Http\Controllers\ADPIE\NursingDiagnosisController;
 
 class ActOfDailyLivingController extends Controller
 {
@@ -126,6 +127,7 @@ class ActOfDailyLivingController extends Controller
         $currentDate = now()->format('Y-m-d'); // Default
         $currentDayNo = 1; // Default
         $totalDaysSinceAdmission = 0;
+        $alerts = []; // Initialize alerts array
 
         $patientId = $request->session()->get('selected_patient_id');
         $date = $request->session()->get('selected_date');
@@ -147,6 +149,12 @@ class ActOfDailyLivingController extends Controller
                 $currentDate = $date;
                 $currentDayNo = $dayNo;
                 $adlData = $this->getAdlRecord($patientId, $currentDate, $currentDayNo);
+
+                // Run CDSS analysis on fetched data to display alerts
+                if ($adlData) {
+                    $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+                    $alerts = $cdssService->analyzeFindings($adlData->toArray());
+                }
             }
         }
 
@@ -156,7 +164,7 @@ class ActOfDailyLivingController extends Controller
             'selectedPatient' => $selectedPatient,
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
-            'totalDaysSinceAdmission' => $totalDaysSinceAdmission,
+            'alerts' => $alerts, // Pass alerts to the view
         ]);
     }
 

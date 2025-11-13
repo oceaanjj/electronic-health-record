@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const patientTableBody = document.querySelector('.w-full tbody');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
+    // Exit if required elements don't exist on this page
+    if (!searchInput || !patientTableBody) return;
+
     // Helper: smooth fade animation
     function fadeIn(element) {
         element.classList.remove('opacity-0', 'translate-y-2');

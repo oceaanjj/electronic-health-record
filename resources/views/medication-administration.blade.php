@@ -2,9 +2,6 @@
 @section('title', 'Patient Vital Signs')
 @section('content')
 
-<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        MEDICATION ADMINISTRATION
-    </h2>
 
     <form method="POST" action="{{ route('medication-administration.store') }}">
         @csrf

@@ -2,9 +2,6 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
-<h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        ACTIVITIES OF DAILY LIVING
-    </h2>
 
 <div id="form-content-container">
     {{-- This container is now the main wrapper for all dynamic content --}}
@@ -91,8 +88,10 @@
     {{-- END HEADER --}}
 
     <form id="adl-form" method="POST" class="cdss-form" data-analyze-url="{{ route('adl.analyze-field') }}"
-      data-alert-height-class="h-[53px]">
- 
+      data-alert-height-class="h-[55px]"> 
+    
+<!-- data-alert-height-class = set alert box height -->
+
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
             @csrf
 
@@ -150,16 +149,17 @@
                         ] as $field)
                             <tr>
                                 <td class="align-middle" data-alert-for="{{ $field }}">
-                                    @if (isset($isLoading) && $isLoading && old($field, $adlData->$field ?? ''))
-                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-loading">
-                                            <div class="loading-spinner"></div>
-                                            <span>Analyzing...</span>
-                                        </div>
-                                    @else
-                                        <div class="alert-box my-[3px] h-[53px] flex justify-center items-center">
-                                            <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
-                                        </div>
-                                    @endif
+                                    @php
+                                        $alertText = 'NO ALERTS';
+                                        $alertSeverity = 'none';
+                                        if (isset($alerts[$field]) && $alerts[$field]['alert'] !== 'No Findings') {
+                                            $alertText = $alerts[$field]['alert'];
+                                            $alertSeverity = strtolower($alerts[$field]['severity']);
+                                        }
+                                    @endphp
+                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-{{ $alertSeverity }}">
+                                        <span class="opacity-70 text-white font-semibold">{{ $alertText }}</span>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -167,10 +167,16 @@
                 </div>
             </div>
 
-           <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                    <button type="button" class="button-default">CDSS</button>
-                    <button type="submit" class="button-default">SUBMIT</button>
-                </div>
+
+<div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+    @if (isset($adlData))
+        <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
+            class="button-default text-center">
+            CDSS
+        </a>
+    @endif
+    <button type="submit" form="adl-form" class="button-default">SUBMIT</button>
+</div>
                 
         </fieldset>
     </form>
@@ -183,7 +189,6 @@
         'resources/js/patient-loader.js',
         'resources/js/date-day-loader.js',
         'resources/js/init-searchable-dropdown.js',
-        'resources/js/page-initializer.js',
         'resources/js/alert.js',
         'resources/js/act-of-daily-living-date-sync.js'
     ])

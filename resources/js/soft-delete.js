@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('.ehr-table').addEventListener('click', function (e) {
+    const ehrTable = document.querySelector('.ehr-table');
+    if (!ehrTable) return; // Exit if table doesn't exist on this page
+    
+    ehrTable.addEventListener('click', function (e) {
         if (e.target.classList.contains('btn-delete') || e.target.classList.contains('btn-recover')) {
             e.preventDefault();
 

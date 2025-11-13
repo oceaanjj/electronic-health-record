@@ -72,7 +72,7 @@ window.initializeCdssForForm = function (form) {
                         } | Value: ${finding}`
                     );
                 }
-            }, 300);
+            }, 800);
         };
 
         input.addEventListener("input", handleInput);

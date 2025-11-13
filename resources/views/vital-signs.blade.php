@@ -24,7 +24,9 @@
             PATIENT NAME :
         </label>
 
-        <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('vital-signs.select') }}" data-admission-date="{{ $selectedPatient->admission_date ?? '' }}">
+           <div class="searchable-dropdown relative w-[400px]" 
+             data-select-url="{{ route('vital-signs.select') }}" 
+             data-admission-date="{{ $selectedPatient ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : '' }}">
             {{-- Text input for search --}}
             <input
                 type="text"
@@ -374,14 +376,14 @@ document.addEventListener("DOMContentLoaded", function () {
 @endsection
 
 
+
 @push('scripts')
     @vite([
     'resources/js/patient-loader.js', 
-    'resources/js/date-day-loader.js', 
+    // 'resources/js/date-day-loader.js', 
     'resources/js/alert.js', 
     'resources/js/init-searchable-dropdown.js', 
     'resources/js/vital-signs-date-sync.js',
-        'resources/js/page-initializer.js'
     
     ])
 
@@ -389,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener('DOMContentLoaded', () => {
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
-                window.initializeDateDayLoader,
+                // window.initializeDateDayLoader, //
                 // window.initializeVitalSignsAlerts,
                 window.initializeVitalSignsDateSync
             ];

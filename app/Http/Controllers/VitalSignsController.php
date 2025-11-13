@@ -70,9 +70,9 @@ class VitalSignsController extends Controller
                 $isNewPatientSelection = is_null($date) && is_null($dayNo) && $request->has('patient_id');
 
                 if ($isNewPatientSelection) {
-                    // New patient selected, default to the latest day
+                    // --- MODIFIED: Default to Today / Latest Day ---
                     $dayNo = $totalDaysSinceAdmission;
-                    $date = $admissionDate->copy()->addDays($dayNo - 1)->format('Y-m-d');
+                    $date = now()->format('Y-m-d');
                 } else {
                     // Use date/day from request or fall back to session
                     $date = $date ?? $request->session()->get('selected_date');
@@ -84,6 +84,15 @@ class VitalSignsController extends Controller
                         $date = $admissionDate->copy()->addDays($dayNo - 1)->format('Y-m-d');
                     }
                 }
+
+                // Ensure date and day are capped at today
+                $today = now();
+                $selectedDateCarbon = Carbon::parse($date);
+                if ($selectedDateCarbon->isAfter($today)) {
+                    $date = $today->format('Y-m-d');
+                    $dayNo = $totalDaysSinceAdmission;
+                }
+
 
                 // Store the determined date/day in the session
                 $request->session()->put('selected_date', $date);
@@ -124,6 +133,40 @@ class VitalSignsController extends Controller
         ]);
     }
 
+    /**
+     * Handles AJAX request to fetch vital signs data for a specific patient, date, and day.
+     * Returns data as JSON.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchVitalSignsData(Request $request)
+    {
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'date' => 'required|date',
+            'day_no' => 'required|integer',
+        ]);
+
+        $patientId = $validatedData['patient_id'];
+        $date = $validatedData['date'];
+        $dayNo = (int) $validatedData['day_no'];
+
+        // Fetch the Vitals record
+        $vitalsData = $this->getVitalsRecord($patientId, $date, $dayNo);
+
+        // Re-run CDSS analysis on fetched data
+        $cdssService = new VitalCdssService();
+        foreach ($vitalsData as $time => $vitalRecord) {
+            $vitalsArray = $vitalRecord->toArray();
+            $alertResult = $cdssService->analyzeVitalsForAlerts($vitalsArray);
+            $vitalsData[$time]->alerts = $alertResult['alert'];
+            $vitalsData[$time]->news_severity = $alertResult['severity'];
+        }
+
+        return response()->json($vitalsData);
+    }
+
     public function show(Request $request)
     {
         // The logic for displaying the initial page is now handled by selectPatient
@@ -135,7 +178,7 @@ class VitalSignsController extends Controller
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
             'date' => 'required|date',
-            'day_no' => 'required|integer|between:1,30',
+            'day_no' => 'required|integer|min:1', // Changed from between:1,30
         ]);
 
         $user_id = Auth::id();
@@ -144,6 +187,17 @@ class VitalSignsController extends Controller
             ->first();
         if (!$patient)
             return back()->with('error', 'Unauthorized patient access.');
+
+        // Check if date is not in the future
+        if (Carbon::parse($validatedData['date'])->isFuture()) {
+            return back()->with('error', 'Cannot save vital signs for a future date.');
+        }
+
+        // Check if date is before admission date
+        if (Carbon::parse($validatedData['date'])->isBefore(Carbon::parse($patient->admission_date)->startOfDay())) {
+            return back()->with('error', 'Cannot save vital signs for a date before admission.');
+        }
+
 
         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
         $anyCreated = false;
@@ -197,12 +251,14 @@ class VitalSignsController extends Controller
                 }
             } else {
                 // If no data is submitted for this time slot, delete the existing record
-                Vitals::where($queryConditions)->delete();
-                AuditLogController::log(
-                    'Vital Signs Record Deleted',
-                    'User ' . Auth::user()->username . " deleted a Vital Signs record for time " . $time,
-                    ['patient_id' => $validatedData['patient_id'], 'time' => $time]
-                );
+                $deletedCount = Vitals::where($queryConditions)->delete();
+                if ($deletedCount > 0) {
+                    AuditLogController::log(
+                        'Vital Signs Record Deleted',
+                        'User ' . Auth::user()->username . " deleted a Vital Signs record for time " . $time,
+                        ['patient_id' => $validatedData['patient_id'], 'time' => $time]
+                    );
+                }
             }
         }
 
@@ -239,7 +295,7 @@ class VitalSignsController extends Controller
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
             'date' => 'required|date',
-            'day_no' => 'required|integer|between:1,30',
+            'day_no' => 'required|integer|min:1', // Changed from between:1,30
         ]);
 
         $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
@@ -290,6 +346,7 @@ class VitalSignsController extends Controller
                 $rules = $yaml['diagnosis'] ?? $yaml;
                 foreach ($rules as $rule) {
                     $matched = false;
+                    // FIXED SYNTAX ERROR HERE: changed 'is - array' to 'is_array'
                     if (!empty($rule['keywords']) && is_array($rule['keywords'])) {
                         foreach ($rule['keywords'] as $kw) {
                             $kwClean = trim(strtolower($kw));
@@ -329,7 +386,7 @@ class VitalSignsController extends Controller
         if (empty($recommendations) && !empty($alertText)) {
             $recommendations[] = [
                 'alert' => $result['alert'] ?? '',
-                'severity' => strtoupper($result['severity'] ?? 'INFO'),
+                'severity' => strtoupper($result['severity'] ?? 'NONE'),
             ];
         }
 

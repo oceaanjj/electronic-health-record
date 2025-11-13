@@ -19,7 +19,7 @@
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
         <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
-            data-analyze-url="{{ route('lab-values.run-cdss-field') }}">
+            data-analyze-url="{{ route('lab-values.run-cdss-field') }}" data-alert-height-class="h-[49.5px]">
             @csrf
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
@@ -66,7 +66,8 @@
                                     <td class="p-2 bg-beige text-center">
                                         <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
                                             value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
-                                            class="w-full h-[40px] focus:outline-none text-center cdss-input" data-field-name="{{ $name }}_result">
+                                            class="w-full h-[40px] focus:outline-none text-center cdss-input"
+                                            data-field-name="{{ $name }}_result">
                                     </td>
                                     <td class="p-2 bg-beige text-center">
                                         <input type="text" name="{{ $name }}_normal_range" placeholder="Normal Range"
@@ -84,11 +85,11 @@
                             ALERTS
                         </div>
 
-                        <table class="w-full border-collapse text-center">
+                        <table class="w-full border-collapse">
                             @foreach ($labTests as $label => $name)
                                 <tr>
                                     <td class="align-middle">
-                                        <div class="alert-box my-1 h-[53px] flex justify-center items-center flex-col px-2"
+                                        <div class="alert-box my-1 h-[49.5px] flex justify-center items-center text-center px-2"
                                             data-alert-for="{{ $name }}_result">
                                             <span class="opacity-70 text-white font-semibold">No Alerts</span>
                                         </div>
@@ -122,7 +123,11 @@
     @endpush
 
     @push('scripts')
-        @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+        @vite([
+            'resources/js/alert.js',
+            'resources/js/patient-loader.js',
+            'resources/js/searchable-dropdown.js'
+        ])
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,7 @@
 // =======================================================
+// UNIVERSAL CDSS ALERT SYSTEM
 // Handles CDSS alerts for all forms (ADL, PE, Vitals, etc.)
+// Supports both single-field and time-based row forms
 // =======================================================
 
 let debounceTimer;
@@ -50,9 +52,11 @@ window.initializeCdssForForm = function (form) {
             debounceTimer = setTimeout(() => {
                 if (fieldName && finding !== "") {
                     if (alertCell) {
-                        console.log(`[CDSS] Analyzing ${fieldName}...`);
                         showAlertLoading(alertCell);
                         alertCell.dataset.startTime = performance.now();
+                        console.log(
+                            `[CDSS] Started analysis for ${fieldName} at ${alertCell.dataset.startTime} ms`
+                        );
                     }
                     analyzeField(
                         fieldName,
@@ -62,14 +66,13 @@ window.initializeCdssForForm = function (form) {
                         analyzeUrl,
                         csrfToken
                     );
+                    console.log(
+                        `[CDSS] Input detected → Field: ${
+                            fieldName || "(time-based)"
+                        } | Value: ${finding}`
+                    );
                 }
-
-                console.log(
-                    `[CDSS] Input detected → Field: ${
-                        fieldName || "(time-based)"
-                    } | Value: ${finding}`
-                );
-            }, 444);
+            }, 300);
         };
 
         input.addEventListener("input", handleInput);
@@ -123,6 +126,9 @@ window.triggerInitialCdssAnalysis = function (form) {
     analysisGroups.forEach((group) => {
         showAlertLoading(group.alertCell);
         group.alertCell.dataset.startTime = performance.now();
+        console.log(
+            `[CDSS] Initial analysis started at ${group.alertCell.dataset.startTime} ms`
+        );
     });
 
     analysisGroups.forEach((group) => {
@@ -151,7 +157,7 @@ window.triggerInitialCdssAnalysis = function (form) {
     });
 };
 
-// Global listeners for form reload and DOM load
+// Global listeners for reload & DOM load
 if (!window.cdssFormReloadListenerAttached) {
     window.cdssFormReloadListenerAttached = true;
     document.addEventListener("cdss:form-reloaded", (event) => {
@@ -234,10 +240,16 @@ async function analyzeField(
             body: JSON.stringify(bodyData),
         });
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
-        const alertData = await response.json();
-        console.log("[CDSS] Received response:", alertData);
 
-        setTimeout(() => displayAlert(alertCell, alertData), 300);
+        const alertData = await response.json();
+        const endTime = performance.now();
+        const startTime = parseFloat(alertCell.dataset.startTime || endTime);
+        const duration = (endTime - startTime).toFixed(2);
+
+        console.log(`[CDSS] Response received in ${duration} ms`);
+        console.log("[CDSS] Response data:", alertData);
+
+        setTimeout(() => displayAlert(alertCell, alertData, duration), 300);
     } catch (error) {
         console.error("[CDSS] Analysis failed:", error);
         displayAlert(alertCell, {
@@ -250,7 +262,8 @@ async function analyzeField(
 // Display alert result
 // alertCell → HTMLElement
 // alertData → object
-function displayAlert(alertCell, alertData) {
+// duration → string (ms)
+function displayAlert(alertCell, alertData, duration = null) {
     const heightClass = getAlertHeightClass(alertCell);
     let colorClass = "alert-green";
     if (alertData.severity === "CRITICAL") colorClass = "alert-red";
@@ -281,7 +294,9 @@ function displayAlert(alertCell, alertData) {
     }
 
     console.log(
-        `[CDSS] Displaying alert → Severity: ${alertData.severity} | Message: ${alertData.alert}`
+        `[CDSS] Displaying alert → Severity: ${
+            alertData.severity
+        } | Duration: ${duration || "?"} ms | Message: ${alertData.alert}`
     );
 
     alertCell.innerHTML = `

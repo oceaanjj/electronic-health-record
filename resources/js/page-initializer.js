@@ -14,7 +14,7 @@
 
 // Function to execute all registered initializer functions.
 function runPageInitializers() {
-    pauseObserver(); // Does nothing, but safe to call
+    // pauseObserver(); // Does nothing, but afe to call
     if (window.pageInitializers && Array.isArray(window.pageInitializers)) {
         window.pageInitializers.forEach((initializer) => {
             // Check if the item in the array is a function before calling it.
@@ -31,7 +31,7 @@ function runPageInitializers() {
             }
         });
     }
-    resumeObserver(); // Does nothing, but safe to call
+    // resumeObserver(); // Does nothing, but safe to call
 }
 
 // Main initialization on first page load.

@@ -100,7 +100,8 @@
             <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}"
                 data-analyze-url="{{ route('vital-signs.check') }}"
                 data-times="{{ json_encode($times) }}"
-                data-fetch-url="{{ route('vital-signs.fetch-data') }}">
+                data-fetch-url="{{ route('vital-signs.fetch-data') }}"
+                data-alert-height-class="h-[90px]">
                 @csrf
 
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
@@ -345,8 +346,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <!-- end of vital sign chart  -->
-
-
 @endpush
 
    
@@ -354,7 +353,14 @@ document.addEventListener("DOMContentLoaded", function () {
 @endsection
 @push('scripts')
     {{-- Load all necessary script files --}}
-    @vite(['resources/js/patient-loader.js', 'resources/js/date-day-loader.js', 'resources/js/vital-signs-alerts.js', 'resources/js/init-searchable-dropdown.js', 'resources/js/page-initializer.js', 'resources/js/vital-signs-date-sync.js'])
+    @vite([
+    'resources/js/patient-loader.js', 
+    'resources/js/date-day-loader.js', 
+    'resources/js/alert.js', 
+    'resources/js/init-searchable-dropdown.js', 
+    'resources/js/page-initializer.js', 
+    'resources/js/vital-signs-date-sync.js'
+    ])
 
     {{-- Define the specific initializers for this page --}}
     <script>

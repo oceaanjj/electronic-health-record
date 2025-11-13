@@ -64,7 +64,7 @@ window.initializeCdssForForm = function (form) {
                 if (fieldName && finding !== "") {
                     analyzeField(fieldName, finding, analyzeUrl, csrfToken);
                 }
-            }, 800);
+            }, 1000);
         };
 
         // Remove old listener to prevent duplicates, then add new one

@@ -90,8 +90,9 @@
         
     {{-- END HEADER --}}
 
-    <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"
-        data-analyze-url="{{ route('adl.analyze-field') }}">
+    <form id="adl-form" method="POST" class="cdss-form" data-analyze-url="{{ route('adl.analyze-field') }}"
+      data-alert-height-class="h-[53px]">
+ 
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
             @csrf
 
@@ -183,7 +184,7 @@
         'resources/js/date-day-loader.js',
         'resources/js/init-searchable-dropdown.js',
         'resources/js/page-initializer.js',
-        'resources/js/act-of-daily-living-alerts.js',
+        'resources/js/alert.js',
         'resources/js/act-of-daily-living-date-sync.js'
     ])
 
@@ -193,7 +194,7 @@
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                window.initializeAdlAlerts, // This is the new, specific initializer
+                window.initializeAdlAlerts,
                 window.initializeAdlDateSync
             ];
         });

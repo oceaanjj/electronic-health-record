@@ -32,7 +32,7 @@
                     <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
                         value="@isset($selectedPatient){{ trim($selectedPatient->name) }}@endisset" autocomplete="off"
                         class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                                           focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
 
                     {{-- Dropdown list --}}
                     <div id="patient_options_container"
@@ -55,7 +55,7 @@
                     DAY NO :
                 </label>
                 <select id="day_no_selector" name="day_no" class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                               focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                                       focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
                     @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
                         <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
                             {{ $i }}
@@ -144,7 +144,13 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/intake-output-patient-loader.js', 'resources/js/intake-output-cdss.js', 'resources/js/searchable-dropdown.js', 'resources/js/intake-output-data-loader.js'])
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/intake-output-patient-loader.js',
+        'resources/js/intake-output-cdss.js',
+        'resources/js/searchable-dropdown.js',
+        'resources/js/intake-output-data-loader.js'
+    ])
 
     {{-- Define the specific initializers for this page --}}
     <script>

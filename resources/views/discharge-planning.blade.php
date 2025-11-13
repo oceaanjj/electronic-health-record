@@ -39,7 +39,8 @@
                             </th>
                         </tr>
                         <tr>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">DISCHARGE CRITERIA</th>
+                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown w-1/3">DISCHARGE
+                                CRITERIA</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-line-brown">REQUIRED ACTION</th>
                         </tr>
 
@@ -135,5 +136,9 @@
 @endpush
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/patient-loader.js',
+        'resources/js/searchable-dropdown.js'
+    ])
 @endpush

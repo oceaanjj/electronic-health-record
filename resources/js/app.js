@@ -21,9 +21,7 @@ import "./date-day-loader.js";
 import "./compute-age.js";
 import "./init-searchable-dropdown.js";
 import "./page-initializer.js";
-import "./vital-signs-alerts.js";
 import "./intake-output-patient-loader.js";
-import "./act-of-daily-living-alerts.js";
 
 // Import CSS
 import "../css/app.css";

@@ -38,8 +38,7 @@
                         {{-- GROSS MOTOR --}}
                         <tr>
                             <th rowspan="2" class="w-[200px] main-header rounded-l-lg">GROSS MOTOR</th>
-                            <th
-                                class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
+                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -56,8 +55,7 @@
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] main-header rounded-l-lg">FINE MOTOR</th>
-                            <th
-                                class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
+                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -74,8 +72,7 @@
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] main-header rounded-l-lg">LANGUAGE</th>
-                            <th
-                                class="bg-yellow-light text-brown text-[13px]  border-line-brown rounded-tr-lg">
+                            <th class="bg-yellow-light text-brown text-[13px]  border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -91,8 +88,7 @@
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] main-header rounded-l-lg">COGNITIVE</th>
-                            <th
-                                class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
+                            <th class="bg-yellow-light text-brown text-[13px] border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -108,8 +104,7 @@
                     <table class="mb-1.5 w-[72%] border-separate border-spacing-0 bg-beige">
                         <tr>
                             <th rowspan="2" class="w-[200px] main-header rounded-l-lg">SOCIAL</th>
-                            <th
-                                class="bg-yellow-light text-brown text-[13px]  border-line-brown rounded-tr-lg">
+                            <th class="bg-yellow-light text-brown text-[13px]  border-line-brown rounded-tr-lg">
                                 FINDINGS</th>
                         </tr>
 
@@ -148,7 +143,12 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/patient-loader.js',
+        'resources/js/searchable-dropdown.js',
+        'resources/js/date-day-loader.js'
+    ])
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const patientSearchInput = document.getElementById('patient_search_input');

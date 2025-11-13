@@ -199,7 +199,7 @@
             window.pageInitializers = [
                 window.initializeSearchableDropdown,
                 window.initializeDateDayLoader,
-                window.initializeAdlAlerts,
+                // window.initializeAdlAlerts,
                 window.initializeAdlDateSync
             ];
         });

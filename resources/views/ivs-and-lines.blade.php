@@ -40,7 +40,8 @@
                                 <td class="p-2 bg-beige text-center">
                                     <input type="text" name="iv_fluid" placeholder="iv fluid"
                                         value="{{ $ivsAndLineRecord->iv_fluid ?? '' }}"
-                                        class="w-full h-[45px] text-center focus:outline-none cdss-input" data-field-name="iv_fluid">
+                                        class="w-full h-[45px] text-center focus:outline-none cdss-input"
+                                        data-field-name="iv_fluid">
                                     @error('iv_fluid')
                                         <span class="text-red-500 text-xs">{{ $message }}</span>
                                     @enderror
@@ -48,7 +49,8 @@
                                 <td class="p-2 bg-beige text-center">
                                     <input type="text" name="rate" placeholder="rate"
                                         value="{{ $ivsAndLineRecord->rate ?? '' }}"
-                                        class="w-full h-[45px] text-center focus:outline-none cdss-input" data-field-name="rate">
+                                        class="w-full h-[45px] text-center focus:outline-none cdss-input"
+                                        data-field-name="rate">
                                     @error('rate')
                                         <span class="text-red-500 text-xs">{{ $message }}</span>
                                     @enderror
@@ -56,7 +58,8 @@
                                 <td class="p-2 bg-beige text-center">
                                     <input type="text" name="site" placeholder="site"
                                         value="{{ $ivsAndLineRecord->site ?? '' }}"
-                                        class="w-full h-[45px] text-center focus:outline-none cdss-input" data-field-name="site">
+                                        class="w-full h-[45px] text-center focus:outline-none cdss-input"
+                                        data-field-name="site">
                                     @error('site')
                                         <span class="text-red-500 text-xs">{{ $message }}</span>
                                     @enderror
@@ -64,7 +67,8 @@
                                 <td class="p-2 bg-beige text-center">
                                     <input type="text" name="status" placeholder="status"
                                         value="{{ $ivsAndLineRecord->status ?? '' }}"
-                                        class="w-full h-[45px] text-center focus:outline-none cdss-input" data-field-name="status">
+                                        class="w-full h-[45px] text-center focus:outline-none cdss-input"
+                                        data-field-name="status">
                                     @error('status')
                                         <span class="text-red-500 text-xs">{{ $message }}</span>
                                     @enderror
@@ -101,16 +105,19 @@
         </fieldset>
 
         {{-- @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success">{{ session('success') }}</div>
         @endif
         @if (session('error'))
-            <div class="alert alert-error">{{ session('error') }}</div>
+        <div class="alert alert-error">{{ session('error') }}</div>
         @endif --}}
 
 
 @endsection
     @push('scripts')
-        @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+        @vite([
+            'resources/js/patient-loader.js',
+            'resources/js/searchable-dropdown.js'
+        ])
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {

@@ -185,14 +185,4 @@
         'resources/js/patient-loader.js',
         'resources/js/searchable-dropdown.js'
     ])
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cdssForm = document.querySelector('.cdss-form');
-            if (cdssForm && window.initializeCdssForForm) {
-                window.initializeCdssForForm(cdssForm);
-                window.triggerInitialCdssAnalysis(cdssForm);
-            }
-        });
-    </script>
 @endpush

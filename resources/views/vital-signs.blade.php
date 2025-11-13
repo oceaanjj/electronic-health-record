@@ -375,16 +375,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 @push('scripts')
-    {{-- Load all necessary script files --}}
     @vite([
     'resources/js/patient-loader.js', 
     'resources/js/date-day-loader.js', 
     'resources/js/alert.js', 
     'resources/js/init-searchable-dropdown.js', 
-    'resources/js/vital-signs-date-sync.js'
+    'resources/js/vital-signs-date-sync.js',
+        'resources/js/page-initializer.js'
+    
     ])
 
-    {{-- Define the specific initializers for this page --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.pageInitializers = [

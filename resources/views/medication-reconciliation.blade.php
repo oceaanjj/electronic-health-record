@@ -17,10 +17,11 @@
                 <center>
                     <table class="mb-2 w-[80%] border-collapse border-spacing-0">
                         <tr>
-                            <th colspan="6" class="main-header rounded-t-lg">PATIENT'S CURRENT MEDICATION 
+                            <th colspan="6" class="main-header rounded-t-lg">PATIENT'S CURRENT MEDICATION
                                 <div style="margin-top: 0px; font-size: 10px; color: rgb(173, 173, 173);">
                                     ( UPON ADMISSION )
-                                </div></th>
+                                </div>
+                            </th>
                         </tr>
                         <tr>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
@@ -28,7 +29,8 @@
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">ROUTE</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">FREQUENCY</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">INDICATION</th>
-                            <th class="bg-yellow-light text-brown text-[12px] border-line-brown">ADMINISTERED DURING STAY?</th>
+                            <th class="bg-yellow-light text-brown text-[12px] border-line-brown">ADMINISTERED DURING STAY?
+                            </th>
                             </th>
                         </tr>
                         <tr class="bg-beige">
@@ -70,14 +72,15 @@
                                     ( IF ANY )
                                 </div>
                             </th>
-                        </tr>   
+                        </tr>
                         <tr>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSE</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">ROUTE</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">FREQUENCY</th>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">INDICATION</th>
-                            <th class="bg-yellow-light text-brown text-[12px] border-line-brown">DISCONTINUED ON ADMISSION?</th>
+                            <th class="bg-yellow-light text-brown text-[12px] border-line-brown">DISCONTINUED ON ADMISSION?
+                            </th>
                             </th>
                         </tr>
                         <tr class="bg-beige">
@@ -114,7 +117,8 @@
                     <table class="mb-2 w-[80%] border-collapse border-spacing-0">
                         {{-- Note: colspan is 5 here --}}
                         <tr>
-                                <th colspan="5" class="main-header rounded-t-lg">CHANGES IN MEDICATION DURING HOSPITALIZATION </th>
+                            <th colspan="5" class="main-header rounded-t-lg">CHANGES IN MEDICATION DURING HOSPITALIZATION
+                            </th>
                         </tr>
                         <tr>
                             <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
@@ -159,5 +163,10 @@
 @endsection
 
     @push('scripts')
-        @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+        @vite([
+            'resources/js/alert.js',
+            'resources/js/patient-loader.js',
+            'resources/js/searchable-dropdown.js',
+            'resources/js/date-day-loader.js'
+        ])
     @endpush

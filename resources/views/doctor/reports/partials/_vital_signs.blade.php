@@ -70,7 +70,7 @@
                             @if (!empty($alertsArray))
                                 <ul>
                                     @foreach ($alertsArray as $alert)
-                                        <li> • {{ trim($alert) }}</li>
+                                        <li> {{ trim($alert) }}</li>
                                     @endforeach
                                 </ul>
                             @else

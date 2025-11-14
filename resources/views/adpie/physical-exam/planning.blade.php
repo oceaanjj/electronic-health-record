@@ -16,8 +16,9 @@
     <form
         action="{{ route('nursing-diagnosis.storePlanning', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
         method="POST" class="h-full flex flex-col cdss-form"
-        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}" data-patient-id="{{ $patient->patient_id }}"
-        data-component="{{ $component }}">
+        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
+        data-batch-analyze-url="{{ route('nursing-diagnosis.analyze-batch-field') }}"
+        data-patient-id="{{ $patient->patient_id }}" data-component="{{ $component }}">
         @csrf
 
         <fieldset>
@@ -40,10 +41,24 @@
                     <div class="bg-dark-green text-white font-bold py-2 mb-0 text-center rounded-t-lg">
                         RECOMMENDATIONS
                     </div>
-                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
-                        data-alert-for="planning" style="border-top: none;">
-                        <span class="opacity-70 text-white font-semibold">No Recommendations</span>
+
+                    {{-- NEW: Pre-load alert from session ★ --}}
+                    @php
+                        $alert = session('adpie_alerts')['planning'] ?? null;
+                        $level = $alert->level ?? 'INFO';
+                        $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
+                        $colorClass = 'alert-green';
+                        if ($level === 'CRITICAL')
+                            $colorClass = 'alert-red';
+                        if ($level === 'WARNING')
+                            $colorClass = 'alert-orange';
+                    @endphp
+
+                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg {{ $colorClass }}"
+                        data-alert-for="planning" style="border-top: none; height: 90px; margin: 2px;">
+                        <div class="alert-message p-1">{!! $message !!}</div>
                     </div>
+                    {{-- END NEW --}}
                 </div>
             </div>
 

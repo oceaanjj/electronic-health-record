@@ -11,30 +11,26 @@ use App\Services\IntakeAndOutputCdssService;
 use App\Services\ActOfDailyLivingCdssService;
 use App\Models\Patient;
 use Exception;
-use Illuminate\Support\Arr; // New helper for array operations
+use Illuminate_Support_Arr;
+use Illuminate\Support\Facades\Log; // Use the Laravel Log facade
 
 class NursingDiagnosisCdssService
 {
-    // --- 1. CORE IMPROVEMENTS: Dependency Management & Type Safety ---
-    // Injecting a simple Rule Engine abstraction would be ideal,
-    // but for now, let's focus on cleaner code within this class.
-
     private $physicalExamCdssService;
     private $labValuesCdssService;
     private $vitalCdssService;
     private $intakeAndOutputCdssService;
     private $actOfDailyLivingCdssService;
 
-    // Use static property for rules cache to avoid recalculation if the service
-    // is instantiated multiple times in a single request (though less common with Laravel's service container).
+    // Static cache for rules
     private static $adpieRulesCache = [];
 
-    // Define severity scores for ranking with explicit data types.
+    // Define severity scores for ranking
     private const SEVERITY_SCORES = [
         'critical' => 3,
         'warning' => 2,
         'info' => 1,
-        'low' => 0, // Added a 'low' or default score
+        'low' => 0,
     ];
 
     public function __construct(
@@ -49,14 +45,10 @@ class NursingDiagnosisCdssService
         $this->vitalCdssService = $vitalCdssService;
         $this->intakeAndOutputCdssService = $intakeAndOutputCdssService;
         $this->actOfDailyLivingCdssService = $actOfDailyLivingCdssService;
-        // Initialization of static cache is not needed here.
     }
 
-    // --- 2. IMPROVEMENT: Rule Loading (Caching, Error Handling) ---
     /**
      * Retrieves and caches ADPIE rules for a component.
-     * @param string $componentName e.g., 'physical-exam'
-     * @return array
      */
     private function getRulesForComponent(string $componentName): array
     {
@@ -67,8 +59,7 @@ class NursingDiagnosisCdssService
         $rulesDirectory = storage_path('app/private/adpie/' . $componentName . '/rules');
 
         if (!File::isDirectory($rulesDirectory)) {
-            // Use Laravel's built-in logging instead of error_log
-            \Log::warning("ADPIE rules directory not found for component: " . $componentName);
+            Log::warning("ADPIE rules directory not found for component: " . $componentName);
             self::$adpieRulesCache[$componentName] = [];
             return [];
         }
@@ -77,7 +68,6 @@ class NursingDiagnosisCdssService
         $mergedRules = [];
 
         foreach ($files as $file) {
-            // Use `pathinfo` for robust extension checking
             if (!in_array(pathinfo($file->getPathname(), PATHINFO_EXTENSION), ['yaml', 'yml'])) {
                 continue;
             }
@@ -87,20 +77,20 @@ class NursingDiagnosisCdssService
                 if (is_array($parsedYaml) && !empty($parsedYaml)) {
                     $stepName = $file->getFilenameWithoutExtension();
 
-                    // Use Laravel Arr::wrap for consistent handling of lists vs keyed arrays
-                    $rulesList = Arr::wrap($parsedYaml);
-
-                    // Simple check to see if the first element is an array (list of rules)
-                    if (is_array(reset($rulesList)) && !is_numeric(key(reset($rulesList)))) {
-                        // If it's a top-level key matching the filename, use its content
-                        $mergedRules[$stepName] = $rulesList[$stepName] ?? $rulesList;
+                    // Check if the YAML file itself contains a top-level key (like 'diagnosis:')
+                    if (isset($parsedYaml[$stepName]) && is_array($parsedYaml[$stepName])) {
+                        // Use the content under that key
+                        $mergedRules[$stepName] = $parsedYaml[$stepName];
+                    } else if (is_array(reset($parsedYaml))) {
+                        // If it's a simple list of rules (array of arrays)
+                        $mergedRules[$stepName] = $parsedYaml;
                     } else {
-                        // Otherwise, assume the entire file content is the rule set for this step
-                        $mergedRules[$stepName] = $rulesList;
+                        // Handle other valid YAML structures if necessary, or log a warning
+                        Log::warning("Unexpected YAML structure in file: " . $file->getPathname());
                     }
                 }
             } catch (Exception $e) {
-                \Log::error("Failed to parse ADPIE YAML file: " . $file->getPathname(), ['error' => $e->getMessage()]);
+                Log::error("Failed to parse ADPIE YAML file: " . $file->getPathname(), ['error' => $e->getMessage()]);
             }
         }
 
@@ -108,12 +98,8 @@ class NursingDiagnosisCdssService
         return $mergedRules;
     }
 
-    // --- 3. IMPROVEMENT: Alert Generation (Clearer Separation) ---
     /**
-     * Converts ranked alert strings into a structured alert object for the front-end.
-     * @param array $recommendations Array of alert strings.
-     * @param string $highestSeverity Highest severity found in the ranked list (e.g., 'critical', 'warning')
-     * @return object|null
+     * Converts ranked alert strings into a structured alert object.
      */
     private function createAlert(array $recommendations, string $highestSeverity = 'recommendation')
     {
@@ -123,32 +109,24 @@ class NursingDiagnosisCdssService
 
         $messageHtml = '<ul class="list-disc list-inside text-left">';
         foreach ($recommendations as $rec) {
-            // Ensure the recommendation is a string before escaping
             $messageHtml .= '<li>' . htmlspecialchars((string) $rec) . '</li>';
         }
         $messageHtml .= '</ul>';
 
-        // Join recommendations with a period for clearer raw message separation
         $plainTextMessage = implode('. ', $recommendations);
 
         return (object) [
-            // Use the highest severity for a more accurate visual cue
             'level' => strtolower($highestSeverity),
             'message' => $messageHtml,
             'raw_message' => $plainTextMessage
         ];
     }
 
-    // --- 4. IMPROVEMENT: Rule Matching (Performance & Clarity) ---
     /**
      * Finds all rules that match the finding.
-     * @param string $finding The input text to analyze.
-     * @param array $rules The rule set for a specific ADPIE step.
-     * @return array
      */
     private function runAdpieAnalysis(string $finding, array $rules): array
     {
-        // One-time lowercasing of the finding for efficiency
         $findingLower = strtolower(trim($finding));
         $matchedRules = [];
 
@@ -159,19 +137,14 @@ class NursingDiagnosisCdssService
         foreach ($rules as $rule) {
             // Robust validation of rule structure
             if (!is_array($rule) || !isset($rule['keywords']) || !is_array($rule['keywords'])) {
-                \Log::warning('Invalid rule structure encountered.', ['rule' => $rule]);
+                Log::warning('Invalid rule structure encountered.', ['rule' => $rule]);
                 continue;
             }
 
-            // Pre-process keywords: trim and lowercase them once
             $keywords = array_map('strtolower', array_map('trim', $rule['keywords']));
-
             $matchType = $rule['match_type'] ?? 'all';
-            $negate = $rule['negate'] ?? false;
+            $negate = (bool) ($rule['negate'] ?? false);
             $match = false;
-
-            // Using a simple, consistent logic: $match is set to true if the conditions pass,
-            // and the final $negate check handles inversion.
 
             if ($matchType === 'any') {
                 $match = false;
@@ -184,7 +157,6 @@ class NursingDiagnosisCdssService
             } else { // 'all' (default)
                 $match = true;
                 foreach ($keywords as $keyword) {
-                    // Fail fast: if any keyword is missing, the 'all' match fails.
                     if (!str_contains($findingLower, $keyword)) {
                         $match = false;
                         break;
@@ -198,7 +170,7 @@ class NursingDiagnosisCdssService
             }
 
             if ($match) {
-                // Attach a computed score (based on keywords) for secondary ranking stability
+                // Attach a computed score for secondary ranking
                 $rule['computed_specificity'] = count($keywords);
                 $matchedRules[] = $rule;
             }
@@ -206,75 +178,77 @@ class NursingDiagnosisCdssService
         return $matchedRules;
     }
 
-    // --- 5. IMPROVEMENT: Ranking and Filtering (Robustness & Scoring) ---
     /**
      * Scores, ranks, and filters the matched rules.
-     * @param array $matchedRules Array of matching rule objects.
-     * @param int $limit Max number of alerts to return.
-     * @return array Array containing the top N alert strings and the highest severity.
      */
     private function rankAndFilterAlerts(array $matchedRules, int $limit = 3): array
     {
         $highestSeverity = 'info';
 
-        usort($matchedRules, function (array $a, array $b) use (&$highestSeverity) {
-            // 1. Prioritize by Severity (Critical > Warning > Info > Low)
-            $severityA = self::SEVERITY_SCORES[strtolower($a['severity'] ?? 'low')] ?? 0;
-            $severityB = self::SEVERITY_SCORES[strtolower($b['severity'] ?? 'low')] ?? 0;
+        // 1. Calculate a Composite Score for each rule
+        $scoredRules = array_map(function ($rule) use (&$highestSeverity) {
+
+            // Ensure keys exist to prevent warnings
+            $severityName = strtolower($rule['severity'] ?? 'low');
+            $negate = (bool) ($rule['negate'] ?? false);
+            $keywords = $rule['keywords'] ?? []; // Safety check
+
+            // --- Scoring components ---
+            $severityScore = self::SEVERITY_SCORES[$severityName] ?? 0;
+            $specificityScore = (int) ($rule['computed_specificity'] ?? count($keywords));
+            $deprioritizeScore = (int) ($rule['deprioritize_score'] ?? 0);
+            $negatePenalty = $negate ? 0.5 : 0; // Small penalty for negated rules
+
+            // High factor (100) ensures severity dominates ranking
+            $finalScore = ($severityScore * 100)
+                + $specificityScore
+                - $deprioritizeScore
+                - $negatePenalty;
+
+            $rule['final_rank_score'] = $finalScore;
 
             // Track the highest severity
-            $currentHighest = max($severityA, $severityB);
-            $severityName = array_search($currentHighest, self::SEVERITY_SCORES);
-            if ($severityName && self::SEVERITY_SCORES[$highestSeverity] < $currentHighest) {
+            if ($severityScore > (self::SEVERITY_SCORES[$highestSeverity] ?? 0)) {
                 $highestSeverity = $severityName;
             }
 
-            if ($severityA !== $severityB) {
-                return $severityB <=> $severityA; // Sort descending by severity
-            }
+            return $rule;
+        }, $matchedRules);
 
-            // 2. Prioritize by Specificity (More keywords/computed_specificity is better)
-            // Use the computed specificity for consistency
-            $specificityA = $a['computed_specificity'] ?? count($a['keywords'] ?? []);
-            $specificityB = $b['computed_specificity'] ?? count($b['keywords'] ?? []);
 
-            if ($specificityA !== $specificityB) {
-                return $specificityB <=> $specificityA; // Sort descending by specificity
-            }
+        // 2. Sort by the calculated final score
+        usort($scoredRules, function ($a, $b) {
+            $scoreA = $a['final_rank_score'] ?? 0;
+            $scoreB = $b['final_rank_score'] ?? 0;
 
-            // 3. De-prioritize 'negate' rules (they are less specific and should be weighted lower)
-            $negateA = (bool) ($a['negate'] ?? false);
-            $negateB = (bool) ($b['negate'] ?? false);
-
-            return $negateA <=> $negateB; // Sort ascending (false (0) comes before true (1))
+            return $scoreB <=> $scoreA; // Sort descending
         });
 
-        // Get the top N rules
-        $topRules = array_slice($matchedRules, 0, $limit);
+        // 3. Get the top N rules
+        $topRules = array_slice($scoredRules, 0, $limit);
 
-        // Return just the alert strings and the highest severity
+        // 4. Return the alerts and severity
         return [
             'alerts' => array_column($topRules, 'alert'),
             'highest_severity' => $highestSeverity
         ];
     }
 
-    // --- 6. IMPROVEMENT: Centralized Analysis Method for ADPIE Steps ---
     /**
      * General purpose analysis for any ADPIE step.
-     * @param string $componentName
-     * @param string $stepName 'diagnosis', 'planning', 'intervention', 'evaluation'
-     * @param string $finding The input text to analyze.
-     * @return object|null The structured alert object or null.
      */
     private function runAnalysisStep(string $componentName, string $stepName, string $finding)
     {
         $componentRules = $this->getRulesForComponent($componentName);
         $rules = $componentRules[$stepName] ?? [];
 
+        if (empty($rules)) {
+            Log::info("No rules found for component/step: {$componentName}/{$stepName}");
+            return null;
+        }
+
         $matchedRules = $this->runAdpieAnalysis($finding, $rules);
 
-        // Return null immediately if no matches
         if (empty($matchedRules)) {
             return null;
         }

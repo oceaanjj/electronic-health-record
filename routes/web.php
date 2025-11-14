@@ -263,13 +263,17 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     ]);
 
 
+    // --- D P I E  ---
 
     Route::post('/adpie/vitals/analyze-diagnosis', [VitalSignsController::class, 'analyzeDiagnosisForNursing'])
         ->name('adpie.vitals.analyzeDiagnosis');
-    // --- D P I E  ---
 
     Route::prefix('adpie')->name('nursing-diagnosis.')->group(function () {
         Route::post('/analyze-step', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');
+
+        // ★ ADD THIS NEW BATCH ROUTE ★
+        Route::post('/analyze-batch-step', [NursingDiagnosisController::class, 'analyzeBatchDiagnosisField'])->name('analyze-batch-field');
+
         Route::get('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'startDiagnosis'])->name('start');
         Route::post('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'storeDiagnosis'])->name('storeDiagnosis');
         Route::get('/{component}/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])->name('showPlanning');

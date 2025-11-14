@@ -123,6 +123,7 @@
             renderPreviews(type); // Re-render
         }
     }
+
     // Expose to window for 'onclick'
     window.handleDeletePreview = handleDeletePreview;
 

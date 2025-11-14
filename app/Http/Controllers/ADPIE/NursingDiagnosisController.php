@@ -130,13 +130,44 @@ class NursingDiagnosisController extends Controller
         return $this->getComponentService($component)->storeEvaluation($request, $component, $nursingDiagnosisId);
     }
 
+
+    //NEW 
+    private function getAlertForField($fieldName, $finding, $patientId, $component)
+    {
+        $recommendation = null;
+        $finding = $finding ?? '';
+
+        // Route the analysis based on the field name
+        switch ($fieldName) {
+            case 'diagnosis':
+                $recommendation = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $finding);
+                break;
+            case 'planning':
+                $recommendation = $this->nursingDiagnosisCdssService->analyzePlanning($component, $finding);
+                break;
+            case 'intervention':
+                $recommendation = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $finding);
+                break;
+            case 'evaluation':
+                $recommendation = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $finding);
+                break;
+        }
+
+        if ($recommendation === null) {
+            return [
+                'level' => 'INFO',
+                'message' => `<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>`
+            ];
+        }
+
+        // Make sure the object is returned
+        return $recommendation;
+    }
+
+
     //==================================================================
     // WIZARD "CDSS" METHOD
     //==================================================================
-
-    /**
-     * This method is generic and doesn't need to be in a component.
-     */
     public function analyzeDiagnosisField(Request $request)
     {
         try {
@@ -171,7 +202,7 @@ class NursingDiagnosisController extends Controller
             if ($recommendation === null) {
                 return response()->json([
                     'level' => 'INFO',
-                    'message' => '<span class="opacity-70 text-white font-semibold">No Recommendations</span>'
+                    'message' => '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>'
                 ]);
             }
 
@@ -185,6 +216,48 @@ class NursingDiagnosisController extends Controller
             ], 500);
         }
     }
+
+
+
+    // NEW 
+    public function analyzeBatchDiagnosisField(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'batch' => 'required|array',
+                'batch.*.fieldName' => 'required|string',
+                'batch.*.finding' => 'nullable|string',
+                'patient_id' => 'nullable|exists:patients,patient_id',
+                'component' => 'required|string',
+            ]);
+
+            $results = [];
+
+            foreach ($data['batch'] as $item) {
+                // Use the same helper function as the single-field analysis
+                $alert = $this->getAlertForField(
+                    $item['fieldName'],
+                    $item['finding'],
+                    $data['patient_id'],
+                    $data['component']
+                );
+                $results[] = $alert;
+            }
+
+            return response()->json($results);
+
+        } catch (\Exception $e) {
+            Log::error("[ADPIE] Error in analyzeBatchDiagnosisField: " . $e->getMessage(), ['exception' => $e]);
+            // Return an array of errors with the same length as the batch
+            $batchSize = isset($data['batch']) ? count($data['batch']) : 0;
+            $errorResponse = [
+                'level' => 'CRITICAL',
+                'message' => 'Batch analysis failed.'
+            ];
+            return response()->json(array_fill(0, $batchSize, $errorResponse), 500);
+        }
+    }
+
 
     //==================================================================
     // OTHER METHODS

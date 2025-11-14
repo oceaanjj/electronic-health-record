@@ -26,6 +26,31 @@ class PhysicalExamComponent implements AdpieComponentInterface
             ->latest()
             ->first();
 
+        // Pre-calculate all 4 alerts
+        $alerts = [
+            'diagnosis' => $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosis->diagnosis ?? ''),
+            'planning' => $this->nursingDiagnosisCdssService->analyzePlanning($component, $diagnosis->planning ?? ''),
+            'intervention' => $this->nursingDiagnosisCdssService->analyzeIntervention($component, $diagnosis->intervention ?? ''),
+            'evaluation' => $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $diagnosis->evaluation ?? ''),
+        ];
+
+        // Check if the alert object AND its message exist before stripping html tags
+        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
+            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
+        }
+        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
+            $alerts['planning']->message = strip_tags($alerts['planning']->message);
+        }
+        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
+            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
+        }
+        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
+            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        }
+
+        // Put them in the session to persist across all pages
+        session()->put('adpie_alerts', $alerts);
+
         return view('adpie.physical-exam.diagnosis', [
             'physicalExamId' => $physicalExam->id,
             'patient' => $physicalExam->patient,
@@ -47,11 +72,13 @@ class PhysicalExamComponent implements AdpieComponentInterface
 
         $diagnosisText = $request->input('diagnosis');
 
-        // --- THIS IS THE FIX ---
-        // Get alert by analyzing the DIAGNOSIS text
         $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
-        $diagnosisAlert = $alertObject->raw_message ?? null;
-        // --- END OF FIX ---
+
+        // Check if the object and property exist before stripping html tags
+        $diagnosisAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $diagnosisAlert = strip_tags($alertObject->message);
+        }
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
@@ -60,7 +87,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
             [
                 'patient_id' => $patient->patient_id,
                 'diagnosis' => $diagnosisText,
-                'diagnosis_alert' => $diagnosisAlert,
+                'diagnosis_alert' => $diagnosisAlert, // Now plain text or null
             ]
         );
 
@@ -91,11 +118,16 @@ class PhysicalExamComponent implements AdpieComponentInterface
         $planningText = $request->input('planning');
 
         $alertObject = $this->nursingDiagnosisCdssService->analyzePlanning($component, $planningText);
-        $planningAlert = $alertObject->raw_message ?? null;
+
+        // Check if the object and property exist before stripping html tags
+        $planningAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $planningAlert = strip_tags($alertObject->message);
+        }
 
         $diagnosis->update([
             'planning' => $planningText,
-            'planning_alert' => $planningAlert,
+            'planning_alert' => $planningAlert, // Now plain text or null
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -125,11 +157,16 @@ class PhysicalExamComponent implements AdpieComponentInterface
         $interventionText = $request->input('intervention');
 
         $alertObject = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $interventionText);
-        $interventionAlert = $alertObject->raw_message ?? null;
+
+        // Check if the object and property exist before stripping html tags
+        $interventionAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $interventionAlert = strip_tags($alertObject->message);
+        }
 
         $diagnosis->update([
             'intervention' => $interventionText,
-            'intervention_alert' => $interventionAlert,
+            'intervention_alert' => $interventionAlert, // Now plain text or null
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -159,14 +196,20 @@ class PhysicalExamComponent implements AdpieComponentInterface
         $evaluationText = $request->input('evaluation');
 
         $alertObject = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $evaluationText);
-        $evaluationAlert = $alertObject->raw_message ?? null;
+
+        // Check if the object and property exist before stripping html tags
+        $evaluationAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $evaluationAlert = strip_tags($alertObject->message);
+        }
 
         $diagnosis->update([
             'evaluation' => $evaluationText,
-            'evaluation_alert' => $evaluationAlert,
+            'evaluation_alert' => $evaluationAlert, // Now plain text or null
         ]);
 
         if ($request->input('action') == 'save_and_finish') {
+            session()->forget('adpie_alerts'); // Clear the session alerts
             return redirect()->route('physical-exam.index')
                 ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
         }

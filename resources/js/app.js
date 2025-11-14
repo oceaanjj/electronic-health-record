@@ -14,7 +14,6 @@ import {
 // Import commonly used scripts globally
 import "./soft-delete.js";
 import "./patient-search.js";
-import "./alert.js";
 import "./patient-loader.js";
 import "./searchable-dropdown.js";
 import "./date-day-loader.js";

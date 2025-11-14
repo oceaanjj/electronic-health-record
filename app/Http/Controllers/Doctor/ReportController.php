@@ -97,6 +97,9 @@ class ReportController extends Controller
         ];
 
         $pdf = Pdf::loadView('doctor.reports.patient-report-pdf', $data);
+
+        $pdf->setPaper('folio', 'portrait'); //pdf paper size update
+
         $pdf->setOption('isPhpEnabled', true);
         return $pdf->download($patient->name . '_Results.pdf');
     }

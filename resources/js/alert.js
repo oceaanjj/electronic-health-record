@@ -2,7 +2,8 @@
 // Handles CDSS alerts for all forms (ADL, PE, Vitals, etc.)
 // =======================================================
 
-const TYPING_DELAY_MS = 800; // Delay after typing stops before analysis in ms
+const TYPING_DELAY_MS = 500; // Delay after typing stops before analysis in ms
+//added delay para hindi kada keyword mag a-analyze
 
 let debounceTimer;
 

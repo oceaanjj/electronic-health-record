@@ -178,7 +178,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/lab-values/select', [LabValuesController::class, 'selectPatient'])->name('lab-values.select');
     Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
     Route::post('/lab-values/analyze-field', [LabValuesController::class, 'runSingleCdssAnalysis'])->name('lab-values.run-cdss-field');
-    Route::post('/analyze-batch', [LabValuesController::class, 'runBatchCdssAnalysis'])->name('lab-values.analyze-batch');//new
+    Route::post('/lab-values/analyze-batch', [LabValuesController::class, 'runBatchCdssAnalysis'])->name('lab-values.analyze-batch'); //new
 
 
 
@@ -240,6 +240,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
     Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
     Route::post('/intake-and-output/cdss', [IntakeAndOutputController::class, 'runCdssAnalysis'])->name('io.cdss');
+    Route::post('/analyze-batch', [IntakeAndOutputController::class, 'runBatchCdssAnalysis'])->name('io.analyze-batch');//new
 
     //MEDICATION-ADMINISTRATION:
     Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])

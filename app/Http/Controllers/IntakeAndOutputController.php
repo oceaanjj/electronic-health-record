@@ -214,6 +214,9 @@ class IntakeAndOutputController extends Controller
             ->with('success', $message);
     }
 
+
+
+
     public function checkIntakeOutput(Request $request)
     {
         $oralIntake = $request->input('oral_intake');
@@ -233,6 +236,32 @@ class IntakeAndOutputController extends Controller
 
         return response()->json($result);
     }
+
+
+    //new
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        // The payload from JS will be { batch: [ { time: "1", vitals: { field: value, ... } }, ... ] }
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.time' => 'required|string', // This is the day_no
+            'batch.*.vitals' => 'required|array', // This holds the I/O fields
+        ]);
+
+        $cdssService = new IntakeAndOutputCdssService();
+        $results = [];
+
+        foreach ($data['batch'] as $item) {
+            // Re-used existing group analysis logic from analyzeIntakeOutput
+            // $item['vitals'] will be [ 'oral_intake' => '500', 'urine_output' => '300', ... ]
+            $result = $cdssService->analyzeIntakeOutput($item['vitals']);
+            $result['severity'] = strtoupper($result['severity']);
+            $results[] = $result;
+        }
+
+        return response()->json($results);
+    }
+
 
     public function runCdssAnalysis(Request $request)
     {

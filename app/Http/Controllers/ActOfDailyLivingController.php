@@ -90,7 +90,7 @@ class ActOfDailyLivingController extends Controller
             // 4. Run CDSS analysis on fetched data to display alerts
             $alerts = [];
             if ($adlData) {
-                $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+                $cdssService = new ActOfDailyLivingCdssService();
                 $alerts = $cdssService->analyzeFindings($adlData->toArray());
             }
             $request->session()->flash('cdss', $alerts);
@@ -152,7 +152,7 @@ class ActOfDailyLivingController extends Controller
 
                 // Run CDSS analysis on fetched data to display alerts
                 if ($adlData) {
-                    $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+                    $cdssService = new ActOfDailyLivingCdssService();
                     $alerts = $cdssService->analyzeFindings($adlData->toArray());
                 }
             }
@@ -168,9 +168,7 @@ class ActOfDailyLivingController extends Controller
         ]);
     }
 
-    /**
-     * New method for real-time CDSS analysis of a single field, called by alert.js.
-     */
+    // old
     public function analyzeField(Request $request)
     {
         $data = $request->validate([
@@ -178,12 +176,40 @@ class ActOfDailyLivingController extends Controller
             'finding' => 'nullable|string',
         ]);
 
-        $cdssService = new \App\Services\ActOfDailyLivingCdssService();
+        $cdssService = new ActOfDailyLivingCdssService();
 
         $alert = $cdssService->analyzeSingleFinding($data['fieldName'], $data['finding'] ?? '');
 
         return response()->json($alert);
     }
+
+
+
+
+    // new method for batch CDSS analysis of multiple fields, called by alert.js
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.fieldName' => 'required|string',
+            'batch.*.finding' => 'nullable|string',
+        ]);
+
+        $cdssService = new ActOfDailyLivingCdssService();
+        $results = [];
+
+        foreach ($data['batch'] as $item) {
+            // Re-use your existing single-field analysis logic
+            $alert = $cdssService->analyzeSingleFinding(
+                $item['fieldName'],
+                $item['finding'] ?? ''
+            );
+            $results[] = $alert;
+        }
+
+        return response()->json($results);
+    }
+
 
     public function store(Request $request)
     {

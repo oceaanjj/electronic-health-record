@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
-use App\Services\LabValuesCdssService; 
+use App\Services\LabValuesCdssService;
 use App\Models\LabValues;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 
 class LabValuesController extends Controller
 {
@@ -16,7 +16,7 @@ class LabValuesController extends Controller
     {
         $patientId = $request->input('patient_id');
         $request->session()->put('selected_patient_id', $patientId);
-        return redirect()->route('lab-values.index'); 
+        return redirect()->route('lab-values.index');
     }
 
     public function show(Request $request)
@@ -39,8 +39,8 @@ class LabValuesController extends Controller
                     $alerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
                 }
             } else {
-                 $request->session()->forget('selected_patient_id');
-                 return redirect()->route('lab-values.index')->with('error', 'Selected patient not found or not authorized.');
+                $request->session()->forget('selected_patient_id');
+                return redirect()->route('lab-values.index')->with('error', 'Selected patient not found or not authorized.');
             }
         }
 
@@ -58,7 +58,7 @@ class LabValuesController extends Controller
 
     public function store(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
         ], [
             'patient_id.required' => 'Please choose a patient first.',
@@ -190,6 +190,68 @@ class LabValuesController extends Controller
         return response()->json($alert);
     }
 
+
+    // new 
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.fieldName' => 'required|string',
+            'batch.*.finding' => 'nullable|numeric', // Lab values are numeric
+        ]);
+
+        // This endpoint requires a patient to be in the session
+        $patientId = $request->session()->get('selected_patient_id');
+        if (!$patientId) {
+            return response()->json([], 400); // Return empty array if no patient
+        }
+
+        $patient = Auth::user()->patients()->find($patientId);
+        if (!$patient) {
+            return response()->json([], 403); // Not authorized
+        }
+
+        $cdssService = new LabValuesCdssService();
+        $ageGroup = $cdssService->getAgeGroup($patient);
+
+        // Map fieldName to the parameter expected by checkLabResult
+        $labParamMap = [
+            'wbc_result' => 'wbc',
+            'rbc_result' => 'rbc',
+            'hgb_result' => 'hgb',
+            'hct_result' => 'hct',
+            'platelets_result' => 'platelets',
+            'mcv_result' => 'mcv',
+            'mch_result' => 'mch',
+            'mchc_result' => 'mchc',
+            'rdw_result' => 'rdw',
+            'neutrophils_result' => 'neutrophils',
+            'lymphocytes_result' => 'lymphocytes',
+            'monocytes_result' => 'monocytes',
+            'eosinophils_result' => 'eosinophils',
+            'basophils_result' => 'basophils',
+        ];
+
+        $results = [];
+
+        foreach ($data['batch'] as $item) {
+            $param = $labParamMap[$item['fieldName']] ?? null;
+            $value = $item['finding'];
+
+            if ($param && $value !== null) {
+                $alert = $cdssService->checkLabResult($param, $value, $ageGroup);
+            } else {
+                $alert = ['alert' => '', 'severity' => LabValuesCdssService::NONE];
+            }
+            $results[] = $alert;
+        }
+
+        return response()->json($results);
+    }
+
+
+
+
     private function runLabCdss($labValue, $cdssService, $ageGroup)
     {
         $alerts = [];
@@ -212,18 +274,18 @@ class LabValuesController extends Controller
 
         foreach ($lab as $param => $field) {
             if (property_exists($labValue, $field) && $labValue->$field !== null) {
-                 $result = $cdssService->checkLabResult($param, $labValue->$field, $ageGroup);
-                 if ($result['severity'] !== LabValuesCdssService::NONE) {
+                $result = $cdssService->checkLabResult($param, $labValue->$field, $ageGroup);
+                if ($result['severity'] !== LabValuesCdssService::NONE) {
                     $alerts[$param . '_alerts'][] = [
                         'text' => $result['alert'],
                         'severity' => $result['severity'],
                     ];
-                 } else {
-                     $alerts[$param . '_alerts'][] = [
-                        'text' => $result['alert'], 
-                        'severity' => $result['severity'], 
+                } else {
+                    $alerts[$param . '_alerts'][] = [
+                        'text' => $result['alert'],
+                        'severity' => $result['severity'],
                     ];
-                 }
+                }
             }
         }
         return $alerts;
@@ -262,7 +324,7 @@ class LabValuesController extends Controller
             if ($ageInYears <= 18) {
                 return 'adolescent';
             }
-            return 'adult'; 
+            return 'adult';
 
         } catch (\Exception $e) {
             Log::error("Error parsing date_of_birth for patient ID {$patient->patient_id}: " . $e->getMessage());
@@ -275,19 +337,19 @@ class LabValuesController extends Controller
      */
     private function getAgeGroupFromInteger(int $ageInYears): string
     {
-         if ($ageInYears === 0) {
-             Log::warning("Cannot accurately determine age group for patient with age 0 years. Assuming 'infant'.");
-             return 'infant';
-         }
+        if ($ageInYears === 0) {
+            Log::warning("Cannot accurately determine age group for patient with age 0 years. Assuming 'infant'.");
+            return 'infant';
+        }
         if ($ageInYears < 2) {
             return 'infant';
         }
-        if ($ageInYears < 12) { 
+        if ($ageInYears < 12) {
             return 'child';
         }
-        if ($ageInYears <= 18) { 
+        if ($ageInYears <= 18) {
             return 'adolescent';
         }
-        return 'adult'; 
+        return 'adult';
     }
 }

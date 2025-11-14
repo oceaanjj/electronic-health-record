@@ -178,6 +178,36 @@ class PhysicalExamController extends Controller
         return response()->json($alert);
     }
 
+    //updated for batch processing
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.fieldName' => 'required|string', // Ensure each item has a fieldName
+            'batch.*.finding' => 'nullable|string',
+        ]);
+
+        $cdssService = new PhysicalExamCdssService();
+        $results = [];
+
+        // 2. Loop over each item in the batch
+        foreach ($data['batch'] as $item) {
+
+            // 3. Re-use your existing single-field analysis logic
+            $alert = $cdssService->analyzeSingleFinding(
+                $item['fieldName'],
+                $item['finding'] ?? ''
+            );
+
+            // 4. Add the result to our results array
+            $results[] = $alert;
+        }
+
+        // 5. Return the complete array of alerts
+        return response()->json($results);
+    }
+
+
 
     /**
      * Runs CDSS analysis on findings.

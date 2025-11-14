@@ -19,7 +19,8 @@
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
         <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form"
-            data-analyze-url="{{ route('physical-exam.analyze-field') }}" data-alert-height-class="h-[90px]">
+            data-analyze-url="{{ route('physical-exam.analyze-field') }}"
+            data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}" data-alert-height-class="h-[90px]">
             @csrf
 
             <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">

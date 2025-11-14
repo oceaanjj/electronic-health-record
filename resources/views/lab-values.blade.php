@@ -19,7 +19,8 @@
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
         <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
-            data-analyze-url="{{ route('lab-values.run-cdss-field') }}" data-alert-height-class="h-[49.5px]">
+            data-analyze-url="{{ route('lab-values.run-cdss-field') }}"
+            data-batch-analyze-url="{{ route('lab-values.analyze-batch') }}" data-alert-height-class="h-[49.5px]">
             @csrf
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 

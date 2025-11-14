@@ -119,6 +119,9 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::view("/{$routeUri}", $name)->name($name);
     }
 
+
+
+
     // Patient & Medical Record Routes
     Route::prefix('patients')->name('patients.')->group(function () {
         Route::get('/search', fn() => view('patients.search'))->name('search');
@@ -133,11 +136,16 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         'destroy'
     ]);
 
-    // ADD THESE TWO NEW ROUTES for Active/Inactive
+
+
+
+    // Patient Demograhic: Active/Inactive
     Route::delete('patients/{id}/deactivate', [PatientController::class, 'deactivate'])->name('patients.deactivate');
     Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->name('patients.activate');
 
-    // physical exam
+
+
+    // PHYSICAL EXAM Routes
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
         Route::get('/', [PhysicalExamController::class, 'show'])->name('index');
         Route::post('/select', [PhysicalExamController::class, 'selectPatient'])->name('select');
@@ -145,7 +153,10 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/cdss', [PhysicalExamController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
         // New route for real-time, single-field analysis
         Route::post('/analyze-field', [PhysicalExamController::class, 'runSingleCdssAnalysis'])->name('analyze-field');
+        Route::post('/analyze-batch', [PhysicalExamController::class, 'runBatchCdssAnalysis'])->name('analyze-batch');
     });
+
+
 
     // Medical History Store Routes
     Route::get('/medical-history', [MedicalController::class, 'show'])->name('medical-history');
@@ -160,26 +171,37 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::get('/developmental-history', [MedicalController::class, 'showDevelopmentalHistory'])->name('developmental-history');
     Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
 
+
+
     // Lab Values Routes
     Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
     Route::post('/lab-values/select', [LabValuesController::class, 'selectPatient'])->name('lab-values.select');
     Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
     Route::post('/lab-values/analyze-field', [LabValuesController::class, 'runSingleCdssAnalysis'])->name('lab-values.run-cdss-field');
+    Route::post('/analyze-batch', [LabValuesController::class, 'runBatchCdssAnalysis'])->name('lab-values.analyze-batch');//new
+
+
 
     // IVS AND LINES:
     Route::get('/ivs-and-lines', [IvsAndLineController::class, 'show'])->name('ivs-and-lines');
     Route::post('/ivs-and-lines/select', [IvsAndLineController::class, 'selectPatient'])->name('ivs-and-lines.select');
     Route::post('/ivs-and-lines', [IvsAndLineController::class, 'store'])->name('ivs-and-lines.store');
 
+
+
     // MEDICAL RECONCILIATION:
     Route::get('/medication-reconciliation', [MedReconciliationController::class, 'show'])->name('medication-reconciliation');
     Route::post('/medication-reconciliation/select', [MedReconciliationController::class, 'selectPatient'])->name('medreconciliation.select');
     Route::post('/medication-reconciliation', [MedReconciliationController::class, 'store'])->name('medreconciliation.store');
 
+
+
     // DISCHARGE PLANNING::
     Route::get('/discharge-planning', [DischargePlanningController::class, 'show'])->name('discharge-planning');
     Route::post('/discharge-planning', [DischargePlanningController::class, 'store'])->name('discharge-planning.store');
     Route::post('/discharge-planning/select', [DischargePlanningController::class, 'selectPatient'])->name('discharge-planning.select');
+
+
 
     //Activities of Daily Living (ADL)
     Route::prefix('adl')->name('adl.')->group(function () {
@@ -189,7 +211,10 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/select-patient', [ActOfDailyLivingController::class, 'selectPatient'])->name('select');
         Route::post('/select-date-day', [ActOfDailyLivingController::class, 'selectDateAndDay'])->name('select-date-day');
         Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
+        Route::post('/analyze-batch', [ActOfDailyLivingController::class, 'runBatchCdssAnalysis'])->name('analyze-batch'); //new
     });
+
+
 
     Route::get('/diagnostics', [DiagnosticsController::class, 'index'])->name('diagnostics.index');
     Route::post('/diagnostics/select', [DiagnosticsController::class, 'selectPatient'])->name('diagnostics.select');
@@ -206,6 +231,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::post('/cdss', [VitalSignsController::class, 'runCdssAnalysis'])->name('cdss');
         Route::post('/check', [VitalSignsController::class, 'checkVitals'])->name('check');
         Route::post('/fetch-data', [VitalSignsController::class, 'fetchVitalSignsData'])->name('fetch-data');
+        Route::post('/analyze-batch', [VitalSignsController::class, 'runBatchCdssAnalysis'])->name('analyze-batch');//new
     });
 
     //Intake and Output
@@ -235,11 +261,11 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         'as' => 'lab-values.nursing-diagnosis.start'
     ]);
 
-    
 
-        Route::post('/adpie/vitals/analyze-diagnosis', [VitalSignsController::class, 'analyzeDiagnosisForNursing'])
+
+    Route::post('/adpie/vitals/analyze-diagnosis', [VitalSignsController::class, 'analyzeDiagnosisForNursing'])
         ->name('adpie.vitals.analyzeDiagnosis');
-    // --- D P I E (DYNAMIC REFACTOR) ---
+    // --- D P I E  ---
 
     Route::prefix('adpie')->name('nursing-diagnosis.')->group(function () {
         Route::post('/analyze-step', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');

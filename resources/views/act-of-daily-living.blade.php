@@ -87,7 +87,9 @@
         
     {{-- END HEADER --}}
 
-    <form id="adl-form" method="POST" class="cdss-form" data-analyze-url="{{ route('adl.analyze-field') }}"
+    <form id="adl-form" method="POST" class="cdss-form" 
+    data-analyze-url="{{ route('adl.analyze-field') }}"
+    data-batch-analyze-url="{{ route('adl.analyze-batch') }}"
       data-alert-height-class="h-[55px]"> 
     
 <!-- data-alert-height-class = set alert box height -->

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Log;
 
 class VitalSignsController extends Controller
 {
+
+
     /**
      * Finds and returns the Vitals record for a given patient, date, and day.
      *
@@ -32,6 +34,11 @@ class VitalSignsController extends Controller
                 return Carbon::parse($item->time)->format('H:i');
             });
     }
+
+
+
+
+
 
     public function selectPatient(Request $request)
     {
@@ -130,6 +137,9 @@ class VitalSignsController extends Controller
         ]);
     }
 
+
+
+
     /**
      * Handles AJAX request to fetch vital signs data for a specific patient, date, and day.
      * Returns data as JSON.
@@ -164,11 +174,19 @@ class VitalSignsController extends Controller
         return response()->json($vitalsData);
     }
 
+
+
+
+
+
     public function show(Request $request)
     {
         // The logic for displaying the initial page is now handled by selectPatient
         return $this->selectPatient($request);
     }
+
+
+
 
     public function store(Request $request)
     {
@@ -268,6 +286,9 @@ class VitalSignsController extends Controller
         ])->with('success', $message);
     }
 
+
+
+
     public function checkVitals(Request $request)
     {
         $time = $request->input('time');
@@ -286,6 +307,35 @@ class VitalSignsController extends Controller
 
         return response()->json($result);
     }
+
+
+
+    //new
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.time' => 'required|string',
+            'batch.*.vitals' => 'required|array',
+        ]);
+
+        $cdssService = new VitalCdssService();
+        $results = [];
+
+        foreach ($data['batch'] as $item) {
+            // Re-use your existing group analysis logic from checkVitals
+            $result = $cdssService->analyzeVitalsForAlerts($item['vitals']);
+            $result['severity'] = strtoupper($result['severity']);
+            $results[] = $result;
+        }
+
+        return response()->json($results);
+    }
+
+
+
+
+
 
     public function runCdssAnalysis(Request $request)
     {

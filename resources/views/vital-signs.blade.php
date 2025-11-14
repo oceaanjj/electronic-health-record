@@ -98,6 +98,7 @@
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
             <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}"
                 data-analyze-url="{{ route('vital-signs.check') }}"
+                data-batch-analyze-url="{{ route('vital-signs.analyze-batch') }}" 
                 data-times="{{ json_encode($times) }}"
                 data-fetch-url="{{ route('vital-signs.fetch-data') }}"
                 data-alert-height-class="h-[55px]">

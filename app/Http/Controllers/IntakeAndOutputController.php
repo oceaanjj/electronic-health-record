@@ -19,6 +19,8 @@ class IntakeAndOutputController extends Controller
         $intakeOutputs = $patient->intakeAndOutputs;
         return view('patient-intake-outputs', compact('patient', 'intakeOutputs'));
     }
+
+
     public function generatedAlerts(Request $request)
     {
         $data = $request->validate([
@@ -36,10 +38,9 @@ class IntakeAndOutputController extends Controller
             'patients' => $patients,
             'cdss_alerts' => $alerts,
         ]);
-
-
-
     }
+
+
 
     public function selectPatientAndDate(Request $request)
     {
@@ -140,10 +141,14 @@ class IntakeAndOutputController extends Controller
         ]);
     }
 
+
+
     public function show(Request $request)
     {
         return $this->selectPatientAndDate($request);
     }
+
+
 
     public function store(Request $request)
     {
@@ -180,7 +185,6 @@ class IntakeAndOutputController extends Controller
             'urine_output' => 'nullable|integer',
             'other_output' => 'nullable|integer',
         ]);
-
         // Analyze the data to get the alert
         $cdss = new IntakeAndOutputCdssService();
         $alertData = $cdss->analyzeIntakeOutput($validatedData);
@@ -213,8 +217,6 @@ class IntakeAndOutputController extends Controller
         return redirect()->route('io.show')
             ->with('success', $message);
     }
-
-
 
 
     public function checkIntakeOutput(Request $request)

@@ -38,6 +38,8 @@ class ReportController extends Controller
         $patient = Patient::findOrFail($patient_id);
 
         $data = [
+
+            //NON - CDSS:
             'patient' => $patient,
             'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
             'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
@@ -56,9 +58,9 @@ class ReportController extends Controller
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
 
-            //CDSS RELATED:
+            //CDSS:
             'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
-            //DITOILALAGAY YUNG LUMANG TABLE SA TAAS KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS
+            //DITOILALAGAY YUNG MGA COMPOMENT NA MAY CDSS (IREMOVE YUNG SAME COMPONENT SA NON CDSS) KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS
 
         ];
 

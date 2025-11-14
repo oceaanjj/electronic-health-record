@@ -51,7 +51,20 @@ class LabValues extends Model
         'eosinophils_normal_range',
         'basophils_result',
         'basophils_normal_range',
-        'alerts',
+        'wbc_alert',
+        'rbc_alert',
+        'hgb_alert',
+        'hct_alert',
+        'platelets_alert',
+        'mcv_alert',
+        'mch_alert',
+        'mchc_alert',
+        'rdw_alert',
+        'neutrophils_alert',
+        'lymphocytes_alert',
+        'monocytes_alert',
+        'eosinophils_alert',
+        'basophils_alert',
     ];
 
     /**

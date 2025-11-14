@@ -4,6 +4,8 @@
 
 @section('content')
 
+
+
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
             <div
@@ -30,9 +32,9 @@
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[30%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">LAB TEST</th>
-                                <th class="w-[30%] bg-dark-green text-white font-bold py-2">RESULT</th>
-                                <th class="w-[40%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">PEDIATRIC
+                                <th class="w-[30%] main-header rounded-tl-[15px]">LAB TEST</th>
+                                <th class="w-[30%] main-header">RESULT</th>
+                                <th class="w-[50%] main-header rounded-tr-[15px]">
                                     NORMAL RANGE
                                 </th>
                             </tr>
@@ -64,12 +66,12 @@
                                     <td class="p-2 bg-beige text-center">
                                         <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
                                             value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
-                                            class="w-full h-[40px] text-center cdss-input" data-field-name="{{ $name }}_result">
+                                            class="w-full h-[40px] focus:outline-none text-center cdss-input" data-field-name="{{ $name }}_result">
                                     </td>
                                     <td class="p-2 bg-beige text-center">
                                         <input type="text" name="{{ $name }}_normal_range" placeholder="Normal Range"
                                             value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}"
-                                            class="w-full h-[40px] text-center">
+                                            class="w-full h-[40px] focus:outline-none text-center">
                                     </td>
                                 </tr>
                             @endforeach
@@ -78,7 +80,7 @@
 
                     {{-- ALERTS TABLE--}}
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header rounded-[15px]">
                             ALERTS
                         </div>
 
@@ -99,7 +101,12 @@
 
                 {{-- BUTTONS --}}
                 <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                    <button type="button" class="button-default">CDSS</button>
+                    @if (isset($labValue))
+                        <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
+                            class="button-default text-center">
+                            CDSS
+                        </a>
+                    @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
 

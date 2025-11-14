@@ -1,12 +1,41 @@
-/**
- * vital-signs-alerts.js
- *
- * This script handles real-time CDSS alerts for the vital signs form.
- * It listens for input changes on vital sign fields and dynamically updates
- * the corresponding alert box for that time slot.
- */
-
 let debounceTimer;
+let activeAnalysisCount = 0; // Counter for active analysis requests
+
+// --- Function: Disable header inputs ---
+
+// --- Function: Disable header inputs ---
+function disableHeaderInputs() {
+    const patientSearchInput = document.getElementById("patient_search_input");
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
+
+    if (patientSearchInput) {
+        patientSearchInput.setAttribute("disabled", "true");
+    }
+    if (dateSelector) {
+        dateSelector.setAttribute("disabled", "true");
+    }
+    if (dayNoSelector) {
+        dayNoSelector.setAttribute("disabled", "true");
+    }
+}
+
+// --- Function: Enable header inputs ---
+function enableHeaderInputs() {
+    const patientSearchInput = document.getElementById("patient_search_input");
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
+
+    if (patientSearchInput) {
+        patientSearchInput.removeAttribute("disabled");
+    }
+    if (dateSelector) {
+        dateSelector.removeAttribute("disabled");
+    }
+    if (dayNoSelector) {
+        dayNoSelector.removeAttribute("disabled");
+    }
+}
 
 // --- Function: Analyze input with backend ---
 async function analyzeVitalSignField(
@@ -38,6 +67,15 @@ async function analyzeVitalSignField(
         });
     }
 
+    const vitalsForm = document.getElementById("vitals-form");
+    if (!vitalsForm) return;
+
+    activeAnalysisCount++;
+    if (activeAnalysisCount === 1) {
+        vitalsForm.classList.add("is-loading-vitals");
+        disableHeaderInputs();
+    }
+
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -52,15 +90,23 @@ async function analyzeVitalSignField(
 
         const alertData = await response.json();
 
-        setTimeout(() => {
-            displayAlert(alertCell, alertData);
-        }, 150);
+        displayAlert(alertCell, alertData);
+        activeAnalysisCount--;
+        if (activeAnalysisCount === 0) {
+            vitalsForm.classList.remove("is-loading-vitals");
+            enableHeaderInputs();
+        }
     } catch (error) {
         console.error("Vital Signs CDSS analysis failed:", error);
         displayAlert(alertCell, {
             alert: "Error analyzing...",
             severity: "CRITICAL",
         });
+        activeAnalysisCount--;
+        if (activeAnalysisCount === 0) {
+            vitalsForm.classList.remove("is-loading-vitals");
+            enableHeaderInputs();
+        }
     }
 }
 
@@ -71,15 +117,15 @@ function showAlertLoading(alertCell) {
         return;
     }
 
-        // Update content of the inner div
+    // Update content of the inner div
 
-        alertBoxDiv.innerHTML = `
+    alertBoxDiv.innerHTML = `
 
             <div class=\"alert-message\">\n            <div class=\"alert-loading\">\n                <div class=\"loading-spinner\"></div>\n                <span>Analyzing...</span>\n            </div>\n        </div>
 
         `;
 
-        alertCell.onclick = null;
+    alertCell.onclick = null;
 }
 
 // --- Display alert content ---
@@ -120,12 +166,20 @@ function displayAlert(alertCell, alertData) {
         `;
         alertCell.onclick = null; // No modal for "No Findings"
     } else {
-        alertMessageContent = `<span>${alertData.alert}</span>`;
-        alertCell.onclick = () => openAlertModal(alertData); // Add click listener for modal
+        // Split the alerts string into an array
+        const alertsArray = alertData.alert.split('; ').filter(alert => alert.trim() !== '');
+        let bulletPoints = alertsArray.map(alert => `<li>${alert.trim()}</li>`).join('');
+        alertMessageContent = `<ul class="text-left list-disc list-inside">${bulletPoints}</ul>`;
+
+        alertCell.onclick = () => {
+            if (!alertCell.classList.contains("has-no-alert")) {
+                openAlertModal(alertData);
+            }
+        };
     }
 
     // Update content of the inner div
-    alertBoxDiv.innerHTML = `<div class=\"alert-message\">${alertMessageContent}</div>`;
+    alertBoxDiv.innerHTML = `<div class=\"alert-message\"  style="padding:1rem;">${alertMessageContent}</div>`;
 }
 
 // --- Default NO ALERTS state ---
@@ -141,7 +195,11 @@ function showDefaultNoAlerts(alertCell) {
 
     // Update content of the inner div
     alertBoxDiv.innerHTML = `
-        <div class=\"alert-message\">\n            <span class=\"opacity-80 text-white text-center font-semibold uppercase\">\n                NO ALERTS\n            </span>\n        </div>
+        <div class=\"alert-message text-center\">
+        <span class=\"opacity-80 text-white text-center font-semibold uppercase\">
+                  NO ALERTS
+        </span>\   
+        </div>
     `;
     alertCell.onclick = null;
 }
@@ -151,12 +209,17 @@ function openAlertModal(alertData) {
     const overlay = document.createElement("div");
     overlay.className = "alert-modal-overlay";
 
+    // Split the alerts string into an array for the modal
+    const alertsArray = alertData.alert.split('; ').filter(alert => alert.trim() !== '');
+    let bulletPoints = alertsArray.map(alert => `<li>${alert.trim()}</li>`).join('');
+    const modalContent = `<ul class="text-left list-disc list-inside">${bulletPoints}</ul>`;
+
     const modal = document.createElement("div");
     modal.className = "alert-modal fade-in";
     modal.innerHTML = `
         <button class=\"close-btn\">&times;</button>
         <h2>Alert Details</h2>
-        <p>${alertData.alert}</p>
+        ${modalContent}
     `;
 
     overlay.appendChild(modal);
@@ -273,6 +336,20 @@ window.initializeVitalSignsAlerts = function () {
             'Vital Signs Alerts: Form missing "data-analyze-url" or CSRF token not found.'
         );
         return;
+    }
+
+    const patientIdInput = document.getElementById("patient_id_hidden");
+    const patientSelected = patientIdInput && patientIdInput.value;
+
+    if (!patientSelected) {
+        // If no patient is selected, ensure all alert cells display "NO ALERTS" and are unclickable
+        const allAlertCells = document.querySelectorAll(
+            "[data-alert-for-time]"
+        );
+        allAlertCells.forEach((alertCell) => {
+            showDefaultNoAlerts(alertCell);
+        });
+        return; // No need to set up input listeners if no patient is selected
     }
 
     const inputs = vitalsForm.querySelectorAll(".cdss-input");

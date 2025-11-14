@@ -1,0 +1,16 @@
+planning:
+  - keywords: ["Risk for Infection"]
+    alert: "Goal: Patient will remain free of signs and symptoms of infection throughout the shift. Outcome: Patient's WBC count will trend towards normal range."
+    severity: "INFO"
+  - keywords: ["Activity Intolerance"]
+    alert: "Goal: Patient will demonstrate increased tolerance for activity. Outcome: Patient will report a decreased level of fatigue during activity."
+    severity: "INFO"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Goal: Patient will not experience any bleeding episodes. Outcome: Patient's platelet count will stabilize or increase."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will maintain adequate tissue perfusion. Outcome: Patient's hemoglobin and hematocrit levels will be within normal limits."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will achieve and maintain adequate nutritional status. Outcome: Patient's RBC, Hgb, and Hct levels will trend towards normal."
+    severity: "INFO"

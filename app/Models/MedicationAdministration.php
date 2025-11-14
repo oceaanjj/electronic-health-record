@@ -19,6 +19,7 @@ class MedicationAdministration extends Model
         'frequency',
         'comments',
         'time',
+        'date', // Added the new date column
     ];
 
        public function patient()

@@ -83,45 +83,53 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        // $expectedRole = strtolower($request->input('role'));
-
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-
-            //  Allow Admins to log in anywhere
-            // if (strtolower($user->role) === $expectedRole || strtolower($user->role) === 'admin') {
             $request->session()->regenerate();
-
-            // Log the successful login action with user details
-            // AuditLogController::log('Login Successful', 'User logged in to the system.', [
-            //     'user_role' => $user->role,
-            //     'login_as' => ucfirst($expectedRole)
-            // ]);
 
             AuditLogController::log('Login Successful', 'User logged in to the system.', [
                 'user_role' => $user->role,
-                // 'login_as' is no longer needed
             ]);
 
             // Redirect based on actual role (Admins always go to admin-home)
             switch ($user->role) {
                 case 'Nurse':
-                    return redirect()->route('nurse-home');
+                    return redirect()->route('nurse-home')->with('sweetalert', [
+                        'type' => 'success',
+                        'title' => 'Welcome Nurse!',
+                        'text' => 'Login successful.',
+                        'timer' => 2000
+                    ]);
                 case 'Doctor':
-                    return redirect()->route('doctor-home');
+                    return redirect()->route('doctor-home')->with('sweetalert', [
+                        'type' => 'success',
+                        'title' => 'Welcome Doctor!',
+                        'text' => 'Login successful.',
+                        'timer' => 2000
+                    ]);
                 case 'Admin':
-                    return redirect()->route('admin-home');
+                    return redirect()->route('admin-home')->with('sweetalert', [
+                        'type' => 'success',
+                        'title' => 'Welcome Admin!',
+                        'text' => 'Login successful.',
+                        'timer' => 2000
+                    ]);
                 default:
                     Auth::logout();
-                    return back()->withErrors([ // Use back() to stay on the login page
-                        'username' => 'Access denied.'
+                    return back()->with('sweetalert', [
+                        'type' => 'error',
+                        'title' => 'Access Denied',
+                        'text' => 'You do not have permission to access this account.',
+                        'timer' => 2500
                     ])->onlyInput('username');
-                // }
             }
         }
 
-        return back()->withErrors([
-            'username' => 'Invalid login details.'
+        return back()->with('sweetalert', [
+            'type' => 'error',
+            'title' => 'Login Failed',
+            'text' => 'Invalid login details.',
+            'timer' => 2500
         ])->onlyInput('username');
     }
 
@@ -136,6 +144,11 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('sweetalert', [
+            'type' => 'success',
+            'title' => 'Logged Out',
+            'text' => 'You have been logged out successfully.',
+            'timer' => 2000
+        ]);
     }
 }

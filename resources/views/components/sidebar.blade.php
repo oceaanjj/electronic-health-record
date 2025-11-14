@@ -8,10 +8,11 @@
         shadow-xl hover:bg-dark-green hover:scale-105 
         transition-all duration-300 ease-in-out">
 
-        <img src="./img/sidebar/close-arrow.png" class="w-3 block group-hover:hidden" alt="arrow">
+        <img src="{{ asset('img/sidebar/close-arrow.png') }}" class="w-3 block group-hover:hidden" alt="arrow">
 
 
-        <img src="./img/sidebar/close-arrow-hover.png" class="w-3 hidden group-hover:block" alt="arrow-hover">
+        <img src="{{ asset('img/sidebar/close-arrow-hover.png') }}" class="w-3 hidden group-hover:block"
+            alt="arrow-hover">
 
     </button>
 
@@ -19,11 +20,15 @@
 
     <ul class="mt-[140px] text-dark-green text-[13px] font-creato-black pr-[10px] pl-[10px]">
         <li>
-            <a href="{{ route('nurse-home') }}"
-                class="group flex items-center gap-3 pl-4 pb-2 pt-2 mt-[20px]
-                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
-                    <img src="./img/sidebar/home-icon.png" alt="Home Icon" class="w-5 h-5 transition duration-200">
-                    <span >Home</span>
+            <a href="{{ route('nurse-home') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2 mt-[20px]
+                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
+                        {{ request()->routeIs('nurse-home')
+    ? 'bg-dark-green text-white font-bold'
+    : 'hover:bg-hover' }}">
+
+                <img src="{{ asset('img/sidebar/home-icon.png') }}" alt="Home Icon"
+                    class="w-5 h-5 transition duration-200">
+                <span>Home</span>
             </a>
         </li>
 
@@ -34,7 +39,7 @@
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover' }}">
 
-                <img src="./img/sidebar/demographic-profile.png" alt="Home Icon"
+                <img src="{{ asset('img/sidebar/demographic-profile.png') }}" alt="Home Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('patients.index') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Demographic
@@ -52,7 +57,8 @@
                          {{ request()->routeIs('medical-history')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/medical-history.png" alt="History Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/medical-history.png') }}" alt="History Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('medical-history') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Medical
                     History</span>
@@ -65,7 +71,7 @@
                          {{ request()->routeIs('physical-exam.index')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold'}}">
-                <img src="./img/sidebar/physical-exam.png" alt="Physical Exam Icon"
+                <img src="{{ asset('img/sidebar/physical-exam.png') }}" alt="Physical Exam Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('physical-exam.index') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Physical
@@ -79,7 +85,8 @@
                          {{ request()->routeIs('vital-signs.show')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/vital-signs.png" alt="History Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/vital-signs.png') }}" alt="History Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('vital-signs.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Vital
                     Signs</span>
@@ -92,7 +99,7 @@
                          {{ request()->routeIs('io.show')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/intake-and-output.png" alt="History Icon"
+                <img src="{{ asset('img/sidebar/intake-and-output.png') }}" alt="History Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('io.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Intake
@@ -108,7 +115,7 @@
                          {{ request()->routeIs('adl.show')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/activities-of-daily-living.png" alt="ADL Icon"
+                <img src="{{ asset('img/sidebar/activities-of-daily-living.png') }}" alt="ADL Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('adl.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Activities
@@ -116,14 +123,14 @@
             </a>
         </li>
 
-
         <li>
             <a href="{{ route('lab-values.index') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('lab-values.index')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/lab-values.png" alt="Lab Icon" class="w-5 h-5 transition duration-200">
+                <img src="{{ asset('img/sidebar/lab-values.png') }}" alt="Lab Icon"
+                    class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('lab-values.index') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Lab
                     Values</span>
@@ -132,15 +139,16 @@
 
         <li>
             <a href="{{ route('diagnostics.index') }}"
-             class="group flex items-center gap-3 pl-5 pb-2 pt-2 
+                class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
-                         {{ request()->routeIs('diagnostics.show') 
-                            ? 'bg-dark-green text-white font-bold' 
-                            : 'hover:bg-hover hover:font-bold' }}">
-                    <img src="./img/sidebar/diagnostics.png" alt="Lab Icon" class="w-6 h-6 transition duration-200">
-                    <span class="{{ request()->routeIs('diagnostics.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Diagnostics</span>
+                         {{ request()->routeIs('diagnostics.index') ? 'bg-dark-green text-white font-bold' : 'hover:bg-hover hover:font-bold' }}">
+                <img src="{{ asset('img/sidebar/diagnostics.png') }}" alt="Lab Icon"
+                    class="w-5 h-5 transition duration-200">
+                <span
+                    class="{{ request()->routeIs('diagnostics.show') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Diagnostics</span>
             </a>
         </li>
+
 
 
 
@@ -148,22 +156,25 @@
         <li>
             <a href="{{ route('ivs-and-lines') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
-                         {{ request()->routeIs('ivs-and-lines') 
-                            ? 'bg-dark-green text-white font-bold' 
-                            : 'hover:bg-hover hover:font-bold' }}">
-                    <img src="./img/sidebar/ivs-and-lines.png" alt="IV Icon" class="w-4 h-4 transition duration-200">
-                    <span class="{{ request()->routeIs('ivs-and-lines') ? 'text-white font-bold' : 'group-hover:font-bold' }}">IVs & Lines</span>
+                         {{ request()->routeIs('ivs-and-lines')
+    ? 'bg-dark-green text-white font-bold'
+    : 'hover:bg-hover hover:font-bold' }}">
+                <img src="{{ asset('img/sidebar/ivs-and-lines.png') }}" alt="IV Icon"
+                    class="w-4 h-4 transition duration-200">
+                <span
+                    class="{{ request()->routeIs('ivs-and-lines') ? 'text-white font-bold' : 'group-hover:font-bold' }}">IVs
+                    & Lines</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ route('medication-administration') }}"
-                 class="group flex items-center gap-3 pl-4 pb-2 pt-2 
+            <a href="{{ route('medication-administration') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('medication-administration')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-                <img src="./img/sidebar/med-admini.png" alt="Medication Icon" class="w-6 h-6 transition duration-200">
+                <img src="{{ asset('img/sidebar/med-admini.png') }}" alt="Medication Icon"
+                    class="w-6 h-6 transition duration-200">
                 <span
                     class="{{ request()->routeIs('medication-administration') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Medication
                     Administration</span>
@@ -171,13 +182,12 @@
         </li>
 
         <li>
-            <a href="{{ route('medication-reconciliation') }}"
-                    class="group flex items-center gap-3 pl-4 pb-2 pt-2 
+            <a href="{{ route('medication-reconciliation') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('medication-reconciliation')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover' }}">
-                <img src="./img/sidebar/med-recon.png" alt="Reconciliation Icon"
+                <img src="{{ asset('img/sidebar/med-recon.png') }}" alt="Reconciliation Icon"
                     class="w-6 h-6 transition duration-200">
                 <span
                     class="{{ request()->routeIs('medication-reconciliation') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Medication
@@ -185,40 +195,85 @@
             </a>
         </li>
 
+
+        {{---
         <li>
             <a href="{{ route('discharge-planning') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                          {{ request()->routeIs('discharge-planning')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover' }}">
-                <img src="./img/sidebar/discharge-planning.png" alt="Discharge Icon"
+                <img src="{{ asset('img/sidebar/discharge-planning.png') }}" alt="Discharge Icon"
                     class="w-5 h-5 transition duration-200">
                 <span
                     class="{{ request()->routeIs('discharge-planning') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Discharge
                     Planning</span>
             </a>
-        </li>
+        </li>--}}
 
 
         <li>
             <center>
-                 <hr class="w-full mt-[120px] border-dark-green border-t-1">
+                <hr class="w-full mt-[120px] border-dark-green border-t-1">
             </center>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
 
-            <a href="#" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
-                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold 
-                        " onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <img src="./img/sidebar/logout.png" alt="Discharge Icon" class="w-6 h-6 transition duration-200">
+            <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
+                        hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
+                <img src="{{ asset('img/sidebar/logout.png') }}" alt="Discharge Icon"
+                    class="w-6 h-6 transition duration-200">
                 <span>LOG OUT</span>
             </a>
         </li>
-        
 
-        {{-- 
+        @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const logoutBtn = document.getElementById('logout-btn');
+                const logoutForm = document.getElementById('logout-form');
+                
+                if (logoutBtn && logoutForm) {
+                    logoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        if (typeof showConfirm === 'function') {
+                            showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel')
+                                .then((result) => {
+                                    if (result.isConfirmed) {
+                                        logoutForm.submit();
+                                    }
+                                });
+                        } else if (typeof Swal === 'function') {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: 'Do you really want to logout?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Yes',
+                                cancelButtonText: 'Cancel',
+                                confirmButtonColor: '#2A1C0F',
+                                cancelButtonColor: '#6c757d'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    logoutForm.submit();
+                                }
+                            });
+                        } else {
+                            if (confirm('Are you sure you want to logout?')) {
+                                logoutForm.submit();
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+        @endpush
+
+
+        {{--
         <li>
             <a href="about.php" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]

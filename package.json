@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
-        "chart.js": "^4.5.1"
+        "chart.js": "^4.5.1",
+        "sweetalert2": "^11.26.3"
     }
 }

@@ -1,0 +1,13 @@
+# storage/app/private/vital_signs/diagnosis_rules.yml
+vital_signs:
+  - keywords:
+      - "elevated temperature"
+      - "fever"
+    severity: warning
+    alert: "Consider antipyretic measures"
+  
+  - keywords:
+      - "tachycardia"
+      - "elevated heart rate"
+    severity: warning
+    alert: "Monitor cardiac status"

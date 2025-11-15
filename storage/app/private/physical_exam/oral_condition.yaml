@@ -1,145 +1,589 @@
 oral_condition:
   # Category: Lips
-  - keywords: ["central cyanosis", "blue lips", "blue tongue", "blue gums"]
-    alert: "Central cyanosis (blue discoloration of lips, tongue, or oral mucosa) is a sign of severe hypoxia and is a medical emergency. Assess oxygen saturation and respiratory status immediately."
+  - keywords: ["blue lips", "cyanotic lips", "blue gums", "blue tongue"]
+    alert: "Bluish discoloration of lips, gums, or tongue represents central cyanosis due to hypoxemia or congenital heart disease. Immediate oxygen and cardiopulmonary evaluation required."
     severity: "critical"
-  - keywords: ["pallor of lips", "pale lips"]
-    alert: "Pale lips or oral mucosa suggest anemia or poor perfusion (shock). Correlate with other vital signs and a complete blood count."
+  - keywords: ["pale lips", "lip pallor"]
+    alert: "Pallor of the lips may indicate anemia or hypoperfusion; correlate with conjunctival color and vital signs."
     severity: "warning"
-  - keywords: ["dry lips", "cracked lips", "chapped lips"]
-    alert: "Dry or cracked lips are a common sign of dehydration. Assess overall fluid status, including mucous membrane moisture and urine output."
-    severity: "warning"
-  - keywords:
-      ["angular cheilitis", "angular stomatitis", "cracks at corners of mouth"]
-    alert: "Angular cheilitis (inflammation at the corners of the mouth) can be caused by nutritional deficiencies (iron, B vitamins), infection (Candida), or excessive lip-licking."
+  - keywords: ["cracked lips", "dry lips", "fissured lips"]
+    alert: "Cracked or dry lips are common with dehydration, mouth breathing, or vitamin B deficiency. Assess hydration status."
     severity: "info"
   - keywords:
-      ["herpes simplex", "cold sore", "fever blister", "vesicles on lip"]
-    alert: "Vesicles on an erythematous base on the lip border suggest Herpes Simplex Virus. Primary infection in children (herpetic gingivostomatitis) can be severe."
-    severity: "warning"
-  - keywords: ["angioedema of lips", "swollen lips"]
-    alert: "Lip angioedema is a sign of an allergic reaction. Assess for airway compromise (stridor, difficulty breathing) as this can be life-threatening."
-    severity: "critical"
-  - keywords: ["microstomia", "small mouth"]
-    alert: "Microstomia (abnormally small mouth) can be a feature of congenital syndromes such as Trisomy 18 and 21."
+      ["angular cheilitis", "cracks at mouth corners", "angular stomatitis"]
+    alert: "Inflamed fissures at mouth corners (angular cheilitis) are linked to Candida infection or nutritional deficiency of B vitamins or iron."
     severity: "info"
-  - keywords: ["fish mouth"]
-    alert: "A 'fish mouth' appearance, with a thin upper lip and smooth philtrum, is a characteristic feature of Fetal Alcohol Syndrome."
+  - keywords: ["herpes labialis", "fever blister", "cold sore"]
+    alert: "Grouped vesicles on erythematous base along the vermilion border suggest recurrent herpes simplex infection."
+    severity: "warning"
+  - keywords: ["swollen lips", "lip angioedema"]
+    alert: "Sudden swelling of the lips indicates angioedema, potentially allergic and life-threatening if airway involvement occurs."
+    severity: "critical"
+  - keywords: ["cheilitis", "lip inflammation", "lip scaling"]
+    alert: "Diffuse inflammation or scaling of the lips may reflect actinic cheilitis, infection, or irritant dermatitis; chronic lesions warrant biopsy."
+    severity: "warning"
+  - keywords: ["ulcer on lip", "lip ulcer", "non-healing lip lesion"]
+    alert: "Persistent lip ulceration may represent squamous cell carcinoma; biopsy indicated for non-healing lesions."
+    severity: "critical"
+  - keywords: ["microstomia", "small mouth opening"]
+    alert: "Microstomia can be congenital or secondary to connective-tissue disease (scleroderma); may impair oral hygiene and feeding."
+    severity: "info"
+  - keywords: ["fish mouth appearance", "smooth philtrum", "thin upper lip"]
+    alert: "Smooth philtrum and thin upper lip produce a fish-mouth appearance characteristic of fetal alcohol spectrum disorder."
     severity: "info"
 
-  # Category: Oral Mucosa & Gums
-  - keywords: ["dry mucous membranes", "tacky mucosa", "dry mouth"]
-    alert: "Dry or tacky oral mucosa is a reliable sign of dehydration. Assess for other signs of volume depletion."
+  # Category: Oral Mucosa
+  - keywords: ["dry mucosa", "tacky oral mucosa"]
+    alert: "Dry or tacky oral mucosa signifies dehydration or anticholinergic drug effect; reassess fluid status."
     severity: "warning"
-  - keywords: ["gingivitis", "bleeding gums", "swollen gums", "red gums"]
-    alert: "Gingivitis (inflamed, bleeding gums) is common and often related to poor oral hygiene. Can also be seen in nutritional deficiencies or systemic disease. Recommend dental evaluation."
+  - keywords: ["bright red mucosa", "erythematous oral mucosa"]
+    alert: "Diffuse mucosal erythema may indicate viral stomatitis or local irritation from mouthwash or dentures."
     severity: "info"
-  - keywords: ["aphthous ulcer", "canker sore"]
-    alert: "Aphthous ulcer (canker sore) is a painful, shallow whitish ulcer with a red halo. Typically heals in 7-10 days. Offer symptomatic relief."
-    severity: "info"
-  - keywords: ["Koplik's spots", "koplik spots"]
-    alert: "Koplik's spots (small white specks resembling grains of salt on a red background on the buccal mucosa) are pathognomonic for measles (rubeola). This is a critical public health finding."
+  - keywords:
+      [
+        "white plaques on mucosa",
+        "leukoplakia",
+        "white patch cannot be scraped off",
+      ]
+    alert: "White plaques that cannot be scraped off suggest leukoplakia, a premalignant lesion; biopsy is warranted."
     severity: "critical"
-  - keywords: ["oral vesicles", "ulcers in mouth"]
-    alert: "Oral vesicles or ulcers can be a sign of viral infection, such as Hand, Foot, and Mouth Disease (Coxsackievirus) or primary Herpes Simplex infection."
+  - keywords: ["white curd-like plaques", "thrush", "oral candidiasis"]
+    alert: "White curd-like plaques that scrape off leaving erythema represent oral candidiasis, often after antibiotics or in immunosuppression."
     severity: "warning"
+  - keywords: ["ulcer on buccal mucosa", "aphthous ulcer", "canker sore"]
+    alert: "Painful shallow ulcers with red halo (aphthous ulcers) are benign and self-limiting but may relate to stress or trauma."
+    severity: "info"
+  - keywords: ["Koplik spots", "white grains on red base"]
+    alert: "Small bluish-white spots on the buccal mucosa precede measles rash; this is pathognomonic for rubeola."
+    severity: "critical"
   - keywords: ["petechiae on palate", "palatal petechiae"]
-    alert: "Petechiae on the palate can be a sign of streptococcal pharyngitis, infectious mononucleosis, or more serious conditions like endocarditis or thrombocytopenia."
+    alert: "Palatal petechiae may accompany streptococcal pharyngitis, mononucleosis, or thrombocytopenia; evaluate accordingly."
+    severity: "warning"
+  - keywords:
+      ["ulcerative lesions with gray membrane", "necrotic gingivostomatitis"]
+    alert: "Gray necrotic ulcerations with foul odor suggest acute necrotizing ulcerative gingivitis (Vincent angina); treat urgently with debridement and antibiotics."
+    severity: "critical"
+  - keywords: ["burned mucosa", "white slough oral burn"]
+    alert: "White slough on mucosa after ingestion of caustic substance indicates chemical burn; manage as ingestion emergency."
+    severity: "critical"
+  - keywords: ["pigmented oral mucosa", "melanotic macule"]
+    alert: "Brown or black macules on mucosa may be benign freckles or Addison disease manifestation; evaluate cortisol if generalized."
+    severity: "info"
+
+  # Category: Gums (Gingiva)
+  - keywords: ["bleeding gums", "gingivitis", "red swollen gums"]
+    alert: "Bleeding and swelling of gums indicate gingivitis due to poor oral hygiene or plaque accumulation."
+    severity: "info"
+  - keywords: ["spongy bleeding gums", "vitamin C deficiency"]
+    alert: "Spongy bleeding gums are classic for scurvy (vitamin C deficiency)."
+    severity: "warning"
+  - keywords: ["hyperplastic gums", "gingival overgrowth"]
+    alert: "Gingival enlargement may occur with phenytoin, cyclosporine, or calcium-channel blockers; consider medication review."
+    severity: "warning"
+  - keywords: ["bluish gum line", "Burton line", "lead poisoning sign"]
+    alert: "A bluish-black gum line (Burton line) indicates chronic lead exposure; screen for heavy-metal toxicity."
+    severity: "critical"
+  - keywords: ["ulcerative gingivitis", "bleeding necrotic gums"]
+    alert: "Necrotic ulcerative gingivitis causes severe halitosis and pain; requires antimicrobial therapy and improved oral hygiene."
+    severity: "warning"
+  - keywords: ["receding gums", "tooth root exposure"]
+    alert: "Gingival recession exposes roots and occurs with aging or periodontal disease; dental hygiene reinforcement recommended."
+    severity: "info"
+  - keywords: ["gingival mass", "epulis", "gum tumor"]
+    alert: "Localized gingival nodules (epulis) are usually benign but require excision and histology to exclude malignancy."
+    severity: "warning"
+  - keywords: ["bleeding gums during pregnancy", "pregnancy gingivitis"]
+    alert: "Hormonal gingivitis presents in pregnancy with bleeding gums; emphasize oral hygiene and professional cleaning."
+    severity: "info"
+  - keywords: ["ulcerative gum lesion unhealed", "indurated gum ulcer"]
+    alert: "Persistent indurated gum ulcer may indicate oral squamous carcinoma; urgent biopsy required."
+    severity: "critical"
+  - keywords: ["gingival pallor", "pale gums"]
+    alert: "Pale gums accompany anemia and systemic hypoperfusion; evaluate hemoglobin."
     severity: "warning"
 
   # Category: Teeth & Dentition
-  - keywords: ["dental caries", "cavities", "tooth decay"]
-    alert: "Dental caries are present. This is the most common chronic disease of childhood. Refer for dental evaluation."
+  - keywords: ["dental caries", "tooth decay"]
+    alert: "Dental caries are common chronic infections; advise dental treatment and fluoride use."
     severity: "info"
-  - keywords: ["nursing bottle caries", "baby bottle tooth decay"]
-    alert: "Characteristic pattern of severe decay on upper front teeth suggests nursing bottle caries. Counsel caregivers on feeding practices and refer to a dentist urgently."
+  - keywords: ["brown mottled enamel", "fluorosis"]
+    alert: "Mottled enamel indicates dental fluorosis from excessive fluoride ingestion during tooth formation."
+    severity: "info"
+  - keywords: ["chalky white enamel spots", "early caries lesion"]
+    alert: "White chalky enamel demineralization represents early carious change; reversible with fluoride."
+    severity: "info"
+  - keywords: ["loose teeth", "tooth mobility"]
+    alert: "Loose teeth in adults indicate periodontal disease; may also occur in scurvy or trauma."
     severity: "warning"
-  - keywords: ["natal teeth"]
-    alert: "Presence of teeth at birth (natal teeth) is uncommon. Assess for mobility; loose teeth pose an aspiration risk and may require removal."
+  - keywords: ["missing teeth", "edentulous"]
+    alert: "Missing teeth impair chewing and speech; assess nutritional and social impact."
+    severity: "info"
+  - keywords: ["natal teeth", "teeth at birth"]
+    alert: "Teeth present at birth can be loose and aspirated; dental removal may be necessary."
     severity: "warning"
-  - keywords: ["delayed eruption", "absent teeth"]
-    alert: "Significant delay in tooth eruption may be a normal variation but can also be associated with systemic conditions like hypothyroidism or nutritional deficiencies."
+  - keywords: ["delayed eruption", "late tooth eruption"]
+    alert: "Delayed tooth eruption may indicate hypothyroidism or rickets; evaluate growth and endocrine status."
+    severity: "warning"
+  - keywords: ["malocclusion", "crooked teeth", "crowding"]
+    alert: "Malocclusion predisposes to caries and TMJ strain; refer to orthodontics for correction."
     severity: "info"
-  - keywords: ["malocclusion", "crooked teeth", "poor bite"]
-    alert: "Malocclusion (misalignment of teeth) is a common finding. Refer for orthodontic evaluation as needed."
+  - keywords: ["tooth discoloration", "yellow teeth", "tetracycline staining"]
+    alert: "Yellow or gray discoloration of teeth can result from tetracycline use in childhood or dental trauma."
     severity: "info"
+  - keywords: ["fractured tooth", "broken tooth", "tooth avulsion"]
+    alert: "Tooth fracture or avulsion after trauma requires prompt dental re-implantation or repair."
+    severity: "critical"
 
   # Category: Tongue
-  - keywords: ["strawberry tongue", "red swollen tongue"]
-    alert: "A bright red tongue with prominent papillae ('strawberry tongue') is a critical sign associated with Scarlet Fever and Kawasaki disease. Requires urgent evaluation."
+  - keywords: ["red swollen tongue", "strawberry tongue"]
+    alert: "Bright red tongue with prominent papillae ('strawberry tongue') occurs in scarlet fever and Kawasaki disease."
     severity: "critical"
-  - keywords:
-      [
-        "oral candidiasis",
-        "thrush",
-        "white plaques on tongue",
-        "white coat on tongue",
-      ]
-    alert: "Oral candidiasis (thrush) presents as white plaques on the tongue or mucosa that can be scraped off, leaving a raw surface. Common in infants; in older children may indicate immunosuppression."
+  - keywords: ["smooth glossy tongue", "atrophic glossitis"]
+    alert: "Smooth shiny tongue lacking papillae indicates nutritional deficiency of B12, folate, or iron."
     severity: "warning"
-  - keywords: ["geographic tongue"]
-    alert: "Geographic tongue presents with scattered smooth red areas on the dorsum of the tongue, giving a map-like appearance. This is a benign, migratory condition."
+  - keywords: ["geographic tongue", "migratory glossitis"]
+    alert: "Irregular red patches with white borders on dorsum form a map-like pattern, a benign variant."
     severity: "info"
   - keywords: ["fissured tongue", "scrotal tongue"]
-    alert: "Fissured tongue has deep grooves on the dorsal surface. This is a benign condition that may appear with aging."
+    alert: "Deep grooves across tongue surface signify fissured tongue, benign but may trap debris."
     severity: "info"
-  - keywords: ["smooth tongue", "atrophic glossitis"]
-    alert: "A smooth, glossy red tongue with loss of papillae suggests atrophic glossitis, which can be caused by nutritional deficiencies (Vitamin B12, iron, folate)."
+  - keywords: ["white patches side of tongue", "hairy leukoplakia"]
+    alert: "Corrugated white lesions on lateral tongue that cannot be scraped off suggest hairy leukoplakia (HIV marker)."
     severity: "warning"
+  - keywords: ["black hairy tongue", "elongated papillae"]
+    alert: "Elongated dark papillae reflect keratin accumulation often from poor hygiene or antibiotics; benign and reversible."
+    severity: "info"
   - keywords: ["macroglossia", "enlarged tongue"]
-    alert: "An abnormally large tongue (macroglossia) can be a sign of congenital hypothyroidism or genetic syndromes like Down syndrome or Beckwith-Wiedemann."
+    alert: "Large tongue may accompany Down syndrome, hypothyroidism, or amyloidosis; assess airway and speech issues."
     severity: "warning"
-  - keywords: ["deviated tongue", "tongue deviates"]
-    alert: "Tongue deviation on protrusion points to a lesion of the hypoglossal nerve (CN XII). The tongue deviates toward the weak side."
+  - keywords: ["tongue deviation", "deviated tongue"]
+    alert: "Tongue deviating to one side on protrusion indicates hypoglossal nerve palsy on the same side."
     severity: "critical"
-  - keywords: ["hairy leukoplakia", "feathery white patches", "side of tongue"]
-    alert: "Hairy leukoplakia (white, feathery patches on the sides of the tongue that cannot be scraped off) is strongly associated with immunosuppression, particularly HIV/AIDS."
-    severity: "warning"
   - keywords:
-      [
-        "carcinoma of tongue",
-        "non-healing ulcer on tongue",
-        "indurated tongue nodule",
-      ]
-    alert: "Any non-healing ulcer or indurated nodule on the tongue is suspicious for carcinoma (rare in children but possible) and requires urgent biopsy."
+      ["ulcer on tongue", "indurated tongue lesion", "non-healing tongue sore"]
+    alert: "Non-healing indurated ulcer of the tongue is suspicious for carcinoma; urgent biopsy."
     severity: "critical"
+  - keywords: ["coated tongue", "white film on tongue"]
+    alert: "Whitish coating on tongue may reflect dehydration, poor hygiene, or oral thrush; scrape to differentiate causes."
+    severity: "info"
 
   # Category: Palate, Pharynx & Tonsils
-  - keywords: ["pharyngitis", "sore throat", "red throat"]
-    alert: "Erythematous pharynx is a sign of pharyngitis. Assess for fever and exudates to differentiate between viral and bacterial causes."
+  - keywords: ["red throat", "sore throat", "pharyngitis"]
+    alert: "Red pharyngeal mucosa indicates pharyngitis from viral or bacterial infection; correlate with fever and exudate."
     severity: "warning"
   - keywords:
-      [
-        "exudative pharyngitis",
-        "tonsillar exudates",
-        "white patches on tonsils",
-        "pus on tonsils",
-      ]
-    alert: "Exudative pharyngitis, especially with fever and without a cough, is suggestive of streptococcal pharyngitis ('strep throat'). Consider rapid strep test."
+      ["tonsillar exudate", "white patches tonsils", "exudative pharyngitis"]
+    alert: "Tonsillar exudate with fever suggests streptococcal pharyngitis; perform rapid strep test or culture."
     severity: "warning"
-  - keywords: ["peritonsillar abscess", "quinsy"]
-    alert: "A peritonsillar abscess can compromise the airway. Look for severe sore throat, fever, 'hot potato' voice, and uvular deviation. Requires urgent ENT evaluation."
+  - keywords:
+      ["asymmetric tonsil swelling", "uvular deviation", "hot potato voice"]
+    alert: "Asymmetric swelling with uvular deviation implies peritonsillar abscess; emergency ENT evaluation."
     severity: "critical"
-  - keywords: ["uvula deviation", "deviated uvula"]
-    alert: "Deviation of the uvula to one side suggests a peritonsillar abscess or a lesion of the vagus nerve (CN X). This is a critical finding."
+  - keywords: ["gray membrane throat", "diphtheritic membrane"]
+    alert: "Gray adherent pharyngeal membrane signifies diphtheria; medical emergency and isolation required."
     severity: "critical"
-  - keywords: ["Epstein's pearls", "Epstein pearls"]
-    alert: "Epstein's pearls are small, white, benign cysts on the hard palate of newborns. They are a normal finding and resolve spontaneously."
-    severity: "info"
+  - keywords: ["palatal ulcer", "roof of mouth sore"]
+    alert: "Ulcers on the palate may arise from trauma, viral infection, or pemphigus; biopsy if chronic."
+    severity: "warning"
   - keywords: ["high arched palate"]
-    alert: "A high arched palate can be a normal variant or associated with several congenital syndromes, such as Marfan syndrome."
+    alert: "High arched palate occurs in congenital syndromes like Marfan or cleft palate; evaluate if speech or airway affected."
     severity: "info"
-  - keywords: ["diphtheria", "gray membrane in throat"]
-    alert: "A gray, adherent pseudomembrane on the pharynx, uvula, or tongue is a classic sign of diphtheria, a medical emergency."
+  - keywords: ["cleft palate", "palatal defect"]
+    alert: "Palatal defect predisposes to feeding difficulty and recurrent infections; requires surgical correction."
     severity: "critical"
+  - keywords: ["tonsillar hypertrophy", "enlarged tonsils"]
+    alert: "Enlarged tonsils may cause snoring or obstructive sleep apnea; ENT referral if symptomatic."
+    severity: "warning"
+  - keywords: ["post-tonsillectomy bleeding", "fresh blood in mouth"]
+    alert: "Bleeding after tonsillectomy is potentially life-threatening; immediate surgical reassessment required."
+    severity: "critical"
+  - keywords: ["palatal petechiae after cough", "minor trauma from suction"]
+    alert: "Isolated palatal petechiae can occur from coughing or suction trauma; benign if no systemic signs."
+    severity: "info"
 
   # Category: Breath & Salivation
-  - keywords: ["fruity breath", "acetone breath"]
-    alert: "Fruity or acetone odor on the breath is a classic sign of diabetic ketoacidosis (DKA). Check blood glucose and ketones immediately."
+  - keywords: ["foul breath", "halitosis"]
+    alert: "Halitosis may result from dental caries, sinus infection, or poor hygiene; investigate underlying cause."
+    severity: "info"
+  - keywords: ["acetone odor", "fruity breath"]
+    alert: "Fruity acetone odor is classic for diabetic ketoacidosis; urgent metabolic evaluation required."
     severity: "critical"
-  - keywords: ["excessive drooling", "sialorrhea"]
-    alert: "Excessive drooling in an acutely ill child with fever and sore throat can be a sign of epiglottitis or a retropharyngeal abscess, indicating potential airway obstruction."
+  - keywords: ["ammonia odor breath", "uremic fetor"]
+    alert: "Ammonia-like breath indicates uremia in renal failure; evaluate kidney function."
+    severity: "warning"
+  - keywords: ["musty sweet odor", "hepatic fetor"]
+    alert: "Musty sweet breath odor (fetor hepaticus) accompanies severe liver disease with portosystemic shunting."
+    severity: "warning"
+  - keywords: ["putrid odor", "anaerobic infection smell"]
+    alert: "Putrid oral odor indicates anaerobic infection such as lung abscess or necrotizing gingivitis."
     severity: "critical"
-  - keywords: ["halitosis", "bad breath"]
-    alert: "Halitosis can be caused by poor oral hygiene, dental caries, pharyngitis, or a nasal foreign body. Assess for underlying cause."
+  - keywords: ["drooling", "sialorrhea"]
+    alert: "Excessive drooling with airway symptoms suggests epiglottitis or retropharyngeal abscess; airway management urgent."
+    severity: "critical"
+  - keywords: ["dry mouth", "xerostomia"]
+    alert: "Dry mouth may stem from dehydration, anticholinergic drugs, or Sjögren syndrome; assess fluid and medication causes."
+    severity: "warning"
+  - keywords: ["salivary gland swelling", "parotid swelling"]
+    alert: "Parotid enlargement may occur in mumps, obstruction, or autoimmune parotitis; check for tenderness and fever."
+    severity: "warning"
+  - keywords: ["purulent discharge from Stensen duct", "salivary duct pus"]
+    alert: "Pus from Stensen’s duct suggests suppurative parotitis; requires antibiotics and hydration."
+    severity: "critical"
+  - keywords: ["pain before meals relieved after", "salivary colic"]
+    alert: "Painful swelling before meals relieved afterward implies salivary duct stone; ultrasound can confirm."
+    severity: "info"
+  # Category: Lips (continued)
+  - keywords: ["ulcerated lip lesion", "bleeding lip nodule"]
+    alert: "An ulcerated or bleeding lip nodule may represent a pyogenic granuloma or malignancy; prompt evaluation and biopsy recommended."
+    severity: "warning"
+  - keywords: ["pigmented macule lip", "dark spot lower lip"]
+    alert: "Dark macule on the lower lip may represent labial melanotic macule, usually benign but should be documented for change."
+    severity: "info"
+  - keywords: ["crusting lip ulcer", "scabbed lesion on lip"]
+    alert: "Crusted lip ulcer following vesicles is typical of herpes simplex labialis; contagious until crusted."
+    severity: "info"
+  - keywords: ["painful lip fissure", "ulcer at vermilion border"]
+    alert: "Painful fissure at the vermilion border may result from nutritional deficiency, trauma, or infection; symptomatic care indicated."
+    severity: "info"
+  - keywords: ["blistering lip lesion", "vesicular eruption on lip"]
+    alert: "Clustered vesicles on the lips suggest herpes simplex infection; consider antiviral therapy if early."
+    severity: "warning"
+  - keywords:
+      ["lip swelling after new medication", "angioedema medication reaction"]
+    alert: "Lip swelling following medication exposure (ACE inhibitors, antibiotics) suggests drug-induced angioedema; stop offending agent and secure airway."
+    severity: "critical"
+  - keywords: ["lip laceration", "traumatic mouth injury"]
+    alert: "Laceration through the vermilion border requires careful repair for cosmetic and functional outcome."
+    severity: "warning"
+  - keywords: ["crusted yellow lesion on lip", "impetigo on lip"]
+    alert: "Honey-colored crusted lesion at the lip corner suggests impetigo, commonly due to Staphylococcus aureus or Streptococcus pyogenes."
+    severity: "warning"
+  - keywords: ["white thickened lip patch", "leukoplakia on lip"]
+    alert: "Persistent white thickened patch on the lip that cannot be removed may represent precancerous leukoplakia; biopsy is needed."
+    severity: "critical"
+  - keywords: ["lip fissure in newborn", "cleft lip"]
+    alert: "Cleft lip is a congenital deformity requiring multidisciplinary management for feeding, speech, and surgical repair."
+    severity: "critical"
+
+  # Category: Oral Mucosa (continued)
+  - keywords: ["ulcer with red border on buccal mucosa", "minor aphthous ulcer"]
+    alert: "Minor aphthous ulcer presents as a shallow lesion with red margin, resolving within 10 days; symptomatic treatment recommended."
+    severity: "info"
+  - keywords: ["multiple oral ulcers", "major aphthae"]
+    alert: "Multiple large painful ulcers may indicate aphthous stomatitis, Behçet syndrome, or systemic disease; investigate underlying cause."
+    severity: "warning"
+  - keywords: ["white lacy pattern on mucosa", "reticular white streaks"]
+    alert: "White lacy lesions on buccal mucosa suggest lichen planus; chronic cases may require topical corticosteroids."
+    severity: "warning"
+  - keywords: ["grayish pseudomembrane", "membranous stomatitis"]
+    alert: "Gray pseudomembrane covering ulcers may appear in diphtheria or necrotic infections; requires urgent evaluation."
+    severity: "critical"
+  - keywords: ["vesicular eruption on oral mucosa", "painful oral vesicles"]
+    alert: "Oral vesicles in children are often due to Coxsackievirus (Hand-Foot-Mouth disease); ensure hydration and symptomatic care."
+    severity: "warning"
+  - keywords: ["painful hemorrhagic vesicles", "oral erythema multiforme"]
+    alert: "Hemorrhagic oral vesicles may occur in erythema multiforme; evaluate for systemic drug reaction."
+    severity: "critical"
+  - keywords: ["mucosal ulcer with yellow base", "necrotic oral ulcer"]
+    alert: "Necrotic oral ulcers may occur in leukemia or agranulocytosis; check complete blood count urgently."
+    severity: "critical"
+  - keywords: ["pigmented mucosal patch", "melanotic pigmentation"]
+    alert: "Isolated pigmented mucosal patch may represent benign melanosis or Peutz-Jeghers syndrome; correlate with family history."
+    severity: "warning"
+  - keywords: ["white plaque scrapable", "milk residue confusion"]
+    alert: "Scrapable white coating could be milk residue or thrush; differentiate by erythematous base after removal."
+    severity: "info"
+  - keywords: ["pseudomembrane with foul odor", "necrotic debris"]
+    alert: "Foul-smelling gray pseudomembrane may indicate acute necrotizing gingivostomatitis or diphtheria; urgent antimicrobial therapy required."
+    severity: "critical"
+
+  # Category: Gums (continued)
+  - keywords: ["painful bleeding gums", "necrotic gingiva"]
+    alert: "Painful necrotic gums with halitosis suggest Vincent’s angina (trench mouth); needs debridement and antibiotics."
+    severity: "warning"
+  - keywords: ["swollen spongy gums", "gingival edema"]
+    alert: "Swollen, spongy gums may appear with poor oral hygiene or pregnancy-related gingivitis; ensure regular dental care."
+    severity: "info"
+  - keywords: ["purplish gums", "cyanotic gums"]
+    alert: "Cyanotic gums occur with hypoxemia or venous congestion; evaluate cardiovascular and respiratory status."
+    severity: "warning"
+  - keywords: ["pale atrophic gums", "gums receding"]
+    alert: "Receding pale gums suggest chronic periodontal disease with loss of attachment; early dental referral indicated."
+    severity: "info"
+  - keywords:
+      ["gingival ulceration after chemotherapy", "chemotherapy mucositis"]
+    alert: "Painful gingival ulcers after chemotherapy indicate mucositis; maintain oral hygiene and consider topical analgesics."
+    severity: "warning"
+  - keywords: ["painful gum swelling with pus", "gingival abscess"]
+    alert: "Localized gingival swelling with purulent drainage suggests gingival abscess; incision and drainage may be required."
+    severity: "warning"
+  - keywords:
+      ["fibrous gingival overgrowth", "drug-induced gingival hyperplasia"]
+    alert: "Firm, fibrous gum enlargement is often drug-induced (phenytoin, cyclosporine); consider medication change."
+    severity: "warning"
+  - keywords: ["ulcerated gum mass", "bleeding gum lesion"]
+    alert: "Persistent ulcerated bleeding gum lesion may represent malignancy; biopsy mandatory."
+    severity: "critical"
+  - keywords: ["gum hypertrophy in child", "leukemic infiltration"]
+    alert: "Rapid gum hypertrophy in children may indicate leukemic infiltration; perform urgent hematologic evaluation."
+    severity: "critical"
+  - keywords: ["metallic taste and blue gum line", "lead line"]
+    alert: "Metallic taste with blue gum margin (Burton line) strongly suggests chronic lead toxicity; requires chelation."
+    severity: "critical"
+
+  # Category: Teeth & Dentition (continued)
+  - keywords: ["yellow-brown teeth", "fluorosis teeth"]
+    alert: "Yellow-brown discoloration with pitting is characteristic of dental fluorosis from excessive fluoride."
+    severity: "info"
+  - keywords: ["black discoloration tooth", "dead tooth"]
+    alert: "Darkened nonvital tooth may follow trauma or pulp necrosis; dental restoration recommended."
+    severity: "warning"
+  - keywords: ["attrition", "worn teeth", "grinding damage"]
+    alert: "Flattened worn occlusal surfaces indicate bruxism; mouthguard and stress management may prevent further wear."
+    severity: "info"
+  - keywords: ["tooth erosion", "acid wear", "bulimia enamel loss"]
+    alert: "Smooth enamel erosion on inner teeth suggests acid exposure from bulimia or reflux; treat underlying cause."
+    severity: "warning"
+  - keywords: ["tooth pain", "sensitive tooth"]
+    alert: "Dental pain may arise from caries, abscess, or sinusitis; dental evaluation needed if persistent."
+    severity: "info"
+  - keywords: ["swelling over tooth root", "periapical abscess"]
+    alert: "Localized swelling near tooth root with pain indicates periapical abscess; urgent drainage or root canal required."
+    severity: "critical"
+  - keywords: ["multiple caries", "poor oral hygiene"]
+    alert: "Multiple dental caries indicate poor hygiene and possible high sugar intake; preventive education essential."
+    severity: "info"
+  - keywords: ["bleeding after tooth extraction", "post-extraction hemorrhage"]
+    alert: "Persistent bleeding after dental extraction suggests coagulopathy or infection; manage with pressure and evaluation."
+    severity: "warning"
+  - keywords:
+      ["pain 3 days after extraction", "dry socket", "alveolar osteitis"]
+    alert: "Severe pain and exposed bone after extraction indicate dry socket; irrigation and dressing required."
+    severity: "warning"
+  - keywords: ["malformed teeth", "enamel hypoplasia"]
+    alert: "Thin or pitted enamel can indicate developmental hypoplasia secondary to infection or malnutrition during tooth formation."
+    severity: "info"
+
+  # Category: Tongue (continued)
+  - keywords: ["black coating tongue", "smoker’s tongue"]
+    alert: "Dark discoloration of tongue surface may result from tobacco use or antibiotic therapy; benign but requires hygiene reinforcement."
+    severity: "info"
+  - keywords: ["painless white patch tongue", "cannot be scraped off"]
+    alert: "Non-scrapable white tongue patch indicates leukoplakia; requires biopsy to rule out carcinoma."
+    severity: "critical"
+  - keywords: ["painful red ulcer tongue", "glossitis with pain"]
+    alert: "Painful tongue with erythema suggests glossitis due to deficiency or infection; address underlying cause."
+    severity: "warning"
+  - keywords: ["tremulous tongue", "fasciculations tongue"]
+    alert: "Tongue tremor or fasciculation may indicate lower motor neuron lesion (hypoglossal nerve) or hyperthyroidism."
+    severity: "warning"
+  - keywords: ["thick white coating tongue", "poor hygiene coating"]
+    alert: "Heavy white coating is common in dehydration or smokers; remove with cleaning; differentiate from candidiasis."
+    severity: "info"
+  - keywords: ["small painful vesicles tongue tip", "herpetic stomatitis"]
+    alert: "Painful tongue vesicles suggest primary herpes simplex infection; maintain hydration and analgesia."
+    severity: "warning"
+  - keywords: ["yellow coating tongue", "icteric tongue"]
+    alert: "Yellowish discoloration of tongue surface may appear in jaundice; evaluate hepatic function."
+    severity: "warning"
+  - keywords: ["tongue ulcer with raised edge", "carcinoma suspicion"]
+    alert: "Ulcer with raised rolled edges is characteristic of squamous cell carcinoma; biopsy urgently."
+    severity: "critical"
+  - keywords: ["purple tongue", "cyanotic tongue"]
+    alert: "Bluish or purple tongue indicates central cyanosis; assess oxygenation and cardiac output."
+    severity: "critical"
+  - keywords: ["painful fissures tongue", "tongue dryness"]
+    alert: "Painful cracks on the tongue are seen in dehydration, candidiasis, or vitamin deficiency; maintain oral moisture."
+    severity: "warning"
+
+  # Category: Palate, Pharynx & Tonsils (continued)
+  - keywords: ["uvula midline deviation after stroke", "vagus palsy sign"]
+    alert: "Uvula deviation after stroke indicates vagus nerve (CN X) involvement; evaluate swallowing and airway protection."
+    severity: "critical"
+  - keywords: ["palatal ulcer with yellow base", "herpetic lesion palate"]
+    alert: "Painful ulcer on soft palate may represent herpetic or Coxsackie infection; symptomatic relief indicated."
+    severity: "warning"
+  - keywords: ["uvula edema", "swollen uvula"]
+    alert: "Uvula swelling may follow infection or allergy; monitor for airway obstruction."
+    severity: "critical"
+  - keywords: ["white spots tonsils without fever", "tonsillar concretions"]
+    alert: "Tonsillar concretions (tonsilloliths) appear as white spots and cause halitosis; benign but can be removed if symptomatic."
+    severity: "info"
+  - keywords: ["ulcer posterior pharynx", "pharyngeal ulcer"]
+    alert: "Posterior pharyngeal ulcers may occur in viral pharyngitis or TB; evaluate chronicity and systemic symptoms."
+    severity: "warning"
+  - keywords: ["asymmetric soft palate elevation", "CN X lesion"]
+    alert: "Asymmetric palate elevation on phonation points to vagus nerve palsy on the contralateral side."
+    severity: "critical"
+  - keywords: ["gray necrotic patch tonsil", "peritonsillar necrosis"]
+    alert: "Gray necrosis on tonsil surface may signify diphtheria or severe bacterial infection; urgent management."
+    severity: "critical"
+  - keywords: ["white patches on palate scrape off", "oral candidiasis palate"]
+    alert: "Removable white plaques on palate confirm oral candidiasis; antifungal therapy indicated."
+    severity: "warning"
+  - keywords: ["petechiae soft palate", "infectious mononucleosis"]
+    alert: "Soft palate petechiae often occur in Epstein–Barr virus infection; check for lymphadenopathy and splenomegaly."
+    severity: "warning"
+  - keywords: ["bleeding tonsil bed", "post tonsillectomy hemorrhage"]
+    alert: "Fresh bleeding from tonsillar bed is a postoperative emergency requiring immediate ENT intervention."
+    severity: "critical"
+  # Category: Oral Mucosa (continued)
+  - keywords: ["mucosal bleeding spots", "oral petechiae"]
+    alert: "Petechial hemorrhages on the oral mucosa may indicate thrombocytopenia, trauma, or infectious endocarditis; check platelet count."
+    severity: "warning"
+  - keywords: ["oral ulcer nonhealing", "chronic mouth sore"]
+    alert: "A chronic nonhealing oral ulcer raises suspicion for carcinoma or tuberculosis; requires biopsy."
+    severity: "critical"
+  - keywords: ["mucosal sloughing", "desquamation inside mouth"]
+    alert: "Oral mucosal sloughing with tenderness may indicate Stevens–Johnson syndrome or toxic epidermal necrolysis; emergency care required."
+    severity: "critical"
+  - keywords: ["gray-white film mucosa", "chemical burn mouth"]
+    alert: "White film or slough on the mucosa may follow chemical burn from caustic ingestion; manage airway and neutralize exposure."
+    severity: "critical"
+  - keywords: ["mucosal blister", "pemphigus vulgaris"]
+    alert: "Flaccid mucosal blisters that rupture easily are characteristic of pemphigus vulgaris; urgent dermatology consult needed."
+    severity: "critical"
+  - keywords: ["multiple shallow ulcers mouth", "minor recurrent aphthae"]
+    alert: "Multiple small ulcers recurring periodically suggest recurrent aphthous stomatitis; assess for stress or nutrient deficiency."
+    severity: "info"
+  - keywords: ["ulcers with crusted lips", "Stevens-Johnson syndrome"]
+    alert: "Painful oral ulcers with crusted lips in a febrile patient indicate Stevens–Johnson syndrome; stop offending medication immediately."
+    severity: "critical"
+  - keywords: ["painless mucosal nodule", "fibroma inside cheek"]
+    alert: "Smooth, painless mucosal nodules are often irritation fibromas; benign but may require excision if recurrent."
+    severity: "info"
+  - keywords: ["mucosal pigmentation buccal", "Addison hyperpigmentation"]
+    alert: "Bilateral brown patches on buccal mucosa can indicate Addison’s disease; check cortisol levels."
+    severity: "warning"
+  - keywords: ["diffuse oral erythema", "stomatitis"]
+    alert: "Diffuse erythema and tenderness of oral mucosa are features of stomatitis, often secondary to infection or chemotherapy."
+    severity: "warning"
+
+  # Category: Gingiva and Periodontium (continued)
+  - keywords: ["gum pain with fever", "acute necrotizing gingivitis"]
+    alert: "Foul breath, necrotic gums, and pain with fever are characteristic of acute necrotizing gingivitis; treat with antibiotics and debridement."
+    severity: "warning"
+  - keywords: ["hyperemic gums", "red swollen gums pregnancy"]
+    alert: "Gingival hyperemia and swelling during pregnancy are physiologic; maintain good hygiene and monitor for bleeding."
+    severity: "info"
+  - keywords: ["dark brown gum pigmentation", "racial pigmentation"]
+    alert: "Dark brown gum pigmentation may be normal in darker-skinned individuals; benign finding."
+    severity: "info"
+  - keywords: ["bleeding gums brushing", "gingival inflammation"]
+    alert: "Bleeding during brushing indicates gingival inflammation; advise improved oral hygiene and regular dental cleaning."
+    severity: "info"
+  - keywords: ["tender gum abscess", "localized periodontal abscess"]
+    alert: "Localized gum tenderness with swelling suggests a periodontal abscess; drainage and antibiotics may be required."
+    severity: "warning"
+  - keywords: ["gums pulling away from teeth", "periodontal pockets"]
+    alert: "Gingival recession forming pockets around teeth signifies chronic periodontitis; may lead to tooth loss if untreated."
+    severity: "warning"
+  - keywords: ["blue-black gum patch", "amalgam tattoo"]
+    alert: "Blue-black pigmentation on gums adjacent to restored teeth represents amalgam tattoo; benign and requires no treatment."
+    severity: "info"
+  - keywords: ["spontaneous gum bleeding", "gingival hemorrhage"]
+    alert: "Spontaneous gum bleeding suggests coagulopathy, leukemia, or scurvy; investigate hematologic status."
+    severity: "critical"
+  - keywords: ["gum ulceration chemotherapy", "mucositis chemotherapy"]
+    alert: "Chemotherapy-related mucositis presents as gum ulceration and pain; maintain meticulous oral care and use topical analgesics."
+    severity: "warning"
+  - keywords: ["hyperplastic gums phenytoin", "phenytoin gingival enlargement"]
+    alert: "Diffuse gingival hyperplasia can occur from chronic phenytoin use; consider dental consultation and drug substitution."
+    severity: "warning"
+
+  # Category: Teeth and Jaw
+  - keywords: ["tooth mobility", "loose tooth adult"]
+    alert: "Loose adult teeth are a sign of advanced periodontal disease; assess bone loss radiographically."
+    severity: "warning"
+  - keywords: ["fractured tooth", "broken tooth crown"]
+    alert: "Tooth fracture after trauma requires dental evaluation to prevent infection or pulp exposure."
+    severity: "warning"
+  - keywords: ["pain after cold drink", "tooth sensitivity"]
+    alert: "Sharp transient pain with cold stimuli suggests exposed dentin or enamel erosion; recommend desensitizing toothpaste."
+    severity: "info"
+  - keywords: ["missing teeth multiple", "edentulous"]
+    alert: "Multiple missing teeth affect nutrition and speech; evaluate for dentures or implants."
+    severity: "info"
+  - keywords: ["tooth discoloration brown", "tetracycline staining"]
+    alert: "Brownish-gray discoloration of teeth indicates tetracycline exposure during tooth development; purely cosmetic."
+    severity: "info"
+  - keywords: ["enamel hypocalcification", "white spots enamel"]
+    alert: "White opaque spots on enamel indicate hypocalcification, often due to fluorosis or enamel development defect."
+    severity: "info"
+  - keywords: ["tooth abscess swelling face", "odontogenic infection"]
+    alert: "Facial swelling with tooth abscess indicates spreading odontogenic infection; urgent antibiotics and drainage required."
+    severity: "critical"
+  - keywords: ["tooth displacement trauma", "luxated tooth"]
+    alert: "Tooth displacement following injury (luxation) requires prompt repositioning to preserve viability."
+    severity: "critical"
+  - keywords: ["tooth loss early child", "premature exfoliation"]
+    alert: "Premature tooth loss in children may indicate hypophosphatasia or juvenile periodontitis; investigate systemic causes."
+    severity: "warning"
+  - keywords: ["jaw pain clicking", "temporomandibular disorder"]
+    alert: "Clicking or pain near the jaw joint suggests temporomandibular disorder; stress reduction and bite guards may help."
+    severity: "info"
+
+  # Category: Tongue (continued)
+  - keywords: ["tongue tremor resting", "tremulous tongue Parkinson"]
+    alert: "Resting tongue tremor may be associated with Parkinson’s disease or thyrotoxicosis; assess neurological signs."
+    severity: "warning"
+  - keywords: ["purple tongue lesion", "vascular malformation tongue"]
+    alert: "Bluish vascular lesions on tongue are hemangiomas; benign unless they ulcerate or bleed."
+    severity: "info"
+  - keywords: ["tongue ulcer nonhealing", "ulcerated nodule tongue"]
+    alert: "Persistent ulcer or nodule on tongue surface should raise suspicion for malignancy; urgent biopsy indicated."
+    severity: "critical"
+  - keywords: ["yellow coating tongue", "poor oral hygiene tongue"]
+    alert: "Yellow coating on tongue indicates bacterial overgrowth or poor oral hygiene; improve brushing and hydration."
+    severity: "info"
+  - keywords: ["loss of tongue papillae", "smooth red tongue"]
+    alert: "Loss of filiform papillae causes smooth, red tongue seen in iron or B12 deficiency; confirm with lab studies."
+    severity: "warning"
+  - keywords: ["ulcer under tongue", "floor of mouth ulcer"]
+    alert: "Nonhealing ulcer under the tongue may represent carcinoma; refer for biopsy."
+    severity: "critical"
+  - keywords: ["tongue deviates on protrusion", "CN XII palsy"]
+    alert: "Tongue deviation to one side upon protrusion signifies hypoglossal nerve lesion on the same side."
+    severity: "critical"
+  - keywords: ["brown hairy tongue", "elongated papillae"]
+    alert: "Elongated papillae producing a hairy appearance occur with poor hygiene, tobacco, or antibiotics; benign but unsightly."
+    severity: "info"
+  - keywords: ["tongue biting marks", "seizure evidence"]
+    alert: "Lateral tongue bite marks indicate tonic–clonic seizure; assess for postictal confusion or injury."
+    severity: "critical"
+  - keywords: ["tongue fissures deep", "congenital fissured tongue"]
+    alert: "Deep longitudinal fissures on the tongue may be congenital; benign but require hygiene to prevent food trapping."
+    severity: "info"
+
+  # Category: Salivary Glands and Ducts
+  - keywords: ["parotid swelling painful", "mumps parotitis"]
+    alert: "Painful parotid swelling with fever suggests viral parotitis (mumps); isolate patient and provide supportive care."
+    severity: "warning"
+  - keywords: ["unilateral firm parotid mass", "parotid tumor"]
+    alert: "Firm parotid swelling that is painless and persistent may indicate neoplasm; requires imaging and biopsy."
+    severity: "critical"
+  - keywords: ["pain on eating under jaw", "submandibular stone"]
+    alert: "Pain and swelling in submandibular region during meals indicate sialolithiasis; confirm with imaging."
+    severity: "warning"
+  - keywords: ["purulent discharge from duct", "bacterial sialadenitis"]
+    alert: "Pus expression from Stensen or Wharton duct confirms bacterial sialadenitis; initiate antibiotics and hydration."
+    severity: "warning"
+  - keywords: ["dry mouth", "xerostomia"]
+    alert: "Persistent dry mouth may result from Sjögren syndrome, medications, or dehydration; assess saliva flow and hydration status."
+    severity: "warning"
+  - keywords: ["salivary gland tenderness", "pain over gland"]
+    alert: "Localized tenderness over salivary gland with erythema indicates infection; culture duct discharge if present."
+    severity: "warning"
+  - keywords: ["swollen salivary gland post radiation", "fibrosis gland"]
+    alert: "Chronic firm enlargement after radiotherapy suggests gland fibrosis; supportive care indicated."
+    severity: "info"
+  - keywords: ["recurrent parotid swelling", "juvenile recurrent parotitis"]
+    alert: "Recurrent parotid swelling in children is often idiopathic; ensure hydration and monitor for infection."
+    severity: "info"
+  - keywords:
+      ["facial nerve palsy with parotid mass", "malignant parotid tumor"]
+    alert: "Parotid mass associated with facial paralysis suggests malignancy; urgent imaging and biopsy required."
+    severity: "critical"
+  - keywords: ["swelling under tongue floor", "ranula"]
+    alert: "Bluish swelling on the floor of the mouth represents a ranula (mucous cyst); surgical excision may be necessary."
     severity: "info"

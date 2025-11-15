@@ -88,10 +88,9 @@ class PhysicalExamCdssService
             $alert = $this->runAnalysis($finding, $ruleSet);
 
             if ($alert) {
-                // This maps the form field name to the session key used in the view.
-                // e.g., 'skin_condition' becomes 'skin' for session('cdss.skin')
-                $sessionKey = str_replace(['_condition', '_appearance'], '', $key);
-                $alerts[$sessionKey] = $alert;
+                $alerts[$key . '_alert'] = $alert['alert'];
+            } else {
+                $alerts[$key . '_alert'] = 'No Findings';
             }
         }
         return $alerts;
@@ -152,8 +151,8 @@ class PhysicalExamCdssService
                     continue;
                 }
 
-                // Check if all words from the keyword phrase are present in the user's input.
-                $isMatch = empty(array_diff($keywordWords, $findingWords));
+                // Check if there is any overlap between the keyword words and the user's input.
+                $isMatch = !empty(array_intersect($keywordWords, $findingWords));
 
                 if ($isMatch) {
                     // A score is calculated to prioritize more specific keywords.

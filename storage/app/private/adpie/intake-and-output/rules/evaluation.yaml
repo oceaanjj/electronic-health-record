@@ -1,0 +1,18 @@
+evaluation:
+  # Outcome Evaluation
+  - keywords: ["improved hydration", "adequate intake"]
+    match_type: any
+    severity: "INFO"
+    alert: "Evaluation: Patient maintaining adequate fluid balance as evidenced by stable vital signs"
+
+  - keywords: ["normalized output", "adequate urine"]
+    match_type: any
+    severity: "INFO"
+    alert: "Evaluation: Urine output within normal parameters >30mL/hr"
+
+  - keywords: ["fluid overload resolved", "edema decreased"]
+    match_type: any
+    severity: "INFO"
+    alert: "Evaluation: Resolution of fluid volume excess, peripheral edema improving"
+
+  # Continue with 397+ more evaluation rules...

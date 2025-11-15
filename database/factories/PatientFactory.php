@@ -42,15 +42,21 @@ class PatientFactory extends Factory
 
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'middle_name' => $this->faker->optional()->firstName(),
+            'middle_name' => $this->faker->firstName(),
             'age' => $this->faker->numberBetween(1, 42),
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'address' => $this->faker->address(),
             'birthplace' => $this->faker->city(),
+            'birthdate' => $this->faker->date('Y-m-d'),
             'religion' => $this->faker->randomElement(['Catholic', 'Iglesia ni Cristo', 'Christian']),
             'ethnicity' => $this->faker->randomElement(['Filipino', 'Foreign']),
             'chief_complaints' => $this->faker->randomElement($complaints),
             'admission_date' => $this->faker->date('Y-m-d'),
+            'room_no' => $this->faker->buildingNumber(),
+            'bed_no' => $this->faker->bothify('##?'),
+            'contact_name' => $this->faker->name(),
+            'contact_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Spouse', 'Child', 'Friend']),
+            'contact_number' => $this->faker->phoneNumber(),
 
         ];
     }

@@ -1,0 +1,17 @@
+planning:
+  # Temperature interventions planning
+  - keywords: ["fever", "temperature", "monitoring"]
+    alert: "Plan: Implement fever reduction protocol and continuous temperature monitoring"
+    severity: "INFO"
+
+  # Cardiac-related planning  
+  - keywords: ["cardiac", "heart rate", "monitoring"]
+    alert: "Plan: Establish continuous cardiac monitoring and vital signs assessment q2h"
+    severity: "INFO"
+
+  # Blood pressure planning
+  - keywords: ["blood pressure", "monitoring"]
+    alert: "Plan: Implement BP monitoring protocol with position changes and medication timing"
+    severity: "INFO"
+
+  # More planning rules...

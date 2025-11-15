@@ -1,0 +1,16 @@
+evaluation:
+  - keywords: ["Risk for Infection"]
+    alert: "Evaluate for signs and symptoms of infection. Review WBC count trends. Goal met if patient remains afebrile and WBC count is trending towards normal."
+    severity: "INFO"
+  - keywords: ["Activity Intolerance"]
+    alert: "Evaluate patient's subjective report of fatigue. Compare activity tolerance with baseline. Goal met if patient reports increased energy and can perform ADLs with less assistance."
+    severity: "INFO"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Evaluate for any signs of bleeding. Review platelet count. Goal met if no bleeding episodes are observed and platelet count is stable or increasing."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Evaluate skin color, temperature, and capillary refill. Review hemoglobin and hematocrit levels. Goal met if patient's skin is warm and dry, and H&H levels are stable or improving."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Evaluate patient's weight and dietary intake. Review RBC, Hgb, and Hct levels. Goal met if patient is consuming adequate nutrition and lab values are trending towards normal."
+    severity: "INFO"

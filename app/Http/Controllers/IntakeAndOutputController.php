@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\IntakeAndOutput;
 use App\Models\Patient;
+use App\Services\IntakeAndOutputCdssService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class IntakeAndOutputController extends Controller
 {
@@ -17,6 +19,8 @@ class IntakeAndOutputController extends Controller
         $intakeOutputs = $patient->intakeAndOutputs;
         return view('patient-intake-outputs', compact('patient', 'intakeOutputs'));
     }
+
+
     public function generatedAlerts(Request $request)
     {
         $data = $request->validate([
@@ -34,63 +38,68 @@ class IntakeAndOutputController extends Controller
             'patients' => $patients,
             'cdss_alerts' => $alerts,
         ]);
-
-
-
     }
+
+
 
     public function selectPatientAndDate(Request $request)
     {
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $selectedPatient = null;
         $ioData = null;
-        $date = now()->format('Y-m-d');
         $dayNo = 1;
+        $daysSinceAdmission = 30; // Default value
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
         if ($patientId) {
             $selectedPatient = Patient::find($patientId);
             if (!$selectedPatient) {
-                $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
-                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData'));
+                $request->session()->forget(['selected_patient_id', 'selected_day_no']);
+                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData', 'daysSinceAdmission'));
             }
             $request->session()->put('selected_patient_id', $patientId);
 
-            $date = $request->input('date');
+            // Calculate days since admission
+            $admissionDate = Carbon::parse($selectedPatient->admission_date);
+            $daysSinceAdmission = $admissionDate->diffInDays(Carbon::now()) + 1;
+
+
             $dayNo = $request->input('day_no');
 
-            if (is_null($date) || is_null($dayNo)) {
-                // Try to get date and day from session first
-                $date = $request->session()->get('selected_date', now()->format('Y-m-d'));
+            if (is_null($dayNo)) {
+                // Try to get day from session first
                 $dayNo = $request->session()->get('selected_day_no', 1);
 
-                // If still no date/day (e.g., first load, or session cleared), then try latest IO
-                if ($date === now()->format('Y-m-d') && $dayNo === 1) { // Check if defaults were used from session
+                // If still no day (e.g., first load, or session cleared), then try latest IO
+                if ($dayNo === 1) { // Check if defaults were used from session
                     $latestIo = IntakeAndOutput::where('patient_id', $patientId)
-                        ->orderBy('date', 'desc')
                         ->orderBy('day_no', 'desc')
                         ->first();
 
                     if ($latestIo) {
-                        $date = $latestIo->date;
                         $dayNo = $latestIo->day_no;
                     }
                 }
             }
 
-            $request->session()->put('selected_date', $date);
             $request->session()->put('selected_day_no', $dayNo);
 
             $ioData = IntakeAndOutput::where('patient_id', $patientId)
-                ->where('date', $date)
                 ->where('day_no', (int) $dayNo)
                 ->first();
+
+            Log::info('IntakeAndOutputController@selectPatientAndDate Debug:', [
+                'patient_id' => $patientId,
+                'day_no' => $dayNo,
+                'ioData_found' => $ioData ? 'true' : 'false',
+                'ioData_content' => $ioData ? $ioData->toArray() : null,
+            ]);
         } else {
-            $request->session()->forget(['selected_patient_id', 'selected_date', 'selected_day_no']);
+            $request->session()->forget(['selected_patient_id', 'selected_day_no']);
+            Log::info('IntakeAndOutputController@selectPatientAndDate Debug: No patient ID found, session cleared.');
         }
 
-        $currentDate = $date;
         $currentDayNo = $dayNo;
 
         if ($request->ajax() && $request->header('X-Fetch-Form-Content')) {
@@ -99,8 +108,8 @@ class IntakeAndOutputController extends Controller
                 'patients' => $patients,
                 'ioData' => $ioData,
                 'selectedPatient' => $selectedPatient,
-                'currentDate' => $currentDate,
                 'currentDayNo' => $currentDayNo,
+                'daysSinceAdmission' => $daysSinceAdmission,
             ])->render();
 
             // Use DOMDocument to parse and extract the form-content-container
@@ -119,7 +128,6 @@ class IntakeAndOutputController extends Controller
         } elseif ($request->ajax()) {
             return response()->json([
                 'ioData' => $ioData,
-                'currentDate' => $currentDate,
                 'currentDayNo' => $currentDayNo,
             ]);
         }
@@ -128,15 +136,19 @@ class IntakeAndOutputController extends Controller
             'patients' => $patients,
             'ioData' => $ioData,
             'selectedPatient' => $selectedPatient,
-            'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
+            'daysSinceAdmission' => $daysSinceAdmission,
         ]);
     }
+
+
 
     public function show(Request $request)
     {
         return $this->selectPatientAndDate($request);
     }
+
+
 
     public function store(Request $request)
     {
@@ -161,20 +173,24 @@ class IntakeAndOutputController extends Controller
         }
         //****
 
+        $admissionDate = Carbon::parse($patient->admission_date);
+        $daysSinceAdmission = $admissionDate->diffInDays(Carbon::now()) + 1;
 
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
-            'date' => 'required|date',
+            'day_no' => 'required|integer|between:1,' . $daysSinceAdmission,
             'oral_intake' => 'nullable|integer',
             'iv_fluids_volume' => 'nullable|integer',
             'iv_fluids_type' => 'nullable|string',
             'urine_output' => 'nullable|integer',
             'other_output' => 'nullable|integer',
         ]);
+        // Analyze the data to get the alert
+        $cdss = new IntakeAndOutputCdssService();
+        $alertData = $cdss->analyzeIntakeOutput($validatedData);
+        $validatedData['alert'] = $alertData['alert'];
 
         $existingIo = IntakeAndOutput::where('patient_id', $validatedData['patient_id'])
-            ->where('date', $validatedData['date'])
             ->where('day_no', $validatedData['day_no'])
             ->first();
 
@@ -196,12 +212,12 @@ class IntakeAndOutputController extends Controller
             );
         }
 
-        $request->session()->put('selected_date', $validatedData['date']);
         $request->session()->put('selected_day_no', $validatedData['day_no']);
 
         return redirect()->route('io.show')
             ->with('success', $message);
     }
+
 
     public function checkIntakeOutput(Request $request)
     {
@@ -215,7 +231,7 @@ class IntakeAndOutputController extends Controller
             'urine_output' => $urineOutput,
         ];
 
-        $cdssAlerts = new \App\Services\IntakeAndOutputCdssService();
+        $cdssAlerts = new IntakeAndOutputCdssService();
         $result = $cdssAlerts->analyzeIntakeOutput($data);
 
         $result['severity'] = strtoupper($result['severity']);
@@ -224,9 +240,63 @@ class IntakeAndOutputController extends Controller
     }
 
 
+    //new
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        // The payload from JS will be { batch: [ { time: "1", vitals: { field: value, ... } }, ... ] }
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.time' => 'required|string', // This is the day_no
+            'batch.*.vitals' => 'required|array', // This holds the I/O fields
+        ]);
+
+        $cdssService = new IntakeAndOutputCdssService();
+        $results = [];
+
+        foreach ($data['batch'] as $item) {
+            // Re-used existing group analysis logic from analyzeIntakeOutput
+            // $item['vitals'] will be [ 'oral_intake' => '500', 'urine_output' => '300', ... ]
+            $result = $cdssService->analyzeIntakeOutput($item['vitals']);
+            $result['severity'] = strtoupper($result['severity']);
+            $results[] = $result;
+        }
+
+        return response()->json($results);
+    }
 
 
+    public function runCdssAnalysis(Request $request)
+    {
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'day_no' => 'required|integer|between:1,30',
+        ]);
 
+        $ioData = [
+            'oral_intake' => $request->input('oral_intake'),
+            'iv_fluids_volume' => $request->input('iv_fluids_volume'),
+            'urine_output' => $request->input('urine_output'),
+        ];
 
+        $cdssService = new IntakeAndOutputCdssService();
+        $result = $cdssService->analyzeIntakeOutput($ioData);
 
+        $findings = [];
+        if ($result['severity'] !== IntakeAndOutputCdssService::NONE) {
+            $findings[] = $result['alert'];
+        }
+
+        $ioRecord = IntakeAndOutput::firstOrCreate(
+            [
+                'patient_id' => $validatedData['patient_id'],
+                'day_no' => $validatedData['day_no'],
+            ],
+            $ioData
+        );
+
+        return redirect()->route('nursing-diagnosis.start', [
+            'component' => 'intake-and-output',
+            'id' => $ioRecord->id
+        ])->with('findings', $findings);
+    }
 }

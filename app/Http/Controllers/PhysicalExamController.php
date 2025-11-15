@@ -81,7 +81,20 @@ class PhysicalExamController extends Controller
         $existingExam = PhysicalExam::where('patient_id', $data['patient_id'])->first();
 
         if ($existingExam) {
-            $existingExam->update($data);
+            // call cdss
+            $cdssService = new PhysicalExamCdssService();
+            $alerts = $cdssService->analyzeFindings($data);
+
+            $existingExam->update(array_merge($data, [
+                'general_appearance_alert' => $alerts['general_appearance_alert'] ?? null,
+                'skin_alert' => $alerts['skin_condition_alert'] ?? null,
+                'eye_alert' => $alerts['eye_condition_alert'] ?? null,
+                'oral_alert' => $alerts['oral_condition_alert'] ?? null,
+                'cardiovascular_alert' => $alerts['cardiovascular_alert'] ?? null,
+                'abdomen_alert' => $alerts['abdomen_condition_alert'] ?? null,
+                'extremities_alert' => $alerts['extremities_alert'] ?? null,
+                'neurological_alert' => $alerts['neurological_alert'] ?? null,
+            ]));
             $message = 'Physical exam data updated successfully!';
             AuditLogController::log(
                 'Physical Exam Updated',
@@ -104,14 +117,14 @@ class PhysicalExamController extends Controller
                 'extremities' => $data['extremities'],
                 'neurological' => $data['neurological'],
                 // Store alerts
-                'general_appearance_alert' => $alerts['general_appearance_alerts'] ?? null,
-                'skin_alert' => $alerts['skin_alerts'] ?? null,
-                'eye_alert' => $alerts['eye_alerts'] ?? null,
-                'oral_alert' => $alerts['oral_alerts'] ?? null,
-                'cardiovascular_alert' => $alerts['cardiovascular_alerts'] ?? null,
-                'abdomen_alert' => $alerts['abdomen_alerts'] ?? null,
-                'extremities_alert' => $alerts['extremities_alerts'] ?? null,
-                'neurological_alert' => $alerts['neurological_alerts'] ?? null,
+                'general_appearance_alert' => $alerts['general_appearance_alert'] ?? null,
+                'skin_alert' => $alerts['skin_condition_alert'] ?? null,
+                'eye_alert' => $alerts['eye_condition_alert'] ?? null,
+                'oral_alert' => $alerts['oral_condition_alert'] ?? null,
+                'cardiovascular_alert' => $alerts['cardiovascular_alert'] ?? null,
+                'abdomen_alert' => $alerts['abdomen_condition_alert'] ?? null,
+                'extremities_alert' => $alerts['extremities_alert'] ?? null,
+                'neurological_alert' => $alerts['neurological_alert'] ?? null,
             ]);
 
             $message = 'Physical exam data saved successfully!';
@@ -164,6 +177,36 @@ class PhysicalExamController extends Controller
         // Return the result as a JSON response
         return response()->json($alert);
     }
+
+    //updated for batch processing
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.fieldName' => 'required|string', // Ensure each item has a fieldName
+            'batch.*.finding' => 'nullable|string',
+        ]);
+
+        $cdssService = new PhysicalExamCdssService();
+        $results = [];
+
+        // 2. Loop over each item in the batch
+        foreach ($data['batch'] as $item) {
+
+            // 3. Re-use your existing single-field analysis logic
+            $alert = $cdssService->analyzeSingleFinding(
+                $item['fieldName'],
+                $item['finding'] ?? ''
+            );
+
+            // 4. Add the result to our results array
+            $results[] = $alert;
+        }
+
+        // 5. Return the complete array of alerts
+        return response()->json($results);
+    }
+
 
 
     /**

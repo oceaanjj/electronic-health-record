@@ -76,7 +76,8 @@ class DiagnosticsController extends Controller
 
         try {
             foreach ((array) $request->file('images') as $type => $files) {
-                if (!is_array($files)) continue;
+                if (!is_array($files))
+                    continue;
 
                 foreach ($files as $file) {
                     if ($file && $file->isValid()) {
@@ -146,8 +147,8 @@ class DiagnosticsController extends Controller
 
             // Fetch all diagnostic records for the given type and patient
             $records = Diagnostic::where('patient_id', $patient_id)
-                                 ->where('type', $type)
-                                 ->get();
+                ->where('type', $type)
+                ->get();
 
             if ($records->isEmpty()) {
                 return response()->json(['success' => true, 'message' => 'No images found to delete for this type.'], 200);

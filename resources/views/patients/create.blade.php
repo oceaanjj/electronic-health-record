@@ -4,194 +4,260 @@
 
 @section('content')
 
-    {{-- This container centers the content and matches the width of the medical-history page --}}
-    <div class="w-[72%] mx-auto my-10">
-        
-        {{-- SUCCESS MESSAGE --}}
-        @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <span class="block sm:inline">{{ session('success') }}</span>
-            </div>
-        @endif
 
-        {{-- ERROR VALIDATION --}}
-        @if ($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <strong class="font-bold">Whoops!</strong>
-                <span class="block sm:inline">Please correct the errors below.</span>
-                <ul class="mt-3 list-disc list-inside">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    @if (session('success'))
+        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-green-200 dark:text-green-900" role="alert">
+            <span class="font-medium">Success!</span> {{ session('success') }}
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-red-200 dark:text-red-900" role="alert">
+            <span class="font-medium">Please correct the following errors:</span>
+            <ul class="mt-1.5 list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="w-[100%] md:w-[90%] lg:w-[75%] xl:w-[65%] mx-auto my-12">
 
         <form action="{{ route('patients.store') }}" method="POST">
             @csrf
 
-            {{-- Styled Header for Patient Registration --}}
-            <div class="bg-dark-green text-white rounded-t-lg font-bold text-lg p-4 w-full">
-                PATIENT REGISTRATION
-            </div>
 
-            {{-- Form content area with beige background, padding, and shadow --}}
-            <div class="bg-beige p-6 rounded-b-lg shadow-md mb-8">
-                
-                {{-- A responsive grid for layout. 6 columns on medium screens, 1 on small screens --}}
-                <div class="grid grid-cols-6 gap-6">
+            <h1 class="text-dark-green text-4xl font-extrabold mb-5 pb-1 tracking-tight">
+                REGISTER PATIENT
+            </h1>
 
-                    {{-- First Name --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="first_name" class="block mb-2 font-bold text-dark-green">First Name</label>
-                        <input type="text" id="first_name" name="first_name" placeholder="Enter first name" value="{{ old('first_name') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
 
-                    {{-- Middle Name --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="middle_name" class="block mb-2 font-bold text-dark-green">Middle Name</label>
-                        <input type="text" id="middle_name" name="middle_name" placeholder="Enter middle name" value="{{ old('middle_name') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
+            <div class="shadow-2xl rounded-xl overflow-hidden mb-10 border border-gray-100">
 
-                    {{-- Last Name --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="last_name" class="block mb-2 font-bold text-dark-green">Last Name</label>
-                        <input type="text" id="last_name" name="last_name" placeholder="Enter last name" value="{{ old('last_name') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
 
-                    {{-- Birthdate (controls age) --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="birthdate" class="block mb-2 font-bold text-dark-green">Birthdate</label>
-                        <input type="date" id="birthdate" name="birthdate" value="{{ old('birthdate') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
+                <div class="bg-dark-green font-bold py-2 text-white p-4 pl-10 text-xl tracking-wider">
+                    <h1>PATIENT DETAILS</h1>
+                </div>
 
-                    {{-- Age (readonly, controlled by birthdate) --}}
-                    <div class="col-span-6 md:col-span-1">
-                        <label for="age" class="block mb-2 font-bold text-dark-green">Age</label>
-                        <input type="number" id="age" name="age" placeholder="Age" value="{{ old('age') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm" readonly>
-                    </div>
 
-                    {{-- Sex --}}
-                    <div class="col-span-6 md:col-span-3">
-                        <label for="sex" class="block mb-2 font-bold text-dark-green">Sex</label>
-                        <select id="sex" name="sex"
-                                class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                            <option>Select sex</option>
-                            <option value="Male" {{ old('sex') == 'Male' ? 'selected' : '' }}>Male</option>
-                            <option value="Female" {{ old('sex') == 'Female' ? 'selected' : '' }}>Female</option>
-                        </select>
-                    </div>
+                <div class="bg-white p-6 sm:p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
 
-                    {{-- Address --}}
-                    <div class="col-span-6 md:col-span-4">
-                        <label for="address" class="block mb-2 font-bold text-dark-green">Address</label>
-                        <input type="text" id="address" name="address" placeholder="Enter complete address" value="{{ old('address') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
 
-                    {{-- Birth Place --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="birthplace" class="block mb-2 font-bold text-dark-green">Birth Place</label>
-                        <input type="text" id="birthplace" name="birthplace" placeholder="Enter birth place" value="{{ old('birthplace') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="first_name" class="block text-sm font-semibold text-gray-700 mb-1">First Name <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="e.g. Juan" required>
+                        </div>
 
-                    {{-- Religion --}}
-                    <div class="col-span-6 md:col-span-3">
-                        <label for="religion" class="block mb-2 font-bold text-dark-green">Religion</label>
-                        <input type="text" id="religion" name="religion" placeholder="Enter religion" value="{{ old('religion') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="middle_name" class="block text-sm font-semibold text-gray-700 mb-1">Middle
+                                Name</label>
+                            <input type="text" id="middle_name" name="middle_name" value="{{ old('middle_name') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="Optional">
+                        </div>
 
-                    {{-- Ethnicity --}}
-                    <div class="col-span-6 md:col-span-3">
-                        <label for="ethnicity" class="block mb-2 font-bold text-dark-green">Ethnicity</label>
-                        <input type="text" id="ethnicity" name="ethnicity" placeholder="Enter ethnicity" value="{{ old('ethnicity') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="last_name" class="block text-sm font-semibold text-gray-700 mb-1">Last Name <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="e.g. Dela Cruz" required>
+                        </div>
 
-                    {{-- Chief Complaints --}}
-                    <div class="col-span-6">
-                        <label for="chief_complaints" class="block mb-2 font-bold text-dark-green">Chief of Complaints</label>
-                        <textarea id="chief_complaints" name="chief_complaints" rows="3" placeholder="Enter chief complaints"
-                                  class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm notepad-lines h-24">{{ old('chief_complaints') }}</textarea>
-                    </div>
 
-                    {{-- Admission Date --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="admission_date" class="block mb-2 font-bold text-dark-green">Admission Date</label>
-                        <input type="date" id="admission_date" name="admission_date" value="{{ old('admission_date') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="birthdate" class="block text-sm font-semibold text-gray-700 mb-1">Birthdate <span
+                                    class="text-red-500">*</span></label>
+                            <input type="date" id="birthdate" name="birthdate" value="{{ old('birthdate') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" required>
+                        </div>
 
-                    {{-- Room No. --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="room_no" class="block mb-2 font-bold text-dark-green">Room No.</label>
-                        <input type="text" id="room_no" name="room_no" placeholder="Enter room number" value="{{ old('room_no') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
 
-                    {{-- Bed No. --}}
-                    <div class="col-span-6 md:col-span-2">
-                        <label for="bed_no" class="block mb-2 font-bold text-dark-green">Bed No.</label>
-                        <input type="text" id="bed_no" name="bed_no" placeholder="Enter bed number" value="{{ old('bed_no') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                        <div class="col-span-6 md:col-span-1">
+                            <label for="age" class="block text-sm font-semibold text-gray-700 mb-1">Age <span
+                                    class="text-red-500">*</span></label>
+                            <input type="number" id="age" name="age" value="{{ old('age') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                bg-gray-100 cursor-not-allowed focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
+                                placeholder="Age" readonly required>
+                        </div>
+
+
+                        <div class="col-span-6 md:col-span-3">
+                            <label for="sex" class="block text-sm font-semibold text-gray-700 mb-1">Sex <span
+                                    class="text-red-500">*</span></label>
+                            <select id="sex" name="sex" required
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
+                                <option value="" disabled selected>Select Sex</option>
+                                <option value="Female" {{ old('sex') == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Male" {{ old('sex') == 'Male' ? 'selected' : '' }}>Male</option>
+                            </select>
+                        </div>
+
+
+                        <div class="col-span-6">
+                            <label for="address" class="block text-sm font-semibold text-gray-700 mb-1">Address</label>
+                            <input type="text" id="address" name="address" value="{{ old('address') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="Street, City, Province/State, Country">
+                        </div>
+
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="birthplace" class="block text-sm font-semibold text-gray-700 mb-1">Birth
+                                Place</label>
+                            <input type="text" id="birthplace" name="birthplace" value="{{ old('birthplace') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="City/Municipality">
+                        </div>
+
+
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="religion" class="block text-sm font-semibold text-gray-700 mb-1">Religion</label>
+                            <select id="religion" name="religion"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 
+                                focus:border-indigo-500 transition duration-150 ease-in-out">
+                                <option value="" disabled selected>Select Religion</option>
+                                @php
+                                    $religions = ['Roman Catholic', 'Islam', 'Iglesia ni Cristo', 'Protestant', 'Born Again', 'Buddhist', 'Hindu', 'Other'];
+                                @endphp
+                                @foreach ($religions as $r)
+                                    <option value="{{ $r }}" {{ old('religion') == $r ? 'selected' : '' }}>{{ $r }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="ethnicity" class="block text-sm font-semibold text-gray-700 mb-1">Ethnicity</label>
+                            <select id="ethnicity" name="ethnicity"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 
+                                focus:border-indigo-500 transition duration-150 ease-in-out">
+                                <option value="" disabled selected>Select Ethnicity</option>
+                                @php
+                                    $ethnicities = ['Tagalog', 'Cebuano', 'Ilocano', 'Bisaya', 'Bicolano', 'Kapampangan', 'Ibanag', 'Other'];
+                                @endphp
+                                @foreach ($ethnicities as $e)
+                                    <option value="{{ $e }}" {{ old('ethnicity') == $e ? 'selected' : '' }}>{{ $e }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+                        <div class="col-span-6">
+                            <label for="chief_complaints" class="block text-sm font-semibold text-gray-700 mb-1">Chief of
+                                Complaints</label>
+                            <textarea id="chief_complaints" name="chief_complaints" rows="4"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400 resize-none"
+                                placeholder="Describe the patient's primary symptoms or issues.">{{ old('chief_complaints') }}</textarea>
+                        </div>
+
+
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="admission_date" class="block text-sm font-semibold text-gray-700 mb-1">Admission
+                                Date</label>
+                            <input type="date" id="admission_date" name="admission_date" value="{{ $currentDate }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-gray-100 cursor-not-allowed
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out" readonly>
+                        </div>
+
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="room_no" class="block text-sm font-semibold text-gray-700 mb-1">Room No.</label>
+                            <input type="text" id="room_no" name="room_no" value="{{ old('room_no') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="Enter room number">
+                        </div>
+
+                        <div class="col-span-6 md:col-span-2">
+                            <label for="bed_no" class="block text-sm font-semibold text-gray-700 mb-1">Bed No.</label>
+                            <input type="text" id="bed_no" name="bed_no" value="{{ old('bed_no') }}"
+                                class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="Enter bed number">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Styled Header for Emergency Contact --}}
-            <div class="bg-dark-green text-white rounded-t-lg font-bold text-lg p-4 w-full mt-8">
-                EMERGENCY CONTACT
-            </div>
 
-            {{-- Content area for Emergency Contact --}}
-            <div class="bg-beige p-6 rounded-b-lg shadow-md">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    
-                    {{-- Contact Name --}}
-                    <div class="col-span-1">
-                        <label for="contact_name" class="block mb-2 font-bold text-dark-green">Name</label>
-                        <input type="text" id="contact_name" name="contact_name" placeholder="Enter name" value="{{ old('contact_name') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+            <div class="shadow-2xl rounded-xl overflow-hidden mb-10 border border-gray-100">
+                <div class="bg-dark-green font-bold py-2 text-white p-4 pl-10 text-xl tracking-wider flex justify-between items-center">
+                    <h1>EMERGENCY CONTACT</h1>
+                    <button type="button" id="add-contact" class="bg-white text-dark-green px-3 py-1 rounded-md font-bold hover:bg-gray-200">
+                        +
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 sm:p-8" id="contact-container">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 contact-entry">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
+                            <input type="text" name="contact_name[]" class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="Contact person's full name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
+                            <input type="text" name="contact_relationship[]" class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                placeholder="e.g. Spouse, Parent">
+                        </div>
+                        <div class="flex gap-2 items-end">
+                            <div class="flex-1">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+                                <input type="text" name="contact_number[]" class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                                    focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
+                                    placeholder="e.g. 0912-345-6789">
+                            </div>
+                            <button type="button" class="remove-contact hidden text-red-600 font-bold text-xl pb-2 hover:text-red-800">×</button>
+                        </div>
                     </div>
-
-                    {{-- Contact Relationship --}}
-                    <div class="col-span-1">
-                        <label for="contact_relationship" class="block mb-2 font-bold text-dark-green">Relationship</label>
-                        <input type="text" id="contact_relationship" name="contact_relationship" placeholder="Enter relationship to patient" value="{{ old('contact_relationship') }}"
-                               class="w-full text-[1sem 0 0 0] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
-
-       
-                    <div class="col-span-1">
-                        <label for="contact_number" class="block mb-2 font-bold text-dark-green">Contact Number</label>
-                        <input type="text" id="contact_number" name="contact_number" placeholder="Enter number" value="{{ old('contact_number') }}"
-                               class="w-full text-[15px] px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                    </div>
-
                 </div>
             </div>
 
-            {{-- Save Button --}}
-            <div class="flex justify-end mt-8">
-                <button type="submit" class="button-default">Save</button>
+
+            <div class="flex justify-end items-center mt-10 space-x-4">
+                <button type="button" onclick="window.history.back()" class="button-default">BACK</button>
+                <button type="submit" class="button-default">SAVE</button>
             </div>
 
         </form>
     </div>
-
 @endsection
 
-        @push('styles')
-            @vite(['resources/css/registration-style.css'])
-        @endpush
+@push('scripts')
+    @vite(['resources/js/compute-age.js'])
 
-        @push('scripts')
-            @vite(['resources/js/compute-age.js'])
-        @endpush
+    <script>
+
+        document.getElementById('add-contact').addEventListener('click', function() {
+            const container = document.getElementById('contact-container');
+            const entry = container.querySelector('.contact-entry');
+            const clone = entry.cloneNode(true);
+
+            clone.querySelectorAll('input').forEach(input => input.value = '');
+
+
+            clone.querySelector('.remove-contact').classList.remove('hidden');
+
+            container.appendChild(clone);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-contact')) {
+                e.target.closest('.contact-entry').remove();
+            }
+        });
+    </script>
+@endpush

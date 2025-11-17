@@ -38,8 +38,6 @@ class VitalSignsController extends Controller
 
 
 
-
-
     public function selectPatient(Request $request)
     {
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();

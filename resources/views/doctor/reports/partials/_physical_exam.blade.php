@@ -67,10 +67,9 @@
                 </tbody>
             </table>
 
-            {{--
-            This ADPIE table is now INSIDE the loop,
-            so it shows the diagnosis for THIS exam.
-            --}}
+
+            <!-- ADPIE Table -->
+
             <h2 class="section-title">ADPIE
             </h2>
             <table class="data-table">

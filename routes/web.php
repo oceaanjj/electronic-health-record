@@ -19,59 +19,17 @@ use App\Http\Controllers\DischargePlanningController;
 use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
 use App\Http\Controllers\MedicationAdministrationController;
-
-use App\Http\Controllers\NursingDiagnosisController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-// --- ADD THESE NEW ROUTES FOR THE DPIE WIZARD ---
-
-Route::get('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'startDiagnosis'])
-     ->name('nursing-diagnosis.start');
-
-Route::post('/adpie/physical-exam/diagnosis/{physicalExamId}', [NursingDiagnosisController::class, 'storeDiagnosis'])
-     ->name('nursing-diagnosis.storeDiagnosis');
-
-Route::get('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])
-     ->name('nursing-diagnosis.showPlanning');
-
-Route::post('/adpie/physical-exam/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])
-     ->name('nursing-diagnosis.storePlanning');
-
-Route::get('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])
-     ->name('nursing-diagnosis.showIntervention');
-
-Route::post('/adpie/physical-exam/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])
-     ->name('nursing-diagnosis.storeIntervention');
-
-Route::get('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])
-     ->name('nursing-diagnosis.showEvaluation');
-
-Route::post('/adpie/physical-exam/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])
-     ->name('nursing-diagnosis.storeEvaluation');
-
-// ===== START OF FIX =====
-// ADD THIS ROUTE for the real-time recommendations
-Route::post('/adpie/physical-exam/diagnosis/analyze-field', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])
-     ->name('nursing-diagnosis.analyze-field');
-// ===== END OF FIX =====
-
-// ... your other routes like showByPatient ...
-Route::get('/nursing-diagnosis/patient/{patientId}', [NursingDiagnosisController::class, 'showByPatient'])
-     ->name('nursing-diagnosis.showByPatient');
-
+use App\Http\Controllers\ADPIE\NursingDiagnosisController;
+use App\Http\Controllers\Doctor\ReportController;
 
 // Home Page and Authentication Routes
 Route::get('/', [HomeController::class, 'handleHomeRedirect'])->name('home');
+
+// Route ko lang for viewing my sweetalerts
+// Route::get('/sweetalert-test', function() {
+//     return view('sweetalert-test-debug');
+// })->name('sweetalert.test');
+
 
 // -- UPDATED LOGIN ROUTES ---
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -79,7 +37,7 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 
 
 
-// Old routes for separate login forms (as requested, kept as comments)
+// Old routes for separate login forms 
 
 // Route::prefix('login')->name('login.')->group(callback: function () {
 //     Route::get('/login', [LoginController::class, 'showRoleSelectionForm'])->name('login');
@@ -119,7 +77,6 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     // No delete routes!
 });
 
-use App\Http\Controllers\Doctor\ReportController;
 
 //-------------------------------------------------------------
 // Protected Routes for Doctor
@@ -169,16 +126,16 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
         Route::get('/search-results', [PatientController::class, 'search'])->name('search-results');
     });
 
-// In routes/web.php
+    // In routes/web.php
 
-// This gives you: index, create, store, show, edit, update
-Route::resource('patients', PatientController::class)->except([
-    'destroy' 
-]);
+    // This gives you: index, create, store, show, edit, update
+    Route::resource('patients', PatientController::class)->except([
+        'destroy'
+    ]);
 
-// ADD THESE TWO NEW ROUTES for Active/Inactive
-Route::delete('patients/{id}/deactivate', [PatientController::class, 'deactivate'])->name('patients.deactivate');
-Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->name('patients.activate');
+    // ADD THESE TWO NEW ROUTES for Active/Inactive
+    Route::delete('patients/{id}/deactivate', [PatientController::class, 'deactivate'])->name('patients.deactivate');
+    Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->name('patients.activate');
 
     // physical exam
     Route::prefix('physical-exam')->name('physical-exam.')->group(function () {
@@ -207,7 +164,6 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
     Route::get('/lab-values', [LabValuesController::class, 'show'])->name('lab-values.index');
     Route::post('/lab-values/select', [LabValuesController::class, 'selectPatient'])->name('lab-values.select');
     Route::post('/lab-values', [LabValuesController::class, 'store'])->name('lab-values.store');
-    Route::post('/lab-values/run-cdss', [LabValuesController::class, 'runCdssAnalysis'])->name('lab-values.cdss');
     Route::post('/lab-values/analyze-field', [LabValuesController::class, 'runSingleCdssAnalysis'])->name('lab-values.run-cdss-field');
 
     // IVS AND LINES:
@@ -229,9 +185,7 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
     Route::prefix('adl')->name('adl.')->group(function () {
         Route::get('/', [ActOfDailyLivingController::class, 'show'])->name('show');
         Route::post('/', [ActOfDailyLivingController::class, 'store'])->name('store');
-        Route::post('/cdss', [ActOfDailyLivingController::class, 'runCdssAnalysis'])->name('runCdssAnalysis');
         // Route::post('/select', [ActOfDailyLivingController::class, 'selectPatientAndDate'])->name('select');
-
         Route::post('/select-patient', [ActOfDailyLivingController::class, 'selectPatient'])->name('select');
         Route::post('/select-date-day', [ActOfDailyLivingController::class, 'selectDateAndDay'])->name('select-date-day');
         Route::post('/analyze-field', [ActOfDailyLivingController::class, 'analyzeField'])->name('analyze-field');
@@ -258,16 +212,45 @@ Route::post('patients/{id}/activate', [PatientController::class, 'activate'])->n
     Route::post('/intake-and-output/select', [IntakeAndOutputController::class, 'selectPatientAndDate'])->name('io.select');
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
     Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
+    Route::post('/intake-and-output/cdss', [IntakeAndOutputController::class, 'runCdssAnalysis'])->name('io.cdss');
 
-Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
-     ->name('medication-administration');
-
-// Para sa pag-save ng data (kapag nag-submit ng form)
-Route::post('/medication-administration/store', [MedicationAdministrationController::class, 'store'])
-     ->name('medication-administration.store');
-
-// Para sa patient dropdown search (base sa code mo)
+    //MEDICATION-ADMINISTRATION:
+    Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
+        ->name('medication-administration');
+    Route::post('/medication-administration/store', [MedicationAdministrationController::class, 'store'])
+        ->name('medication-administration.store');
     Route::post('/medication-administration/select-patient', [MedicationAdministrationController::class, 'selectPatient'])
         ->name('medication-administration.select-patient');
+    Route::get('/medication-administration/records', [MedicationAdministrationController::class, 'getRecords'])
+        ->name('medication-administration.get-records');
+
+
+
+
+
+
+    Route::get('/lab-values/nursing-diagnosis/{id}', [
+        'uses' => 'App\Http\Controllers\ADPIE\NursingDiagnosisController@startDiagnosis',
+        'as' => 'lab-values.nursing-diagnosis.start'
+    ]);
+
+    
+
+        Route::post('/adpie/vitals/analyze-diagnosis', [VitalSignsController::class, 'analyzeDiagnosisForNursing'])
+        ->name('adpie.vitals.analyzeDiagnosis');
+    // --- D P I E (DYNAMIC REFACTOR) ---
+
+    Route::prefix('adpie')->name('nursing-diagnosis.')->group(function () {
+        Route::post('/analyze-step', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');
+        Route::get('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'startDiagnosis'])->name('start');
+        Route::post('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'storeDiagnosis'])->name('storeDiagnosis');
+        Route::get('/{component}/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])->name('showPlanning');
+        Route::post('/{component}/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storePlanning'])->name('storePlanning');
+        Route::get('/{component}/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showIntervention'])->name('showIntervention');
+        Route::post('/{component}/intervention/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeIntervention'])->name('storeIntervention');
+        Route::get('/{component}/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showEvaluation'])->name('showEvaluation');
+        Route::post('/{component}/evaluation/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'storeEvaluation'])->name('storeEvaluation');
+        Route::get('/patient/{patientId}', [NursingDiagnosisController::class, 'showByPatient'])->name('showByPatient');
+    });
 
 });

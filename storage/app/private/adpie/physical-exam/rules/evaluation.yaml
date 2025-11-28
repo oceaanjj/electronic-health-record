@@ -1,0 +1,71 @@
+# -----------------------------------------------------------------
+# 1. EVALUATION OUTCOMES
+# -----------------------------------------------------------------
+- keywords: ["goal met", "met"]
+  match_type: any
+  alert: "Excellent. Document the specific data that supports this (e.g., 'Goal met: Patient ambulated 100 feet with walker')."
+  severity: "INFO"
+- keywords: ["goal not met", "not met"]
+  match_type: all
+  alert: "CRITICAL ACTION: The plan must be revised. Document *why* it was not met and what the new plan is."
+  severity: "CRITICAL"
+- keywords: ["partially met"]
+  match_type: all
+  alert: "Plan needs modification. Specify which parts were met and revise the plan for the parts that were not."
+  severity: "WARNING"
+- keywords: ["resolved"]
+  match_type: any
+  alert: "Good. Document that the diagnosis is resolved and the plan can be discontinued."
+  severity: "INFO"
+
+# -----------------------------------------------------------------
+# 2. EVALUATION ACTIONS
+# -----------------------------------------------------------------
+- keywords: ["continue", "ongoing"]
+  match_type: any
+  alert: "This is an ongoing plan. Ensure the goal's time frame is updated or a new goal is set for the next shift."
+  severity: "INFO"
+- keywords: ["revise", "modify", "change", "new plan"]
+  match_type: any
+  alert: "Good. This is the correct action for 'Goal Not Met'. Specify what the new plan is."
+  severity: "INFO"
+- keywords: ["re-assess", "reassess"]
+  match_type: any
+  alert: "Good. This is the first step in revising the plan. Document your new assessment findings."
+  severity: "INFO"
+- keywords: ["discontinue", "d/c"]
+  match_type: any
+  alert: "Use 'Resolved' or 'Goal Met' as the primary status if discontinuing."
+  severity: "INFO"
+
+# -----------------------------------------------------------------
+# 3. EVALUATION DATA
+# -----------------------------------------------------------------
+- keywords: ["patient states", "reports", "denies"]
+  match_type: any
+  alert: "Good use of subjective data. (e.g., 'Goal met: Patient states pain is 2/10')."
+  severity: "INFO"
+- keywords: ["as evidenced by", "aeb"]
+  match_type: any
+  alert: "Good use of objective data. (e.g., 'Goal met: ...as evidenced by clear lung sounds')."
+  severity: "INFO"
+- keywords: ["ambulated", "walked"]
+  match_type: any
+  alert: "Good objective data. (e.g., '...patient ambulated 50 feet with minimal assistance')."
+  severity: "INFO"
+- keywords: ["demonstrated", "verbalized"]
+  match_type: any
+  alert: "Excellent measurable verbs for evaluating teaching. (e.g., 'Goal met: Patient verbalized 3 side effects...')."
+  severity: "INFO"
+- keywords: ["pain scale", "pain level"]
+  match_type: any
+  alert: "Excellent. Always include the pre- and post-intervention pain score in your evaluation."
+  severity: "INFO"
+- keywords: ["o2 sat", "spo2", "oxygen saturation"]
+  match_type: any
+  alert: "Excellent objective data for evaluating respiratory goals."
+  severity: "INFO"
+- keywords: ["skin intact", "no redness", "no breakdown"]
+  match_type: any
+  alert: "Excellent objective data for evaluating skin integrity goals."
+  severity: "INFO"

@@ -28,10 +28,18 @@ class PhysicalExam extends Model
         'abdomen_condition',
         'extremities',
         'neurological',
+        'general_appearance_alert',
+        'skin_alert',
+        'eye_alert',
+        'oral_alert',
+        'cardiovascular_alert',
+        'abdomen_alert',
+        'extremities_alert',
+        'neurological_alert',
     ];
 
     // Relationship sa patient table
-   public function patient()
+    public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');
     }
@@ -39,13 +47,13 @@ class PhysicalExam extends Model
     // You should also have this one
     public function nursingDiagnoses()
     {
-        return $this->hasMany(NursingDiagnosis::class);
+        return $this->hasOne(NursingDiagnosis::class);
     }
 }
 
-    // Relationship sa CDSS physical exam table (optional for later use)
-    // public function cdssAssessment()
-    // {
-    //     return $this->hasOne(CdssPhysicalExam::class);
-    // }
+// Relationship sa CDSS physical exam table (optional for later use)
+// public function cdssAssessment()
+// {
+//     return $this->hasOne(CdssPhysicalExam::class);
+// }
 

@@ -1,0 +1,22 @@
+diagnosis:
+  - keywords: ["Impaired physical mobility"]
+    alert: "Risk for falls related to impaired physical mobility."
+    severity: "WARNING"
+  - keywords: ["Self-care deficit"]
+    alert: "Bathing self-care deficit related to inability to wash body."
+    severity: "INFO"
+  - keywords: ["Disturbed sleep pattern"]
+    alert: "Insomnia related to frequent awakenings."
+    severity: "INFO"
+  - keywords: ["Acute pain"]
+    alert: "Acute pain related to surgical incision."
+    severity: "WARNING"
+  - keywords: ["Chronic pain"]
+    alert: "Chronic pain related to arthritis."
+    severity: "WARNING"
+  - keywords: ["Risk for imbalanced nutrition"]
+    alert: "Imbalanced nutrition: less than body requirements related to decreased appetite."
+    severity: "WARNING"
+  - keywords: ["Risk for deficient fluid volume"]
+    alert: "Deficient fluid volume related to decreased fluid intake."
+    severity: "WARNING"

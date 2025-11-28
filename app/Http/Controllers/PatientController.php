@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\ModelNotFoundException; // <-- Import this
 use Illuminate\Support\Facades\Log; // <-- Import this for logging errors
+use Carbon\Carbon;
 
 class PatientController extends Controller
 {
 
     public function patients(): HasMany
     {
-        return $this->hasMany(Patient::class, 'user_id', 'id');
+        return $this->HasMany(Patient::class, 'user_id', 'id');
     }
 
 
@@ -35,7 +36,6 @@ class PatientController extends Controller
 
             // Log patient viewing
             AuditLogController::log('Patient Viewed', 'User ' . Auth::user()->username . ' viewed patient record.', ['patient_id' => $patient->patient_id]);
-
             return view('patients.show', compact('patient'));
 
         } catch (ModelNotFoundException $e) {
@@ -51,7 +51,8 @@ class PatientController extends Controller
     // redirect sa form na magiinput ng patient
     public function create()
     {
-        return view('patients.create');
+        $currentDate = Carbon::today()->format('Y-m-d');
+        return view('patients.create', compact('currentDate'));
     }
 
     // SAVE
@@ -70,10 +71,41 @@ class PatientController extends Controller
             'ethnicity' => 'nullable|string',
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
+            'room_no' => 'nullable|string',
+            'bed_no' => 'nullable|string',
+            'contact_name' => 'nullable|array',
+            'contact_name.*' => 'nullable|string',
+            'contact_relationship' => 'nullable|array',
+            'contact_relationship.*' => 'nullable|string',
+            'contact_number' => 'nullable|array',
+            'contact_number.*' => 'nullable|string',
         ]);
 
         try {
             $data['user_id'] = Auth::id();
+            
+            // Filter out empty contact values and ensure proper array structure
+            if (isset($data['contact_name'])) {
+                $data['contact_name'] = array_filter($data['contact_name'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_name'] = !empty($data['contact_name']) ? array_values($data['contact_name']) : null;
+            }
+            
+            if (isset($data['contact_relationship'])) {
+                $data['contact_relationship'] = array_filter($data['contact_relationship'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_relationship'] = !empty($data['contact_relationship']) ? array_values($data['contact_relationship']) : null;
+            }
+            
+            if (isset($data['contact_number'])) {
+                $data['contact_number'] = array_filter($data['contact_number'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_number'] = !empty($data['contact_number']) ? array_values($data['contact_number']) : null;
+            }
+            
             $patient = Patient::create($data);
 
             // Log patient creation
@@ -121,9 +153,39 @@ class PatientController extends Controller
             'ethnicity' => 'nullable|string',
             'chief_complaints' => 'nullable|string',
             'admission_date' => 'required|date',
+            'room_no' => 'nullable|string',
+            'bed_no' => 'nullable|string',
+            'contact_name' => 'nullable|array',
+            'contact_name.*' => 'nullable|string',
+            'contact_relationship' => 'nullable|array',
+            'contact_relationship.*' => 'nullable|string',
+            'contact_number' => 'nullable|array',
+            'contact_number.*' => 'nullable|string',
         ]);
 
         try {
+            // Filter out empty contact values and ensure proper array structure
+            if (isset($data['contact_name'])) {
+                $data['contact_name'] = array_filter($data['contact_name'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_name'] = !empty($data['contact_name']) ? array_values($data['contact_name']) : null;
+            }
+            
+            if (isset($data['contact_relationship'])) {
+                $data['contact_relationship'] = array_filter($data['contact_relationship'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_relationship'] = !empty($data['contact_relationship']) ? array_values($data['contact_relationship']) : null;
+            }
+            
+            if (isset($data['contact_number'])) {
+                $data['contact_number'] = array_filter($data['contact_number'], function($value) {
+                    return !empty($value);
+                });
+                $data['contact_number'] = !empty($data['contact_number']) ? array_values($data['contact_number']) : null;
+            }
+            
             // Find patient, even if inactive
             $patient = Patient::withTrashed()->findOrFail($id);
             $patient->update($data);
@@ -142,26 +204,25 @@ class PatientController extends Controller
     }
 
     // SET TO INACTIVE
-public function deactivate($id)
-{
-    try {
-        $patient = Patient::findOrFail($id); 
-        $patient->delete(); 
+    public function deactivate($id)
+    {
+        try {
+            $patient = Patient::findOrFail($id);
+            $patient->delete();
 
-   
-        AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-        return redirect()->route('patients.index')->with('success', 'Patient set to inactive successfully');
+            AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-    } 
-    catch (ModelNotFoundException $e) {
-        abort(404, 'Patient not found or already inactive');
-    } catch (\Exception $e) {
-        Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
-        return redirect()->route('patients.index')->with('error', 'An error occurred while deactivating the patient.');
+            return response()->json(['success' => true, 'message' => 'Patient set to inactive successfully', 'patient' => $patient->fresh()]);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'Patient not found or already inactive'], 404);
+        } catch (\Exception $e) {
+            Log::error('Error in PatientController@deactivate: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred while deactivating the patient.'], 500);
+        }
     }
-}
-    
+
     // SET TO ACTIVE
     public function activate($id)
     {
@@ -172,16 +233,12 @@ public function deactivate($id)
             // Log patient activation
             AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
 
-            return response()->json(['success' => 'Patient recovered successfully']);
-        //         return redirect()->route('patients.index')->with('success', 'Patient recovered         │       
-// │        successfully');
-            }
-
-         catch (ModelNotFoundException $e) {
-            abort(404, 'Patient not found');
+            return response()->json(['success' => true, 'message' => 'Patient set to active successfully', 'patient' => $patient->fresh()]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'Patient not found'], 404);
         } catch (\Exception $e) {
             Log::error('Error in PatientController@activate: ' . $e->getMessage());
-            return redirect()->route('patients.index')->with('error', 'An error occurred while activating the patient.');
+            return response()->json(['success' => false, 'message' => 'An error occurred while activating the patient.'], 500);
         }
     }
 
@@ -192,7 +249,7 @@ public function deactivate($id)
     {
         // Retrieve the input and trim any whitespace
         $search_term = trim($request->input('input'));
-        $patients_query = Auth::user()->patients()->withTrashed(); 
+        $patients_query = Auth::user()->patients()->withTrashed();
 
         if (!empty($search_term)) {
             $patients_query->where(function ($query) use ($search_term) {

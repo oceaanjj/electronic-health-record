@@ -1,0 +1,2549 @@
+planning:
+  - keywords: ["patient will"]
+    alert: "Goals are often patient-centered. Start with 'Patient will...'."
+    severity: "INFO"
+    negate: true # This rule applies if "patient will" is NOT present
+  - keywords: ["smart"]
+    alert: "Ensure goals are Specific, Measurable, Achievable, Relevant, and Time-bound."
+    severity: "INFO"
+  - keywords: ["understand"]
+    alert: "Avoid 'understand' or 'know'. Use measurable verbs like 'demonstrate', 'state', or 'list'."
+    severity: "WARNING"
+  - keywords: ["frail", "acutely ill", "chronically ill"]
+    alert: "Plan: Establish and maintain energy conservation measures; cluster care and schedule rest periods."
+    severity: "warning"
+  - keywords: ["lethargic", "obtunded", "stuporous", "comatose"]
+    alert: "Plan: (EMERGENCY) Secure airway (prepare for intubation); initiate continuous neurological checks (q15 min) and notify senior clinician/code team immediately."
+    severity: "critical"
+  - keywords: ["clutchching chest", "labored breathing", "wheezing"]
+    alert: "Plan: (EMERGENCY) Apply supplemental oxygen (non-rebreather mask), place on cardiac/pulse-ox monitor, and prepare for immediate respiratory intervention (e.g., nebulizer, assisted ventilation)."
+    severity: "critical"
+  - keywords: ["wincing", "sweating", "protecting painful area", "fidgety"]
+    alert: "Plan: Assess pain using age-appropriate scale (e.g., FLACC, FACES, NIPS); administer analgesia as ordered within 30 minutes; non-pharmacologic comfort measures."
+    severity: "warning"
+  - keywords: ["flat affect", "sad affect", "poor eye contact", "psychomotor slowing"]
+    alert: "Plan: Initiate psychosocial assessment and consult Child Life Specialist or social work; encourage therapeutic play and caregiver interaction."
+    severity: "info"
+  - keywords: ["fruity odor", "acetone breath"]
+    alert: "Plan: (EMERGENCY) Obtain immediate point-of-care (POC) blood glucose; establish IV access for fluids and insulin infusion per DKA protocol."
+    severity: "critical"
+  - keywords: ["short stature", "loss of height"]
+    alert: "Plan: Obtain accurate height and weight, plot on growth chart; initiate nutritional screening and consult endocrinology/nutrition."
+    severity: "info"
+  - keywords: ["barrel chest", "increased AP diameter"]
+    alert: "Plan: Perform detailed respiratory assessment (auscultation, work of breathing); initiate pulmonary toilet/chest physiotherapy as appropriate."
+    severity: "warning"
+  - keywords: ["leans forward", "arms braced", "tripod position"]
+    alert: "Plan: (EMERGENCY) Do not leave patient unattended; allow position of comfort; apply oxygen and prepare for immediate respiratory support."
+    severity: "critical"
+  - keywords: ["alert", "active", "playful", "interactive", "smiling", "cooing", "babbles"]
+    alert: "Plan: Encourage age-appropriate developmental stimulation (e.g., play, caregiver interaction); provide positive reinforcement."
+    severity: "info"
+  - keywords: ["sleepy but arousable", "drowsy but awakens", "returns to sleep quickly"]
+    alert: "Plan: Cluster nursing care to allow for uninterrupted sleep cycles (at least 90 min); manage environmental stimuli (noise, light)."
+    severity: "info"
+  - keywords: ["irritable", "fussy", "difficult to soothe", "not acting like themself"]
+    alert: "Plan: Perform comprehensive pain assessment (FLACC/NIPS) and assess for other sources of discomfort (e.g., wet diaper, hunger, IV site); attempt non-pharmacologic soothing."
+    severity: "warning"
+  - keywords: ["inconsolable", "crying continuously", "cannot be comforted", "high-pitched cry"]
+    alert: "Plan: (EMERGENCY) Perform immediate neurological assessment (fontanelle, pupils, LOC); assess for severe pain or signs of increased ICP."
+    severity: "critical"
+  - keywords: ["lethargic", "listless", "drowsy", "difficult to arouse", "poor interaction"]
+    alert: "Plan: (EMERGENCY) Place on continuous pulse oximetry and cardiorespiratory monitor; obtain POC glucose; notify provider for immediate assessment."
+    severity: "critical"
+  - keywords: ["obtunded", "responds only to painful stimuli", "responds to pain"]
+    alert: "Plan: (EMERGENCY) Secure airway (e.g., jaw thrust), prepare for intubation; establish IV access; obtain POC glucose; notify code team/senior clinician."
+    severity: "critical"
+  - keywords: ["unresponsive", "unarousable", "comatose", "no response to pain"]
+    alert: "Plan: (EMERGENCY) Initiate BLS/PALS protocol; call for code team; secure airway and check for pulse immediately."
+    severity: "critical"
+  - keywords: ["confused", "disoriented", "not recognizing caregiver", "glassy-eyed stare"]
+    alert: "Plan: (EMERGENCY) Assess airway and oxygenation; obtain POC glucose; initiate neurological checks q15-30 min; identify and treat underlying cause (AEIOU-TIPS)."
+    severity: "critical"
+  - keywords: ["post-ictal", "postictal"]
+    alert: "Plan: Maintain patient in recovery position (side-lying) to protect airway; monitor vital signs and neurological status until return to baseline."
+    severity: "warning"
+  - keywords: ["parent concerned", "caregiver worried", "just not right"]
+    alert: "Plan: Acknowledge and validate caregiver concern; perform a full set of vital signs and focused assessment; escalate to provider."
+    severity: "warning"
+  - keywords: ["good muscle tone", "moving all extremities", "resists examination"]
+    alert: "Plan: Continue to monitor; provide age-appropriate developmental activities."
+    severity: "info"
+  - keywords: ["floppy", "limp", "poor muscle tone", "rag doll", "hypotonic"]
+    alert: "Plan: (EMERGENCY) Assess airway and respiratory effort (hypotonia can lead to obstruction); prepare for supportive care; notify provider for neurologic workup."
+    severity: "critical"
+  - keywords: ["rigid", "stiff", "hypertonic", "opisthotonus", "arched back"]
+    alert: "Plan: (EMERGENCY) Minimize handling and stimuli; assess for signs of meningitis or severe neurologic event; notify provider immediately."
+    severity: "critical"
+  - keywords: ["tripod position", "tripoding", "leaning forward", "arms braced"]
+    alert: "Plan: (EMERGENCY) Do not force patient to lie down; provide supplemental O2; prepare for immediate advanced airway management."
+    severity: "critical"
+  - keywords: ["sniffing position", "head tilted back"]
+    alert: "Plan: (EMERGENCY) Do not attempt to visualize airway with tongue blade; keep patient calm; notify provider and anesthesiology immediately for controlled intubation."
+    severity: "critical"
+  - keywords: ["guarding", "protecting painful area", "refuses to move a limb"]
+    alert: "Plan: Immobilize affected limb in position of comfort; assess neurovascular status distal to injury; administer pain medication as ordered."
+    severity: "warning"
+  - keywords: ["labored breathing", "working hard to breathe", "respiratory distress"]
+    alert: "Plan: (EMERGENCY) Elevate head of bed, apply oxygen, place on continuous pulse oximetry; prepare respiratory treatments (e.g., nebulizers)."
+    severity: "critical"
+  - keywords: ["nasal flaring"]
+    alert: "Plan: Elevate head of bed, assess O2 saturation, and perform focused respiratory assessment (auscultation) to determine cause."
+    severity: "warning"
+  - keywords: ["head bobbing"]
+    alert: "Plan: (EMERGENCY) Provide 100% oxygen via non-rebreather mask; prepare for non-invasive (CPAP/BiPAP) or invasive (intubation) ventilation."
+    severity: "critical"
+  - keywords: ["retractions", "subcostal retractions", "intercostal retractions"]
+    alert: "Plan: Place on continuous pulse oximetry, elevate head of bed; prepare appropriate respiratory intervention (e.g., suctioning, nebulizer)."
+    severity: "warning"
+  - keywords: ["supraclavicular retractions", "suprasternal retractions", "tracheal tug"]
+    alert: "Plan: (EMERGENCY) Provide supplemental oxygen; minimize agitation; prepare for immediate advanced airway support."
+    severity: "critical"
+  - keywords: ["seesaw breathing", "paradoxical breathing"]
+    alert: "Plan: (EMERGENCY) Initiate bag-mask ventilation (BMV); call for code team/immediate intubation; this is pre-arrest breathing."
+    severity: "critical"
+  - keywords: ["gasping", "agonal breathing"]
+    alert: "Plan: (EMERGENCY) This is not effective breathing. Initiate BLS/PALS protocol; begin bag-mask ventilation and chest compressions."
+    severity: "critical"
+  - keywords: ["pink", "well-perfused", "warm"]
+    alert: "Plan: Continue routine monitoring of perfusion and vital signs per unit policy."
+    severity: "info"
+  - keywords: ["pale", "pallor", "ashen"]
+    alert: "Plan: Assess capillary refill, heart rate, and BP; check most recent hemoglobin/hematocrit; ensure IV access."
+    severity: "warning"
+  - keywords: ["mottled", "mottling", "lacy pattern on skin"]
+    alert: "Plan: (EMERGENCY) Assess central vs. peripheral perfusion; obtain full vital signs; establish IV access and notify provider for suspected shock."
+    severity: "critical"
+  - keywords: ["cyanotic", "cyanosis", "blue lips", "blue nail beds", "central cyanosis"]
+    alert: "Plan: (EMERGENCY) Apply 100% oxygen immediately; assess airway and breathing; place on cardiorespiratory monitor."
+    severity: "critical"
+  - keywords: ["flushed", "bright red cheeks"]
+    alert: "Plan: Check temperature; assess for signs of sepsis (hypotension, tachycardia); review medication list for vasodilators."
+    severity: "warning"
+  - keywords: ["jaundiced", "jaundice", "yellow skin", "icteric sclera"]
+    alert: "Plan: (Infant) Initiate phototherapy protocol as ordered, ensure adequate hydration/feeding. (Child) Obtain liver function tests (LFTs) as ordered."
+    severity: "warning"
+  - keywords: ["well-hydrated", "moist mucous membranes"]
+    alert: "Plan: Maintain hydration; encourage oral fluids as tolerated or maintain IV fluid rate as ordered."
+    severity: "info"
+  - keywords: ["dry lips", "dry mucous membranes", "tacky mouth"]
+    alert: "Plan: Initiate oral rehydration therapy (ORT) if tolerated; monitor intake and output (I&O); provide oral care."
+    severity: "warning"
+  - keywords: ["sunken eyes", "no tears when crying", "absent tears"]
+    alert: "Plan: (EMERGENCY) Initiate IV fluid resuscitation with isotonic crystalloid (e.g., 20 mL/kg bolus) as ordered; monitor vital signs closely."
+    severity: "critical"
+  - keywords: ["sunken fontanelle", "depressed fontanelle"]
+    alert: "Plan: (EMERGENCY) Initiate IV fluid bolus (20 mL/kg isotonic crystalloid) as ordered; monitor for signs of shock."
+    severity: "critical"
+  - keywords: ["well-nourished", "well-developed"]
+    alert: "Plan: Continue to provide age-appropriate nutrition and developmental support."
+    severity: "info"
+  - keywords: ["thin", "underweight", "emaciated", "wasting"]
+    alert: "Plan: Initiate 3-day calorie count; consult nutritionist/dietitian; implement high-calorie nutritional plan as ordered."
+    severity: "warning"
+  - keywords: ["cachectic", "chronically ill appearance"]
+    alert: "Plan: Consult nutrition and social work/palliative care; focus on high-density nutrition and managing symptoms affecting intake."
+    severity: "warning"
+  - keywords: ["obese", "overweight"]
+    alert: "Plan: Provide nutritional counseling and resources for healthy eating habits; consult dietitian."
+    severity: "info"
+  - keywords: ["fecal odor on breath", "feculent breath"]
+    alert: "Plan: (EMERGENCY) Maintain NPO status; prepare for nasogastric (NG) tube placement for decompression; notify surgical team."
+    severity: "critical"
+  - keywords: ["well-groomed", "clean", "good hygiene"]
+    alert: "Plan: Encourage and facilitate continued self-care and hygiene practices."
+    severity: "info"
+  - keywords: ["poor hygiene", "disheveled", "malodorous"]
+    alert: "Plan: Assist with activities of daily living (ADLs), provide bathing and hygiene supplies; assess caregiver's ability to provide care."
+    severity: "info"
+  - keywords: ["dysmorphic features", "unusual facies", "low-set ears", "epicanthal folds"]
+    alert: "Plan: Document specific features observed; ensure developmental screening is performed; support family and await genetics consultation."
+    severity: "info"
+  - keywords: ["bruising", "multiple bruises", "bruises in various stages of healing"]
+    alert: "Plan: Document size, location, and color of all bruises; follow hospital protocol for suspected non-accidental trauma (NAT) screen."
+    severity: "warning"
+  - keywords: ["petechiae", "purpura", "non-blanching rash"]
+    alert: "Plan: (EMERGENCY) Institute droplet precautions (for suspected meningococcemia); establish IV access; prepare for immediate blood work (CBC, Coags, Blood Culture) and antibiotics."
+    severity: "critical"
+
+  # Rules based on: skin_condition.yaml
+  - keywords: ["cyanosis", "cyanotic", "blue skin"]
+    alert: "Plan: (EMERGENCY) Apply 100% oxygen, assess airway/breathing, place on continuous pulse oximetry, obtain full vital signs."
+    severity: "critical"
+  - keywords: ["jaundice", "yellow skin", "icteric sclera"]
+    alert: "Plan: (Neonate) Ensure adequate hydration and initiate phototherapy as ordered. (Child) Obtain LFTs and bilirubin levels as ordered."
+    severity: "warning"
+  - keywords: ["pallor", "pale skin"]
+    alert: "Plan: Assess vital signs (HR, BP, Cap Refill); obtain CBC as ordered; ensure IV access is available."
+    severity: "warning"
+  - keywords: ["decreased turgor", "tenting", "slow recoil"]
+    alert: "Plan: Initiate oral rehydration therapy (ORT); if not tolerated, prepare for IV fluid rehydration. Monitor I&O."
+    severity: "warning"
+  - keywords: ["petechiae", "purpura"]
+    alert: "Plan: (EMERGENCY) Place patient on bleeding precautions (no IM injections, soft toothbrush); establish IV access; obtain STAT CBC and coagulation panel as ordered."
+    severity: "critical"
+  - keywords: ["ecchymosis", "unexplained bruising"]
+    alert: "Plan: Place patient on bleeding precautions; obtain CBC with platelet count and coagulation panel as ordered; document location/size of bruising."
+    severity: "warning"
+  - keywords: ["macule", "patch"]
+    alert: "Plan: Document location, size, and color of lesion. No acute intervention required."
+    severity: "info"
+  - keywords: ["papule", "plaque"]
+    alert: "Plan: Document and monitor lesion; apply topical treatments (e.g., corticosteroids) as ordered for symptomatic (e.g., psoriatic) plaques."
+    severity: "info"
+  - keywords: ["vesicle", "bulla"]
+    alert: "Plan: Initiate contact precautions (if suspected herpes/varicella); keep lesions clean and dry; do not rupture blisters."
+    severity: "warning"
+  - keywords: ["pustule"]
+    alert: "Plan: Document lesion; maintain good skin hygiene; apply topical antibiotics as ordered if signs of infection are present."
+    severity: "info"
+  - keywords: ["nodule", "cyst"]
+    alert: "Plan: Assess for tenderness, redness, or fluctuance; prepare for incision and drainage (I&D) if abscess is suspected."
+    severity: "warning"
+  - keywords: ["ulcer", "erosion"]
+    alert: "Plan: Assess and document wound characteristics (size, depth, base, drainage); initiate wound care as ordered; implement pressure relief measures."
+    severity: "warning"
+  - keywords: ["actinic keratosis"]
+    alert: "Plan: Provide sun safety education to patient and caregivers; ensure dermatology follow-up is scheduled."
+    severity: "warning"
+  - keywords: ["basal cell carcinoma", "translucent papule", "telangiectasia"]
+    alert: "Plan: Document lesion characteristics (with photo if possible); ensure dermatology referral is placed for biopsy."
+    severity: "warning"
+  - keywords: ["squamous cell carcinoma", "firm red nodule", "crusted lesion"]
+    alert: "Plan: Document lesion; ensure urgent dermatology referral is placed for biopsy and management."
+    severity: "critical"
+  - keywords: ["asymmetry", "irregular border", "color variation", "diameter >6mm", "evolving"]
+    alert: "Plan: Document ABCDE criteria met; place urgent referral to dermatology for evaluation."
+    severity: "critical"
+  - keywords: ["clubbing", "nail clubbing"]
+    alert: "Plan: Perform comprehensive cardiopulmonary assessment; obtain O2 saturation; report finding to provider for workup."
+    severity: "warning"
+  - keywords: ["mottling", "mottled skin", "cutis marmorata", "lacy pattern"]
+    alert: "Plan: Assess central perfusion (cap refill, BP, LOC); if associated with shock, establish IV access and notify provider immediately."
+    severity: "warning"
+  - keywords: ["flushed", "erythema", "bright red skin"]
+    alert: "Plan: Check temperature; assess for signs of sepsis (hypotension, tachycardia); maintain hydration."
+    severity: "warning"
+  - keywords: ["harlequin color change"]
+    alert: "Plan: Document finding; provide reassurance and education to caregivers that this is a benign newborn phenomenon."
+    severity: "info"
+  - keywords: ["doughy skin"]
+    alert: "Plan: (EMERGENCY) Establish IV access for careful fluid resuscitation; place on cardiorespiratory monitor; obtain STAT labs (especially sodium) as ordered."
+    severity: "critical"
+  - keywords: ["dry skin", "xerosis"]
+    alert: "Plan: Educate caregiver on using emollients after bathing; ensure adequate hydration."
+    severity: "info"
+  - keywords: ["clammy skin", "diaphoresis", "cold sweat"]
+    alert: "Plan: (EMERGENCY) Obtain POC glucose; assess vital signs for shock; apply oxygen; establish IV access."
+    severity: "critical"
+  - keywords: ["wheal", "hive", "weal"]
+    alert: "Plan: Assess for airway involvement (stridor, wheezing); administer antihistamines as ordered; identify and remove potential allergen."
+    severity: "warning"
+  - keywords: ["burrow"]
+    alert: "Plan: Initiate contact precautions; prepare to apply scabicide treatment (e.g., permethrin) as ordered; educate family on treating contacts/environment."
+    severity: "warning"
+  - keywords: ["comedone", "blackhead", "whitehead"]
+    alert: "Plan: Provide education on skin hygiene and non-comedogenic products."
+    severity: "info"
+  - keywords: ["scale", "scaling", "flaking skin"]
+    alert: "Plan: Apply emollients to hydrate skin; apply topical medications (e.g., steroids, keratolytics) as ordered."
+    severity: "info"
+  - keywords: ["crust", "scab"]
+    alert: "Plan: Keep area clean; apply topical antibiotics (e.g., mupirocin) as ordered for suspected impetigo."
+    severity: "warning"
+  - keywords: ["fissure", "skin crack"]
+    alert: "Plan: Apply barrier creams or emollients to protect skin; assess for underlying cause (e.g., eczema, fungal infection)."
+    severity: "info"
+  - keywords: ["excoriation", "scratch mark"]
+    alert: "Plan: Keep fingernails short; apply anti-pruritic lotion (e.g., calamine) or oral antihistamines as ordered; investigate cause of itching."
+    severity: "info"
+  - keywords: ["atrophy", "thin skin"]
+    alert: "Plan: Implement skin protection measures to prevent tearing; review medication list for high-potency topical steroids."
+    severity: "info"
+  - keywords: ["lichenification"]
+    alert: "Plan: Apply topical steroids and emollients as ordered; cover area to prevent scratching; educate on itch-scratch cycle."
+    severity: "warning"
+  - keywords: ["scar"]
+    alert: "Plan: Document location and size of scar. No acute intervention required."
+    severity: "info"
+  - keywords: ["keloid"]
+    alert: "Plan: Assess for pain or pruritus; consult dermatology for management options (e.g., steroid injection, silicone sheets)."
+    severity: "info"
+  - keywords: ["cherry angioma"]
+    alert: "Plan: Document finding; reassure patient/caregiver of benign nature."
+    severity: "info"
+  - keywords: ["spider angioma", "spider nevus"]
+    alert: "Plan: Document number and location; report finding to provider for potential liver function workup if multiple lesions are present."
+    severity: "warning"
+  - keywords: ["erythema toxicum neonatorum", "newborn rash"]
+    alert: "Plan: Reassure caregivers that this is a benign, self-resolving rash and requires no treatment."
+    severity: "info"
+  - keywords: ["milia", "milk spots"]
+    alert: "Plan: Reassure caregivers that these are benign and will resolve spontaneously; educate not to "pop" them."
+    severity: "info"
+  - keywords: ["neonatal acne", "baby acne"]
+    alert: "Plan: Reassure caregivers this is benign; educate on gentle cleansing with water."
+    severity: "info"
+  - keywords: ["transient neonatal pustular melanosis"]
+    alert: "Plan: Reassure caregivers that this is a benign, self-resolving finding."
+    severity: "info"
+  - keywords: ["cradle cap", "infant seborrheic dermatitis"]
+    alert: "Plan: Educate caregivers on management (e.g., gentle shampooing, soft brush, emollients)."
+    severity: "info"
+  - keywords: ["miliaria", "heat rash", "prickly heat"]
+    alert: "Plan: Educate caregivers on keeping the infant cool and dry; advise loose-fitting cotton clothing."
+    severity: "info"
+  - keywords: ["mongolian spot", "congenital dermal melanocytosis", "slate gray nevus"]
+    alert: "Plan: Carefully document the location and size of the macule in the infant's chart to differentiate from future bruising/trauma."
+    severity: "info"
+  - keywords: ["salmon patch", "nevus simplex", "stork bite", "angel kiss"]
+    alert: "Plan: Reassure caregivers that this is a benign vascular marking that typically fades over time."
+    severity: "info"
+  - keywords: ["port-wine stain", "nevus flammeus"]
+    alert: "Plan: (If V1/facial) Place referral for ophthalmology (glaucoma screen) and neurology (Sturge-Weber). (General) Place referral to dermatology for laser treatment options."
+    severity: "warning"
+  - keywords: ["infantile hemangioma", "strawberry hemangioma", "strawberry mark"]
+    alert: "Plan: (If periocular/airway/large) Place urgent referral to dermatology for consideration of systemic therapy (e.g., propranolol). (General) Educate caregivers on growth/involution timeline."
+    severity: "info"
+  - keywords: ["cafe-au-lait macule", "cafe-au-lait spot"]
+    alert: "Plan: Count and measure all spots; if >= 6 spots > 5mm (prepubertal), report to provider for Neurofibromatosis Type 1 workup."
+    severity: "warning"
+  - keywords: ["congenital nevus", "congenital mole"]
+    alert: "Plan: Document size and location; place referral to dermatology for surveillance, especially for large/giant nevi."
+    severity: "warning"
+  - keywords: ["chickenpox", "varicella", "dewdrop on a rose petal"]
+    alert: "Plan: (EMERGENCY) Institute strict airborne and contact precautions; administer antiviral (e.g., acyclovir) as ordered; monitor for complications."
+    severity: "warning"
+  - keywords: ["measles", "rubeola", "Koplik spots"]
+    alert: "Plan: (EMERGENCY) Institute airborne precautions immediately; report to public health; provide supportive care (hydration, vitamin A as ordered)."
+    severity: "critical"
+  - keywords: ["rubella", "german measles"]
+    alert: "Plan: Institute droplet precautions; report to public health; assess vaccination status of all contacts (especially pregnant women)."
+    severity: "warning"
+  - keywords: ["fifth disease", "erythema infectiosum", "slapped cheek"]
+    alert: "Plan: Institute droplet precautions; notify high-risk contacts (e.g., pregnant women, sickle cell patients); provide supportive care."
+    severity: "warning"
+  - keywords: ["roseola infantum", "sixth disease", "exanthem subitum"]
+    alert: "Plan: Implement seizure precautions during febrile phase; educate caregivers on fever management and expected rash appearance."
+    severity: "warning"
+  - keywords: ["hand foot mouth", "HFM", "oral vesicles", "palmar rash", "plantar rash"]
+    alert: "Plan: Provide pain control (e.g., acetaminophen) for oral ulcers; encourage fluid intake (e.g., popsicles) to prevent dehydration."
+    severity: "warning"
+  - keywords: ["scarlet fever", "scarlatina"]
+    alert: "Plan: (EMERGENCY) Administer antibiotics (e.g., penicillin) as ordered to treat Group A Strep and prevent rheumatic fever."
+    severity: "critical"
+  - keywords: ["impetigo", "honey-colored crust"]
+    alert: "Plan: Initiate contact precautions; apply topical or administer oral antibiotics as ordered; educate on hygiene to prevent spread."
+    severity: "warning"
+  - keywords: ["molluscum contagiosum", "umbilicated papules"]
+    alert: "Plan: Educate caregivers that this is a benign, self-limited viral infection; discuss treatment options (e.g., cryotherapy, cantharidin) with provider if desired."
+    severity: "info"
+  - keywords: ["cellulitis"]
+    alert: "Plan: (EMERGENCY) Establish IV access for antibiotics as ordered; elevate the affected limb; mark border of erythema to monitor spread."
+    severity: "critical"
+  - keywords: ["tinea corporis", "ringworm"]
+    alert: "Plan: Apply topical antifungal cream as ordered; educate on hygiene (not sharing towels) and completing treatment course."
+    severity: "info"
+  - keywords: ["tinea capitis", "scalp ringworm", "kerion"]
+    alert: "Plan: Administer oral antifungal medication (e.g., griseofulvin) as ordered; educate family on use of antifungal shampoo."
+    severity: "warning"
+  - keywords: ["tinea pedis", "athlete's foot"]
+    alert: "Plan: Apply topical antifungal; educate on keeping feet dry, wearing cotton socks, and using shower shoes in public showers."
+    severity: "info"
+  - keywords: ["scabies", "burrows"]
+    alert: "Plan: Initiate contact precautions; apply scabicide (e.g., permethrin) as ordered from head to toe; ensure all contacts and linens are treated."
+    severity: "warning"
+  - keywords: ["head lice", "pediculosis capitis", "nits"]
+    alert: "Plan: Apply pediculicide shampoo as ordered; educate caregiver on nit combing and environmental cleaning (bedding, brushes)."
+    severity: "info"
+  - keywords: ["atopic dermatitis", "eczema"]
+    alert: "Plan: Educate on "soak and seal" (emollient after bath); apply topical steroids as ordered to flares; keep fingernails short."
+    severity: "warning"
+  - keywords: ["contact dermatitis", "poison ivy"]
+    alert: "Plan: Remove/wash off offending agent; apply topical steroids as ordered; provide anti-pruritic measures (e.g., cool compress, calamine)."
+    severity: "warning"
+  - keywords: ["diaper dermatitis", "diaper rash"]
+    alert: "Plan: Educate on frequent diaper changes, gentle cleaning, and application of a barrier cream (e.g., zinc oxide) with every change."
+    severity: "info"
+  - keywords: ["hives", "urticaria", "wheals"]
+    alert: "Plan: (EMERGENCY if airway involved) Assess for stridor, wheezing, or dyspnea. (Non-airway) Administer antihistamines as ordered."
+    severity: "warning"
+  - keywords: ["psoriasis", "silvery scale"]
+    alert: "Plan: Apply topical steroids and emollients as ordered; initiate dermatology referral for long-term management plan."
+    severity: "warning"
+  - keywords: ["keratosis pilaris", "chicken skin"]
+    alert: "Plan: Reassure caregiver of benign nature; educate on use of emollients and gentle exfoliants (e.g., lactic acid lotion)."
+    severity: "info"
+  - keywords: ["pityriasis rosea", "herald patch", "christmas tree rash"]
+    alert: "Plan: Reassure patient/caregiver that this is a benign, self-limiting (6-8 weeks) rash; provide anti-pruritic measures if itchy."
+    severity: "info"
+  - keywords: ["pyogenic granuloma"]
+    alert: "Plan: Apply pressure if bleeding; keep clean; ensure dermatology referral is in place for removal."
+    severity: "warning"
+  - keywords: ["dermatofibroma"]
+    alert: "Plan: Document finding; reassure patient/caregiver of benign nature."
+    severity: "info"
+  - keywords: ["alopecia areata"]
+    alert: "Plan: Provide emotional support; consult dermatology for treatment options (e.G., topical steroids)."
+    severity: "warning"
+  - keywords: ["trichotillomania"]
+    alert: "Plan: Provide a supportive, non-judgmental environment; consult Child and Adolescent Psychiatry or psychology."
+    severity: "warning"
+  - keywords: ["paronychia"]
+    alert: "Plan: Administer antibiotics as ordered; educate on warm soaks; if fluctuant, prepare for I&D."
+    severity: "warning"
+  - keywords: ["onycholysis"]
+    alert: "Plan: Keep nail trimmed short and dry; investigate underlying cause (e.g., trauma, psoriasis)."
+    severity: "info"
+  - keywords: ["leukonychia", "white spots on nails"]
+    alert: "Plan: Reassure patient/caregiver this is benign, likely from minor trauma."
+    severity: "info"
+  - keywords: ["Beau's lines"]
+    alert: "Plan: Reassure patient this is a sign of a *past* significant illness; no acute intervention needed."
+    severity: "info"
+  - keywords: ["acanthosis nigricans"]
+    alert: "Plan: Obtain POC glucose; consult nutrition/endocrinology; provide education on link to insulin resistance."
+    severity: "warning"
+  - keywords: ["erythema nodosum"]
+    alert: "Plan: Provide pain management (e.g., NSAIDs, rest); report to provider for workup of underlying systemic illness."
+    severity: "warning"
+  - keywords: ["Gottron's papules", "heliotrope rash"]
+    alert: "Plan: (EMERGENCY) Notify provider immediately; obtain STAT labs (e.g., CK, LFTs) as ordered; place urgent consult to Rheumatology."
+    severity: "critical"
+  - keywords: ["malar rash", "butterfly rash"]
+    alert: "Plan: (EMERGENCY) Notify provider; obtain labs (e.g., ANA, UA) as ordered; place urgent consult to Rheumatology."
+    severity: "critical"
+  - keywords: ["sclerodactyly", "tight finger skin"]
+    alert: "Plan: Protect fingers from cold/trauma; apply emollients; consult Rheumatology for management."
+    severity: "warning"
+
+  # Rules based on: eye_condition.yaml
+  - keywords: ["sudden visual loss", "sudden vision loss", "acute vision loss"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; place immediate call to ophthalmology for emergency evaluation."
+    severity: "critical"
+  - keywords: ["blurry vision", "blurred vision", "trouble focusing", "difficulty seeing far", "myopia"]
+    alert: "Plan: Ensure patient is seated safely; place referral for routine vision screening."
+    severity: "info"
+  - keywords: ["difficulty reading", "holds objects close", "trouble seeing near", "hyperopia"]
+    alert: "Plan: Ensure patient has appropriate reading materials/light; place referral for routine vision screening."
+    severity: "info"
+  - keywords: ["hemianopsia", "quadrantanopsia", "field cut", "loss of peripheral vision", "tunnel vision"]
+    alert: "Plan: (EMERGENCY) Implement fall precautions; approach patient from their intact visual field; place urgent consult to neurology/ophthalmology."
+    severity: "critical"
+  - keywords: ["flashing lights", "photopsia", "seeing flashes"]
+    alert: "Plan: (EMERGENCY) Place patient on bed rest; reduce eye movement; place urgent call to ophthalmology."
+    severity: "critical"
+  - keywords: ["floaters", "seeing spots", "cobwebs in vision"]
+    alert: "Plan: Place referral to ophthalmology for dilated exam to rule out retinal tear."
+    severity: "warning"
+  - keywords: ["double vision", "diplopia"]
+    alert: "Plan: (EMERGENCY) Implement fall precautions; consider eye patch for comfort; place urgent consult to neurology/ophthalmology."
+    severity: "critical"
+  - keywords: ["exophthalmos", "proptosis", "bulging eyes", "stare"]
+    alert: "Plan: Administer lubricating eye drops/ointment as ordered; monitor for incomplete eye closure (lagophthalmos)."
+    severity: "warning"
+  - keywords: ["ptosis", "droopy eyelid", "drooping eyelid"]
+    alert: "Plan: (If acute) Notify provider for immediate neurologic assessment. (If chronic) Assess for visual field obstruction."
+    severity: "warning"
+  - keywords: ["lid retraction", "scleral show"]
+    alert: "Plan: Administer lubricating eye drops as ordered to prevent exposure keratopathy."
+    severity: "warning"
+  - keywords: ["ectropion", "eyelid turned out"]
+    alert: "Plan: Administer lubricating eye drops; educate on proper lid hygiene."
+    severity: "info"
+  - keywords: ["entropion", "eyelid turned in"]
+    alert: "Plan: Administer lubricating ointment; place consult to ophthalmology for definitive management."
+    severity: "warning"
+  - keywords: ["sty", "hordeolum", "pimple on eyelid"]
+    alert: "Plan: Educate on applying warm compresses to the affected eye for 10-15 minutes, 4 times a day."
+    severity: "info"
+  - keywords: ["chalazion", "eyelid bump", "painless eyelid lump"]
+    alert: "Plan: Educate on applying warm compresses; place referral to ophthalmology if persistent or affecting vision."
+    severity: "info"
+  - keywords: ["xanthelasma", "yellow plaque on eyelid"]
+    alert: "Plan: Report finding to provider; anticipate order for fasting lipid panel."
+    severity: "info"
+  - keywords: ["swollen eyelids", "puffy eyelids", "blepharitis", "periorbital edema"]
+    alert: "Plan: (If systemic) Monitor daily weights and I&O. (If local/blepharitis) Educate on lid hygiene/warm compresses."
+    severity: "warning"
+  - keywords: ["excessive tearing", "epiphora", "watery eyes"]
+    alert: "Plan: (Infant) Educate caregiver on nasolacrimal duct massage. (Child/Adult) Assess for underlying irritation."
+    severity: "info"
+  - keywords: ["dacryocystitis", "swelling near tear duct", "inflammation of lacrimal sac"]
+    alert: "Plan: Administer antibiotics as ordered; apply warm compresses; educate on gentle massage."
+    severity: "warning"
+  - keywords: ["conjunctivitis", "pink eye", "red eye", "injected conjunctiva"]
+    alert: "Plan: Initiate contact precautions; educate on hand hygiene; administer antibiotic/antihistamine eye drops as ordered."
+    severity: "warning"
+  - keywords: ["icteric sclera", "yellow eyes", "scleral icterus"]
+    alert: "Plan: (Neonate) Initiate phototherapy as ordered. (Child) Obtain LFTs and bilirubin levels as ordered."
+    severity: "warning"
+  - keywords: ["subconjunctival hemorrhage", "blood spot on eye"]
+    alert: "Plan: Reassure patient/caregiver that this is benign and will resolve in 1-2 weeks. (Infant w/ trauma) Report to provider."
+    severity: "info"
+  - keywords: ["pinguecula"]
+    alert: "Plan: Reassure patient of benign nature; educate on use of artificial tears if irritated."
+    severity: "info"
+  - keywords: ["episcleritis"]
+    alert: "Plan: Administer lubricating drops for comfort; report to provider for consideration of NSAIDs."
+    severity: "warning"
+  - keywords: ["anisocoria", "unequal pupils"]
+    alert: "Plan: (If acute) Notify provider for immediate neurologic assessment. (If chronic) Document finding."
+    severity: "warning"
+  - keywords: ["fixed dilated pupil", "blown pupil", "unilateral mydriasis"]
+    alert: "Plan: (EMERGENCY) Call for immediate provider/neurosurgery consult; prepare for emergent head CT and ICP management."
+    severity: "critical"
+  - keywords: ["miosis", "pinpoint pupils", "constricted pupils"]
+    alert: "Plan: (EMERGENCY) Assess respiratory status; prepare to administer naloxone (if opioid overdose suspected); notify provider immediately."
+    severity: "critical"
+  - keywords: ["mydriasis", "dilated pupils"]
+    alert: "Plan: (EMERGENCY) Assess LOC and respiratory status; notify provider immediately for neurologic workup."
+    severity: "critical"
+  - keywords: ["irregular pupil", "abnormal pupil shape"]
+    alert: "Plan: Document finding; ask about history of eye trauma or surgery."
+    severity: "info"
+  - keywords: ["leukocoria", "white pupil", "white reflex", "cat's eye reflex"]
+    alert: "Plan: (EMERGENCY) Place immediate, urgent referral to ophthalmology; provide support to family."
+    severity: "critical"
+  - keywords: ["strabismus", "misaligned eyes", "crossed eyes", "wandering eye"]
+    alert: "Plan: Place referral to pediatric ophthalmology for evaluation and management (e.g., patching, glasses)."
+    severity: "warning"
+  - keywords: ["esotropia", "eyes turn in"]
+    alert: "Plan: Place referral to pediatric ophthalmology for amblyopia screening."
+    severity: "warning"
+  - keywords: ["exotropia", "eyes turn out"]
+    alert: "Plan: Place referral to pediatric ophthalmology for amblyopia screening."
+    severity: "warning"
+  - keywords: ["nystagmus", "jiggly eyes", "dancing eyes"]
+    alert: "Plan: Implement fall precautions; place referral to ophthalmology and neurology for workup."
+    severity: "warning"
+  - keywords: ["lid lag"]
+    alert: "Plan: Administer lubricating eye drops; report finding to provider for thyroid function workup."
+    severity: "warning"
+  - keywords: ["cataract", "lens opacity", "cloudy lens"]
+    alert: "Plan: (EMERGENCY) Place urgent referral to pediatric ophthalmology for surgical evaluation."
+    severity: "critical"
+  - keywords: ["corneal abrasion", "scratched cornea", "foreign body sensation"]
+    alert: "Plan: Administer antibiotic ointment and analgesic drops as ordered; educate on not rubbing the eye; schedule follow-up."
+    severity: "warning"
+  - keywords: ["corneal opacity", "cloudy cornea"]
+    alert: "Plan: (EMERGENCY) Place immediate, urgent referral to ophthalmology for pressure check."
+    severity: "critical"
+  - keywords: ["arcus senilis"]
+    alert: "Plan: (Child) Report finding to provider; anticipate order for fasting lipid panel."
+    severity: "info"
+  - keywords: ["papilledema", "swollen optic disc", "blurred disc margins"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; initiate neurological checks; prepare for emergent head imaging (CT/MRI)."
+    severity: "critical"
+  - keywords: ["increased cup-to-disc ratio", "glaucomatous cupping", "large optic cup"]
+    alert: "Plan: Place referral to ophthalmology for full glaucoma workup."
+    severity: "warning"
+  - keywords: ["optic atrophy", "pale optic disc"]
+    alert: "Plan: Place referral to ophthalmology and neurology for workup of optic nerve damage."
+    severity: "warning"
+  - keywords: ["AV nicking", "arteriovenous nicking"]
+    alert: "Plan: Ensure accurate blood pressure monitoring; provide education on hypertension management."
+    severity: "warning"
+  - keywords: ["copper wiring", "silver wiring"]
+    alert: "Plan: Implement strict blood pressure control as ordered; educate on adherence to antihypertensive medication."
+    severity: "warning"
+  - keywords: ["retinal hemorrhages", "dot and blot hemorrhages", "flame hemorrhages"]
+    alert: "Plan: (EMERGENCY - Infant) Initiate hospital protocol for suspected non-accidental trauma. (Child/Adult) Ensure strict blood glucose/BP control; place ophthalmology referral."
+    severity: "critical"
+  - keywords: ["cotton wool spots", "soft exudates"]
+    alert: "Plan: Implement strict blood glucose and blood pressure control as ordered."
+    severity: "warning"
+  - keywords: ["hard exudates"]
+    alert: "Plan: Implement strict blood glucose control as ordered; ensure ophthalmology follow-up."
+    severity: "warning"
+  - keywords: ["microaneurysms"]
+    alert: "Plan: Implement strict blood glucose control as ordered; ensure ophthalmology follow-up."
+    severity: "warning"
+
+  # Rules based on: oral_condition.yaml
+  - keywords: ["blue lips", "cyanotic lips", "blue gums", "blue tongue"]
+    alert: "Plan: (EMERGENCY) Apply 100% oxygen; assess airway and breathing; place on continuous pulse oximetry."
+    severity: "critical"
+  - keywords: ["pale lips", "lip pallor"]
+    alert: "Plan: Assess vital signs and capillary refill; obtain CBC as ordered."
+    severity: "warning"
+  - keywords: ["cracked lips", "dry lips", "fissured lips"]
+    alert: "Plan: Encourage oral fluid intake; apply lip balm; provide regular oral care."
+    severity: "info"
+  - keywords: ["angular cheilitis", "cracks at mouth corners", "angular stomatitis"]
+    alert: "Plan: Apply topical antifungal/barrier cream as ordered; consult nutrition for potential vitamin deficiency."
+    severity: "info"
+  - keywords: ["herpes labialis", "fever blister", "cold sore"]
+    alert: "Plan: Educate on hygiene (hand washing); administer antiviral medication as ordered."
+    severity: "warning"
+  - keywords: ["swollen lips", "lip angioedema"]
+    alert: "Plan: (EMERGENCY) Assess for stridor or respiratory distress; prepare for epinephrine and airway support; stop offending agent (e.g., medication)."
+    severity: "critical"
+  - keywords: ["cheilitis", "lip inflammation", "lip scaling"]
+    alert: "Plan: Apply barrier ointment; remove any irritants; consult dermatology if persistent."
+    severity: "warning"
+  - keywords: ["ulcer on lip", "lip ulcer", "non-healing lip lesion"]
+    alert: "Plan: (EMERGENCY) Place urgent referral to dermatology or ENT for biopsy."
+    severity: "critical"
+  - keywords: ["microstomia", "small mouth opening"]
+    alert: "Plan: Consult PT/OT for stretching exercises; ensure adequate nutritional intake."
+    severity: "info"
+  - keywords: ["fish mouth appearance", "smooth philtrum", "thin upper lip"]
+    alert: "Plan: Document findings; place referral for developmental assessment and genetics consult."
+    severity: "info"
+  - keywords: ["dry mucosa", "tacky oral mucosa"]
+    alert: "Plan: Initiate oral rehydration therapy (ORT) or IV fluids as ordered; provide frequent oral care."
+    severity: "warning"
+  - keywords: ["bright red mucosa", "erythematous oral mucosa"]
+    alert: "Plan: Provide symptomatic relief (e.g., saline rinses); remove potential irritants (e.g., harsh mouthwash)."
+    severity: "info"
+  - keywords: ["white plaques on mucosa", "leukoplakia", "white patch cannot be scraped off"]
+    alert: "Plan: (EMERGENCY) Place urgent referral to ENT/oral surgery for biopsy."
+    severity: "critical"
+  - keywords: ["white curd-like plaques", "thrush", "oral candidiasis"]
+    alert: "Plan: Administer topical or systemic antifungal (e.g., nystatin) as ordered; educate on hygiene (e.g., cleaning bottles, inhaler spacers)."
+    severity: "warning"
+  - keywords: ["ulcer on buccal mucosa", "aphthous ulcer", "canker sore"]
+    alert: "Plan: Provide symptomatic relief (e.g., magic mouthwash as ordered); educate on avoiding triggers (e.g., acidic foods)."
+    severity: "info"
+  - keywords: ["Koplik spots", "white grains on red base"]
+    alert: "Plan: (EMERGENCY) Institute airborne precautions immediately; report to public health; monitor for impending rash and respiratory complications."
+    severity: "critical"
+  - keywords: ["petechiae on palate", "palatal petechiae"]
+    alert: "Plan: Obtain throat culture as ordered (for Strep); assess for lymphadenopathy (for mono); obtain CBC."
+    severity: "warning"
+  - keywords: ["ulcerative lesions with gray membrane", "necrotic gingivostomatitis"]
+    alert: "Plan: (EMERGENCY) Administer antibiotics as ordered; provide gentle but thorough oral care; ensure adequate hydration and nutrition."
+    severity: "critical"
+  - keywords: ["burned mucosa", "white slough oral burn"]
+    alert: "Plan: (EMERGENCY) Maintain NPO; notify provider and poison control; assess for airway compromise."
+    severity: "critical"
+  - keywords: ["pigmented oral mucosa", "melanotic macule"]
+    alert: "Plan: Document finding; (if generalized) anticipate orders for endocrine workup (e.g., cortisol levels)."
+    severity: "info"
+  - keywords: ["bleeding gums", "gingivitis", "red swollen gums"]
+    alert: "Plan: Educate on gentle brushing with a soft-bristle toothbrush and regular flossing."
+    severity: "info"
+  - keywords: ["spongy bleeding gums", "vitamin C deficiency"]
+    alert: "Plan: Consult dietitian for nutritional assessment; administer vitamin C supplements as ordered."
+    severity: "warning"
+  - keywords: ["hyperplastic gums", "gingival overgrowth"]
+    alert: "Plan: Review medication list with provider; educate on meticulous oral hygiene; consult dentistry."
+    severity: "warning"
+  - keywords: ["bluish gum line", "Burton line", "lead poisoning sign"]
+    alert: "Plan: (EMERGENCY) Notify provider for immediate blood lead level testing; consult social work/public health for environmental assessment."
+    severity: "critical"
+  - keywords: ["ulcerative gingivitis", "bleeding necrotic gums"]
+    alert: "Plan: Administer antibiotics and analgesics as ordered; provide gentle saline rinses; ensure adequate nutrition."
+    severity: "warning"
+  - keywords: ["receding gums", "tooth root exposure"]
+    alert: "Plan: Educate on proper brushing technique; ensure routine dental follow-up."
+    severity: "info"
+  - keywords: ["gingival mass", "epulis", "gum tumor"]
+    alert: "Plan: Place referral to oral surgery or dentistry for evaluation and potential excision."
+    severity: "warning"
+  - keywords: ["bleeding gums during pregnancy", "pregnancy gingivitis"]
+    alert: "Plan: Reassure patient this is common; educate on meticulous, gentle oral hygiene; schedule routine dental cleaning."
+    severity: "info"
+  - keywords: ["ulcerated gum lesion unhealed", "indurated gum ulcer"]
+    alert: "Plan: (EMERGENCY) Place urgent referral to oral surgery/ENT for biopsy."
+    severity: "critical"
+  - keywords: ["gingival pallor", "pale gums"]
+    alert: "Plan: Assess for other signs of anemia; obtain CBC as ordered."
+    severity: "warning"
+  - keywords: ["dental caries", "tooth decay"]
+    alert: "Plan: Place referral to dentistry for restoration; educate on diet (reduce sugar) and hygiene (fluoride toothpaste)."
+    severity: "info"
+  - keywords: ["brown mottled enamel", "fluorosis"]
+    alert: "Plan: Assess source of fluoride (e.g., well water); place referral to dentistry."
+    severity: "info"
+  - keywords: ["chalky white enamel spots", "early caries lesion"]
+    alert: "Plan: Educate on fluoride toothpaste use and reducing sugar intake; place referral to dentistry."
+    severity: "info"
+  - keywords: ["loose teeth", "tooth mobility"]
+    alert: "Plan: Place referral to dentistry for periodontal assessment."
+    severity: "warning"
+  - keywords: ["missing teeth", "edentulous"]
+    alert: "Plan: Consult nutrition regarding soft diet; consult dentistry for restorative options."
+    severity: "info"
+  - keywords: ["natal teeth", "teeth at birth"]
+    alert: "Plan: Place referral to pediatric dentistry to assess tooth mobility and risk of aspiration."
+    severity: "warning"
+  - keywords: ["delayed eruption", "late tooth eruption"]
+    alert: "Plan: Report finding to provider for potential endocrine/nutritional workup."
+    severity: "warning"
+  - keywords: ["malocclusion", "crooked teeth", "crowding"]
+    alert: "Plan: Place referral to orthodontics for evaluation."
+    severity: "info"
+  - keywords: ["tooth discoloration", "yellow teeth", "tetracycline staining"]
+    alert: "Plan: Reassure patient (if tetracycline); consult dentistry for cosmetic options."
+    severity: "info"
+  - keywords: ["fractured tooth", "broken tooth", "tooth avulsion"]
+    alert: "Plan: (EMERGENCY) (Avulsion) Place tooth in milk or saline, see dentist immediately. (Fracture) Administer pain relief, see dentist."
+    severity: "critical"
+  - keywords: ["red swollen tongue", "strawberry tongue"]
+    alert: "Plan: (EMERGENCY) Report to provider immediately; anticipate orders for antibiotics (for Scarlet Fever) or IVIG (for Kawasaki)."
+    severity: "critical"
+  - keywords: ["smooth glossy tongue", "atrophic glossitis"]
+    alert: "Plan: Consult nutrition; anticipate orders for labs (B12, folate, iron) and supplementation."
+    severity: "warning"
+  - keywords: ["geographic tongue", "migratory glossitis"]
+    alert: "Plan: Reassure patient/caregiver this is a benign, harmless condition."
+    severity: "info"
+  - keywords: ["fissured tongue", "scrotal tongue"]
+    alert: "Plan: Reassure patient this is benign; educate on brushing the tongue to remove trapped debris."
+    severity: "info"
+  - keywords: ["white patches side of tongue", "hairy leukoplakia"]
+    alert: "Plan: Report finding to provider; anticipate order for HIV testing."
+    severity: "warning"
+  - keywords: ["black hairy tongue", "elongated papillae"]
+    alert: "Plan: Educate patient on tongue brushing/scraping; review medications (e.g., recent antibiotics)."
+    severity: "info"
+  - keywords: ["macroglossia", "enlarged tongue"]
+    alert: "Plan: Assess for airway obstruction (stridor, snoring); position to maintain patent airway; report to provider for workup."
+    severity: "warning"
+  - keywords: ["tongue deviation", "deviated tongue"]
+    alert: "Plan: (EMERGENCY) Notify provider for immediate neurologic assessment; assess swallowing and protect airway."
+    severity: "critical"
+  - keywords: ["ulcer on tongue", "indurated tongue lesion", "non-healing tongue sore"]
+    alert: "Plan: (EMERGENCY) Place urgent referral to ENT/oral surgery for biopsy."
+    severity: "critical"
+  - keywords: ["coated tongue", "white film on tongue"]
+    alert: "Plan: Encourage fluid intake and oral hygiene (tongue brushing)."
+    severity: "info"
+  - keywords: ["red throat", "sore throat", "pharyngitis"]
+    alert: "Plan: Provide symptomatic relief (e.g., analgesics, warm saline rinses); obtain throat culture as ordered."
+    severity: "warning"
+  - keywords: ["tonsillar exudate", "white patches tonsils", "exudative pharyngitis"]
+    alert: "Plan: Obtain rapid strep test/throat culture as ordered; administer antibiotics if prescribed."
+    severity: "warning"
+  - keywords: ["asymmetric tonsil swelling", "uvular deviation", "hot potato voice"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; establish IV access; place urgent consult to ENT for aspiration or drainage."
+    severity: "critical"
+  - keywords: ["gray membrane throat", "diphtheritic membrane"]
+    alert: "Plan: (EMERGENCY) Institute droplet precautions; notify provider and infectious disease immediately; prepare to administer antitoxin."
+    severity: "critical"
+  - keywords: ["palatal ulcer", "roof of mouth sore"]
+    alert: "Plan: Provide symptomatic pain relief; consult provider for evaluation if persistent."
+    severity: "warning"
+  - keywords: ["high arched palate"]
+    alert: "Plan: Document finding; assess for feeding or speech difficulties; report to provider."
+    severity: "info"
+  - keywords: ["cleft palate", "palatal defect"]
+    alert: "Plan: (EMERGENCY) Consult neonatology/surgery; initiate feeding protocol with specialized bottles (e.g., Haberman)."
+    severity: "critical"
+  - keywords: ["tonsillar hypertrophy", "enlarged tonsils"]
+    alert: "Plan: Assess for history of snoring, apnea, or daytime sleepiness; place referral to ENT if symptomatic."
+    severity: "warning"
+  - keywords: ["post-tonsillectomy bleeding", "fresh blood in mouth"]
+    alert: "Plan: (EMERGENCY) Turn patient to side; keep NPO; notify surgeon immediately; prepare for return to operating room."
+    severity: "critical"
+  - keywords: ["palatal petechiae after cough", "minor trauma from suction"]
+    alert: "Plan: Document finding; reassure patient this is benign trauma."
+    severity: "info"
+  - keywords: ["foul breath", "halitosis"]
+    alert: "Plan: Encourage oral hygiene; assess for underlying cause (e.g., caries, pharyngitis, GERD)."
+    severity: "info"
+  - keywords: ["acetone odor", "fruity breath"]
+    alert: "Plan: (EMERGENCY) Obtain immediate POC blood glucose; establish IV access for DKA protocol."
+    severity: "critical"
+  - keywords: ["ammonia odor breath", "uremic fetor"]
+    alert: "Plan: Report to provider; anticipate orders for renal function tests (BUN, Creatinine)."
+    severity: "warning"
+  - keywords: ["musty sweet odor", "hepatic fetor"]
+    alert: "Plan: Report to provider; anticipate orders for LFTs; implement safety measures for potential hepatic encephalopathy."
+    severity: "warning"
+  - keywords: ["putrid odor", "anaerobic infection smell"]
+    alert: "Plan: (EMERGENCY) Report to provider; anticipate orders for chest x-ray (lung abscess) or CT scan."
+    severity: "critical"
+  - keywords: ["drooling", "sialorrhea"]
+    alert: "Plan: (EMERGENCY) Do not examine throat; allow position of comfort; notify provider/anesthesia immediately for airway assessment."
+    severity: "critical"
+  - keywords: ["dry mouth", "xerostomia"]
+    alert: "Plan: Provide frequent oral care; offer sips of water or sugar-free lozenges; review medication list for causative agents."
+    severity: "warning"
+  - keywords: ["salivary gland swelling", "parotid swelling"]
+    alert: "Plan: Institute droplet precautions (if mumps suspected); apply warm compresses; provide analgesics as ordered."
+    severity: "warning"
+  - keywords: ["purulent discharge from Stensen duct", "salivary duct pus"]
+    alert: "Plan: (EMERGENCY) Administer IV antibiotics as ordered; encourage hydration and sialogogues (e.g., lemon drops)."
+    severity: "critical"
+  - keywords: ["pain before meals relieved after", "salivary colic"]
+    alert: "Plan: Encourage hydration; apply warm compresses; provide analgesics as ordered."
+    severity: "info"
+  - keywords: ["ulcerated lip lesion", "bleeding lip nodule"]
+    alert: "Plan: Apply pressure for bleeding; keep clean; ensure dermatology/oral surgery referral."
+    severity: "warning"
+  - keywords: ["pigmented macule lip", "dark spot lower lip"]
+    alert: "Plan: Document finding for surveillance; reassure patient of benign nature."
+    severity: "info"
+  - keywords: ["crusting lip ulcer", "scabbed lesion on lip"]
+    alert: "Plan: Educate on hand hygiene; apply topical antivirals as ordered."
+    severity: "info"
+  - keywords: ["painful lip fissure", "ulcer at vermilion border"]
+    alert: "Plan: Apply barrier ointment; consult nutrition for potential deficiency."
+    severity: "info"
+  - keywords: ["blistering lip lesion", "vesicular eruption on lip"]
+    alert: "Plan: Initiate contact precautions; administer antivirals as ordered."
+    severity: "warning"
+  - keywords: ["lip swelling after new medication", "angioedema medication reaction"]
+    alert: "Plan: (EMERGENCY) Stop medication; assess airway; prepare epinephrine; notify provider immediately."
+    severity: "critical"
+  - keywords: ["lip laceration", "traumatic mouth injury"]
+    alert: "Plan: Assess for tooth damage; ensure wound is cleaned; consult provider for repair (especially if vermilion border is crossed)."
+    severity: "warning"
+  - keywords: ["crusted yellow lesion on lip", "impetigo on lip"]
+    alert: "Plan: Initiate contact precautions; apply topical antibiotics as ordered; educate on hygiene."
+    severity: "warning"
+  - keywords: ["white thickened lip patch", "leukoplakia on lip"]
+    alert: "Plan: (EMERGENCY) Place urgent referral for biopsy."
+    severity: "critical"
+  - keywords: ["lip fissure in newborn", "cleft lip"]
+    alert: "Plan: (EMERGENCY) Initiate feeding protocol with specialized bottle; consult surgical team; provide caregiver support."
+    severity: "critical"
+  - keywords: ["ulcer with red border on buccal mucosa", "minor aphthous ulcer"]
+    alert: "Plan: Provide symptomatic relief (e.g., topical anesthetic); educate on avoiding triggers."
+    severity: "info"
+  - keywords: ["multiple oral ulcers", "major aphthae"]
+    alert: "Plan: Provide pain management; consult provider for systemic workup (e.g., Behçet's)."
+    severity: "warning"
+  - keywords: ["white lacy pattern on mucosa", "reticular white streaks"]
+    alert: "Plan: Provide symptomatic relief; place referral to dermatology/oral medicine."
+    severity: "warning"
+  - keywords: ["grayish pseudomembrane", "membranous stomatitis"]
+    alert: "Plan: (EMERGENCY) Institute droplet precautions; notify infectious disease; prepare for antitoxin."
+    severity: "critical"
+  - keywords: ["vesicular eruption on oral mucosa", "painful oral vesicles"]
+    alert: "Plan: Provide pain control and encourage fluid intake (e.g., popsicles) to prevent dehydration."
+    severity: "warning"
+  - keywords: ["painful hemorrhagic vesicles", "oral erythema multiforme"]
+    alert: "Plan: (EMERGENCY) Stop potential offending drugs; provide aggressive pain control and oral care; notify provider/dermatology."
+    severity: "critical"
+  - keywords: ["mucosal ulcer with yellow base", "necrotic oral ulcer"]
+    alert: "Plan: (EMERGENCY) Notify provider; anticipate STAT CBC for neutropenia."
+    severity: "critical"
+  - keywords: ["pigmented mucosal patch", "melanotic pigmentation"]
+    alert: "Plan: Document finding; report to provider for consideration of systemic workup."
+    severity: "warning"
+  - keywords: ["white plaque scrapable", "milk residue confusion"]
+    alert: "Plan: Reassure caregiver (if milk residue); if thrush suspected, administer antifungals as ordered."
+    severity: "info"
+  - keywords: ["pseudomembrane with foul odor", "necrotic debris"]
+    alert: "Plan: (EMERGENCY) Obtain cultures; administer antibiotics as ordered; provide gentle but thorough oral hygiene."
+    severity: "critical"
+  - keywords: ["painful bleeding gums", "necrotic gingiva"]
+    alert: "Plan: Administer antibiotics/analgesics as ordered; provide gentle chlorhexidine rinses."
+    severity: "warning"
+  - keywords: ["swollen spongy gums", "gingival edema"]
+    alert: "Plan: Educate on meticulous, gentle oral hygiene; schedule dental cleaning."
+    severity: "info"
+  - keywords: ["purplish gums", "cyanotic gums"]
+    alert: "Plan: Assess respiratory status and O2 saturation; apply oxygen as needed."
+    severity: "warning"
+  - keywords: ["pale atrophic gums", "gums receding"]
+    alert: "Plan: Place referral to dentistry for periodontal care."
+    severity: "info"
+  - keywords: ["gingival ulceration after chemotherapy", "chemotherapy mucositis"]
+    alert: "Plan: Provide pain control (e.g., magic mouthwash); maintain oral hygiene with soft brush; ensure hydration."
+    severity: "warning"
+  - keywords: ["painful gum swelling with pus", "gingival abscess"]
+    alert: "Plan: Administer analgesics; prepare for I&D by dentist/oral surgeon."
+    severity: "warning"
+  - keywords: ["fibrous gingival overgrowth", "drug-induced gingival hyperplasia"]
+    alert: "Plan: Review medication list with provider; consult dentistry for management."
+    severity: "warning"
+  - keywords: ["ulcerated gum mass", "bleeding gum lesion"]
+    alert: "Plan: (EMERGENCY) Place urgent referral for biopsy."
+    severity: "critical"
+  - keywords: ["gum hypertrophy in child", "leukemic infiltration"]
+    alert: "Plan: (EMERGENCY) Notify provider; anticipate STAT CBC and hematology/oncology consult."
+    severity: "critical"
+  - keywords: ["metallic taste and blue gum line", "lead line"]
+    alert: "Plan: (EMERGENCY) Notify provider for blood lead level testing; consult public health/social work."
+    severity: "critical"
+  - keywords: ["yellow-brown teeth", "fluorosis teeth"]
+    alert: "Plan: Place referral to dentistry; assess home water source for fluoride levels."
+    severity: "info"
+  - keywords: ["black discoloration tooth", "dead tooth"]
+    alert: "Plan: Place referral to dentistry for evaluation."
+    severity: "warning"
+  - keywords: ["attrition", "worn teeth", "grinding damage"]
+    alert: "Plan: Place referral to dentistry for evaluation (e.g., night guard)."
+    severity: "info"
+  - keywords: ["tooth erosion", "acid wear", "bulimia enamel loss"]
+    alert: "Plan: Consult provider/psychology for suspected bulimia; consult GI for GERD; refer to dentistry."
+    severity: "warning"
+  - keywords: ["tooth pain", "sensitive tooth"]
+    alert: "Plan: Administer analgesics as ordered; place referral to dentistry."
+    severity: "info"
+  - keywords: ["swelling over tooth root", "periapical abscess"]
+    alert: "Plan: (EMERGENCY) Administer antibiotics/analgesics as ordered; place urgent referral to dentistry/oral surgery for drainage."
+    severity: "critical"
+  - keywords: ["bleeding after tooth extraction", "post-extraction hemorrhage"]
+    alert: "Plan: Apply firm pressure with gauze; notify dentist/oral surgeon if bleeding persists."
+    severity: "warning"
+  - keywords: ["pain 3 days after extraction", "dry socket", "alveolar osteitis"]
+    alert: "Plan: Place urgent call to dentist/oral surgeon for evaluation and packing."
+    severity: "warning"
+  - keywords: ["malformed teeth", "enamel hypoplasia"]
+    alert: "Plan: Place referral to dentistry; document for provider (may indicate past illness)."
+    severity: "info"
+  - keywords: ["tooth abscess swelling face", "odontogenic infection"]
+    alert: "Plan: (EMERGENCY) Assess airway; administer IV antibiotics as ordered; place urgent consult to oral/maxillofacial surgery."
+    severity: "critical"
+  - keywords: ["tooth displacement trauma", "luxated tooth"]
+    alert: "Plan: (EMERGENCY) Place immediate referral to dentist for splinting/repositioning."
+    severity: "critical"
+  - keywords: ["tooth loss early child", "premature exfoliation"]
+    alert: "Plan: Report to provider for systemic workup; place referral to pediatric dentistry."
+    severity: "warning"
+  - keywords: ["jaw pain clicking", "temporomandibular disorder"]
+    alert: "Plan: Provide soft diet; administer NSAIDs as ordered; place referral to dentistry/oral surgery."
+    severity: "info"
+  - keywords: ["tongue tremor resting", "tremulous tongue Parkinson"]
+    alert: "Plan: Report finding to provider for neurologic workup."
+    severity: "warning"
+  - keywords: ["purple tongue lesion", "vascular malformation tongue"]
+    alert: "Plan: Document finding; reassure patient (if benign); assess for bleeding."
+    severity: "info"
+  - keywords: ["tongue ulcer nonhealing", "ulcerated nodule tongue"]
+    alert: "Plan: (EMERGENCY) Place urgent referral to ENT/oral surgery for biopsy."
+    severity: "critical"
+  - keywords: ["yellow coating tongue", "poor oral hygiene tongue"]
+    alert: "Plan: Educate on tongue brushing/scraping and hydration."
+    severity: "info"
+  - keywords: ["loss of tongue papillae", "smooth red tongue"]
+    alert: "Plan: Consult nutrition; anticipate orders for vitamin level testing."
+    severity: "warning"
+  - keywords: ["ulcer under tongue", "floor of mouth ulcer"]
+    alert: "Plan: (EMERGENCY) Place urgent referral to ENT/oral surgery for biopsy."
+    severity: "critical"
+  - keywords: ["tongue biting marks", "seizure evidence"]
+    alert: "Plan: (EMERGENCY) Institute seizure precautions; assess for other injuries; report to provider."
+    severity: "critical"
+  - keywords: ["uvula midline deviation after stroke", "vagus palsy sign"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; perform swallow screen; notify provider for immediate neurologic/speech therapy consult."
+    severity: "critical"
+  - keywords: ["palatal ulcer with yellow base", "herpetic lesion palate"]
+    alert: "Plan: Provide pain control and ensure adequate hydration."
+    severity: "warning"
+  - keywords: ["uvula edema", "swollen uvula"]
+    alert: "Plan: (EMERGENCY) Assess for airway compromise; notify provider; prepare for potential airway intervention."
+    severity: "critical"
+  - keywords: ["white spots tonsils without fever", "tonsillar concretions"]
+    alert: "Plan: Reassure patient this is benign; educate on oral hygiene."
+    severity: "info"
+  - keywords: ["ulcer posterior pharynx", "pharyngeal ulcer"]
+    alert: "Plan: Provide symptomatic pain relief; consult provider for evaluation."
+    severity: "warning"
+  - keywords: ["asymmetric soft palate elevation", "CN X lesion"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; perform swallow screen; notify provider for neurologic/speech therapy consult."
+    severity: "critical"
+  - keywords: ["gray necrotic patch tonsil", "peritonsillar necrosis"]
+    alert: "Plan: (EMERGENCY) Institute droplet precautions; place urgent consult to ENT/infectious disease."
+    severity: "critical"
+  - keywords: ["white patches on palate scrape off", "oral candidiasis palate"]
+    alert: "Plan: Administer antifungal medications as ordered."
+    severity: "warning"
+  - keywords: ["petechiae soft palate", "infectious mononucleosis"]
+    alert: "Plan: Obtain throat culture and/or mono test as ordered; advise rest and hydration."
+    severity: "warning"
+
+  # Rules based on: cardiovascular.yaml
+  - keywords: ["central cyanosis", "blue lips", "blue tongue"]
+    alert: "Plan: (EMERGENCY) Apply 100% oxygen, place on continuous pulse oximetry, and notify provider/cardiology immediately."
+    severity: "critical"
+  - keywords: ["peripheral cyanosis", "acrocyanosis", "blue hands", "blue feet"]
+    alert: "Plan: (Neonate) Apply warm blanket, re-assess. (Child) Assess central perfusion (cap refill, BP) and apply warmth."
+    severity: "warning"
+  - keywords: ["differential cyanosis", "blue lower extremities", "pink upper extremities"]
+    alert: "Plan: (EMERGENCY) Place on 4-extremity BP monitor; start prostaglandin infusion as ordered; place urgent consult to cardiology/NICU."
+    severity: "critical"
+  - keywords: ["weak femoral pulse", "absent femoral pulse", "brachiofemoral delay"]
+    alert: "Plan: (EMERGENCY) Obtain 4-extremity blood pressures; place urgent consult to cardiology; prepare for potential prostaglandin infusion."
+    severity: "critical"
+  - keywords: ["bounding pulse", "water-hammer pulse"]
+    alert: "Plan: Obtain 4-extremity blood pressures; report finding to provider for cardiology workup (suspected PDA)."
+    severity: "warning"
+  - keywords: ["weak pulse", "thready pulse"]
+    alert: "Plan: (EMERGENCY) Assess for shock (BP, LOC); establish IV access; notify provider for immediate resuscitation."
+    severity: "critical"
+  - keywords: ["precordial bulge", "asymmetric chest"]
+    alert: "Plan: Document finding; perform detailed cardiac auscultation; report to provider for cardiology referral."
+    severity: "warning"
+  - keywords: ["precordial heave", "parasternal lift"]
+    alert: "Plan: Document finding; obtain 12-lead ECG as ordered; report to provider for cardiology referral."
+    severity: "warning"
+  - keywords: ["suprasternal notch thrill"]
+    alert: "Plan: Document finding; perform 4-extremity BPs; report to provider for cardiology referral (suspected AS/PS)."
+    severity: "warning"
+  - keywords: ["apical thrill"]
+    alert: "Plan: Document finding; perform full cardiopulmonary assessment; report to provider for cardiology referral (suspected MR)."
+    severity: "warning"
+  - keywords: ["left sternal border thrill"]
+    alert: "Plan: Document finding; perform full cardiopulmonary assessment; report to provider for cardiology referral (suspected VSD)."
+    severity: "warning"
+  - keywords: ["tachycardia", "persistent tachycardia"]
+    alert: "Plan: Place on continuous cardiorespiratory monitor; obtain 12-lead ECG; assess for underlying causes (fever, pain, dehydration, hypoxia)."
+    severity: "warning"
+  - keywords: ["bradycardia"]
+    alert: "Plan: (EMERGENCY) Assess airway and breathing; apply oxygen; check perfusion; initiate PALS/BLS if non-perfusing."
+    severity: "critical"
+  - keywords: ["irregular rhythm", "arrhythmia"]
+    alert: "Plan: Place on cardiorespiratory monitor; obtain 12-lead ECG; assess hemodynamic stability (BP, perfusion)."
+    severity: "warning"
+  - keywords: ["diastolic murmur"]
+    alert: "Plan: (EMERGENCY) Document finding; place on monitor; place urgent consult to cardiology."
+    severity: "critical"
+  - keywords: ["holosystolic murmur", "pansystolic murmur"]
+    alert: "Plan: Document finding; assess for signs of heart failure (e.g., hepatomegaly, poor feeding); place cardiology referral."
+    severity: "warning"
+  - keywords: ["continuous murmur", "machinery murmur"]
+    alert: "Plan: Document finding; assess for wide pulse pressure and bounding pulses; place cardiology referral (suspected PDA)."
+    severity: "warning"
+  - keywords: ["harsh murmur", "grade 3 murmur", "grade III murmur"]
+    alert: "Plan: Document finding (grade, location, radiation); place cardiology referral."
+    severity: "warning"
+  - keywords: ["murmur increases with standing"]
+    alert: "Plan: (EMERGENCY) Place patient on bed rest/limit activity; notify provider immediately; place urgent cardiology consult (suspected HOCM)."
+    severity: "critical"
+  - keywords: ["murmur decreases with standing"]
+    alert: "Plan: Document finding; reassure caregiver this is a common feature of a benign innocent murmur."
+    severity: "info"
+  - keywords: ["murmur radiates to back", "murmur between scapulae"]
+    alert: "Plan: Obtain 4-extremity blood pressures (checking for coarctation); report findings to provider for cardiology referral."
+    severity: "warning"
+  - keywords: ["murmur radiates to axilla"]
+    alert: "Plan: Document finding; assess for signs of heart failure; place cardiology referral (suspected MR)."
+    severity: "warning"
+  - keywords: ["murmur radiates to neck", "murmur radiates to carotids"]
+    alert: "Plan: Document finding; assess for syncope or chest pain on exertion; place cardiology referral (suspected AS)."
+    severity: "warning"
+  - keywords: ["fixed split S2", "wide fixed split S2"]
+    alert: "Plan: Document finding; report to provider for cardiology referral (suspected ASD)."
+    severity: "warning"
+  - keywords: ["wide split S2", "persistent split S2"]
+    alert: "Plan: Document finding; report to provider for cardiology referral (suspected PS or RBBB)."
+    severity: "warning"
+  - keywords: ["single S2", "single second heart sound"]
+    alert: "Plan: Document finding; assess oxygen saturation; place cardiology referral (suspected complex CHD)."
+    severity: "warning"
+  - keywords: ["loud P2", "accentuated P2"]
+    alert: "Plan: Document finding; assess for respiratory distress; report to provider for workup (pulmonary hypertension)."
+    severity: "warning"
+  - keywords: ["ejection click", "systolic click"]
+    alert: "Plan: Document finding; place cardiology referral for echocardiogram."
+    severity: "warning"
+  - keywords: ["mid-systolic click", "late systolic murmur"]
+    alert: "Plan: Document finding; place cardiology referral (suspected MVP)."
+    severity: "warning"
+  - keywords: ["S3 gallop", "third heart sound"]
+    alert: "Plan: Assess for signs of fluid overload (hepatomegaly, crackles, edema); monitor I&O; report to provider."
+    severity: "warning"
+  - keywords: ["S4 gallop", "fourth heart sound"]
+    alert: "Plan: Report finding to provider; place cardiology referral (suspected ventricular non-compliance)."
+    severity: "warning"
+  - keywords: ["hepatomegaly", "enlarged liver"]
+    alert: "Plan: Assess for other signs of fluid overload (edema, crackles); initiate daily weights; maintain strict I&O."
+    severity: "warning"
+  - keywords: ["peripheral edema", "pitting edema", "sacral edema", "ascites"]
+    alert: "Plan: Elevate extremities; initiate daily weights; maintain strict I&O; assess skin integrity."
+    severity: "warning"
+  - keywords: ["poor feeding", "diaphoresis with feeding", "sweating with feeding"]
+    alert: "Plan: Allow for frequent rest periods during feeding; provide high-calorie formula as ordered; monitor for adequate weight gain."
+    severity: "warning"
+  - keywords: ["failure to thrive", "poor weight gain"]
+    alert: "Plan: Initiate 3-day calorie count; consult nutrition; provide high-calorie formula/foods as ordered."
+    severity: "warning"
+  - keywords: ["reduced exercise capacity", "fatigue with exertion"]
+    alert: "Plan: Cluster care to conserve energy; schedule rest periods; place cardiology referral."
+    severity: "warning"
+  - keywords: ["syncope on exertion", "presyncope with exercise"]
+    alert: "Plan: (EMERGENCY) Place patient on bed rest/strict activity restriction; place urgent cardiology consult."
+    severity: "critical"
+  - keywords: ["chest pain", "chest pain on exertion"]
+    alert: "Plan: (EMERGENCY) Place patient on bed rest; obtain 12-lead ECG; place urgent cardiology consult."
+    severity: "critical"
+  - keywords: ["Still's murmur", "vibratory murmur", "musical murmur"]
+    alert: "Plan: Document finding; reassure caregivers of benign nature."
+    severity: "info"
+  - keywords: ["venous hum"]
+    alert: "Plan: Document finding; reassure caregivers of benign nature."
+    severity: "info"
+  - keywords: ["pulmonary flow murmur", "systolic ejection murmur", "upper left sternal border"]
+    alert: "Plan: Document finding; reassure caregivers of benign nature."
+    severity: "info"
+  - keywords: ["holosystolic murmur", "lower left sternal border"]
+    alert: "Plan: Place cardiology referral for VSD workup."
+    severity: "warning"
+  - keywords: ["systolic ejection murmur", "upper left sternal border", "radiates to back"]
+    alert: "Plan: Place cardiology referral for PS workup."
+    severity: "warning"
+  - keywords: ["systolic ejection murmur", "upper right sternal border", "radiates to neck"]
+    alert: "Plan: Place cardiology referral for AS workup."
+    severity: "warning"
+  - keywords: ["crackles", "rales", "pulmonary congestion"]
+    alert: "Plan: Elevate head of bed; administer diuretics as ordered; maintain strict I&O."
+    severity: "warning"
+  - keywords: ["maternal diabetes", "gestational diabetes"]
+    alert: "Plan: (Infant) Ensure newborn cardiology screening (e.g., pulse oximetry) is performed; monitor for hypoglycemia."
+    severity: "info"
+  - keywords: ["maternal lupus", "maternal SLE"]
+    alert: "Plan: (Infant) Place on cardiorespiratory monitor to assess for heart block; report findings."
+    severity: "info"
+  - keywords: ["family history of sudden death"]
+    alert: "Plan: (EMERGENCY) Report history to provider; place urgent cardiology referral; ensure automated external defibrillator (AED) is nearby."
+    severity: "critical"
+  - keywords: ["Marfan syndrome", "family history of Marfan"]
+    alert: "Plan: Implement activity restrictions as ordered; ensure cardiology referral is in place."
+    severity: "warning"
+  - keywords: ["Trisomy 21", "Down syndrome"]
+    alert: "Plan: Ensure cardiology referral for echocardiogram is in place (as per protocol)."
+    severity: "info"
+  - keywords: ["Turner syndrome", "XO syndrome"]
+    alert: "Plan: Ensure 4-extremity BPs are taken; ensure cardiology referral is in place."
+    severity: "info"
+  - keywords: ["fever", "new murmur", "arthralgia"]
+    alert: "Plan: (EMERGENCY) Notify provider; anticipate orders for ASO, ESR/CRP, ECG, and antibiotics."
+    severity: "critical"
+  - keywords: ["fever", "unexplained shock", "new murmur"]
+    alert: "Plan: (EMERGENCY) Establish IV access; administer fluid bolus and antibiotics as ordered; obtain blood cultures; place urgent cardiology consult."
+    severity: "critical"
+  - keywords: ["long systolic murmur", "pansystolic murmur (PSM)"]
+    alert: "Plan: Document finding; place cardiology referral."
+    severity: "warning"
+  - keywords: ["opening snap"]
+    alert: "Plan: Document finding; place cardiology referral."
+    severity: "warning"
+  - keywords: ["displaced PMI", "displaced apical impulse"]
+    alert: "Plan: Document finding; obtain 12-lead ECG; report to provider."
+    severity: "warning"
+  - keywords: ["respiratory distress", "tachypnea"]
+    alert: "Plan: Elevate head of bed, apply oxygen, assess for cardiac vs. respiratory cause (e.g., hepatomegaly, murmur vs. wheezing, stridor)."
+    severity: "warning"
+  - keywords: ["palpitations"]
+    alert: "Plan: Obtain 12-lead ECG and vital signs; instruct patient to report any further episodes."
+    severity: "warning"
+  - keywords: ["squatting behavior"]
+    alert: "Plan: (If 'tet spell') Place child in knee-chest position, apply oxygen; notify provider immediately. (If history) Place cardiology referral."
+    severity: "warning"
+  - keywords: ["boot-shaped heart", "coeur en sabot"]
+    alert: "Plan: Document X-ray finding; continue monitoring for 'tet spells' or cyanosis."
+    severity: "info"
+  - keywords: ["egg on a string", "egg on its side"]
+    alert: "Plan: Document X-ray finding; prepare for immediate neonatal/cardiology intervention."
+    severity: "info"
+  - keywords: ["early diastolic murmur", "blowing murmur", "left sternal border"]
+    alert: "Plan: Assess for wide pulse pressure; place cardiology referral (suspected AR)."
+    severity: "warning"
+  - keywords: ["mid-diastolic rumble", "apex"]
+    alert: "Plan: Assess for signs of left atrial enlargement (e.g., cough); place cardiology referral (suspected MS)."
+    severity: "warning"
+
+  # Rules based on: abdomen.yaml (Pediatric Focus)
+  - keywords: ["flat abdomen", "non-distended", "soft on palpation"]
+    alert: "Plan: Continue routine assessment and monitoring."
+    severity: "none"
+  - keywords: ["distended abdomen", "abdominal distension"]
+    alert: "Plan: Measure abdominal girth at umbilicus; assess for flatus/bowel movement; keep NPO if obstruction suspected."
+    severity: "warning"
+  - keywords: ["scaphoid abdomen", "sunken abdomen"]
+    alert: "Plan: Initiate nutritional screening and calorie counts; assess for signs of dehydration."
+    severity: "info"
+  - keywords: ["visible peristalsis"]
+    alert: "Plan: Keep patient NPO; notify provider; prepare for NG tube placement (infant: suspected Pyloric Stenosis)."
+    severity: "warning"
+  - keywords: ["abdominal asymmetry", "uneven contour"]
+    alert: "Plan: Do NOT over-palpate mass; notify provider; prepare patient for abdominal ultrasound as ordered."
+    severity: "warning"
+  - keywords: ["pulsating mass midline", "expansile pulsation abdomen"]
+    alert: "Plan: (EMERGENCY) Do not palpate; obtain vital signs; notify provider/surgical team immediately."
+    severity: "critical"
+  - keywords: ["abdominal scars", "surgical scars"]
+    alert: "Plan: Document location of scars; ask about previous surgeries."
+    severity: "info"
+  - keywords: ["dilated abdominal veins", "caput medusae"]
+    alert: "Plan: Assess for other signs of liver failure (jaundice, ascites); obtain LFTs as ordered."
+    severity: "warning"
+  - keywords: ["ecchymosis around umbilicus", "Cullen sign"]
+    alert: "Plan: (EMERGENCY) Establish IV access; monitor vital signs for shock; notify provider/surgical team."
+    severity: "critical"
+  - keywords: ["tenderness in right lower quadrant", "RLQ tenderness"]
+    alert: "Plan: Keep patient NPO; notify provider; prepare for surgical consult (suspected appendicitis)."
+    severity: "warning"
+  - keywords: ["right upper quadrant tenderness", "RUQ tenderness"]
+    alert: "Plan: Keep patient NPO; notify provider; anticipate orders for LFTs, amylase/lipase, and abdominal ultrasound."
+    severity: "warning"
+  - keywords: ["left lower quadrant tenderness", "LLQ tenderness"]
+    alert: "Plan: Assess last bowel movement; administer stool softener/laxative as ordered if constipation suspected."
+    severity: "warning"
+  - keywords: ["epigastric tenderness", "epigastric pain"]
+    alert: "Plan: Keep NPO; notify provider; anticipate orders for amylase/lipase."
+    severity: "warning"
+  - keywords: ["diffuse abdominal tenderness"]
+    alert: "Plan: Assess for rebound/guarding; monitor vital signs; keep NPO if peritonitis suspected."
+    severity: "warning"
+  - keywords: ["rebound tenderness", "pain on release"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; establish IV access; notify surgical team immediately."
+    severity: "critical"
+  - keywords: ["guarding", "rigidity", "board-like abdomen"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; establish IV access; notify surgical team immediately for evaluation."
+    severity: "critical"
+  - keywords: ["localized tenderness at McBurney’s point", "RLQ pain McBurney"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; establish IV access; notify surgical team immediately (suspected appendicitis)."
+    severity: "critical"
+  - keywords: ["tenderness over suprapubic area"]
+    alert: "Plan: Assess for bladder distension; obtain urine sample (UA/culture) as ordered."
+    severity: "warning"
+  - keywords: ["left upper quadrant tenderness", "LUQ pain"]
+    alert: "Plan: Keep NPO; notify provider; assess for trauma (suspected splenic injury)."
+    severity: "warning"
+  - keywords: ["tympanic abdomen", "increased tympany"]
+    alert: "Plan: Assess for flatus/bowel movement; encourage ambulation if appropriate."
+    severity: "info"
+  - keywords: ["dullness in flanks", "shifting dullness"]
+    alert: "Plan: Measure abdominal girth; initiate daily weights; maintain strict I&O."
+    severity: "warning"
+  - keywords: ["dullness in suprapubic area"]
+    alert: "Plan: Perform bladder scan; assist patient to void; prepare for straight catheterization if ordered."
+    severity: "warning"
+  - keywords: ["hyperresonance abdomen"]
+    alert: "Plan: Assess for flatus; encourage ambulation."
+    severity: "info"
+  - keywords: ["dullness over liver", "liver span percussion"]
+    alert: "Plan: Document finding; assess for other signs of liver disease (jaundice, ascites)."
+    severity: "warning"
+  - keywords: ["dullness over spleen", "Traube space dullness"]
+    alert: "Plan: (If trauma/Mono) Implement activity restrictions/bed rest; notify provider. Do not palpate deeply."
+    severity: "warning"
+  - keywords: ["normal bowel sounds", "active bowel sounds"]
+    alert: "Plan: Continue routine monitoring."
+    severity: "none"
+  - keywords: ["hypoactive bowel sounds", "diminished bowel sounds"]
+    alert: "Plan: Keep patient NPO (if post-op); monitor for flatus or bowel movement."
+    severity: "warning"
+  - keywords: ["absent bowel sounds"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; notify provider/surgical team."
+    severity: "critical"
+  - keywords: ["hyperactive bowel sounds", "tinkling sounds"]
+    alert: "Plan: Keep patient NPO; notify provider; prepare for NG tube placement."
+    severity: "warning"
+  - keywords: ["abdominal bruit", "renal artery bruit"]
+    alert: "Plan: Document finding; report to provider; ensure strict BP monitoring."
+    severity: "warning"
+  - keywords: ["venous hum", "epigastric hum"]
+    alert: "Plan: Document finding; report to provider; assess for other signs of portal hypertension."
+    severity: "info"
+  - keywords: ["friction rub over liver", "friction rub over spleen"]
+    alert: "Plan: Provide pain management; report finding to provider."
+    severity: "warning"
+  - keywords: ["succussion splash"]
+    alert: "Plan: Keep patient NPO; notify provider; prepare for NG tube placement."
+    severity: "warning"
+  - keywords: ["borborygmi", "loud gurgling sounds"]
+    alert: "Plan: Assess for diarrhea; provide access to bathroom/bedpan."
+    severity: "info"
+  - keywords: ["high-pitched bowel sounds with cramping"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; notify surgical team; prepare for NG tube placement."
+    severity: "critical"
+  - keywords: ["palpable liver edge", "hepatomegaly"]
+    alert: "Plan: Document finding (cm below costal margin); assess for RUQ tenderness and signs of fluid overload."
+    severity: "warning"
+  - keywords: ["tender enlarged liver"]
+    alert: "Plan: Provide pain management; report to provider; anticipate orders for LFTs."
+    severity: "warning"
+  - keywords: ["non-tender enlarged liver", "firm nodular liver"]
+    alert: "Plan: (EMERGENCY) Report to provider; anticipate orders for LFTs, coagulation panel, and abdominal imaging."
+    severity: "critical"
+  - keywords: ["palpable spleen", "splenomegaly"]
+    alert: "Plan: Do NOT palpate deeply; implement activity restrictions (bed rest); notify provider (suspected Mono/trauma)."
+    severity: "warning"
+  - keywords: ["enlarged kidney palpable", "renal mass"]
+    alert: "Plan: Do NOT over-palpate; notify provider; prepare patient for abdominal ultrasound/CT as ordered."
+    severity: "warning"
+  - keywords: ["palpable gallbladder", "Courvoisier sign"]
+    alert: "Plan: (EMERGENCY) Keep NPO; notify provider; anticipate orders for abdominal ultrasound and surgical consult."
+    severity: "critical"
+  - keywords: ["Murphy’s sign positive", "RUQ pain on inspiration"]
+    alert: "Plan: Keep patient NPO; notify provider; anticipate orders for abdominal ultrasound (suspected cholecystitis)."
+    severity: "warning"
+  - keywords: ["Rovsing’s sign positive"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; notify surgical team (suspected appendicitis)."
+    severity: "critical"
+  - keywords: ["Psoas sign positive", "pain on hip extension"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; notify surgical team (suspected appendicitis)."
+    severity: "critical"
+  - keywords: ["Obturator sign positive"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; notify surgical team (suspected appendicitis)."
+    severity: "critical"
+  - keywords: ["Grey Turner’s sign", "flank ecchymosis"]
+    alert: "Plan: (EMERGENCY) Establish large-bore IV access; monitor vital signs for shock; notify provider/surgical team."
+    severity: "critical"
+  - keywords: ["Blumberg sign positive"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; establish IV access; notify surgical team."
+    severity: "critical"
+  - keywords: ["abdominal mass in child", "palpable mass pediatric"]
+    alert: "Plan: (EMERGENCY) Do NOT repeatedly palpate the mass; notify provider/oncology immediately; prepare for ultrasound/CT."
+    severity: "critical"
+  - keywords: ["projectile vomiting infant"]
+    alert: "Plan: (EMERGENCY) Keep infant NPO; establish IV access for fluid resuscitation; notify surgical team (suspected Pyloric Stenosis)."
+    severity: "critical"
+  - keywords: ["umbilical redness newborn", "omphalitis"]
+    alert: "Plan: (EMERGENCY) Notify provider immediately; establish IV access; administer antibiotics as ordered."
+    severity: "critical"
+  - keywords: ["olive-shaped mass", "palpable olive RUQ"]
+    alert: "Plan: (EMERGENCY) Keep infant NPO; maintain IV hydration; notify surgical team (confirms Pyloric Stenosis)."
+    severity: "critical"
+  - keywords: ["currant jelly stool", "red jelly stool"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; establish IV access; notify provider/radiology for air-contrast enema."
+    severity: "critical"
+  - keywords: ["sausage-shaped mass abdomen"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; notify provider; prepare for diagnostic enema (suspected intussusception)."
+    severity: "critical"
+  - keywords: ["abdominal distension in newborn", "failure to pass meconium"]
+    alert: "Plan: (EMERGENCY) Keep infant NPO; prepare for NG tube decompression; notify surgical team (suspected Hirschsprung's/atresia)."
+    severity: "critical"
+  - keywords: ["constipation", "no bowel movement for days"]
+    alert: "Plan: Encourage fluid intake; administer stool softener/laxative as ordered; educate on high-fiber diet."
+    severity: "info"
+  - keywords: ["diarrhea", "frequent loose stools"]
+    alert: "Plan: Initiate contact precautions; monitor I&O and signs of dehydration; provide skin barrier cream."
+    severity: "warning"
+  - keywords: ["bloody stool", "hematochezia"]
+    alert: "Plan: (EMERGENCY) Monitor vital signs for shock; establish IV access; keep patient NPO; notify provider."
+    severity: "critical"
+  - keywords: ["tarry stool", "melena"]
+    alert: "Plan: (EMERGENCY) Monitor vital signs for shock; establish IV access; keep patient NPO; notify provider."
+    severity: "critical"
+  - keywords: ["absent flatus", "no gas passage"]
+    alert: "Plan: Keep patient NPO; monitor for distension; notify provider (suspected ileus/obstruction)."
+    severity: "warning"
+  - keywords: ["steatorrhea", "greasy foul-smelling stool"]
+    alert: "Plan: Consult nutrition; anticipate orders for pancreatic enzyme replacement or celiac screening."
+    severity: "warning"
+  - keywords: ["CVA tenderness", "costovertebral angle tenderness"]
+    alert: "Plan: Obtain urine sample for UA/culture; administer analgesics and antibiotics as ordered; encourage fluids."
+    severity: "warning"
+  - keywords: ["flank pain radiating to groin", "renal colic"]
+    alert: "Plan: (EMERGENCY) Administer analgesics as ordered; strain all urine; encourage fluid intake; prepare for CT scan."
+    severity: "critical"
+
+  # Rules based on: extremities.yaml (Pediatric Focus)
+  - keywords: ["calf tenderness", "pitting 2+", "brown pigmentation"]
+    alert: "Plan: Elevate extremities; apply compression stockings as ordered; educate on skin care."
+    severity: "info"
+  - keywords: ["dependent rubor", "pallor on elevation", "temperature asymmetry"]
+    alert: "Plan: Do not elevate legs; keep extremities warm; report to provider for vascular workup (ABI)."
+    severity: "warning"
+  - keywords: ["unilateral calf swelling", "tender varix", "positive calf squeeze test"]
+    alert: "Plan: (EMERGENCY) Maintain patient on strict bed rest; elevate limb; notify provider for urgent Doppler ultrasound."
+    severity: "critical"
+  - keywords: ["pitting edema", "pedal edema"]
+    alert: "Plan: Elevate extremities; monitor daily weights and I&O; assess for systemic cause (heart, liver, kidney)."
+    severity: "warning"
+  - keywords: ["absent pulses", "cold extremities"]
+    alert: "Plan: (EMERGENCY) Notify provider/vascular surgery immediately; keep extremity flat or slightly dependent; do not apply heat/cold."
+    severity: "critical"
+  - keywords: ["weak dorsalis pedis pulse", "weak posterior tibial pulse"]
+    alert: "Plan: Document pulse quality (e.g., 1+); assess capillary refill; report to provider."
+    severity: "warning"
+  - keywords: ["stasis dermatitis", "hemosiderin staining", "brown pigmentation"]
+    alert: "Plan: Apply barrier creams/emollients; educate on leg elevation and compression."
+    severity: "info"
+  - keywords: ["arterial ulcer", "toe ulcer", "painful ulcer"]
+    alert: "Plan: (EMERGENCY) Consult wound care and vascular surgery; keep wound clean and dry; do not debride eschar."
+    severity: "critical"
+  - keywords: ["venous ulcer", "medial malleolus ulcer", "edema"]
+    alert: "Plan: Apply compression wrap/device as ordered; elevate limb; consult wound care."
+    severity: "warning"
+  - keywords: ["lymphedema", "non-pitting edema"]
+    alert: "Plan: Apply compression; consult lymphedema specialist/PT; protect skin from injury."
+    severity: "info"
+  - keywords: ["intermittent claudication", "exertional leg pain"]
+    alert: "Plan: Encourage rest as needed during activity; place referral for vascular evaluation."
+    severity: "warning"
+  - keywords: ["shiny skin", "muscle wasting", "loss of hair on lower leg"]
+    alert: "Plan: Protect from trauma; do not use heating pads; ensure vascular follow-up."
+    severity: "warning"
+  - keywords: ["delayed capillary refill", "capillary refill >3s"]
+    alert: "Plan: Assess for other signs of shock (tachycardia, hypotension, cool skin); notify provider."
+    severity: "warning"
+  - keywords: ["cold pale foot", "pain at rest"]
+    alert: "Plan: (EMERGENCY) Notify vascular surgery immediately; protect limb from pressure/trauma."
+    severity: "critical"
+  - keywords: ["warm swollen leg", "erythema tracking up leg"]
+    alert: "Plan: Elevate limb; mark border of erythema; administer antibiotics as ordered."
+    severity: "warning"
+  - keywords: ["palpable cord", "tender varix", "localized erythema"]
+    alert: "Plan: Apply warm compresses; administer NSAIDs as ordered; monitor for extension (DVT)."
+    severity: "warning"
+  - keywords: ["crepitus in joint", "joint effusion", "erythema"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; immobilize joint; notify provider for urgent joint aspiration."
+    severity: "critical"
+  - keywords: ["cold extremities", "mottled extremity", "shock signs"]
+    alert: "Plan: (EMERGENCY) Initiate fluid resuscitation/pressors as ordered; identify and treat underlying cause of shock."
+    severity: "critical"
+  - keywords: ["clubbing of toes", "onycholysis"]
+    alert: "Plan: Perform full cardiopulmonary assessment; monitor O2 saturation."
+    severity: "warning"
+  - keywords: ["erythematous streaking", "lymphangitic streak", "red streaks toward groin"]
+    alert: "Plan: Administer antibiotics as ordered; elevate limb; monitor for systemic signs of infection."
+    severity: "warning"
+  - keywords: ["tender warm localized area", "fluctuant mass", "abscess"]
+    alert: "Plan: (EMERGENCY) Prepare for incision and drainage; administer antibiotics as ordered."
+    severity: "critical"
+  - keywords: ["boggy synovium", "joint warmth", "severe pain with ROM"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; immobilize joint; prepare for urgent joint aspiration/washout."
+    severity: "critical"
+  - keywords: ["ecchymosis after trauma", "bruising around joint", "swelling after injury"]
+    alert: "Plan: Apply RICE (Rest, Ice, Compression, Elevation); immobilize limb; assess neurovascular status."
+    severity: "warning"
+  - keywords: ["hematoma with expanding size", "sentinel hemorrhage", "rapid swelling"]
+    alert: "Plan: (EMERGENCY) Apply direct pressure; monitor vital signs for shock; notify provider/surgical team immediately."
+    severity: "critical"
+  - keywords: ["open wound with exposed bone", "open fracture", "compound fracture"]
+    alert: "Plan: (EMERGENCY) Cover wound with sterile saline-soaked gauze; keep NPO; administer IV antibiotics and tetanus as ordered; prepare for surgery."
+    severity: "critical"
+  - keywords: ["shortened externally rotated lower limb", "leg shortened", "external rotation deformity"]
+    alert: "Plan: (EMERGENCY) Immobilize patient (do not move leg); assess neurovascular status; keep NPO; prepare for surgery."
+    severity: "critical"
+  - keywords: ["positive Thompson test", "absent plantar flexion on squeeze"]
+    alert: "Plan: Immobilize in plantar flexion; keep non-weight bearing; place referral to orthopedics."
+    severity: "warning"
+  - keywords: ["pain on passive stretch of compartment", "pain out of proportion", "paresthesia"]
+    alert: "Plan: (EMERGENCY) Keep limb at heart level (do NOT elevate); remove all constrictive dressings; notify surgical team immediately for compartment pressure check."
+    severity: "critical"
+  - keywords: ["loss of two-point discrimination", "decreased protective sensation", "monofilament abnormal"]
+    alert: "Plan: Implement limb protection measures; educate on daily foot checks; ensure proper-fitting footwear."
+    severity: "warning"
+  - keywords: ["erysipelas pattern raised border", "skin sharply demarcated", "hot bright erythema"]
+    alert: "Plan: Administer antibiotics as ordered; mark border to monitor spread."
+    severity: "warning"
+  - keywords: ["tenderness over fibular head", "lateral knee swelling", "peroneal nerve symptoms"]
+    alert: "Plan: Assess for foot drop; protect from pressure; report to provider."
+    severity: "warning"
+  - keywords: ["tender swelling behind knee", "posterior knee mass", "popliteal cyst"]
+    alert: "Plan: Apply RICE; administer NSAIDs as ordered; report to provider."
+    severity: "info"
+  - keywords: ["pain at base of thumb", "tender anatomic snuffbox", "scaphoid tenderness"]
+    alert: "Plan: Immobilize with thumb spica splint as ordered; place referral to orthopedics (high risk of non-union)."
+    severity: "warning"
+  - keywords: ["localized bone tenderness", "focal bony tenderness", "suspected osteomyelitis"]
+    alert: "Plan: (EMERGENCY) Keep NPO; establish IV access; administer antibiotics as ordered; prepare for imaging/biopsy."
+    severity: "critical"
+  - keywords: ["hot swollen toe", "great toe erythema", "intense pain at MTP joint"]
+    alert: "Plan: (EMERGENCY) Keep NPO; notify provider for joint aspiration to rule out septic arthritis."
+    severity: "critical"
+  - keywords: ["crepitant subcutaneous air", "surgical emphysema after wound", "crackling sensation"]
+    alert: "Plan: (EMERGENCY) Notify surgical team immediately; mark area of crepitus; prepare for potential debridement."
+    severity: "critical"
+  - keywords: ["stiff cold fingers with color change on exposure", "episodic pallor and cyanosis", "Raynaud phenomenon"]
+    alert: "Plan: Educate on keeping hands warm (gloves); advise smoking cessation; administer calcium channel blockers as ordered."
+    severity: "info"
+  - keywords: ["hot swollen foot without erythema", "Charcot suspicion in diabetic"]
+    alert: "Plan: (EMERGENCY) Make patient strictly non-weight bearing; immobilize foot; notify provider for urgent orthopedic/podiatry consult."
+    severity: "critical"
+  - keywords: ["splinter hemorrhages under nail", "nail fold hemorrhage", "infective endocarditis sign"]
+    alert: "Plan: Report finding to provider; anticipate orders for blood cultures and echocardiogram."
+    severity: "warning"
+
+  # Rules based on: neurological.yaml (Pediatric Focus)
+  - keywords: ["unresponsive", "no response to voice", "no response to pain"]
+    alert: "Plan: (EMERGENCY) Initiate PALS/BLS; check pulse, secure airway (jaw thrust), begin bag-mask ventilation; call code team."
+    severity: "critical"
+  - keywords: ["drowsy but arousable", "lethargic", "somnolent"]
+    alert: "Plan: Perform full GCS; place on continuous pulse oximetry; obtain POC glucose; implement frequent (q1h) neuro checks."
+    severity: "warning"
+  - keywords: ["confused", "disoriented", "not oriented to time place person"]
+    alert: "Plan: Reorient patient frequently; implement safety/fall precautions; investigate underlying cause (e.g., hypoxia, hypoglycemia, infection)."
+    severity: "warning"
+  - keywords: ["GCS less than 8", "Glasgow Coma Scale 7"]
+    alert: "Plan: (EMERGENCY) Notify provider/anesthesia for immediate intubation; maintain C-spine precautions if trauma."
+    severity: "critical"
+  - keywords: ["GCS 15", "alert and oriented x3"]
+    alert: "Plan: Continue routine neurological monitoring per policy."
+    severity: "none"
+  - keywords: ["agitated", "restless", "irritable behavior"]
+    alert: "Plan: Assess for and treat underlying cause first (Pain, Hypoxia, Hypoglycemia, Full Bladder); maintain a calm, safe environment."
+    severity: "warning"
+  - keywords: ["obtunded", "difficult to arouse", "responds only to pain"]
+    alert: "Plan: (EMERGENCY) Apply oxygen; perform sternal rub to confirm LOC; obtain POC glucose; notify provider for immediate assessment."
+    severity: "critical"
+  - keywords: ["delirium", "acute confusion", "hallucinations"]
+    alert: "Plan: (EMERGENCY) Initiate 1:1 observation for safety; assess for hypoxia/metabolic cause; notify provider."
+    severity: "critical"
+  - keywords: ["ptosis", "drooping eyelid"]
+    alert: "Plan: (If acute) Notify provider for urgent neuro consult (CN III palsy). (If chronic) Document finding."
+    severity: "warning"
+  - keywords: ["anisocoria", "unequal pupils"]
+    alert: "Plan: (EMERGENCY - If acute) Notify provider/neurosurgery immediately; prepare for emergent head CT."
+    severity: "critical"
+  - keywords: ["pupils equal and reactive", "PERRLA"]
+    alert: "Plan: Continue routine monitoring."
+    severity: "none"
+  - keywords: ["fixed dilated pupil"]
+    alert: "Plan: (EMERGENCY) This is uncal herniation. Call code/neuro-STAT; prepare for ICP management (e.g., mannitol)."
+    severity: "critical"
+  - keywords: ["diplopia", "double vision"]
+    alert: "Plan: Implement fall precautions; provide eye patch for comfort; notify provider for neurologic workup."
+    severity: "warning"
+  - keywords: ["facial numbness", "reduced sensation face"]
+    alert: "Plan: Protect eye on affected side with lubricating drops (check corneal reflex); notify provider."
+    severity: "warning"
+  - keywords: ["hearing loss", "decreased hearing one ear"]
+    alert: "Plan: Ensure patient safety; communicate clearly (e.g., visual aids); notify provider for ENT/neuro consult."
+    severity: "warning"
+  - keywords: ["absent corneal reflex"]
+    alert: "Plan: (EMERGENCY) Initiate eye care protocol: apply lubricating ointment and protective patch/shield; notify provider."
+    severity: "critical"
+  - keywords: ["hoarse voice", "uvula deviates"]
+    alert: "Plan: Keep patient NPO; perform swallow screen; notify provider for speech/neuro consult."
+    severity: "warning"
+  - keywords: ["paraplegia", "bilateral leg weakness"]
+    alert: "Plan: (EMERGENCY) Immobilize spine (flat bed rest); perform full neurovascular assessment; notify provider/neurosurgery."
+    severity: "critical"
+  - keywords: ["quadriplegia", "paralysis all limbs"]
+    alert: "Plan: (EMERGENCY) Maintain C-spine stabilization; secure airway; notify code team/neurosurgery."
+    severity: "critical"
+  - keywords: ["muscle wasting", "atrophy", "reduced bulk"]
+    alert: "Plan: Consult physical therapy (PT) for range-of-motion (ROM) exercises; implement skin protection measures."
+    severity: "info"
+  - keywords: ["increased tone", "spasticity", "stiff limbs"]
+    alert: "Plan: Consult PT for stretching program; administer muscle relaxants (e.g., baclofen) as ordered."
+    severity: "warning"
+  - keywords: ["decreased tone", "flaccid limbs"]
+    alert: "Plan: Support limbs with pillows; protect joints; consult PT; assess respiratory effort."
+    severity: "warning"
+  - keywords: ["muscle fasciculations"]
+    alert: "Plan: Document location and frequency; report to provider for neurologic workup."
+    severity: "warning"
+  - keywords: ["foot drop", "difficulty dorsiflexing foot"]
+    alert: "Plan: Implement fall precautions; consult PT for ankle-foot orthosis (AFO) fitting."
+    severity: "warning"
+  - keywords: ["loss of sensation", "numbness"]
+    alert: "Plan: Protect limb from injury (heat, cold, pressure); educate on visual inspection of the area."
+    severity: "warning"
+  - keywords: ["paresthesia", "tingling sensation"]
+    alert: "Plan: Document location/triggers; implement safety measures if sensation is impaired."
+    severity: "info"
+  - keywords: ["stocking distribution numbness"]
+    alert: "Plan: Implement diabetic foot care protocol; educate on daily foot inspection and proper footwear."
+    severity: "warning"
+  - keywords: ["loss of vibration sense", "loss of proprioception", "poor joint position sense"]
+    alert: "Plan: Implement fall precautions; consult PT for balance training."
+    severity: "warning"
+  - keywords: ["loss of pain and temperature"]
+    alert: "Plan: Educate patient on burn prevention (e.g., check water temperature); protect limb from injury."
+    severity: "warning"
+  - keywords: ["sensory level at umbilicus"]
+    alert: "Plan: (EMERGENCY) Immobilize spine; monitor for urinary retention and autonomic dysreflexia; notify neurosurgery."
+    severity: "critical"
+  - keywords: ["saddle anesthesia"]
+    alert: "Plan: (EMERGENCY) Notify neurosurgery immediately; monitor for urinary retention (bladder scan) and bowel incontinence."
+    severity: "critical"
+  - keywords: ["absent ankle jerk"]
+    alert: "Plan: Implement fall precautions; ensure proper footwear."
+    severity: "warning"
+  - keywords: ["brisk reflexes", "3+ reflexes"]
+    alert: "Plan: Document finding; assess for clonus; implement seizure precautions if hyperreflexia is severe."
+    severity: "warning"
+  - keywords: ["asymmetric reflexes"]
+    alert: "Plan: Document finding; report to provider for neurologic workup."
+    severity: "warning"
+  - keywords: ["Babinski positive", "upgoing plantar"]
+    alert: "Plan: Document finding; implement fall precautions."
+    severity: "warning"
+  - keywords: ["clonus present"]
+    alert: "Plan: Implement seizure precautions; protect limb from injury; administer muscle relaxants as ordered."
+    severity: "warning"
+  - keywords: ["reflexes 2+ and equal"]
+    alert: "Plan: Continue routine monitoring."
+    severity: "none"
+  - keywords: ["finger to nose test abnormal", "dysmetria", "overshoot on finger nose test"]
+    alert: "Plan: Implement fall precautions; assist with feeding and ADLs; place referral to PT/OT."
+    severity: "warning"
+  - keywords: ["heel to shin impaired"]
+    alert: "Plan: Implement fall precautions; assist with ambulation."
+    severity: "warning"
+  - keywords: ["unsteady gait", "broad-based gait", "ataxic gait", "staggering gait"]
+    alert: "Plan: Implement fall precautions (e.g., bed alarm, clear path); assist with all ambulation."
+    severity: "warning"
+  - keywords: ["festinating gait", "shuffling steps"]
+    alert: "Plan: Implement fall precautions; consult PT; ensure clear pathway, remove rugs."
+    severity: "warning"
+  - keywords: ["spastic gait", "scissoring gait"]
+    alert: "Plan: Implement fall precautions; consult PT for stretching and assistive devices."
+    severity: "warning"
+  - keywords: ["high stepping gait", "foot slapping gait"]
+    alert: "Plan: Implement fall precautions; consult PT for AFO and gait training."
+    severity: "warning"
+  - keywords: ["Romberg positive"]
+    alert: "Plan: Implement fall precautions; educate patient to use visual cues for balance; assist with ambulation."
+    severity: "warning"
+  - keywords: ["slurred speech", "dysarthria"]
+    alert: "Plan: Keep patient NPO; perform swallow screen; place referral to Speech-Language Pathologist (SLP)."
+    severity: "warning"
+  - keywords: ["aphasia", "unable to speak", "word finding difficulty"]
+    alert: "Plan: (EMERGENCY) Notify provider for STAT stroke workup. (Post-stroke) Consult SLP; use communication aids (e.g., whiteboard)."
+    severity: "critical"
+  - keywords: ["receptive aphasia", "cannot understand speech"]
+    alert: "Plan: Use simple, clear commands and gestures; consult SLP."
+    severity: "warning"
+  - keywords: ["expressive aphasia", "Broca’s aphasia"]
+    alert: "Plan: Be patient, allow time for response; use yes/no questions; consult SLP."
+    severity: "warning"
+  - keywords: ["dysphonia", "hoarse voice", "weak voice"]
+    alert: "Plan: Keep NPO; perform swallow screen; place referral to SLP/ENT."
+    severity: "warning"
+  - keywords: ["mutism", "no verbal output"]
+    alert: "Plan: (EMERGENCY) Notify provider for immediate neurologic/psychiatric evaluation."
+    severity: "critical"
+  - keywords: ["nasal speech", "hypernasal voice"]
+    alert: "Plan: Keep NPO; perform swallow screen; consult SLP."
+    severity: "warning"
+  - keywords: ["short term memory impaired"]
+    alert: "Plan: Reorient patient frequently; use memory aids (e.g., clock, calendar, whiteboard)."
+    severity: "info"
+  - keywords: ["poor attention", "cannot concentrate"]
+    alert: "Plan: Minimize environmental stimuli; provide clear, one-step instructions."
+    severity: "warning"
+  - keywords: ["flat affect", "no facial expression"]
+    alert: "Plan: Assess for other signs of depression; consult psychology/social work."
+    severity: "info"
+  - keywords: ["generalized tonic clonic", "convulsion"]
+    alert: "Plan: (EMERGENCY) Institute seizure precautions; time seizure; protect patient from injury (do not restrain); maintain airway."
+    severity: "critical"
+  - keywords: ["focal seizure", "partial seizure"]
+    alert: "Plan: Institute seizure precautions; observe and document focal features (e.g., right arm twitching)."
+    severity: "warning"
+  - keywords: ["absence seizure", "blank stare"]
+    alert: "Plan: Institute seizure precautions (e.g., no unsupervised swimming); document frequency/duration; notify provider."
+    severity: "info"
+  - keywords: ["postictal confusion", "drowsy after seizure"]
+    alert: "Plan: Place patient in recovery position; maintain patent airway; monitor vital signs and LOC until return to baseline."
+    severity: "warning"
+  - keywords: ["tongue bite", "urinary incontinence during episode"]
+    alert: "Plan: Institute seizure precautions; provide hygiene; document event."
+    severity: "warning"
+  - keywords: ["status epilepticus", "continuous seizure activity"]
+    alert: "Plan: (EMERGENCY) Call code/provider STAT; maintain airway; administer rescue medications (e.g., lorazepam) as ordered."
+    severity: "critical"
+  - keywords: ["myoclonic jerks", "sudden muscle twitch"]
+    alert: "Plan: Institute seizure/fall precautions; report to provider."
+    severity: "warning"
+  - keywords: ["drop attack", "sudden collapse"]
+    alert: "Plan: Institute fall/seizure precautions; consider helmet if frequent; place neurology consult."
+    severity: "warning"
+  - keywords: ["decorticate posturing", "flexor posture"]
+    alert: "Plan: (EMERGENCY) Secure airway; notify provider/neurosurgery; prepare for ICP management."
+    severity: "critical"
+  - keywords: ["decerebrate posturing", "extensor posture"]
+    alert: "Plan: (EMERGENCY) Secure airway; notify provider/neurosurgery; prepare for immediate intervention."
+    severity: "critical"
+  - keywords: ["rigidity", "lead pipe rigidity", "cogwheel rigidity"]
+    alert: "Plan: Consult PT for ROM; assist with ADLs; administer Parkinson's medications as ordered."
+    severity: "warning"
+  - keywords: ["opisthotonus", "arched back spasm"]
+    alert: "Plan: (EMERGENCY) Minimize stimuli; notify provider immediately (suspect tetanus/meningitis)."
+    severity: "critical"
+  - keywords: ["chorea", "rapid jerky movements"]
+    alert: "Plan: Implement fall/safety precautions; consult PT/OT; provide padding."
+    severity: "warning"
+  - keywords: ["athetosis", "slow writhing movements"]
+    alert: "Plan: Implement safety precautions; consult OT for adaptive devices."
+    severity: "warning"
+  - keywords: ["dystonia", "sustained muscle contraction"]
+    alert: "Plan: Administer PRN medications (e.g., diphenhydramine) as ordered; notify provider."
+    severity: "warning"
+  - keywords: ["hemiballismus", "flinging limb movements"]
+    alert: "Plan: (EMERGENCY) Protect patient from injury (padded bed rails); notify provider STAT."
+    severity: "critical"
+  - keywords: ["tics", "involuntary facial twitch"]
+    alert: "Plan: Provide psychosocial support; reassure patient; consult neurology if new or severe."
+    severity: "info"
+  - keywords: ["tremor at rest"]
+    alert: "Plan: Assist with ADLs (e.g., feeding); consult OT; administer medications as ordered."
+    severity: "warning"
+  - keywords: ["intention tremor"]
+    alert: "Plan: Consult OT for weighted utensils/assistive devices; implement fall precautions."
+    severity: "warning"
+  - keywords: ["asterixis", "flapping tremor"]
+    alert: "Plan: (EMERGENCY) Notify provider; implement safety precautions; anticipate orders for ammonia level and lactulose."
+    severity: "critical"
+  - keywords: ["akathisia", "cannot stay still"]
+    alert: "Plan: Notify provider (may need medication adjustment); provide safe area for movement."
+    severity: "info"
+  - keywords: ["vertigo", "spinning sensation"]
+    alert: "Plan: Implement fall precautions; keep patient NPO if nauseated; administer antiemetics as ordered."
+    severity: "warning"
+  - keywords: ["nystagmus", "involuntary eye movement"]
+    alert: "Plan: Implement fall precautions; notify provider for neurologic/ENT workup."
+    severity: "warning"
+  - keywords: ["pupils pinpoint", "pinpoint pupils"]
+    alert: "Plan: (EMERGENCY) Assess respiratory status; prepare naloxone; notify provider immediately."
+    severity: "critical"
+  - keywords: ["bilateral dilated pupils unreactive"]
+    alert: "Plan: (EMERGENCY) Check for pulse; initiate CPR/PALS protocol."
+    severity: "critical"
+  - keywords: ["one dilated pupil", "unequal pupil after head injury"]
+    alert: "Plan: (EMERGENCY) Call provider/neurosurgery STAT; prepare for ICP management and emergent CT."
+    severity: "critical"
+  - keywords: ["absent doll's eye reflex", "no oculocephalic response"]
+    alert: "Plan: (EMERGENCY) Maintain C-spine precautions; notify provider; prepare for advanced airway."
+    severity: "critical"
+  - keywords: ["abnormal vestibulo-ocular reflex", "no eye movement with caloric test"]
+    alert: "Plan: (EMERGENCY) Document finding; notify provider (confirms severe brainstem injury)."
+    severity: "critical"
+  - keywords: ["absent gag reflex"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; position patient on side; prepare for advanced airway."
+    severity: "critical"
+  - keywords: ["absent cough reflex"]
+    alert: "Plan: (EMERGENCY) Keep patient NPO; prepare for advanced airway; perform frequent suctioning."
+    severity: "critical"
+  - keywords: ["Cheyne-Stokes respiration"]
+    alert: "Plan: (EMERGENCY) Apply oxygen; place on cardiorespiratory monitor; notify provider immediately."
+    severity: "critical"
+  - keywords: ["bradycardia with hypertension", "Cushing reflex"]
+    alert: "Plan: (EMERGENCY) Elevate head of bed 30 degrees; notify provider/neurosurgery STAT; prepare for ICP management (mannitol)."
+    severity: "critical"
+  - keywords: ["irregular respirations", "neurogenic breathing pattern"]
+    alert: "Plan: (EMERGENCY) Apply oxygen; prepare for immediate intubation; notify provider."
+    severity: "critical"
+  - keywords: ["flushing with headache after SCI"]
+    alert: "Plan: (EMERGENCY) Sit patient upright; check for/relieve noxious stimuli (e.g., full bladder, kinked catheter); monitor BP q5 min."
+    severity: "critical"
+  - keywords: ["bulging fontanelle"]
+    alert: "Plan: (EMERGENCY) Elevate head of bed; minimize stimuli; notify provider immediately (suspect meningitis/ICP)."
+    severity: "critical"
+  - keywords: ["sunset eyes"]
+    alert: "Plan: (EMERGENCY) Notify provider/neurosurgery; prepare for head CT/VP shunt evaluation."
+    severity: "critical"
+  - keywords: ["high pitched cry", "shrill cry"]
+    alert: "Plan: Perform full neurologic assessment (fontanelle, pupils); minimize stimuli; notify provider."
+    severity: "warning"
+  - keywords: ["loss of developmental milestones"]
+    alert: "Plan: (EMERGENCY) Notify provider; place consults for neurology and PT/OT; provide family support."
+    severity: "critical"
+  - keywords: ["persistent primitive reflexes"]
+    alert: "Plan: Place referral for developmental pediatrics/neurology; consult PT/OT."
+    severity: "warning"
+  - keywords: ["asymmetric Moro reflex"]
+    alert: "Plan: Perform gentle ROM on affected side; educate caregivers on careful handling; consult PT."
+    severity: "warning"
+  - keywords: ["absent rooting reflex", "absent suck reflex"]
+    alert: "Plan: (EMERGENCY) Keep infant NPO; initiate IV fluids/NG feeding as ordered; notify provider for neurologic workup."
+    severity: "critical"
+  - keywords: ["seizure in neonate", "twitching newborn"]
+    alert: "Plan: (EMERGENCY) Obtain POC glucose; maintain airway; administer anti-epileptics as ordered; notify NICU/provider."
+    severity: "critical"
+  - keywords: ["head lag persistent after 6 months"]
+    alert: "Plan: Provide full head and neck support during handling; place referral for PT/neurology."
+    severity: "warning"
+  - keywords: ["microcephaly"]
+    alert: "Plan: Measure and plot head circumference; place referral for developmental assessment."
+    severity: "info"
+  - keywords: ["positive grasp reflex adult"]
+    alert: "Plan: Document finding; implement safety precautions (e.g., patient may grab objects)."
+    severity: "warning"
+  - keywords: ["cremasteric reflex absent"]
+    alert: "Plan: (EMERGENCY - if acute testicular pain) Keep patient NPO; notify provider/urology STAT for suspected torsion."
+    severity: "critical"
+  - keywords: ["anal wink absent"]
+    alert: "Plan: Assess for urinary retention and constipation; report finding to provider (suspect spinal lesion)."
+    severity: "warning"
+  - keywords: ["flaccid coma"]
+    alert: "Plan: (EMERGENCY) Initiate PALS/BLS; call code; prepare for brain death protocol."
+    severity: "critical"
+  - keywords: ["no brainstem reflexes", "absent pupillary and corneal reflex"]
+    alert: "Plan: (EMERGENCY) Maintain ventilatory/hemodynamic support; notify provider to initiate brain death assessment."
+    severity: "critical"
+  - keywords: ["agonal respirations", "gasping breathing"]
+    alert: "Plan: (EMERGENCY) This is not breathing. Initiate PALS/BLS; begin bag-mask ventilation."
+    severity: "critical"
+  - keywords: ["papilledema", "blurred optic disc margin"]
+    alert: "Plan: (EMERGENCY) Elevate head of bed 30 degrees; keep NPO; notify neurosurgery; prepare for emergent head imaging."
+    severity: "critical"
+- keywords: ["wheezing"]
+  match_type: any
+  alert: "Patient will demonstrate clear lung sounds on auscultation within 24-48 hours."
+  severity: "INFO"
+- keywords: ["crackles"]
+  match_type: any
+  alert: "Patient will exhibit clear lung sounds and decreased peripheral edema within 48 hours."
+  severity: "INFO"
+- keywords: ["O2 sat", "low"]
+  match_type: all
+  alert: "Patient will maintain O2 saturation >= 92% (or baseline) on [current O2 therapy] for the next 8 hours."
+  severity: "WARNING"
+- keywords: ["O2 sat", "90%"]
+  match_type: any
+  alert: "Patient's O2 saturation will return to >92% within 30 minutes of intervention."
+  severity: "WARNING"
+- keywords: ["O2 sat", "88%"]
+  match_type: any
+  alert: "Patient's O2 saturation will be >= 90% within 15 minutes of O2 application."
+  severity: "CRITICAL"
+- keywords: ["dyspnea", "SOB", "shortness of breath"]
+  match_type: any
+  alert: "Patient will report decreased dyspnea (e.g., < 3/10 on 0-10 scale) during activity within 24 hours."
+  severity: "INFO"
+- keywords: ["tachypnea"]
+  match_type: any
+  alert: "Patient's respiratory rate will remain between 12-20 breaths/min for the next 8 hours."
+  severity: "INFO"
+- keywords: ["bradypnea"]
+  match_type: any
+  alert: "Patient's respiratory rate will remain >10 breaths/min for the next 4 hours."
+  severity: "WARNING"
+- keywords: ["accessory muscle use"]
+  match_type: any
+  alert: "Patient will exhibit no signs of respiratory distress (e.g., no accessory muscle use) within 4 hours."
+  severity: "WARNING"
+- keywords: ["cough", "non-productive"]
+  match_type: all
+  alert: "Patient will demonstrate a productive cough to clear secretions by end of shift."
+  severity: "INFO"
+- keywords: ["cough", "productive"]
+  match_type: all
+  alert: "Patient will verbalize 2 methods to mobilize secretions (e.g., hydration, huff cough) by end of shift."
+  severity: "INFO"
+- keywords: ["sputum", "thick"]
+  match_type: all
+  alert: "Patient will produce thinner, clear sputum within 48 hours."
+  severity: "INFO"
+- keywords: ["sputum", "yellow", "green"]
+  match_type: any
+  alert: "Patient will be afebrile and sputum will clear within 3 days of antibiotic therapy."
+  severity: "INFO"
+- keywords: ["breath sounds", "diminished"]
+  match_type: all
+  alert: "Patient will demonstrate improved bilateral lung expansion on auscultation within 24 hours."
+  severity: "INFO"
+- keywords: ["breath sounds", "absent"]
+  match_type: all
+  alert: "Patient will have vital signs and respiratory status assessed every 15-30 minutes until stable."
+  severity: "CRITICAL"
+- keywords: ["stridor"]
+  match_type: any
+  alert: "Patient will maintain a patent airway for the duration of the shift."
+  severity: "CRITICAL"
+- keywords: ["cyanosis", "central"]
+  match_type: all
+  alert: "Patient's central cyanosis will resolve (e.g., pink mucous membranes) within 1 hour."
+  severity: "CRITICAL"
+- keywords: ["cyanosis", "peripheral"]
+  match_type: all
+  alert: "Patient's extremities will be warm and pink with cap refill <3 sec within 4 hours."
+  severity: "WARNING"
+- keywords: ["edema", "pitting"]
+  match_type: all
+  alert: "Patient's pitting edema will reduce by at least one grade (e.g., 3+ to 2+) within 48 hours."
+  severity: "INFO"
+- keywords: ["edema", "generalized", "anasarca"]
+  match_type: any
+  alert: "Patient will achieve a net negative I/O balance for 3 consecutive days."
+  severity: "INFO"
+- keywords: ["edema", "pedal"]
+  match_type: all
+  alert: "Patient will verbalize 3 methods to reduce lower extremity edema (e.g., elevation, low salt) by discharge."
+  severity: "INFO"
+- keywords: ["fluid volume excess"]
+  match_type: any
+  alert: "Patient will lose 1-2 lbs (0.5-1 kg) of fluid weight per day as tolerated."
+  severity: "INFO"
+- keywords: ["tachycardia"]
+  match_type: any
+  alert: "Patient's heart rate will remain in normotensive range (60-100 bpm) for the next 8 hours."
+  severity: "INFO"
+- keywords: ["bradycardia"]
+  match_type: any
+  alert: "Patient will remain asymptomatic (no dizziness, syncope) with current heart rate for the duration of the shift."
+  severity: "INFO"
+- keywords: ["rhythm", "irregular"]
+  match_type: all
+  alert: "Patient will remain free from complications of irregular rhythm (e.g., no falls, no chest pain) for 24 hours."
+  severity: "WARNING"
+- keywords: ["afib", "atrial fibrillation"]
+  match_type: any
+  alert: "Patient will remain free of signs of stroke (e.g., FAST) for the duration of the shift."
+  severity: "WARNING"
+- keywords: ["pulse", "weak", "thready"]
+  match_type: any
+  alert: "Patient will have palpable (2+) peripheral pulses in all extremities within 8 hours."
+  severity: "WARNING"
+- keywords: ["pulse", "absent"]
+  match_type: all
+  alert: "Patient's affected extremity will regain palpable or Doppler-audible pulses within 1 hour of intervention."
+  severity: "CRITICAL"
+- keywords: ["pulse", "bounding"]
+  match_type: any
+  alert: "Patient's blood pressure will remain within target range for the next 4 hours."
+  severity: "INFO"
+- keywords: ["pallor"]
+  match_type: any
+  alert: "Patient's skin color will return to baseline (e.g., pink) within 8 hours."
+  severity: "INFO"
+- keywords: ["mottled", "skin"]
+  match_type: all
+  alert: "Patient's skin mottling will resolve and extremities will be warm within 2 hours of intervention."
+  severity: "CRITICAL"
+- keywords: ["capillary refill", "slow", "> 3 seconds"]
+  match_type: any
+  alert: "Patient's capillary refill will be less than 3 seconds in all extremities within 4 hours."
+  severity: "WARNING"
+- keywords: ["JVD", "jugular vein distention"]
+  match_type: any
+  alert: "Patient's JVD will be absent or reduced (at 30-45 degrees) within 24-48 hours."
+  severity: "INFO"
+- keywords: ["chest pain"]
+  match_type: any
+  alert: "Patient will report 0/10 chest pain (or relief from baseline) within 30 minutes of intervention."
+  severity: "CRITICAL"
+- keywords: ["palpitations"]
+  match_type: any
+  alert: "Patient will report resolution of palpitations within 1 hour."
+  severity: "INFO"
+- keywords: ["BP", "high", "hypertension"]
+  match_type: any
+  alert: "Patient's blood pressure will remain below 140/90 mmHg (or specified target) by end of shift."
+  severity: "INFO"
+- keywords: ["BP", "low", "hypotension"]
+  match_type: any
+  alert: "Patient's systolic blood pressure will remain >90 mmHg (or specified target) for the next 8 hours."
+  severity: "WARNING"
+- keywords: ["orthostatic hypotension"]
+  match_type: any
+  alert: "Patient will be able to change positions (lying to standing) without dizziness or SBP drop >20 mmHg by discharge."
+  severity: "INFO"
+- keywords: ["bruit", "carotid"]
+  match_type: all
+  alert: "Patient will remain free of new neurological deficits (e.g., no new weakness, slurred speech) for the next 24 hours."
+  severity: "WARNING"
+- keywords: ["murmur", "heart"]
+  match_type: all
+  alert: "Patient will remain hemodynamically stable and free of chest pain for the duration of the shift."
+  severity: "INFO"
+- keywords: ["cool", "extremities"]
+  match_type: all
+  alert: "Patient's extremities will be warm to the touch within 4 hours."
+  severity: "INFO"
+- keywords: ["redness", "skin", "erythema"]
+  match_type: any
+  alert: "Patient's skin will remain intact, with no new areas of breakdown, for the next 24 hours."
+  severity: "INFO"
+- keywords: ["blanching", "skin"]
+  match_type: all
+  alert: "Patient's blanchable red area will resolve within 24 hours with offloading."
+  severity: "INFO"
+- keywords: ["non-blanching", "redness"]
+  match_type: all
+  alert: "Patient's Stage 1 pressure injury will not progress to Stage 2 (no open skin) by discharge."
+  severity: "WARNING"
+- keywords: ["wound", "ulcer", "pressure"]
+  match_type: any
+  alert: "Patient's wound will show decreased size (e.g., length, width, depth) within 1 week."
+  severity: "WARNING"
+- keywords: ["ulcer", "venous"]
+  match_type: all
+  alert: "Patient will demonstrate correct application of compression dressing by discharge."
+  severity: "INFO"
+- keywords: ["ulcer", "arterial"]
+  match_type: all
+  alert: "Patient's affected extremity will maintain baseline pulse, color, and temperature for the next 8 hours."
+  severity: "WARNING"
+- keywords: ["ulcer", "diabetic"]
+  match_type: all
+  alert: "Patient will demonstrate proper offloading techniques for the affected foot by end of shift."
+  severity: "INFO"
+- keywords: ["rash"]
+  match_type: any
+  alert: "Patient will report decreased itching and rash will show signs of resolution within 3 days."
+  severity: "INFO"
+- keywords: ["dry", "skin", "xerosis"]
+  match_type: any
+  alert: "Patient's skin will be supple and free of cracking within 3 days."
+  severity: "INFO"
+- keywords: ["turgor", "poor", "tenting"]
+  match_type: any
+  alert: "Patient will demonstrate signs of adequate hydration (e.g., good skin turgor, moist mucous membranes) within 24 hours."
+  severity: "INFO"
+- keywords: ["moisture", "skin"]
+  match_type: all
+  alert: "Patient's skin will remain free of maceration (e.g., skin folds, perineum) for the next 24 hours."
+  severity: "INFO"
+- keywords: ["diaphoresis", "diaphoretic"]
+  match_type: any
+  alert: "Patient's skin will remain clean and dry for the duration of the shift."
+  severity: "INFO"
+- keywords: ["clammy", "skin"]
+  match_type: all
+  alert: "Patient will return to warm, dry skin and hemodynamic stability within 1 hour of intervention."
+  severity: "CRITICAL"
+- keywords: ["jaundice", "yellow skin"]
+  match_type: any
+  alert: "Patient will report decreased pruritus and labs (bilirubin) will trend down within 1 week."
+  severity: "INFO"
+- keywords: ["petechiae"]
+  match_type: any
+  alert: "Patient will remain free of new petechiae or signs of bleeding for the next 24 hours."
+  severity: "WARNING"
+- keywords: ["ecchymosis", "bruise"]
+  match_type: any
+  alert: "Patient will have no new areas of ecchymosis for the next 48 hours."
+  severity: "INFO"
+- keywords: ["incision", "drainage"]
+  match_type: all
+  alert: "Patient's wound drainage will decrease in amount and change from purulent/sanguineous to serous within 3-5 days."
+  severity: "INFO"
+- keywords: ["incision", "redness"]
+  match_type: all
+  alert: "Patient will be free of signs of wound infection (no fever, erythema, purulence) within 48 hours of starting antibiotics."
+  severity: "WARNING"
+- keywords: ["incision", "dehiscence"]
+  match_type: any
+  alert: "Patient's wound will remain stable (no further separation) until surgical consult."
+  severity: "CRITICAL"
+- keywords: ["incision", "evisceration"]
+  match_type: any
+  alert: "Patient will remain hemodynamically stable and pain controlled (< 4/10) prior to surgery."
+  severity: "CRITICAL"
+- keywords: ["skin", "tear"]
+  match_type: all
+  alert: "Patient's skin tear will show signs of healing (e.g., flap adherence, no drainage) within 3 days."
+  severity: "INFO"
+- keywords: ["macerated", "skin"]
+  match_type: all
+  alert: "Patient's macerated skin will be dry and intact within 24-48 hours."
+  severity: "INFO"
+- keywords: ["Braden", "low", "high risk"]
+  match_type: any
+  alert: "Patient will remain free of new pressure injuries for the duration of their hospital stay."
+  severity: "WARNING"
+- keywords: ["sacrum", "red"]
+  match_type: all
+  alert: "Patient's sacral redness will resolve within 24 hours of initiating turning/offloading schedule."
+  severity: "INFO"
+- keywords: ["heels", "red"]
+  match_type: all
+  alert: "Patient's heel redness will resolve within 24 hours of 'floating heels' (e.g., pillows, boots)."
+  severity: "INFO"
+- keywords: ["purulent", "drainage"]
+  match_type: all
+  alert: "Patient's wound will be free of purulent drainage and temperature will be <100.4°F within 48 hours of antibiotic tx."
+  severity: "WARNING"
+- keywords: ["bowel sounds", "absent"]
+  match_type: all
+  alert: "Patient will have return of bowel sounds and pass flatus within 24-48 hours."
+  severity: "WARNING"
+- keywords: ["bowel sounds", "hypoactive"]
+  match_type: all
+  alert: "Patient will have a soft, formed bowel movement within 48 hours."
+  severity: "INFO"
+- keywords: ["bowel sounds", "hyperactive"]
+  match_type: all
+  alert: "Patient will have < 3 loose/liquid stools in the next 24 hours."
+  severity: "INFO"
+- keywords: ["abdomen", "distended"]
+  match_type: all
+  alert: "Patient's abdominal girth will decrease by [X] cm/inches by end of shift."
+  severity: "INFO"
+- keywords: ["abdomen", "firm", "rigid"]
+  match_type: any
+  alert: "Patient will have vital signs and pain level assessed every 15 minutes until provider evaluates."
+  severity: "CRITICAL"
+- keywords: ["abdomen", "tender"]
+  match_type: all
+  alert: "Patient will report abdominal pain < 4/10 within 1 hour."
+  severity: "INFO"
+- keywords: ["rebound tenderness"]
+  match_type: any
+  alert: "Patient will have pain controlled (<4/10) and vital signs stable prior to surgical intervention."
+  severity: "CRITICAL"
+- keywords: ["nausea"]
+  match_type: any
+  alert: "Patient will report nausea < 2/10 within 1 hour of antiemetic administration."
+  severity: "INFO"
+- keywords: ["vomiting", "emesis"]
+  match_type: any
+  alert: "Patient will have no further episodes of emesis in the next 8 hours."
+  severity: "WARNING"
+- keywords: ["coffee ground emesis"]
+  match_type: any
+  alert: "Patient will remain hemodynamically stable (SBP >90, HR <100) with no new bleeding episodes for the next 8 hours."
+  severity: "CRITICAL"
+- keywords: ["constipation", "no BM", "3 days"]
+  match_type: any
+  alert: "Patient will have a bowel movement within the next 24 hours."
+  severity: "INFO"
+- keywords: ["stool", "hard", "dry"]
+  match_type: all
+  alert: "Patient will pass a soft, formed stool within 24 hours."
+  severity: "INFO"
+- keywords: ["diarrhea", "loose", "watery"]
+  match_type: any
+  alert: "Patient will have < 3 loose stools in 24 hours and perineal skin will remain intact."
+  severity: "INFO"
+- keywords: ["stool", "black", "tarry", "melena"]
+  match_type: any
+  alert: "Patient will have no further melena stools and Hgb will remain stable for 24 hours."
+  severity: "CRITICAL"
+- keywords: ["stool", "bright red", "hematochezia"]
+  match_type: any
+  alert: "Patient will have no further hematochezia and vitals will remain stable for the next 8 hours."
+  severity: "CRITICAL"
+- keywords: ["stool", "clay-colored"]
+  match_type: any
+  alert: "Patient will have return of normal brown stool color within 1 week (or post-intervention)."
+  severity: "INFO"
+- keywords: ["NG tube", "residual", "high"]
+  match_type: all
+  alert: "Patient will tolerate tube feeding at goal rate with residuals < [policy limit] for 24 hours."
+  severity: "WARNING"
+- keywords: ["dysphagia", "swallowing difficulty"]
+  match_type: any
+  alert: "Patient will remain free from signs of aspiration (e.g., coughing, choking, fever) for the next 24 hours."
+  severity: "CRITICAL"
+- keywords: ["poor appetite"]
+  match_type: any
+  alert: "Patient will consume at least 50% of all meals for the next 3 days."
+  severity: "INFO"
+- keywords: ["mouth", "dry", "xerostomia"]
+  match_type: any
+  alert: "Patient's oral mucous membranes will be moist and intact by end of shift."
+  severity: "INFO"
+- keywords: ["mouth", "sores", "stomatitis"]
+  match_type: any
+  alert: "Patient will report pain < 3/10 during oral intake within 48 hours."
+  severity: "INFO"
+- keywords: ["thrush", "white patches"]
+  match_type: any
+  alert: "Patient's oral thrush will show 50% resolution within 3 days of antifungal treatment."
+  severity: "INFO"
+- keywords: ["dysuria", "painful urination"]
+  match_type: any
+  alert: "Patient will report absence of burning or pain on urination within 48 hours of starting antibiotics."
+  severity: "INFO"
+- keywords: ["hematuria", "blood in urine"]
+  match_type: any
+  alert: "Patient's urine will be clear and free of gross hematuria within 24 hours."
+  severity: "WARNING"
+- keywords: ["urine", "cloudy"]
+  match_type: all
+  alert: "Patient will be free of UTI symptoms (fever, dysuria, urgency) within 48 hours."
+  severity: "INFO"
+- keywords: ["urine", "foul odor"]
+  match_type: all
+  alert: "Patient will be afebrile and urine will be clear/odorless within 48 hours of abx."
+  severity: "INFO"
+- keywords: ["urine", "dark", "amber"]
+  match_type: any
+  alert: "Patient's urine will be light yellow/straw-colored within 24 hours."
+  severity: "INFO"
+- keywords: ["incontinence", "urine"]
+  match_type: all
+  alert: "Patient's perineal skin will remain intact and free from redness or breakdown for the next 24 hours."
+  severity: "INFO"
+- keywords: ["incontinence", "bowel"]
+  match_type: all
+  alert: "Patient's perianal skin will remain intact and free of breakdown for the duration of the shift."
+  severity: "WARNING"
+- keywords: ["urinary retention"]
+  match_type: any
+  alert: "Patient will have a post-void residual (PVR) of < 100 mL after the next successful void."
+  severity: "WARNING"
+- keywords: ["no urine output", "anuria"]
+  match_type: any
+  alert: "Patient will have return of urine output (>30ml/hr) within 4 hours."
+  severity: "CRITICAL"
+- keywords: ["low urine output", "oliguria"]
+  match_type: any
+  alert: "Patient will maintain a urine output of > 30 mL/hr (or 0.5 mL/kg/hr) for the next 8 hours."
+  severity: "WARNING"
+- keywords: ["foley", "catheter"]
+  match_type: any
+  alert: "Patient will remain free of signs of CAUTI (e.g., fever, cloudy urine) for the duration of catheterization."
+  severity: "INFO"
+- keywords: ["bladder scan", "high", "PVR"]
+  match_type: any
+  alert: "Patient will successfully void with PVR < 100mL within 6 hours."
+  severity: "INFO"
+- keywords: ["frequency", "urinary"]
+  match_type: all
+  alert: "Patient will report a return to normal voiding pattern within 48 hours."
+  severity: "INFO"
+- keywords: ["urgency", "urinary"]
+  match_type: all
+  alert: "Patient will report resolution of urinary urgency within 48 hours."
+  severity: "INFO"
+- keywords: ["nocturia"]
+  match_type: any
+  alert: "Patient will remain free from falls during the night shift."
+  severity: "INFO"
+- keywords: ["confusion", "acute"]
+  match_type: all
+  alert: "Patient will be oriented to person, place, and time (A&O x3) within 24-48 hours or return to baseline."
+  severity: "WARNING"
+- keywords: ["disoriented"]
+  match_type: any
+  alert: "Patient will be able to state correct name and location by end of shift."
+  severity: "INFO"
+- keywords: ["lethargic"]
+  match_type: any
+  alert: "Patient will return to a more alert state (e.g., awakens easily to voice) within 8 hours."
+  severity: "WARNING"
+- keywords: ["obtunded"]
+  match_type: any
+  alert: "Patient's GCS will improve or remain stable (at baseline) for the next 8 hours."
+  severity: "CRITICAL"
+- keywords: ["unresponsive"]
+  match_type: any
+  alert: "Patient will have airway protected and vital signs stabilized within 30 minutes."
+  severity: "CRITICAL"
+- keywords: ["GCS", "low"]
+  match_type: all
+  alert: "Patient's GCS score will not decrease from baseline for the next 8 hours."
+  severity: "CRITICAL"
+- keywords: ["GCS", "decrease", "drop"]
+  match_type: any
+  alert: "Patient will have neuro exam performed by provider within 15 minutes."
+  severity: "CRITICAL"
+- keywords: ["pupils", "unequal"]
+  match_type: all
+  alert: "Patient will exhibit no further decline in neurological status (e.g., stable GCS) for the next 4 hours."
+  severity: "CRITICAL"
+- keywords: ["pupils", "fixed", "dilated"]
+  match_type: all
+  alert: "Patient will have critical neuro-assessment documented every 15 minutes until provider intervention."
+  severity: "CRITICAL"
+- keywords: ["pupils", "pinpoint"]
+  match_type: all
+  alert: "Patient's pupils will return to 2-3mm and reactive within 1 hour of intervention (e.g., naloxone)."
+  severity: "WARNING"
+- keywords: ["weakness", "extremity"]
+  match_type: all
+  alert: "Patient's motor strength will not decrease from baseline (e.g., 5/5) for the next 24 hours."
+  severity: "INFO"
+- keywords: ["weakness", "unilateral", "one-sided"]
+  match_type: any
+  alert: "Patient will exhibit no further decline in neurological status (e.g., stable NIHSS score) for the next 12 hours."
+  severity: "CRITICAL"
+- keywords: ["paralysis", "plegia"]
+  match_type: any
+  alert: "Patient will remain free from complications of immobility (e.g., skin breakdown, contractures) for 48 hours."
+  severity: "WARNING"
+- keywords: ["numbness", "tingling", "paresthesia"]
+  match_type: any
+  alert: "Patient will report resolution or decrease in paresthesia within 24 hours."
+  severity: "INFO"
+- keywords: ["gait", "unsteady"]
+  match_type: all
+  alert: "Patient will remain free from falls for the duration of the hospital stay."
+  severity: "WARNING"
+- keywords: ["gait", "shuffling"]
+  match_type: all
+  alert: "Patient will demonstrate safe use of assistive device (e.g., walker) for all ambulation by discharge."
+  severity: "INFO"
+- keywords: ["dizzy", "dizziness"]
+  match_type: any
+  alert: "Patient will report no dizziness during position changes by end of shift."
+  severity: "INFO"
+- keywords: ["vertigo"]
+  match_type: any
+  alert: "Patient will remain free from falls for the next 24 hours."
+  severity: "WARNING"
+- keywords: ["syncope", "fainted"]
+  match_type: any
+  alert: "Patient will have no further syncopal episodes for the remainder of admission."
+  severity: "CRITICAL"
+- keywords: ["slurred speech", "dysarthria"]
+  match_type: any
+  alert: "Patient will be able to make needs known (verbally or non-verbally) for the duration of the shift."
+  severity: "INFO"
+- keywords: ["aphasia", "expressive"]
+  match_type: all
+  alert: "Patient will use communication board or gestures to make 3 needs known by end of shift."
+  severity: "INFO"
+- keywords: ["aphasia", "receptive"]
+  match_type: all
+  alert: "Patient will respond appropriately to 3 simple, gestured commands by end of shift."
+  severity: "INFO"
+- keywords: ["tremors"]
+  match_type: any
+  alert: "Patient will be able to perform 1 ADL (e.g., feeding) with minimal tremor interference by discharge."
+  severity: "INFO"
+- keywords: ["seizure"]
+  match_type: any
+  alert: "Patient will remain free from injury (e.g., no falls, head trauma) during the shift."
+  severity: "CRITICAL"
+- keywords: ["headache"]
+  match_type: any
+  alert: "Patient will report headache severity reduced to < 3/10 within 1 hour of intervention."
+  severity: "INFO"
+- keywords: ["memory", "poor", "forgetful"]
+  match_type: any
+  alert: "Patient will use memory aids (e.g.,- whiteboard) to recall 2 care-related tasks by discharge."
+  severity: "INFO"
+- keywords: ["agitated", "restless"]
+  match_type: any
+  alert: "Patient will have a 50% reduction in agitated behaviors within 2 hours of de-escalation/intervention."
+  severity: "WARNING"
+- keywords: ["combative"]
+  match_type: any
+  alert: "Patient and staff will remain free from injury for the duration of the shift."
+  severity: "CRITICAL"
+- keywords: ["hallucinations"]
+  match_type: any
+  alert: "Patient will verbalize orientation to reality (e.g., 'I know it's not real') by end of shift."
+  severity: "WARNING"
+- keywords: ["delusions"]
+  match_type: any
+  alert: "Patient will participate in 1 activity without verbalizing delusional content for 30 minutes."
+  severity: "INFO"
+- keywords: ["joint pain", "arthralgia"]
+  match_type: any
+  alert: "Patient will report joint pain < 4/10 during activity within 24 hours."
+  severity: "INFO"
+- keywords: ["joint", "swelling"]
+  match_type: all
+  alert: "Patient's joint swelling will be visibly reduced within 48 hours."
+  severity: "INFO"
+- keywords: ["joint", "warmth", "redness"]
+  match_type: all
+  alert: "Patient's affected joint will be free of warmth and redness within 48 hours of abx."
+  severity: "WARNING"
+- keywords: ["ROM", "limited", "decreased"]
+  match_type: any
+  alert: "Patient's affected joint will show a 10-degree improvement in range of motion, as measured by PT, within 1 week."
+  severity: "INFO"
+- keywords: ["contracture"]
+  match_type: any
+  alert: "Patient's contracture will not worsen (no decrease in ROM) during admission."
+  severity: "INFO"
+- keywords: ["muscle", "weakness"]
+  match_type: all
+  alert: "Patient will ambulate [X] feet (e.g., 50 ft) with assistive device and 1-person assist, 3 times per day."
+  severity: "INFO"
+- keywords: ["muscle", "atrophy"]
+  match_type: all
+  alert: "Patient will perform active ROM exercises to all extremities 3 times by end of shift."
+  severity: "INFO"
+- keywords: ["muscle", "spasms", "cramps"]
+  match_type: any
+  alert: "Patient will report a 50% reduction in muscle spasms within 1 hour of intervention."
+  severity: "INFO"
+- keywords: ["assistive device", "walker", "cane"]
+  match_type: any
+  alert: "Patient will demonstrate safe use of assistive device on 3 consecutive ambulation attempts."
+  severity: "INFO"
+- keywords: ["activity intolerance"]
+  match_type: any
+  alert: "Patient will ambulate 20 feet further today than yesterday without O2 sat dropping <92%."
+  severity: "INFO"
+- keywords: ["self-care", "deficit", "assist", "ADL"]
+  match_type: any
+  alert: "Patient will participate in 50% of their ADLs (e.g., bathing, dressing) with setup assistance by discharge."
+  severity: "INFO"
+- keywords: ["fatigue"]
+  match_type: any
+  alert: "Patient will identify 3 energy-conservation techniques by end of shift."
+  severity: "INFO"
+- keywords: ["fall", "found on floor"]
+  match_type: any
+  alert: "Patient will remain free from further falls for the duration of the hospital stay."
+  severity: "CRITICAL"
+- keywords: ["crepitus", "joint"]
+  match_type: all
+  alert: "Patient will report pain < 4/10 with movement of affected joint within 24 hours."
+  severity: "INFO"
+- keywords: ["crepitus", "subcutaneous"]
+  match_type: all
+  alert: "Patient's subcutaneous crepitus will not extend in area for the next 8 hours."
+  severity: "WARNING"
+- keywords: ["pain", "acute"]
+  match_type: all
+  alert: "Patient will report a pain level of < 4/10 (or a 2-point decrease) within 1 hour of analgesic administration."
+  severity: "INFO"
+- keywords: ["pain", "chronic"]
+  match_type: all
+  alert: "Patient will participate in 1 non-pharmacological pain intervention (e.g., imagery) by end of shift."
+  severity: "INFO"
+- keywords: ["pain", "scale", "7/10"]
+  match_type: all
+  alert: "Patient will report pain < 4/10 within 1 hour of intervention."
+  severity: "WARNING"
+- keywords: ["pain", "scale", "8/10"]
+  match_type: all
+  alert: "Patient will report pain < 4/10 within 1 hour of intervention."
+  severity: "WARNING"
+- keywords: ["pain", "scale", "9/10"]
+  match_type: all
+  alert: "Patient will report pain < 5/10 within 1 hour of intervention."
+  severity: "CRITICAL"
+- keywords: ["pain", "scale", "10/10"]
+  match_type: all
+  alert: "Patient will report pain < 5/10 within 1 hour of intervention."
+  severity: "CRITICAL"
+- keywords: ["pain", "non-verbal", "grimace", "guarding"]
+  match_type: any
+  alert: "Patient will exhibit decreased non-verbal pain cues (e.g., < 3 on CPOT scale) within 1 hour of intervention."
+  severity: "INFO"
+- keywords: ["anxious", "anxiety"]
+  match_type: any
+  alert: "Patient will report anxiety level < 4/10 within 1 hour of intervention (e.g., PRN med, relaxation techniques)."
+  severity: "INFO"
+- keywords: ["crying"]
+  match_type: any
+  alert: "Patient will accept 1 coping support (e.g., verbalize feelings, request chaplain) by end of shift."
+  severity: "INFO"
+- keywords: ["flat affect"]
+  match_type: any
+  alert: "Patient will engage in 1 brief conversation with staff by end of shift."
+  severity: "INFO"
+- keywords: ["depressed", "sad"]
+  match_type: any
+  alert: "Patient will verbalize feelings to staff 1 time within the next 24 hours."
+  severity: "INFO"
+- keywords: ["suicidal", "SI"]
+  match_type: any
+  alert: "Patient will remain safe, free from self-harm, and on 1:1 observation for the duration of the shift."
+  severity: "CRITICAL"
+- keywords: ["homicidal", "HI"]
+  match_type: any
+  alert: "Patient and staff will remain free from harm for the duration of the shift."
+  severity: "CRITICAL"
+- keywords: ["insomnia", "no sleep"]
+  match_type: any
+  alert: "Patient will report achieving at least 4-6 hours of uninterrupted sleep tonight."
+  severity: "INFO"
+- keywords: ["nightmares"]
+  match_type: any
+  alert: "Patient will verbalize 1 relaxation technique to use before sleep by end of shift."
+  severity: "INFO"
+- keywords: ["fever", "febrile", "hyperthermia"]
+  match_type: any
+  alert: "Patient's temperature will return to < 100.4°F (38°C) within 2 hours of intervention."
+  severity: "WARNING"
+- keywords: ["hypothermia", "cold"]
+  match_type: any
+  alert: "Patient's core temperature will rise to > 96.8°F (36°C) within 4 hours."
+  severity: "WARNING"
+- keywords: ["chills", "rigors"]
+  match_type: any
+  alert: "Patient will be afebrile and state no chills within 4 hours."
+  severity: "WARNING"
+- keywords: ["non-compliant", "non-adherent"]
+  match_type: any
+  alert: "Patient will verbalize 1 barrier to adherence and 1 potential solution by discharge."
+  severity: "INFO"
+- keywords: ["knowledge", "deficit", "lacks"]
+  match_type: any
+  alert: "Patient or caregiver will demonstrate correct [skill, e.g., 'insulin administration'] using teach-back method by discharge."
+  severity: "INFO"
+- keywords: ["new diagnosis", "education"]
+  match_type: any
+  alert: "Patient will verbalize 3 key self-management points related to their new diagnosis of [e.g., 'Diabetes'] by discharge."
+  severity: "INFO"
+- keywords: ["home", "meds", "reconcile"]
+  match_type: all
+  alert: "Patient's home medication list will be reconciled with inpatient orders by end of shift."
+  severity: "INFO"
+- keywords: ["discharge", "home"]
+  match_type: all
+  alert: "Patient will verbalize 3 'red flag' symptoms and when to call the provider by time of discharge."
+  severity: "INFO"
+- keywords: ["language", "barrier"]
+  match_type: all
+  alert: "Patient will have all education provided via certified interpreter (or approved device) for the duration of stay."
+  severity: "INFO"
+- keywords: ["hard of hearing", "HOH"]
+  match_type: any
+  alert: "Patient will use [hearing aids, pocket talker] and demonstrate understanding of conversation by end of shift."
+  severity: "INFO"
+- keywords: ["blind", "vision", "impaired"]
+  match_type: any
+  alert: "Patient will have a safe, uncluttered environment and remain free from falls for 24 hours."
+  severity: "INFO"
+- keywords: ["isolation", "precautions"]
+  match_type: any
+  alert: "Patient will verbalize understanding of isolation rationale (e.g., 'to prevent spread') by end of shift."
+  severity: "INFO"
+- keywords: ["alcohol", "withdrawal"]
+  match_type: any
+  alert: "Patient's CIWA score will remain < 8 for the next 24 hours."
+  severity: "WARNING"
+- keywords: ["opioid", "withdrawal"]
+  match_type: any
+  alert: "Patient's COWS score will remain < 5 for the next 24 hours."
+  severity: "WARNING"
+- keywords: ["IV", "site", "red", "painful"]
+  match_type: any
+  alert: "Patient will have a new, patent IV with no signs of phlebitis within 1 hour."
+  severity: "INFO"
+- keywords: ["IV", "site", "swollen", "cool"]
+  match_type: any
+  alert: "Patient's infiltration will resolve (e.g., swelling decreased) within 4 hours of IV removal."
+  severity: "INFO"
+- keywords: ["blood glucose", "high", "hyperglycemia"]
+  match_type: any
+  alert: "Patient's blood glucose will be between 80-180 mg/dL (or target) for the next 8 hours."
+  severity: "WARNING"
+- keywords: ["blood glucose", "low", "hypoglycemia"]
+  match_type: any
+  alert: "Patient's blood glucose will be > 70 mg/dL within 30 minutes of intervention."
+  severity: "CRITICAL"
+- keywords: ["Hgb", "low", "anemia"]
+  match_type: any
+  alert: "Patient will remain free of symptoms of anemia (e.g., no dizziness, dyspnea on exertion) for 24 hours."
+  severity: "INFO"
+- keywords: ["platelets", "low", "thrombocytopenia"]
+  match_type: any
+  alert: "Patient will remain free of bleeding (e.g., no petechiae, no hematuria) for the next 24 hours."
+  severity: "WARNING"
+- keywords: ["WBC", "low", "neutropenia"]
+  match_type: any
+  alert: "Patient will remain free of infection (e.g., afebrile, no new cough) for the next 48 hours."
+  severity: "WARNING"
+- keywords: ["sodium", "low", "hyponatremia"]
+  match_type: any
+  alert: "Patient will remain free of neurological compromise (e.g., no new confusion, no seizure) for 24 hours."
+  severity: "WARNING"
+- keywords: ["sodium", "high", "hypernatremia"]
+  match_type: any
+  alert: "Patient will demonstrate adequate hydration (moist mucous membranes) within 24 hours."
+  severity: "WARNING"
+- keywords: ["potassium", "low", "hypokalemia"]
+  match_type: any
+  alert: "Patient will remain free of cardiac dysrhythmias and muscle weakness for the next 8 hours."
+  severity: "WARNING"
+- keywords: ["potassium", "high", "hyperkalemia"]
+  match_type: any
+  alert: "Patient will remain free of cardiac dysrhythmias (e.g., stable sinus rhythm) for the next 8 hours."
+  severity: "CRITICAL"
+- keywords: ["INR", "high"]
+  match_type: all
+  alert: "Patient will remain free of bleeding (e.g., no gross hematuria, no new bruising) for the next 24 hours."
+  severity: "WARNING"
+- keywords: ["troponin", "positive", "high"]
+  match_type: any
+  alert: "Patient will report 0/10 chest pain and remain free of dysrhythmias for the next 4 hours."
+  severity: "CRITICAL"
+- keywords: ["lactate", "high"]
+  match_type: all
+  alert: "Patient's lactate level will trend down toward normal (< 2.0) within 8 hours."
+  severity: "CRITICAL"
+- keywords: ["denies", "pain"]
+  match_type: all
+  alert: "Patient will maintain a pain level of 0/10 for the duration of the shift."
+  severity: "INFO"
+- keywords: ["denies", "shortness of breath"]
+  match_type: all
+  alert: "Patient will maintain unlabored respirations (12-20 bpm) for the duration of the shift."
+  severity: "INFO"
+- keywords: ["denies", "nausea"]
+  match_type: all
+  alert: "Patient will tolerate diet without nausea or vomiting for the next 24 hours."
+  severity: "INFO"
+- keywords: ["baseline", "normal"]
+  match_type: any
+  alert: "Patient will maintain all vital signs and physical exam findings at their stated baseline for the next 8 hours."
+  severity: "INFO"

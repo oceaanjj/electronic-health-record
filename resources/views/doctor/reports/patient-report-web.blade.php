@@ -15,7 +15,8 @@
         .section-title {    /* component title */
             background-color: #ffe070ff;
             padding: 5px;
-            margin: -8px -8px 8px -8px;
+            margin-top:10px;
+            margin-botom:10px;
             border-bottom: 1px solid #eee;
             font-size: 16px;
             font-weight: bold;
@@ -79,6 +80,9 @@
                 ])
             </div>
             <div class="section">
+                @include('doctor.reports.partials._developmental-history', ['developmentalHistory' => $developmentalHistory])
+            </div>
+            <div class="section">
                 @include('doctor.reports.partials._physical_exam', ['physicalExam' => $physicalExam])
             </div>
             <div class="section">
@@ -99,16 +103,16 @@
             <div class="section">
                 @include('doctor.reports.partials._ivs_and_lines', ['ivsAndLines' => $ivsAndLines])
             </div>
-        <div class="section">
-            @include('doctor.reports.partials._medication_administration')
-        </div>
-        <div class="section">
-            @include('doctor.reports.partials._medication_reconciliation', [
-                'currentMedication' => $currentMedication,
-                'homeMedication' => $homeMedication,
-                'changesInMedication' => $changesInMedication,
-            ])
-                    </div>
+            <div class="section">
+                @include('doctor.reports.partials._medication_administrations', ['medicationAdministrations' => $medicationAdministrations])
+            </div>
+            <div class="section">
+                @include('doctor.reports.partials._medication_reconciliation', [
+                    'currentMedication' => $currentMedication,
+                    'homeMedication' => $homeMedication,
+                    'changesInMedication' => $changesInMedication,
+                ])
+            </div>
                     <div class="section">
                         @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning])
                     </div>

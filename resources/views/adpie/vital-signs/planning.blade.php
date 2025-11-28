@@ -1,36 +1,69 @@
-@extends('layouts.app')
 
-@section('title', 'Patient Medical History')
+@extends('layouts.app')
+@section('title', 'Step 2: Planning')
 
 @section('content')
+    <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
+        <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
+            PATIENT NAME :
+        </label>
+        <div class="relative w-[400px]">
+            <input type="text" id="patient_search_input" value="{{ trim($patient->name ?? '') }}" readonly
+                class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100">
+        </div>
+    </div>
 
-<center>
-  <table class="mb-1.5 w-[72%] border-separate border-spacing-0">
-                <tr>
-                    <th rowspan="2" class="w-[200px] bg-dark-green text-white rounded-l-lg">PLANNING</th>
-                    <th
-                        class="bg-yellow-light text-brown text-[13px] border-l-2 border-r-2 border-t-2 border-line-brown rounded-tr-lg">
-                        FINDINGS
-                    </th>
+    <form action="{{ route('nursing-diagnosis.storePlanning', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
+        method="POST" class="h-full flex flex-col cdss-form"
+        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
+        data-patient-id="{{ $patient->patient_id }}"
+        data-component="{{ $component }}">
+        @csrf
 
-                    <th
-                        class="bg-yellow-light text-brown text-[13px] border-l-2 border-r-2 border-t-2 border-line-brown rounded-tr-lg">
-                        DECISION SUPPORT
-                    </th>
+        <fieldset>
+            <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
+                <div class="w-[68%] rounded-[15px] overflow-hidden">
+                    <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
+                        PLANNING (STEP 2 of 4)
+                    </div>
+                    <textarea id="planning" name="planning"
+                        class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input"
+                        data-field-name="planning"
+                        style="border-top: none;"
+                        placeholder="Enter nursing plan...">{{ old('planning', $diagnosis->planning ?? '') }}</textarea>
+                </div>
 
-                </tr>
+                <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">
+                    <div class="bg-dark-green text-white font-bold py-2 mb-0 text-center rounded-t-lg">
+                        RECOMMENDATIONS
+                    </div>
+                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
+                        data-alert-for="planning" style="border-top: none;">
+                        <span class="opacity-70 text-white font-semibold">No Recommendations</span>
+                    </div>
+                </div>
+            </div>
 
-                <tr>
-                    <td class="rounded-br-lg">
-                        <textarea class="notepad-lines h-[100px]" name="gross_motor"
-                            placeholder="Type here..."></textarea>
-                    </td>
+            <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
+                <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
+                    <a href="javascript:window.history.back()" class="button-default text-center">
+                        GO BACK
+                    </a>
+                </div>
 
-
-                    {{-- dito yung suggestions hindi ko muna lalagyan css put muna kayo bast anga shoshow text --}}
-                    <td class="w-[200px]"></td>
-                </tr>
-            </table>
-</center>
-
+                <div class="flex flex-row items-center justify-end space-x-2">
+                    <button type="submit" name="action" value="save_and_exit" class="button-default">
+                        SUBMIT
+                    </button>
+                    <button type="submit" name="action" value="save_and_proceed" class="button-default">
+                        INTERVENTION
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/adpie-alert.js'])
+@endpush

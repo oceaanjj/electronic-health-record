@@ -88,10 +88,9 @@ class PhysicalExamCdssService
             $alert = $this->runAnalysis($finding, $ruleSet);
 
             if ($alert) {
-                // This maps the form field name to the session key used in the view.
-                // e.g., 'skin_condition' becomes 'skin' for session('cdss.skin')
-                $sessionKey = str_replace(['_condition', '_appearance'], '', $key);
-                $alerts[$sessionKey] = $alert;
+                $alerts[$key . '_alert'] = $alert['alert'];
+            } else {
+                $alerts[$key . '_alert'] = 'No Findings';
             }
         }
         return $alerts;

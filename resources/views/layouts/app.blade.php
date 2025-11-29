@@ -7,7 +7,20 @@
     <title>Electronic Health Record</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    {{-- **google icons library nyhahhahaha** --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
     <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- !important for instant alerts-->
+
+    <style>
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 20
+        }
+    </style>
 </head>
 
 <body class="bg-white overflow-x-hidden">

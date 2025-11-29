@@ -71,9 +71,23 @@
     --font-neometric: "neometric", sans-serif;
 
     --radius-oval: 50%;
+    --color-placeholder: #d1d5db;
 }
 
+
+
 @layer components {
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--color-placeholder);
+    }
+    
+
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: var(--color-placeholder);
+    }
+
     .bg-yellow-light {
         background: linear-gradient(180deg, #ffd966, #f4b400);
         font-family: var(--font-creato-bold);

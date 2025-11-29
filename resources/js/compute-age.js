@@ -26,3 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
     birthdateInput.addEventListener("change", calculateAge);
     calculateAge();
 });
+
+
+
+
+   
+

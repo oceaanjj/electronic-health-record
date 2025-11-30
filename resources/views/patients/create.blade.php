@@ -176,7 +176,7 @@
                             <div class="relative js-error-container">
                                 <input type="number" id="age" name="age" value="{{ old('age') }}"
                                     class="w-full text-base px-4 py-2 rounded-lg shadow-sm pr-5 js-error-field outline-none border border-gray-300
-                                        transition duration-150 ease-in-out cursor-not-allowed" placeholder="Age" readonly disabled>
+                                        transition duration-150 ease-in-out cursor-not-allowed" placeholder="Age" readonly>
                             </div>
                         </div>
                     {{-- ** end age ** --}}
@@ -421,7 +421,7 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
                             
                             <div class="flex-1"> 
-                                <input type="text" name="contact_number[]"
+                                <input type="tel" name="contact_number[]"
                                     class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
                                         outline-none focus:ring-green-200 focus:border-green-500 transition duration-150 ease-in-out placeholder-gray-400"
                                     placeholder="e.g. 0912-345-6789" autocomplete="tel">

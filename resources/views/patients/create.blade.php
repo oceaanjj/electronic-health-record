@@ -175,17 +175,7 @@
 
                             <div class="relative js-error-container">
                                 <input type="number" id="age" name="age" value="{{ old('age') }}"
-                                    class="w-full text-base px-4 py-2 rounded-lg shadow-sm pr-5 js-error-field
-                                        
-                                        @error('birthdate') 
-                                            outline-none
-                                            border-2 border-red-500 has-server-error 
-                                            focus:ring-red-500 focus:border-red-500
-                                        @else  
-                                            {{-- ** para bumalik sa green kemerut ** --}}     
-                                            outline-none border border-gray-300 
-                                            focus:ring-green-200 focus:border-green-500 
-                                        @enderror
+                                    class="w-full text-base px-4 py-2 rounded-lg shadow-sm pr-5 js-error-field outline-none border border-gray-300
                                         transition duration-150 ease-in-out cursor-not-allowed" placeholder="Age" readonly disabled>
                             </div>
                         </div>

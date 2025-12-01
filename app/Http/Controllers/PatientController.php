@@ -58,7 +58,7 @@ class PatientController extends Controller
     // SAVE
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $rules = [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'middle_name' => 'nullable|string',
@@ -79,7 +79,18 @@ class PatientController extends Controller
             'contact_relationship.*' => 'nullable|string',
             'contact_number' => 'nullable|array',
             'contact_number.*' => 'nullable|string',
-        ]);
+        ];
+
+        $messages = [
+            'first_name.required' => 'This field is required.',
+            'last_name.required' => 'This field is required.',
+            'age.required' => 'This field is required.',
+            'birthdate.required' => 'This field is required.',
+            'sex.required' => 'This field is required.',
+            'admission_date.required' => 'This field is required.',
+        ];
+
+        $data = $request->validate($rules, $messages);
 
         try {
             $data['user_id'] = Auth::id();
@@ -140,7 +151,7 @@ class PatientController extends Controller
     // UPDATE
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
+        $rules = [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'middle_name' => 'nullable|string',
@@ -161,7 +172,18 @@ class PatientController extends Controller
             'contact_relationship.*' => 'nullable|string',
             'contact_number' => 'nullable|array',
             'contact_number.*' => 'nullable|string',
-        ]);
+        ];
+
+        $messages = [
+            'first_name.required' => 'This field is required.',
+            'last_name.required' => 'This field is required.',
+            'age.required' => 'This field is required.',
+            'birthdate.required' => 'This field is required.',
+            'sex.required' => 'This field is required.',
+            'admission_date.required' => 'This field is required.',
+        ];
+
+        $data = $request->validate($rules, $messages);
 
         try {
             // Filter out empty contact values and ensure proper array structure

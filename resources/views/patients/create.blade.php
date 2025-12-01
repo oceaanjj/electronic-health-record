@@ -493,7 +493,7 @@
                     </p>
                 `;
 
-                function updateErrorState(input, isError) {
+                function updateErrorState(input, isError, message = "This field is required.") {
                     const container = input.closest('.col-span-6');
                     const relativeWrapper = input.closest('.js-error-container');
                     let errorMessage = container.querySelector('.js-error-message');
@@ -509,17 +509,24 @@
                         if (relativeWrapper) {
                             relativeWrapper.insertAdjacentHTML('beforeend', iconTemplate);
                         }
-                        container.insertAdjacentHTML('beforeend', messageTemplate("This field is required."));
+                        container.insertAdjacentHTML('beforeend', messageTemplate(message)); 
                     } else {
                         input.classList.add(...DEFAULT_BORDER_CLASSES);
                     }
                 }
 
                 errorFields.forEach(input => {
+                    const serverMessage = input.getAttribute('data-server-message');
+                    if (serverMessage) {
+                        updateErrorState(input, true, serverMessage);
+                    }
+
                     input.addEventListener('input', function() {
                         const fieldIsEmpty = this.value.trim() === '';
                         updateErrorState(this, fieldIsEmpty);
                     });
+                    
+                   
                     if (input.value.trim() !== '') {
                         updateErrorState(input, false);
                     }
@@ -531,7 +538,7 @@
                     const menu = container.querySelector('.custom-dropdown-menu');
                     const arrow = container.querySelector('.dropdown-arrow'); 
                     
-                    // Close all other open dropdowns and reset their arrows
+                  
                     document.querySelectorAll('.custom-dropdown-container').forEach(otherContainer => {
                         const otherMenu = otherContainer.querySelector('.custom-dropdown-menu');
                         const otherArrow = otherContainer.querySelector('.dropdown-arrow');
@@ -542,10 +549,10 @@
                         }
                     });
 
-                    // Toggle the current dropdown menu
+           
                     menu.classList.toggle('hidden');
                     
-                    // Toggle the current dropdown arrow based on the new menu state
+                
                     if (menu.classList.contains('hidden')) {
                         arrow.textContent = 'arrow_drop_down';
                     } else {
@@ -559,13 +566,13 @@
                     const hiddenInput = container.closest('.col-span-6').querySelector('input[type="hidden"]');
                     const selectedTextSpan = container.querySelector('.dropdown-selected-text');
 
-                    // Opens/Closes the menu
+                  
                     button.addEventListener('click', function(e) {
                         e.preventDefault();
                         toggleDropdown(this);
                     });
 
-                    // Selects the value and closes the menu
+             
                     menu.querySelectorAll('li').forEach(option => {
                         option.addEventListener('click', function() {
                             const selectedValue = this.getAttribute('data-value');
@@ -575,11 +582,11 @@
                             hiddenInput.value = selectedValue;
                             selectedTextSpan.textContent = selectedText;
                             
-                            // Remove gray placeholder color and add dark text color
+                            
                             selectedTextSpan.classList.remove('text-gray-500'); 
                             selectedTextSpan.classList.add('text-gray-900'); 
                             
-                            // Close the menu and reset arrow
+                       
                             menu.classList.add('hidden');
                             arrow.textContent = 'arrow_drop_down';
 
@@ -598,9 +605,8 @@
                         }
                     });
                     
-                    // Set initial state if old() value exists on page load
+
                     if (hiddenInput.value) {
-                        // Find the correct displayed text, or default to value
                         let initialText = hiddenInput.value;
                         menu.querySelectorAll('li').forEach(option => {
                             if (option.getAttribute('data-value') === hiddenInput.value) {
@@ -609,11 +615,9 @@
                         });
 
                         selectedTextSpan.textContent = initialText;
-                        selectedTextSpan.classList.remove('text-gray-400'); // Assuming text-gray-400 is placeholder
-                        selectedTextSpan.classList.add('text-gray-700'); // Apply dark color on load
+                        selectedTextSpan.classList.remove('text-gray-400'); 
+                        selectedTextSpan.classList.add('text-gray-700'); 
                         
-                        // On page load, also ensure that if a value is present, the error state is cleared 
-                        // from the button, in case the error was for a different field.
                         updateErrorState(button, false); 
                     }
                 });

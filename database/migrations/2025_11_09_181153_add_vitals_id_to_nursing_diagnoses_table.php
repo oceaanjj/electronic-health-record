@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('nursing_diagnoses', function (Blueprint $table) {
-            if (!Schema::hasColumn('nursing_diagnoses', 'vitals_id')) {
-                $table->foreignId('vitals_id')->nullable()->constrained('vital_signs')->onDelete('cascade');
+            if (!Schema::hasColumn('nursing_diagnoses', 'vital_signs_id')) {
+                $table->foreignId('vital_signs_id')->nullable()->constrained('vital_signs')->onDelete('cascade');
             }
         });
     }

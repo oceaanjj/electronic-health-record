@@ -57,7 +57,9 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
         
-        $patient = Patient::findOrFail($id);
+        $adl = ActOfDailyLiving::findOrFail($id); // $id is adl_id
+        $patient = $adl->patient; // Get patient from the relationship
+
         $diagnosisText = $request->input('diagnosis');
 
         $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
@@ -65,10 +67,10 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                'patient_id' => $id,
-                'physical_exam_id' => null,
+                'adl_id' => $id,
             ],
             [
+                'patient_id' => $patient->patient_id,
                 'diagnosis' => $diagnosisText,
                 'diagnosis_alert' => $diagnosisAlert,
             ]

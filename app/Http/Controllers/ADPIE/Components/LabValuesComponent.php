@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Services\NursingDiagnosisCdssService;
 use Illuminate\Http\Request;
 use App\Models\LabValues;
+use Illuminate\Support\Facades\Log;
 
 class LabValuesComponent implements AdpieComponentInterface
 {
@@ -30,11 +31,24 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function startDiagnosis(string $component, $id)
     {
-        $patient = Patient::findOrFail($id);
-        $labValues = LabValues::where('patient_id', $id)->first();
-        
-        $diagnosis = NursingDiagnosis::where('patient_id', $id)
-            ->whereNull('physical_exam_id')
+        Log::info('LabValuesComponent@startDiagnosis: Starting diagnosis for id: ' . $id);
+        $labValues = LabValues::with('patient')->find($id); 
+
+        if (!$labValues) {
+            Log::error('LabValuesComponent@startDiagnosis: LabValues record not found for id: ' . $id);
+            abort(404, 'LabValues record not found.');
+        }
+        Log::info('LabValuesComponent@startDiagnosis: Found lab values record.', ['lab_values_id' => $id]);
+
+        $patient = $labValues->patient;
+
+        if (!$patient) {
+            Log::error('LabValuesComponent@startDiagnosis: Patient not found for lab_values_id: ' . $id);
+            abort(404, 'Patient not found for the given lab values.');
+        }
+        Log::info('LabValuesComponent@startDiagnosis: Found patient.', ['patient_id' => $patient->patient_id]);
+
+        $diagnosis = NursingDiagnosis::where('lab_values_id', $id)
             ->latest()
             ->first();
 
@@ -53,23 +67,20 @@ class LabValuesComponent implements AdpieComponentInterface
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
         
-        $patient = Patient::findOrFail($id);
+        $labValues = LabValues::findOrFail($id); // $id is lab_values_id
+        $patient = $labValues->patient;
         $diagnosisText = $request->input('diagnosis');
         
-        // Fetch the LabValues record for the patient
-        $labValues = LabValues::where('patient_id', $id)->first();
-        $componentData = $labValues ? $labValues->toArray() : [];
-
         // Get alert by analyzing the diagnosis text
         $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
         $diagnosisAlert = $alertObject->raw_message ?? null;
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                'patient_id' => $patient->patient_id,
-                'physical_exam_id' => null, 
+                'lab_values_id' => $id,
             ],
             [
+                'patient_id' => $patient->patient_id,
                 'diagnosis' => $diagnosisText,
                 'diagnosis_alert' => $diagnosisAlert,
             ]

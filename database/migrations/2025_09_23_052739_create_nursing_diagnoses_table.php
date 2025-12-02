@@ -1,11 +1,10 @@
-<?php
+`<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,10 +16,10 @@ return new class extends Migration
             $table->foreignId('physical_exam_id')->nullable()->constrained('physical_exams')->onDelete('cascade');
             $table->foreignId('intake_and_output_id')->nullable()->constrained('intake_and_outputs')->onDelete('cascade');
             $table->foreignId('lab_values_id')->nullable()->constrained('lab_values')->onDelete('cascade');
-            $table->foreignId('adl_id')->nullable()->constrained('act_of_daily_living')->onDelete('cascade');
-            $table->foreignId('vitals_id')->nullable()->constrained('vital_signs')->onDelete('cascade');
+            $table->foreignId('adl_id')->nullable()->constrained('adls')->onDelete('cascade');
+            $table->foreignId('vitals_id')->nullable()->constrained('vitals')->onDelete('cascade');
             $table->foreignId('vital_signs_id')->nullable()->constrained('vital_signs')->onDelete('cascade');
-            
+
             $table->text('diagnosis');
             $table->text('diagnosis_alert')->nullable();
             $table->text('planning')->nullable();

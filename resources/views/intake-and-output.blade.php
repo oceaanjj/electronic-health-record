@@ -32,7 +32,7 @@
                     <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
                         value="@isset($selectedPatient){{ trim($selectedPatient->name) }}@endisset" autocomplete="off"
                         class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                                                                                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                                                                                           focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
 
                     {{-- Dropdown list --}}
                     <div id="patient_options_container"
@@ -56,7 +56,7 @@
                 </label>
                 <select id="day_no_selector" name="day_no"
                     class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                                                                                   focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                                                                                       focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
                     @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
                         <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
                             {{ $i }}
@@ -136,7 +136,7 @@
                 </div>
                 <div class="w-[70%] mx-auto flex justify-end mt-20 mb-30 space-x-4">
                     {{-- <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button>--}}
-                    @if ($ioData)
+                    @if (isset($ioData))
                         <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default">CDSS</button>
                     @endif
                     <button type="submit" class="button-default">SUBMIT</button>
@@ -158,19 +158,19 @@
 
     {{-- Define the specific initializers for this page --}}
     <!-- <script>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            window.pageInitializers = [
-                                window.initializeSearchableDropdown,
-                                window.initializeDateDayLoader,
-                                // Assuming intakeOutputCdss has an init method or is directly callable
-                                () => {
-                                    if (typeof window.intakeOutputCdss === 'function') {
-                                        window.intakeOutputCdss();
-                                    } else if (typeof window.intakeOutputCdss?.init === 'function') {
-                                        window.intakeOutputCdss.init();
+                            document.addEventListener('DOMContentLoaded', () => {
+                                window.pageInitializers = [
+                                    window.initializeSearchableDropdown,
+                                    window.initializeDateDayLoader,
+                                    // Assuming intakeOutputCdss has an init method or is directly callable
+                                    () => {
+                                        if (typeof window.intakeOutputCdss === 'function') {
+                                            window.intakeOutputCdss();
+                                        } else if (typeof window.intakeOutputCdss?.init === 'function') {
+                                            window.intakeOutputCdss.init();
+                                        }
                                     }
-                                }
-                            ];
-                        });
-                    </script> -->
+                                ];
+                            });
+                        </script> -->
 @endpush

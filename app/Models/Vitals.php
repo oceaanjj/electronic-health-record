@@ -9,18 +9,8 @@ class Vitals extends Model
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'vital_signs';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'patient_id',
         'date',
@@ -37,5 +27,11 @@ class Vitals extends Model
     public function patient()
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    // FOR ADPIE:
+    public function nursingDiagnoses()
+    {
+        return $this->hasOne(NursingDiagnosis::class);
     }
 }

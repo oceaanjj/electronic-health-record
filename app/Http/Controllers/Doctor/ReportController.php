@@ -38,16 +38,22 @@ class ReportController extends Controller
         $patient = Patient::findOrFail($patient_id);
 
         $data = [
+
+            //NON - CDSS:
             'patient' => $patient,
             'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
             'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
             'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->first(),
+
+            //adpie:
             'vitals' => Vitals::where('patient_id', $patient_id)->get(),
-            'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
+            // 'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
             'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
             'labValues' => LabValues::where('patient_id', $patient_id)->get(),
+
+
             'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
             'medicationAdministrations' => MedicationAdministration::where('patient_id', $patient_id)->get(),
@@ -56,9 +62,11 @@ class ReportController extends Controller
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
 
-            //CDSS RELATED:
+            //CDSS:
             'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
-            //DITOILALAGAY YUNG LUMANG TABLE SA TAAS KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS
+            'intakeAndOutput' => IntakeAndOutput::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+
+            //DITOILALAGAY YUNG MGA COMPOMENT NA MAY CDSS (IREMOVE YUNG SAME COMPONENT SA NON CDSS) KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS
 
         ];
 
@@ -76,10 +84,14 @@ class ReportController extends Controller
             'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->first(),
+
+            //adpie:
             'vitals' => Vitals::where('patient_id', $patient_id)->get(),
-            'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
+            // 'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
             'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
             'labValues' => LabValues::where('patient_id', $patient_id)->get(),
+
+
             'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
             'medicationAdministrations' => MedicationAdministration::where('patient_id', $patient_id)->get(),
@@ -90,11 +102,15 @@ class ReportController extends Controller
 
             //CDSS RELATED:
             'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+            'intakeAndOutput' => IntakeAndOutput::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             //DITOILALAGAY YUNG LUMANG TABLE SA TAAS KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS 
 
         ];
 
         $pdf = Pdf::loadView('doctor.reports.patient-report-pdf', $data);
+
+        $pdf->setPaper('folio', 'portrait'); //pdf paper size update
+
         $pdf->setOption('isPhpEnabled', true);
         return $pdf->download($patient->name . '_Results.pdf');
     }

@@ -23,6 +23,6 @@ class IntakeAndOutput extends Model
     }
     public function nursingDiagnoses()
     {
-        return $this->hasMany(NursingDiagnosis::class, 'intake_and_output_id');
+        return $this->hasOne(NursingDiagnosis::class, 'intake_and_output_id');
     }
 }

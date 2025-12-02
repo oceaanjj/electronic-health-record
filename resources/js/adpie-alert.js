@@ -1,159 +1,106 @@
-/**
- * How it works:
- * ... (same as before) ...
- * * MODIFICATION: The initializeCdssForForm function is attached to the 'window'
- * object so that other scripts (like patient-loader.js) can call it
- * after replacing page content.
- */
+// =======================================================
+// ADPIE CDSS ALERT SYSTEM
+// Handles LIVE TYPING analysis only.
+// Page-load alerts are now pre-rendered by Blade.
+// =======================================================
 
+const TYPING_DELAY_MS = 800; // Delay after typing stops before analysis
 let debounceTimer;
 
-window.initializeCdssForForm = function (form) {
+// Find alert cell for a given input (ADPIE version)
+function findAlertCellForInput(input) {
+    const fieldName = input.dataset.fieldName;
+    if (fieldName) {
+        return document.querySelector(`[data-alert-for="${fieldName}"]`);
+    }
+    return null;
+}
+
+// =======================================================
+// 1. LIVE TYPING ANALYSIS
+// =======================================================
+
+// Initialize CDSS listeners for a form
+window.initializeAdpieCdssForForm = function (form) {
     const analyzeUrl = form.dataset.analyzeUrl;
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
         ?.getAttribute("content");
-
     const component = form.dataset.component;
+    const patientId = form.dataset.patientId;
 
-    if (!analyzeUrl || !csrfToken || !component) {
+    if (!analyzeUrl || !csrfToken || !component || !patientId) {
         console.error(
-            'CDSS form missing "data-analyze-url", "data-component", or CSRF token not found.',
+            "[ADPIE] Missing form data: analyze-url, component, patient-id, or CSRF token.",
             form
         );
         return;
     }
 
+    console.log(`[ADPIE] Initializing typing listeners for: ${component}`);
+
     const inputs = form.querySelectorAll(".cdss-input");
-
-    // --- Analyze while typing ---
     inputs.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            clearTimeout(debounceTimer);
+        if (input.dataset.alertListenerAttached) return; // Prevent duplicate listeners
 
+        const handleInput = (e) => {
+            clearTimeout(debounceTimer);
             const fieldName = e.target.dataset.fieldName;
             const finding = e.target.value.trim();
-            const alertCell = document.querySelector(
-                `[data-alert-for="${fieldName}"]`
+            const alertCell = findAlertCellForInput(e.target);
+
+            console.log(
+                `[ADPIE] Input detected → Field: ${fieldName} | Value: ${finding}`
             );
 
-            const form = e.target.closest(".cdss-form");
-            const patientId = form.dataset.patientId;
-
-            if (alertCell) {
-                if (finding === "") {
-                    showDefaultNoAlerts(alertCell);
-                } else {
-                    if (!alertCell.classList.contains("alert-loading")) {
-                        showAlertLoading(alertCell);
-                    }
-                }
+            if (alertCell && finding === "") {
+                showDefaultNoAlerts(alertCell); // Show default if field is cleared
+                return;
             }
 
             debounceTimer = setTimeout(() => {
-                if (fieldName && finding !== "") {
+                if (fieldName && finding !== "" && alertCell) {
+                    console.log(
+                        `[ADPIE] Debounce timer finished. Analyzing ${fieldName}...`
+                    );
+                    showAlertLoading(alertCell); // Show loading spinner *only when typing*
                     analyzeField(
                         fieldName,
                         finding,
                         patientId,
                         component,
+                        alertCell,
                         analyzeUrl,
                         csrfToken
                     );
                 }
-            }, 300);
-        });
+            }, TYPING_DELAY_MS);
+        };
+
+        input.addEventListener("input", handleInput);
+        input.dataset.alertListenerAttached = "true";
     });
 };
 
-// --- Listen for form reload event to trigger initial analysis for pre-filled fields ---
-document.addEventListener("cdss:form-reloaded", (event) => {
-    const formContainer = event.detail.formContainer;
-    const cdssForm = formContainer.querySelector(".cdss-form");
-
-    if (cdssForm) {
-        const analyzeUrl = cdssForm.dataset.analyzeUrl;
-        const csrfToken = document
-            .querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
-
-        const patientId = cdssForm.dataset.patientId;
-        const component = cdssForm.dataset.component;
-
-        if (!analyzeUrl || !csrfToken || !component) {
-            console.error(
-                'CDSS form reloaded: Missing "data-analyze-url", "data-component", or CSRF token.',
-                cdssForm
-            );
-            return;
-        }
-
-        const inputs = cdssForm.querySelectorAll(".cdss-input");
-        inputs.forEach((input) => {
-            const fieldName = input.dataset.fieldName;
-            const finding = input.value.trim();
-            const alertCell = document.querySelector(
-                `[data-alert-for="${fieldName}"]`
-            );
-
-            if (alertCell) {
-                if (finding === "") {
-                    showDefaultNoAlerts(alertCell);
-                } else {
-                    analyzeField(
-                        fieldName,
-                        finding,
-                        patientId,
-                        component,
-                        analyzeUrl,
-                        csrfToken
-                    );
-                }
-            }
-        });
-    }
-});
-
-// --- Initialize CDSS forms on page load ---
-document.addEventListener("DOMContentLoaded", () => {
-    const cdssForms = document.querySelectorAll(".cdss-form");
-    cdssForms.forEach((form) => {
-        // Initialize the typing event listeners
-        window.initializeCdssForForm(form);
-
-        // Trigger analysis for any data already in the form
-        window.triggerInitialCdssAnalysis(form);
-    });
-});
-
-// --- Function: Analyze input with backend ---
+// Analyze ONE field via API (for live typing)
 async function analyzeField(
     fieldName,
     finding,
     patientId,
     component,
+    alertCell,
     url,
     token
 ) {
-    // --- DEBUGGING LINE ---
-    console.log(
-        `[CDSS] Analyzing field: ${fieldName} for component: ${component}`
-    );
-
-    const alertCell = document.querySelector(`[data-alert-for="${fieldName}"]`);
     if (!alertCell) return;
-
-    showAlertLoading(alertCell);
+    console.log(`[ADPIE] Sending single analysis for: ${fieldName}`);
 
     try {
         const response = await fetch(url, {
             method: "POST",
-            credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": token,
-                Accept: "application/json",
-                "X-Requested-With": "XMLHttpRequest",
             },
             body: JSON.stringify({
                 fieldName,
@@ -162,215 +109,216 @@ async function analyzeField(
                 component: component,
             }),
         });
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
-        const responseText = await response.text();
-        console.log("[CDSS] Raw server response:", responseText);
-
-        if (!response.ok) {
-            console.error(
-                "[CDSS] Server returned non-OK response:",
-                response.status,
-                responseText
-            );
-            let errorMsg = `Server error: ${response.status}`;
-            try {
-                const errorData = JSON.parse(responseText);
-                if (errorData.message && errorData.errors) {
-                    errorMsg = `${errorData.message} (Details: ${JSON.stringify(
-                        errorData.errors
-                    )})`;
-                } else {
-                    errorMsg = errorData.message || errorMsg;
-                }
-            } catch (e) {
-                errorMsg =
-                    responseText.length < 200
-                        ? responseText
-                        : "Server returned non-JSON response. Check for redirects.";
-            }
-            throw new Error(errorMsg);
-        }
-
-        let alertData;
-        try {
-            alertData = JSON.parse(responseText);
-        } catch (jsonError) {
-            console.error(
-                "[CDSS] Failed to parse JSON from response:",
-                jsonError,
-                responseText
-            );
-            throw new Error("Invalid JSON response from server.");
-        }
-
-        setTimeout(() => {
-            displayAlert(alertCell, alertData);
-        }, 150);
+        const alertData = await response.json();
+        console.log(
+            `[ADPIE] Single response received for: ${fieldName}`,
+            alertData
+        );
+        displayAlert(alertCell, alertData); // Display immediately
     } catch (error) {
-        console.error("[CDSS] analysis failed:", error);
-        alertCell.innerHTML = `
-      <div class="alert-box alert-red fade-in" style="height:90px;margin:2px;">
-        <span class="alert-message">Error: ${error.message}</span>
-      </div>
-    `;
+        console.error("[ADPIE] Single analysis failed:", error);
+        displayAlert(alertCell, {
+            message: "Error analyzing...",
+            level: "CRITICAL",
+        });
     }
 }
 
-// --- Display alert content ---
-function displayAlert(alertCell, alertData) {
-    alertCell.innerHTML = "";
+// =======================================================
+// 2. BATCH ANALYSIS (REMOVED)
+// This is no longer needed. Alerts are pre-loaded by Blade.
+// =======================================================
 
-    const alertBox = document.createElement("div");
-    alertBox.className = "alert-box fade-in";
-    alertBox.style.height = "90px";
-    alertBox.style.margin = "2px";
+// =======================================================
+// 3. HELPER FUNCTIONS (Display, Loading, Modal)
+// =======================================================
+
+// Display alert result (ADPIE version)
+function displayAlert(alertCell, alertData) {
+    if (!alertCell) return;
+
+    console.log(
+        `[ADPIE] Displaying alert → Level: ${alertData.level} | Message: ${alertData.message}`
+    );
 
     let colorClass = "alert-green";
     if (alertData.level === "CRITICAL") colorClass = "alert-red";
     else if (alertData.level === "WARNING") colorClass = "alert-orange";
-    else if (alertData.level === "INFO") colorClass = "alert-green";
-    else if (alertData.level === "recommendation") colorClass = "alert-green"; // Added this
 
-    alertBox.classList.add(colorClass);
-
-    const alertMessage = document.createElement("div");
-    alertMessage.className = "alert-message";
-    alertMessage.style.padding = "1px";
+    let alertContent = "";
+    let hasNoAlerts = false;
 
     if (
-        alertData.message?.toLowerCase().includes("no findings") ||
-        alertData.message?.toLowerCase().includes("no recommendations") ||
-        !alertData.message
+        !alertData.message ||
+        alertData.message.toLowerCase().includes("no findings") ||
+        alertData.message.toLowerCase().includes("no recommendations") ||
+        alertData.message.includes("No Recommendations")
     ) {
-        alertBox.classList.add("has-no-alert");
-        alertMessage.innerHTML = `
-      <span class="text-white text-center uppercase font-semibold opacity-80">
-        NO RECOMMENDATIONS
-      </span>
-    `;
+        hasNoAlerts = true;
+        alertContent =
+            '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
     } else {
-        alertMessage.innerHTML = `<span>${alertData.message}</span>`;
+        alertContent = `<span>${alertData.message}</span>`;
     }
 
-    alertBox.appendChild(alertMessage);
-    alertCell.appendChild(alertBox);
+    alertCell.innerHTML = `
+      <div class="alert-box fade-in ${colorClass} ${
+        hasNoAlerts ? "has-no-alert" : ""
+    }" 
+           style="height:90px; margin:2px;">
+        <div class="alert-message p-1">${alertContent}</div>
+      </div>
+    `;
 
-    alertMessage.addEventListener("scroll", () => {
-        // No visual fade — clean scroll only
-    });
-
-    if (
-        alertData.message &&
-        !alertData.message.toLowerCase().includes("no findings") &&
-        !alertData.message.toLowerCase().includes("no recommendations")
-    ) {
-        alertBox.addEventListener("click", () => openAlertModal(alertData));
+    if (!hasNoAlerts) {
+        alertCell
+            .querySelector(".alert-box")
+            ?.addEventListener("click", () => openAlertModal(alertData));
     }
 }
 
-// --- Function: Trigger initial CDSS analysis for pre-filled fields ---
-window.triggerInitialCdssAnalysis = function (form) {
-    const analyzeUrl = form.dataset.analyzeUrl;
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
-
-    const patientId = form.dataset.patientId;
-    const component = form.dataset.component;
-
-    if (!analyzeUrl || !csrfToken || !component) {
-        console.error(
-            'Initial CDSS analysis missing "data-analyze-url", "data-component", or CSRF token.',
-            form
-        );
-        return;
-    }
-
-    const inputs = form.querySelectorAll(".cdss-input");
-    inputs.forEach((input) => {
-        const fieldName = input.dataset.fieldName;
-        const finding = input.value.trim();
-        const alertCell = document.querySelector(
-            `[data-alert-for="${fieldName}"]`
-        );
-
-        if (alertCell && finding !== "") {
-            analyzeField(
-                fieldName,
-                finding,
-                patientId,
-                component,
-                analyzeUrl,
-                csrfToken
-            );
-        } else if (alertCell && finding === "") {
-            showDefaultNoAlerts(alertCell);
-        }
-    });
-};
-
-// --- Default NO ALERTS state ---
+// Show "No Alerts" state (ADPIE version)
 function showDefaultNoAlerts(alertCell) {
-    alertCell.className = "alert-box has-no-alert alert-green fade-in";
-    alertCell.style.height = "90px";
-    alertCell.style.margin = "2.8px";
+    if (!alertCell) return;
+    console.log("[ADPIE] Clearing alert box (No Alerts)");
     alertCell.innerHTML = `
-    <span class="alert-message opacity-80 text-white text-center font-semibold uppercase">
-      NO ALERTS
-    </span>
-  `;
+      <div class="alert-box has-no-alert alert-green" style="height:90px; margin:2.8px;">
+        <span class="alert-message text-white text-center font-semibold uppercase opacity-80">NO RECOMMENDATIONS</span>
+      </div>
+    `;
     alertCell.onclick = null;
 }
 
-// --- Loading spinner (continuous) ---
+// Show loading spinner
 function showAlertLoading(alertCell) {
-    alertCell.className = "alert-box alert-green alert-loading fade-in";
-    alertCell.style.height = "90px";
-    alertCell.style.margin = "2px";
+    if (!alertCell) return;
+    console.log("[ADPIE] Analyzing... showing loader");
     alertCell.innerHTML = `
-    <div class="alert-loading">
-      <div class="loading-spinner"></div>
-      <span>Analyzing...</span>
-    </div>
-  `;
+      <div class="alert-box alert-green flex justify-center items-center" style="height:90px; margin:2px;">
+        <div class="flex items-center gap-2 text-white font-semibold">
+          <div class="loading-spinner"></div>
+          <span>Analyzing...</span>
+        </div>
+      </div>
+    `;
     alertCell.onclick = null;
 }
 
-// --- Modal popup for details ---
+// Open modal with alert details (ADPIE version)
 function openAlertModal(alertData) {
+    if (document.querySelector(".alert-modal-overlay")) return;
+
     const overlay = document.createElement("div");
-    overlay.className = "alert-modal-overlay";
+    overlay.className = "alert-modal-overlay fade-in";
+
+    const alertContent =
+        alertData.message || alertData.alert || "No details available.";
+
+    const recommendation = alertData.recommendation || null;
 
     const modal = document.createElement("div");
     modal.className = "alert-modal fade-in";
-
-    const alertContent = alertData.alert
-        ? alertData.alert
-        : alertData.message || "No details available.";
-
     modal.innerHTML = `
-    <button class="close-btn">&times;</button>
-    <h2>Alert Details</h2>
-    <p>${alertContent}</p>
-  `;
+      <button class="close-btn">&times;</button>
+      <h2>Alert Details</h2>
+      <p>${alertContent}</p>
+      ${
+          recommendation
+              ? `<h3>Recommendation:</h3><p>${recommendation}</p>`
+              : ""
+      }
+    `;
 
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 
-    const closeModal = () => overlay.remove();
+    const close = () => {
+        overlay.remove();
+    };
+
     overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) closeModal();
+        if (e.target === overlay) close();
     });
-    modal.querySelector(".close-btn").addEventListener("click", closeModal);
+    modal.querySelector(".close-btn").addEventListener("click", close);
 }
 
-// --- Fade-in animation ---
-const style = document.createElement("style");
-style.textContent = `
-  .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
-  }
-`;
-document.head.appendChild(style);
+// Add fade-in animation & modal styles
+(function () {
+    if (document.getElementById("adpie-alert-styles")) return;
+    const style = document.createElement("style");
+    style.id = "adpie-alert-styles";
+    style.textContent = `
+      .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
+      @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+      .alert-modal-overlay {
+        position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 1000; backdrop-filter: blur(5px);
+      }
+      .alert-modal {
+        background: white; padding: 2rem; border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        max-width: 500px; width: 90%; position: relative; color: #333;
+      }
+      .alert-modal h2 {
+        margin-top: 0; font-size: 1.5rem; font-weight: 600; color: #222;
+      }
+      .alert-modal h3 {
+        font-size: 1.1rem; font-weight: 600;
+        margin-top: 1rem; margin-bottom: 0.5rem; color: #444;
+      }
+      .alert-modal p { font-size: 1rem; line-height: 1.6; }
+      .alert-modal .close-btn {
+        position: absolute; top: 10px; right: 15px;
+        font-size: 2rem; font-weight: bold; color: #888;
+        background: none; border: none; cursor: pointer; line-height: 1;
+      }
+      .alert-modal .close-btn:hover { color: #333; }
+    `;
+    document.head.appendChild(style);
+})();
+
+// =======================================================
+// 4. GLOBAL EVENT LISTENERS (Simplified)
+// =======================================================
+
+// Initializes all ADPIE CDSS forms on the page.
+function initializeAllAdpieCdssForms() {
+    console.log("[ADPIE] Initializing all forms D-P-I-E");
+    const cdssForms = document.querySelectorAll(".cdss-form");
+    cdssForms.forEach((form) => {
+        // Check if it's an ADPIE form by looking for 'data-component'
+        if (form.dataset.component) {
+            window.initializeAdpieCdssForForm(form); // Init typing ONLY
+        }
+    });
+}
+
+// Listener for when a patient/form is changed
+if (!window.adpieCdssFormReloadListenerAttached) {
+    window.adpieCdssFormReloadListenerAttached = true;
+    document.addEventListener("cdss:form-reloaded", (event) => {
+        const formContainer = event.detail.formContainer;
+        const cdssForm = formContainer.querySelector(".cdss-form");
+        if (cdssForm && cdssForm.dataset.component) {
+            console.log(
+                "[ADPIE] Form reloaded — reinitializing typing listeners"
+            );
+            window.initializeAdpieCdssForForm(cdssForm);
+        }
+    });
+}
+
+// Listener for the very first page load
+if (!window.adpieCdssDomLoadListenerAttached) {
+    window.adpieCdssDomLoadListenerAttached = true;
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.cdssFormReloaded === true) return; // Prevent double-loading
+        console.log("[ADPIE] DOM fully loaded — initializing forms");
+        initializeAllAdpieCdssForms();
+    });
+}

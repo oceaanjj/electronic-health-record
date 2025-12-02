@@ -10,6 +10,9 @@ use App\Services\VitalCdssService;
 use App\Services\IntakeAndOutputCdssService;
 use App\Services\ActOfDailyLivingCdssService;
 use App\Models\Patient;
+use Exception;
+use Illuminate_Support_Arr;
+use Illuminate\Support\Facades\Log; // Use the Laravel Log facade
 
 class NursingDiagnosisCdssService
 {
@@ -18,13 +21,16 @@ class NursingDiagnosisCdssService
     private $vitalCdssService;
     private $intakeAndOutputCdssService;
     private $actOfDailyLivingCdssService;
-    private $adpieRules;
+
+    // Static cache for rules
+    private static $adpieRulesCache = [];
 
     // Define severity scores for ranking
     private const SEVERITY_SCORES = [
         'critical' => 3,
         'warning' => 2,
         'info' => 1,
+        'low' => 0,
     ];
 
     public function __construct(
@@ -39,20 +45,22 @@ class NursingDiagnosisCdssService
         $this->vitalCdssService = $vitalCdssService;
         $this->intakeAndOutputCdssService = $intakeAndOutputCdssService;
         $this->actOfDailyLivingCdssService = $actOfDailyLivingCdssService;
-        $this->adpieRules = [];
     }
 
-    private function getRulesForComponent(string $componentName)
+    /**
+     * Retrieves and caches ADPIE rules for a component.
+     */
+    private function getRulesForComponent(string $componentName): array
     {
-        if (isset($this->adpieRules[$componentName])) {
-            return $this->adpieRules[$componentName];
+        if (isset(self::$adpieRulesCache[$componentName])) {
+            return self::$adpieRulesCache[$componentName];
         }
 
         $rulesDirectory = storage_path('app/private/adpie/' . $componentName . '/rules');
 
         if (!File::isDirectory($rulesDirectory)) {
-            error_log("ADPIE rules directory not found for component: " . $componentName);
-            $this->adpieRules[$componentName] = [];
+            Log::warning("ADPIE rules directory not found for component: " . $componentName);
+            self::$adpieRulesCache[$componentName] = [];
             return [];
         }
 
@@ -60,30 +68,40 @@ class NursingDiagnosisCdssService
         $mergedRules = [];
 
         foreach ($files as $file) {
-            if (in_array($file->getExtension(), ['yaml', 'yml'])) {
-                try {
-                    $parsedYaml = Yaml::parseFile($file->getPathname());
-                    if (is_array($parsedYaml)) {
-                        $stepName = $file->getFilenameWithoutExtension();
+            if (!in_array(pathinfo($file->getPathname(), PATHINFO_EXTENSION), ['yaml', 'yml'])) {
+                continue;
+            }
 
-                        // Handle YAML that is just a list OR has a top-level key
-                        if (isset($parsedYaml[$stepName]) && is_array($parsedYaml[$stepName])) {
-                            $mergedRules[$stepName] = $parsedYaml[$stepName];
-                        } else {
-                            $mergedRules[$stepName] = $parsedYaml;
-                        }
+            try {
+                $parsedYaml = Yaml::parseFile($file->getPathname());
+                if (is_array($parsedYaml) && !empty($parsedYaml)) {
+                    $stepName = $file->getFilenameWithoutExtension();
+
+                    // Check if the YAML file itself contains a top-level key (like 'diagnosis:')
+                    if (isset($parsedYaml[$stepName]) && is_array($parsedYaml[$stepName])) {
+                        // Use the content under that key
+                        $mergedRules[$stepName] = $parsedYaml[$stepName];
+                    } else if (is_array(reset($parsedYaml))) {
+                        // If it's a simple list of rules (array of arrays)
+                        $mergedRules[$stepName] = $parsedYaml;
+                    } else {
+                        // Handle other valid YAML structures if necessary, or log a warning
+                        Log::warning("Unexpected YAML structure in file: " . $file->getPathname());
                     }
-                } catch (\Exception $e) {
-                    error_log("Failed to parse ADPIE YAML file: " . $file->getPathname() . " - " . $e->getMessage());
                 }
+            } catch (Exception $e) {
+                Log::error("Failed to parse ADPIE YAML file: " . $file->getPathname(), ['error' => $e->getMessage()]);
             }
         }
 
-        $this->adpieRules[$componentName] = $mergedRules;
+        self::$adpieRulesCache[$componentName] = $mergedRules;
         return $mergedRules;
     }
 
-    private function createAlert($recommendations)
+    /**
+     * Converts ranked alert strings into a structured alert object.
+     */
+    private function createAlert(array $recommendations, string $highestSeverity = 'recommendation')
     {
         if (empty($recommendations)) {
             return null;
@@ -91,117 +109,171 @@ class NursingDiagnosisCdssService
 
         $messageHtml = '<ul class="list-disc list-inside text-left">';
         foreach ($recommendations as $rec) {
-            $messageHtml .= '<li>' . htmlspecialchars($rec) . '</li>';
+            $messageHtml .= '<li>' . htmlspecialchars((string) $rec) . '</li>';
         }
         $messageHtml .= '</ul>';
 
-        $plainTextMessage = implode(' ', $recommendations);
+        $plainTextMessage = implode('. ', $recommendations);
 
         return (object) [
-            'level' => 'recommendation', // This 'level' is just for the JS display
-            'message' => $messageHtml,       // For the UI
-            'raw_message' => $plainTextMessage // For the database
+            'level' => strtolower($highestSeverity),
+            'message' => $messageHtml,
+            'raw_message' => $plainTextMessage
         ];
     }
 
     /**
-     * --- MODIFIED ALGORITHM ---
-     * This function now returns the *entire rule object* for all matches,
-     * not just the alert string. This is needed for ranking.
+     * Finds all rules that match the finding.
      */
     private function runAdpieAnalysis(string $finding, array $rules): array
     {
         $findingLower = strtolower(trim($finding));
-        $matchedRules = []; // We will return all matching rules
+        $matchedRules = [];
 
         if (empty($rules)) {
             return [];
         }
 
         foreach ($rules as $rule) {
-            // Fix for "Undefined array key 'keywords'"
-            if (!is_array($rule) || !isset($rule['keywords'])) {
-                continue; // Skip this invalid rule
+            // Robust validation of rule structure
+            if (!is_array($rule) || !isset($rule['keywords']) || !is_array($rule['keywords'])) {
+                Log::warning('Invalid rule structure encountered.', ['rule' => $rule]);
+                continue;
             }
 
+            $keywords = array_map('strtolower', array_map('trim', $rule['keywords']));
             $matchType = $rule['match_type'] ?? 'all';
-            $negate = $rule['negate'] ?? false;
+            $negate = (bool) ($rule['negate'] ?? false);
             $match = false;
 
             if ($matchType === 'any') {
                 $match = false;
-                foreach ($rule['keywords'] as $keyword) {
-                    if (str_contains($findingLower, strtolower($keyword))) {
+                foreach ($keywords as $keyword) {
+                    if (str_contains($findingLower, $keyword)) {
                         $match = true;
                         break;
                     }
                 }
-            } else {
+            } else { // 'all' (default)
                 $match = true;
-                foreach ($rule['keywords'] as $keyword) {
-                    if (!str_contains($findingLower, strtolower($keyword))) {
+                foreach ($keywords as $keyword) {
+                    if (!str_contains($findingLower, $keyword)) {
                         $match = false;
                         break;
                     }
                 }
             }
 
+            // Apply negation logic
             if ($negate) {
                 $match = !$match;
             }
 
             if ($match) {
-                $matchedRules[] = $rule; // Add the entire rule object
+                // Attach a computed score for secondary ranking
+                $rule['computed_specificity'] = count($keywords);
+                $matchedRules[] = $rule;
             }
         }
         return $matchedRules;
     }
 
     /**
-     * --- NEW FUNCTION ---
-     * This function scores, ranks, and filters the matched rules
-     * to prevent "Alert Fatigue".
+     * Scores, ranks, and filters the matched rules.
      */
     private function rankAndFilterAlerts(array $matchedRules, int $limit = 3): array
     {
-        usort($matchedRules, function ($a, $b) {
-            // 1. Prioritize by Severity (Critical > Warning > Info)
-            $severityA = self::SEVERITY_SCORES[strtolower($a['severity'] ?? 'info')] ?? 0;
-            $severityB = self::SEVERITY_SCORES[strtolower($b['severity'] ?? 'info')] ?? 0;
+        $highestSeverity = 'info';
 
-            if ($severityA !== $severityB) {
-                return $severityB <=> $severityA; // Sort descending by severity
+        // 1. Calculate a Composite Score for each rule
+        $scoredRules = array_map(function ($rule) use (&$highestSeverity) {
+
+            // Ensure keys exist to prevent warnings
+            $severityName = strtolower($rule['severity'] ?? 'low');
+            $negate = (bool) ($rule['negate'] ?? false);
+            $keywords = $rule['keywords'] ?? []; // Safety check
+
+            // --- Scoring components ---
+            $severityScore = self::SEVERITY_SCORES[$severityName] ?? 0;
+            $specificityScore = (int) ($rule['computed_specificity'] ?? count($keywords));
+            $deprioritizeScore = (int) ($rule['deprioritize_score'] ?? 0);
+            $negatePenalty = $negate ? 0.5 : 0; // Small penalty for negated rules
+
+            // High factor (100) ensures severity dominates ranking
+            $finalScore = ($severityScore * 100)
+                + $specificityScore
+                - $deprioritizeScore
+                - $negatePenalty;
+
+            $rule['final_rank_score'] = $finalScore;
+
+            // Track the highest severity
+            if ($severityScore > (self::SEVERITY_SCORES[$highestSeverity] ?? 0)) {
+                $highestSeverity = $severityName;
             }
 
-            // 2. Prioritize by Specificity (More keywords is better)
-            $keywordCountA = count($a['keywords']);
-            $keywordCountB = count($b['keywords']);
+            return $rule;
+        }, $matchedRules);
 
-            if ($keywordCountA !== $keywordCountB) {
-                return $keywordCountB <=> $keywordCountA; // Sort descending by keyword count
-            }
 
-            // 3. De-prioritize 'negate' rules (they are less specific)
-            $negateA = $a['negate'] ?? false;
-            $negateB = $b['negate'] ?? false;
+        // 2. Sort by the calculated final score
+        usort($scoredRules, function ($a, $b) {
+            $scoreA = $a['final_rank_score'] ?? 0;
+            $scoreB = $b['final_rank_score'] ?? 0;
 
-            return $negateA <=> $negateB; // Sort ascending (false comes first)
+            return $scoreB <=> $scoreA; // Sort descending
         });
 
-        // Get the top N rules (default 3)
-        $topRules = array_slice($matchedRules, 0, $limit);
+        // 3. Get the top N rules
+        $topRules = array_slice($scoredRules, 0, $limit);
 
-        // Return just the alert strings for these top rules
-        return array_column($topRules, 'alert');
+        // 4. Return the alerts and severity
+        return [
+            'alerts' => array_column($topRules, 'alert'),
+            'highest_severity' => $highestSeverity
+        ];
     }
 
-    // (This function is for your on-submit logic, it remains unchanged)
+    /**
+     * General purpose analysis for any ADPIE step.
+     */
+    private function runAnalysisStep(string $componentName, string $stepName, string $finding)
+    {
+        $componentRules = $this->getRulesForComponent($componentName);
+        $rules = $componentRules[$stepName] ?? [];
+
+        if (empty($rules)) {
+            Log::info("No rules found for component/step: {$componentName}/{$stepName}");
+            return null;
+        }
+
+        $matchedRules = $this->runAdpieAnalysis($finding, $rules);
+
+        if (empty($matchedRules)) {
+            return null;
+        }
+
+        $rankedData = $this->rankAndFilterAlerts($matchedRules);
+
+        return $this->createAlert($rankedData['alerts'], $rankedData['highest_severity']);
+    }
+
+
+    // --- 7. REFACTORED PUBLIC METHODS ---
+
     public function generateNursingDiagnosisRules(string $componentName, array $componentData, array $nurseInput, Patient $patient)
     {
-        // ... (Your existing code is correct)
+        // Existing logic for 'physical-exam' and other components remains here.
+        // It relies on the *other* CDSS services (PhysicalExamCdssService, etc.)
+        // which should ideally return structured alerts, not just strings,
+        // so you can rank them globally. This is a potential future improvement.
+
+        // For now, assume the original logic handles this:
         $allAlerts = [];
         switch ($componentName) {
             case 'physical-exam':
+                // Assuming $this->physicalExamCdssService->analyzeFindings() returns
+                // an array of findings/alerts that need to be processed/formatted here.
                 $componentAlerts = $this->physicalExamCdssService->analyzeFindings($componentData);
                 foreach ($componentAlerts as $key => $alert) {
                     if ($alert !== 'No Findings' && $alert !== null) {
@@ -228,15 +300,15 @@ class NursingDiagnosisCdssService
                     }
                 }
                 break;
-                        case 'lab-values':
-                            $ageGroup = $this->labValuesCdssService->getAgeGroup($patient);
-                            $results = $this->labValuesCdssService->runLabCdss((object) $componentData, $ageGroup);
-                            foreach ($results as $key => $result) {
-                                if ($result[0]['severity'] !== LabValuesCdssService::NONE) {
-                                    $allAlerts[] = ['source' => 'Lab Values', 'field' => $key, 'alert' => $result[0]['text']];
-                                }
-                            }
-                            break;
+            case 'lab-values':
+                $ageGroup = $this->labValuesCdssService->getAgeGroup($patient);
+                $results = $this->labValuesCdssService->runLabCdss((object) $componentData, $ageGroup);
+                foreach ($results as $key => $result) {
+                    if ($result[0]['severity'] !== LabValuesCdssService::NONE) {
+                        $allAlerts[] = ['source' => 'Lab Values', 'field' => $key, 'alert' => $result[0]['text']];
+                    }
+                }
+                break;
             // ... (rest of your cases) ...
         }
 
@@ -250,52 +322,23 @@ class NursingDiagnosisCdssService
         ];
     }
 
-    //
-    // --- UPDATED REAL-TIME ANALYSIS METHODS ---
-    // They now find all matches, rank/filter them, and then create the alert.
-    //
-
     public function analyzeDiagnosis(string $componentName, string $finding)
     {
-        $componentRules = $this->getRulesForComponent($componentName);
-        $rules = $componentRules['diagnosis'] ?? [];
-
-        $matchedRules = $this->runAdpieAnalysis($finding, $rules);
-        $rankedAlerts = $this->rankAndFilterAlerts($matchedRules); // <-- NEW STEP
-
-        return $this->createAlert($rankedAlerts);
+        return $this->runAnalysisStep($componentName, 'diagnosis', $finding);
     }
 
     public function analyzePlanning(string $componentName, string $finding)
     {
-        $componentRules = $this->getRulesForComponent($componentName);
-        $rules = $componentRules['planning'] ?? [];
-
-        $matchedRules = $this->runAdpieAnalysis($finding, $rules);
-        $rankedAlerts = $this->rankAndFilterAlerts($matchedRules); // <-- NEW STEP
-
-        return $this->createAlert($rankedAlerts);
+        return $this->runAnalysisStep($componentName, 'planning', $finding);
     }
 
     public function analyzeIntervention(string $componentName, string $finding)
     {
-        $componentRules = $this->getRulesForComponent($componentName);
-        $rules = $componentRules['intervention'] ?? [];
-
-        $matchedRules = $this->runAdpieAnalysis($finding, $rules);
-        $rankedAlerts = $this->rankAndFilterAlerts($matchedRules); // <-- NEW STEP
-
-        return $this->createAlert($rankedAlerts);
+        return $this->runAnalysisStep($componentName, 'intervention', $finding);
     }
 
     public function analyzeEvaluation(string $componentName, string $finding)
     {
-        $componentRules = $this->getRulesForComponent($componentName);
-        $rules = $componentRules['evaluation'] ?? [];
-
-        $matchedRules = $this->runAdpieAnalysis($finding, $rules);
-        $rankedAlerts = $this->rankAndFilterAlerts($matchedRules); // <-- NEW STEP
-
-        return $this->createAlert($rankedAlerts);
+        return $this->runAnalysisStep($componentName, 'evaluation', $finding);
     }
 }

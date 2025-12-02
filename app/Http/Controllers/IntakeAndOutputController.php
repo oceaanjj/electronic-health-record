@@ -8,6 +8,7 @@ use App\Services\IntakeAndOutputCdssService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class IntakeAndOutputController extends Controller
 {
@@ -18,6 +19,8 @@ class IntakeAndOutputController extends Controller
         $intakeOutputs = $patient->intakeAndOutputs;
         return view('patient-intake-outputs', compact('patient', 'intakeOutputs'));
     }
+
+
     public function generatedAlerts(Request $request)
     {
         $data = $request->validate([
@@ -35,10 +38,9 @@ class IntakeAndOutputController extends Controller
             'patients' => $patients,
             'cdss_alerts' => $alerts,
         ]);
-
-
-
     }
+
+
 
     public function selectPatientAndDate(Request $request)
     {
@@ -46,6 +48,7 @@ class IntakeAndOutputController extends Controller
         $selectedPatient = null;
         $ioData = null;
         $dayNo = 1;
+        $daysSinceAdmission = 30; // Default value
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
@@ -53,9 +56,14 @@ class IntakeAndOutputController extends Controller
             $selectedPatient = Patient::find($patientId);
             if (!$selectedPatient) {
                 $request->session()->forget(['selected_patient_id', 'selected_day_no']);
-                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData'));
+                return view('intake-and-output', compact('patients', 'selectedPatient', 'ioData', 'daysSinceAdmission'));
             }
             $request->session()->put('selected_patient_id', $patientId);
+
+            // Calculate days since admission
+            $admissionDate = Carbon::parse($selectedPatient->admission_date);
+            $daysSinceAdmission = $admissionDate->diffInDays(Carbon::now()) + 1;
+
 
             $dayNo = $request->input('day_no');
 
@@ -101,6 +109,7 @@ class IntakeAndOutputController extends Controller
                 'ioData' => $ioData,
                 'selectedPatient' => $selectedPatient,
                 'currentDayNo' => $currentDayNo,
+                'daysSinceAdmission' => $daysSinceAdmission,
             ])->render();
 
             // Use DOMDocument to parse and extract the form-content-container
@@ -128,13 +137,18 @@ class IntakeAndOutputController extends Controller
             'ioData' => $ioData,
             'selectedPatient' => $selectedPatient,
             'currentDayNo' => $currentDayNo,
+            'daysSinceAdmission' => $daysSinceAdmission,
         ]);
     }
+
+
 
     public function show(Request $request)
     {
         return $this->selectPatientAndDate($request);
     }
+
+
 
     public function store(Request $request)
     {
@@ -159,17 +173,18 @@ class IntakeAndOutputController extends Controller
         }
         //****
 
+        $admissionDate = Carbon::parse($patient->admission_date);
+        $daysSinceAdmission = $admissionDate->diffInDays(Carbon::now()) + 1;
 
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
+            'day_no' => 'required|integer|between:1,' . $daysSinceAdmission,
             'oral_intake' => 'nullable|integer',
             'iv_fluids_volume' => 'nullable|integer',
             'iv_fluids_type' => 'nullable|string',
             'urine_output' => 'nullable|integer',
             'other_output' => 'nullable|integer',
         ]);
-
         // Analyze the data to get the alert
         $cdss = new IntakeAndOutputCdssService();
         $alertData = $cdss->analyzeIntakeOutput($validatedData);
@@ -203,6 +218,7 @@ class IntakeAndOutputController extends Controller
             ->with('success', $message);
     }
 
+
     public function checkIntakeOutput(Request $request)
     {
         $oralIntake = $request->input('oral_intake');
@@ -222,6 +238,32 @@ class IntakeAndOutputController extends Controller
 
         return response()->json($result);
     }
+
+
+    //new
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        // The payload from JS will be { batch: [ { time: "1", vitals: { field: value, ... } }, ... ] }
+        $data = $request->validate([
+            'batch' => 'required|array',
+            'batch.*.time' => 'required|string', // This is the day_no
+            'batch.*.vitals' => 'required|array', // This holds the I/O fields
+        ]);
+
+        $cdssService = new IntakeAndOutputCdssService();
+        $results = [];
+
+        foreach ($data['batch'] as $item) {
+            // Re-used existing group analysis logic from analyzeIntakeOutput
+            // $item['vitals'] will be [ 'oral_intake' => '500', 'urine_output' => '300', ... ]
+            $result = $cdssService->analyzeIntakeOutput($item['vitals']);
+            $result['severity'] = strtoupper($result['severity']);
+            $results[] = $result;
+        }
+
+        return response()->json($results);
+    }
+
 
     public function runCdssAnalysis(Request $request)
     {

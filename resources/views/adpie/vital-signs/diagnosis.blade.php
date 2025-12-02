@@ -22,36 +22,37 @@
 
         <fieldset>
             <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
-                <div class="w-[68%] rounded-[15px] overflow-hidden">
-                    <div class="bg-dark-green py-2 text-white rounded-t-lg text-center font-bold">
+                <div class="w-[68%] rounded-[15px] overflow-hidden ">
+                    <div class="main-header py-2 text-white rounded-t-lg text-center font-bold">
                         DIAGNOSIS (STEP 1 of 4)
                     </div>
-                    <textarea id="diagnosis" name="diagnosis"
-                        class="notepad-lines w-full rounded-b-lg shadow-sm cdss-input"
+                    <textarea id="diagnosis" name="diagnosis" 
+                        class="
+                        notepad-lines w-full rounded-b-lg shadow-sm cdss-input "
                         data-field-name="diagnosis"
                         style="border-top: none;"
                         placeholder="Enter nursing diagnosis...">{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
                 </div>
 
-                <div class="w-[25%] rounded-[15px] overflow-hidden ml-4">
-                    <div class="bg-dark-green text-white font-bold py-2 mb-0 text-center rounded-t-lg">
+                <div class="w-[25%] rounded-[15px] overflow-hidden ml-4 bg-beige">
+                    <div class="main-header py-2 text-white rounded-t-lg text-center font-bold">
                         RECOMMENDATIONS
                     </div>
-                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg"
+                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg bg-beige"
                         data-alert-for="diagnosis" style="border-top: none;">
                         <span class="opacity-70 text-white font-semibold">No Recommendations</span>
                     </div>
                 </div>
             </div>
 
-            <div class="w-[70%] mx-auto flex justify-between items-center mt-6">
+            <div class="w-[70%] mx-auto flex justify-between items-center mt-6 bg-beige">
                 <div class="flex flex-col items-start space-y-2" style="min-width: 220px;">
                     <a href="{{ route('adl.show') }}" class="button-default text-center">
                         GO BACK
                     </a>
                 </div>
 
-                <div class="flex flex-row items-center justify-end space-x-2">
+                <div class="flex flex-row items-center justify-end space-x-2 bg-beige">
                     <button type="submit" name="action" value="save_and_exit" class="button-default">
                         SUBMIT
                     </button>

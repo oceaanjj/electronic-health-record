@@ -2,16 +2,17 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
+
 <div id="form-content-container">
     {{-- This container is now the main wrapper for all dynamic content --}}
 
-    @if (!session('selected_patient_id'))
+    @if (!isset($selectedPatient) && !session('selected_patient_id'))
         <div class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
             <span class="text-gray-600 font-creato">Please select a patient to input</span>
         </div>
     @endif
 
-    {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR (from vital-signs) --}}
+    {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR --}}
     <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
         <div class="flex items-center gap-6 w-full">
             @csrf
@@ -21,7 +22,15 @@
                 PATIENT NAME :
             </label>
 
-            <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('adl.select') }}">
+            {{-- 
+              UPDATED: 
+              - Added data-sync-mode="html-reload"
+              - Fixed data-admission-date to use correct Carbon format
+            --}}
+            <div class="searchable-dropdown relative w-[400px]" 
+                 data-select-url="{{ route('adl.select') }}" 
+                 data-admission-date="{{ $selectedPatient ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : '' }}"
+                 data-sync-mode="html-reload">
                 <input
                     type="text"
                     id="patient_search_input"
@@ -55,7 +64,7 @@
                 type="date"
                 id="date_selector"
                 name="date"
-                value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+                value="{{ $currentDate  ?? now()->format('Y-m-d') }}"
                 @if (!$selectedPatient) disabled @endif
                 class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                        focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
@@ -72,13 +81,13 @@
                 class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
                        focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
             >
-                <option value="">-- Select number --</option>
-                @for ($i = 1; $i <= 30; $i++)
+                {{-- Controller now ensures $totalDaysSinceAdmission is always set --}}
+                @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
                     <option
                         value="{{ $i }}"
-                        @if(($currentDayNo ?? 1) == $i) selected @endif
+                        @if($currentDayNo == $i) selected @endif
                     >
-                        {{ $i }}
+                        {{  $i }}
                     </option>
                 @endfor
             </select>
@@ -87,14 +96,19 @@
         
     {{-- END HEADER --}}
 
-    <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"
-        data-analyze-url="{{ route('adl.analyze-field') }}">
-        <fieldset @if (!session('selected_patient_id')) disabled @endif>
+    <form id="adl-form" method="POST" class="cdss-form" 
+          action="{{ route('adl.store') }}"
+          data-analyze-url="{{ route('adl.analyze-field') }}"
+          data-batch-analyze-url="{{ route('adl.analyze-batch') }}"
+          data-alert-height-class="h-[55px]"> 
+    
+        <fieldset @if (!$selectedPatient) disabled @endif>
             @csrf
 
-            <input type="hidden" name="patient_id" class="patient-id-input" value="{{ session('selected_patient_id') }}">
-            <input type="hidden" name="date" class="date-input" value="{{ $currentDate ?? session('selected_date') }}">
-            <input type="hidden" name="day_no" class="day-no-input" value="{{ $currentDayNo ?? session('selected_day_no') }}">
+            {{-- These inputs are now updated by patient-loader.js and date-day-sync.js --}}
+            <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+            <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
+            <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
             <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
                 {{-- LEFT SIDE TABLE (INPUTS) --}}
@@ -129,7 +143,7 @@
                     </table>
                 </div>
 
-                {{-- ALERTS TABLE (JAVASCRIPT-CONTROLLED) --}}
+                {{-- ALERTS TABLE --}}
                 <div class="w-[25%] rounded-[15px] overflow-hidden">
                     <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                         ALERTS
@@ -144,16 +158,17 @@
                             'sleep_pattern_assessment',
                             'pain_level_assessment',
                         ] as $field)
-                            <tr>
+                            @php
+                                // Use the $alerts array passed from the controller
+                                $alertText = 'NO ALERTS';
+                                $alertSeverity = 'none';
+                                if (isset($alerts[$field]) && !empty($alerts[$field]['alert']) && $alerts[$field]['alert'] !== 'No Findings') {
+                                    $alertText = $alerts[$field]['alert'];
+                                    $alertSeverity = strtolower($alerts[$field]['severity']);
+                                }
+                            @endphp
+                             <tr>
                                 <td class="align-middle" data-alert-for="{{ $field }}">
-                                    @php
-                                        $alertText = 'NO ALERTS';
-                                        $alertSeverity = 'none';
-                                        if (isset($alerts[$field]) && $alerts[$field]['alert'] !== 'No Findings') {
-                                            $alertText = $alerts[$field]['alert'];
-                                            $alertSeverity = strtolower($alerts[$field]['severity']);
-                                        }
-                                    @endphp
                                     <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-{{ $alertSeverity }}">
                                         <span class="opacity-70 text-white font-semibold">{{ $alertText }}</span>
                                     </div>
@@ -164,16 +179,15 @@
                 </div>
             </div>
 
-
-<div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-    @if (isset($adlData))
-        <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
-            class="button-default text-center">
-            CDSS
-        </a>
-    @endif
-    <button type="submit" form="adl-form" class="button-default">SUBMIT</button>
-</div>
+            <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                @if (isset($adlData))
+                    <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
+                        class="button-default text-center">
+                        CDSS
+                    </a>
+                @endif
+                <button type="submit" form="adl-form" class="button-default">SUBMIT</button>
+            </div>
                 
         </fieldset>
     </form>
@@ -181,23 +195,17 @@
 @endsection
 
 @push('scripts')
-    {{-- Load all necessary script files, replacing generic alert.js with the specific one --}}
+
     @vite([
         'resources/js/patient-loader.js',
-        'resources/js/date-day-loader.js',
-        'resources/js/init-searchable-dropdown.js',
-        'resources/js/page-initializer.js',
-        'resources/js/act-of-daily-living-alerts.js'
+        'resources/js/init.searchable-dropdown.js',
+        'resources/js/alert.js',
+        'resources/js/date-day-sync.js' 
     ])
 
-    {{-- Define the specific initializers for this page, following the vital-signs pattern --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            window.pageInitializers = [
-                window.initializeSearchableDropdown,
-                window.initializeDateDayLoader,
-                window.initializeAdlAlerts // This is the new, specific initializer
-            ];
+            window.initializeSearchableDropdown();
         });
     </script>
 @endpush

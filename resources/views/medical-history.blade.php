@@ -2,6 +2,8 @@
 @section('title', 'Patient Medical History')
 @section('content')
 
+
+
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
@@ -27,7 +29,7 @@
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         {{-- PRESENT ILLNESS --}}
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PRESENT ILLNESS</th>
+                            <th colspan="6" class="main-header text-white rounded-t-lg">PRESENT ILLNESS</th>
                         </tr>
 
                         <tr>
@@ -76,7 +78,7 @@
 
                         {{-- PAST MEDICAL / SURGICAL --}}
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
+                            <th colspan="6" class="main-header text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
                         </tr>
                         <tr>
 
@@ -123,7 +125,7 @@
                         {{-- KNOWN CONDITION OR ALLERGIES --}}
 
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
+                            <th colspan="6" class="main-header text-white rounded-t-lg">KNOWN CONDITION OR ALLERGIES</th>
                         </tr>
 
                         <tr>
@@ -169,7 +171,7 @@
                     <table class="mb-2 w-[72%] border-collapse border-spacing-0">
                         {{-- VACCINATION --}}
                         <tr>
-                            <th colspan="6" class="bg-dark-green text-white rounded-t-lg">VACCINATION</th>
+                            <th colspan="6" class="main-header text-white rounded-t-lg">VACCINATION</th>
                         </tr>
                         <tr>
 
@@ -224,5 +226,10 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js', 'resources/js/date-day-loader.js'])
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/patient-loader.js',
+        'resources/js/searchable-dropdown.js',
+        'resources/js/date-day-loader.js'
+    ])
 @endpush

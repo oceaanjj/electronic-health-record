@@ -4,349 +4,381 @@
 
 @section('content')
 
-<style>
-.container { padding: 1rem; }
-.alert { padding: 10px; border-radius: 6px; margin-bottom: 1rem; }
-.alert-success { background: #d1e7dd; color: #0f5132; }
-.alert-error { background: #f8d7da; color: #842029; }
+    <style>
+        /* --- GLOBAL & UTILITIES --- */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1e40af;
+            --danger-color: #ef4444;
+            --danger-hover: #b91c1c;
+            --gray-100: #f9fafb;
+            --gray-200: #f3f4f6;
+            --gray-300: #e5e7eb;
+            --gray-400: #d1d5db;
+            --gray-500: #9ca3af;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+        }
 
-.diagnostic-grid { 
-    margin-top: 1rem; 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 1rem; 
-}
+        .container {
+            padding: 1.5rem;
+        }
 
-.diagnostic-panel {
-    border-radius: 12px;
-    box-shadow: 0 0 5px #b0a87e;
-    flex: 1 1 300px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
+        #form-content-container {
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
 
-.panel-body {
-    background: linear-gradient(135deg, #5a9c5a, #4a8c4a);
-    padding: 1rem;
-    flex-grow: 1;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-}
+        /* --- BUTTONS (Material Style) --- */
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-.panel-body h2 {
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    font-size: 1.5rem;
-    margin: 0;
-    padding: 1rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-}
+        .btn:hover {
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
 
-.panel-footer {
-    background: #f7edc9;
-    padding: 0.75rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-.insert-btn {
-    background: green;
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-}
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
 
-.clear-btn {
-    background: red;
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-}
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
 
-button[type=submit] { 
-    background: #007bff; 
-    color: white; 
-    padding: 8px 16px; 
-    border: none; 
-    border-radius: 6px; 
-    cursor: pointer; 
-    font-weight: bold; 
-}
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: #fff;
+        }
 
-.file-input {
-    display: none;
-}
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+        }
 
-.preview-grid { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 8px; 
-    margin-top: 1rem;
-}
-.preview-item { 
-    position: relative; 
-    width: 100px; 
-    height: 100px; 
-}
-.preview-item img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    border-radius: 8px; 
-    border: 2px solid #ccc; 
-}
-.delete-btn { 
-    position: absolute; 
-    top: -6px; 
-    right: -6px; 
-    background: red; 
-    color: white; 
-    border: none; 
-    border-radius: 50%; 
-    width: 22px; 
-    height: 22px; 
-    font-size: 12px; 
-    cursor: pointer; 
-}
+        .btn[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: var(--gray-400);
+            color: var(--gray-500);
+            box-shadow: none;
+            transform: none;
+        }
 
-.uploaded-title {
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: white;
-    font-weight: bold;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    padding-bottom: 5px;
-}
+        /* --- GRID --- */
+        .diagnostic-grid {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            /* Responsive grid */
+            gap: 2rem;
+        }
 
-/* --- button disabledd --- */
-.insert-btn.disabled,
-.insert-btn[disabled],
-button.clear-btn[disabled],
-button[type=submit][disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background-color: #e0e0e0;
-    color: #999;
-}
-button.clear-btn[disabled] {
-    background: none;
-    opacity: 0.4;
-}
-</style>
+        /* --- CARD PANEL (Material Style) --- */
+        .diagnostic-panel {
+            background: #ffffff;
+            border-radius: 16px;
+            /* Material 3 style */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
 
-<div id="form-content-container">
+        .diagnostic-panel:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.40);
+        }
 
-    {{-- Styled Alerts --}}
-    @if (session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6">{{ session('success') }}</div>
-    @endif
-    @if (session('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6">{{ session('error') }}</div>
-    @endif
+        /* --- HEADER AREA --- */
+        .panel-header {
+            background: var(--gray-100);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-300);
+            background-color: rgba(4, 127, 0, 1)
+        }
 
-    <x-searchable-patient-dropdown
-        :patients="$patients"
-        :selectedPatient="$selectedPatient"
-        selectRoute="{{ route('diagnostics.select') }}"
-        inputPlaceholder="-Select or type to search-"
-        inputName="patient_id"
-        inputValue="{{ session('selected_patient_id') }}"
-    />
+        .panel-header h2 {
+            color: var(--gray-800);
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0;
+            color: white;
+        }
 
-    @if ($selectedPatient)
-        <h2 style="color:white; margin-top: 1rem;">Diagnostics for: <strong>{{ $selectedPatient->first_name }} {{ $selectedPatient->middle_name ? $selectedPatient->middle_name . ' ' : '' }}{{ $selectedPatient->last_name }}</strong></h2>
-    @endif
+        /* --- UPLOAD AREA (The 'panel-body') --- */
+        .panel-upload-area {
+            position: relative;
+            padding: 1.5rem;
+            border: 2px dashed var(--gray-400);
+            border-radius: 12px;
+            margin: 1.5rem;
+            cursor: pointer;
+            background: #fff;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Pushes prompt to top, accepted-types to bottom */
+            flex-grow: 1;
+            /* Makes the upload area fill the card */
+            min-height: 280px;
+        }
 
-    <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="patient_id" value="{{ $selectedPatient ? $selectedPatient->patient_id : '' }}">
+        .panel-upload-area:hover {
+            background-color: var(--gray-100);
+            border-color: var(--primary-color);
+        }
 
-        <fieldset {{ !$selectedPatient ? 'disabled' : '' }}>
-            <div class="diagnostic-grid">
-                @php
-                    $types = [
-                        'xray' => 'X-Ray',
-                        'ultrasound' => 'Ultrasound',
-                        'ct_scan' => 'CT Scan',
-                        'echocardiogram' => 'Echocardiogram'
-                    ];
-                @endphp
+        /* Drag-over state */
+        .panel-upload-area.drag-over {
+            background-color: #e0eaff;
+            border-color: var(--primary-color);
+            border-style: solid;
+        }
 
-                @foreach ($types as $key => $label)
-                    <div class="diagnostic-panel" data-type="{{ $key }}"
-                         data-uploaded-image-ids="{{ json_encode($selectedPatient && isset($images[$key]) ? $images[$key]->pluck('id')->toArray() : []) }}">
-                        
-                        <div class="panel-body">
-                            <h2>{{ $label }}</h2>
+        /* New wrapper for the main content (prompt/previews) */
+        .upload-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-grow: 1;
+            /* Allows this to center vertically */
+        }
 
-                            <div class="preview-grid" id="preview-{{ $key }}"></div>
+        /* Prompt for uploading */
+        .upload-prompt {
+            text-align: center;
+            color: var(--gray-500);
+            pointer-events: none;
+            /* Allows clicks to pass through to the label */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-                            @if ($selectedPatient && isset($images[$key]) && count($images[$key]))
-                                <h4 class="uploaded-title">Uploaded Files:</h4>
-                                <div class="preview-grid" id="uploaded-files-{{ $key }}">
-                                    @foreach ($images[$key] as $image)
-                                        <div class="preview-item">
-                                            <img src="{{ Storage::url($image->path) }}" alt="{{ $image->original_name }}">
-                                            <button type="button" class="delete-btn"
-                                                onclick="deleteImage('{{ route('diagnostics.destroy', $image->id) }}')">x</button>
+        .upload-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            color: var(--gray-400);
+        }
+
+        .upload-prompt p {
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* "Accepted types" text at the bottom */
+        .upload-accepted-types {
+            display: block;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            width: 100%;
+            padding-top: 1rem;
+            /* Space from content above */
+            pointer-events: none;
+        }
+
+        /* --- PREVIEW GRID --- */
+        .preview-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--gray-300);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger-color);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 22px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- UPLOADED FILES TITLE --- */
+        .uploaded-title {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-800);
+            font-weight: 600;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 8px;
+            font-size: 1rem;
+            width: 100%;
+            text-align: left;
+        }
+
+        /* --- FOOTER BUTTON AREA --- */
+        .panel-footer {
+            background: var(--gray-100);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-top: 1px solid var(--gray-300);
+        }
+
+        /* --- FILE INPUT HIDDEN --- */
+        .file-input {
+            display: none;
+        }
+    </style>
+
+
+    <div id="form-content-container" data-csrf-token="{{ csrf_token() }}"
+        data-patient-id="{{ $selectedPatient->patient_id ?? '' }}"
+        data-delete-all-url-template="{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}">
+
+        {{-- Use your existing searchable dropdown --}}
+        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
+            selectRoute="{{ route('diagnostics.select') }}" inputPlaceholder="-Select or type to search-"
+            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
+
+        @if ($selectedPatient)
+            <h2 style="color:white; margin-top: 1rem; font-weight: 300;">Diagnostics for:
+                <strong style="font-weight: 600;">{{ $selectedPatient->first_name }}
+                    {{ $selectedPatient->middle_name ? $selectedPatient->middle_name . ' ' : '' }}{{ $selectedPatient->last_name }}</strong>
+            </h2>
+        @endif
+
+        <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="patient_id" value="{{ $selectedPatient ? $selectedPatient->patient_id : '' }}">
+
+            <fieldset {{ !$selectedPatient ? 'disabled' : '' }}>
+                <div class="diagnostic-grid">
+                    @php
+                        $types = [
+                            'xray' => 'X-Ray',
+                            'ultrasound' => 'Ultrasound',
+                            'ct_scan' => 'CT Scan',
+                            'echocardiogram' => 'Echocardiogram'
+                        ];
+                    @endphp
+
+                    @foreach ($types as $key => $label)
+                        <div class="diagnostic-panel" data-type="{{ $key }}"
+                            data-uploaded-image-ids="{{ json_encode($selectedPatient && isset($images[$key]) ? $images[$key]->pluck('id')->toArray() : []) }}">
+
+                            <div class="panel-header">
+                                <h2>{{ $label }}</h2>
+                            </div>
+
+                            <label class="panel-upload-area" for="file-input-{{ $key }}" data-type="{{ $key }}">
+
+                                <div class="upload-content-wrapper">
+                                    <div class="upload-prompt" id="prompt-{{ $key }}">
+                                        <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M12 16.5V9.75m0 0l-3 3m3-3l3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                                        </svg>
+                                        <p>Drop files here or <strong>click to browse</strong></p>
+                                    </div>
+
+                                    <div class="preview-grid" id="preview-{{ $key }}"></div>
+
+
+
+                                    @if ($selectedPatient && isset($images[$key]) && count($images[$key]))
+                                        <h4 class="uploaded-title">Uploaded Files:</h4>
+                                        <div class="preview-grid" id="uploaded-files-{{ $key }}">
+                                            @foreach ($images[$key] as $image)
+                                                <div class="preview-item">
+                                                    <img src="{{ Storage::url($image->path) }}" alt="{{ $image->original_name }}">
+                                                    <button type="button" class="delete-btn"
+                                                        onclick="deleteImage(event, '{{ route('diagnostics.destroy', $image->id) }}')">×</button>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    @endif
                                 </div>
-                            @endif
-                        </div>
 
-                        <div class="panel-footer">
-                            <input 
-                                type="file" 
-                                name="images[{{ $key }}][]" 
-                                accept="image/*" 
-                                multiple 
-                                onchange="previewImages(event, '{{ $key }}')" 
-                                class="file-input" 
-                                id="file-input-{{ $key }}"
-                                {{ !$selectedPatient ? 'disabled' : '' }}>
-                            
-                            <label 
-                                for="file-input-{{ $key }}" 
-                                class="insert-btn {{ !$selectedPatient ? 'disabled' : '' }}">
-                                INSERT PHOTO
+                                <span class="upload-accepted-types">
+                                    Accepted: Images (JPG, PNG, etc.)
+                                </span>
+
                             </label>
 
-                            <button 
-                                type="button" 
-                                class="clear-btn" 
-                                onclick="handleClearButtonClick('{{ $key }}')"
-                                {{ !$selectedPatient ? 'disabled' : '' }}>
-                                CLEAR
-                            </button>
+                            <div class="panel-footer">
+                                <input type="file" name="images[{{ $key }}][]" accept="image/*" multiple
+                                    onchange="previewImages(event, '{{ $key }}')" class="file-input" id="file-input-{{ $key }}"
+                                    {{ !$selectedPatient ? 'disabled' : '' }}>
+
+                                <button type="button"
+                                    class="bg-red-500 cursor-pointer hover:bg-red-700 text-white py-1 px-3 rounded-full"
+                                    onclick="handleClearButtonClick('{{ $key }}')" {{ !$selectedPatient ? 'disabled' : '' }}>
+                                    Clear All
+                                </button>
+                            </div>
+
                         </div>
-                        
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
 
-            <div style="margin-top: 1rem;">
-                <button type="submit" {{ !$selectedPatient ? 'disabled' : '' }}>Submit</button>
-            </div>
-        </fieldset>
-    </form>
-</div>
-
-    <script>
-function previewImages(event, type) {
-    const input = event.target;
-    const previewContainer = document.getElementById('preview-' + type);
-    previewContainer.innerHTML = ''; // Clear existing new previews
-
-    if (input.files) {
-        Array.from(input.files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = e => {
-                const div = document.createElement('div');
-                div.classList.add('relative', 'w-full', 'aspect-square'); // Use Tailwind classes for consistency
-                div.innerHTML = `<img src="${e.target.result}" alt="preview" class="w-full h-full object-cover rounded-lg border-2 border-gray-300">`;
-                previewContainer.appendChild(div);
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-}
-
-function clearPreview(type) {
-    const previewContainer = document.getElementById('preview-' + type);
-    const input = document.getElementById('file-input-' + type); 
-    previewContainer.innerHTML = '';
-    input.value = ''; // Clear the file input
-}
-
-function deleteImage(url) {
-    // Note: The user's instructions mention avoiding confirm().
-    // This would require a custom modal, which is a larger change.
-    // Keeping the original logic for now as requested by the file.
-    if (!confirm('Delete this image?')) return; 
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: new URLSearchParams({ _method: 'DELETE' })
-    })
-    .then(res => {
-        if (res.ok) {
-            location.reload();
-        } else {
-            alert('Failed to delete image.');
-        }
-    })
-    .catch(() => alert('Error deleting image.'));
-}
-
-function handleClearButtonClick(type) {
-    const panel = document.querySelector(`.diagnostic-panel[data-type="${type}"]`);
-    const uploadedImageIds = JSON.parse(panel.dataset.uploadedImageIds || '[]');
-
-    if (uploadedImageIds.length > 0) {
-        // If there are uploaded images, trigger bulk delete
-        deleteAllImages(type, uploadedImageIds);
-    } else {
-        // Otherwise, just clear the client-side preview
-        clearPreview(type);
-    }
-}
-
-function deleteAllImages(type, imageIds) {
-    if (!confirm('Delete ALL images for ' + type.toUpperCase() + '? This action cannot be undone.')) return;
-
-    fetch('{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}'
-        .replace('__TYPE__', type)
-        .replace('__PATIENT_ID__', '{{ $selectedPatient->patient_id ?? '' }}'), {
-        method: 'POST', // Laravel uses POST for DELETE via _method
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            location.reload(); // Reload page to reflect changes
-        } else {
-            alert('Failed to delete images: ' + (data.message || 'Unknown error.'));
-        }
-    })
-    .catch(error => {
-        console.error('Error deleting images:', error);
-        alert('Error deleting images.');
-    });
-}
-
-// Initialize searchable dropdown on page load
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.initSearchableDropdown) {
-        window.initSearchableDropdown();
-    }
-});
-</script>
+                {{-- Use the global button classes --}}
+                <div style="margin-top: 2rem; text-align:center;">
+                    <button type="submit" class="button-default text-center" {{ !$selectedPatient ? 'disabled' : '' }}>
+                        SUBMIT
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
+    @vite([
+        'resources/js/patient-loader.js',
+        'resources/js/searchable-dropdown.js',
+        'resources/js/diagnostics.js'
+    ])
 @endpush

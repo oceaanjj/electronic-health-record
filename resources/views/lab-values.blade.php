@@ -4,6 +4,8 @@
 
 @section('content')
 
+
+
     <div id="form-content-container">
         @if (!session('selected_patient_id'))
             <div
@@ -17,7 +19,8 @@
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
         <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
-            data-analyze-url="{{ route('lab-values.run-cdss-field') }}">
+            data-analyze-url="{{ route('lab-values.run-cdss-field') }}"
+            data-batch-analyze-url="{{ route('lab-values.analyze-batch') }}" data-alert-height-class="h-[49.5px]">
             @csrf
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
@@ -30,9 +33,9 @@
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[30%] bg-dark-green text-white font-bold py-2 rounded-tl-[15px]">LAB TEST</th>
-                                <th class="w-[30%] bg-dark-green text-white font-bold py-2">RESULT</th>
-                                <th class="w-[40%] bg-dark-green text-white font-bold py-2 rounded-tr-[15px]">PEDIATRIC
+                                <th class="w-[30%] main-header rounded-tl-[15px]">LAB TEST</th>
+                                <th class="w-[30%] main-header">RESULT</th>
+                                <th class="w-[50%] main-header rounded-tr-[15px]">
                                     NORMAL RANGE
                                 </th>
                             </tr>
@@ -64,12 +67,13 @@
                                     <td class="p-2 bg-beige text-center">
                                         <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
                                             value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
-                                            class="w-full h-[40px] text-center cdss-input" data-field-name="{{ $name }}_result">
+                                            class="w-full h-[40px] focus:outline-none text-center cdss-input"
+                                            data-field-name="{{ $name }}_result">
                                     </td>
                                     <td class="p-2 bg-beige text-center">
                                         <input type="text" name="{{ $name }}_normal_range" placeholder="Normal Range"
                                             value="{{ old($name . '_normal_range', optional($labValue)->{$name . '_normal_range'}) }}"
-                                            class="w-full h-[40px] text-center">
+                                            class="w-full h-[40px] focus:outline-none text-center">
                                     </td>
                                 </tr>
                             @endforeach
@@ -78,15 +82,15 @@
 
                     {{-- ALERTS TABLE--}}
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header rounded-[15px]">
                             ALERTS
                         </div>
 
-                        <table class="w-full border-collapse text-center">
+                        <table class="w-full border-collapse">
                             @foreach ($labTests as $label => $name)
                                 <tr>
                                     <td class="align-middle">
-                                        <div class="alert-box my-1 h-[53px] flex justify-center items-center flex-col px-2"
+                                        <div class="alert-box my-1 h-[49.5px] flex justify-center items-center text-center px-2"
                                             data-alert-for="{{ $name }}_result">
                                             <span class="opacity-70 text-white font-semibold">No Alerts</span>
                                         </div>
@@ -120,15 +124,9 @@
     @endpush
 
     @push('scripts')
-        @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const cdssForm = document.querySelector('.cdss-form');
-                if (cdssForm && window.initializeCdssForForm) {
-                    window.initializeCdssForForm(cdssForm);
-                    window.triggerInitialCdssAnalysis(cdssForm);
-                }
-            });
-        </script>
+        @vite([
+            'resources/js/alert.js',
+            'resources/js/patient-loader.js',
+            'resources/js/searchable-dropdown.js'
+        ])
     @endpush

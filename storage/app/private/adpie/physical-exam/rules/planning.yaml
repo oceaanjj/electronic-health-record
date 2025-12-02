@@ -1,4 +1,5 @@
 planning:
+<<<<<<< HEAD
   - keywords: ["patient will"]
     alert: "Goals are often patient-centered. Start with 'Patient will...'."
     severity: "INFO"
@@ -165,3 +166,1448 @@ planning:
   - keywords: ["petechiae", "purpura", "non-blanching rash"]
     alert: "Plan: (EMERGENCY) Institute droplet precautions (for suspected meningococcemia); establish IV access; prepare for immediate blood work (CBC, Coags, Blood Culture) and antibiotics."
     severity: "critical"
+=======
+  - keywords:
+      - wheezing
+    match_type: any
+    alert: Patient will demonstrate clear lung sounds on auscultation within 24-48 hours.
+    severity: INFO
+  - keywords:
+      - crackles
+    match_type: any
+    alert:
+      Patient will exhibit clear lung sounds and decreased peripheral edema within
+      48 hours.
+    severity: INFO
+  - keywords:
+      - O2 sat
+      - low
+    match_type: all
+    alert:
+      Patient will maintain O2 saturation >= 92% (or baseline) on [current O2 therapy]
+      for the next 8 hours.
+    severity: WARNING
+  - keywords:
+      - O2 sat
+      - 90%
+    match_type: any
+    alert: Patient's O2 saturation will return to >92% within 30 minutes of intervention.
+    severity: WARNING
+  - keywords:
+      - O2 sat
+      - 88%
+    match_type: any
+    alert: Patient's O2 saturation will be >= 90% within 15 minutes of O2 application.
+    severity: CRITICAL
+  - keywords:
+      - dyspnea
+      - SOB
+      - shortness of breath
+    match_type: any
+    alert:
+      Patient will report decreased dyspnea (e.g., < 3/10 on 0-10 scale) during
+      activity within 24 hours.
+    severity: INFO
+  - keywords:
+      - tachypnea
+    match_type: any
+    alert:
+      Patient's respiratory rate will remain between 12-20 breaths/min for the
+      next 8 hours.
+    severity: INFO
+  - keywords:
+      - bradypnea
+    match_type: any
+    alert: Patient's respiratory rate will remain >10 breaths/min for the next 4 hours.
+    severity: WARNING
+  - keywords:
+      - accessory muscle use
+    match_type: any
+    alert:
+      Patient will exhibit no signs of respiratory distress (e.g., no accessory
+      muscle use) within 4 hours.
+    severity: WARNING
+  - keywords:
+      - cough
+      - non-productive
+    match_type: all
+    alert:
+      Patient will demonstrate a productive cough to clear secretions by end of
+      shift.
+    severity: INFO
+  - keywords:
+      - cough
+      - productive
+    match_type: all
+    alert:
+      Patient will verbalize 2 methods to mobilize secretions (e.g., hydration,
+      huff cough) by end of shift.
+    severity: INFO
+  - keywords:
+      - sputum
+      - thick
+    match_type: all
+    alert: Patient will produce thinner, clear sputum within 48 hours.
+    severity: INFO
+  - keywords:
+      - sputum
+      - yellow
+      - green
+    match_type: any
+    alert:
+      Patient will be afebrile and sputum will clear within 3 days of antibiotic
+      therapy.
+    severity: INFO
+  - keywords:
+      - breath sounds
+      - diminished
+    match_type: all
+    alert:
+      Patient will demonstrate improved bilateral lung expansion on auscultation
+      within 24 hours.
+    severity: INFO
+  - keywords:
+      - breath sounds
+      - absent
+    match_type: all
+    alert:
+      Patient will have vital signs and respiratory status assessed every 15-30
+      minutes until stable.
+    severity: CRITICAL
+  - keywords:
+      - stridor
+    match_type: any
+    alert: Patient will maintain a patent airway for the duration of the shift.
+    severity: CRITICAL
+  - keywords:
+      - cyanosis
+      - central
+    match_type: all
+    alert:
+      Patient's central cyanosis will resolve (e.g., pink mucous membranes) within
+      1 hour.
+    severity: CRITICAL
+  - keywords:
+      - cyanosis
+      - peripheral
+    match_type: all
+    alert:
+      Patient's extremities will be warm and pink with cap refill <3 sec within
+      4 hours.
+    severity: WARNING
+  - keywords:
+      - edema
+      - pitting
+    match_type: all
+    alert:
+      Patient's pitting edema will reduce by at least one grade (e.g., 3+ to 2+)
+      within 48 hours.
+    severity: INFO
+  - keywords:
+      - edema
+      - generalized
+      - anasarca
+    match_type: any
+    alert: Patient will achieve a net negative I/O balance for 3 consecutive days.
+    severity: INFO
+  - keywords:
+      - edema
+      - pedal
+    match_type: all
+    alert:
+      Patient will verbalize 3 methods to reduce lower extremity edema (e.g., elevation,
+      low salt) by discharge.
+    severity: INFO
+  - keywords:
+      - fluid volume excess
+    match_type: any
+    alert: Patient will lose 1-2 lbs (0.5-1 kg) of fluid weight per day as tolerated.
+    severity: INFO
+  - keywords:
+      - tachycardia
+    match_type: any
+    alert:
+      Patient's heart rate will remain in normotensive range (60-100 bpm) for the
+      next 8 hours.
+    severity: INFO
+  - keywords:
+      - bradycardia
+    match_type: any
+    alert:
+      Patient will remain asymptomatic (no dizziness, syncope) with current heart
+      rate for the duration of the shift.
+    severity: INFO
+  - keywords:
+      - rhythm
+      - irregular
+    match_type: all
+    alert:
+      Patient will remain free from complications of irregular rhythm (e.g., no
+      falls, no chest pain) for 24 hours.
+    severity: WARNING
+  - keywords:
+      - afib
+      - atrial fibrillation
+    match_type: any
+    alert:
+      Patient will remain free of signs of stroke (e.g., FAST) for the duration
+      of the shift.
+    severity: WARNING
+  - keywords:
+      - pulse
+      - weak
+      - thready
+    match_type: any
+    alert:
+      Patient will have palpable (2+) peripheral pulses in all extremities within
+      8 hours.
+    severity: WARNING
+  - keywords:
+      - pulse
+      - absent
+    match_type: all
+    alert:
+      Patient's affected extremity will regain palpable or Doppler-audible pulses
+      within 1 hour of intervention.
+    severity: CRITICAL
+  - keywords:
+      - pulse
+      - bounding
+    match_type: any
+    alert: Patient's blood pressure will remain within target range for the next 4 hours.
+    severity: INFO
+  - keywords:
+      - pallor
+    match_type: any
+    alert: Patient's skin color will return to baseline (e.g., pink) within 8 hours.
+    severity: INFO
+  - keywords:
+      - mottled
+      - skin
+    match_type: all
+    alert:
+      Patient's skin mottling will resolve and extremities will be warm within
+      2 hours of intervention.
+    severity: CRITICAL
+  - keywords:
+      - capillary refill
+      - slow
+      - "> 3 seconds"
+    match_type: any
+    alert:
+      Patient's capillary refill will be less than 3 seconds in all extremities
+      within 4 hours.
+    severity: WARNING
+  - keywords:
+      - JVD
+      - jugular vein distention
+    match_type: any
+    alert: Patient's JVD will be absent or reduced (at 30-45 degrees) within 24-48 hours.
+    severity: INFO
+  - keywords:
+      - chest pain
+    match_type: any
+    alert:
+      Patient will report 0/10 chest pain (or relief from baseline) within 30 minutes
+      of intervention.
+    severity: CRITICAL
+  - keywords:
+      - palpitations
+    match_type: any
+    alert: Patient will report resolution of palpitations within 1 hour.
+    severity: INFO
+  - keywords:
+      - BP
+      - high
+      - hypertension
+    match_type: any
+    alert:
+      Patient's blood pressure will remain below 140/90 mmHg (or specified target)
+      by end of shift.
+    severity: INFO
+  - keywords:
+      - BP
+      - low
+      - hypotension
+    match_type: any
+    alert:
+      Patient's systolic blood pressure will remain >90 mmHg (or specified target)
+      for the next 8 hours.
+    severity: WARNING
+  - keywords:
+      - orthostatic hypotension
+    match_type: any
+    alert:
+      Patient will be able to change positions (lying to standing) without dizziness
+      or SBP drop >20 mmHg by discharge.
+    severity: INFO
+  - keywords:
+      - bruit
+      - carotid
+    match_type: all
+    alert:
+      Patient will remain free of new neurological deficits (e.g., no new weakness,
+      slurred speech) for the next 24 hours.
+    severity: WARNING
+  - keywords:
+      - murmur
+      - heart
+    match_type: all
+    alert:
+      Patient will remain hemodynamically stable and free of chest pain for the
+      duration of the shift.
+    severity: INFO
+  - keywords:
+      - cool
+      - extremities
+    match_type: all
+    alert: Patient's extremities will be warm to the touch within 4 hours.
+    severity: INFO
+  - keywords:
+      - redness
+      - skin
+      - erythema
+    match_type: any
+    alert:
+      Patient's skin will remain intact, with no new areas of breakdown, for the
+      next 24 hours.
+    severity: INFO
+  - keywords:
+      - blanching
+      - skin
+    match_type: all
+    alert: Patient's blanchable red area will resolve within 24 hours with offloading.
+    severity: INFO
+  - keywords:
+      - non-blanching
+      - redness
+    match_type: all
+    alert:
+      Patient's Stage 1 pressure injury will not progress to Stage 2 (no open skin)
+      by discharge.
+    severity: WARNING
+  - keywords:
+      - wound
+      - ulcer
+      - pressure
+    match_type: any
+    alert:
+      Patient's wound will show decreased size (e.g., length, width, depth) within
+      1 week.
+    severity: WARNING
+  - keywords:
+      - ulcer
+      - venous
+    match_type: all
+    alert: Patient will demonstrate correct application of compression dressing by discharge.
+    severity: INFO
+  - keywords:
+      - ulcer
+      - arterial
+    match_type: all
+    alert:
+      Patient's affected extremity will maintain baseline pulse, color, and temperature
+      for the next 8 hours.
+    severity: WARNING
+  - keywords:
+      - ulcer
+      - diabetic
+    match_type: all
+    alert:
+      Patient will demonstrate proper offloading techniques for the affected foot
+      by end of shift.
+    severity: INFO
+  - keywords:
+      - rash
+    match_type: any
+    alert:
+      Patient will report decreased itching and rash will show signs of resolution
+      within 3 days.
+    severity: INFO
+  - keywords:
+      - dry
+      - skin
+      - xerosis
+    match_type: any
+    alert: Patient's skin will be supple and free of cracking within 3 days.
+    severity: INFO
+  - keywords:
+      - turgor
+      - poor
+      - tenting
+    match_type: any
+    alert:
+      Patient will demonstrate signs of adequate hydration (e.g., good skin turgor,
+      moist mucous membranes) within 24 hours.
+    severity: INFO
+  - keywords:
+      - moisture
+      - skin
+    match_type: all
+    alert:
+      Patient's skin will remain free of maceration (e.g., skin folds, perineum)
+      for the next 24 hours.
+    severity: INFO
+  - keywords:
+      - diaphoresis
+      - diaphoretic
+    match_type: any
+    alert: Patient's skin will remain clean and dry for the duration of the shift.
+    severity: INFO
+  - keywords:
+      - clammy
+      - skin
+    match_type: all
+    alert:
+      Patient will return to warm, dry skin and hemodynamic stability within 1
+      hour of intervention.
+    severity: CRITICAL
+  - keywords:
+      - jaundice
+      - yellow skin
+    match_type: any
+    alert:
+      Patient will report decreased pruritus and labs (bilirubin) will trend down
+      within 1 week.
+    severity: INFO
+  - keywords:
+      - petechiae
+    match_type: any
+    alert:
+      Patient will remain free of new petechiae or signs of bleeding for the next
+      24 hours.
+    severity: WARNING
+  - keywords:
+      - ecchymosis
+      - bruise
+    match_type: any
+    alert: Patient will have no new areas of ecchymosis for the next 48 hours.
+    severity: INFO
+  - keywords:
+      - incision
+      - drainage
+    match_type: all
+    alert:
+      Patient's wound drainage will decrease in amount and change from purulent/sanguineous
+      to serous within 3-5 days.
+    severity: INFO
+  - keywords:
+      - incision
+      - redness
+    match_type: all
+    alert:
+      Patient will be free of signs of wound infection (no fever, erythema, purulence)
+      within 48 hours of starting antibiotics.
+    severity: WARNING
+  - keywords:
+      - incision
+      - dehiscence
+    match_type: any
+    alert:
+      Patient's wound will remain stable (no further separation) until surgical
+      consult.
+    severity: CRITICAL
+  - keywords:
+      - incision
+      - evisceration
+    match_type: any
+    alert:
+      Patient will remain hemodynamically stable and pain controlled (< 4/10) prior
+      to surgery.
+    severity: CRITICAL
+  - keywords:
+      - skin
+      - tear
+    match_type: all
+    alert:
+      Patient's skin tear will show signs of healing (e.g., flap adherence, no
+      drainage) within 3 days.
+    severity: INFO
+  - keywords:
+      - macerated
+      - skin
+    match_type: all
+    alert: Patient's macerated skin will be dry and intact within 24-48 hours.
+    severity: INFO
+  - keywords:
+      - Braden
+      - low
+      - high risk
+    match_type: any
+    alert:
+      Patient will remain free of new pressure injuries for the duration of their
+      hospital stay.
+    severity: WARNING
+  - keywords:
+      - sacrum
+      - red
+    match_type: all
+    alert:
+      Patient's sacral redness will resolve within 24 hours of initiating turning/offloading
+      schedule.
+    severity: INFO
+  - keywords:
+      - heels
+      - red
+    match_type: all
+    alert:
+      Patient's heel redness will resolve within 24 hours of 'floating heels' (e.g.,
+      pillows, boots).
+    severity: INFO
+  - keywords:
+      - purulent
+      - drainage
+    match_type: all
+    alert:
+      Patient's wound will be free of purulent drainage and temperature will be
+      <100.4°F within 48 hours of antibiotic tx.
+    severity: WARNING
+  - keywords:
+      - bowel sounds
+      - absent
+    match_type: all
+    alert: Patient will have return of bowel sounds and pass flatus within 24-48 hours.
+    severity: WARNING
+  - keywords:
+      - bowel sounds
+      - hypoactive
+    match_type: all
+    alert: Patient will have a soft, formed bowel movement within 48 hours.
+    severity: INFO
+  - keywords:
+      - bowel sounds
+      - hyperactive
+    match_type: all
+    alert: Patient will have < 3 loose/liquid stools in the next 24 hours.
+    severity: INFO
+  - keywords:
+      - abdomen
+      - distended
+    match_type: all
+    alert: Patient's abdominal girth will decrease by [X] cm/inches by end of shift.
+    severity: INFO
+  - keywords:
+      - abdomen
+      - firm
+      - rigid
+    match_type: any
+    alert:
+      Patient will have vital signs and pain level assessed every 15 minutes until
+      provider evaluates.
+    severity: CRITICAL
+  - keywords:
+      - abdomen
+      - tender
+    match_type: all
+    alert: Patient will report abdominal pain < 4/10 within 1 hour.
+    severity: INFO
+  - keywords:
+      - rebound tenderness
+    match_type: any
+    alert:
+      Patient will have pain controlled (<4/10) and vital signs stable prior to
+      surgical intervention.
+    severity: CRITICAL
+  - keywords:
+      - nausea
+    match_type: any
+    alert: Patient will report nausea < 2/10 within 1 hour of antiemetic administration.
+    severity: INFO
+  - keywords:
+      - vomiting
+      - emesis
+    match_type: any
+    alert: Patient will have no further episodes of emesis in the next 8 hours.
+    severity: WARNING
+  - keywords:
+      - coffee ground emesis
+    match_type: any
+    alert:
+      Patient will remain hemodynamically stable (SBP >90, HR <100) with no new
+      bleeding episodes for the next 8 hours.
+    severity: CRITICAL
+  - keywords:
+      - constipation
+      - no BM
+      - 3 days
+    match_type: any
+    alert: Patient will have a bowel movement within the next 24 hours.
+    severity: INFO
+  - keywords:
+      - stool
+      - hard
+      - dry
+    match_type: all
+    alert: Patient will pass a soft, formed stool within 24 hours.
+    severity: INFO
+  - keywords:
+      - diarrhea
+      - loose
+      - watery
+    match_type: any
+    alert:
+      Patient will have < 3 loose stools in 24 hours and perineal skin will remain
+      intact.
+    severity: INFO
+  - keywords:
+      - stool
+      - black
+      - tarry
+      - melena
+    match_type: any
+    alert:
+      Patient will have no further melena stools and Hgb will remain stable for
+      24 hours.
+    severity: CRITICAL
+  - keywords:
+      - stool
+      - bright red
+      - hematochezia
+    match_type: any
+    alert:
+      Patient will have no further hematochezia and vitals will remain stable for
+      the next 8 hours.
+    severity: CRITICAL
+  - keywords:
+      - stool
+      - clay-colored
+    match_type: any
+    alert: Patient will have return of normal brown stool color within 1 week (or post-intervention).
+    severity: INFO
+  - keywords:
+      - NG tube
+      - residual
+      - high
+    match_type: all
+    alert:
+      Patient will tolerate tube feeding at goal rate with residuals < [policy
+      limit] for 24 hours.
+    severity: WARNING
+  - keywords:
+      - dysphagia
+      - swallowing difficulty
+    match_type: any
+    alert:
+      Patient will remain free from signs of aspiration (e.g., coughing, choking,
+      fever) for the next 24 hours.
+    severity: CRITICAL
+  - keywords:
+      - poor appetite
+    match_type: any
+    alert: Patient will consume at least 50% of all meals for the next 3 days.
+    severity: INFO
+  - keywords:
+      - mouth
+      - dry
+      - xerostomia
+    match_type: any
+    alert: Patient's oral mucous membranes will be moist and intact by end of shift.
+    severity: INFO
+  - keywords:
+      - mouth
+      - sores
+      - stomatitis
+    match_type: any
+    alert: Patient will report pain < 3/10 during oral intake within 48 hours.
+    severity: INFO
+  - keywords:
+      - thrush
+      - white patches
+    match_type: any
+    alert:
+      Patient's oral thrush will show 50% resolution within 3 days of antifungal
+      treatment.
+    severity: INFO
+  - keywords:
+      - dysuria
+      - painful urination
+    match_type: any
+    alert:
+      Patient will report absence of burning or pain on urination within 48 hours
+      of starting antibiotics.
+    severity: INFO
+  - keywords:
+      - hematuria
+      - blood in urine
+    match_type: any
+    alert: Patient's urine will be clear and free of gross hematuria within 24 hours.
+    severity: WARNING
+  - keywords:
+      - urine
+      - cloudy
+    match_type: all
+    alert:
+      Patient will be free of UTI symptoms (fever, dysuria, urgency) within 48
+      hours.
+    severity: INFO
+  - keywords:
+      - urine
+      - foul odor
+    match_type: all
+    alert:
+      Patient will be afebrile and urine will be clear/odorless within 48 hours
+      of abx.
+    severity: INFO
+  - keywords:
+      - urine
+      - dark
+      - amber
+    match_type: any
+    alert: Patient's urine will be light yellow/straw-colored within 24 hours.
+    severity: INFO
+  - keywords:
+      - incontinence
+      - urine
+    match_type: all
+    alert:
+      Patient's perineal skin will remain intact and free from redness or breakdown
+      for the next 24 hours.
+    severity: INFO
+  - keywords:
+      - incontinence
+      - bowel
+    match_type: all
+    alert:
+      Patient's perianal skin will remain intact and free of breakdown for the
+      duration of the shift.
+    severity: WARNING
+  - keywords:
+      - urinary retention
+    match_type: any
+    alert:
+      Patient will have a post-void residual (PVR) of < 100 mL after the next successful
+      void.
+    severity: WARNING
+  - keywords:
+      - no urine output
+      - anuria
+    match_type: any
+    alert: Patient will have return of urine output (>30ml/hr) within 4 hours.
+    severity: CRITICAL
+  - keywords:
+      - low urine output
+      - oliguria
+    match_type: any
+    alert:
+      Patient will maintain a urine output of > 30 mL/hr (or 0.5 mL/kg/hr) for
+      the next 8 hours.
+    severity: WARNING
+  - keywords:
+      - foley
+      - catheter
+    match_type: any
+    alert:
+      Patient will remain free of signs of CAUTI (e.g., fever, cloudy urine) for
+      the duration of catheterization.
+    severity: INFO
+  - keywords:
+      - bladder scan
+      - high
+      - PVR
+    match_type: any
+    alert: Patient will successfully void with PVR < 100mL within 6 hours.
+    severity: INFO
+  - keywords:
+      - frequency
+      - urinary
+    match_type: all
+    alert: Patient will report a return to normal voiding pattern within 48 hours.
+    severity: INFO
+  - keywords:
+      - urgency
+      - urinary
+    match_type: all
+    alert: Patient will report resolution of urinary urgency within 48 hours.
+    severity: INFO
+  - keywords:
+      - nocturia
+    match_type: any
+    alert: Patient will remain free from falls during the night shift.
+    severity: INFO
+  - keywords:
+      - confusion
+      - acute
+    match_type: all
+    alert:
+      Patient will be oriented to person, place, and time (A&O x3) within 24-48
+      hours or return to baseline.
+    severity: WARNING
+  - keywords:
+      - disoriented
+    match_type: any
+    alert: Patient will be able to state correct name and location by end of shift.
+    severity: INFO
+  - keywords:
+      - lethargic
+    match_type: any
+    alert:
+      Patient will return to a more alert state (e.g., awakens easily to voice)
+      within 8 hours.
+    severity: WARNING
+  - keywords:
+      - obtunded
+    match_type: any
+    alert:
+      Patient's GCS will improve or remain stable (at baseline) for the next 8
+      hours.
+    severity: CRITICAL
+  - keywords:
+      - unresponsive
+    match_type: any
+    alert: Patient will have airway protected and vital signs stabilized within 30 minutes.
+    severity: CRITICAL
+  - keywords:
+      - GCS
+      - low
+    match_type: all
+    alert: Patient's GCS score will not decrease from baseline for the next 8 hours.
+    severity: CRITICAL
+  - keywords:
+      - GCS
+      - decrease
+      - drop
+    match_type: any
+    alert: Patient will have neuro exam performed by provider within 15 minutes.
+    severity: CRITICAL
+  - keywords:
+      - pupils
+      - unequal
+    match_type: all
+    alert:
+      Patient will exhibit no further decline in neurological status (e.g., stable
+      GCS) for the next 4 hours.
+    severity: CRITICAL
+  - keywords:
+      - pupils
+      - fixed
+      - dilated
+    match_type: all
+    alert:
+      Patient will have critical neuro-assessment documented every 15 minutes until
+      provider intervention.
+    severity: CRITICAL
+  - keywords:
+      - pupils
+      - pinpoint
+    match_type: all
+    alert:
+      Patient's pupils will return to 2-3mm and reactive within 1 hour of intervention
+      (e.g., naloxone).
+    severity: WARNING
+  - keywords:
+      - weakness
+      - extremity
+    match_type: all
+    alert:
+      Patient's motor strength will not decrease from baseline (e.g., 5/5) for
+      the next 24 hours.
+    severity: INFO
+  - keywords:
+      - weakness
+      - unilateral
+      - one-sided
+    match_type: any
+    alert:
+      Patient will exhibit no further decline in neurological status (e.g., stable
+      NIHSS score) for the next 12 hours.
+    severity: CRITICAL
+  - keywords:
+      - paralysis
+      - plegia
+    match_type: any
+    alert:
+      Patient will remain free from complications of immobility (e.g., skin breakdown,
+      contractures) for 48 hours.
+    severity: WARNING
+  - keywords:
+      - numbness
+      - tingling
+      - paresthesia
+    match_type: any
+    alert: Patient will report resolution or decrease in paresthesia within 24 hours.
+    severity: INFO
+  - keywords:
+      - gait
+      - unsteady
+    match_type: all
+    alert: Patient will remain free from falls for the duration of the hospital stay.
+    severity: WARNING
+  - keywords:
+      - gait
+      - shuffling
+    match_type: all
+    alert:
+      Patient will demonstrate safe use of assistive device (e.g., walker) for
+      all ambulation by discharge.
+    severity: INFO
+  - keywords:
+      - dizzy
+      - dizziness
+    match_type: any
+    alert: Patient will report no dizziness during position changes by end of shift.
+    severity: INFO
+  - keywords:
+      - vertigo
+    match_type: any
+    alert: Patient will remain free from falls for the next 24 hours.
+    severity: WARNING
+  - keywords:
+      - syncope
+      - fainted
+    match_type: any
+    alert: Patient will have no further syncopal episodes for the remainder of admission.
+    severity: CRITICAL
+  - keywords:
+      - slurred speech
+      - dysarthria
+    match_type: any
+    alert:
+      Patient will be able to make needs known (verbally or non-verbally) for the
+      duration of the shift.
+    severity: INFO
+  - keywords:
+      - aphasia
+      - expressive
+    match_type: all
+    alert:
+      Patient will use communication board or gestures to make 3 needs known by
+      end of shift.
+    severity: INFO
+  - keywords:
+      - aphasia
+      - receptive
+    match_type: all
+    alert:
+      Patient will respond appropriately to 3 simple, gestured commands by end
+      of shift.
+    severity: INFO
+  - keywords:
+      - tremors
+    match_type: any
+    alert:
+      Patient will be able to perform 1 ADL (e.g., feeding) with minimal tremor
+      interference by discharge.
+    severity: INFO
+  - keywords:
+      - seizure
+    match_type: any
+    alert:
+      Patient will remain free from injury (e.g., no falls, head trauma) during
+      the shift.
+    severity: CRITICAL
+  - keywords:
+      - headache
+    match_type: any
+    alert:
+      Patient will report headache severity reduced to < 3/10 within 1 hour of
+      intervention.
+    severity: INFO
+  - keywords:
+      - memory
+      - poor
+      - forgetful
+    match_type: any
+    alert:
+      Patient will use memory aids (e.g.,- whiteboard) to recall 2 care-related
+      tasks by discharge.
+    severity: INFO
+  - keywords:
+      - agitated
+      - restless
+    match_type: any
+    alert:
+      Patient will have a 50% reduction in agitated behaviors within 2 hours of
+      de-escalation/intervention.
+    severity: WARNING
+  - keywords:
+      - combative
+    match_type: any
+    alert: Patient and staff will remain free from injury for the duration of the shift.
+    severity: CRITICAL
+  - keywords:
+      - hallucinations
+    match_type: any
+    alert:
+      Patient will verbalize orientation to reality (e.g., 'I know it's not real')
+      by end of shift.
+    severity: WARNING
+  - keywords:
+      - delusions
+    match_type: any
+    alert:
+      Patient will participate in 1 activity without verbalizing delusional content
+      for 30 minutes.
+    severity: INFO
+  - keywords:
+      - joint pain
+      - arthralgia
+    match_type: any
+    alert: Patient will report joint pain < 4/10 during activity within 24 hours.
+    severity: INFO
+  - keywords:
+      - joint
+      - swelling
+    match_type: all
+    alert: Patient's joint swelling will be visibly reduced within 48 hours.
+    severity: INFO
+  - keywords:
+      - joint
+      - warmth
+      - redness
+    match_type: all
+    alert:
+      Patient's affected joint will be free of warmth and redness within 48 hours
+      of abx.
+    severity: WARNING
+  - keywords:
+      - ROM
+      - limited
+      - decreased
+    match_type: any
+    alert:
+      Patient's affected joint will show a 10-degree improvement in range of motion,
+      as measured by PT, within 1 week.
+    severity: INFO
+  - keywords:
+      - contracture
+    match_type: any
+    alert: Patient's contracture will not worsen (no decrease in ROM) during admission.
+    severity: INFO
+  - keywords:
+      - muscle
+      - weakness
+    match_type: all
+    alert:
+      Patient will ambulate [X] feet (e.g., 50 ft) with assistive device and 1-person
+      assist, 3 times per day.
+    severity: INFO
+  - keywords:
+      - muscle
+      - atrophy
+    match_type: all
+    alert:
+      Patient will perform active ROM exercises to all extremities 3 times by end
+      of shift.
+    severity: INFO
+  - keywords:
+      - muscle
+      - spasms
+      - cramps
+    match_type: any
+    alert: Patient will report a 50% reduction in muscle spasms within 1 hour of intervention.
+    severity: INFO
+  - keywords:
+      - assistive device
+      - walker
+      - cane
+    match_type: any
+    alert:
+      Patient will demonstrate safe use of assistive device on 3 consecutive ambulation
+      attempts.
+    severity: INFO
+  - keywords:
+      - activity intolerance
+    match_type: any
+    alert:
+      Patient will ambulate 20 feet further today than yesterday without O2 sat
+      dropping <92%.
+    severity: INFO
+  - keywords:
+      - self-care
+      - deficit
+      - assist
+      - ADL
+    match_type: any
+    alert:
+      Patient will participate in 50% of their ADLs (e.g., bathing, dressing) with
+      setup assistance by discharge.
+    severity: INFO
+  - keywords:
+      - fatigue
+    match_type: any
+    alert: Patient will identify 3 energy-conservation techniques by end of shift.
+    severity: INFO
+  - keywords:
+      - fall
+      - found on floor
+    match_type: any
+    alert:
+      Patient will remain free from further falls for the duration of the hospital
+      stay.
+    severity: CRITICAL
+  - keywords:
+      - crepitus
+      - joint
+    match_type: all
+    alert:
+      Patient will report pain < 4/10 with movement of affected joint within 24
+      hours.
+    severity: INFO
+  - keywords:
+      - crepitus
+      - subcutaneous
+    match_type: all
+    alert: Patient's subcutaneous crepitus will not extend in area for the next 8 hours.
+    severity: WARNING
+  - keywords:
+      - pain
+      - acute
+    match_type: all
+    alert:
+      Patient will report a pain level of < 4/10 (or a 2-point decrease) within
+      1 hour of analgesic administration.
+    severity: INFO
+  - keywords:
+      - pain
+      - chronic
+    match_type: all
+    alert:
+      Patient will participate in 1 non-pharmacological pain intervention (e.g.,
+      imagery) by end of shift.
+    severity: INFO
+  - keywords:
+      - pain
+      - scale
+      - 7/10
+    match_type: all
+    alert: Patient will report pain < 4/10 within 1 hour of intervention.
+    severity: WARNING
+  - keywords:
+      - pain
+      - scale
+      - 8/10
+    match_type: all
+    alert: Patient will report pain < 4/10 within 1 hour of intervention.
+    severity: WARNING
+  - keywords:
+      - pain
+      - scale
+      - 9/10
+    match_type: all
+    alert: Patient will report pain < 5/10 within 1 hour of intervention.
+    severity: CRITICAL
+  - keywords:
+      - pain
+      - scale
+      - 10/10
+    match_type: all
+    alert: Patient will report pain < 5/10 within 1 hour of intervention.
+    severity: CRITICAL
+  - keywords:
+      - pain
+      - non-verbal
+      - grimace
+      - guarding
+    match_type: any
+    alert:
+      Patient will exhibit decreased non-verbal pain cues (e.g., < 3 on CPOT scale)
+      within 1 hour of intervention.
+    severity: INFO
+  - keywords:
+      - anxious
+      - anxiety
+    match_type: any
+    alert:
+      Patient will report anxiety level < 4/10 within 1 hour of intervention (e.g.,
+      PRN med, relaxation techniques).
+    severity: INFO
+  - keywords:
+      - crying
+    match_type: any
+    alert:
+      Patient will accept 1 coping support (e.g., verbalize feelings, request chaplain)
+      by end of shift.
+    severity: INFO
+  - keywords:
+      - flat affect
+    match_type: any
+    alert: Patient will engage in 1 brief conversation with staff by end of shift.
+    severity: INFO
+  - keywords:
+      - depressed
+      - sad
+    match_type: any
+    alert: Patient will verbalize feelings to staff 1 time within the next 24 hours.
+    severity: INFO
+  - keywords:
+      - suicidal
+      - SI
+    match_type: any
+    alert:
+      Patient will remain safe, free from self-harm, and on 1:1 observation for
+      the duration of the shift.
+    severity: CRITICAL
+  - keywords:
+      - homicidal
+      - HI
+    match_type: any
+    alert: Patient and staff will remain free from harm for the duration of the shift.
+    severity: CRITICAL
+  - keywords:
+      - insomnia
+      - no sleep
+    match_type: any
+    alert: Patient will report achieving at least 4-6 hours of uninterrupted sleep tonight.
+    severity: INFO
+  - keywords:
+      - nightmares
+    match_type: any
+    alert:
+      Patient will verbalize 1 relaxation technique to use before sleep by end
+      of shift.
+    severity: INFO
+  - keywords:
+      - fever
+      - febrile
+      - hyperthermia
+    match_type: any
+    alert: Patient's temperature will return to < 100.4°F (38°C) within 2 hours of intervention.
+    severity: WARNING
+  - keywords:
+      - hypothermia
+      - cold
+    match_type: any
+    alert: Patient's core temperature will rise to > 96.8°F (36°C) within 4 hours.
+    severity: WARNING
+  - keywords:
+      - chills
+      - rigors
+    match_type: any
+    alert: Patient will be afebrile and state no chills within 4 hours.
+    severity: WARNING
+  - keywords:
+      - non-compliant
+      - non-adherent
+    match_type: any
+    alert:
+      Patient will verbalize 1 barrier to adherence and 1 potential solution by
+      discharge.
+    severity: INFO
+  - keywords:
+      - knowledge
+      - deficit
+      - lacks
+    match_type: any
+    alert:
+      Patient or caregiver will demonstrate correct [skill, e.g., 'insulin administration']
+      using teach-back method by discharge.
+    severity: INFO
+  - keywords:
+      - new diagnosis
+      - education
+    match_type: any
+    alert:
+      Patient will verbalize 3 key self-management points related to their new
+      diagnosis of [e.g., 'Diabetes'] by discharge.
+    severity: INFO
+  - keywords:
+      - home
+      - meds
+      - reconcile
+    match_type: all
+    alert:
+      Patient's home medication list will be reconciled with inpatient orders by
+      end of shift.
+    severity: INFO
+  - keywords:
+      - discharge
+      - home
+    match_type: all
+    alert:
+      Patient will verbalize 3 'red flag' symptoms and when to call the provider
+      by time of discharge.
+    severity: INFO
+  - keywords:
+      - language
+      - barrier
+    match_type: all
+    alert:
+      Patient will have all education provided via certified interpreter (or approved
+      device) for the duration of stay.
+    severity: INFO
+  - keywords:
+      - hard of hearing
+      - HOH
+    match_type: any
+    alert:
+      Patient will use [hearing aids, pocket talker] and demonstrate understanding
+      of conversation by end of shift.
+    severity: INFO
+  - keywords:
+      - blind
+      - vision
+      - impaired
+    match_type: any
+    alert:
+      Patient will have a safe, uncluttered environment and remain free from falls
+      for 24 hours.
+    severity: INFO
+  - keywords:
+      - isolation
+      - precautions
+    match_type: any
+    alert:
+      Patient will verbalize understanding of isolation rationale (e.g., 'to prevent
+      spread') by end of shift.
+    severity: INFO
+  - keywords:
+      - alcohol
+      - withdrawal
+    match_type: any
+    alert: Patient's CIWA score will remain < 8 for the next 24 hours.
+    severity: WARNING
+  - keywords:
+      - opioid
+      - withdrawal
+    match_type: any
+    alert: Patient's COWS score will remain < 5 for the next 24 hours.
+    severity: WARNING
+  - keywords:
+      - IV
+      - site
+      - red
+      - painful
+    match_type: any
+    alert: Patient will have a new, patent IV with no signs of phlebitis within 1 hour.
+    severity: INFO
+  - keywords:
+      - IV
+      - site
+      - swollen
+      - cool
+    match_type: any
+    alert:
+      Patient's infiltration will resolve (e.g., swelling decreased) within 4 hours
+      of IV removal.
+    severity: INFO
+  - keywords:
+      - blood glucose
+      - high
+      - hyperglycemia
+    match_type: any
+    alert:
+      Patient's blood glucose will be between 80-180 mg/dL (or target) for the
+      next 8 hours.
+    severity: WARNING
+  - keywords:
+      - blood glucose
+      - low
+      - hypoglycemia
+    match_type: any
+    alert: Patient's blood glucose will be > 70 mg/dL within 30 minutes of intervention.
+    severity: CRITICAL
+  - keywords:
+      - Hgb
+      - low
+      - anemia
+    match_type: any
+    alert:
+      Patient will remain free of symptoms of anemia (e.g., no dizziness, dyspnea
+      on exertion) for 24 hours.
+    severity: INFO
+  - keywords:
+      - platelets
+      - low
+      - thrombocytopenia
+    match_type: any
+    alert:
+      Patient will remain free of bleeding (e.g., no petechiae, no hematuria) for
+      the next 24 hours.
+    severity: WARNING
+  - keywords:
+      - WBC
+      - low
+      - neutropenia
+    match_type: any
+    alert:
+      Patient will remain free of infection (e.g., afebrile, no new cough) for
+      the next 48 hours.
+    severity: WARNING
+  - keywords:
+      - sodium
+      - low
+      - hyponatremia
+    match_type: any
+    alert:
+      Patient will remain free of neurological compromise (e.g., no new confusion,
+      no seizure) for 24 hours.
+    severity: WARNING
+  - keywords:
+      - sodium
+      - high
+      - hypernatremia
+    match_type: any
+    alert:
+      Patient will demonstrate adequate hydration (moist mucous membranes) within
+      24 hours.
+    severity: WARNING
+  - keywords:
+      - potassium
+      - low
+      - hypokalemia
+    match_type: any
+    alert:
+      Patient will remain free of cardiac dysrhythmias and muscle weakness for
+      the next 8 hours.
+    severity: WARNING
+  - keywords:
+      - potassium
+      - high
+      - hyperkalemia
+    match_type: any
+    alert:
+      Patient will remain free of cardiac dysrhythmias (e.g., stable sinus rhythm)
+      for the next 8 hours.
+    severity: CRITICAL
+  - keywords:
+      - INR
+      - high
+    match_type: all
+    alert:
+      Patient will remain free of bleeding (e.g., no gross hematuria, no new bruising)
+      for the next 24 hours.
+    severity: WARNING
+  - keywords:
+      - troponin
+      - positive
+      - high
+    match_type: any
+    alert:
+      Patient will report 0/10 chest pain and remain free of dysrhythmias for the
+      next 4 hours.
+    severity: CRITICAL
+  - keywords:
+      - lactate
+      - high
+    match_type: all
+    alert: Patient's lactate level will trend down toward normal (< 2.0) within 8 hours.
+    severity: CRITICAL
+  - keywords:
+      - denies
+      - pain
+    match_type: all
+    alert: Patient will maintain a pain level of 0/10 for the duration of the shift.
+    severity: INFO
+  - keywords:
+      - denies
+      - shortness of breath
+    match_type: all
+    alert:
+      Patient will maintain unlabored respirations (12-20 bpm) for the duration
+      of the shift.
+    severity: INFO
+  - keywords:
+      - denies
+      - nausea
+    match_type: all
+    alert: Patient will tolerate diet without nausea or vomiting for the next 24 hours.
+    severity: INFO
+  - keywords:
+      - baseline
+      - normal
+    match_type: any
+    alert:
+      Patient will maintain all vital signs and physical exam findings at their
+      stated baseline for the next 8 hours.
+    severity: INFO
+>>>>>>> 1d71399172651e49e459f7607c0804cd69b0b076

@@ -1,4 +1,5 @@
 diagnosis:
+<<<<<<< HEAD
   # --- Your Original Rules ---
   - keywords: ["pain"]
     alert: "Recommend pain assessment (e.g., PQRST, 0-10 scale)."
@@ -48,3 +49,4484 @@ diagnosis:
   - keywords: ["risk for", "pressure ulcer"]
     alert: "Implement pressure ulcer prevention protocol. Use Braden Scale for risk assessment. Reposition q2h if bedbound."
     severity: "WARNING"
+=======
+  - keywords:
+      - pain
+      - sore
+      - aching
+      - discomfort
+    match_type: any
+    alert:
+      Finding suggests 'Acute Pain' or 'Chronic Pain'. Correlate with patient report
+      and history.
+    severity: WARNING
+  - keywords:
+      - pain
+      - 7/10
+    match_type: all
+    alert: Severe pain reported. Suggests 'Acute Pain'. Prioritize assessment and intervention.
+    severity: CRITICAL
+  - keywords:
+      - pain
+      - 8/10
+    match_type: all
+    alert: Severe pain reported. Suggests 'Acute Pain'. Prioritize assessment and intervention.
+    severity: CRITICAL
+  - keywords:
+      - pain
+      - 9/10
+    match_type: all
+    alert: Severe pain reported. Suggests 'Acute Pain'. Prioritize assessment and intervention.
+    severity: CRITICAL
+  - keywords:
+      - pain
+      - 10/10
+    match_type: all
+    alert:
+      Extreme pain reported. Suggests 'Acute Pain'. Prioritize immediate assessment
+      and intervention.
+    severity: CRITICAL
+  - keywords:
+      - sharp
+      - pain
+      - chest
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Acute Pain'. Assess for cardiac/pulmonary origin
+      immediately (e.g., MI, PE).
+    severity: CRITICAL
+  - keywords:
+      - crushing
+      - pain
+      - chest
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Acute Pain' (r/t potential MI). Assess cardiac
+      status immediately.
+    severity: CRITICAL
+  - keywords:
+      - abdominal
+      - pain
+      - rigid
+      - board-like
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Acute Pain' (r/t potential peritonitis). Assess
+      for guarding, rebound tenderness.
+    severity: CRITICAL
+  - keywords:
+      - joint
+      - pain
+      - swelling
+    match_type: all
+    alert:
+      Finding suggests 'Acute Pain' or 'Chronic Pain' (r/t inflammation). Consider
+      'Impaired Physical Mobility'.
+    severity: WARNING
+  - keywords:
+      - headache
+      - HA
+    match_type: any
+    alert: Finding suggests 'Acute Pain'. Assess PQRST and rule out neurological changes.
+    severity: INFO
+  - keywords:
+      - headache
+      - worst
+      - life
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Acute Pain' (r/t potential SAH). Perform immediate
+      neuro assessment.
+    severity: CRITICAL
+  - keywords:
+      - impaired
+      - skin
+      - integrity
+    match_type: all
+    alert: Documented finding. Ensure 'Impaired Skin Integrity' is on the care plan.
+    severity: INFO
+  - keywords:
+      - broken
+      - skin
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity'. Document location, size, and
+      wound bed characteristics.
+    severity: WARNING
+  - keywords:
+      - open
+      - area
+      - coccyx
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity'. Assess and stage the pressure
+      injury.
+    severity: WARNING
+  - keywords:
+      - open
+      - area
+      - heel
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity'. Assess and stage the pressure
+      injury. Ensure offloading.
+    severity: WARNING
+  - keywords:
+      - redness
+      - erythema
+    match_type: any
+    alert: Finding suggests 'Risk for Impaired Skin Integrity'. Assess for blanching.
+    severity: INFO
+  - keywords:
+      - non-blanchable
+      - redness
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 1)'. Implement pressure
+      reduction interventions.
+    severity: WARNING
+  - keywords:
+      - nonblanchable
+      - erythema
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 1)'. Implement pressure
+      reduction interventions.
+    severity: WARNING
+  - keywords:
+      - blister
+      - sacrum
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 2)'. Document as partial-thickness
+      loss.
+    severity: WARNING
+  - keywords:
+      - partial
+      - thickness
+      - loss
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 2)'. Document size, depth,
+      and drainage.
+    severity: WARNING
+  - keywords:
+      - full
+      - thickness
+      - loss
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 3 or 4)'. Assess for subcutaneous
+      fat, slough, or eschar.
+    severity: CRITICAL
+  - keywords:
+      - subcutaneous
+      - fat
+      - visible
+      - wound
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 3)'. Assess for tunneling
+      or undermining.
+    severity: CRITICAL
+  - keywords:
+      - bone
+      - visible
+      - wound
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 4)'. High risk for osteomyelitis.
+      Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - tendon
+      - visible
+      - wound
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Stage 4)'. High risk for infection.
+      Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - slough
+      - wound
+      - bed
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity (Unstageable)'. Requires debridement
+      to stage.
+    severity: WARNING
+  - keywords:
+      - eschar
+      - wound
+      - bed
+    match_type: all
+    alert: Finding suggests 'Impaired Skin Integrity (Unstageable)'. Assess for stability.
+    severity: WARNING
+  - keywords:
+      - necrotic
+      - tissue
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity' and 'Impaired Tissue Perfusion'.
+      Requires debridement.
+    severity: CRITICAL
+  - keywords:
+      - unstageable
+      - pressure
+      - injury
+    match_type: all
+    alert:
+      Documented finding. Ensure 'Impaired Skin Integrity' is on the care plan.
+      Assess need for debridement.
+    severity: WARNING
+  - keywords:
+      - DTI
+      - deep
+      - tissue
+      - injury
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Skin Integrity'. Document as 'Deep Tissue Injury'.
+      Monitor for evolution.
+    severity: WARNING
+  - keywords:
+      - purple
+      - maroon
+      - area
+    match_type: all
+    alert:
+      Finding suggests 'Deep Tissue Injury'. Do not mistake for a bruise. Implement
+      offloading.
+    severity: WARNING
+  - keywords:
+      - surgical
+      - incision
+      - wound
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' and 'Impaired Skin Integrity'. Assess
+      wound edges (REEDA).
+    severity: INFO
+  - keywords:
+      - incision
+      - red
+      - edematous
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Infection' or 'Infection'. Correlate with other
+      signs (fever, drainage).
+    severity: WARNING
+  - keywords:
+      - incision
+      - approximated
+    match_type: all
+    alert:
+      Normal finding. Add 'Impaired Skin Integrity' (as expected post-op) and monitor
+      for 'Risk for Infection'.
+    severity: INFO
+  - keywords:
+      - incision
+      - dehisced
+      - dehiscence
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Impaired Skin Integrity' and 'Impaired Wound
+      Healing'. Cover with sterile saline gauze, notify provider.
+    severity: CRITICAL
+  - keywords:
+      - evisceration
+      - bowel
+      - visible
+    match_type: any
+    alert:
+      Surgical emergency. Suggests 'Impaired Skin Integrity'. Cover with sterile
+      saline gauze, position low-Fowler's, notify surgeon STAT.
+    severity: CRITICAL
+  - keywords:
+      - purulent
+      - drainage
+      - pus
+    match_type: any
+    alert:
+      Finding suggests 'Infection'. Obtain wound culture as ordered. Add 'Infection'
+      to care plan.
+    severity: CRITICAL
+  - keywords:
+      - serous
+      - drainage
+    match_type: all
+    alert:
+      Normal finding (clear/yellow fluid). Monitor for changes. Relates to 'Impaired
+      Skin Integrity'.
+    severity: INFO
+  - keywords:
+      - sanguineous
+      - drainage
+    match_type: all
+    alert:
+      Finding (bloody drainage). Expected post-op, but monitor amount. Relates
+      to 'Impaired Skin Integrity' and 'Risk for Bleeding'.
+    severity: WARNING
+  - keywords:
+      - serosanguineous
+      - drainage
+    match_type: all
+    alert:
+      Normal finding (pinkish fluid). Monitor for changes. Relates to 'Impaired
+      Skin Integrity'.
+    severity: INFO
+  - keywords:
+      - foul
+      - odor
+      - wound
+    match_type: all
+    alert: Finding strongly suggests 'Infection'. Assess for other s/s of infection.
+    severity: CRITICAL
+  - keywords:
+      - rash
+      - macular
+      - papular
+      - urticaria
+      - hives
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Skin Integrity'. Assess for 'Risk for Allergic
+      Reaction'.
+    severity: WARNING
+  - keywords:
+      - petechiae
+      - purpura
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Bleeding'. Assess platelet count and coagulation
+      status.
+    severity: CRITICAL
+  - keywords:
+      - bruise
+      - ecchymosis
+      - contusion
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Tissue Integrity'. Assess for cause, potential
+      'Risk for Bleeding' or 'Risk for Injury'.
+    severity: INFO
+  - keywords:
+      - dry
+      - skin
+      - flaky
+      - xerosis
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Skin Integrity'. Consider 'Deficient
+      Fluid Volume'.
+    severity: INFO
+  - keywords:
+      - poor
+      - turgor
+      - tenting
+    match_type: any
+    alert:
+      Finding suggests 'Deficient Fluid Volume'. Assess other hydration markers
+      (mucous membranes, UOP).
+    severity: WARNING
+  - keywords:
+      - dry
+      - mucous
+      - membranes
+    match_type: all
+    alert: Finding suggests 'Deficient Fluid Volume'. Assess for thirst and UOP.
+    severity: WARNING
+  - keywords:
+      - tents
+      - skin
+      - turgor
+    match_type: all
+    alert:
+      Finding suggests 'Deficient Fluid Volume'. Assess other hydration markers
+      (mucous membranes, UOP).
+    severity: WARNING
+  - keywords:
+      - edema
+      - swelling
+    match_type: any
+    alert: Finding suggests 'Fluid Volume Excess'. Specify location and pitting scale.
+    severity: WARNING
+  - keywords:
+      - pitting
+      - edema
+      - "+1"
+    match_type: all
+    alert: Finding suggests 'Fluid Volume Excess'. Assess weight gain and I&O.
+    severity: WARNING
+  - keywords:
+      - pitting
+      - edema
+      - "+2"
+    match_type: all
+    alert: Finding suggests 'Fluid Volume Excess'. Assess weight gain and I&O.
+    severity: WARNING
+  - keywords:
+      - pitting
+      - edema
+      - "+3"
+    match_type: all
+    alert: Finding suggests 'Fluid Volume Excess'. Assess for respiratory symptoms (crackles).
+    severity: CRITICAL
+  - keywords:
+      - pitting
+      - edema
+      - "+4"
+    match_type: all
+    alert: Finding suggests 'Fluid Volume Excess'. Assess for respiratory symptoms (crackles).
+    severity: CRITICAL
+  - keywords:
+      - bilateral
+      - lower
+      - extremity
+      - edema
+    match_type: all
+    alert:
+      Finding suggests 'Fluid Volume Excess' (r/t potential CHF, renal failure).
+      Assess weight, I&O, lung sounds.
+    severity: CRITICAL
+  - keywords:
+      - unilateral
+      - leg
+      - edema
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion' (r/t potential
+      DVT). Assess for pain, warmth, redness.
+    severity: CRITICAL
+  - keywords:
+      - anasarca
+      - generalized
+      - edema
+    match_type: any
+    alert:
+      Severe finding. Suggests 'Fluid Volume Excess' (r/t potential organ failure).
+      Assess respiratory status immediately.
+    severity: CRITICAL
+  - keywords:
+      - JVD
+      - jugular
+      - vein
+      - distention
+    match_type: any
+    alert:
+      Finding suggests 'Fluid Volume Excess' (r/t potential CHF). Assess lung sounds,
+      edema.
+    severity: CRITICAL
+  - keywords:
+      - pale
+      - pallor
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Tissue Perfusion' or 'Decreased Cardiac Output'.
+      Assess Hgb/Hct, cap refill.
+    severity: WARNING
+  - keywords:
+      - cyanotic
+      - cyanosis
+      - blue
+      - tinge
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Impaired Gas Exchange' or 'Ineffective Tissue
+      Perfusion'. Assess SpO2 and respiratory status.
+    severity: CRITICAL
+  - keywords:
+      - circumoral
+      - cyanosis
+    match_type: all
+    alert:
+      Critical finding (around mouth). Suggests 'Impaired Gas Exchange'. Assess
+      SpO2 and respiratory status STAT.
+    severity: CRITICAL
+  - keywords:
+      - acrocyanosis
+    match_type: all
+    alert:
+      Finding (blue hands/feet). Suggests 'Ineffective Peripheral Tissue Perfusion'.
+      Assess cap refill, pulse.
+    severity: WARNING
+  - keywords:
+      - jaundice
+      - yellow
+      - skin
+      - sclera
+    match_type: any
+    alert: Finding suggests 'Risk for Impaired Liver Function'. Assess LFTs.
+    severity: CRITICAL
+  - keywords:
+      - diaphoretic
+      - sweating
+      - clammy
+    match_type: any
+    alert:
+      Finding suggests 'Decreased Cardiac Output' (r/t potential MI), 'Hypoglycemia',
+      or 'Hyperthermia'. Assess vital signs, glucose.
+    severity: CRITICAL
+  - keywords:
+      - cold
+      - clammy
+      - skin
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Tissue Perfusion' (Shock). Assess
+      VS, mental status.
+    severity: CRITICAL
+  - keywords:
+      - warm
+      - hot
+      - skin
+      - flushed
+    match_type: any
+    alert: Finding suggests 'Hyperthermia' or 'Risk for Infection'. Check temperature.
+    severity: WARNING
+  - keywords:
+      - crackles
+      - rales
+    match_type: any
+    alert:
+      Finding suggests 'Fluid Volume Excess' or 'Ineffective Airway Clearance'.
+      Specify location (e.g., bases).
+    severity: CRITICAL
+  - keywords:
+      - crackles
+      - bilateral
+      - bases
+    match_type: all
+    alert:
+      Finding strongly suggests 'Fluid Volume Excess' (r/t potential CHF, PNA).
+      Assess SpO2, edema.
+    severity: CRITICAL
+  - keywords:
+      - wheeze
+      - wheezing
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' or 'Impaired Gas Exchange'
+      (r/t bronchoconstriction). Assess SpO2.
+    severity: CRITICAL
+  - keywords:
+      - expiratory
+      - wheeze
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' (r/t asthma, COPD). Assess
+      work of breathing.
+    severity: WARNING
+  - keywords:
+      - inspiratory
+      - wheeze
+    match_type: all
+    alert: Finding suggests 'Ineffective Breathing Pattern'. Assess for obstruction.
+    severity: CRITICAL
+  - keywords:
+      - stridor
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Airway Clearance' (r/t upper airway
+      obstruction). Assess airway patency STAT.
+    severity: CRITICAL
+  - keywords:
+      - rhonchi
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Airway Clearance' (r/t secretions in large
+      airways). Encourage cough, consider suction.
+    severity: WARNING
+  - keywords:
+      - diminished
+      - breath
+      - sounds
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' or 'Impaired Gas Exchange'.
+      Specify location.
+    severity: WARNING
+  - keywords:
+      - absent
+      - breath
+      - sounds
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Impaired Gas Exchange' (r/t pneumothorax, atelectasis).
+      Assess SpO2, resp effort.
+    severity: CRITICAL
+  - keywords:
+      - short
+      - breath
+      - SOB
+      - dyspnea
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern', 'Impaired Gas Exchange',
+      or 'Activity Intolerance'. Assess SpO2, RR.
+    severity: CRITICAL
+  - keywords:
+      - dyspnea
+      - "on"
+      - exertion
+      - DOE
+    match_type: any
+    alert: Finding suggests 'Activity Intolerance'. Assess VS response to activity.
+    severity: WARNING
+  - keywords:
+      - orthopnea
+      - sleep
+      - pillows
+    match_type: any
+    alert:
+      Finding suggests 'Fluid Volume Excess' or 'Ineffective Breathing Pattern'
+      (r/t CHF). Assess lung sounds.
+    severity: WARNING
+  - keywords:
+      - labored
+      - breathing
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern'. Assess for accessory muscle
+      use, SpO2.
+    severity: CRITICAL
+  - keywords:
+      - accessory
+      - muscle
+      - use
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' (r/t respiratory distress).
+      Assess SpO2, RR.
+    severity: CRITICAL
+  - keywords:
+      - retractions
+      - intercostal
+      - suprasternal
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' (r/t respiratory distress).
+      Assess SpO2, RR.
+    severity: CRITICAL
+  - keywords:
+      - nasal
+      - flaring
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' (r/t respiratory distress,
+      esp. in infants). Assess SpO2.
+    severity: CRITICAL
+  - keywords:
+      - tachypnea
+      - tachypneic
+    match_type: any
+    alert:
+      Finding (fast RR). Suggests 'Ineffective Breathing Pattern'. Assess cause
+      (e.g., hypoxia, pain, anxiety).
+    severity: WARNING
+  - keywords:
+      - bradypnea
+      - bradypneic
+    match_type: any
+    alert:
+      Finding (slow RR). Suggests 'Ineffective Breathing Pattern'. Assess for over-sedation,
+      neuro changes.
+    severity: CRITICAL
+  - keywords:
+      - apnea
+      - apneic
+    match_type: any
+    alert:
+      Critical finding (no breathing). Suggests 'Ineffective Breathing Pattern'
+      or 'Impaired Gas Exchange'. Initiate rescue breathing/code.
+    severity: CRITICAL
+  - keywords:
+      - kussmaul
+      - respirations
+    match_type: all
+    alert:
+      Critical finding (deep, rapid breathing). Suggests 'Impaired Gas Exchange'
+      (r/t metabolic acidosis, DKA). Check glucose, ABG.
+    severity: CRITICAL
+  - keywords:
+      - cheyne-stokes
+    match_type: all
+    alert:
+      Critical finding (abnormal pattern). Suggests 'Ineffective Breathing Pattern'
+      (r/t neuro issue, end-of-life). Assess neuro status.
+    severity: CRITICAL
+  - keywords:
+      - cough
+      - productive
+      - sputum
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Airway Clearance'. Assess sputum color, consistency,
+      amount.
+    severity: INFO
+  - keywords:
+      - cough
+      - non-productive
+      - dry
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Airway Clearance'. Assess for cause (e.g.,
+      irritant, medication).
+    severity: INFO
+  - keywords:
+      - hemoptysis
+      - cough
+      - blood
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding'. Assess amount, source. Notify
+      provider.
+    severity: CRITICAL
+  - keywords:
+      - yellow
+      - sputum
+    match_type: all
+    alert: Finding suggests 'Risk for Infection'. Consider 'Ineffective Airway Clearance'.
+    severity: WARNING
+  - keywords:
+      - green
+      - sputum
+    match_type: all
+    alert: Finding suggests 'Risk for Infection'. Consider 'Ineffective Airway Clearance'.
+    severity: WARNING
+  - keywords:
+      - pink
+      - frothy
+      - sputum
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Fluid Volume Excess' (r/t pulmonary edema). Assess
+      resp status STAT.
+    severity: CRITICAL
+  - keywords:
+      - tracheal
+      - deviation
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Impaired Gas Exchange' (r/t tension pneumothorax).
+      Assess resp status STAT.
+    severity: CRITICAL
+  - keywords:
+      - crepitus
+      - subcutaneous
+    match_type: all
+    alert:
+      Finding (air under skin). Suggests 'Impaired Gas Exchange' (r/t pneumothorax,
+      chest tube leak). Assess site.
+    severity: WARNING
+  - keywords:
+      - SpO2
+      - < 92%
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Gas Exchange'. Verify probe, apply O2 as ordered,
+      assess breathing.
+    severity: WARNING
+  - keywords:
+      - SpO2
+      - < 90%
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Gas Exchange'. Apply O2, assess breathing, notify
+      provider.
+    severity: CRITICAL
+  - keywords:
+      - SpO2
+      - < 88%
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Impaired Gas Exchange'. Apply O2, assess breathing,
+      notify provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - SpO2
+      - 85%
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Impaired Gas Exchange'. Apply O2, assess breathing,
+      notify provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - confused
+      - confusion
+    match_type: any
+    alert:
+      Finding suggests 'Acute Confusion' or 'Chronic Confusion'. Assess A&O, baseline
+      mental status.
+    severity: WARNING
+  - keywords:
+      - disoriented
+      - time
+    match_type: all
+    alert: Finding suggests 'Acute Confusion'. Assess A&O x 3 (person, place, time).
+    severity: WARNING
+  - keywords:
+      - disoriented
+      - place
+    match_type: all
+    alert: Finding suggests 'Acute Confusion'. Assess A&O x 3.
+    severity: WARNING
+  - keywords:
+      - A&O
+      - x1
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion'. Specify orientation (person only?). Assess
+      for cause.
+    severity: WARNING
+  - keywords:
+      - A&O
+      - x2
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion'. Specify orientation (person, place?).
+      Assess for cause.
+    severity: WARNING
+  - keywords:
+      - A&O
+      - x3
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion'. Specify disorientation (time?). Assess
+      for cause.
+    severity: WARNING
+  - keywords:
+      - not
+      - oriented
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion'. Specify disorientation (person, place,
+      time?).
+    severity: WARNING
+  - keywords:
+      - change
+      - mental
+      - status
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Acute Confusion'. Assess for cause (e.g., hypoxia,
+      hypoglycemia, infection, stroke).
+    severity: CRITICAL
+  - keywords:
+      - lethargic
+      - drowsy
+    match_type: any
+    alert:
+      Finding suggests 'Acute Confusion' or 'Disturbed Sleep Pattern'. Assess rousability,
+      GCS.
+    severity: WARNING
+  - keywords:
+      - obtunded
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion' or 'Ineffective Cerebral Tissue Perfusion'.
+      Assess GCS, response to stimuli.
+    severity: CRITICAL
+  - keywords:
+      - stuporous
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion' or 'Ineffective Cerebral Tissue Perfusion'.
+      Assess GCS, response to painful stimuli.
+    severity: CRITICAL
+  - keywords:
+      - comatose
+      - unresponsive
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Cerebral Tissue Perfusion'. Assess
+      GCS, ABCs.
+    severity: CRITICAL
+  - keywords:
+      - GCS
+      - < 15
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion' or 'Ineffective Cerebral Tissue Perfusion'.
+      Specify components (E, V, M).
+    severity: WARNING
+  - keywords:
+      - GCS
+      - < 8
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Cerebral Tissue Perfusion'. Assess
+      need for airway protection.
+    severity: CRITICAL
+  - keywords:
+      - agitated
+      - agitation
+    match_type: any
+    alert:
+      Finding suggests 'Acute Confusion', 'Anxiety', or 'Risk for Other-Directed
+      Violence'. Assess for safety, cause (e.g., pain, hypoxia).
+    severity: WARNING
+  - keywords:
+      - restless
+      - restlessness
+    match_type: any
+    alert:
+      Finding suggests 'Anxiety', 'Acute Pain', or 'Acute Confusion'. Early sign
+      of hypoxia. Assess SpO2, pain.
+    severity: WARNING
+  - keywords:
+      - hallucinations
+      - visual
+      - auditory
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' or 'Acute Confusion' (Delirium).
+      Assess safety, reorient.
+    severity: WARNING
+  - keywords:
+      - delirium
+    match_type: all
+    alert:
+      Finding suggests 'Acute Confusion'. Assess using CAM-ICU. Identify and treat
+      underlying cause.
+    severity: CRITICAL
+  - keywords:
+      - slurred
+      - speech
+      - dysarthria
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Verbal Communication'. Assess for other neuro
+      deficits (e.g., FAST screen).
+    severity: CRITICAL
+  - keywords:
+      - aphasia
+      - expressive
+      - receptive
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Verbal Communication'. Specify type. Assess for
+      other neuro deficits.
+    severity: CRITICAL
+  - keywords:
+      - word
+      - finding
+      - difficulty
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Verbal Communication' (Anomic aphasia). Assess
+      neuro status.
+    severity: WARNING
+  - keywords:
+      - pupils
+      - unequal
+      - anisocoria
+    match_type: any
+    alert:
+      Critical finding (if new). Suggests 'Ineffective Cerebral Tissue Perfusion'
+      (r/t ICP). Assess GCS, notify provider.
+    severity: CRITICAL
+  - keywords:
+      - pupil
+      - fixed
+      - dilated
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Cerebral Tissue Perfusion' (r/t herniation).
+      Notify provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - pupils
+      - sluggish
+      - reaction
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Cerebral Tissue Perfusion' (r/t ICP). Assess
+      GCS.
+    severity: CRITICAL
+  - keywords:
+      - PERRLA
+    match_type: all
+    alert: Normal finding. Documented. No nursing diagnosis suggested.
+    severity: INFO
+  - keywords:
+      - PERRLA
+    match_type: all
+    alert:
+      Finding suggests neuro deficit. Specify which part of PERRLA is abnormal.
+      E.g., 'Ineffective Cerebral Tissue Perfusion'.
+    severity: WARNING
+  - keywords:
+      - weakness
+      - paresis
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Physical Mobility' or 'Activity Intolerance'.
+      Specify location and strength.
+    severity: WARNING
+  - keywords:
+      - left
+      - sided
+      - weakness
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Physical Mobility', 'Risk for Falls', 'Risk for
+      Unilateral Neglect'. Assess neuro status (FAST).
+    severity: CRITICAL
+  - keywords:
+      - right
+      - sided
+      - weakness
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Physical Mobility', 'Risk for Falls'. Assess neuro
+      status (FAST).
+    severity: CRITICAL
+  - keywords:
+      - hemiplegia
+      - paralysis
+      - one
+      - side
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Physical Mobility', 'Risk for Injury'. Assess
+      neuro status.
+    severity: CRITICAL
+  - keywords:
+      - paraplegia
+      - lower
+      - body
+      - paralysis
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Physical Mobility', 'Risk for Impaired Skin Integrity',
+      'Risk for Impaired Urinary Elimination'.
+    severity: CRITICAL
+  - keywords:
+      - quadriplegia
+      - tetraplegia
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Physical Mobility', 'Risk for Ineffective Breathing
+      Pattern', 'Risk for Impaired Skin Integrity'.
+    severity: CRITICAL
+  - keywords:
+      - grip
+      - strength
+      - weak
+      - unequal
+    match_type: any
+    alert: Finding suggests 'Impaired Physical Mobility'. Assess for other neuro deficits.
+    severity: WARNING
+  - keywords:
+      - unsteady
+      - gait
+      - ataxia
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Falls' and 'Impaired Walking'. Implement falls
+      precautions.
+    severity: WARNING
+  - keywords:
+      - shuffling
+      - gait
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Walking' (r/t potential Parkinson's) and 'Risk
+      for Falls'.
+    severity: WARNING
+  - keywords:
+      - foot
+      - drop
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Walking' and 'Risk for Falls'. Consider need for
+      AFO.
+    severity: WARNING
+  - keywords:
+      - numbness
+      - tingling
+      - paresthesia
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' or 'Ineffective Peripheral
+      Tissue Perfusion'. Assess location.
+    severity: WARNING
+  - keywords:
+      - dizziness
+      - lightheaded
+      - vertigo
+    match_type: any
+    alert: Finding suggests 'Risk for Falls'. Assess for orthostatic hypotension.
+    severity: WARNING
+  - keywords:
+      - syncope
+      - fainted
+      - passed
+      - out
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Falls', 'Decreased Cardiac Output', or 'Ineffective
+      Cerebral Tissue Perfusion'. Assess cause.
+    severity: CRITICAL
+  - keywords:
+      - seizure
+      - activity
+    match_type: all
+    alert: Finding suggests 'Risk for Injury'. Implement seizure precautions.
+    severity: CRITICAL
+  - keywords:
+      - post-ictal
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Injury' and 'Acute Confusion'. Monitor airway
+      and neuro status.
+    severity: CRITICAL
+  - keywords:
+      - tremors
+      - shaking
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Injury'. Assess if resting or intention tremor.
+      Check for other causes (e.g., withdrawal, hypoglycemia).
+    severity: WARNING
+  - keywords:
+      - nystagmus
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Injury' (r/t visual disturbance). Assess for other
+      neuro deficits.
+    severity: WARNING
+  - keywords:
+      - memory
+      - impaired
+      - deficit
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Memory' or 'Chronic Confusion' (Dementia). Assess
+      short-term and long-term.
+    severity: INFO
+  - keywords:
+      - poor
+      - judgment
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Thought Processes' or 'Acute/Chronic Confusion'.
+      Assess safety awareness.
+    severity: WARNING
+  - keywords:
+      - impulsive
+      - behavior
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Injury' or 'Impaired Thought Processes'. Implement
+      safety measures.
+    severity: WARNING
+  - keywords:
+      - unilateral
+      - neglect
+    match_type: all
+    alert:
+      Finding suggests 'Unilateral Neglect'. High 'Risk for Injury'. Approach patient
+      from unaffected side, teach scanning.
+    severity: CRITICAL
+  - keywords:
+      - decreased
+      - ROM
+      - range
+      - motion
+    match_type: any
+    alert: Finding suggests 'Impaired Physical Mobility'. Specify joint(s) affected.
+    severity: INFO
+  - keywords:
+      - contracture
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Physical Mobility'. Specify joint. Requires long-term
+      management.
+    severity: WARNING
+  - keywords:
+      - muscle
+      - atrophy
+    match_type: all
+    alert: Finding suggests 'Disuse Syndrome' or 'Impaired Physical Mobility'.
+    severity: INFO
+  - keywords:
+      - muscle
+      - spasms
+      - cramps
+    match_type: any
+    alert:
+      Finding suggests 'Acute Pain'. Assess for cause (e.g., electrolyte imbalance,
+      strain).
+    severity: INFO
+  - keywords:
+      - joint
+      - crepitus
+    match_type: all
+    alert: Finding suggests 'Impaired Physical Mobility' or 'Chronic Pain' (r/t arthritis).
+    severity: INFO
+  - keywords:
+      - assist
+      - ambulate
+      - walk
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Walking' or 'Impaired Physical Mobility'. Specify
+      level of assistance (e.g., x1, x2).
+    severity: INFO
+  - keywords:
+      - unable
+      - ambulate
+      - walk
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Physical Mobility'. Add 'Risk for Impaired Skin
+      Integrity' and 'Risk for Disuse Syndrome'.
+    severity: WARNING
+  - keywords:
+      - bedrest
+      - bed
+      - rest
+    match_type: any
+    alert:
+      Finding suggests 'Activity Intolerance', 'Risk for Impaired Skin Integrity',
+      'Risk for Disuse Syndrome'.
+    severity: WARNING
+  - keywords:
+      - uses
+      - walker
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Walking' and 'Risk for Falls'. Ensure device is
+      within reach.
+    severity: INFO
+  - keywords:
+      - uses
+      - cane
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Walking' and 'Risk for Falls'. Ensure device is
+      within reach.
+    severity: INFO
+  - keywords:
+      - uses
+      - wheelchair
+      - w/c
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Wheelchair Mobility'. Add 'Risk for Impaired Skin
+      Integrity'.
+    severity: WARNING
+  - keywords:
+      - unable
+      - transfer
+      - independently
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Bed Mobility' or 'Impaired Transfer Ability'.
+      High 'Risk for Falls'.
+    severity: WARNING
+  - keywords:
+      - assist
+      - x1
+      - transfer
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Transfer Ability'. Specify level of assist. 'Risk
+      for Falls'.
+    severity: INFO
+  - keywords:
+      - assist
+      - x2
+      - transfer
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Transfer Ability'. Specify level of assist. High
+      'Risk for Falls'.
+    severity: WARNING
+  - keywords:
+      - hoyer
+      - lift
+      - mechanical
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Bed Mobility' and 'Impaired Transfer Ability'.
+      High 'Risk for Impaired Skin Integrity'.
+    severity: WARNING
+  - keywords:
+      - fatigue
+      - tired
+      - weak
+    match_type: any
+    alert: Finding suggests 'Fatigue' or 'Activity Intolerance'. Assess impact on ADLs.
+    severity: INFO
+  - keywords:
+      - activity
+      - intolerance
+    match_type: all
+    alert: Finding suggests 'Activity Intolerance'. Assess vital sign response to activity.
+    severity: WARNING
+  - keywords:
+      - tachycardia
+      - tachycardic
+    match_type: any
+    alert:
+      Finding (fast HR). Suggests 'Decreased Cardiac Output' or 'Risk for...'.
+      Assess cause (e.g., pain, fever, hypovolemia, anxiety).
+    severity: WARNING
+  - keywords:
+      - bradycardia
+      - bradycardic
+    match_type: any
+    alert:
+      Finding (slow HR). Suggests 'Decreased Cardiac Output'. Assess for symptoms
+      (e.g., dizziness, syncope).
+    severity: WARNING
+  - keywords:
+      - irregular
+      - rhythm
+      - arrhythmia
+      - afib
+    match_type: any
+    alert:
+      Finding suggests 'Decreased Cardiac Output' or 'Risk for Ineffective Tissue
+      Perfusion'. Assess vitals, symptoms.
+    severity: CRITICAL
+  - keywords:
+      - pulse
+      - weak
+      - thready
+    match_type: any
+    alert:
+      Finding suggests 'Decreased Cardiac Output' or 'Deficient Fluid Volume' (Shock).
+      Assess BP, mental status.
+    severity: CRITICAL
+  - keywords:
+      - pulse
+      - bounding
+    match_type: all
+    alert: Finding suggests 'Fluid Volume Excess'. Assess BP, edema, lung sounds.
+    severity: WARNING
+  - keywords:
+      - pulse
+      - absent
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Tissue Perfusion'. Get Doppler. Notify
+      provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - doppler
+      - unable
+      - palpate
+      - pulse
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion'. Document finding.
+      Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - bruit
+      - carotid
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Ineffective Cerebral Tissue Perfusion' (r/t stenosis).
+      Assess for neuro deficits.
+    severity: CRITICAL
+  - keywords:
+      - murmur
+      - heart
+    match_type: all
+    alert:
+      Finding suggests 'Decreased Cardiac Output' (r/t valve dysfunction). Assess
+      for other CV symptoms.
+    severity: WARNING
+  - keywords:
+      - S3
+      - gallop
+    match_type: all
+    alert: Finding suggests 'Fluid Volume Excess' (r/t CHF). Assess lung sounds, edema.
+    severity: CRITICAL
+  - keywords:
+      - S4
+      - gallop
+    match_type: all
+    alert: Finding suggests 'Decreased Cardiac Output' (r/t HTN, stiff ventricle).
+    severity: WARNING
+  - keywords:
+      - capillary
+      - refill
+      - prolonged
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion'. Assess pulses,
+      skin temp, color.
+    severity: WARNING
+  - keywords:
+      - cap
+      - refill
+      - "> 3"
+      - seconds
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion'. Assess pulses,
+      skin temp, color.
+    severity: WARNING
+  - keywords:
+      - cool
+      - extremities
+      - skin
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion'. Assess pulses,
+      cap refill.
+    severity: WARNING
+  - keywords:
+      - mottled
+      - skin
+      - mottling
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Tissue Perfusion' (Shock, end-of-life).
+      Assess VS, mental status.
+    severity: CRITICAL
+  - keywords:
+      - hypotension
+      - hypotensive
+      - low
+      - bp
+    match_type: any
+    alert:
+      Finding suggests 'Decreased Cardiac Output' or 'Deficient Fluid Volume'.
+      Assess for symptoms (dizziness, confusion).
+    severity: CRITICAL
+  - keywords:
+      - hypertension
+      - hypertensive
+      - high
+      - bp
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Decreased Cardiac Output' or 'Risk for Ineffective
+      Tissue Perfusion'. Assess for symptoms (headache, vision changes).
+    severity: WARNING
+  - keywords:
+      - orthostatic
+      - hypotension
+    match_type: all
+    alert: Finding suggests 'Risk for Falls' and 'Deficient Fluid Volume'.
+    severity: WARNING
+  - keywords:
+      - pacemaker
+      - site
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Infection' and 'Risk for Injury'. Assess site,
+      tele rhythm.
+    severity: INFO
+  - keywords:
+      - aicd
+      - icd
+      - site
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' and 'Risk for Injury'. Assess site,
+      tele rhythm.
+    severity: INFO
+  - keywords:
+      - absent
+      - bowel
+      - sounds
+      - ileus
+    match_type: any
+    alert:
+      Finding suggests 'Gastrointestinal Motility Dysfunction' (Paralytic Ileus).
+      Assess for distention, N/V. Hold oral intake.
+    severity: CRITICAL
+  - keywords:
+      - "no"
+      - bowel
+      - sounds
+    match_type: all
+    alert:
+      Finding suggests 'Gastrointestinal Motility Dysfunction' (Paralytic Ileus).
+      Assess for distention, N/V. Hold oral intake.
+    severity: CRITICAL
+  - keywords:
+      - hypoactive
+      - bowel
+      - sounds
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Constipation' or 'Gastrointestinal Motility Dysfunction'.
+      Assess last BM, flatus.
+    severity: WARNING
+  - keywords:
+      - sluggish
+      - bowel
+      - sounds
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Constipation' or 'Gastrointestinal Motility Dysfunction'.
+      Assess last BM, flatus.
+    severity: WARNING
+  - keywords:
+      - hyperactive
+      - bowel
+      - sounds
+    match_type: all
+    alert: Finding suggests 'Diarrhea'. Assess stool frequency, consistency.
+    severity: WARNING
+  - keywords:
+      - borborygmi
+    match_type: all
+    alert:
+      Finding (loud, gurgling BS). Suggests 'Diarrhea' or 'Risk for Gastrointestinal
+      Motility Dysfunction' (Obstruction).
+    severity: WARNING
+  - keywords:
+      - abdomen
+      - distended
+      - distention
+    match_type: any
+    alert:
+      Finding suggests 'Gastrointestinal Motility Dysfunction' or 'Fluid Volume
+      Excess' (Ascites). Assess for firmness, pain.
+    severity: WARNING
+  - keywords:
+      - abdomen
+      - firm
+      - rigid
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Gastrointestinal Motility Dysfunction' (r/t peritonitis).
+      Assess pain, rebound tenderness.
+    severity: CRITICAL
+  - keywords:
+      - abdomen
+      - tender
+      - pain
+    match_type: any
+    alert: Finding suggests 'Acute Pain'. Specify quadrant. Assess for guarding, rebound.
+    severity: WARNING
+  - keywords:
+      - guarding
+      - abdomen
+    match_type: all
+    alert: Finding suggests 'Acute Pain'. Assess for rigidity, rebound tenderness.
+    severity: WARNING
+  - keywords:
+      - rebound
+      - tenderness
+    match_type: all
+    alert: Finding suggests 'Acute Pain' (r/t peritoneal irritation). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - nausea
+    match_type: all
+    alert: Finding suggests 'Nausea'. Assess for vomiting, ability to tolerate PO.
+    severity: INFO
+  - keywords:
+      - vomiting
+      - emesis
+    match_type: any
+    alert:
+      Finding suggests 'Nausea'. Assess 'Risk for Deficient Fluid Volume' and 'Risk
+      for Aspiration'.
+    severity: WARNING
+  - keywords:
+      - coffee
+      - ground
+      - emesis
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding' (Upper GI). Notify provider
+      STAT.
+    severity: CRITICAL
+  - keywords:
+      - hematemesis
+      - vomit
+      - blood
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding' (Upper GI). Notify provider
+      STAT.
+    severity: CRITICAL
+  - keywords:
+      - poor
+      - appetite
+      - anorexia
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements'.
+      Assess intake, weight."
+    severity: INFO
+  - keywords:
+      - NPO
+      - nothing
+      - by
+      - mouth
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Imbalanced Nutrition'. Ensure 'Risk for Deficient
+      Fluid Volume' is addressed (e.g., IVFs).
+    severity: INFO
+  - keywords:
+      - difficulty
+      - swallowing
+      - dysphagia
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Swallowing'. High 'Risk for Aspiration'. Implement
+      swallowing precautions, request SLP eval.
+    severity: CRITICAL
+  - keywords:
+      - cough
+      - after
+      - swallow
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Swallowing' and 'Risk for Aspiration'. Stop PO
+      intake, notify provider, request SLP eval.
+    severity: CRITICAL
+  - keywords:
+      - drooling
+      - unable
+      - manage
+      - secretions
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Swallowing' or 'Ineffective Airway Clearance'.
+      High 'Risk for Aspiration'.
+    severity: CRITICAL
+  - keywords:
+      - constipation
+      - constipated
+    match_type: any
+    alert: Finding suggests 'Constipation'. Assess last BM, bowel sounds.
+    severity: INFO
+  - keywords:
+      - "no"
+      - bm
+      - "3"
+      - days
+    match_type: all
+    alert:
+      Finding suggests 'Constipation'. Assess bowel sounds, abdomen. Consider 'Risk
+      for Impaction'.
+    severity: WARNING
+  - keywords:
+      - "no"
+      - bm
+      - "5"
+      - days
+    match_type: all
+    alert:
+      Finding suggests 'Constipation'. Assess for impaction, 'Gastrointestinal
+      Motility Dysfunction'.
+    severity: WARNING
+  - keywords:
+      - diarrhea
+      - loose
+      - stool
+      - watery
+    match_type: any
+    alert:
+      Finding suggests 'Diarrhea'. Assess 'Risk for Deficient Fluid Volume' and
+      'Risk for Impaired Skin Integrity' (perianal).
+    severity: WARNING
+  - keywords:
+      - c. diff
+      - cdiff
+    match_type: any
+    alert:
+      Finding suggests 'Diarrhea' and 'Infection'. Implement contact precautions.
+      High 'Risk for Deficient Fluid Volume'.
+    severity: CRITICAL
+  - keywords:
+      - melena
+      - black
+      - tarry
+      - stool
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding' (Upper GI). Notify provider,
+      assess VS.
+    severity: CRITICAL
+  - keywords:
+      - hematochezia
+      - bright
+      - red
+      - stool
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding' (Lower GI). Notify provider,
+      assess VS.
+    severity: CRITICAL
+  - keywords:
+      - stoma
+      - ostomy
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Skin Integrity' (peristomal). Assess
+      stoma (color, output) and skin.
+    severity: INFO
+  - keywords:
+      - stoma
+      - pale
+      - dusky
+      - blue
+      - black
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Tissue Perfusion' (of stoma). Notify
+      surgeon STAT.
+    severity: CRITICAL
+  - keywords:
+      - NG
+      - tube
+      - nasogastric
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Aspiration', 'Risk for Imbalanced Nutrition',
+      'Risk for Impaired Skin Integrity' (nares).
+    severity: INFO
+  - keywords:
+      - PEG
+      - tube
+      - G-tube
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Skin Integrity' (stoma site), 'Risk for
+      Aspiration'. Assess site, residual.
+    severity: INFO
+  - keywords:
+      - PEG
+      - site
+      - red
+      - drainage
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Infection' and 'Impaired Skin Integrity'. Assess
+      site, clean.
+    severity: WARNING
+  - keywords:
+      - malnourished
+      - cachectic
+      - emaciated
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements'.
+      Assess weight, intake, albumin."
+    severity: WARNING
+  - keywords:
+      - underweight
+      - BMI
+      - < 18.5
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements'.
+      High 'Risk for Impaired Skin Integrity'."
+    severity: WARNING
+  - keywords:
+      - overweight
+      - BMI
+      - "> 25"
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: More Than Body Requirements'.
+      Assess 'Risk for...' (e.g., Impaired Mobility, Skin Integrity)."
+    severity: INFO
+  - keywords:
+      - obese
+      - BMI
+      - "> 30"
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: More Than Body Requirements'.
+      High 'Risk for Impaired Skin Integrity' (skin folds)."
+    severity: WARNING
+  - keywords:
+      - morbidly
+      - obese
+      - BMI
+      - "> 40"
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: More Than Body Requirements'.
+      High 'Risk for...' (e.g., Ineffective Breathing, Impaired Mobility, Skin Integrity)."
+    severity: CRITICAL
+  - keywords:
+      - muscle
+      - wasting
+    match_type: all
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements' and
+      'Disuse Syndrome'."
+    severity: WARNING
+  - keywords:
+      - low
+      - urine
+      - output
+      - UOP
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Urinary Elimination' or 'Deficient Fluid Volume'.
+      Assess I&O, fluid status.
+    severity: WARNING
+  - keywords:
+      - oliguria
+      - oliguric
+    match_type: any
+    alert:
+      Finding (< 0.5 mL/kg/hr). Suggests 'Impaired Urinary Elimination' (r/t potential
+      AKI) or 'Deficient Fluid Volume'.
+    severity: CRITICAL
+  - keywords:
+      - anuria
+      - anuric
+      - "no"
+      - urine
+    match_type: any
+    alert:
+      Critical finding (no urine). Suggests 'Impaired Urinary Elimination' (r/t
+      AKI, obstruction). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - polyuria
+      - large
+      - urine
+      - volume
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Deficient Fluid Volume' (r/t DI, DM). Assess I&O,
+      electrolytes.
+    severity: WARNING
+  - keywords:
+      - dysuria
+      - painful
+      - urination
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Urinary Elimination' and 'Risk for Infection'
+      (UTI).
+    severity: WARNING
+  - keywords:
+      - burning
+      - urination
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Urinary Elimination' and 'Risk for Infection'
+      (UTI).
+    severity: WARNING
+  - keywords:
+      - urinary
+      - frequency
+    match_type: all
+    alert: Finding suggests 'Impaired Urinary Elimination' (r/t UTI, BPH).
+    severity: INFO
+  - keywords:
+      - urinary
+      - urgency
+    match_type: all
+    alert: Finding suggests 'Impaired Urinary Elimination' (r/t UTI, OAB).
+    severity: INFO
+  - keywords:
+      - urinary
+      - hesitancy
+    match_type: all
+    alert: Finding suggests 'Impaired Urinary Elimination' (r/t BPH, obstruction).
+    severity: INFO
+  - keywords:
+      - hematuria
+      - blood
+      - urine
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Kidney Function' or 'Risk for Bleeding'.
+      Assess for cause, notify provider.
+    severity: CRITICAL
+  - keywords:
+      - cloudy
+      - urine
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (UTI). Assess for odor, dysuria.
+    severity: WARNING
+  - keywords:
+      - foul
+      - smelling
+      - urine
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (UTI). Assess for cloudiness, dysuria.
+    severity: WARNING
+  - keywords:
+      - dark
+      - amber
+      - urine
+    match_type: all
+    alert: Finding suggests 'Deficient Fluid Volume'. Assess I&O, skin turgor.
+    severity: INFO
+  - keywords:
+      - incontinence
+      - incontinent
+      - urine
+    match_type: any
+    alert:
+      "Finding suggests 'Urinary Incontinence' (specify type: Stress, Urge, Functional,
+      Overflow). High 'Risk for Impaired Skin Integrity'."
+    severity: WARNING
+  - keywords:
+      - dribbling
+      - urine
+    match_type: all
+    alert: Finding suggests 'Stress Incontinence' or 'Overflow Incontinence'.
+    severity: INFO
+  - keywords:
+      - foley
+      - catheter
+      - indwelling
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' (CAUTI) and 'Risk for Impaired Skin
+      Integrity' (meatus).
+    severity: INFO
+  - keywords:
+      - bladder
+      - distended
+      - palpable
+    match_type: all
+    alert:
+      Finding suggests 'Urinary Retention'. Assess last void, consider bladder
+      scan.
+    severity: WARNING
+  - keywords:
+      - PVR
+      - post
+      - void
+      - residual
+      - high
+    match_type: any
+    alert: Finding suggests 'Urinary Retention'. Notify provider.
+    severity: WARNING
+  - keywords:
+      - anxious
+      - nervous
+    match_type: any
+    alert: Finding suggests 'Anxiety'. Assess level of anxiety, offer support.
+    severity: INFO
+  - keywords:
+      - crying
+      - tearful
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Coping', 'Grieving', or 'Anxiety'. Assess emotional
+      state, offer support.
+    severity: INFO
+  - keywords:
+      - flat
+      - affect
+      - blunted
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Coping' or 'Grieving'. Assess for signs of
+      depression.
+    severity: WARNING
+  - keywords:
+      - withdrawn
+      - isolated
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Loneliness' or 'Ineffective Coping'. Encourage
+      social interaction.
+    severity: INFO
+  - keywords:
+      - sad
+      - depressed
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Coping', 'Grieving', or 'Hopelessness'. Assess
+      support system.
+    severity: WARNING
+  - keywords:
+      - hopeless
+      - helpless
+    match_type: any
+    alert: Finding suggests 'Hopelessness' or 'Powerlessness'. Assess for suicidal ideation.
+    severity: CRITICAL
+  - keywords:
+      - suicidal
+      - ideation
+      - SI
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Suicide'. Implement 1:1 observation,
+      notify provider STAT, ensure safety.
+    severity: CRITICAL
+  - keywords:
+      - homicidal
+      - ideation
+      - HI
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Other-Directed Violence'. Notify provider
+      STAT, ensure safety.
+    severity: CRITICAL
+  - keywords:
+      - angry
+      - irritable
+      - hostile
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Coping' or 'Risk for Other-Directed Violence'.
+      Assess for de-escalation.
+    severity: WARNING
+  - keywords:
+      - combative
+      - violent
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Other-Directed Violence'. Ensure staff safety,
+      call for help.
+    severity: CRITICAL
+  - keywords:
+      - denial
+      - denies
+      - problem
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Denial' or 'Ineffective Coping'. Assess readiness
+      to learn.
+    severity: INFO
+  - keywords:
+      - non-compliant
+      - non-adherent
+    match_type: any
+    alert:
+      Finding suggests 'Noncompliance'. Assess *reason* for noncompliance (e.g.,
+      knowledge deficit, financial, side effects).
+    severity: INFO
+  - keywords:
+      - poor
+      - hygiene
+      - unkempt
+    match_type: any
+    alert:
+      Finding suggests 'Self-Care Deficit' (Bathing/Hygiene). Assess ability to
+      perform ADLs.
+    severity: INFO
+  - keywords:
+      - unable
+      - bathe
+      - self
+    match_type: all
+    alert:
+      Finding suggests 'Self-Care Deficit' (Bathing). Assess level of assistance
+      needed.
+    severity: INFO
+  - keywords:
+      - unable
+      - dress
+      - self
+    match_type: all
+    alert:
+      Finding suggests 'Self-Care Deficit' (Dressing). Assess level of assistance
+      needed.
+    severity: INFO
+  - keywords:
+      - unable
+      - feed
+      - self
+    match_type: all
+    alert:
+      Finding suggests 'Self-Care Deficit' (Feeding). Assess level of assistance
+      needed. 'Risk for Aspiration'.
+    severity: WARNING
+  - keywords:
+      - unable
+      - toilet
+      - self
+    match_type: all
+    alert:
+      Finding suggests 'Self-Care Deficit' (Toileting). High 'Risk for Falls'.
+      Assess level of assistance.
+    severity: WARNING
+  - keywords:
+      - body
+      - odor
+    match_type: all
+    alert:
+      Finding suggests 'Self-Care Deficit' (Bathing). Assess ability and willingness
+      to bathe.
+    severity: INFO
+  - keywords:
+      - halitosis
+      - bad
+      - breath
+    match_type: any
+    alert: Finding suggests 'Self-Care Deficit' (Oral Hygiene). Assess oral mucosa.
+    severity: INFO
+  - keywords:
+      - dental
+      - caries
+      - cavities
+      - poor
+      - dentition
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Oral Mucous Membrane' and 'Self-Care Deficit'.
+      Assess 'Risk for Imbalanced Nutrition'.
+    severity: WARNING
+  - keywords:
+      - oral
+      - lesions
+      - stomatitis
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Oral Mucous Membrane'. Assess for pain, ability
+      to eat.
+    severity: WARNING
+  - keywords:
+      - thrush
+      - candida
+      - white
+      - tongue
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Oral Mucous Membrane' (r/t infection). Assess
+      need for antifungal.
+    severity: WARNING
+  - keywords:
+      - fever
+      - febrile
+      - pyrexia
+    match_type: any
+    alert:
+      Finding suggests 'Hyperthermia' and 'Risk for Infection'. Assess for other
+      s/s of infection.
+    severity: WARNING
+  - keywords:
+      - temperature
+      - "> 38"
+    match_type: all
+    alert:
+      Finding suggests 'Hyperthermia' and 'Risk for Infection'. Assess for other
+      s/s of infection.
+    severity: WARNING
+  - keywords:
+      - temperature
+      - "> 38.5"
+    match_type: all
+    alert:
+      Finding suggests 'Hyperthermia' and 'Risk for Infection'. Notify provider,
+      consider antipyretics.
+    severity: CRITICAL
+  - keywords:
+      - temperature
+      - "> 39"
+    match_type: all
+    alert:
+      Finding suggests 'Hyperthermia' and 'Risk for Infection'. Notify provider,
+      consider cultures.
+    severity: CRITICAL
+  - keywords:
+      - hypothermia
+      - hypothermic
+    match_type: any
+    alert: Finding suggests 'Hypothermia'. Initiate warming measures, assess cause.
+    severity: CRITICAL
+  - keywords:
+      - temperature
+      - < 36
+    match_type: all
+    alert:
+      Finding suggests 'Hypothermia'. Initiate warming measures, assess cause (e.g.,
+      exposure, sepsis).
+    severity: CRITICAL
+  - keywords:
+      - temperature
+      - < 35
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Hypothermia'. Initiate active warming measures.
+      Assess for sepsis.
+    severity: CRITICAL
+  - keywords:
+      - chills
+      - rigors
+      - shivering
+    match_type: any
+    alert:
+      Finding often precedes fever. Suggests 'Risk for Infection'. Consider drawing
+      blood cultures.
+    severity: WARNING
+  - keywords:
+      - knowledge
+      - deficit
+      - deficient
+    match_type: any
+    alert:
+      Finding suggests 'Knowledge Deficit'. Specify topic (e.g., new diagnosis,
+      medication).
+    severity: INFO
+  - keywords:
+      - patient
+      - states
+      - does not
+      - understand
+    match_type: all
+    alert:
+      Finding suggests 'Knowledge Deficit'. Assess learning needs, barriers to
+      learning.
+    severity: INFO
+  - keywords:
+      - impaired
+      - vision
+      - blind
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Visual). High 'Risk for
+      Falls'. Assess 'Self-Care Deficit'.
+    severity: WARNING
+  - keywords:
+      - cataracts
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Visual). Assess 'Risk for
+      Falls'.
+    severity: INFO
+  - keywords:
+      - glaucoma
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Visual). Assess 'Risk for
+      Falls'.
+    severity: INFO
+  - keywords:
+      - hearing
+      - impaired
+      - deaf
+      - HOH
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Auditory). Assess 'Risk
+      for Impaired Verbal Communication'.
+    severity: INFO
+  - keywords:
+      - uses
+      - hearing
+      - aids
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Auditory). Ensure devices
+      are in and functional.
+    severity: INFO
+  - keywords:
+      - sleep
+      - poorly
+      - insomnia
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sleep Pattern'. Assess for cause (e.g., pain,
+      anxiety, environment).
+    severity: INFO
+  - keywords:
+      - reports
+      - not
+      - sleeping
+    match_type: all
+    alert: Finding suggests 'Disturbed Sleep Pattern'. Assess 'Fatigue'.
+    severity: INFO
+  - keywords:
+      - wakes
+      - frequently
+      - night
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Sleep Pattern'. Assess for cause (e.g., nocturia,
+      pain).
+    severity: INFO
+  - keywords:
+      - somnolent
+      - sleepy
+      - day
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sleep Pattern' or 'Fatigue'. Assess quality of
+      night sleep.
+    severity: INFO
+  - keywords:
+      - fall
+      - risk
+      - high
+    match_type: any
+    alert:
+      Documented finding. Ensure 'Risk for Falls' is on the care plan and all precautions
+      are in place.
+    severity: WARNING
+  - keywords:
+      - history
+      - of
+      - falls
+    match_type: all
+    alert: Finding indicates high 'Risk for Falls'. Implement fall precautions.
+    severity: WARNING
+  - keywords:
+      - patient
+      - found
+      - "on"
+      - floor
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Falls' and 'Risk for Injury'. Perform
+      post-fall assessment STAT.
+    severity: CRITICAL
+  - keywords:
+      - near
+      - fall
+    match_type: all
+    alert: Finding indicates high 'Risk for Falls'. Re-assess fall risk, review precautions.
+    severity: WARNING
+  - keywords:
+      - smoker
+      - smoking
+      - tobacco
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Health Maintenance'. Assess 'Readiness for
+      Enhanced Knowledge' (cessation).
+    severity: INFO
+  - keywords:
+      - alcohol
+      - etoh
+      - use
+      - drinks
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Health Maintenance'. Assess for 'Risk for...
+      (e.g., Injury, Ineffective Coping)'. Assess for withdrawal.
+    severity: WARNING
+  - keywords:
+      - etoh
+      - withdrawal
+      - CIWA
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Injury' and 'Risk for Acute Confusion'. Monitor
+      CIWA score.
+    severity: CRITICAL
+  - keywords:
+      - drug
+      - use
+      - illicit
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Health Maintenance' and 'Ineffective Coping'.
+      Assess for withdrawal.
+    severity: WARNING
+  - keywords:
+      - overdose
+    match_type: all
+    alert:
+      Critical finding. Assess ABCs, neuro status. Suggests 'Ineffective Coping',
+      'Risk for Suicide'.
+    severity: CRITICAL
+  - keywords:
+      - homeless
+      - "no"
+      - fixed
+      - address
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Home Maintenance'. Assess 'Ineffective Health
+      Maintenance'. Involve social work/case management.
+    severity: WARNING
+  - keywords:
+      - lives
+      - alone
+      - "no"
+      - support
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Loneliness', 'Impaired Home Maintenance', 'Risk
+      for Ineffective Self-Health Management'. Assess support system.
+    severity: WARNING
+  - keywords:
+      - caregiver
+      - role
+      - strain
+      - stress
+    match_type: any
+    alert:
+      Finding suggests 'Caregiver Role Strain'. Assess caregiver's coping, involve
+      social work.
+    severity: INFO
+  - keywords:
+      - language
+      - barrier
+      - speaks
+      - only
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Verbal Communication'. Use professional interpreter
+      services. High 'Risk for... (e.g., Knowledge Deficit)'.
+    severity: WARNING
+  - keywords:
+      - IV
+      - site
+      - intravenous
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' and 'Risk for Impaired Skin Integrity'.
+      Assess site for patency, phlebitis.
+    severity: INFO
+  - keywords:
+      - IV
+      - site
+      - red
+      - swollen
+      - painful
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' or 'Impaired Tissue Integrity' (Phlebitis/Infiltration).
+      Stop infusion, remove IV.
+    severity: WARNING
+  - keywords:
+      - infiltration
+      - infiltrated
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Tissue Integrity'. Stop infusion, remove IV, elevate
+      limb.
+    severity: WARNING
+  - keywords:
+      - phlebitis
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Tissue Integrity'. Stop infusion, remove IV, apply
+      warm compress.
+    severity: WARNING
+  - keywords:
+      - central
+      - line
+      - picc
+      - port
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' (CLABSI). Assess site, dressing integrity.
+      Use aseptic technique.
+    severity: WARNING
+  - keywords:
+      - central
+      - line
+      - dressing
+      - not
+      - intact
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Infection'. Change dressing immediately using
+      sterile technique.
+    severity: CRITICAL
+  - keywords:
+      - chest
+      - tube
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Gas Exchange', 'Risk for Infection', 'Acute Pain'.
+      Assess site, drainage, air leak.
+    severity: CRITICAL
+  - keywords:
+      - chest
+      - tube
+      - "no"
+      - tidaling
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Gas Exchange' (r/t potential kink, clot, or re-expansion).
+      Assess patient, system.
+    severity: WARNING
+  - keywords:
+      - chest
+      - tube
+      - continuous
+      - bubbling
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Gas Exchange' (r/t air leak). Assess patient,
+      system, connections.
+    severity: WARNING
+  - keywords:
+      - drain
+      - JP
+      - jackson-pratt
+      - hemovac
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection'. Assess site, drainage amount/color.
+      Ensure patency.
+    severity: INFO
+  - keywords:
+      - cast
+      - splint
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Ineffective Peripheral Tissue Perfusion'. Perform
+      neurovascular checks (5 P's).
+    severity: WARNING
+  - keywords:
+      - neurovascular
+      - compromise
+      - 5 P's
+    match_type: any
+    alert:
+      Critical finding (Pain, Pallor, Pulselessness, Paresthesia, Paralysis). Suggests
+      'Ineffective Peripheral Tissue Perfusion'. Notify provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - compartment
+      - syndrome
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Peripheral Tissue Perfusion'. Notify
+      provider STAT. Do not elevate limb.
+    severity: CRITICAL
+  - keywords:
+      - traction
+      - skeletal
+      - skin
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Skin Integrity' (pin sites), 'Risk for
+      Ineffective Peripheral Tissue Perfusion', 'Impaired Physical Mobility'.
+    severity: WARNING
+  - keywords:
+      - pin
+      - site
+      - red
+      - drainage
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Infection' (Osteomyelitis). Perform pin care,
+      notify provider.
+    severity: CRITICAL
+  - keywords:
+      - amputation
+      - stump
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Skin Integrity', 'Acute Pain', 'Disturbed Body
+      Image', 'Risk for Bleeding'.
+    severity: WARNING
+  - keywords:
+      - phantom
+      - limb
+      - pain
+    match_type: all
+    alert:
+      Finding suggests 'Acute Pain'. Medicate as ordered. Reassure patient this
+      is a real sensation.
+    severity: WARNING
+  - keywords:
+      - allergic
+      - reaction
+      - allergy
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Allergic Reaction'. Assess for rash, urticaria,
+      dyspnea. Stop offending agent.
+    severity: WARNING
+  - keywords:
+      - anaphylaxis
+      - anaphylactic
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Impaired Gas Exchange', 'Ineffective Breathing
+      Pattern'. Assess airway, administer epi.
+    severity: CRITICAL
+  - keywords:
+      - burn
+      - thermal
+      - chemical
+      - electrical
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Skin Integrity', 'Acute Pain', 'Risk for Infection',
+      'Risk for Deficient Fluid Volume'.
+    severity: CRITICAL
+  - keywords:
+      - rule
+      - of
+      - nines
+      - TBSA
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Deficient Fluid Volume' (Burn shock). Calculate
+      fluid resuscitation needs.
+    severity: CRITICAL
+  - keywords:
+      - circumferential
+      - burn
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Ineffective Peripheral Tissue Perfusion'
+      (Compartment Syndrome). Assess 5 P's.
+    severity: CRITICAL
+  - keywords:
+      - inhalation
+      - injury
+      - soot
+      - nares
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Airway Clearance', 'Impaired Gas
+      Exchange'. Assess for stridor, hoarseness.
+    severity: CRITICAL
+  - keywords:
+      - hoarse
+      - voice
+      - brassy
+      - cough
+    match_type: any
+    alert:
+      Critical finding (esp. after burn/trauma). Suggests 'Ineffective Airway Clearance'
+      (r/t laryngeal edema). Assess airway.
+    severity: CRITICAL
+  - keywords:
+      - glucose
+      - low
+      - hypoglycemia
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Injury'. Administer glucose per protocol.
+      Re-check in 15 min.
+    severity: CRITICAL
+  - keywords:
+      - glucose
+      - < 70
+    match_type: all
+    alert:
+      Critical finding (Hypoglycemia). Suggests 'Risk for Injury'. Administer glucose
+      per protocol. Re-check in 15 min.
+    severity: CRITICAL
+  - keywords:
+      - glucose
+      - < 50
+    match_type: all
+    alert:
+      Critical finding (Hypoglycemia). Suggests 'Risk for Injury'. Administer glucose
+      per protocol. Re-check in 15 min.
+    severity: CRITICAL
+  - keywords:
+      - glucose
+      - high
+      - hyperglycemia
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Unstable Blood Glucose Level'. Assess for s/s
+      (polyuria, polydipsia). Administer insulin as ordered.
+    severity: WARNING
+  - keywords:
+      - glucose
+      - "> 250"
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Unstable Blood Glucose Level'. Assess for DKA/HHS.
+      Administer insulin as ordered.
+    severity: WARNING
+  - keywords:
+      - glucose
+      - "> 400"
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Unstable Blood Glucose Level'. Assess
+      for DKA/HHS. Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - ketones
+      - urine
+      - blood
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Unstable Blood Glucose Level' (DKA).
+      Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - fruity
+      - breath
+      - acetone
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Unstable Blood Glucose Level' (DKA).
+      Check glucose, ketones.
+    severity: CRITICAL
+  - keywords:
+      - potassium
+      - high
+      - hyperkalemia
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Decreased Cardiac Output' (Arrhythmia).
+      Place on cardiac monitor. Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - potassium
+      - low
+      - hypokalemia
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Decreased Cardiac Output' (Arrhythmia).
+      Place on cardiac monitor. Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - sodium
+      - high
+      - hypernatremia
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Deficient Fluid Volume' or 'Risk for Impaired
+      Thought Processes'. Assess neuro status.
+    severity: WARNING
+  - keywords:
+      - sodium
+      - low
+      - hyponatremia
+    match_type: any
+    alert:
+      Finding suggests 'Fluid Volume Excess' or 'Risk for Impaired Thought Processes'.
+      Assess neuro status, seizure risk.
+    severity: WARNING
+  - keywords:
+      - calcium
+      - low
+      - hypocalcemia
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Injury' (Seizures, tetany). Assess for Chvostek's,
+      Trousseau's.
+    severity: WARNING
+  - keywords:
+      - chvostek
+      - sign
+      - positive
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Injury' (Hypocalcemia). Assess for tetany. Notify
+      provider.
+    severity: WARNING
+  - keywords:
+      - trousseau
+      - sign
+      - positive
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Injury' (Hypocalcemia). Assess for tetany. Notify
+      provider.
+    severity: WARNING
+  - keywords:
+      - magnesium
+      - low
+      - hypomagnesemia
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Decreased Cardiac Output' (Torsades).
+      Place on cardiac monitor.
+    severity: CRITICAL
+  - keywords:
+      - Hgb
+      - low
+      - hemoglobin
+      - anemia
+    match_type: any
+    alert:
+      Finding suggests 'Activity Intolerance', 'Fatigue', 'Ineffective Tissue Perfusion'.
+      Assess for pallor, SOB, bleeding.
+    severity: WARNING
+  - keywords:
+      - Hct
+      - low
+      - hematocrit
+    match_type: any
+    alert:
+      Finding suggests 'Activity Intolerance', 'Fatigue', 'Ineffective Tissue Perfusion'.
+      Assess for bleeding.
+    severity: WARNING
+  - keywords:
+      - platelets
+      - low
+      - thrombocytopenia
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Bleeding'. Implement bleeding precautions. Assess
+      for petechiae, bruising.
+    severity: CRITICAL
+  - keywords:
+      - platelets
+      - < 50000
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding'. Implement bleeding precautions.
+      Assess for bleeding.
+    severity: CRITICAL
+  - keywords:
+      - platelets
+      - < 20000
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Spontaneous Bleeding'. Implement bleeding
+      precautions. Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - WBC
+      - high
+      - leukocytosis
+    match_type: any
+    alert: Finding suggests 'Risk for Infection'. Assess for fever, s/s of infection.
+    severity: WARNING
+  - keywords:
+      - WBC
+      - low
+      - leukopenia
+      - neutropenia
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' (Immunocompromised). Implement neutropenic
+      precautions.
+    severity: CRITICAL
+  - keywords:
+      - neutropenic
+      - precautions
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Infection'. Ensure all precautions (no fresh flowers/fruit,
+      mask) are in place.
+    severity: WARNING
+  - keywords:
+      - INR
+      - high
+      - elevated
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Bleeding'. Implement bleeding precautions. Hold
+      anticoagulants as ordered.
+    severity: CRITICAL
+  - keywords:
+      - PTT
+      - high
+      - elevated
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Bleeding'. Implement bleeding precautions. Adjust
+      heparin as ordered.
+    severity: CRITICAL
+  - keywords:
+      - troponin
+      - high
+      - elevated
+      - positive
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Decreased Cardiac Output' (r/t MI). Notify provider
+      STAT, assess chest pain, EKG.
+    severity: CRITICAL
+  - keywords:
+      - BNP
+      - high
+      - elevated
+    match_type: any
+    alert:
+      Finding suggests 'Fluid Volume Excess' (r/t CHF). Assess lung sounds, edema,
+      JVD.
+    severity: CRITICAL
+  - keywords:
+      - BUN
+      - high
+      - elevated
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Urinary Elimination' or 'Deficient Fluid Volume'.
+      Assess creatinine, GFR, UOP.
+    severity: WARNING
+  - keywords:
+      - creatinine
+      - high
+      - elevated
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Urinary Elimination' (r/t renal failure). Assess
+      GFR, UOP, fluid status.
+    severity: CRITICAL
+  - keywords:
+      - LFTs
+      - high
+      - elevated
+      - AST
+      - ALT
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Liver Function'. Assess for jaundice,
+      ascites, mental status changes.
+    severity: CRITICAL
+  - keywords:
+      - ammonia
+      - high
+      - elevated
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Acute Confusion' (r/t hepatic encephalopathy).
+      Assess mental status.
+    severity: CRITICAL
+  - keywords:
+      - lactate
+      - lactic
+      - acid
+      - high
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Tissue Perfusion' (Sepsis, shock).
+      Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - blood
+      - culture
+      - positive
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Infection' (Sepsis). Notify provider STAT. Ensure
+      antibiotics are initiated.
+    severity: CRITICAL
+  - keywords:
+      - sepsis
+      - septic
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Infection', 'Ineffective Tissue Perfusion'. Monitor
+      VS, lactate. Implement sepsis bundle.
+    severity: CRITICAL
+  - keywords:
+      - SIRS
+      - criteria
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (Sepsis). Assess for source of infection.
+    severity: CRITICAL
+  - keywords:
+      - shingles
+      - herpes
+      - zoster
+      - vesicular
+      - rash
+    match_type: any
+    alert:
+      Finding suggests 'Acute Pain' and 'Impaired Skin Integrity'. Implement airborne/contact
+      precautions.
+    severity: WARNING
+  - keywords:
+      - MRSA
+      - positive
+    match_type: all
+    alert: Finding suggests 'Infection'. Implement contact precautions.
+    severity: WARNING
+  - keywords:
+      - VRE
+      - positive
+    match_type: all
+    alert: Finding suggests 'Infection'. Implement contact precautions.
+    severity: WARNING
+  - keywords:
+      - ESBL
+      - positive
+    match_type: all
+    alert: Finding suggests 'Infection'. Implement contact precautions.
+    severity: WARNING
+  - keywords:
+      - contact
+      - precautions
+    match_type: all
+    alert:
+      Finding suggests 'Infection' or 'Risk for Infection'. Ensure gown/gloves
+      are used.
+    severity: INFO
+  - keywords:
+      - droplet
+      - precautions
+    match_type: all
+    alert:
+      Finding suggests 'Infection' (e.g., flu). Ensure mask/eye protection are
+      used.
+    severity: INFO
+  - keywords:
+      - airborne
+      - precautions
+    match_type: all
+    alert:
+      Finding suggests 'Infection' (e.g., TB, varicella). Ensure N95, negative
+      pressure room.
+    severity: WARNING
+  - keywords:
+      - TB
+      - tuberculosis
+      - AFB
+      - positive
+    match_type: any
+    alert: Finding suggests 'Infection'. Implement airborne precautions STAT.
+    severity: CRITICAL
+  - keywords:
+      - HIV
+      - positive
+      - AIDS
+    match_type: any
+    alert: Finding suggests 'Risk for Infection' (Immunocompromised). Assess CD4 count.
+    severity: WARNING
+  - keywords:
+      - pregnant
+      - pregnancy
+    match_type: any
+    alert:
+      Finding suggests 'Readiness for Enhanced Knowledge' (Prenatal). Assess for
+      'Risk for...' (e.g., bleeding, HTN).
+    severity: INFO
+  - keywords:
+      - fetal
+      - heart
+      - tones
+      - FHT
+    match_type: any
+    alert: Finding suggests 'Risk for Impaired Fetal Gas Exchange'. Assess rate, variability.
+    severity: INFO
+  - keywords:
+      - fetal
+      - distress
+      - late
+      - decelerations
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Impaired Fetal Gas Exchange'. Implement intrauterine
+      resuscitation measures.
+    severity: CRITICAL
+  - keywords:
+      - vaginal
+      - bleeding
+      - pregnancy
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding'. Assess amount, fetal status.
+      Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - preeclampsia
+      - HTN
+      - proteinuria
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Ineffective Tissue Perfusion'. Assess
+      for headache, vision changes, edema.
+    severity: CRITICAL
+  - keywords:
+      - postpartum
+      - hemorrhage
+      - PPH
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Deficient Fluid Volume' and 'Risk for
+      Bleeding'. Assess fundus, bleeding.
+    severity: CRITICAL
+  - keywords:
+      - fundus
+      - boggy
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Risk for Bleeding' (PPH). Massage fundus, assess
+      bleeding.
+    severity: CRITICAL
+  - keywords:
+      - fundus
+      - firm
+    match_type: all
+    alert: Normal postpartum finding. No immediate diagnosis suggested.
+    severity: INFO
+  - keywords:
+      - lochia
+      - rubra
+      - serosa
+      - alba
+    match_type: any
+    alert: Normal postpartum finding. Assess amount, clots. Relates to 'Risk for Bleeding'.
+    severity: INFO
+  - keywords:
+      - episiotomy
+      - laceration
+      - perineal
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Skin Integrity', 'Acute Pain', 'Risk for Infection'.
+      Assess REEDA.
+    severity: INFO
+  - keywords:
+      - pedal
+      - pulse
+      - weak
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion'. Assess other
+      side, cap refill, color, temp.
+    severity: WARNING
+  - keywords:
+      - pedal
+      - pulse
+      - absent
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Peripheral Tissue Perfusion'. Get
+      Doppler. Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - radial
+      - pulse
+      - weak
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion' or 'Decreased
+      Cardiac Output'. Assess other side, BP.
+    severity: WARNING
+  - keywords:
+      - AV
+      - fistula
+      - graft
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Ineffective Tissue Perfusion'. Assess for bruit/thrill.
+      No BP/IV in this arm.
+    severity: WARNING
+  - keywords:
+      - bruit
+      - thrill
+      - absent
+      - fistula
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Ineffective Tissue Perfusion' (clotted fistula).
+      Notify provider/nephrology.
+    severity: CRITICAL
+  - keywords:
+      - peritoneal
+      - dialysis
+      - catheter
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' (Peritonitis). Assess site, effluent
+      (cloudy?).
+    severity: WARNING
+  - keywords:
+      - dialysis
+      - effluent
+      - cloudy
+    match_type: all
+    alert: Critical finding. Suggests 'Infection' (Peritonitis). Notify provider/nephrology.
+    severity: CRITICAL
+  - keywords:
+      - tracheostomy
+      - trach
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Airway Clearance', 'Risk for Infection', 'Impaired
+      Verbal Communication', 'Impaired Skin Integrity' (stoma).
+    severity: CRITICAL
+  - keywords:
+      - trach
+      - copious
+      - secretions
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Airway Clearance'. Suction as needed. Assess
+      lung sounds.
+    severity: WARNING
+  - keywords:
+      - ventilator
+      - vent
+      - intubated
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern', 'Impaired Gas Exchange',
+      'Risk for Infection' (VAP), 'Impaired Verbal Communication'.
+    severity: CRITICAL
+  - keywords:
+      - high
+      - pressure
+      - alarm
+      - ventilator
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Airway Clearance' (e.g., needs suction, kinked
+      tube, bronchospasm) or 'Impaired Gas Exchange' (e.g., pneumothorax).
+    severity: CRITICAL
+  - keywords:
+      - low
+      - pressure
+      - alarm
+      - ventilator
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' (e.g., disconnected tube,
+      cuff leak).
+    severity: CRITICAL
+  - keywords:
+      - restraints
+      - restrained
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Injury'. Assess need for restraints, neurovascular
+      status, skin integrity. Ensure quick-release.
+    severity: WARNING
+  - keywords:
+      - sutures
+      - staples
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Skin Integrity' (expected). Assess 'Risk for Infection'.
+      Monitor site.
+    severity: INFO
+  - keywords:
+      - suture
+      - line
+      - open
+      - draining
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity' and 'Risk for Infection'. Notify
+      provider.
+    severity: WARNING
+  - keywords:
+      - bleeding
+      - oozing
+      - site
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Bleeding'. Assess amount, apply pressure, check
+      coagulation status.
+    severity: WARNING
+  - keywords:
+      - hematoma
+      - site
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Bleeding' or 'Impaired Tissue Integrity'. Outline
+      area, monitor for expansion.
+    severity: WARNING
+  - keywords:
+      - pacing
+      - wires
+      - epicardial
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' and 'Risk for Decreased Cardiac Output'.
+      Assess site, pacer settings.
+    severity: CRITICAL
+  - keywords:
+      - arterial
+      - line
+      - art-line
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection', 'Risk for Bleeding', 'Risk for Ineffective
+      Peripheral Tissue Perfusion'. Assess site, waveform, distal perfusion.
+    severity: CRITICAL
+  - keywords:
+      - ICP
+      - monitor
+      - bolt
+      - EVD
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Cerebral Tissue Perfusion' and 'Risk for Infection'.
+      Monitor ICP, CPP, neuro status.
+    severity: CRITICAL
+  - keywords:
+      - ICP
+      - high
+      - elevated
+      - "> 20"
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Cerebral Tissue Perfusion'. Implement
+      ICP protocol (e.g., elevate HOB, notify provider).
+    severity: CRITICAL
+  - keywords:
+      - CPP
+      - low
+      - < 60
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Cerebral Tissue Perfusion'. Assess
+      MAP, ICP. Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - scleral
+      - icterus
+    match_type: all
+    alert:
+      Finding (yellow sclera). Suggests 'Risk for Impaired Liver Function'. Assess
+      LFTs, skin.
+    severity: WARNING
+  - keywords:
+      - corneal
+      - abrasion
+    match_type: all
+    alert: Finding suggests 'Acute Pain' and 'Risk for Injury'. Assess vision.
+    severity: WARNING
+  - keywords:
+      - conjunctivitis
+      - pink
+      - eye
+    match_type: any
+    alert: Finding suggests 'Infection' or 'Allergic Reaction'. Assess drainage.
+    severity: INFO
+  - keywords:
+      - auditory
+      - hallucinations
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Auditory). Assess for command
+      hallucinations, safety.
+    severity: CRITICAL
+  - keywords:
+      - visual
+      - hallucinations
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Visual) or 'Acute Confusion'
+      (Delirium). Assess safety.
+    severity: WARNING
+  - keywords:
+      - tactile
+      - hallucinations
+      - bugs
+      - crawling
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Tactile) (r/t withdrawal,
+      delirium). Assess safety.
+    severity: WARNING
+  - keywords:
+      - delusions
+      - paranoid
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Thought Processes'. Assess content, safety risk.
+      Do not challenge delusion.
+    severity: WARNING
+  - keywords:
+      - pressured
+      - speech
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Thought Processes' (r/t mania). Assess 'Risk
+      for Injury'.
+    severity: WARNING
+  - keywords:
+      - flight
+      - of
+      - ideas
+    match_type: all
+    alert: Finding suggests 'Disturbed Thought Processes'. Assess 'Risk for Injury'.
+    severity: WARNING
+  - keywords:
+      - loose
+      - associations
+    match_type: all
+    alert: Finding suggests 'Disturbed Thought Processes'. Assess 'Impaired Verbal Communication'.
+    severity: WARNING
+  - keywords:
+      - word
+      - salad
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Thought Processes' or 'Impaired Verbal Communication'.
+      Assess for aphasia.
+    severity: WARNING
+  - keywords:
+      - neologisms
+    match_type: all
+    alert: Finding suggests 'Disturbed Thought Processes'. Assess 'Impaired Verbal Communication'.
+    severity: WARNING
+  - keywords:
+      - echolalia
+    match_type: all
+    alert: Finding suggests 'Disturbed Thought Processes'. Assess 'Impaired Verbal Communication'.
+    severity: WARNING
+  - keywords:
+      - poverty
+      - of
+      - speech
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Verbal Communication' or 'Ineffective Coping'
+      (Depression).
+    severity: INFO
+  - keywords:
+      - panic
+      - attack
+    match_type: all
+    alert:
+      Finding suggests 'Anxiety' (Severe/Panic). Stay with patient, use calm voice,
+      assess breathing.
+    severity: WARNING
+  - keywords:
+      - hypervigilant
+      - hypervigilance
+    match_type: any
+    alert:
+      Finding suggests 'Anxiety' or 'Post-Trauma Syndrome'. Assess environmental
+      stimuli.
+    severity: WARNING
+  - keywords:
+      - flashbacks
+      - nightmares
+    match_type: any
+    alert: Finding suggests 'Post-Trauma Syndrome'. Assess for triggers, 'Anxiety'.
+    severity: WARNING
+  - keywords:
+      - ritualistic
+      - behavior
+      - compulsions
+    match_type: any
+    alert:
+      Finding suggests 'Anxiety' (r/t OCD). Assess 'Ineffective Coping'. Do not
+      interrupt ritual if possible.
+    severity: INFO
+  - keywords:
+      - self-mutilation
+      - cutting
+      - self-harm
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Self-Mutilation', 'Ineffective Coping'.
+      Assess for 'Risk for Suicide'. Implement safety measures.
+    severity: CRITICAL
+  - keywords:
+      - difficulty
+      - concentrating
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Thought Processes', 'Anxiety', or 'Fatigue'. Assess
+      cause.
+    severity: INFO
+  - keywords:
+      - indecisive
+      - indecisiveness
+    match_type: any
+    alert: Finding suggests 'Powerlessness' or 'Ineffective Coping' (Depression).
+    severity: INFO
+  - keywords:
+      - grandiosity
+      - grandiose
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Thought Processes' (r/t mania). Assess 'Risk
+      for Injury'.
+    severity: WARNING
+  - keywords:
+      - spiritual
+      - distress
+    match_type: all
+    alert:
+      Finding suggests 'Spiritual Distress'. Assess need for chaplain/spiritual
+      support.
+    severity: INFO
+  - keywords:
+      - questions
+      - meaning
+      - of
+      - life
+    match_type: all
+    alert: Finding suggests 'Spiritual Distress' or 'Hopelessness'. Assess support system.
+    severity: WARNING
+  - keywords:
+      - refuses
+      - medication
+    match_type: all
+    alert:
+      Finding suggests 'Noncompliance'. Assess *reason* for refusal. Educate and
+      notify provider.
+    severity: WARNING
+  - keywords:
+      - refuses
+      - treatment
+    match_type: all
+    alert:
+      Finding suggests 'Noncompliance'. Assess *reason*, ensure patient has capacity,
+      notify provider. Document.
+    severity: WARNING
+  - keywords:
+      - sexually
+      - inappropriate
+      - behavior
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Coping' or 'Disturbed Thought Processes'. Set
+      firm boundaries. Assess safety.
+    severity: WARNING
+  - keywords:
+      - sclera
+      - visible
+      - above
+      - iris
+    match_type: all
+    alert:
+      Finding (Sunsetting sign - peds). Suggests 'Ineffective Cerebral Tissue Perfusion'
+      (r/t hydrocephalus). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - bulging
+      - fontanelle
+    match_type: all
+    alert:
+      Critical finding (infant). Suggests 'Ineffective Cerebral Tissue Perfusion'
+      (r/t ICP). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - sunken
+      - fontanelle
+    match_type: all
+    alert: Finding (infant). Suggests 'Deficient Fluid Volume'. Assess hydration status.
+    severity: WARNING
+  - keywords:
+      - grunting
+      - infant
+    match_type: all
+    alert:
+      Critical finding (infant). Suggests 'Ineffective Breathing Pattern' (Respiratory
+      distress). Assess SpO2, RR.
+    severity: CRITICAL
+  - keywords:
+      - weak
+      - cry
+      - infant
+    match_type: all
+    alert:
+      Finding (infant). Suggests 'Fatigue', 'Ineffective Breathing Pattern', or
+      'Infection'. Assess overall status.
+    severity: WARNING
+  - keywords:
+      - high-pitched
+      - cry
+      - infant
+    match_type: all
+    alert:
+      Critical finding (infant). Suggests 'Acute Pain' or 'Ineffective Cerebral
+      Tissue Perfusion' (r/t ICP, withdrawal).
+    severity: CRITICAL
+  - keywords:
+      - floppy
+      - infant
+      - hypotonia
+    match_type: any
+    alert:
+      Finding (infant). Suggests 'Impaired Physical Mobility' or 'Ineffective Breathing
+      Pattern'. Assess neuro status, tone.
+    severity: CRITICAL
+  - keywords:
+      - jaundice
+      - newborn
+      - bilirubin
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Liver Function' (Hyperbilirubinemia).
+      Assess skin, sclera. Monitor bili levels.
+    severity: WARNING
+  - keywords:
+      - umbilical
+      - cord
+      - stump
+      - red
+      - draining
+    match_type: any
+    alert:
+      Finding (newborn). Suggests 'Risk for Infection' (Omphalitis). Assess site,
+      notify provider.
+    severity: WARNING
+  - keywords:
+      - meconium
+      - stain
+    match_type: all
+    alert:
+      Finding (newborn). Suggests 'Risk for Ineffective Airway Clearance' (Meconium
+      Aspiration). Assess resp status.
+    severity: WARNING
+  - keywords:
+      - temperature
+      - instability
+      - newborn
+    match_type: all
+    alert:
+      Finding (newborn). Suggests 'Ineffective Thermoregulation' or 'Risk for Infection'.
+      Assess temp, environment.
+    severity: WARNING
+  - keywords:
+      - poor
+      - suck
+      - reflex
+    match_type: all
+    alert:
+      Finding (infant). Suggests 'Ineffective Infant Feeding Pattern'. Assess 'Imbalanced
+      Nutrition'.
+    severity: WARNING
+  - keywords:
+      - breastfeeding
+      - ineffective
+      - poor
+      - latch
+    match_type: any
+    alert:
+      Finding suggests 'Ineffective Breastfeeding'. Assess 'Risk for Imbalanced
+      Nutrition' (infant). Consider lactation consult.
+    severity: INFO
+  - keywords:
+      - bottle
+      - feeding
+      - difficulty
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Infant Feeding Pattern'. Assess for 'Risk for
+      Aspiration'.
+    severity: INFO
+  - keywords:
+      - failure
+      - to
+      - thrive
+      - FTT
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements' (Infant).
+      Assess weight, feeding, social factors."
+    severity: WARNING
+  - keywords:
+      - child
+      - abuse
+      - suspicion
+      - non-accidental
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Injury'. Report per facility policy/law.
+      Ensure child's safety.
+    severity: CRITICAL
+  - keywords:
+      - spiral
+      - fracture
+    match_type: all
+    alert:
+      Finding (esp. in child). High suspicion for abuse. Suggests 'Risk for Injury'.
+      Report per policy.
+    severity: CRITICAL
+  - keywords:
+      - bruises
+      - multiple
+      - stages
+      - healing
+    match_type: all
+    alert:
+      Finding (esp. in child). High suspicion for abuse. Suggests 'Risk for Injury'.
+      Report per policy.
+    severity: CRITICAL
+  - keywords:
+      - elder
+      - abuse
+      - neglect
+      - suspicion
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Risk for Injury', 'Ineffective Coping'. Report
+      to APS per policy.
+    severity: CRITICAL
+  - keywords:
+      - pressure
+      - injury
+      - neglect
+    match_type: all
+    alert:
+      Finding (if r/t neglect). Suggests 'Impaired Skin Integrity'. Report to APS/CPS
+      per policy.
+    severity: CRITICAL
+  - keywords:
+      - end
+      - of
+      - life
+      - EOL
+      - hospice
+    match_type: any
+    alert:
+      Finding suggests focus shift. Assess for 'Acute/Chronic Pain', 'Ineffective
+      Airway Clearance', 'Anxiety', 'Spiritual Distress'.
+    severity: INFO
+  - keywords:
+      - death
+      - rattle
+      - terminal
+      - secretions
+    match_type: any
+    alert:
+      Finding (EOL). Suggests 'Ineffective Airway Clearance'. Consider positioning,
+      anticholinergics. Reassure family.
+    severity: INFO
+  - keywords:
+      - mottling
+      - end
+      - of
+      - life
+    match_type: all
+    alert:
+      Finding (EOL). Suggests 'Ineffective Tissue Perfusion'. Reassure family.
+      Part of dying process.
+    severity: INFO
+  - keywords:
+      - cheyne-stokes
+      - end
+      - of
+      - life
+    match_type: all
+    alert:
+      Finding (EOL). Suggests 'Ineffective Breathing Pattern'. Reassure family.
+      Part of dying process.
+    severity: INFO
+  - keywords:
+      - "no"
+      - pulse
+      - "no"
+      - breathing
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Cardiopulmonary Arrest'. Check code status. Initiate
+      CPR/Code Blue.
+    severity: CRITICAL
+  - keywords:
+      - asystole
+    match_type: all
+    alert:
+      Critical finding. Suggests 'Cardiopulmonary Arrest'. Check code status. Initiate
+      CPR/ACLS.
+    severity: CRITICAL
+  - keywords:
+      - v-fib
+      - ventricular
+      - fibrillation
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Cardiopulmonary Arrest'. Check code status. Defibrillate
+      STAT.
+    severity: CRITICAL
+  - keywords:
+      - v-tach
+      - pulseless
+      - ventricular
+      - tachycardia
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Cardiopulmonary Arrest'. Check code status. Initiate
+      CPR/ACLS.
+    severity: CRITICAL
+  - keywords:
+      - PEA
+      - pulseless
+      - electrical
+      - activity
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Cardiopulmonary Arrest'. Check code status. Initiate
+      CPR/ACLS. Find cause (H's & T's).
+    severity: CRITICAL
+  - keywords:
+      - DNR
+      - DNI
+      - do
+      - not
+      - resuscitate
+    match_type: any
+    alert: Finding confirms code status. No CPR. Focus on 'Acute Pain', comfort measures.
+    severity: INFO
+  - keywords:
+      - palliative
+      - care
+    match_type: all
+    alert:
+      Finding suggests focus on comfort. Assess for 'Acute/Chronic Pain', 'Nausea',
+      'Constipation', 'Anxiety'.
+    severity: INFO
+  - keywords:
+      - grieving
+      - grief
+    match_type: any
+    alert:
+      Finding suggests 'Grieving' or 'Anticipatory Grieving'. Assess coping, offer
+      support.
+    severity: INFO
+  - keywords:
+      - family
+      - distress
+      - anxious
+    match_type: any
+    alert:
+      Finding suggests 'Interrupted Family Processes'. Provide updates, support,
+      involve social work/chaplain.
+    severity: INFO
+  - keywords:
+      - intracranial
+      - pressure
+      - high
+      - ICP
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Ineffective Cerebral Tissue Perfusion'. Assess
+      GCS, Cushing's triad.
+    severity: CRITICAL
+  - keywords:
+      - cushing
+      - triad
+      - bradycardia
+      - hypertension
+      - irregular
+      - respirations
+    match_type: any
+    alert:
+      Critical finding (Late sign of ICP). Suggests 'Ineffective Cerebral Tissue
+      Perfusion' (Herniation). Notify provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - posturing
+      - decorticate
+      - decerebrate
+    match_type: any
+    alert:
+      Critical finding (Late sign of ICP). Suggests 'Ineffective Cerebral Tissue
+      Perfusion' (Herniation). Notify provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - halo
+      - sign
+      - csf
+      - leak
+    match_type: any
+    alert:
+      Critical finding (r/t basilar skull fracture). Suggests 'Risk for Infection'
+      (Meningitis). Notify provider. Do not pack.
+    severity: CRITICAL
+  - keywords:
+      - raccoon
+      - eyes
+      - periorbital
+      - ecchymosis
+    match_type: any
+    alert:
+      Critical finding (r/t basilar skull fracture). Suggests 'Risk for Infection'
+      (Meningitis). Assess neuro status.
+    severity: CRITICAL
+  - keywords:
+      - battle
+      - sign
+      - mastoid
+      - ecchymosis
+    match_type: any
+    alert:
+      Critical finding (r/t basilar skull fracture). Suggests 'Risk for Infection'
+      (Meningitis). Assess neuro status.
+    severity: CRITICAL
+  - keywords:
+      - nuchal
+      - rigidity
+      - stiff
+      - neck
+    match_type: any
+    alert:
+      Critical finding. Suggests 'Acute Pain' and 'Risk for Infection' (Meningitis).
+      Assess Brudzinski's/Kernig's.
+    severity: CRITICAL
+  - keywords:
+      - kernig
+      - sign
+      - positive
+    match_type: all
+    alert: Critical finding. Suggests 'Risk for Infection' (Meningitis). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - brudzinski
+      - sign
+      - positive
+    match_type: all
+    alert: Critical finding. Suggests 'Risk for Infection' (Meningitis). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - photophobia
+    match_type: all
+    alert:
+      Finding suggests 'Acute Pain' (r/t migraine) or 'Risk for Infection' (Meningitis).
+      Dim lights.
+    severity: WARNING
+  - keywords:
+      - ataxia
+      - uncoordinated
+    match_type: any
+    alert: Finding suggests 'Risk for Falls' and 'Impaired Walking'. Assess neuro status.
+    severity: WARNING
+  - keywords:
+      - diplopia
+      - double
+      - vision
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Visual) and 'Risk for Injury'.
+      Assess neuro status.
+    severity: WARNING
+  - keywords:
+      - dysphonia
+      - hoarse
+      - voice
+    match_type: any
+    alert: Finding suggests 'Impaired Verbal Communication'. Assess for 'Impaired Swallowing'.
+    severity: INFO
+  - keywords:
+      - homonymous
+      - hemianopsia
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Sensory Perception' (Visual) and 'Risk for Unilateral
+      Neglect'. Teach scanning.
+    severity: WARNING
+  - keywords:
+      - flaccid
+      - bowel
+      - bladder
+    match_type: any
+    alert:
+      Finding suggests 'Bowel Incontinence' and 'Urinary Retention' or 'Incontinence'
+      (r/t spinal cord injury).
+    severity: CRITICAL
+  - keywords:
+      - autonomic
+      - dysreflexia
+    match_type: all
+    alert:
+      Critical finding (r/t SCI). Find and remove stimulus (e.g., kinked foley,
+      impaction). Sit patient up. Assess BP.
+    severity: CRITICAL
+  - keywords:
+      - orthopnea
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Breathing Pattern' or 'Fluid Volume Excess'.
+      Specify number of pillows.
+    severity: WARNING
+  - keywords:
+      - paroxysmal
+      - nocturnal
+      - dyspnea
+      - PND
+    match_type: any
+    alert: Finding suggests 'Fluid Volume Excess' (r/t CHF). Assess lung sounds, edema.
+    severity: WARNING
+  - keywords:
+      - palpitations
+      - heart
+      - racing
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Decreased Cardiac Output' or 'Anxiety'. Assess
+      tele, VS.
+    severity: WARNING
+  - keywords:
+      - intermittent
+      - claudication
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion' (PAD). Assess
+      pedal pulses.
+    severity: WARNING
+  - keywords:
+      - dependent
+      - rubor
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion' (PAD). Assess
+      pedal pulses.
+    severity: WARNING
+  - keywords:
+      - stasis
+      - dermatitis
+    match_type: all
+    alert:
+      Finding suggests 'Ineffective Peripheral Tissue Perfusion' (PVD). Assess
+      'Risk for Impaired Skin Integrity'.
+    severity: INFO
+  - keywords:
+      - venous
+      - stasis
+      - ulcer
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity' (r/t PVD). Assess 'Ineffective
+      Peripheral Tissue Perfusion'.
+    severity: WARNING
+  - keywords:
+      - arterial
+      - ulcer
+      - punched
+      - out
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Skin Integrity' (r/t PAD). Assess 'Ineffective
+      Peripheral Tissue Perfusion'.
+    severity: CRITICAL
+  - keywords:
+      - Homan's
+      - sign
+      - positive
+    match_type: all
+    alert:
+      Unreliable finding. Do not perform. Assess for unilateral leg swelling, pain,
+      redness. Suggests 'Ineffective Peripheral Tissue Perfusion' (DVT).
+    severity: INFO
+  - keywords:
+      - ascites
+    match_type: all
+    alert:
+      Finding suggests 'Fluid Volume Excess' (r/t liver failure). Assess 'Ineffective
+      Breathing Pattern', abdomen girth.
+    severity: WARNING
+  - keywords:
+      - fluid
+      - wave
+      - test
+    match_type: all
+    alert: Finding suggests 'Fluid Volume Excess' (Ascites). Assess resp status.
+    severity: WARNING
+  - keywords:
+      - caput
+      - medusae
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Impaired Liver Function' (Portal HTN). Assess
+      for ascites, varices.
+    severity: CRITICAL
+  - keywords:
+      - esophageal
+      - varices
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Bleeding'. High risk for hemorrhage. Assess 'Risk
+      for Deficient Fluid Volume'.
+    severity: CRITICAL
+  - keywords:
+      - spider
+      - angioma
+    match_type: all
+    alert: Finding suggests 'Risk for Impaired Liver Function'. Assess LFTs.
+    severity: INFO
+  - keywords:
+      - asterixis
+      - liver
+      - flap
+    match_type: any
+    alert:
+      Finding suggests 'Acute Confusion' (Hepatic Encephalopathy). Assess ammonia
+      level.
+    severity: CRITICAL
+  - keywords:
+      - murphy's
+      - sign
+      - positive
+    match_type: all
+    alert: Finding suggests 'Acute Pain' (r/t Cholecystitis). Notify provider.
+    severity: WARNING
+  - keywords:
+      - cullen's
+      - sign
+    match_type: all
+    alert:
+      Critical finding (periumbilical bruising). Suggests 'Risk for Bleeding' (Hemorrhagic
+      pancreatitis). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - grey
+      - turner's
+      - sign
+    match_type: all
+    alert:
+      Critical finding (flank bruising). Suggests 'Risk for Bleeding' (Hemorrhagic
+      pancreatitis). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - mcburney's
+      - point
+      - tenderness
+    match_type: all
+    alert: Finding suggests 'Acute Pain' (r/t Appendicitis). Notify provider.
+    severity: WARNING
+  - keywords:
+      - costovertebral
+      - angle
+      - tenderness
+      - CVA
+    match_type: any
+    alert: Finding suggests 'Acute Pain' and 'Risk for Infection' (Pyelonephritis).
+    severity: WARNING
+  - keywords:
+      - scaphoid
+      - abdomen
+    match_type: all
+    alert:
+      "Finding (sunken abdomen). Suggests 'Imbalanced Nutrition: Less Than Body
+      Requirements'. Assess nutritional status."
+    severity: INFO
+  - keywords:
+      - visible
+      - peristalsis
+    match_type: all
+    alert:
+      Finding (esp. with distention). Suggests 'Gastrointestinal Motility Dysfunction'
+      (Obstruction). Notify provider.
+    severity: CRITICAL
+  - keywords:
+      - goiter
+      - enlarged
+      - thyroid
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Imbalanced Nutrition' or 'Risk for Ineffective
+      Airway Clearance' (if large).
+    severity: WARNING
+  - keywords:
+      - exophthalmos
+    match_type: all
+    alert:
+      Finding suggests 'Risk for Injury' (Corneal) (r/t Hyperthyroidism). Assess
+      'Risk for Disturbed Body Image'.
+    severity: WARNING
+  - keywords:
+      - moon
+      - facies
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Body Image' (r/t Cushing's/steroid use). Assess
+      'Fluid Volume Excess'.
+    severity: INFO
+  - keywords:
+      - buffalo
+      - hump
+    match_type: all
+    alert: Finding suggests 'Disturbed Body Image' (r/t Cushing's/steroid use).
+    severity: INFO
+  - keywords:
+      - hirsutism
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Body Image' (r/t endocrine issue). Assess patient's
+      coping.
+    severity: INFO
+  - keywords:
+      - striae
+      - stretch
+      - marks
+      - purple
+    match_type: any
+    alert: Finding suggests 'Disturbed Body Image' (r/t Cushing's, rapid weight change).
+    severity: INFO
+  - keywords:
+      - acanthosis
+      - nigricans
+    match_type: all
+    alert: Finding suggests 'Risk for Unstable Blood Glucose Level' (Insulin resistance).
+    severity: INFO
+  - keywords:
+      - pica
+    match_type: all
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements' (r/t
+      iron deficiency) or 'Risk for Injury'."
+    severity: WARNING
+  - keywords:
+      - polydipsia
+      - excessive
+      - thirst
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Unstable Blood Glucose Level' (Hyperglycemia)
+      or 'Deficient Fluid Volume'.
+    severity: WARNING
+  - keywords:
+      - polyphagia
+      - excessive
+      - hunger
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Unstable Blood Glucose Level' (Hyperglycemia)
+      or 'Imbalanced Nutrition'.
+    severity: INFO
+  - keywords:
+      - gynecomastia
+    match_type: all
+    alert:
+      Finding suggests 'Disturbed Body Image' (r/t hormone imbalance, liver disease,
+      medication).
+    severity: INFO
+  - keywords:
+      - testicular
+      - mass
+      - lump
+    match_type: any
+    alert: Finding suggests 'Risk for...' (e.g., Cancer). Assess 'Anxiety'. Notify provider.
+    severity: WARNING
+  - keywords:
+      - breast
+      - mass
+      - lump
+    match_type: any
+    alert: Finding suggests 'Risk for...' (e.g., Cancer). Assess 'Anxiety'. Notify provider.
+    severity: WARNING
+  - keywords:
+      - nipple
+      - discharge
+    match_type: all
+    alert:
+      Finding suggests 'Risk for...' (e.g., Cancer, hormone issue). Assess color,
+      notify provider.
+    severity: WARNING
+  - keywords:
+      - peau
+      - d'orange
+      - breast
+    match_type: all
+    alert:
+      Finding (dimpled skin). Suggests 'Risk for...' (Inflammatory breast cancer).
+      Notify provider STAT.
+    severity: CRITICAL
+  - keywords:
+      - vaginal
+      - discharge
+      - abnormal
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (e.g., STI, yeast). Assess color, odor.
+    severity: INFO
+  - keywords:
+      - urethral
+      - discharge
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (e.g., STI). Assess color, dysuria.
+    severity: INFO
+  - keywords:
+      - genital
+      - lesions
+      - vesicles
+      - warts
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' (STI) and 'Acute Pain'. Assess 'Knowledge
+      Deficit'.
+    severity: WARNING
+  - keywords:
+      - lymphadenopathy
+      - swollen
+      - lymph
+      - nodes
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' or 'Risk for...' (e.g., malignancy).
+      Assess location, tenderness.
+    severity: WARNING
+  - keywords:
+      - cachexia
+      - wasting
+      - syndrome
+    match_type: any
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements' (r/t
+      chronic disease, cancer). High 'Risk for Impaired Skin Integrity'."
+    severity: CRITICAL
+  - keywords:
+      - anorexia
+      - nervosa
+    match_type: all
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements',
+      'Disturbed Body Image', 'Risk for Decreased Cardiac Output'."
+    severity: CRITICAL
+  - keywords:
+      - bulimia
+      - nervosa
+    match_type: all
+    alert:
+      Finding suggests 'Imbalanced Nutrition', 'Risk for Deficient Fluid Volume'.
+      Assess for 'Impaired Oral Mucous Membrane'.
+    severity: WARNING
+  - keywords:
+      - binge
+      - eating
+    match_type: all
+    alert:
+      "Finding suggests 'Imbalanced Nutrition: More Than Body Requirements',
+      'Ineffective Coping'."
+    severity: INFO
+  - keywords:
+      - clubbing
+      - fingers
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Gas Exchange' (Chronic hypoxia) or 'Decreased
+      Cardiac Output' (Chronic).
+    severity: WARNING
+  - keywords:
+      - splinter
+      - hemorrhages
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (Endocarditis). Assess cardiac status.
+    severity: CRITICAL
+  - keywords:
+      - janeway
+      - lesions
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (Endocarditis). Assess cardiac status.
+    severity: CRITICAL
+  - keywords:
+      - osler
+      - nodes
+    match_type: all
+    alert: Finding suggests 'Risk for Infection' (Endocarditis). Assess cardiac status.
+    severity: CRITICAL
+  - keywords:
+      - splenomegaly
+      - enlarged
+      - spleen
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Infection' or 'Risk for Bleeding'. Assess for
+      'Acute Pain'.
+    severity: WARNING
+  - keywords:
+      - hepatomegaly
+      - enlarged
+      - liver
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Liver Function'. Assess for jaundice,
+      ascites.
+    severity: WARNING
+  - keywords:
+      - kyphosis
+      - hunchback
+    match_type: any
+    alert:
+      Finding suggests 'Impaired Physical Mobility', 'Risk for Falls', 'Risk for
+      Ineffective Breathing Pattern'.
+    severity: INFO
+  - keywords:
+      - lordosis
+      - swayback
+    match_type: any
+    alert: Finding suggests 'Chronic Pain' (Back). Assess mobility.
+    severity: INFO
+  - keywords:
+      - scoliosis
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Physical Mobility', 'Chronic Pain', 'Risk for
+      Ineffective Breathing Pattern' (if severe).
+    severity: INFO
+  - keywords:
+      - gout
+      - tophi
+    match_type: any
+    alert:
+      Finding suggests 'Acute Pain' or 'Chronic Pain'. Assess 'Impaired Physical
+      Mobility'.
+    severity: WARNING
+  - keywords:
+      - bunion
+    match_type: all
+    alert: Finding suggests 'Acute Pain' and 'Impaired Walking'. Assess 'Risk for Falls'.
+    severity: INFO
+  - keywords:
+      - hammer
+      - toe
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Walking' and 'Risk for Impaired Skin Integrity'
+      (on toe).
+    severity: INFO
+  - keywords:
+      - callus
+      - corn
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Skin Integrity'. Assess footwear, esp.
+      in diabetics.
+    severity: INFO
+  - keywords:
+      - ingrown
+      - toenail
+    match_type: all
+    alert:
+      Finding suggests 'Acute Pain' and 'Risk for Infection'. Assess 'Knowledge
+      Deficit' (nail care).
+    severity: INFO
+  - keywords:
+      - fungal
+      - nails
+      - onychomycosis
+    match_type: any
+    alert: Finding suggests 'Risk for Infection'. Assess 'Self-Care Deficit'.
+    severity: INFO
+  - keywords:
+      - pitting
+      - nails
+    match_type: all
+    alert: Finding suggests 'Disturbed Body Image' (r/t psoriasis).
+    severity: INFO
+  - keywords:
+      - koilonychia
+      - spoon
+      - nails
+    match_type: any
+    alert: Finding suggests 'Imbalanced Nutrition' (Iron deficiency).
+    severity: INFO
+  - keywords:
+      - beau's
+      - lines
+      - nails
+    match_type: all
+    alert: Finding suggests 'Imbalanced Nutrition' or recent systemic illness.
+    severity: INFO
+  - keywords:
+      - hair
+      - loss
+      - alopecia
+    match_type: any
+    alert:
+      Finding suggests 'Disturbed Body Image'. Assess cause (e.g., stress, chemo,
+      autoimmune).
+    severity: INFO
+  - keywords:
+      - hirsutism
+    match_type: all
+    alert:
+      Finding (excessive hair). Suggests 'Disturbed Body Image' (r/t endocrine
+      issue, e.g., PCOS).
+    severity: INFO
+  - keywords:
+      - brittle
+      - hair
+      - dry
+    match_type: any
+    alert: "Finding suggests 'Imbalanced Nutrition: Less Than Body Requirements'."
+    severity: INFO
+  - keywords:
+      - lice
+      - pediculosis
+    match_type: any
+    alert:
+      Finding suggests 'Risk for Impaired Skin Integrity' (from scratching). Implement
+      contact precautions.
+    severity: INFO
+  - keywords:
+      - scabies
+    match_type: all
+    alert:
+      Finding suggests 'Impaired Skin Integrity' and 'Acute Pain' (itching). Implement
+      contact precautions.
+    severity: WARNING
+>>>>>>> 1d71399172651e49e459f7607c0804cd69b0b076

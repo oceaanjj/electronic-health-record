@@ -19,19 +19,21 @@
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
         <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form"
-            data-analyze-url="{{ route('physical-exam.analyze-field') }}">
+            data-analyze-url="{{ route('physical-exam.analyze-field') }}"
+            data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}" data-alert-height-class="h-[90px]">
             @csrf
+
             <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
                     <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
 
-                        <div class="w-[68%] rounded-[15px] overflow-hidden">
+                        <div class="w-[68%] rounded-[15px] overflow-hidden mr-1">
                             <table class="w-full border-separate border-spacing-0">
                                 <tr>
-                                    <th class="w-[20%] bg-dark-green py-2 text-white rounded-tl-lg">SYSTEM</th>
-                                    <th class="w-[45%] bg-dark-green py-2 text-white rounded-tr-lg">FINDINGS</th>
+                                    <th class="w-[20%] main-header py-2 text-white rounded-tl-lg">SYSTEM</th>
+                                    <th class="w-[45%] main-header py-2 text-white rounded-tr-lg">FINDINGS</th>
                                 </tr>
 
                                 {{-- GENERAL APPEARANCE --}}
@@ -127,7 +129,7 @@
 
                         {{-- ALERTS TABLE--}}
                         <div class="w-[25%] rounded-[15px] overflow-hidden">
-                            <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                            <div class="main-header text-white font-bold py-2 mb-1 text-center rounded-[15px]">
                                 ALERTS
                             </div>
                             <table class="w-full border-collapse">
@@ -179,15 +181,9 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/patient-loader.js', 'resources/js/searchable-dropdown.js'])
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cdssForm = document.querySelector('.cdss-form');
-            if (cdssForm && window.initializeCdssForForm) {
-                window.initializeCdssForForm(cdssForm);
-                window.triggerInitialCdssAnalysis(cdssForm);
-            }
-        });
-    </script>
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/patient-loader.js',
+        'resources/js/searchable-dropdown.js'
+    ])
 @endpush

@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\ModelNotFoundException; // <-- Import this
-use Illuminate\Support\Facades\Log; // <-- Import this for logging errors
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class PatientController extends Controller
@@ -83,29 +83,29 @@ class PatientController extends Controller
 
         try {
             $data['user_id'] = Auth::id();
-            
+
             // Filter out empty contact values and ensure proper array structure
             if (isset($data['contact_name'])) {
-                $data['contact_name'] = array_filter($data['contact_name'], function($value) {
+                $data['contact_name'] = array_filter($data['contact_name'], function ($value) {
                     return !empty($value);
                 });
                 $data['contact_name'] = !empty($data['contact_name']) ? array_values($data['contact_name']) : null;
             }
-            
+
             if (isset($data['contact_relationship'])) {
-                $data['contact_relationship'] = array_filter($data['contact_relationship'], function($value) {
+                $data['contact_relationship'] = array_filter($data['contact_relationship'], function ($value) {
                     return !empty($value);
                 });
                 $data['contact_relationship'] = !empty($data['contact_relationship']) ? array_values($data['contact_relationship']) : null;
             }
-            
+
             if (isset($data['contact_number'])) {
-                $data['contact_number'] = array_filter($data['contact_number'], function($value) {
+                $data['contact_number'] = array_filter($data['contact_number'], function ($value) {
                     return !empty($value);
                 });
                 $data['contact_number'] = !empty($data['contact_number']) ? array_values($data['contact_number']) : null;
             }
-            
+
             $patient = Patient::create($data);
 
             // Log patient creation
@@ -166,26 +166,26 @@ class PatientController extends Controller
         try {
             // Filter out empty contact values and ensure proper array structure
             if (isset($data['contact_name'])) {
-                $data['contact_name'] = array_filter($data['contact_name'], function($value) {
+                $data['contact_name'] = array_filter($data['contact_name'], function ($value) {
                     return !empty($value);
                 });
                 $data['contact_name'] = !empty($data['contact_name']) ? array_values($data['contact_name']) : null;
             }
-            
+
             if (isset($data['contact_relationship'])) {
-                $data['contact_relationship'] = array_filter($data['contact_relationship'], function($value) {
+                $data['contact_relationship'] = array_filter($data['contact_relationship'], function ($value) {
                     return !empty($value);
                 });
                 $data['contact_relationship'] = !empty($data['contact_relationship']) ? array_values($data['contact_relationship']) : null;
             }
-            
+
             if (isset($data['contact_number'])) {
-                $data['contact_number'] = array_filter($data['contact_number'], function($value) {
+                $data['contact_number'] = array_filter($data['contact_number'], function ($value) {
                     return !empty($value);
                 });
                 $data['contact_number'] = !empty($data['contact_number']) ? array_values($data['contact_number']) : null;
             }
-            
+
             // Find patient, even if inactive
             $patient = Patient::withTrashed()->findOrFail($id);
             $patient->update($data);

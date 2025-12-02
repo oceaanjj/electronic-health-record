@@ -13,7 +13,7 @@ use Throwable;
 
 class DiagnosticsController extends Controller
 {
-    /** Select patient and store in session */
+    // Select patient and store in session 
     public function selectPatient(Request $request)
     {
         $patientId = $request->input('patient_id');
@@ -21,7 +21,7 @@ class DiagnosticsController extends Controller
         return redirect()->route('diagnostics.index');
     }
 
-    /** Show diagnostics page */
+    //Show diagnostics page
     public function index(Request $request)
     {
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
@@ -49,7 +49,7 @@ class DiagnosticsController extends Controller
         return view('diagnostics', compact('patients', 'selectedPatient', 'images', 'patientId'));
     }
 
-    /** Handle upload of diagnostic images */
+    // Handle upload of diagnostic images 
     public function submit(Request $request)
     {
         $request->validate([
@@ -105,7 +105,7 @@ class DiagnosticsController extends Controller
             ->with('success', "Success! $filesSaved file(s) uploaded successfully.");
     }
 
-    /** Delete diagnostic image */
+    // Delete diagnostic image 
     public function destroy($id)
     {
         try {
@@ -132,7 +132,7 @@ class DiagnosticsController extends Controller
         }
     }
 
-    /** Delete all diagnostic images for a given type and patient */
+    // Delete all diagnostic images for a given type and patient
     public function destroyAll(Request $request, $type, $patient_id)
     {
         try {

@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    // /* The `` array in the `HomeController` class is used to define which session
+    //  The `` array in the `HomeController` class is used to define which session
     // data should be cleared every time the nurse goes back to the `nurse-home` page. Each key in the
     // array corresponds to a specific route, and the associated value is an array of session keys that
-    // should be cleared when that route is accessed. */
+    // should be cleared when that route is accessed.
     // forget (clear) the session everytime the nurse go back to nurse-home page
     private $NurseSessionKeyMap = [
         //route   => (session data u want to clear)
@@ -29,11 +29,10 @@ class HomeController extends Controller
         'discharge-planning' => ['selected_patient_id'],
     ];
 
-    //   /**
-//    * The function `handleHomeRedirect` checks the user's role and redirects them to specific home pages
+    //    * The function `handleHomeRedirect` checks the user's role and redirects them to specific home pages
 //    * based on their role, logging out the user if the role is not recognized.
-//    * 
-//    * @return The `handleHomeRedirect` function is returning a redirect response based on the user's
+//    
+//    * The `handleHomeRedirect` function is returning a redirect response based on the user's
 //    * role. If the user is authenticated, it checks the user's role and redirects them to a specific
 //    * route based on their role (Nurse, Doctor, Admin). If the user's role does not match any of these
 //    * cases, it logs the user out and redirects them to the default 'home' route. If
@@ -78,10 +77,8 @@ class HomeController extends Controller
         return view('admin.home', compact('users'));
     }
 
-    //   /**
-//    * The function clears specific session keys based on a given form name and then redirects to the
-//    * nurse home route.
-//    * 
+
+    //    * The function clears specific session keys based on a given form name and then redirects to the nurse home route.
 //    * @param Request request The `` parameter in the `clearSessionAndRedirect` function is an
 //    * instance of the `Illuminate\Http\Request` class. It represents the current HTTP request and
 //    * contains information about the request such as input data, headers, and more.
@@ -91,8 +88,7 @@ class HomeController extends Controller
 //    * 
 //    * @return The `clearSessionAndRedirect` function is returning a redirect response to the
 //    * 'nurse-home' route after clearing specific keys from the session based on the provided
-//    * ``.
-//    */
+
     public function clearSessionAndRedirect(Request $request, $formName)
     {
         $keysToClear = $this->sessionKeyMap[$formName] ?? [];

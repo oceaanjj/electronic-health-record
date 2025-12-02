@@ -68,7 +68,7 @@ class VitalSignsComponent implements AdpieComponentInterface
 
         $diagnosisAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
             $diagnosisAlert = strip_tags($message);
         }
 
@@ -119,7 +119,7 @@ class VitalSignsComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $planningAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
             $planningAlert = strip_tags($message);
         }
 
@@ -160,7 +160,7 @@ class VitalSignsComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $interventionAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
             $interventionAlert = strip_tags($message);
         }
 
@@ -201,7 +201,7 @@ class VitalSignsComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $evaluationAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
             $evaluationAlert = strip_tags($message);
         }
 

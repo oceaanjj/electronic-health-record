@@ -47,7 +47,6 @@ class PatientFactory extends Factory
             'middle_name' => $this->faker->firstName(),
             'age' => $age,
             'birthdate' => $birthdate,
-
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'address' => $this->faker->address(),
             'birthplace' => $this->faker->city(),

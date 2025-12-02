@@ -127,7 +127,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
 
         $diagnosis->update([
             'planning' => $planningText,
-            'planning_alert' => $planningAlert, // Now plain text or null
+            'planning_alert' => $planningAlert,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -166,7 +166,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
 
         $diagnosis->update([
             'intervention' => $interventionText,
-            'intervention_alert' => $interventionAlert, // Now plain text or null
+            'intervention_alert' => $interventionAlert,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {

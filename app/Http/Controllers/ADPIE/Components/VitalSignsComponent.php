@@ -49,34 +49,31 @@ class VitalSignsComponent implements AdpieComponentInterface
         ]);
     }
 
+
+
     public function storeDiagnosis(Request $request, string $component, $id)
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
-        
+
         $patient = Patient::findOrFail($id);
-        
-        // Get findings from the request
-        $findings = $request->input('findings', []);
 
         $nurseInput = [
             'diagnosis' => $request->input('diagnosis'),
         ];
 
-        // Generate recommendations using CDSS service
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $findings,
-            $nurseInput,
-            $patient
-        );
+        $diagnosisText = $request->input('diagnosis');
 
-        $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
 
-        // Find the latest vitals record for the patient to associate with the diagnosis
+
+        $diagnosisAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $diagnosisAlert = strip_tags($alertObject->message);
+        }
+
+
         $latestVitals = Vitals::where('patient_id', $patient->patient_id)->latest()->first();
 
-        // Create or update diagnosis record
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
                 'vitals_id' => $latestVitals ? $latestVitals->id : null,
@@ -85,7 +82,6 @@ class VitalSignsComponent implements AdpieComponentInterface
                 'patient_id' => $patient->patient_id,
                 'diagnosis' => $nurseInput['diagnosis'],
                 'diagnosis_alert' => $diagnosisAlert,
-                'rule_file_path' => $ruleFilePath,
             ]
         );
 
@@ -114,31 +110,20 @@ class VitalSignsComponent implements AdpieComponentInterface
         $request->validate(['planning' => 'required|string|max:1000']);
 
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        $planningText = $request->input('planning');
 
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $request->input('planning'),
-            'intervention' => $diagnosis->intervention,
-            'evaluation' => $diagnosis->evaluation,
-        ];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzePlanning($component, $planningText);
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $planningAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        // Check if the object and property exist before stripping html tags
+        $planningAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $planningAlert = strip_tags($alertObject->message);
+        }
 
         $diagnosis->update([
-            'planning' => $nurseInput['planning'],
-            'planning_alert' => $planningAlert,
-            'rule_file_path' => $ruleFilePath,
+            'planning' => $planningText,
+            'planning_alert' => $planningAlert, // Now plain text or null
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -166,29 +151,19 @@ class VitalSignsComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
         $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        $interventionText = $request->input('intervention');
 
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $diagnosis->planning,
-            'intervention' => $request->input('intervention'),
-            'evaluation' => $diagnosis->evaluation,
-        ];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $interventionText);
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $interventionAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        // Check if the object and property exist before stripping html tags
+        $interventionAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $interventionAlert = strip_tags($alertObject->message);
+        }
 
         $diagnosis->update([
-            'intervention' => $nurseInput['intervention'],
+            'intervention' => $interventionText,
             'intervention_alert' => $interventionAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -216,29 +191,19 @@ class VitalSignsComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
         $patient = $diagnosis->patient;
 
-        $componentData = $this->getComponentData($request, $patient);
+        $evaluationText = $request->input('evaluation');
 
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $diagnosis->planning,
-            'intervention' => $diagnosis->intervention,
-            'evaluation' => $request->input('evaluation'),
-        ];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $evaluationText);
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $evaluationAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        // Check if the object and property exist before stripping html tags
+        $evaluationAlert = null;
+        if ($alertObject && property_exists($alertObject, 'message')) {
+            $evaluationAlert = strip_tags($alertObject->message);
+        }
 
         $diagnosis->update([
-            'evaluation' => $nurseInput['evaluation'],
-            'evaluation_alert' => $evaluationAlert,
-            'rule_file_path' => $ruleFilePath,
+            'evaluation' => $evaluationText,
+            'evaluation_alert' => $evaluationAlert, // Now plain text or null
         ]);
 
         return redirect()->route('vital-signs.show')

@@ -73,7 +73,13 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
             $patient
         );
 
-        $diagnosisAlert = $generatedRules['alerts'][0]['alert'] ?? null;
+        $diagnosisAlerts = collect($generatedRules['alerts'] ?? [])
+            ->pluck('alert')
+            ->filter()
+            ->map(fn($alert) => '- ' . $alert)
+            ->implode("\n");
+
+        $diagnosisAlert = empty($diagnosisAlerts) ? null : $diagnosisAlerts;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
@@ -144,7 +150,13 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
             $patient
         );
 
-        $planningAlert = $generatedRules['alerts'][0]['alert'] ?? null;
+        $planningAlerts = collect($generatedRules['alerts'] ?? [])
+            ->pluck('alert')
+            ->filter()
+            ->map(fn($alert) => '- ' . $alert)
+            ->implode("\n");
+
+        $planningAlert = empty($planningAlerts) ? null : $planningAlerts;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
         $diagnosis->update([
@@ -206,7 +218,13 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
             $patient
         );
 
-        $interventionAlert = $generatedRules['alerts'][0]['alert'] ?? null;
+        $interventionAlerts = collect($generatedRules['alerts'] ?? [])
+            ->pluck('alert')
+            ->filter()
+            ->map(fn($alert) => '- ' . $alert)
+            ->implode("\n");
+
+        $interventionAlert = empty($interventionAlerts) ? null : $interventionAlerts;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
         $diagnosis->update([
@@ -268,7 +286,13 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
             $patient
         );
 
-        $evaluationAlert = $generatedRules['alerts'][0]['alert'] ?? null;
+        $evaluationAlerts = collect($generatedRules['alerts'] ?? [])
+            ->pluck('alert')
+            ->filter()
+            ->map(fn($alert) => '- ' . $alert)
+            ->implode("\n");
+
+        $evaluationAlert = empty($evaluationAlerts) ? null : $evaluationAlerts;
         $ruleFilePath = $generatedRules['rule_file_path'];
 
         $diagnosis->update([

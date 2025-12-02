@@ -77,7 +77,8 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $diagnosisAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $diagnosisAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $diagnosisAlert = strip_tags($message);
         }
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
@@ -122,7 +123,8 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $planningAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $planningAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $planningAlert = strip_tags($message);
         }
 
         $diagnosis->update([
@@ -161,7 +163,8 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $interventionAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $interventionAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $interventionAlert = strip_tags($message);
         }
 
         $diagnosis->update([
@@ -200,7 +203,8 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $evaluationAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $evaluationAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['- ', "\n"], $alertObject->message);
+            $evaluationAlert = strip_tags($message);
         }
 
         $diagnosis->update([

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
-use App\Services\LabValuesCdssService;
+use App\Services\LabValuesCdssService; 
 use App\Models\LabValues;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Carbon\Carbon; 
 
 class LabValuesController extends Controller
 {
@@ -16,7 +16,7 @@ class LabValuesController extends Controller
     {
         $patientId = $request->input('patient_id');
         $request->session()->put('selected_patient_id', $patientId);
-        return redirect()->route('lab-values.index');
+        return redirect()->route('lab-values.index'); 
     }
 
     public function show(Request $request)
@@ -36,11 +36,11 @@ class LabValuesController extends Controller
                 $ageGroup = $cdssService->getAgeGroup($selectedPatient);
 
                 if ($labValue) {
-                    $alerts = $cdssService->runLabCdss($labValue, $ageGroup);
+                    $alerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
                 }
             } else {
-                $request->session()->forget('selected_patient_id');
-                return redirect()->route('lab-values.index')->with('error', 'Selected patient not found or not authorized.');
+                 $request->session()->forget('selected_patient_id');
+                 return redirect()->route('lab-values.index')->with('error', 'Selected patient not found or not authorized.');
             }
         }
 
@@ -58,7 +58,7 @@ class LabValuesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+         $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
         ], [
             'patient_id.required' => 'Please choose a patient first.',
@@ -104,8 +104,8 @@ class LabValuesController extends Controller
         ]);
 
         $cdssService = new LabValuesCdssService();
-        $ageGroup = $cdssService->getAgeGroup($patient);
-        $alerts = $cdssService->runLabCdss((object) $data, $ageGroup);
+        $ageGroup = $this->getAgeGroup($patient);
+        $alerts = $this->runLabCdss((object) $data, $cdssService, $ageGroup);
 
         // Add alerts to the data array
         foreach ($alerts as $key => $alertInfo) {
@@ -132,8 +132,15 @@ class LabValuesController extends Controller
 
         $request->session()->put('selected_patient_id', $data['patient_id']);
 
+        if ($request->input('action') == 'save_and_diagnose') {
+            return redirect()->route('nursing-diagnosis.start', [
+                'component' => 'lab-values',
+                'id' => $labValue->id
+            ]);
+        }
+
         // Re-run CDSS to get severity for the view
-        $viewAlerts = $cdssService->runLabCdss($labValue, $cdssService, $ageGroup);
+        $viewAlerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
 
         return redirect()->route('lab-values.index')
             ->with('alerts', $viewAlerts)
@@ -190,118 +197,58 @@ class LabValuesController extends Controller
         return response()->json($alert);
     }
 
-<<<<<<< HEAD
-    public function runCdssAnalysis(Request $request)
-=======
-
-    // new 
-    public function runBatchCdssAnalysis(Request $request)
+    private function runLabCdss($labValue, $cdssService, $ageGroup)
     {
-        $data = $request->validate([
-            'batch' => 'required|array',
-            'batch.*.fieldName' => 'required|string',
-            'batch.*.finding' => 'nullable|numeric', // Lab values are numeric
-        ]);
-
-        // This endpoint requires a patient to be in the session
-        $patientId = $request->session()->get('selected_patient_id');
-        if (!$patientId) {
-            return response()->json([], 400); // Return empty array if no patient
-        }
-
-        $patient = Auth::user()->patients()->find($patientId);
-        if (!$patient) {
-            return response()->json([], 403); // Not authorized
-        }
-
-        $cdssService = new LabValuesCdssService();
-        $ageGroup = $cdssService->getAgeGroup($patient);
-
-        // Map fieldName to the parameter expected by checkLabResult
-        $labParamMap = [
-            'wbc_result' => 'wbc',
-            'rbc_result' => 'rbc',
-            'hgb_result' => 'hgb',
-            'hct_result' => 'hct',
-            'platelets_result' => 'platelets',
-            'mcv_result' => 'mcv',
-            'mch_result' => 'mch',
-            'mchc_result' => 'mchc',
-            'rdw_result' => 'rdw',
-            'neutrophils_result' => 'neutrophils',
-            'lymphocytes_result' => 'lymphocytes',
-            'monocytes_result' => 'monocytes',
-            'eosinophils_result' => 'eosinophils',
-            'basophils_result' => 'basophils',
+        $alerts = [];
+        $lab = [
+            'wbc' => 'wbc_result',
+            'rbc' => 'rbc_result',
+            'hgb' => 'hgb_result',
+            'hct' => 'hct_result',
+            'platelets' => 'platelets_result',
+            'mcv' => 'mcv_result',
+            'mch' => 'mch_result',
+            'mchc' => 'mchc_result',
+            'rdw' => 'rdw_result',
+            'neutrophils' => 'neutrophils_result',
+            'lymphocytes' => 'lymphocytes_result',
+            'monocytes' => 'monocytes_result',
+            'eosinophils' => 'eosinophils_result',
+            'basophils' => 'basophils_result',
         ];
 
-        $results = [];
-
-        foreach ($data['batch'] as $item) {
-            $param = $labParamMap[$item['fieldName']] ?? null;
-            $value = $item['finding'];
-
-            if ($param && $value !== null) {
-                $alert = $cdssService->checkLabResult($param, $value, $ageGroup);
-            } else {
-                $alert = ['alert' => '', 'severity' => LabValuesCdssService::NONE];
-            }
-            $results[] = $alert;
-        }
-
-        return response()->json($results);
-    }
-
-
-
-
-    private function runLabCdss($labValue, $cdssService, $ageGroup)
->>>>>>> 1d71399172651e49e459f7607c0804cd69b0b076
-    {
-        $validatedData = $request->validate([
-            'patient_id' => 'required|exists:patients,patient_id',
-        ]);
-
-<<<<<<< HEAD
-        $patient = Patient::findOrFail($validatedData['patient_id']);
-        $cdssService = new LabValuesCdssService();
-        $ageGroup = $cdssService->getAgeGroup($patient);
-        $results = $cdssService->runLabCdss((object) $request->all(), $ageGroup);
-
-        $findings = [];
-        foreach ($results as $alertInfo) {
-            if (isset($alertInfo[0]['text']) && $alertInfo[0]['severity'] !== LabValuesCdssService::NONE) {
-                $findings[] = $alertInfo[0]['text'];
-=======
         foreach ($lab as $param => $field) {
             if (property_exists($labValue, $field) && $labValue->$field !== null) {
-                $result = $cdssService->checkLabResult($param, $labValue->$field, $ageGroup);
-                if ($result['severity'] !== LabValuesCdssService::NONE) {
+                 $result = $cdssService->checkLabResult($param, $labValue->$field, $ageGroup);
+                 if ($result['severity'] !== LabValuesCdssService::NONE) {
                     $alerts[$param . '_alerts'][] = [
                         'text' => $result['alert'],
                         'severity' => $result['severity'],
                     ];
-                } else {
-                    $alerts[$param . '_alerts'][] = [
-                        'text' => $result['alert'],
-                        'severity' => $result['severity'],
+                 } else {
+                     $alerts[$param . '_alerts'][] = [
+                        'text' => $result['alert'], 
+                        'severity' => $result['severity'], 
                     ];
-                }
->>>>>>> 1d71399172651e49e459f7607c0804cd69b0b076
+                 }
             }
         }
+        return $alerts;
+    }
 
-        $labValue = LabValues::firstOrCreate(
-            ['patient_id' => $validatedData['patient_id']],
-            $request->all()
-        );
+    /**
+     * Converts a patient's date_of_birth into the correct age group string.
+     * Ito ang mas preferred na method.
+     *
+     * @param \App\Models\Patient $patient
+     * @return string
+     */
+    private function getAgeGroup(Patient $patient): string
+    {
+        if (empty($patient->date_of_birth)) {
+            return $this->getAgeGroupFromInteger($patient->age ?? 0);
+        }
 
-<<<<<<< HEAD
-        return redirect()->route('nursing-diagnosis.start', [
-            'component' => 'lab-values',
-            'id' => $labValue->id
-        ])->with('findings', $findings);
-=======
         try {
             $dob = Carbon::parse($patient->date_of_birth);
             $now = Carbon::now();
@@ -322,7 +269,7 @@ class LabValuesController extends Controller
             if ($ageInYears <= 18) {
                 return 'adolescent';
             }
-            return 'adult';
+            return 'adult'; 
 
         } catch (\Exception $e) {
             Log::error("Error parsing date_of_birth for patient ID {$patient->patient_id}: " . $e->getMessage());
@@ -335,20 +282,19 @@ class LabValuesController extends Controller
      */
     private function getAgeGroupFromInteger(int $ageInYears): string
     {
-        if ($ageInYears === 0) {
-            Log::warning("Cannot accurately determine age group for patient with age 0 years. Assuming 'infant'.");
-            return 'infant';
-        }
+         if ($ageInYears === 0) {
+             Log::warning("Cannot accurately determine age group for patient with age 0 years. Assuming 'infant'.");
+             return 'infant';
+         }
         if ($ageInYears < 2) {
             return 'infant';
         }
-        if ($ageInYears < 12) {
+        if ($ageInYears < 12) { 
             return 'child';
         }
-        if ($ageInYears <= 18) {
+        if ($ageInYears <= 18) { 
             return 'adolescent';
         }
-        return 'adult';
->>>>>>> 1d71399172651e49e459f7607c0804cd69b0b076
+        return 'adult'; 
     }
 }

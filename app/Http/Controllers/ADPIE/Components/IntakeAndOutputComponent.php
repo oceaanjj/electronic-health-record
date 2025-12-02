@@ -76,7 +76,7 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         $diagnosisAlerts = collect($generatedRules['alerts'] ?? [])
             ->pluck('alert')
             ->filter()
-            ->map(fn($alert) => '- ' . $alert)
+            ->map(fn($alert) => '— ' . $alert)
             ->implode("\n");
 
         $diagnosisAlert = empty($diagnosisAlerts) ? null : $diagnosisAlerts;
@@ -153,7 +153,7 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         $planningAlerts = collect($generatedRules['alerts'] ?? [])
             ->pluck('alert')
             ->filter()
-            ->map(fn($alert) => '- ' . $alert)
+            ->map(fn($alert) => '— ' . $alert)
             ->implode("\n");
 
         $planningAlert = empty($planningAlerts) ? null : $planningAlerts;
@@ -221,7 +221,7 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         $interventionAlerts = collect($generatedRules['alerts'] ?? [])
             ->pluck('alert')
             ->filter()
-            ->map(fn($alert) => '- ' . $alert)
+            ->map(fn($alert) => '— ' . $alert)
             ->implode("\n");
 
         $interventionAlert = empty($interventionAlerts) ? null : $interventionAlerts;
@@ -289,7 +289,7 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         $evaluationAlerts = collect($generatedRules['alerts'] ?? [])
             ->pluck('alert')
             ->filter()
-            ->map(fn($alert) => '- ' . $alert)
+            ->map(fn($alert) => '— ' . $alert)
             ->implode("\n");
 
         $evaluationAlert = empty($evaluationAlerts) ? null : $evaluationAlerts;

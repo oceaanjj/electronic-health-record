@@ -142,10 +142,10 @@ class ActOfDailyLivingController extends Controller
         $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
         $adlData = null;
         $selectedPatient = null;
-        $totalDaysSinceAdmission = 1; // Default
-        $currentDate = now()->format('Y-m-d');
-        $currentDayNo = 1;
-        $alerts = [];
+        $currentDate = now()->format('Y-m-d'); // Default
+        $currentDayNo = 1; // Default
+        $alerts = []; // Initialize alerts array
+        $totalDaysSinceAdmission = 0;
 
         $patientId = $request->session()->get('selected_patient_id');
 
@@ -191,8 +191,8 @@ class ActOfDailyLivingController extends Controller
             'selectedPatient' => $selectedPatient,
             'currentDate' => $currentDate,
             'currentDayNo' => $currentDayNo,
-            'alerts' => $alerts,
-            'totalDaysSinceAdmission' => $totalDaysSinceAdmission, // Pass this
+            'alerts' => $alerts, // Pass alerts to the view
+            'totalDaysSinceAdmission' => $totalDaysSinceAdmission,
         ]);
     }
 

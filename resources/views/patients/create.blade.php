@@ -178,6 +178,10 @@
                                     class="w-full text-base px-4 py-2 rounded-lg shadow-sm pr-5 js-error-field outline-none border border-gray-300
                                         transition duration-150 ease-in-out cursor-not-allowed" placeholder="Age" readonly>
                             </div>
+
+                            <p class="mt-1 text-xs text-gray-400 flex items-center gap-1 js-error-message"> {{-- Added js-error-message --}}
+                                    Please select a birthdate to compute age.
+                            </p>
                         </div>
                     {{-- ** end age ** --}}
 
@@ -417,16 +421,51 @@
 
 
                     <div class="flex gap-2 items-end">
-                        <div class="flex-1">
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
-                            
-                            <div class="flex-1"> 
-                                <input type="tel" name="contact_number[]"
-                                    class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
-                                        outline-none focus:ring-green-200 focus:border-green-500 transition duration-150 ease-in-out placeholder-gray-400"
-                                    placeholder="e.g. 0912-345-6789" autocomplete="tel">
-                            </div>
-                        </div>
+                        <div class="flex-1 col-span-1">
+    <div class="js-error-parent"> 
+        
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+        
+        <div class="relative js-error-container"> 
+            
+            <input type="tel" name="contact_number[]"
+                {{-- 💡 FIX: Use the safe index '0' for the first template element --}}
+                value="{{ old('contact_number.0') }}"
+                data-server-message="{{ $errors->first('contact_number.0') }}" 
+                
+                class="w-full text-base px-4 py-2 rounded-lg shadow-sm pr-10 js-error-field
+                    @error('contact_number.0') 
+                        outline-none
+                        border-2 border-red-500 has-server-error 
+                        focus:ring-red-500 focus:border-red-500
+                    @else 
+                        {{-- ** para bumalik sa green kemerut ** --}} 
+                        outline-none border border-gray-300 
+                        focus:ring-green-200 focus:border-green-500 
+                    @enderror
+                    transition duration-150 ease-in-out placeholder-gray-400"
+                placeholder="e.g. 0912-345-6789" autocomplete="tel">
+
+            {{-- Error Icon Display --}}
+            @error('contact_number.0')
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none js-error-icon">
+                    <span class="material-symbols-outlined text-red-500 text-lg"> 
+                        error
+                    </span>
+                </div>
+            @enderror
+        </div>
+
+        {{-- Error Message Display --}}
+        @error('contact_number.0')
+            <p class="mt-1 text-xs text-red-600 flex items-center gap-1 js-error-message"> 
+                {{ $message }}
+            </p>
+        @enderror
+        
+    </div>
+</div>
+                        
                         
                         <button type="button"
                             class="remove-contact hidden text-red-600 font-bold hover:text-red-800 p-2 leading-none">
@@ -439,8 +478,6 @@
                 </div>
         </div>
 </div>
-
-
 
             <div class="flex justify-end items-center mt-10 space-x-4">
                 <button type="button" onclick="window.history.back()" class="button-default">BACK</button>
@@ -455,65 +492,95 @@
         @vite(['resources/js/compute-age.js'])
 
         <script>
-            document.getElementById('add-contact').addEventListener('click', function() {
-                const container = document.getElementById('contact-container');
-                const entry = container.querySelector('.contact-entry'); 
-                const clone = entry.cloneNode(true);
+            const ERROR_BORDER_CLASSES = ['border-2', 'border-red-500', 'focus:ring-red-500', 'focus:border-red-500', 'has-server-error'];
+            const DEFAULT_BORDER_CLASSES = ['border', 'border-gray-300', 'focus:ring-green-200', 'focus:border-green-500'];
+            const ALLOWED_CHARS_REGEX = /^[0-9\-\s\(\)]*$/;
 
-                clone.querySelectorAll('input').forEach(input => input.value = '');
-                clone.querySelector('.remove-contact').classList.remove('hidden'); 
-                container.appendChild(clone);
-            });
+            const iconTemplate = `
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none js-error-icon">
+                    <span class="material-symbols-outlined text-red-500 text-lg">
+                        error
+                    </span>
+                </div>
+            `;
 
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-contact')) {
-                    e.target.closest('.contact-entry').remove();
-                }
-            });
-            
-            // --- dropdown handling ( customize ) ---
-            document.addEventListener('DOMContentLoaded', function() {
+            const messageTemplate = (message) => `
+                <p class="mt-1 text-xs text-red-600 flex items-center gap-1 js-error-message">
+                    ${message}
+                </p>
+            `;
+
+
+            function updateErrorState(input, isError, message = "This field is required.") {
+                const container = input.closest('.col-span-6') || input.closest('.js-error-parent');
+                const relativeWrapper = input.closest('.js-error-container');
                 
-                const errorFields = document.querySelectorAll('.js-error-field.has-server-error');
+                let errorMessage = container ? container.querySelector('.js-error-message') : null;
+                let errorIcon = relativeWrapper ? relativeWrapper.querySelector('.js-error-icon') : null;
 
-                const ERROR_BORDER_CLASSES = ['border-2', 'border-red-500', 'focus:ring-red-500', 'focus:border-red-500', 'has-server-error'];
-                const DEFAULT_BORDER_CLASSES = ['border', 'border-gray-300', 'focus:ring-green-200', 'focus:border-green-500'];
-                
-                const iconTemplate = `
-                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none js-error-icon">
-                        <span class="material-symbols-outlined text-red-500 text-lg">
-                            error
-                        </span>
-                    </div>
-                `;
+                if (errorMessage) errorMessage.remove();
+                if (errorIcon) errorIcon.remove();
+                input.classList.remove(...ERROR_BORDER_CLASSES, ...DEFAULT_BORDER_CLASSES);
 
-                const messageTemplate = (message) => `
-                    <p class="mt-1 text-xs text-red-600 flex items-center gap-1 js-error-message">
-                        ${message}
-                    </p>
-                `;
-
-                function updateErrorState(input, isError, message = "This field is required.") {
-                    const container = input.closest('.col-span-6');
-                    const relativeWrapper = input.closest('.js-error-container');
-                    let errorMessage = container.querySelector('.js-error-message');
-                    let errorIcon = relativeWrapper ? relativeWrapper.querySelector('.js-error-icon') : null;
-
-                    if (errorMessage) errorMessage.remove();
-                    if (errorIcon) errorIcon.remove();
-
-                    input.classList.remove(...ERROR_BORDER_CLASSES, ...DEFAULT_BORDER_CLASSES);
-
-                    if (isError) {
-                        input.classList.add(...ERROR_BORDER_CLASSES);
-                        if (relativeWrapper) {
-                            relativeWrapper.insertAdjacentHTML('beforeend', iconTemplate);
-                        }
-                        container.insertAdjacentHTML('beforeend', messageTemplate(message)); 
-                    } else {
-                        input.classList.add(...DEFAULT_BORDER_CLASSES);
+                if (isError) {
+                    input.classList.add(...ERROR_BORDER_CLASSES);
+                    if (relativeWrapper) {
+                        relativeWrapper.insertAdjacentHTML('beforeend', iconTemplate);
                     }
+                    if (container) {
+                        container.insertAdjacentHTML('beforeend', messageTemplate(message)); 
+                    }
+                } else {
+                    input.classList.add(...DEFAULT_BORDER_CLASSES);
                 }
+            }
+
+
+            function initializeContactNumberFields(inputElement) {
+                inputElement.addEventListener('input', function() {
+                    const value = this.value;
+                    let isError = false;
+                    let errorMessage = "Enter a valid contact number.";
+                    
+                    if (value.trim() === '') {
+                    } else if (!ALLOWED_CHARS_REGEX.test(value)) {
+                        isError = true;
+                    } 
+                    
+                    updateErrorState(this, isError, errorMessage);
+                });
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('input[name="contact_number[]"]').forEach(initializeContactNumberFields);
+
+                document.getElementById('add-contact').addEventListener('click', function() {
+                    const container = document.getElementById('contact-container');
+                    const entry = container.querySelector('.contact-entry'); 
+                    const clone = entry.cloneNode(true);
+
+                    clone.querySelectorAll('input').forEach(input => {
+                        input.value = '';
+                        updateErrorState(input, false, '');
+                    });
+
+                    clone.querySelector('.remove-contact').classList.remove('hidden'); 
+
+                    const newContactNumberInput = clone.querySelector('input[name="contact_number[]"]');
+                    if (newContactNumberInput) {
+                        initializeContactNumberFields(newContactNumberInput);
+                    }
+                    
+                    container.appendChild(clone);
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-contact')) {
+                        e.target.closest('.contact-entry').remove();
+                    }
+                });
+                            
+                const errorFields = document.querySelectorAll('.js-error-field.has-server-error');
 
                 errorFields.forEach(input => {
                     const serverMessage = input.getAttribute('data-server-message');
@@ -526,7 +593,6 @@
                         updateErrorState(this, fieldIsEmpty);
                     });
                     
-                   
                     if (input.value.trim() !== '') {
                         updateErrorState(input, false);
                     }
@@ -594,7 +660,6 @@
                         });
                     });
 
-                    // Closes the menu and resets arrow
                     document.addEventListener('click', function(e) {
                         const menu = container.querySelector('.custom-dropdown-menu');
                         const arrow = container.querySelector('.dropdown-arrow');

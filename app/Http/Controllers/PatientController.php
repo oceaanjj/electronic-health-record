@@ -79,6 +79,12 @@ class PatientController extends Controller
             'contact_relationship.*' => 'nullable|string',
             'contact_number' => 'nullable|array',
             'contact_number.*' => 'nullable|string',
+
+            'contact_number.*' => [
+                'nullable',
+                'max:20', 
+                'regex:/^[\s\-\+\(\)0-9]*$/', 
+            ],
         ];
 
         $messages = [
@@ -87,6 +93,7 @@ class PatientController extends Controller
             'age.required' => 'This field is required.',
             'birthdate.required' => 'This field is required.',
             'sex.required' => 'This field is required.',
+            'contact_number.*.regex' => 'Contact number must only contain numbers, spaces, hyphens, or parentheses.',
             'admission_date.required' => 'This field is required.',
         ];
 
@@ -172,6 +179,12 @@ class PatientController extends Controller
             'contact_relationship.*' => 'nullable|string',
             'contact_number' => 'nullable|array',
             'contact_number.*' => 'nullable|string',
+
+            'contact_number.*' => [
+                'nullable',
+                'max:20', 
+                'regex:/^[\s\-\+\(\)0-9]*$/', 
+            ],
         ];
 
         $messages = [
@@ -180,6 +193,7 @@ class PatientController extends Controller
             'age.required' => 'This field is required.',
             'birthdate.required' => 'This field is required.',
             'sex.required' => 'This field is required.',
+            'contact_number.*.regex' => 'Contact number must only contain numbers, spaces, hyphens, or parentheses.',
             'admission_date.required' => 'This field is required.',
         ];
 

@@ -8,10 +8,6 @@
     --}}
     @if($physicalExam->isNotEmpty())
 
-        {{--
-        FIX: Loop through EACH physical exam.
-        $item is now one exam in the loop.
-        --}}
         @foreach($physicalExam as $item)
 
             {{-- This table shows the findings for this specific exam --}}

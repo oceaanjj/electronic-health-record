@@ -41,7 +41,7 @@
         <div class="w-[100%] mx-auto flex justify-center items-start gap-1 mt-6">
             <center>
 
-                <div class="w-[68%] rounded-[15px] overflow-hidden">
+                <div class="w-[85%] rounded-[15px] overflow-hidden">
                     <table class="w-full table-fixed border-collapse border-spacing-y-0">
                         <tr>
                             <th class="w-[20%] main-header rounded-tl-[15px]">MEDICATION</th>
@@ -53,7 +53,7 @@
                         </tr>
 
                         {{-- Row 1 (10:00 AM) --}}
-                        <tr class="border-b-2 border-line-brown/70 h-[100px]">
+                        <tr class="border-b-2 border-line-brown/50 h-[100px]">
                             <td class="bg-beige text-center">
                                 <input type="text" name="medication[]" placeholder="Medication"
                                     class="w-full h-[45px] text-center focus:outline-none medication-input">
@@ -79,7 +79,7 @@
                         </tr>
 
                         {{-- Row 2 (2:00 PM) --}}
-                        <tr class="border-b-2 border-line-brown/70 h-[100px]">
+                        <tr class="border-b-2 border-line-brown/50 h-[100px]">
                             <td class="bg-beige text-center">
                                 <input type="text" name="medication[]" placeholder="Medication"
                                     class="w-full h-[45px] text-center focus:outline-none medication-input">

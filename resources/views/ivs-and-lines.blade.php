@@ -24,7 +24,7 @@
                 value="{{ $selectedPatient->patient_id ?? session('selected_patient_id') }}">
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
 
-                <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+                <div class="w-[85%] mx-auto flex justify-center items-start gap-1 mt-6">
 
 
                     <div class="w-full rounded-[15px] overflow-hidden">

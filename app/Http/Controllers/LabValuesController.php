@@ -35,10 +35,11 @@ class LabValuesController extends Controller
                 $cdssService = new LabValuesCdssService();
                 $ageGroup = $cdssService->getAgeGroup($selectedPatient);
 
-                if ($labValue) {
-                    $alerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
-                }
-            } else {
+                                                  if ($labValue) {
+
+                                                     $alerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
+
+                                                  }            } else {
                  $request->session()->forget('selected_patient_id');
                  return redirect()->route('lab-values.index')->with('error', 'Selected patient not found or not authorized.');
             }

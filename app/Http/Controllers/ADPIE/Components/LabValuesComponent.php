@@ -34,6 +34,9 @@ class LabValuesComponent implements AdpieComponentInterface
         Log::info('LabValuesComponent@startDiagnosis: Starting diagnosis for id: ' . $id);
         $labValues = LabValues::with('patient')->find($id); 
 
+        // Temporarily dump $labValues to inspect its content
+        // dd($labValues); 
+
         if (!$labValues) {
             Log::error('LabValuesComponent@startDiagnosis: LabValues record not found for id: ' . $id);
             abort(404, 'LabValues record not found.');

@@ -50,7 +50,7 @@
                                     <td class="border-r-2 border-line-brown/50">
                                         <textarea class="notepad-lines h-[200px]" name="present_condition_name"
                                             placeholder="Type here..."
-                                            required>{{ $presentIllness->condition_name ?? '' }}</textarea>
+                                            >{{ $presentIllness->condition_name ?? '' }}</textarea>
                                     </td>
 
                                     <td class="border-r-2 border-line-brown/50">

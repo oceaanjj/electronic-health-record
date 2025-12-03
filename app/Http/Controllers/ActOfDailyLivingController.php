@@ -101,9 +101,14 @@ class ActOfDailyLivingController extends Controller
 
                 // 4. Run CDSS analysis on fetched data
                 $alerts = [];
+                $nursingDiagnosisId = null; // Initialize
                 if ($adlData) {
                     $cdssService = new ActOfDailyLivingCdssService();
                     $alerts = $cdssService->analyzeFindings($adlData->toArray());
+
+                    // Check for existing NursingDiagnosis
+                    $nursingDiagnosis = \App\Models\NursingDiagnosis::where('adl_id', $adlData->id)->first();
+                    $nursingDiagnosisId = $nursingDiagnosis ? $nursingDiagnosis->id : null;
                 }
                 $request->session()->flash('cdss', $alerts);
 
@@ -126,6 +131,7 @@ class ActOfDailyLivingController extends Controller
             'isLoading' => $isLoading,
             'totalDaysSinceAdmission' => $totalDaysSinceAdmission,
             'alerts' => $alerts ?? [], // Pass alerts
+            'nursingDiagnosisId' => $nursingDiagnosisId ?? null,
         ]);
     }
 
@@ -181,6 +187,10 @@ class ActOfDailyLivingController extends Controller
                 if ($adlData) {
                     $cdssService = new ActOfDailyLivingCdssService();
                     $alerts = $cdssService->analyzeFindings($adlData->toArray());
+
+                    // Check for existing NursingDiagnosis
+                    $nursingDiagnosis = \App\Models\NursingDiagnosis::where('adl_id', $adlData->id)->first();
+                    $nursingDiagnosisId = $nursingDiagnosis ? $nursingDiagnosis->id : null;
                 }
             }
         }
@@ -193,6 +203,7 @@ class ActOfDailyLivingController extends Controller
             'currentDayNo' => $currentDayNo,
             'alerts' => $alerts, // Pass alerts to the view
             'totalDaysSinceAdmission' => $totalDaysSinceAdmission,
+            'nursingDiagnosisId' => $nursingDiagnosisId ?? null,
         ]);
     }
 

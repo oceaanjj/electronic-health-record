@@ -27,7 +27,7 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <div class="w-[70%] mx-auto flex justify-center items-start gap-0 mt-6">
+                    <div class="w-[85%] mx-auto flex justify-center items-start gap-0 mt-6">
 
                         <div class="w-[68%] rounded-[15px] overflow-hidden mr-1">
                             <table class="w-full border-separate border-spacing-0">
@@ -41,7 +41,7 @@
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">
                                         GENERAL<br>APPEARANCE
                                     </th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
+                                    <td class="bg-beige border-b-2 border-line-brown/50">
                                         <textarea name="general_appearance"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="general_appearance"
@@ -52,7 +52,7 @@
                                 {{-- SKIN --}}
                                 <tr>
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">SKIN</th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
+                                    <td class="bg-beige border-b-2 border-line-brown/50">
                                         <textarea name="skin_condition"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="skin_condition"
@@ -63,7 +63,7 @@
                                 {{-- EYES --}}
                                 <tr>
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">EYES</th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
+                                    <td class="bg-beige border-b-2 border-line-brown/50">
                                         <textarea name="eye_condition"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="eye_condition"
@@ -74,7 +74,7 @@
                                 {{-- ORAL CAVITY --}}
                                 <tr>
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">ORAL CAVITY</th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
+                                    <td class="bg-beige border-b-2 border-line-brown/50">
                                         <textarea name="oral_condition"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="oral_condition"
@@ -85,7 +85,7 @@
                                 {{-- CARDIOVASCULAR --}}
                                 <tr>
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">CARDIOVASCULAR</th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
+                                    <td class="bg-beige border-b-2 border-line-brown/50">
                                         <textarea name="cardiovascular"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="cardiovascular"
@@ -96,7 +96,7 @@
                                 {{-- ABDOMEN --}}
                                 <tr>
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">ABDOMEN</th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
+                                    <td class="bg-beige border-b-2 border-line-brown/50">
                                         <textarea name="abdomen_condition"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="abdomen_condition"
@@ -107,7 +107,7 @@
                                 {{-- EXTREMITIES --}}
                                 <tr>
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">EXTREMITIES</th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
+                                    <td class="bg-beige border-b-2 border-line-brown/50">
                                         <textarea name="extremities"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="extremities"
@@ -129,7 +129,7 @@
 
                         {{-- ALERTS TABLE--}}
                         <div class="w-[25%] rounded-[15px] overflow-hidden">
-                            <div class="main-header text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                            <div class="main-header py-2 mb-1 text-center rounded-[15px]">
                                 ALERTS
                             </div>
                             <table class="w-full border-collapse">
@@ -149,7 +149,7 @@
                                 @foreach ($fields as $fieldKey => $label)
                                     <tr>
                                         <td class="align-middle">
-                                            <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center w-full h-[90px]"
+                                            <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center w-full h-[92px]"
                                                 data-alert-for="{{ $fieldKey }}">
                                                 {{-- Dynamic alert content will load here --}}
                                                 <span class="opacity-70 text-white font-semibold">No Alerts</span>

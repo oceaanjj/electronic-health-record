@@ -25,7 +25,7 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <p class="mb-1 w-[72%] main-header rounded-lg">DEVELOPMENTAL HISTORY
+                    <p class="mb-1 w-[72%] main-header rounded-[15px]">DEVELOPMENTAL HISTORY
                     </p>
                 </center>
 

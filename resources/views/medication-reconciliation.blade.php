@@ -15,7 +15,7 @@
 
                 {{-- ..... Patient's Current Medication --}}
                 <center>
-                    <table class="mb-2 w-[80%] border-collapse border-spacing-0">
+                    <table class="mb-2 w-[85%] border-collapse border-spacing-0 rounded-[15px] overflow-hidden">
                         <tr>
                             <th colspan="6" class="main-header rounded-t-lg">PATIENT'S CURRENT MEDICATION
                                 <div style="margin-top: 0px; font-size: 10px; color: rgb(173, 173, 173);">
@@ -34,23 +34,23 @@
                             </th>
                         </tr>
                         <tr class="bg-beige">
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="current_med"
                                     placeholder="Type here...">{{ $currentMedication->current_med ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="current_dose"
                                     placeholder="Type here...">{{ $currentMedication->current_dose ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="current_route"
                                     placeholder="Type here...">{{ $currentMedication->current_route ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="current_frequency"
                                     placeholder="Type here...">{{ $currentMedication->current_frequency ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="current_indication"
                                     placeholder="Type here...">{{ $currentMedication->current_indication ?? '' }}</textarea>
                             </td>
@@ -64,7 +64,7 @@
 
                 {{-- TABLE 2: Patient's Home Medication --}}
                 <center>
-                    <table class="mb-2 w-[80%] border-collapse border-spacing-0">
+                    <table class="mb-2 w-[85%] border-collapse border-spacing-0 rounded-[15px] overflow-hidden">
                         <tr>
                             <th colspan="6" class="main-header rounded-t-lg">
                                 PATIENT'S HOME MEDICATION
@@ -84,23 +84,23 @@
                             </th>
                         </tr>
                         <tr class="bg-beige">
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="home_med"
                                     placeholder="Type here...">{{ $homeMedication->home_med ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="home_dose"
                                     placeholder="Type here...">{{ $homeMedication->home_dose ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="home_route"
                                     placeholder="Type here...">{{ $homeMedication->home_route ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="home_frequency"
                                     placeholder="Type here...">{{ $homeMedication->home_frequency ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="home_indication"
                                     placeholder="Type here...">{{ $homeMedication->home_indication ?? '' }}</textarea>
                             </td>
@@ -114,7 +114,7 @@
 
                 {{-- TABLE 3: Changes in Medication --}}
                 <center>
-                    <table class="mb-2 w-[80%] border-collapse border-spacing-0">
+                    <table class="mb-2 w-[85%] border-collapse border-spacing-0 rounded-[15px] overflow-hidden">
                         {{-- Note: colspan is 5 here --}}
                         <tr>
                             <th colspan="5" class="main-header rounded-t-lg">CHANGES IN MEDICATION DURING HOSPITALIZATION
@@ -128,19 +128,19 @@
                             <th class="bg-yellow-light text-brown text-[13px] border-line-brown">REASON FOR CHANGE</th>
                         </tr>
                         <tr class="bg-beige">
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="change_med"
                                     placeholder="Type here...">{{ $changesInMedication->change_med ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="change_dose"
                                     placeholder="Type here...">{{ $changesInMedication->change_dose ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="change_route"
                                     placeholder="Type here...">{{ $changesInMedication->change_route ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="change_frequency"
                                     placeholder="Type here...">{{ $changesInMedication->change_frequency ?? '' }}</textarea>
                             </td>

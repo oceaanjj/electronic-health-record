@@ -100,7 +100,7 @@
           action="{{ route('adl.store') }}"
           data-analyze-url="{{ route('adl.analyze-field') }}"
           data-batch-analyze-url="{{ route('adl.analyze-batch') }}"
-          data-alert-height-class="h-[55px]"> 
+          data-alert-height-class="h-[96px]"> 
     
         <fieldset @if (!$selectedPatient) disabled @endif>
             @csrf
@@ -110,13 +110,13 @@
             <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
             <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
-            <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+            <div class="w-[85%] mx-auto flex justify-center items-start gap-1 mt-6">
                 {{-- LEFT SIDE TABLE (INPUTS) --}}
                 <div class="w-[68%] rounded-[15px] overflow-hidden">
                     <table class="w-full table-fixed border-collapse border-spacing-y-0">
                         <tr>
-                            <th class="w-[40%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">CATEGORY</th>
-                            <th class="w-[60%] bg-dark-green text-white rounded-tr-lg">ASSESSMENT</th>
+                            <th class="w-[30%] main-header py-2 text-center rounded-tl-lg">CATEGORY</th>
+                            <th class="w-[60%] main-header rounded-tr-lg">ASSESSMENT</th>
                         </tr>
 
                         @foreach ([
@@ -128,15 +128,14 @@
                             'sleep_pattern_assessment' => 'SLEEP PATTERN',
                             'pain_level_assessment' => 'PAIN LEVEL',
                         ] as $field => $label)
-                            <tr class="border-b-2 border-line-brown/70">
+                            <tr class="border-b-2 border-line-brown/50">
                                 <th class="text-center font-semibold py-2 bg-yellow-light text-brown">
                                     {{ $label }}
                                 </th>
                                 <td class="bg-beige">
-                                    <input type="text" name="{{ $field }}" placeholder="Type here..."
-                                        class="cdss-input vital-input h-[60px] w-full border-none bg-transparent focus:ring-0"
-                                        data-field-name="{{ $field }}"
-                                        value="{{ old($field, $adlData->$field ?? '') }}">
+                                    <textarea name="{{ $field }}" placeholder="Type here..."
+                                        class="notepad-lines cdss-input w-full h-[95px]"
+                                        data-field-name="{{ $field }}">{{ old($field, $adlData->$field ?? '') }}</textarea>
                                 </td>
                             </tr>
                         @endforeach
@@ -144,8 +143,8 @@
                 </div>
 
                 {{-- ALERTS TABLE --}}
-                <div class="w-[25%] rounded-[15px] overflow-hidden">
-                    <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                <div class="w-[25%] rounded-[15px]">
+                    <div class="main-header text-center rounded-[15px]">
                         ALERTS
                     </div>
                     <table class="w-full border-collapse">
@@ -169,7 +168,7 @@
                             @endphp
                              <tr>
                                 <td class="align-middle" data-alert-for="{{ $field }}">
-                                    <div class="alert-box my-[3px] h-[53px] flex justify-center items-center alert-{{ $alertSeverity }}">
+                                    <div class="alert-box h-[96px] flex justify-center items-center alert-{{ $alertSeverity }}">
                                         <span class="opacity-70 text-white font-semibold">{{ $alertText }}</span>
                                     </div>
                                 </td>

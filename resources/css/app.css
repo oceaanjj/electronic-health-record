@@ -40,6 +40,16 @@
     src: url("/public/font/neometric/Neometric-Regular.otf") format("truetype");
     font-weight: normal;
     font-style: normal;
+
+    font-family: "rubik";
+    src: url("/public/font/rubik/Rubik-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+
+    font-family: "TASA";
+    src: url("/public/font/tasa/TASA-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @theme {
@@ -69,6 +79,8 @@
     --font-trajan-bold: "Trajan Pro", serif;
     --font-typewriter: "typewriter", monospace;
     --font-neometric: "neometric", sans-serif;
+    --font-rubik: "rubik", sans-serif;
+    --fonr-tasa: "TASA", sans-serif;
 
     --radius-oval: 50%;
     --color-placeholder: #d1d5db;
@@ -80,12 +92,16 @@
     input::placeholder,
     textarea::placeholder {
         color: var(--color-placeholder);
+        font-family: var(--font-creato-bold);
+        font-weight: medium;
     }
     
 
     input::-webkit-input-placeholder,
     textarea::-webkit-input-placeholder {
         color: var(--color-placeholder);
+        font-family: var(--font-creato-bold);
+        font-weight: medium;
     }
 
     .bg-yellow-light {
@@ -96,7 +112,7 @@
     .main-header {
         @apply bg-dark-green text-center text-white font-bold py-2;
         background: linear-gradient(180deg, #006400, #004d00);
-        @apply font-creato-bold font-black text-[15px];
+        @apply font-creato-black font-black text-[15px];
     }
 
     .gradient-gray {

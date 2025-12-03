@@ -20,7 +20,48 @@
         'GRAD' 0,
         'opsz' 20
         }
+
+        .sidebar-open #main {
+            margin-left: 260px;
+        }
+
+        .sidebar-transition {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+
+        @keyframes pageEnter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-transition {
+            animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+
+
     </style>
+
+    <script>
+        (function () {
+            const isOpen = localStorage.getItem("sidebarOpen") === "true";
+            const doc = document.documentElement;
+
+            if (isOpen) {
+                doc.classList.add("sidebar-open");
+            } else {
+                doc.classList.remove("sidebar-open");
+            }
+        })();
+    </script>
+
 </head>
 
 <body class="bg-white overflow-x-hidden">
@@ -29,12 +70,10 @@
     @include('components.sidebar')
 
    <script>
-        // FIX: Only position the sidebar here, as the #main element isn't available yet.
         const isOpen = localStorage.getItem("sidebarOpen") === "true";
         const sidebar = document.getElementById("mySidenav");
 
         if (sidebar) {
-            // Stop the initial animation instantly
             sidebar.style.transition = 'none';
 
             if (isOpen) {
@@ -43,7 +82,6 @@
                 sidebar.classList.add("-translate-x-full");
             }
 
-            // Re-enable transition after state is set
             setTimeout(() => {
                 sidebar.style.transition = '';
             }, 0);
@@ -58,9 +96,9 @@
 
 
 
-    {{-- Main Content --}}
-    <div id="main" class="relative min-h-screen overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
-        
+
+    <div id="main" class="relative min-h-screen overflow-x-hidden bg-white sidebar-transition">
+
 
         <img src="{{ asset('img/bg-design-right.png') }}" alt="Top right design"
             class="absolute top-[120px] right-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0">
@@ -72,7 +110,8 @@
         <div class="relative z-10">
 
             {{-- content ng page --}}
-            <main class="pt-[120px] transition-all duration-300 ease-in-out">
+            <main class="pt-[120px] transition-all duration-300 ease-in-out page-transition">
+
 
                 @yield('content')
             </main>
@@ -83,53 +122,14 @@
 
 
     <script>
-
-        // 🚀 START: CORRECTED DOMContentLoaded BLOCK 🚀
-        // This now instantly sets the margin on #main when it becomes available.
-        window.addEventListener("DOMContentLoaded", function () {
-            const main = document.getElementById("main");
-            const arrow = document.getElementById("arrowBtn");
-            const isOpen = localStorage.getItem("sidebarOpen") === "true";
-
-            // 1. Instantly apply state to #main without transition (Flicker Fix)
-            if (main) {
-                main.style.transition = 'none'; // Disable transition temporarily
-                
-                if (isOpen) {
-                    main.classList.add("ml-[260px]");
-                } else {
-                    main.classList.remove("ml-[260px]");
-                }
-            }
-            
-            // 2. Set initial arrow state (as before)
-            if (arrow) {
-                if (isOpen) {
-                    arrow.classList.replace("-right-24", "-right-10");
-                    arrow.classList.remove("hidden");
-                } else {
-                    arrow.classList.replace("-right-10", "-right-24");
-                    arrow.classList.add("hidden");
-                }
-            }
-
-            // 3. Re-enable transition for interaction
-            requestAnimationFrame(() => {
-                if (main) main.style.transition = ''; // Re-enable CSS transition
-            });
-        });
-        // 🚀 END: CORRECTED DOMContentLoaded BLOCK 🚀
-
-
-        // 2. openNav function: Handles click-to-open logic (No changes needed here).
         function openNav() {
             const sidebar = document.getElementById("mySidenav");
-            const main = document.getElementById("main");
             const arrow = document.getElementById("arrowBtn");
 
             if (sidebar) sidebar.classList.remove("-translate-x-full");
-            if (main) main.classList.add("ml-[260px]");
-            
+
+            document.documentElement.classList.add("sidebar-open");
+
             if (arrow) {
                 arrow.classList.replace("-right-24", "-right-10");
                 arrow.classList.remove("hidden");
@@ -138,31 +138,26 @@
             localStorage.setItem("sidebarOpen", "true");
         }
 
-        // 3. closeNav function: Handles click-to-close logic (No changes needed here).
         function closeNav() {
             const sidebar = document.getElementById("mySidenav");
-            const main = document.getElementById("main");
             const arrow = document.getElementById("arrowBtn");
 
             if (sidebar) sidebar.classList.add("-translate-x-full");
-            if (main) main.classList.remove("ml-[260px]");
-            
+
+            document.documentElement.classList.remove("sidebar-open");
+
             if (arrow) arrow.classList.replace("-right-10", "-right-24");
 
             localStorage.setItem("sidebarOpen", "false");
 
             setTimeout(() => {
-                if (arrow) arrow.classList.add("hidden"); 
-            }, 0);
+                if (arrow) arrow.classList.add("hidden");
+            }, 200);
         }
+
     </script>
 
     @stack('scripts')
-
-
-
-
-
 </body>
 
 </html>

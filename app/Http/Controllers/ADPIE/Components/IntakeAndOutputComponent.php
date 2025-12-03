@@ -52,35 +52,11 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
 
         $intakeAndOutput = IntakeAndOutput::with('patient')->findOrFail($intakeAndOutputId);
         $patient = $intakeAndOutput->patient;
+        $diagnosisText = $request->input('diagnosis');
 
-        $componentData = [
-            'oral_intake' => $intakeAndOutput->oral_intake,
-            'iv_fluids_volume' => $intakeAndOutput->iv_fluids_volume,
-            'urine_output' => $intakeAndOutput->urine_output,
-        ];
-
-        $nurseInput = [
-            'diagnosis' => $request->input('diagnosis'),
-            'planning' => '',
-            'intervention' => '',
-            'evaluation' => '',
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component, // 'intake-and-output'
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $diagnosisAlerts = collect($generatedRules['alerts'] ?? [])
-            ->pluck('alert')
-            ->filter()
-            ->map(fn($alert) => '— ' . $alert)
-            ->implode("\n");
-
-        $diagnosisAlert = empty($diagnosisAlerts) ? null : $diagnosisAlerts;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        // Use the analyzeDiagnosis method directly for the diagnosis step
+        $diagnosisAlertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
+        $diagnosisAlert = $diagnosisAlertObject->raw_message ?? null;
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
@@ -88,12 +64,11 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
             ],
             [
                 'patient_id' => $patient->patient_id,
-                'diagnosis' => $nurseInput['diagnosis'],
+                'diagnosis' => $diagnosisText,
                 'diagnosis_alert' => $diagnosisAlert,
                 'planning' => '',
                 'intervention' => '',
                 'evaluation' => '',
-                'rule_file_path' => $ruleFilePath,
             ]
         );
 
@@ -129,40 +104,15 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
         $intakeAndOutput = $diagnosis->intakeAndOutput;
         $patient = $intakeAndOutput->patient;
+        $planningText = $request->input('planning');
 
-        $componentData = [
-            'oral_intake' => $intakeAndOutput->oral_intake,
-            'iv_fluids_volume' => $intakeAndOutput->iv_fluids_volume,
-            'urine_output' => $intakeAndOutput->urine_output,
-        ];
-
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $request->input('planning'),
-            'intervention' => '',
-            'evaluation' => '',
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $planningAlerts = collect($generatedRules['alerts'] ?? [])
-            ->pluck('alert')
-            ->filter()
-            ->map(fn($alert) => '— ' . $alert)
-            ->implode("\n");
-
-        $planningAlert = empty($planningAlerts) ? null : $planningAlerts;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        // Use the analyzePlanning method directly for the planning step
+        $planningAlertObject = $this->nursingDiagnosisCdssService->analyzePlanning($component, $planningText);
+        $planningAlert = $planningAlertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'planning' => $nurseInput['planning'],
+            'planning' => $planningText,
             'planning_alert' => $planningAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -197,40 +147,15 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
         $intakeAndOutput = $diagnosis->intakeAndOutput;
         $patient = $intakeAndOutput->patient;
+        $interventionText = $request->input('intervention');
 
-        $componentData = [
-            'oral_intake' => $intakeAndOutput->oral_intake,
-            'iv_fluids_volume' => $intakeAndOutput->iv_fluids_volume,
-            'urine_output' => $intakeAndOutput->urine_output,
-        ];
-
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $diagnosis->planning,
-            'intervention' => $request->input('intervention'),
-            'evaluation' => '',
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $interventionAlerts = collect($generatedRules['alerts'] ?? [])
-            ->pluck('alert')
-            ->filter()
-            ->map(fn($alert) => '— ' . $alert)
-            ->implode("\n");
-
-        $interventionAlert = empty($interventionAlerts) ? null : $interventionAlerts;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        // Use the analyzeIntervention method directly for the intervention step
+        $interventionAlertObject = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $interventionText);
+        $interventionAlert = $interventionAlertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'intervention' => $nurseInput['intervention'],
+            'intervention' => $interventionText,
             'intervention_alert' => $interventionAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -265,40 +190,15 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
         $intakeAndOutput = $diagnosis->intakeAndOutput;
         $patient = $intakeAndOutput->patient;
+        $evaluationText = $request->input('evaluation');
 
-        $componentData = [
-            'oral_intake' => $intakeAndOutput->oral_intake,
-            'iv_fluids_volume' => $intakeAndOutput->iv_fluids_volume,
-            'urine_output' => $intakeAndOutput->urine_output,
-        ];
-
-        $nurseInput = [
-            'diagnosis' => $diagnosis->diagnosis,
-            'planning' => $diagnosis->planning,
-            'intervention' => $diagnosis->intervention,
-            'evaluation' => $request->input('evaluation'),
-        ];
-
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $evaluationAlerts = collect($generatedRules['alerts'] ?? [])
-            ->pluck('alert')
-            ->filter()
-            ->map(fn($alert) => '— ' . $alert)
-            ->implode("\n");
-
-        $evaluationAlert = empty($evaluationAlerts) ? null : $evaluationAlerts;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        // Use the analyzeEvaluation method directly for the evaluation step
+        $evaluationAlertObject = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $evaluationText);
+        $evaluationAlert = $evaluationAlertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'evaluation' => $nurseInput['evaluation'],
+            'evaluation' => $evaluationText,
             'evaluation_alert' => $evaluationAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         // Check which button was clicked

@@ -153,7 +153,7 @@
                 </center>
 
                 {{-- SUBMIT BUTTON --}}
-                <div class="w-[80%] mx-auto flex justify-end mt-5 mb-30">
+                <div class="w-[85%] mx-auto flex justify-end mt-5 mb-30">
                     {{-- Styled just like your "NEXT" button, but it's a submit type --}}
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>

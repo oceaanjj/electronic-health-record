@@ -134,7 +134,7 @@
                 </div>
 
 
-                <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                <div class="w-[85%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                     <button class="button-default" type="submit" id="submit_button">SUBMIT</button>
                 </div>
             </center>

@@ -178,7 +178,7 @@
                 </div>
             </div>
 
-            <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+            <div class="w-[80%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                 @if (isset($adlData))
                     <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
                         class="button-default text-center">

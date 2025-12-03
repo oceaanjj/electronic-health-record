@@ -130,7 +130,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="w-[70%] mx-auto flex justify-end mt-20 mb-30 space-x-4">
+                <div class="w-[80%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
                     {{-- <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button>--}}
                     @if ($ioData)
                         <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default">CDSS</button>

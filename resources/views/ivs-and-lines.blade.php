@@ -98,7 +98,7 @@
                 </div>
 
                 {{-- BUTTONS --}}
-                <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                <div class="w-[85%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
         </form>

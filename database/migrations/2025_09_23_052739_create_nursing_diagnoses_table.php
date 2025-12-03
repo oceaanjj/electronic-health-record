@@ -12,12 +12,11 @@ return new class extends Migration {
     {
         Schema::create('nursing_diagnoses', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_id')->nullable();
+            $table->foreignId('patient_id')->nullable()->constrained('patients', 'patient_id')->onDelete('cascade');
             $table->foreignId('physical_exam_id')->nullable()->constrained('physical_exams')->onDelete('cascade');
             $table->foreignId('intake_and_output_id')->nullable()->constrained('intake_and_outputs')->onDelete('cascade');
             $table->foreignId('lab_values_id')->nullable()->constrained('lab_values')->onDelete('cascade');
-            $table->foreignId('adl_id')->nullable()->constrained('adls')->onDelete('cascade');
-            $table->foreignId('vitals_id')->nullable()->constrained('vitals')->onDelete('cascade');
+            $table->foreignId('adl_id')->nullable()->constrained('act_of_daily_living')->onDelete('cascade');
             $table->foreignId('vital_signs_id')->nullable()->constrained('vital_signs')->onDelete('cascade');
 
             $table->text('diagnosis');

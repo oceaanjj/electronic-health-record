@@ -77,7 +77,7 @@ class VitalSignsComponent implements AdpieComponentInterface
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                'vitals_id' => $latestVitals ? $latestVitals->id : null,
+                'vital_signs_id' => $latestVitals ? $latestVitals->id : null,
             ],
             [
                 'patient_id' => $patient->patient_id,

@@ -27,14 +27,13 @@
         }
 
         .section {
-            margin-bottom: 10px;
             border: 1px solid #eee;
-            padding: 8px;
+            padding: 2px;
             border-radius: 5px;
         }
 
         .section-title {
-            background-color: #f9f9f9;
+            background-color: #e0dfdfff;
             padding: 5px;
             margin-top: 10px;
             margin-botom: -10px;
@@ -42,7 +41,7 @@
         }
 
         .section-title-adpie {
-            background-color: #e0dfdfff;
+            background-color: #e7e7e7ff;
             padding: 5px;
             border-bottom: 1px solid #eee;
             margin-bottom: -10px;
@@ -62,9 +61,8 @@
         table {
             width: 100%;
             table-layout: fixed;
-            /* Crucial for fixed column widths */
             border-collapse: collapse;
-            margin-top: 5px;
+            margin-top: 6px;
             max-width: 100%;
         }
 
@@ -161,6 +159,14 @@
             if (isset($pdf)) {
                 $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
                 $size = 9;
+
+
+
+
+
+
+
+
 
 
 

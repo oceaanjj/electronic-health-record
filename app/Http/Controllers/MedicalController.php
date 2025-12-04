@@ -27,7 +27,7 @@ class MedicalController extends Controller
     public function show(Request $request)
     {
 
-$patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
+        $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name')->get();
 
         $selectedPatient = null;
         $presentIllness = null;
@@ -239,8 +239,7 @@ $patients = Auth::user()->patients()->orderBy('last_name')->orderBy('first_name'
 
 
             return redirect()->route('developmental-history')
-                ->withInput($data)
-                ->with('success', $alert);
+                ->withInput($data);
 
 
         } catch (Throwable $e) {

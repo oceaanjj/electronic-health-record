@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         text-align: center;
         pointer-events: none;
     `;
-    alertMessage.textContent = "Please select a patient first!.";
+    alertMessage.textContent = "Please select a patient first!";
     document.body.appendChild(alertMessage);
 
     function showAlertDialog() {

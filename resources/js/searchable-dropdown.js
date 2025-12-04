@@ -7,6 +7,14 @@ const initSearchableDropdown = () => {
     }
     dropdownContainer.dataset.initialized = "true";
 
+    // ------------------------------------------------------------------
+    // FIX: Lift Dropdown Above Overlay
+    // The disabled form overlay has z-index: 50.
+    // We set this to 60 so you can search even when the form is disabled.
+    // ------------------------------------------------------------------
+    dropdownContainer.style.position = "relative";
+    dropdownContainer.style.zIndex = "60";
+
     const searchInput = document.getElementById("patient_search_input");
     const hiddenInput = document.getElementById("patient_id_hidden");
     const optionsContainer = document.getElementById(
@@ -148,41 +156,49 @@ const initSearchableDropdown = () => {
     });
 
     // ---------------------------------------------------------
-    // UPDATED DISABLE FUNCTION
+    //  DISABLE FUNCTION
     // ---------------------------------------------------------
     const disableForm = (isDisabled) => {
         const formContentContainer = document.getElementById(
             "form-content-container"
         );
-        const formElement = formContentContainer
-            ? formContentContainer.querySelector("form")
+
+        let formElement = formContentContainer
+            ? formContentContainer.querySelector("form.cdss-form")
             : null;
+        if (!formElement && formContentContainer) {
+            formElement = formContentContainer.querySelector("form.relative");
+        }
+        // Fallback
+        if (!formElement && formContentContainer) {
+            formElement = formContentContainer.querySelector("form");
+        }
+
         const formFieldset = formContentContainer
             ? formContentContainer.querySelector("fieldset")
             : null;
 
-        // 1. Manage the actual form disabling
         const dateSelector = document.getElementById("date_selector");
         const dayNoSelector = document.getElementById("day_no_selector");
-        const vitalInputs = document.querySelectorAll(".vital-input");
-        const cdssButton = document.querySelector(
-            ".cdss-form button[type='button']"
-        );
-        const submitButton = document.querySelector(
-            ".cdss-form button[type='submit']"
-        );
-        const insertButtons = document.querySelectorAll(".insert-btn");
-        const clearButtons = document.querySelectorAll(".clear-btn");
 
         if (formFieldset) formFieldset.disabled = isDisabled;
         if (dateSelector) dateSelector.disabled = isDisabled;
         if (dayNoSelector) dayNoSelector.disabled = isDisabled;
 
+        const vitalInputs = document.querySelectorAll(".vital-input");
         vitalInputs.forEach((input) => {
             input.disabled = isDisabled;
         });
-        if (cdssButton) cdssButton.disabled = isDisabled;
-        if (submitButton) submitButton.disabled = isDisabled;
+
+        if (formElement) {
+            const submitButton = formElement.querySelector(
+                "button[type='submit']"
+            );
+            if (submitButton) submitButton.disabled = isDisabled;
+        }
+
+        const insertButtons = document.querySelectorAll(".insert-btn");
+        const clearButtons = document.querySelectorAll(".clear-btn");
 
         insertButtons.forEach((button) => {
             if (isDisabled) {
@@ -198,19 +214,16 @@ const initSearchableDropdown = () => {
             button.disabled = isDisabled;
         });
 
-        // 2. Manage the Alert Overlay (The invisible shield)
+        // 2. Manage the Alert Overlay
         if (formElement) {
-            // Try to find existing overlay
             let overlay = formElement.querySelector(".trigger-patient-alert");
 
             if (isDisabled) {
-                // If we are disabling, we MUST have the overlay.
-                // If it doesn't exist, create it.
                 if (!overlay) {
                     overlay = document.createElement("div");
                     overlay.className =
                         "trigger-patient-alert absolute inset-0 z-50 bg-transparent cursor-not-allowed";
-                    // Ensure the form has relative positioning so the overlay stays inside
+
                     if (!formElement.classList.contains("relative")) {
                         formElement.classList.add("relative");
                     }
@@ -218,7 +231,6 @@ const initSearchableDropdown = () => {
                 }
                 overlay.style.display = "block";
             } else {
-                // If we are enabling, hide the overlay
                 if (overlay) {
                     overlay.style.display = "none";
                 }
@@ -227,11 +239,11 @@ const initSearchableDropdown = () => {
     };
 
     const clearFormInputs = () => {
-        const formFieldset = document.querySelector(
-            "#form-content-container fieldset"
+        const formContentContainer = document.getElementById(
+            "form-content-container"
         );
-        if (formFieldset) {
-            const inputs = formFieldset.querySelectorAll(
+        if (formContentContainer) {
+            const inputs = formContentContainer.querySelectorAll(
                 "input, textarea, textarea.notepad-lines"
             );
             inputs.forEach((input) => {
@@ -243,7 +255,7 @@ const initSearchableDropdown = () => {
             });
 
             const diagnosticPanels =
-                formFieldset.querySelectorAll(".diagnostic-panel");
+                formContentContainer.querySelectorAll(".diagnostic-panel");
             diagnosticPanels.forEach((panel) => {
                 const type = panel.dataset.type;
                 const previewContainer = document.getElementById(
@@ -282,7 +294,6 @@ const initSearchableDropdown = () => {
     }
 };
 
-// Global click listener for dropdown closing
 if (!window.searchableDropdownDocumentListener) {
     document.addEventListener("click", (event) => {
         const dropdownContainer = document.querySelector(

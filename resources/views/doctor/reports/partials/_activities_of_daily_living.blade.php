@@ -115,7 +115,12 @@
                 </tbody>
             </table>
 
-            <hr class="pdf-hr">
+
+            @if(!$loop->last)
+                <hr class="pdf-hr">
+            @endif
+
+
         @endforeach
 
     @else

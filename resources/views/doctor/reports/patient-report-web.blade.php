@@ -67,6 +67,7 @@
         }
 
         .no-data {
+            padding-top:8px;
             color: #777;
             font-style: italic;
         }

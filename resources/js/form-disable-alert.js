@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const alertMessage = document.createElement("div");
     alertMessage.id = "patient-selection-alert";
 
-    // Updated CSS for Right Alignment + Animation properties
     alertMessage.style.cssText = `
         position: fixed;
         bottom: 20px;

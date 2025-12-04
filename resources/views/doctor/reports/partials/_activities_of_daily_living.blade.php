@@ -1,9 +1,7 @@
-@extends('layouts.app')
-@section('title', 'Activities of Daily Living')
-@section('content')
+<div class="page-break"></div>
 
-{{-- FORM OVERLAY (ALERT) & DYNAMIC CONTENT --}}
-<div id="form-content-container">
+<div class="section">
+    <h2 class="section-title">Activities of Daily Living</h2>
 
     @php
         $adl = $actOfDailyLiving;
@@ -28,7 +26,6 @@
                         <th>Alerts</th>
                     </tr>
 
-                    @csrf
 
                     {{-- Mobility --}}
                     <tr>

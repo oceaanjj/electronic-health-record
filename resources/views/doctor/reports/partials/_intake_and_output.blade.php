@@ -65,8 +65,6 @@
                     </tr>
                 </tbody>
             </table>
-
-
         @endforeach
 
     @else

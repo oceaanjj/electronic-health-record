@@ -1,6 +1,7 @@
 @extends('layouts.doctor')
-@section('title', 'Patient Report')
+@section('title', 'Doctor Home')
 @section('content')
+
 
     <!-- nasa doctor/report/partials yung mga components -->
     <style>

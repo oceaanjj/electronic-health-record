@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const birthdateInput = document.getElementById("birthdate");
     const ageInput = document.getElementById("age");
 
+    if (!birthdateInput) {
+            return; 
+    }
+
     function calculateAge() {
         const birthdate = new Date(birthdateInput.value);
         const today = new Date();
@@ -26,3 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     birthdateInput.addEventListener("change", calculateAge);
     calculateAge();
 });
+
+
+
+   
+

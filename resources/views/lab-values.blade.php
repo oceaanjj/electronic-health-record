@@ -21,7 +21,7 @@
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
 
                 {{-- MAIN CONTENT - SAME STRUCTURE AS VITAL SIGNS --}}
-                <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+                <div class="w-[85%] mx-auto flex justify-center items-start gap-1 mt-6">
 
                     {{-- LEFT SIDE: LAB VALUES TABLE --}}
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
@@ -96,7 +96,7 @@
                 </div>
 
                 {{-- BUTTONS --}}
-                <div class="w-[66%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                <div class="w-[80%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                     @if (isset($labValue))
                         <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
                             class="button-default text-center">

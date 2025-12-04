@@ -22,101 +22,118 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
-                        {{-- PRESENT ILLNESS --}}
-                        <tr>
-                            <th colspan="6" class="main-header text-white rounded-t-lg">PRESENT ILLNESS</th>
-                        </tr>
+                    <div class="w-[85%] mx-auto flex justify-center items-start gap-1">
 
-                        <tr>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
-                            <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
-                        </tr>
 
-                        <tr class="bg-beige">
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="present_condition_name"
-                                    placeholder="Type here..."
-                                    required>{{ $presentIllness->condition_name ?? '' }}</textarea>
-                            </td>
+                        <div class="w-full rounded-[15px] overflow-hidden">
+                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0">
+        
+                                {{-- PRESENT ILLNESS --}}
+                                <tr>
+                                    <th colspan="6" class="main-header text-white rounded-t-lg">PRESENT ILLNESS</th>
+                                </tr>
 
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="present_description"
-                                    placeholder="Type here...">{{ $presentIllness->description ?? '' }}</textarea>
-                            </td>
+                                <tr>
+                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
+                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
+                                    <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                                </tr>
 
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="present_medication"
-                                    placeholder="Type here...">{{ $presentIllness->medication ?? '' }}</textarea>
-                            </td>
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="present_dosage"
-                                    placeholder="Type here...">{{ $presentIllness->dosage ?? '' }}</textarea>
-                            </td>
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="present_side_effect"
-                                    placeholder="Type here...">{{ $presentIllness->side_effect ?? '' }}</textarea>
-                            </td>
-                            <td>
-                                <textarea class="notepad-lines h-[200px]" name="present_comment"
-                                    placeholder="Type here...">{{ $presentIllness->comment ?? '' }}</textarea>
-                            </td>
-                        </tr>
-                    </table>
+                                <tr class="bg-beige">
+                                    <td class="border-r-2 border-line-brown/50">
+                                        <textarea class="notepad-lines h-[200px]" name="present_condition_name"
+                                            placeholder="Type here..."
+                                            >{{ $presentIllness->condition_name ?? '' }}</textarea>
+                                    </td>
+
+                                    <td class="border-r-2 border-line-brown/50">
+                                        <textarea class="notepad-lines h-[200px]" name="present_description"
+                                            placeholder="Type here...">{{ $presentIllness->description ?? '' }}</textarea>
+                                    </td>
+
+                                    <td class="border-r-2 border-line-brown/50">
+                                        <textarea class="notepad-lines h-[200px]" name="present_medication"
+                                            placeholder="Type here...">{{ $presentIllness->medication ?? '' }}</textarea>
+                                    </td>
+                                    <td class="border-r-2 border-line-brown/50">
+                                        <textarea class="notepad-lines h-[200px]" name="present_dosage"
+                                            placeholder="Type here...">{{ $presentIllness->dosage ?? '' }}</textarea>
+                                    </td>
+                                    <td class="border-r-2 border-line-brown/50">
+                                        <textarea class="notepad-lines h-[200px]" name="present_side_effect"
+                                            placeholder="Type here...">{{ $presentIllness->side_effect ?? '' }}</textarea>
+                                    </td>
+                                    <td>
+                                        <textarea class="notepad-lines h-[200px]" name="present_comment"
+                                            placeholder="Type here...">{{ $presentIllness->comment ?? '' }}</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </center>
 
                 <center>
-                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
+                    <div class="w-[85%] mx-auto flex justify-center items-start gap-1">
 
-                        {{-- PAST MEDICAL / SURGICAL --}}
-                        <tr>
-                            <th colspan="6" class="main-header text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
-                        </tr>
-                        <tr>
 
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
-                            <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
-                            <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
-                        </tr>
+                        <div class="w-full rounded-[15px] overflow-hidden">
+                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0">
 
-                        <tr class="bg-beige">
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="past_condition_name"
-                                    placeholder="Type here...">{{ $pastMedicalSurgical->condition_name ?? '' }}</textarea>
-                            </td>
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="past_description"
-                                    placeholder="Type here...">{{ $pastMedicalSurgical->description ?? '' }}</textarea>
-                            </td>
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="past_medication"
-                                    placeholder="Type here...">{{ $pastMedicalSurgical->medication ?? '' }}</textarea>
-                            </td>
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="past_dosage"
-                                    placeholder="Type here...">{{ $pastMedicalSurgical->dosage ?? '' }}</textarea>
-                            </td>
-                            <td class="border-r-2 border-line-brown/70">
-                                <textarea class="notepad-lines h-[200px]" name="past_side_effect"
-                                    placeholder="Type here...">{{ $pastMedicalSurgical->side_effect ?? '' }}</textarea>
-                            </td>
-                            <td>
-                                <textarea class="notepad-lines h-[200px]" name="past_comment"
-                                    placeholder="Type here...">{{ $pastMedicalSurgical->comment ?? '' }}</textarea>
-                            </td>
-                        </tr>
-                    </table>
+                            {{-- PAST MEDICAL / SURGICAL --}}
+                            <tr>
+                                <th colspan="6" class="main-header text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
+                            </tr>
+                            <tr>
+
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
+                                <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
+                            </tr>
+
+                            <tr class="bg-beige">
+                                <td class="border-r-2 border-line-brown/40">
+                                    <textarea class="notepad-lines h-[200px]" name="past_condition_name"
+                                        placeholder="Type here...">{{ $pastMedicalSurgical->condition_name ?? '' }}</textarea>
+                                </td>
+                                <td class="border-r-2 border-line-brown/50">
+                                    <textarea class="notepad-lines h-[200px]" name="past_description"
+                                        placeholder="Type here...">{{ $pastMedicalSurgical->description ?? '' }}</textarea>
+                                </td>
+                                <td class="border-r-2 border-line-brown/50">
+                                    <textarea class="notepad-lines h-[200px]" name="past_medication"
+                                        placeholder="Type here...">{{ $pastMedicalSurgical->medication ?? '' }}</textarea>
+                                </td>
+                                <td class="border-r-2 border-line-brown/50">
+                                    <textarea class="notepad-lines h-[200px]" name="past_dosage"
+                                        placeholder="Type here...">{{ $pastMedicalSurgical->dosage ?? '' }}</textarea>
+                                </td>
+                                <td class="border-r-2 border-line-brown/50">
+                                    <textarea class="notepad-lines h-[200px]" name="past_side_effect"
+                                        placeholder="Type here...">{{ $pastMedicalSurgical->side_effect ?? '' }}</textarea>
+                                </td>
+                                <td>
+                                    <textarea class="notepad-lines h-[200px]" name="past_comment"
+                                        placeholder="Type here...">{{ $pastMedicalSurgical->comment ?? '' }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
                 </center>
 
                 <center>
-                    <table class="mb-2 w-[72%]">
+                    <div class="w-[85%] mx-auto flex justify-center items-start gap-1">
+
+
+                        <div class="w-full rounded-[15px] overflow-hidden">
+                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0">
 
                         {{-- KNOWN CONDITION OR ALLERGIES --}}
 
@@ -135,23 +152,23 @@
                         </tr>
 
                         <tr class="bg-beige">
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="allergy_condition_name"
                                     placeholder="Type here...">{{ $allergy->condition_name ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="allergy_description"
                                     placeholder="Type here...">{{ $allergy->description ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="allergy_medication"
                                     placeholder="Type here...">{{ $allergy->medication ?? '' }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="allergy_dosage"
                                     placeholder="Type here...">{{ old('allergy_dosage', $allergy->dosage ?? '') }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="allergy_side_effect"
                                     placeholder="Type here...">{{ old('allergy_side_effect', $allergy->side_effect ?? '') }}</textarea>
                             </td>
@@ -161,10 +178,16 @@
                             </td>
                         </tr>
                     </table>
+                        </div>
+                    </div>
                 </center>
 
                 <center>
-                    <table class="mb-2 w-[72%] border-collapse border-spacing-0">
+                    <div class="w-[85%] mx-auto flex justify-center items-start gap-1">
+
+
+                        <div class="w-full rounded-[15px] overflow-hidden">
+                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0">
                         {{-- VACCINATION --}}
                         <tr>
                             <th colspan="6" class="main-header text-white rounded-t-lg">VACCINATION</th>
@@ -180,23 +203,23 @@
                         </tr>
 
                         <tr class="bg-beige">
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="vaccine_name"
                                     placeholder="Type here...">{{ old('vaccine_name', $vaccination->condition_name ?? '') }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="vaccine_description"
                                     placeholder="Type here...">{{ old('vaccine_description', $vaccination->description ?? '') }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="vaccine_medication"
                                     placeholder="Type here...">{{ old('vaccine_medication', $vaccination->medication ?? '') }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="vaccine_dosage"
                                     placeholder="Type here...">{{ old('vaccine_dosage', $vaccination->dosage ?? '') }}</textarea>
                             </td>
-                            <td class="border-r-2 border-line-brown/70">
+                            <td class="border-r-2 border-line-brown/50">
                                 <textarea class="notepad-lines h-[200px]" name="vaccine_side_effect"
                                     placeholder="Type here...">{{ old('vaccine_side_effect', $vaccination->side_effect ?? '') }}</textarea>
                             </td>
@@ -206,9 +229,12 @@
                             </td>
                         </tr>
                     </table>
+
+                        </div>
+                    </div>
                 </center>
 
-                <div class="w-[72%] mx-auto flex justify-end mt-5 mb-30">
+                <div class="w-[85%] mx-auto flex justify-end mt-5 mb-30">
 
                     {{-- paasyos ako ng routing here, dapat mapupunta sa developmental history --}}
                     <a href="{{ route('developmental-history') }}">

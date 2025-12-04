@@ -4,10 +4,6 @@
 
 @section('content')
 
-    <h2 class="text-[45px] font-black mb-10 text-dark-green text-center font-alte mx-auto my-12">
-        INTAKE AND OUTPUT
-    </h2>
-
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
 
@@ -70,15 +66,15 @@
                     value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset">
                 <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
-                <div class="w-[70%] mx-auto flex justify-center items-start gap-1 mt-6">
+                <div class="w-[85%] mx-auto flex justify-center items-start gap-1 mt-6">
                     <div class="w-[68%] rounded-[15px] overflow-hidden">
 
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tl-lg">ORAL
+                                <th class="w-[33%] main-header py-2 text-center rounded-tl-lg">ORAL
                                     INTAKE (mL)</th>
-                                <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center">IV FLUIDS (mL)</th>
-                                <th class="w-[33%] bg-dark-green text-white font-bold py-2 text-center rounded-tr-lg">URINE
+                                <th class="w-[33%] main-header py-2 text-center">IV FLUIDS (mL)</th>
+                                <th class="w-[33%] main-header py-2 text-center rounded-tr-lg">URINE
                                     OUTPUT (mL)</th>
                             </tr>
 
@@ -111,7 +107,7 @@
                     </div>
 
                     <div class="w-[25%] rounded-[15px] overflow-hidden">
-                        <div class="bg-dark-green text-white font-bold py-2 mb-1 text-center rounded-[15px]">
+                        <div class="main-header py-2 mb-1 text-center rounded-[15px]">
                             ALERTS
                         </div>
 
@@ -127,7 +123,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="w-[70%] mx-auto flex justify-end mt-20 mb-30 space-x-4">
+                <div class="w-[80%] mx-auto flex justify-end mt-5 mb-30 space-x-4">
                     {{-- <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button>--}}
                     @if ($ioData)
                         <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default">CDSS</button>

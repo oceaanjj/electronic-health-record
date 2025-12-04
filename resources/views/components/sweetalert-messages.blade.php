@@ -56,6 +56,10 @@
     </script>
 @endif
 
+
+{{-- ** taena ito pala yung error letse 3 days ako dito ah ** --}}
+
+{{-- 
 @if ($errors->any())
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -71,3 +75,4 @@
         });
     </script>
 @endif
+--}}

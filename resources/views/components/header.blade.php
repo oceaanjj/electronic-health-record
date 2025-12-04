@@ -1,9 +1,29 @@
 <header class="fixed flex items-center justify-between bg-white shadow-md h-[120px] z-50 top-0 left-0 right-0">
     <div class="flex items-center space-x-10 pr-10 pl-10">
 
-        <button onclick="openNav()" class="text-yellow text-2xl font-bold focus:outline-none cursor-pointer">
-            ☰
+        <button onclick="toggleNav()">
+            <span class="material-symbols-outlined text-dark-green cursor-pointer"
+                style="font-size: 25px;">
+                dehaze
+            </span>
         </button>
+
+
+        <script>
+            let isNavOpen = false;
+
+            function toggleNav() {
+                if (isNavOpen) {
+                    closeNav();
+                } else {
+                    openNav();
+                }
+
+                isNavOpen = !isNavOpen;
+            }
+        </script>
+
+
 
         @php
             $user = Auth::user();

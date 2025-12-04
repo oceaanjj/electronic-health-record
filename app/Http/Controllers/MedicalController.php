@@ -240,7 +240,7 @@ class MedicalController extends Controller
 
             return redirect()->route('developmental-history')
                 ->withInput($data);
-
+            //-
 
         } catch (Throwable $e) {
             return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());

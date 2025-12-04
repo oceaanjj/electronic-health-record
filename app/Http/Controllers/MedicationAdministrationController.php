@@ -123,7 +123,7 @@ class MedicationAdministrationController extends Controller
             session()->put('last_submitted_date', $administrationDate);
 
             if ($request->expectsJson()) {
-                return response()->json(['message' => 'Medication Administration data saved successfully!', 'created' => $createdCount, 'updated' => $updatedCount]);
+                return response()->json(['message' => 'Medication Administration data saved successfully!']);
             }
 
             return redirect()->route('medication-administration')->with('success', "Medication Administration data saved successfully! {$message}");

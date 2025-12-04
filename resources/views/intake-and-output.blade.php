@@ -45,7 +45,7 @@
                 </label>
                 <select id="day_no_selector" name="day_no"
                     class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                                                                                                                       focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                                                                                                                                               focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
                     @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
                         <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
                             {{ $i }}
@@ -146,20 +146,20 @@
     ])
 
     {{-- Define the specific initializers for this page --}}
-    <!-- <script>
-                                                            document.addEventListener('DOMContentLoaded', () => {
-                                                                window.pageInitializers = [
-                                                                    window.initializeSearchableDropdown,
-                                                                    window.initializeDateDayLoader,
-                                                                    // Assuming intakeOutputCdss has an init method or is directly callable
-                                                                    () => {
-                                                                        if (typeof window.intakeOutputCdss === 'function') {
-                                                                            window.intakeOutputCdss();
-                                                                        } else if (typeof window.intakeOutputCdss?.init === 'function') {
-                                                                            window.intakeOutputCdss.init();
-                                                                        }
-                                                                    }
-                                                                ];
-                                                            });
-                                                        </script> -->
+    <!-- <script> document.addEventListener('DOMContentLoaded', () => {
+                window.pageInitializers = [
+                    window.initializeSearchableDropdown,
+                    window.initializeDateDayLoader,
+                    () => {
+                        if (typeof window.intakeOutputCdss === 'function') {
+                            window.intakeOutputCdss();
+                        } else if (typeof window.intakeOutputCdss?.init === 'function') {
+                            window.intakeOutputCdss.init();
+                        }
+                    }
+                ];
+            });
+        </script> -->
+
+
 @endpush

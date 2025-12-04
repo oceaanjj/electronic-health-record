@@ -1,10 +1,6 @@
 @extends('layouts.app')
-
 @section('title', 'Patient Lab Values')
-
 @section('content')
-
-
 
     <div id="form-content-container">
 

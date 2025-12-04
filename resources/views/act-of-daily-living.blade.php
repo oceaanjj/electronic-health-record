@@ -158,7 +158,6 @@
 @endsection
 
 @push('scripts')
-    {{-- FIX: Using 'searchable-dropdown.js' (the robust one) instead of 'init.searchable-dropdown.js' --}}
     @vite([
         'resources/js/patient-loader.js',
         'resources/js/searchable-dropdown.js', 
@@ -168,7 +167,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // FIX: Using the correct function name exposed by the robust JS
             if (window.initSearchableDropdown) {
                 window.initSearchableDropdown();
             }

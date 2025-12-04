@@ -108,7 +108,7 @@ class MedicationAdministrationController extends Controller
             }
 
             $totalAffected = $createdCount + $updatedCount;
-            $message = "{$createdCount} new entries created and {$updatedCount} entries updated.";
+            // $message = "{$createdCount} new entries created and {$updatedCount} entries updated.";
 
             if ($totalAffected > 0) {
                 $username = Auth::user()->username ?? 'Unknown';
@@ -126,7 +126,7 @@ class MedicationAdministrationController extends Controller
                 return response()->json(['message' => 'Medication Administration data saved successfully!']);
             }
 
-            return redirect()->route('medication-administration')->with('success', "Medication Administration data saved successfully! {$message}");
+            return redirect()->route('medication-administration')->with('success', "Medication Administration data saved successfully! ");
 
         } catch (Throwable $e) {
             if ($request->expectsJson()) {

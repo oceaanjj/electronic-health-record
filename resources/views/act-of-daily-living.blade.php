@@ -5,10 +5,11 @@
 <div id="form-content-container">
 
     {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR --}}
-    {{-- Kept OUTSIDE the main form so it remains clickable --}}
+    {{-- Kept OUTSIDE the form so the disabled overlay doesn't block it --}}
     <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
         <div class="flex items-center gap-6 w-full">
-            
+            @csrf
+
             {{-- PATIENT NAME --}}
             <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
                 PATIENT NAME :
@@ -58,11 +59,12 @@
             </select>
         </div>
     </div>
-    {{-- END HEADER --}}
-
+    
     {{-- 
-        FIX: Added 'relative', 'w-[70%]', 'mx-auto' 
-        This ensures the form has a defined width and the overlay sits inside it.
+        FIX: 
+        1. Added 'relative', 'w-[70%]', 'mx-auto' to <form>.
+        2. Added 'cdss-form' for JS targeting.
+        This creates the correct "box" for the disabled overlay to appear in.
     --}}
     <form id="adl-form" method="POST" class="cdss-form relative w-[70%] mx-auto" 
           action="{{ route('adl.store') }}"
@@ -77,7 +79,7 @@
             <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
             <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
 
-            {{-- Changed inner div to w-full --}}
+            {{-- FIX: Changed w-[70%] to w-full since the parent FORM is now 70% --}}
             <div class="w-full flex justify-center items-start gap-1 mt-6">
                 
                 {{-- LEFT SIDE TABLE (INPUTS) --}}
@@ -143,6 +145,7 @@
                 </div>
             </div>
 
+            {{-- FIX: Changed container to w-full to match form width --}}
             <div class="w-full flex justify-end mt-5 mb-20 space-x-4 pr-[2%]">
                 @if (isset($adlData))
                     <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
@@ -159,16 +162,20 @@
 @endsection
 
 @push('scripts')
+    {{-- FIX: Using 'searchable-dropdown.js' (the robust one) instead of 'init.searchable-dropdown.js' --}}
     @vite([
         'resources/js/patient-loader.js',
-        'resources/js/init.searchable-dropdown.js',
+        'resources/js/searchable-dropdown.js', 
         'resources/js/alert.js',
         'resources/js/date-day-sync.js' 
     ])
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            window.initializeSearchableDropdown();
+            // FIX: Using the correct function name exposed by the robust JS
+            if (window.initSearchableDropdown) {
+                window.initSearchableDropdown();
+            }
         });
     </script>
 @endpush

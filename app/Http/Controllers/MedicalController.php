@@ -75,6 +75,7 @@ class MedicalController extends Controller
 
         return view('developmental-history', compact('patients', 'selectedPatient', 'developmentalHistory'));
     }
+
     public function storeDevelopmentalHistory(Request $request)
     {
         $patientId = $request->session()->get('selected_patient_id');
@@ -240,7 +241,6 @@ class MedicalController extends Controller
 
             return redirect()->route('developmental-history')
                 ->withInput($data);
-            //-
 
         } catch (Throwable $e) {
             return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());

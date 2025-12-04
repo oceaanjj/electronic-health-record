@@ -9,7 +9,9 @@ const initSearchableDropdown = () => {
 
     const searchInput = document.getElementById("patient_search_input");
     const hiddenInput = document.getElementById("patient_id_hidden");
-    const optionsContainer = document.getElementById("patient_options_container");
+    const optionsContainer = document.getElementById(
+        "patient_options_container"
+    );
 
     if (!searchInput || !optionsContainer) return;
 
@@ -128,7 +130,8 @@ const initSearchableDropdown = () => {
             addActive(currentFocus + direction);
         } else if (event.key === "Enter") {
             event.preventDefault();
-            const activeOption = optionsContainer.querySelector(".option.active");
+            const activeOption =
+                optionsContainer.querySelector(".option.active");
             if (activeOption) {
                 selectOption(activeOption);
             } else if (visibleOptions.length > 0) {
@@ -144,91 +147,130 @@ const initSearchableDropdown = () => {
         }
     });
 
+    // ---------------------------------------------------------
+    // UPDATED DISABLE FUNCTION
+    // ---------------------------------------------------------
     const disableForm = (isDisabled) => {
-        const formFieldset = document.querySelector("#form-content-container fieldset");
+        const formContentContainer = document.getElementById(
+            "form-content-container"
+        );
+        const formElement = formContentContainer
+            ? formContentContainer.querySelector("form")
+            : null;
+        const formFieldset = formContentContainer
+            ? formContentContainer.querySelector("fieldset")
+            : null;
+
+        // 1. Manage the actual form disabling
         const dateSelector = document.getElementById("date_selector");
         const dayNoSelector = document.getElementById("day_no_selector");
         const vitalInputs = document.querySelectorAll(".vital-input");
-        const cdssButton = document.querySelector(".cdss-form button[type='button']");
-        const submitButton = document.querySelector(".cdss-form button[type='submit']");
-        const insertButtons = document.querySelectorAll(".insert-btn"); // Select all insert buttons
-        const clearButtons = document.querySelectorAll(".clear-btn"); // Select all clear buttons
+        const cdssButton = document.querySelector(
+            ".cdss-form button[type='button']"
+        );
+        const submitButton = document.querySelector(
+            ".cdss-form button[type='submit']"
+        );
+        const insertButtons = document.querySelectorAll(".insert-btn");
+        const clearButtons = document.querySelectorAll(".clear-btn");
 
-        if (formFieldset) {
-            formFieldset.disabled = isDisabled;
-        }
-        if (dateSelector) {
-            dateSelector.disabled = isDisabled;
-        }
-        if (dayNoSelector) {
-            dayNoSelector.disabled = isDisabled;
-        }
-        vitalInputs.forEach(input => {
+        if (formFieldset) formFieldset.disabled = isDisabled;
+        if (dateSelector) dateSelector.disabled = isDisabled;
+        if (dayNoSelector) dayNoSelector.disabled = isDisabled;
+
+        vitalInputs.forEach((input) => {
             input.disabled = isDisabled;
         });
-        if (cdssButton) {
-            cdssButton.disabled = isDisabled;
-        }
-        if (submitButton) {
-            submitButton.disabled = isDisabled;
-        }
+        if (cdssButton) cdssButton.disabled = isDisabled;
+        if (submitButton) submitButton.disabled = isDisabled;
 
-        // Explicitly disable/enable insert and clear buttons
-        insertButtons.forEach(button => {
+        insertButtons.forEach((button) => {
             if (isDisabled) {
-                button.classList.add('disabled');
-                button.setAttribute('disabled', 'true');
+                button.classList.add("disabled");
+                button.setAttribute("disabled", "true");
             } else {
-                button.classList.remove('disabled');
-                button.removeAttribute('disabled');
+                button.classList.remove("disabled");
+                button.removeAttribute("disabled");
             }
         });
 
-        clearButtons.forEach(button => {
+        clearButtons.forEach((button) => {
             button.disabled = isDisabled;
         });
+
+        // 2. Manage the Alert Overlay (The invisible shield)
+        if (formElement) {
+            // Try to find existing overlay
+            let overlay = formElement.querySelector(".trigger-patient-alert");
+
+            if (isDisabled) {
+                // If we are disabling, we MUST have the overlay.
+                // If it doesn't exist, create it.
+                if (!overlay) {
+                    overlay = document.createElement("div");
+                    overlay.className =
+                        "trigger-patient-alert absolute inset-0 z-50 bg-transparent cursor-not-allowed";
+                    // Ensure the form has relative positioning so the overlay stays inside
+                    if (!formElement.classList.contains("relative")) {
+                        formElement.classList.add("relative");
+                    }
+                    formElement.appendChild(overlay);
+                }
+                overlay.style.display = "block";
+            } else {
+                // If we are enabling, hide the overlay
+                if (overlay) {
+                    overlay.style.display = "none";
+                }
+            }
+        }
     };
 
     const clearFormInputs = () => {
-        const formFieldset = document.querySelector("#form-content-container fieldset");
+        const formFieldset = document.querySelector(
+            "#form-content-container fieldset"
+        );
         if (formFieldset) {
-            const inputs = formFieldset.querySelectorAll("input, textarea, textarea.notepad-lines");
-            inputs.forEach(input => {
-                if (input.type !== 'hidden') { // Do not clear hidden inputs
+            const inputs = formFieldset.querySelectorAll(
+                "input, textarea, textarea.notepad-lines"
+            );
+            inputs.forEach((input) => {
+                if (input.type !== "hidden") {
                     input.value = "";
                 }
-                input.style.backgroundColor = ""; // Clear background color
-                input.style.color = ""; // Clear text color
+                input.style.backgroundColor = "";
+                input.style.color = "";
             });
 
-            // Clear image previews and file inputs
-            const diagnosticPanels = formFieldset.querySelectorAll(".diagnostic-panel");
-            diagnosticPanels.forEach(panel => {
+            const diagnosticPanels =
+                formFieldset.querySelectorAll(".diagnostic-panel");
+            diagnosticPanels.forEach((panel) => {
                 const type = panel.dataset.type;
-                const previewContainer = document.getElementById('preview-' + type);
-                if (previewContainer) {
-                    previewContainer.innerHTML = '';
-                }
-                const uploadedFilesContainer = document.getElementById('uploaded-files-' + type);
-                if (uploadedFilesContainer) {
-                    uploadedFilesContainer.innerHTML = '';
-                }
-                // Also clear the file input itself
-                const fileInput = document.getElementById('file-input-' + type);
-                if (fileInput) {
-                    fileInput.value = '';
-                }
+                const previewContainer = document.getElementById(
+                    "preview-" + type
+                );
+                if (previewContainer) previewContainer.innerHTML = "";
+
+                const uploadedFilesContainer = document.getElementById(
+                    "uploaded-files-" + type
+                );
+                if (uploadedFilesContainer)
+                    uploadedFilesContainer.innerHTML = "";
+
+                const fileInput = document.getElementById("file-input-" + type);
+                if (fileInput) fileInput.value = "";
             });
         }
-        clearAlerts(); // Call clearAlerts when inputs are cleared
+        clearAlerts();
     };
 
     const clearAlerts = () => {
         const alertBoxes = document.querySelectorAll(".alert-box");
-        alertBoxes.forEach(alertBox => {
-            alertBox.innerHTML = '<span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>';
-            alertBox.style.backgroundColor = ""; // Clear background color
-            alertBox.onclick = null; // Ensure the alert box is not clickable
+        alertBoxes.forEach((alertBox) => {
+            alertBox.innerHTML =
+                '<span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>';
+            alertBox.style.backgroundColor = "";
+            alertBox.onclick = null;
         });
     };
 
@@ -240,13 +282,16 @@ const initSearchableDropdown = () => {
     }
 };
 
-// This listener handles clicks outside the dropdown to close it.
-// It's self-contained and only added once.
+// Global click listener for dropdown closing
 if (!window.searchableDropdownDocumentListener) {
     document.addEventListener("click", (event) => {
-        const dropdownContainer = document.querySelector(".searchable-dropdown");
+        const dropdownContainer = document.querySelector(
+            ".searchable-dropdown"
+        );
         if (dropdownContainer && !dropdownContainer.contains(event.target)) {
-            const optionsContainer = document.getElementById("patient_options_container");
+            const optionsContainer = document.getElementById(
+                "patient_options_container"
+            );
             if (optionsContainer) {
                 optionsContainer.style.display = "none";
             }
@@ -255,11 +300,8 @@ if (!window.searchableDropdownDocumentListener) {
     window.searchableDropdownDocumentListener = true;
 }
 
-// Initialize on initial page load
 document.addEventListener("DOMContentLoaded", () => {
     initSearchableDropdown();
 });
 
-// Expose the function to be called from other scripts
 window.initSearchableDropdown = initSearchableDropdown;
-

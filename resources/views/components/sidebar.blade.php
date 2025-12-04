@@ -8,11 +8,8 @@
         shadow-xl hover:bg-dark-green hover:scale-105 
         transition-all duration-300 ease-in-out">
 
-        <img src="{{ asset('img/sidebar/close-arrow.png') }}" class="w-3 block group-hover:hidden" alt="arrow">
-
-
-        <img src="{{ asset('img/sidebar/close-arrow-hover.png') }}" class="w-3 hidden group-hover:block"
-            alt="arrow-hover">
+        <span class="material-symbols-outlined hidden group-hover:block hover:text-white">arrow_left</span>
+       
 
     </button>
 

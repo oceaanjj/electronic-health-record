@@ -49,19 +49,19 @@
 
             @php
                 $cards = [
-                    ['route' => 'patients.create', 'img' => 'register.png', 'title' => 'REGISTER', 'desc' => 'This is where new patients are registered into the system.'],
-                    ['route' => 'patients.index', 'img' => 'demographic-profile.png', 'title' => 'DEMOGRAPHIC PROFILE', 'desc' => 'Store and manage patient information.'],
-                    ['route' => 'medical-history', 'img' => 'medical-history.png', 'title' => 'MEDICAL HISTORY', 'desc' => 'Document past illnesses, surgeries, allergies, and family medical background.'],
-                    ['route' => 'physical-exam.index', 'img' => 'physical-exam.png', 'title' => 'PHYSICAL EXAM', 'desc' => 'Record findings from clinical examinations and physical assessments.'],
-                    ['route' => 'vital-signs.show', 'img' => 'vital-signs.png', 'title' => 'VITAL SIGNS', 'desc' => 'Track and update measurements such as temperature, blood pressure, pulse, and respiration.'],
-                    ['route' => 'io.show', 'img' => 'intake-and-output.png', 'title' => 'INTAKE AND OUTPUT', 'desc' => 'Monitor and log a patient’s fluid intake and output for accurate care management.'],
-                    ['route' => 'adl.show', 'img' => 'activities-of-daily-living.png', 'title' => 'ACTIVITIES OF DAILY LIVING', 'desc' => 'Assess a patient’s ability to perform daily tasks such as eating, bathing, and mobility.'],
-                    ['route' => 'lab-values.index', 'img' => 'lab-values.png', 'title' => 'LAB VALUES', 'desc' => 'Record laboratory test results and integrate findings into the patient’s medical record.'],
-                    ['route' => 'diagnostics.index', 'img' => 'diagnostics.png', 'title' => 'DIAGNOSTICS', 'desc' => 'Document diagnostic procedures and results such as imaging, scans, and other tests.'],
-                    ['route' => 'ivs-and-lines', 'img' => 'ivs-and-lines.png', 'title' => "IV'S & LINES", 'desc' => 'Manage intravenous lines, infusions, and related treatments.'],
-                    ['route' => 'medication-administration', 'img' => 'med-admini.png', 'title' => 'MEDICATION ADMINISTRATION', 'desc' => 'Track prescribed medicines and record their administration schedules.'],
-                    ['route' => 'medication-reconciliation', 'img' => 'med-recon.png', 'title' => 'MEDICATION RECONCILIATION', 'desc' => 'Compare medications to ensure accuracy and prevent duplication or errors.'],
-                    ['route' => 'discharge-planning', 'img' => 'discharge-planning.png', 'title' => 'DISCHARGE PLANNING', 'desc' => 'Plan and document the patient’s care instructions upon discharge.']
+                    ['route' => 'patients.create', 'icon' => 'account_box', 'title' => 'REGISTER', 'desc' => 'This is where new patients are registered into the system.'],
+                    ['route' => 'patients.index', 'icon' => 'article_person', 'title' => 'DEMOGRAPHIC PROFILE', 'desc' => 'Store and manage patient information.'],
+                    ['route' => 'medical-history', 'icon' => 'history', 'title' => 'MEDICAL HISTORY', 'desc' => 'Document past illnesses, surgeries, allergies, and family medical background.'],
+                    ['route' => 'physical-exam.index', 'icon' => 'physical_therapy', 'title' => 'PHYSICAL EXAM', 'desc' => 'Record findings from clinical examinations and physical assessments.'],
+                    ['route' => 'vital-signs.show', 'icon' => 'ecg_heart', 'title' => 'VITAL SIGNS', 'desc' => 'Track and update measurements such as temperature, blood pressure, pulse, and respiration.'],
+                    ['route' => 'io.show', 'icon' => 'pill', 'title' => 'INTAKE AND OUTPUT', 'desc' => 'Monitor and log a patient’s fluid intake and output for accurate care management.'],
+                    ['route' => 'adl.show', 'icon' => 'toys_and_games', 'title' => 'ACTIVITIES OF DAILY LIVING', 'desc' => 'Assess a patient’s ability to perform daily tasks such as eating, bathing, and mobility.'],
+                    ['route' => 'lab-values.index', 'icon' => 'experiment', 'title' => 'LAB VALUES', 'desc' => 'Record laboratory test results and integrate findings into the patient’s medical record.'],
+                    ['route' => 'diagnostics.index', 'icon' => 'diagnosis', 'title' => 'DIAGNOSTICS', 'desc' => 'Document diagnostic procedures and results such as imaging, scans, and other tests.'],
+                    ['route' => 'ivs-and-lines', 'icon' => 'blood_pressure', 'title' => "IV'S & LINES", 'desc' => 'Manage intravenous lines, infusions, and related treatments.'],
+                    ['route' => 'medication-administration', 'icon' => 'medication', 'title' => 'MEDICATION ADMINISTRATION', 'desc' => 'Track prescribed medicines and record their administration schedules.'],
+                    ['route' => 'medication-reconciliation', 'icon' => 'admin_meds', 'title' => 'MEDICATION RECONCILIATION', 'desc' => 'Compare medications to ensure accuracy and prevent duplication or errors.'],
+                   // ['route' => 'discharge-planning', 'icon' => 'discharge-planning.png', 'title' => 'DISCHARGE PLANNING', 'desc' => 'Plan and document the patient’s care instructions upon discharge.']
                 ];
             @endphp
 
@@ -70,8 +70,10 @@
                     class="group border border-gray-300 rounded-[20px] p-8 flex flex-col justify-between text-left bg-white shadow-sm hover:shadow-md transition duration-200 hover:-translate-y-1 hover:border-green-600">
 
                     <div>
-                        <img src="{{ asset('img/sidebar/' . $card['img']) }}" class="w-14 h-14 mb-4 object-contain"
-                            alt="{{ $card['title'] }}">
+
+                        <span class="material-symbols-outlined text-green-700 mb-4"  style="font-size: 50px;">
+                            {{ $card['icon'] }}
+                        </span>
                         <h2 class="font-bold text-sm mb-2">{{ $card['title'] }}</h2>
                         <p class="text-xs text-gray-600 mb-6 leading-relaxed">
                             {{ $card['desc'] }}

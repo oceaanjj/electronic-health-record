@@ -66,8 +66,7 @@
 
             <!-- ADPIE Table -->
 
-            <h2 class="section-title">ADPIE
-            </h2>
+            <h2 class="section-title-adpie">ADPIE</h2>
             <table class="data-table">
                 <thead>
                     <tr>

@@ -22,7 +22,7 @@
         }
 
        .section-title-adpie {
-            background-color: #ebce67ff;
+            background-color: #d0d0d0ff;
             padding: 5px;
             border-bottom: 1px solid #eee;
             margin-bottom: -10px;

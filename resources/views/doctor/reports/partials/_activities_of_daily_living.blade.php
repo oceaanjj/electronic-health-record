@@ -78,12 +78,10 @@
                 </tbody>
             </table>
 
-
-
             <!-- ADPIE Table -->
 
             <h2 class="section-title-adpie">ADPIE</h2>
-            <table class="data-table">
+            <table class="data-table" style="padding-bottom:5px;">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -117,7 +115,9 @@
 
 
             @if(!$loop->last)
-                <hr class="pdf-hr">
+                <div style="margin-bottom:10px">
+                    <hr class="pdf-hr">
+                </div>
             @endif
 
 

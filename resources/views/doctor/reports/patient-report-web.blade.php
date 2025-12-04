@@ -2,9 +2,8 @@
 @section('title', 'Patient Report')
 @section('content')
 
-<!-- nasa doctor/report/partials yung mga components -->
+    <!-- nasa doctor/report/partials yung mga components -->
     <style>
-      
         .section {
             margin-bottom: 10px;
             border: 1px solid #eee;
@@ -12,22 +11,34 @@
             border-radius: 5px;
         }
 
-        .section-title {    /* component title */
+        .section-title {
             background-color: #ffe070ff;
             padding: 5px;
-            margin-top:10px;
-            margin-botom:10px;
+            margin-top: 10px;
+            margin-bottom: -10px;
             border-bottom: 1px solid #eee;
             font-size: 16px;
             font-weight: bold;
         }
 
-        h2{  /* ex: patient-information text */
+       .section-title-adpie {
+            background-color: #ebce67ff;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: -10px;
+            font-size: 16px;
             font-weight: bold;
-            font-size:16px;
+
         }
-       
-        h3 {  /* ex: present illness, sa table */
+
+        h2 {
+            /* ex: patient-information text */
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        h3 {
+            /* ex: present illness, sa table */
             font-size: 16px;
             font-weight: bold;
             margin-top: 15px;
@@ -52,13 +63,18 @@
 
         th {
             background-color: #f2f2f2;
-            font-size:14px;
+            font-size: 14px;
         }
 
         .no-data {
             color: #777;
             font-style: italic;
         }
+
+        .pdf-hr{
+            border:1px solid black;
+        }
+       
     </style>
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="bg-white shadow-md rounded-lg p-6">
@@ -104,18 +120,18 @@
                 @include('doctor.reports.partials._ivs_and_lines', ['ivsAndLines' => $ivsAndLines])
             </div>
             <div class="section">
-                @include('doctor.reports.partials._medication_administrations', ['medicationAdministrations' => $medicationAdministrations])
-            </div>
-            <div class="section">
-                @include('doctor.reports.partials._medication_reconciliation', [
-                    'currentMedication' => $currentMedication,
-                    'homeMedication' => $homeMedication,
-                    'changesInMedication' => $changesInMedication,
-                ])
-            </div>
-                    <div class="section">
-                        @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning])
+        @include('doctor.reports.partials._medication_administrations', ['medicationAdministrations' => $medicationAdministrations])
+    </div>
+    <div class="section">
+        @include('doctor.reports.partials._medication_reconciliation', [
+            'currentMedication' => $currentMedication,
+            'homeMedication' => $homeMedication,
+            'changesInMedication' => $changesInMedication,
+        ])
+                </div>
+                        <div class="section">
+                            @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning])
+                        </div>
                     </div>
                 </div>
-            </div>
 @endsection

@@ -67,11 +67,14 @@ class LabValues extends Model
         'basophils_alert',
     ];
 
-    /**
-     * Get the patient that owns the lab values.
-     */
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
+    }
+
+    // for ADPIE Table
+    public function nursingDiagnoses()
+    {
+        return $this->hasOne(NursingDiagnosis::class);
     }
 }

@@ -83,7 +83,7 @@
                     @if ($groupKey === $currentGroupKey && !$loop->last)
                         <tr>
                             <td colspan="10">
-                                <hr>
+                                <hr class="pdf-hr">
                             </td>
                         </tr>
                     @endif

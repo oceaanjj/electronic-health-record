@@ -36,11 +36,15 @@ class ActOfDailyLiving extends Model
         'pain_level_alert',
     ];
 
-    /**
-     * Get the patient that owns the Activities of Daily Living record.
-     */
+
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
+    }
+
+    // for ADPIE Table
+    public function nursingDiagnoses()
+    {
+        return $this->hasOne(NursingDiagnosis::class, 'adl_id');
     }
 }

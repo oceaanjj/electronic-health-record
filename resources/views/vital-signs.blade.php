@@ -2,7 +2,7 @@
 @section('title', 'Patient Vital Signs')
 @section('content')
 <style>
-
+/*
     #chart-viewport {
     overflow: hidden;
     height: 530px; 
@@ -20,14 +20,13 @@
     #chart-track {
         padding-top: 50px;
         padding-bottom: 40px;
-}
+}*/
 
 
  
 
 
 
-    /*
 #chart-viewport {
     height: 530px;
     overflow: hidden;
@@ -42,7 +41,7 @@
 
 #chart-track > div {
     margin: 10px 0;
-}*/
+}
 
 </style>
 

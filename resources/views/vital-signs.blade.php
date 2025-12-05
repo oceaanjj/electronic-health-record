@@ -131,7 +131,58 @@
                     value="{{ $currentDayNo ?? 1 }}"
                 />
 
-                <div class="mx-auto mt-6 flex w-[70%] items-start justify-center gap-1">
+                <div class="mx-auto mt-6 flex w-[90%] items-start justify-between gap-1">
+                    <div class="relative w-[30%] mr-3">
+                        <!-- UP BUTTON -->
+                        <button
+                            type="button"
+                            id="chart-up"
+                            class="bg-dark-green absolute -top-12 left-1/2 z-20 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full text-white shadow-lg hover:bg-green-700"
+                        >
+                            <span class="material-symbols-outlined">arrow_drop_up</span>
+                        </button>
+
+                        <!-- VIEWPORT (SHOWS 3 CHARTS) -->
+                        <div id="chart-viewport" class="h-[530px] overflow-hidden rounded-[20px] bg-transparent">
+                            <!-- TRACK -->
+                            <div id="chart-track" class="space-y-6 transition-transform duration-700 ease-out">
+                                <!-- ✅ REUSABLE CHART CARD -->
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                    <h2 class="text-dark-green mb-1 text-center font-bold">Temperature Trend</h2>
+                                    <canvas id="tempChart"></canvas>
+                                </div>
+
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                    <h2 class="text-dark-green mb-1 text-center font-bold">Heart Rate Trend</h2>
+                                    <canvas id="hrChart"></canvas>
+                                </div>
+
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                    <h2 class="text-dark-green mb-1 text-center font-bold">Respiratory Rate Trend</h2>
+                                    <canvas id="rrChart"></canvas>
+                                </div>
+
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                    <h2 class="text-dark-green mb-1 text-center font-bold">Blood Pressure Trend</h2>
+                                    <canvas id="bpChart"></canvas>
+                                </div>
+
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                    <h2 class="text-dark-green mb-1 text-center font-bold">SpO₂ Trend</h2>
+                                    <canvas id="spo2Chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DOWN BUTTON -->
+                        <button
+                            type="button"
+                            id="chart-down"
+                            class="bg-dark-green absolute -bottom-12 left-1/2 z-20 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full text-white shadow-lg hover:bg-green-700"
+                        >
+                            <span class="material-symbols-outlined">arrow_drop_down</span>
+                        </button>
+                    </div>
                     <div class="w-[68%] overflow-hidden rounded-[15px]">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
@@ -227,7 +278,7 @@
                         </table>
                     </div>
 
-                    <div class="w-[25%] overflow-hidden rounded-[15px]">
+                    <div class="w-[25%] rounded-[15px]">
                         <div class="main-header rounded-[15px]">ALERTS</div>
 
                         <table class="w-full border-collapse">
@@ -251,7 +302,7 @@
                                 <tr>
                                     <td class="align-middle" data-alert-for-time="{{ $time }}">
                                         <div
-                                            class="alert-box my-1 flex h-[53px] w-full items-center justify-center px-3 py-4"
+                                            class="alert-box flex h-[53px] w-full items-center justify-center"
                                             data-alert-for-time="{{ $time }}"
                                         >
                                             {{-- Dynamic alert content will load here --}}
@@ -279,50 +330,6 @@
                 </div>
             </form>
         </fieldset>
-        <div class="relative mx-auto mt-10 mb-20 w-[50%]">
-            <button
-                id="chart-up"
-                class="bg-dark-green absolute top-[-50px] left-1/2 z-20 -translate-x-1/2 rounded-full px-4 py-2 text-white shadow-lg hover:bg-green-700"
-            >
-                ↑
-            </button>
-
-            <div id="chart-viewport" class="relative h-[260px] overflow-hidden rounded-[20px] bg-white shadow-xl">
-                <div id="chart-track" class="transition-transform duration-700 ease-out">
-                    <div class="p-4">
-                        <h2 class="text-dark-green mb-3 text-center text-lg font-bold">Temperature Trend</h2>
-                        <canvas id="tempChart" height="200"></canvas>
-                    </div>
-
-                    <div class="p-4">
-                        <h2 class="text-dark-green mb-3 text-center text-lg font-bold">Heart Rate Trend</h2>
-                        <canvas id="hrChart" height="200"></canvas>
-                    </div>
-
-                    <div class="p-4">
-                        <h2 class="text-dark-green mb-3 text-center text-lg font-bold">Respiratory Rate Trend</h2>
-                        <canvas id="rrChart" height="200"></canvas>
-                    </div>
-
-                    <div class="p-4">
-                        <h2 class="text-dark-green mb-3 text-center text-lg font-bold">Blood Pressure Trend</h2>
-                        <canvas id="bpChart" height="200"></canvas>
-                    </div>
-
-                    <div class="p-4">
-                        <h2 class="text-dark-green mb-3 text-center text-lg font-bold">SpO₂ Trend</h2>
-                        <canvas id="spo2Chart" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <button
-                id="chart-down"
-                class="bg-dark-green absolute bottom-[-50px] left-1/2 z-20 -translate-x-1/2 rounded-full px-4 py-2 text-white shadow-lg hover:bg-green-700"
-            >
-                ↓
-            </button>
-        </div>
     </div>
 @endsection
 
@@ -340,8 +347,12 @@
     <script>
         let chartIndex = 0;
         const totalCharts = 5;
+
+        const visibleCharts = 2;
+        const chartHeight = 244; // ✅ card height + spacing
+        const maxIndex = totalCharts - visibleCharts;
+
         const track = document.getElementById('chart-track');
-        const viewportHeight = 260; // match container height
 
         document.getElementById('chart-up').addEventListener('click', () => {
             if (chartIndex > 0) chartIndex--;
@@ -349,12 +360,12 @@
         });
 
         document.getElementById('chart-down').addEventListener('click', () => {
-            if (chartIndex < totalCharts - 1) chartIndex++;
+            if (chartIndex < maxIndex) chartIndex++;
             updateChartScroll();
         });
 
         function updateChartScroll() {
-            const offset = -(chartIndex * viewportHeight);
+            const offset = -(chartIndex * chartHeight);
             track.style.transform = `translateY(${offset}px)`;
         }
 

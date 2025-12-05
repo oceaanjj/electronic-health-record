@@ -40,28 +40,29 @@
                     @enderror
                     <br>
 
-                   <label for="password">Password</label><br>
+                    <label for="password">Password</label><br>
                     <div class="password-wrapper">
-                        <input type="password" name="password" id="password" class="h-[50px]" placeholder="Enter your password">
+                        <input type="password" name="password" id="password" class="h-[50px]"
+                            placeholder="Enter your password">
                         <span id="togglePassword" class="toggle-password" onclick="togglePassword()">
                             <i data-lucide="eye-off" class="eye-icon"></i>
                         </span>
 
                     </div>
-                     @error('password')
+                    @error('password')
                         <p class="text-red-600 mt-1 text-sm">{{ $message }}</p>
                     @enderror
 
                     {{-- <p class="forgot">Forgot password?</p> --}}
 
                     <!-- This will now show "Invalid login details." or "Unrecognized role." -->
-                   {{--@error('username') <p style="color:red;">{{ $message }}</p> @enderror
+                    {{--@error('username') <p style="color:red;">{{ $message }}</p> @enderror
                     @error('password') <p style="color:red;">{{ $message }}</p> @enderror--}}
 
                     <button type="submit" class="btn-login mt-6">Sign in</button>
                 </form>
 
-               
+
                 <!-- <div>
                     <a href="{{ route('home') }}" class="return-home">
                         <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon">
@@ -71,56 +72,56 @@
         </div>
     </div>
 
-@if(session('sweetalert'))
+    @if(session('sweetalert'))
+        <script>
+            // Use setTimeout to ensure this doesn't block page rendering
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    const opts = @json(session('sweetalert'));
+                    if (typeof showSuccess === 'function' && opts.type === 'success') {
+                        showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
+                    } else if (typeof showError === 'function' && opts.type === 'error') {
+                        showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
+                    } else if (typeof showWarning === 'function' && opts.type === 'warning') {
+                        showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
+                    } else if (typeof showInfo === 'function' && opts.type === 'info') {
+                        showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
+                    } else if (typeof Swal === 'function') {
+                        Swal.fire({
+                            icon: opts.type || 'info',
+                            title: opts.title || '',
+                            text: opts.text || '',
+                            timer: opts.timer || 2000
+                        });
+                    }
+                }, 100); // Small delay to ensure page is fully loaded
+            });
+        </script>
+    @endif
+
     <script>
-        // Use setTimeout to ensure this doesn't block page rendering
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const opts = @json(session('sweetalert'));
-                if (typeof showSuccess === 'function' && opts.type === 'success') {
-                    showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
-                } else if (typeof showError === 'function' && opts.type === 'error') {
-                    showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
-                } else if (typeof showWarning === 'function' && opts.type === 'warning') {
-                    showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
-                } else if (typeof showInfo === 'function' && opts.type === 'info') {
-                    showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
-                } else if (typeof Swal === 'function') {
-                    Swal.fire({
-                        icon: opts.type || 'info',
-                        title: opts.title || '',
-                        text: opts.text || '',
-                        timer: opts.timer || 2000
-                    });
-                }
-            }, 100); // Small delay to ensure page is fully loaded
-        });
-    </script>
-@endif
-
-<script>
-    lucide.createIcons();
-
-    function togglePassword() {
-        const passwordInput = document.getElementById("password");
-        const togglePassword = document.getElementById("togglePassword");
-
-        // Clear previous icon
-        togglePassword.innerHTML = '';
-
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            // Show open-eye when visible
-            togglePassword.innerHTML = '<i data-lucide="eye"></i>';
-        } else {
-            passwordInput.type = "password";
-            // Show closed-eye when hidden
-            togglePassword.innerHTML = '<i data-lucide="eye-off"></i>';
-        }
-
         lucide.createIcons();
-    }
-</script>
+
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const togglePassword = document.getElementById("togglePassword");
+
+            // Clear previous icon
+            togglePassword.innerHTML = '';
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                // Show open-eye when visible
+                togglePassword.innerHTML = '<i data-lucide="eye"></i>';
+            } else {
+                passwordInput.type = "password";
+                // Show closed-eye when hidden
+                togglePassword.innerHTML = '<i data-lucide="eye-off"></i>';
+            }
+
+            lucide.createIcons();
+        }
+    </script>
 
 </body>
 

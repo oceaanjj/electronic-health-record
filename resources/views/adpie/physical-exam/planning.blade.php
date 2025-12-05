@@ -45,7 +45,7 @@
                     {{-- NEW: Pre-load alert from session --}}
                     @if ($component === 'physical-exam')
                         @php
-                            $alert = session('adpie_alerts')['planning'] ?? null;
+                            $alert = session('physical-exam-alerts')['planning'] ?? null;
                             $level = $alert->level ?? 'INFO';
                             $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
                             $colorClass = 'alert-green';

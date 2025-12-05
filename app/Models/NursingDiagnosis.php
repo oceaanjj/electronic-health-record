@@ -11,7 +11,7 @@ class NursingDiagnosis extends Model
         'intake_and_output_id',
         'lab_values_id', // Added for Lab Values
         'adl_id', // Added for Act of Daily Living
-        'vitals_id', // Added for Vitals
+        'vital_signs_id',
         'patient_id',
         'diagnosis',
         'planning',
@@ -47,9 +47,9 @@ class NursingDiagnosis extends Model
         return $this->belongsTo(ActOfDailyLiving::class, 'adl_id');
     }
 
-    public function vitals() // New relationship
+    public function vitalSigns()
     {
-        return $this->belongsTo(Vitals::class);
+        return $this->belongsTo(Vitals::class, 'vital_signs_id');
     }
 
     public function patient()

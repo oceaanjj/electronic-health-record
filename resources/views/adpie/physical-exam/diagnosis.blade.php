@@ -11,6 +11,8 @@
                 class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100">
         </div>
     </div>
+                    {{-- Display Findings --}}
+
 
     <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $physicalExamId]) }}"
         method="POST" class="h-full flex flex-col cdss-form"

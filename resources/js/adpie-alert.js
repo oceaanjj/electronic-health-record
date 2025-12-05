@@ -46,12 +46,10 @@ window.initializeAdpieCdssForForm = function (form) {
         const handleInput = (e) => {
             clearTimeout(debounceTimer);
             const fieldName = e.target.dataset.fieldName;
+            const fieldNameFormatted =
+                fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
             const finding = e.target.value.trim();
             const alertCell = findAlertCellForInput(e.target);
-
-            console.log(
-                `[ADPIE] Input detected → Field: ${fieldName} | Value: ${finding}`
-            );
 
             if (alertCell && finding === "") {
                 showDefaultNoAlerts(alertCell); // Show default if field is cleared
@@ -61,8 +59,9 @@ window.initializeAdpieCdssForForm = function (form) {
             debounceTimer = setTimeout(() => {
                 if (fieldName && finding !== "" && alertCell) {
                     console.log(
-                        `[ADPIE] Debounce timer finished. Analyzing ${fieldName}...`
+                        `[ADPIE] Input → Field: ${fieldNameFormatted} | Value: ${finding}`
                     );
+
                     showAlertLoading(alertCell); // Show loading spinner *only when typing*
                     analyzeField(
                         fieldName,

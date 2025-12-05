@@ -17,7 +17,7 @@
 
 
         {{-- FORM for data submission (submits with POST) --}}
-        <form action="{{ route('medical.store') }}" method="POST">
+        <form action="{{ route('developmental.store') }}" method="POST">
             @csrf
 
             {{-- Hidden input to send the selected patient's ID with the POST request --}}

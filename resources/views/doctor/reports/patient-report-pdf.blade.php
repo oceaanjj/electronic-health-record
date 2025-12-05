@@ -10,7 +10,7 @@
 
         body {
             font-family: sans-serif;
-            margin: 5mm 10mm;
+            margin: 1mm 2mm;
             font-size: 14px;
         }
 
@@ -27,18 +27,31 @@
         }
 
         .section {
-            margin-bottom: 10px;
             border: 1px solid #eee;
-            padding: 8px;
+            padding: 2px;
             border-radius: 5px;
         }
 
         .section-title {
-            background-color: #f9f9f9;
+            background-color: #e0dfdfff;
             padding: 5px;
             margin-top: 10px;
-            margin-botom: 10px;
+            margin-botom: -10px;
             border-bottom: 1px solid #eee;
+        }
+
+        .section-title-adpie {
+            background-color: #e7e7e7ff;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: -10px;
+            font-size: 16px;
+            font-weight: bold;
+
+        }
+
+        .pdf-hr {
+            border: 1px solid black;
         }
 
         .table-responsive {
@@ -48,9 +61,8 @@
         table {
             width: 100%;
             table-layout: fixed;
-            /* Crucial for fixed column widths */
             border-collapse: collapse;
-            margin-top: 5px;
+            margin-top: 6px;
             max-width: 100%;
         }
 
@@ -99,6 +111,10 @@
             text-align: center;
             line-height: 35px;
         }
+
+        p {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -143,6 +159,24 @@
             if (isset($pdf)) {
                 $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
                 $size = 9;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

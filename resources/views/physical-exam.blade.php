@@ -2,27 +2,19 @@
 @section('title', 'Physical Exam')
 @section('content')
 
-    {{-- NOTE : sa css ko a-add pa ko my-1 py-4 px-3 each alerts tenks wag niyo burahin to makakalimutan ko --}}
-
-    {{-- FORM OVERLAY (ALERT) & DYNAMIC CONTENT --}}
     <div id="form-content-container">
-        @if (!session('selected_patient_id'))
-            <div
-                class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
-                <span class="text-gray-600 font-creato">Please select a patient to input</span>
-            </div>
-        @endif
 
-        <!-- DROPDOWN component -->
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
             selectRoute="{{ route('physical-exam.select') }}" inputPlaceholder="-Select or type to search-"
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
-        <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form"
+        <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form relative w-[70%] mx-auto"
             data-analyze-url="{{ route('physical-exam.analyze-field') }}"
             data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}" data-alert-height-class="h-[90px]">
+
             @csrf
 
+            {{-- HIDDEN INPUT FOR JS TO CHECK --}}
             <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
@@ -107,13 +99,14 @@
                                 {{-- EXTREMITIES --}}
                                 <tr>
                                     <th class="bg-yellow-light text-brown border-b-2 border-line-brown">EXTREMITIES</th>
-                                    <td class="bg-beige border-b-2 border-line-brown/50">
+                                    <td class="bg-beige border-b-2 border-line-brown">
                                         <textarea name="extremities"
                                             class="notepad-lines cdss-input w-full h-[90px] border-none"
                                             data-field-name="extremities"
                                             placeholder="Type here..">{{ old('extremities', $physicalExam->extremities ?? '') }}</textarea>
                                     </td>
                                 </tr>
+
 
                                 {{-- NEUROLOGICAL --}}
                                 <tr class="border-2 border-line-brown">

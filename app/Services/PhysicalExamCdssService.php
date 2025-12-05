@@ -151,8 +151,8 @@ class PhysicalExamCdssService
                     continue;
                 }
 
-                // Check if all words from the keyword phrase are present in the user's input.
-                $isMatch = empty(array_diff($keywordWords, $findingWords));
+                // Check if there is any overlap between the keyword words and the user's input.
+                $isMatch = !empty(array_intersect($keywordWords, $findingWords));
 
                 if ($isMatch) {
                     // A score is calculated to prioritize more specific keywords.

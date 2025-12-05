@@ -6,6 +6,7 @@
     @if($labValues->isEmpty())
         <p class="no-data">No Lab Values data available.</p>
     @else
+
         @foreach($labValues as $item)
             <table>
                 <thead>
@@ -131,9 +132,47 @@
                     </tr>
                 </tbody>
             </table>
+
+
+            <!-- ADPIE Table -->
+
+            <h2 class="section-title-adpie">ADPIE</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Nurse Assessment</th>
+                        <th>CDSS Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Diagnosis</td>
+                        <td>{{ $item->nursingDiagnoses->diagnosis ?? '-' }}</td>
+                        <td>{{ $item->nursingDiagnoses->diagnosis_alert ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Planning</td>
+                        <td>{{ $item->nursingDiagnoses->planning ?? '-' }}</td>
+                        <td>{{ $item->nursingDiagnoses->planning_alert ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Interventions</td>
+                        <td>{{ $item->nursingDiagnoses->intervention ?? '-' }}</td>
+                        <td>{{ $item->nursingDiagnoses->intervention_alert ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Evaluation</td>
+                        <td>{{ $item->nursingDiagnoses->evaluation ?? '-' }}</td>
+                        <td>{{ $item->nursingDiagnoses->evaluation_alert ?? '-' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
             @if(!$loop->last)
                 <hr>
             @endif
+
         @endforeach
     @endif
 </div>

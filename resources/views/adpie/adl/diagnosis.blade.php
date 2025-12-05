@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $patient->patient_id]) }}"
+    <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $adlData->id]) }}"
         method="POST" class="h-full flex flex-col cdss-form"
         data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
         data-patient-id="{{ $patient->patient_id }}"

@@ -2,17 +2,10 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
 
-
 <div id="form-content-container">
-    {{-- This container is now the main wrapper for all dynamic content --}}
-
-    @if (!isset($selectedPatient) && !session('selected_patient_id'))
-        <div class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
-            <span class="text-gray-600 font-creato">Please select a patient to input</span>
-        </div>
-    @endif
 
     {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR --}}
+    {{-- Kept OUTSIDE the form so the disabled overlay doesn't block it --}}
     <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
         <div class="flex items-center gap-6 w-full">
             @csrf
@@ -22,33 +15,19 @@
                 PATIENT NAME :
             </label>
 
-            {{-- 
-              UPDATED: 
-              - Added data-sync-mode="html-reload"
-              - Fixed data-admission-date to use correct Carbon format
-            --}}
             <div class="searchable-dropdown relative w-[400px]" 
                  data-select-url="{{ route('adl.select') }}" 
                  data-admission-date="{{ $selectedPatient ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : '' }}"
                  data-sync-mode="html-reload">
-                <input
-                    type="text"
-                    id="patient_search_input"
-                    placeholder="Select or type Patient Name"
-                    value="{{ trim($selectedPatient->name ?? '') }}"
-                    autocomplete="off"
-                    class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                           focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
-                >
-                <div
-                    id="patient_options_container"
-                    class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto"
-                >
+                <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
+                    value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off"
+                    class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                
+                <div id="patient_options_container"
+                    class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto">
                     @foreach ($patients as $patient)
-                        <div
-                            class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150"
-                            data-value="{{ $patient->patient_id }}"
-                        >
+                        <div class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150"
+                            data-value="{{ $patient->patient_id }}">
                             {{ trim($patient->name) }}
                         </div>
                     @endforeach
@@ -60,43 +39,34 @@
             <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
                 DATE :
             </label>
-            <input
-                type="date"
-                id="date_selector"
-                name="date"
+            <input type="date" id="date_selector" name="date"
                 value="{{ $currentDate  ?? now()->format('Y-m-d') }}"
                 @if (!$selectedPatient) disabled @endif
-                class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
-            >
+                class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-1 focus:ring-gray-400 focus:border-gray-400 outline-none shadow-sm bg-gray-100">
 
             {{-- DAY NO --}}
             <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
                 DAY NO :
             </label>
-            <select
-                id="day_no_selector"
-                name="day_no"
+            <select id="day_no_selector" name="day_no"
                 @if (!$selectedPatient) disabled @endif
-                class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300
-                       focus:ring-2 focus->ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
-            >
-                {{-- Controller now ensures $totalDaysSinceAdmission is always set --}}
+                class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
                 @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
-                    <option
-                        value="{{ $i }}"
-                        @if($currentDayNo == $i) selected @endif
-                    >
+                    <option value="{{ $i }}" @if($currentDayNo == $i) selected @endif>
                         {{  $i }}
                     </option>
                 @endfor
             </select>
         </div>
-       </div>
-        
-    {{-- END HEADER --}}
-
-    <form id="adl-form" method="POST" class="cdss-form" 
+    </div>
+    
+    {{-- 
+        FIX: 
+        1. Added 'relative', 'w-[70%]', 'mx-auto' to <form>.
+        2. Added 'cdss-form' for JS targeting.
+        This creates the correct "box" for the disabled overlay to appear in.
+    --}}
+    <form id="adl-form" method="POST" class="cdss-form relative w-[70%] mx-auto" 
           action="{{ route('adl.store') }}"
           data-analyze-url="{{ route('adl.analyze-field') }}"
           data-batch-analyze-url="{{ route('adl.analyze-batch') }}"
@@ -105,7 +75,6 @@
         <fieldset @if (!$selectedPatient) disabled @endif>
             @csrf
 
-            {{-- These inputs are now updated by patient-loader.js and date-day-sync.js --}}
             <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
             <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}">
             <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}">
@@ -149,16 +118,11 @@
                     </div>
                     <table class="w-full border-collapse">
                         @foreach ([
-                            'mobility_assessment',
-                            'hygiene_assessment',
-                            'toileting_assessment',
-                            'feeding_assessment',
-                            'hydration_assessment',
-                            'sleep_pattern_assessment',
-                            'pain_level_assessment',
+                            'mobility_assessment', 'hygiene_assessment', 'toileting_assessment',
+                            'feeding_assessment', 'hydration_assessment', 'sleep_pattern_assessment',
+                            'pain_level_assessment'
                         ] as $field)
                             @php
-                                // Use the $alerts array passed from the controller
                                 $alertText = 'NO ALERTS';
                                 $alertSeverity = 'none';
                                 if (isset($alerts[$field]) && !empty($alerts[$field]['alert']) && $alerts[$field]['alert'] !== 'No Findings') {
@@ -194,17 +158,18 @@
 @endsection
 
 @push('scripts')
-
     @vite([
         'resources/js/patient-loader.js',
-        'resources/js/init.searchable-dropdown.js',
+        'resources/js/searchable-dropdown.js', 
         'resources/js/alert.js',
         'resources/js/date-day-sync.js' 
     ])
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            window.initializeSearchableDropdown();
+            if (window.initSearchableDropdown) {
+                window.initSearchableDropdown();
+            }
         });
     </script>
 @endpush

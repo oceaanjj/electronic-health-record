@@ -269,7 +269,15 @@ class IntakeAndOutputController extends Controller
     {
         $validatedData = $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'day_no' => 'required|integer|between:1,30',
+        ]);
+
+        $patient = Patient::findOrFail($validatedData['patient_id']);
+        $admissionDate = Carbon::parse($patient->admission_date);
+        $daysSinceAdmission = $admissionDate->diffInDays(Carbon::now()) + 1;
+
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:patients,patient_id',
+            'day_no' => 'required|integer|between:1,' . $daysSinceAdmission,
         ]);
 
         $ioData = [

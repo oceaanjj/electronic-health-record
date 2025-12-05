@@ -8,10 +8,6 @@
     --}}
     @if($physicalExam->isNotEmpty())
 
-        {{--
-        FIX: Loop through EACH physical exam.
-        $item is now one exam in the loop.
-        --}}
         @foreach($physicalExam as $item)
 
             {{-- This table shows the findings for this specific exam --}}
@@ -70,8 +66,7 @@
 
             <!-- ADPIE Table -->
 
-            <h2 class="section-title">ADPIE
-            </h2>
+            <h2 class="section-title-adpie">ADPIE</h2>
             <table class="data-table">
                 <thead>
                     <tr>

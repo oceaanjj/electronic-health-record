@@ -56,5 +56,3 @@ diagnosis:
   - keywords: ["bp < 90", "hr > 120"]
     alert: "Risk for shock related to hypotension and tachycardia. Consider fluid resuscitation."
     severity: "CRITICAL"
-
-  # ... continue with 400+ more rules (truncated for space)

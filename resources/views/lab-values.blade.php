@@ -1,18 +1,8 @@
 @extends('layouts.app')
-
 @section('title', 'Patient Lab Values')
-
 @section('content')
 
-
-
     <div id="form-content-container">
-        @if (!session('selected_patient_id'))
-            <div
-                class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
-                <span class="text-gray-600 font-creato">Please select a patient to input</span>
-            </div>
-        @endif
 
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
             selectRoute="{{ route('lab-values.select') }}" inputPlaceholder="-Select or type to search-"

@@ -127,20 +127,12 @@ class LabValuesComponent implements AdpieComponentInterface
             'evaluation' => $diagnosis->evaluation,
         ];
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $planningAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzePlanning($component, $request->input('planning'));
+        $planningAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'planning' => $nurseInput['planning'],
+            'planning' => $request->input('planning'),
             'planning_alert' => $planningAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -179,20 +171,12 @@ class LabValuesComponent implements AdpieComponentInterface
             'evaluation' => $diagnosis->evaluation,
         ];
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $interventionAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $request->input('intervention'));
+        $interventionAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'intervention' => $nurseInput['intervention'],
+            'intervention' => $request->input('intervention'),
             'intervention_alert' => $interventionAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -231,20 +215,12 @@ class LabValuesComponent implements AdpieComponentInterface
             'evaluation' => $request->input('evaluation'),
         ];
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $evaluationAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $request->input('evaluation'));
+        $evaluationAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'evaluation' => $nurseInput['evaluation'],
+            'evaluation' => $request->input('evaluation'),
             'evaluation_alert' => $evaluationAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_finish') {

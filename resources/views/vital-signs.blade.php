@@ -1,6 +1,51 @@
 @extends('layouts.app')
 @section('title', 'Patient Vital Signs')
 @section('content')
+<style>
+
+    #chart-viewport {
+    overflow: hidden;
+    height: 530px; 
+    position: relative;
+    }
+
+    #chart-track > div:not(:first-child) {
+        margin-top: 10px;
+    }
+
+    #chart-track > div:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    #chart-track {
+        padding-top: 50px;
+        padding-bottom: 40px;
+}
+
+
+ 
+
+
+
+    /*
+#chart-viewport {
+    height: 530px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+#chart-track {
+    padding-top: 50px;
+    padding-bottom: 40px;
+}
+
+#chart-track > div {
+    margin: 10px 0;
+}*/
+
+</style>
+
     <div id="form-content-container">
         {{-- FORM OVERLAY (ALERT) --}}
         @if (! session('selected_patient_id'))
@@ -133,18 +178,19 @@
 
                 <div class="mx-auto mt-6 flex w-[90%] items-start justify-between gap-1">
                     <div class="relative w-[30%] mr-3">
-                        <!-- UP BUTTON -->
-                        <button
-                            type="button"
-                            id="chart-up"
-                            class="bg-dark-green absolute -top-12 left-1/2 z-20 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full text-white shadow-lg hover:bg-green-700"
-                        >
-                            <span class="material-symbols-outlined">arrow_drop_up</span>
-                        </button>
+
+                         <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
+
+                         
+                            <div id="fade-top"
+                                class="pointer-events-none absolute top-0 left-0 z-20 h-10 w-full
+                                        bg-gradient-to-b from-white/90 to-transparent rounded-t-[20px] hidden">
+                            </div>
+            
 
                         <!-- VIEWPORT (SHOWS 3 CHARTS) -->
-                        <div id="chart-viewport" class="h-[530px] overflow-hidden rounded-[20px] bg-transparent">
-                            <!-- TRACK -->
+                        <div id="chart-viewport" class="h-[530px] overflow-hidden rounded-[25px] relative">
+
                             <div id="chart-track" class="space-y-6 transition-transform duration-700 ease-out">
                                 <!-- ✅ REUSABLE CHART CARD -->
                                 <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
@@ -172,16 +218,28 @@
                                     <canvas id="spo2Chart"></canvas>
                                 </div>
                             </div>
+
+                            <div id="fade-bottom"
+                            class="pointer-events-none absolute bottom-0 left-0 z-20 h-10 w-full bg-gradient-to-t from-white/90 to-transparent rounded-b-[20px] hidden"></div>
                         </div>
 
+
+                        
+
+
                         <!-- DOWN BUTTON -->
-                        <button
-                            type="button"
-                            id="chart-down"
-                            class="bg-dark-green absolute -bottom-12 left-1/2 z-20 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full text-white shadow-lg hover:bg-green-700"
-                        >
+                        <button id="chart-up" type="button"
+                                class="bg-dark-green absolute -top-8 left-1/2 z-30 hidden
+                                    -translate-x-1/2 h-10 w-10 rounded-full flex items-center justify-center text-white shadow-lg">
+                            <span class="material-symbols-outlined">arrow_drop_up</span>
+                        </button>
+
+                        <button id="chart-down" type="button"
+                                class="bg-dark-green absolute -bottom-8 left-1/2 z-30
+                                    -translate-x-1/2 h-10 w-10 rounded-full flex items-center justify-center text-white shadow-lg">
                             <span class="material-symbols-outlined">arrow_drop_down</span>
                         </button>
+                        
                     </div>
                     <div class="w-[68%] overflow-hidden rounded-[15px]">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
@@ -345,29 +403,59 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        let chartIndex = 0;
-        const totalCharts = 5;
 
-        const visibleCharts = 2;
-        const chartHeight = 244; // ✅ card height + spacing
-        const maxIndex = totalCharts - visibleCharts;
+let chartIndex = 0;
+const totalCharts = 5;
+const visibleCharts = 2;
+const chartHeight = 244;
+const maxIndex = totalCharts - visibleCharts;
 
-        const track = document.getElementById('chart-track');
+const track = document.getElementById('chart-track');
+const upBtn = document.getElementById('chart-up');
+const downBtn = document.getElementById('chart-down');
+const fadeTop = document.getElementById('fade-top');
+const fadeBottom = document.getElementById('fade-bottom');
 
-        document.getElementById('chart-up').addEventListener('click', () => {
-            if (chartIndex > 0) chartIndex--;
-            updateChartScroll();
-        });
+function updateChartScroll() {
+    const offset = -(chartIndex * chartHeight);
+    track.style.transform = `translateY(${offset}px)`;
 
-        document.getElementById('chart-down').addEventListener('click', () => {
-            if (chartIndex < maxIndex) chartIndex++;
-            updateChartScroll();
-        });
+    updateUIVisibility();
+}
 
-        function updateChartScroll() {
-            const offset = -(chartIndex * chartHeight);
-            track.style.transform = `translateY(${offset}px)`;
-        }
+function updateUIVisibility() {
+    // hindi visible yung up button kapag nasa taas na (FIRST CHART)
+    if (chartIndex === 0) {
+        upBtn.classList.add("hidden");
+        fadeTop.classList.add("hidden");
+    } else {
+        upBtn.classList.remove("hidden");
+        fadeTop.classList.remove("hidden");
+    }
+
+    // hindi visible yung down button kapag nasa baba na (LAST CHART)
+    if (chartIndex === maxIndex) {
+        downBtn.classList.add("hidden");
+        fadeBottom.classList.add("hidden");
+    } else {
+        downBtn.classList.remove("hidden");
+        fadeBottom.classList.remove("hidden");
+    }
+}
+
+document.getElementById('chart-up').addEventListener('click', () => {
+    if (chartIndex > 0) chartIndex--;
+    updateChartScroll();
+});
+
+document.getElementById('chart-down').addEventListener('click', () => {
+    if (chartIndex < maxIndex) chartIndex++;
+    updateChartScroll();
+});
+
+// Load initial state
+document.addEventListener("DOMContentLoaded", updateUIVisibility);
+
 
         document.addEventListener('DOMContentLoaded', function () {
             const timePoints = @json($times); // from PHP

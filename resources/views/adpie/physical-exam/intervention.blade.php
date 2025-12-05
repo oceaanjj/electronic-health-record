@@ -43,23 +43,25 @@
                         RECOMMENDATIONS
                     </div>
 
-                    {{-- NEW: Pre-load alert from session ★ --}}
-                    @php
-                        $alert = session('adpie_alerts')['intervention'] ?? null;
-                        $level = $alert->level ?? 'INFO';
-                        $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
-                        $colorClass = 'alert-green';
-                        if ($level === 'CRITICAL')
-                            $colorClass = 'alert-red';
-                        if ($level === 'WARNING')
-                            $colorClass = 'alert-orange';
-                    @endphp
+                    {{-- NEW: Pre-load alert from session --}}
+                    @if ($component === 'physical-exam')
+                        @php
+                            $alert = session('adpie_alerts')['intervention'] ?? null;
+                            $level = $alert->level ?? 'INFO';
+                            $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
+                            $colorClass = 'alert-green';
+                            if ($level === 'CRITICAL')
+                                $colorClass = 'alert-red';
+                            if ($level === 'WARNING')
+                                $colorClass = 'alert-orange';
+                        @endphp
 
-                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg {{ $colorClass }}"
-                        data-alert-for="intervention" style="border-top: none; height: 90px; margin: 2px;">
-                        <div class="alert-message p-1">{!! $message !!}</div>
-                    </div>
-                    {{-- END NEW --}}
+                        <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg {{ $colorClass }}"
+                            data-alert-for="intervention" style="border-top: none; height: 90px; margin: 2px;">
+                            <div class="alert-message p-1">{!! $message !!}</div>
+                        </div>
+                        {{-- END NEW --}}
+                    @endif
                 </div>
             </div>
 

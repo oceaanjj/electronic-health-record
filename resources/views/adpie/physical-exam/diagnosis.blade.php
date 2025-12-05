@@ -11,7 +11,7 @@
                 class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm bg-gray-100">
         </div>
     </div>
-                    {{-- Display Findings --}}
+    {{-- Display Findings --}}
 
 
     <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $physicalExamId]) }}"
@@ -43,22 +43,24 @@
                     </div>
 
                     {{-- NEW: Pre-load alert from session ★ --}}
-                    @php
-                        $alert = session('adpie_alerts')['diagnosis'] ?? null;
-                        $level = $alert->level ?? 'INFO';
-                        $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
-                        $colorClass = 'alert-green';
-                        if ($level === 'CRITICAL')
-                            $colorClass = 'alert-red';
-                        if ($level === 'WARNING')
-                            $colorClass = 'alert-orange';
-                    @endphp
+                    @if ($component === 'physical-exam')
+                        @php
+                            $alert = session('adpie_alerts')['diagnosis'] ?? null;
+                            $level = $alert->level ?? 'INFO';
+                            $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
+                            $colorClass = 'alert-green';
+                            if ($level === 'CRITICAL')
+                                $colorClass = 'alert-red';
+                            if ($level === 'WARNING')
+                                $colorClass = 'alert-orange';
+                        @endphp
 
-                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg {{ $colorClass }}"
-                        data-alert-for="diagnosis" style="border-top: none; height: 90px; margin: 2px;">
-                        <div class="alert-message p-1">{!! $message !!}</div>
-                    </div>
-                    {{-- END NEW --}}
+                        <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg {{ $colorClass }}"
+                            data-alert-for="diagnosis" style="border-top: none; height: 90px; margin: 2px;">
+                            <div class="alert-message p-1">{!! $message !!}</div>
+                        </div>
+                        {{-- END NEW --}}
+                    @endif
                 </div>
             </div>
 

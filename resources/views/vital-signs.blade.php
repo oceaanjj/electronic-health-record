@@ -228,7 +228,7 @@
 
                         <!-- DOWN BUTTON -->
                         <button id="chart-up" type="button"
-                                class="bg-dark-green absolute -top-8 left-1/2 z-30 hidden
+                                class="bg-dark-green absolute -top-8 left-1/2 z-30
                                     -translate-x-1/2 h-10 w-10 rounded-full flex items-center justify-center text-white shadow-lg">
                             <span class="material-symbols-outlined">arrow_drop_up</span>
                         </button>

@@ -2,8 +2,6 @@
 @section('title', 'Patient IVs and Lines')
 @section('content')
 
-    </style>
-
     <div id="form-content-container">
 
         @if (!session('selected_patient_id'))

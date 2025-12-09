@@ -3,6 +3,7 @@
 
 <head>
     <title>Patient Report</title>
+
     <style>
         * {
             box-sizing: border-box;
@@ -10,7 +11,7 @@
 
         body {
             font-family: sans-serif;
-            margin: 5mm 10mm;
+            margin: 1mm 2mm;
             font-size: 14px;
         }
 
@@ -27,18 +28,31 @@
         }
 
         .section {
-            margin-bottom: 10px;
             border: 1px solid #eee;
-            padding: 8px;
+            padding: 2px;
             border-radius: 5px;
         }
 
         .section-title {
-            background-color: #f9f9f9;
+            background-color: #e0dfdfff;
             padding: 5px;
             margin-top: 10px;
-            margin-botom: 10px;
+            margin-bottom: -10px;
+            /* fixed typo */
             border-bottom: 1px solid #eee;
+        }
+
+        .section-title-adpie {
+            background-color: #e7e7e7ff;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: -10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .pdf-hr {
+            border: 1px solid black;
         }
 
         .table-responsive {
@@ -48,9 +62,8 @@
         table {
             width: 100%;
             table-layout: fixed;
-            /* Crucial for fixed column widths */
             border-collapse: collapse;
-            margin-top: 5px;
+            margin-top: 6px;
             max-width: 100%;
         }
 
@@ -62,7 +75,6 @@
             word-break: break-word;
             vertical-align: top;
             width: 33.33%;
-            /* Equal width for 3 columns */
         }
 
         th {
@@ -92,18 +104,25 @@
 
         .footer {
             position: fixed;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
+            bottom: 0;
+            left: 0;
+            right: 0;
             height: 50px;
             text-align: center;
             line-height: 35px;
+        }
+
+        p {
+            margin: 0;
         }
     </style>
 </head>
 
 <body>
-    @include('doctor.reports.partials._patient_demographics', ['patient' => $patient])
+
+    @include('doctor.reports.partials._patient_demographics', [
+        'patient' => $patient
+    ])
 
     @include('doctor.reports.partials._medical_history', [
         'presentIllness' => $presentIllness,
@@ -112,23 +131,43 @@
         'vaccination' => $vaccination,
     ])
 
-    @include('doctor.reports.partials._developmental-history', ['developmentalHistory' => $developmentalHistory])
+    @include('doctor.reports.partials._developmental-history', [
+        'developmentalHistory' => $developmentalHistory
+    ])
 
-    @include('doctor.reports.partials._physical_exam', ['physicalExam' => $physicalExam])
+    @include('doctor.reports.partials._physical_exam', [
+        'physicalExam' => $physicalExam
+    ])
 
-    @include('doctor.reports.partials._vital_signs', ['vitals' => $vitals])
+    @include('doctor.reports.partials._vital_signs', [
+        'vitals' => $vitals
+    ])
 
-    @include('doctor.reports.partials._intake_and_output', ['intakeAndOutput' => $intakeAndOutput])
+    @include('doctor.reports.partials._intake_and_output', [
+        'intakeAndOutput' => $intakeAndOutput
+    ])
 
-    @include('doctor.reports.partials._activities_of_daily_living', ['actOfDailyLiving' => $actOfDailyLiving])
+    @include('doctor.reports.partials._activities_of_daily_living', [
+        'actOfDailyLiving' => $actOfDailyLiving
+    ])
 
-    @include('doctor.reports.partials._lab_values', ['labValues' => $labValues])
+    @include('doctor.reports.partials._lab_values', [
+        'labValues' => $labValues
+    ])
 
-    @include('doctor.reports.partials._diagnostics', ['diagnostics' => $diagnostics])
+    @include('doctor.reports.partials._diagnostics', [
+        'diagnostics' => $diagnostics
+    ])
 
-    @include('doctor.reports.partials._ivs_and_lines', ['ivsAndLines' => $ivsAndLines])
+    @include('doctor.reports.partials._ivs_and_lines', [
+        'ivsAndLines' => $ivsAndLines
+    ])
 
-    @include('doctor.reports.partials._medication_administrations', ['medicationAdministrations' => $medicationAdministrations])
+
+
+    @include('doctor.reports.partials._medication_administrations', [
+        'medicationAdministrations' => $medicationAdministrations
+    ])
 
     @include('doctor.reports.partials._medication_reconciliation', [
         'currentMedication' => $currentMedication,
@@ -136,24 +175,23 @@
         'changesInMedication' => $changesInMedication,
     ])
 
-    @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning])
+    <!-- @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning]) -->
 
     <footer>
         <script type="text/php">
             if (isset($pdf)) {
-                $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
-                $size = 9;
-
-
-
-
-                $font = $fontMetrics->getFont("Verdana");
+                $text  = "Page {PAGE_NUM} of {PAGE_COUNT}";
+                $size  = 9;
+                $font  = $fontMetrics->getFont("Verdana");
                 $width = $fontMetrics->get_text_width($text, $font, $size) / 2;
+
                 $x = ($pdf->get_width() - $width) / 2;
                 $y = $pdf->get_height() - 35;
+
                 $pdf->page_text($x, $y, $text, $font, $size, [0.3, 0.3, 0.3]);
             }
         </script>
     </footer>
+
 </body>
 </html>

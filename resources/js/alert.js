@@ -57,6 +57,10 @@ window.initializeCdssForForm = function (form) {
 
             debounceTimer = setTimeout(() => {
                 if ((fieldName || time) && alertCell) {
+                    console.log(
+                        `Input → Field: ${fieldName} | Value: ${finding}`
+                    );
+
                     if (alertCell) {
                         showAlertLoading(alertCell);
                         alertCell.dataset.startTime = performance.now();

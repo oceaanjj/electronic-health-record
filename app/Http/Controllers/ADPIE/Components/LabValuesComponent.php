@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Services\NursingDiagnosisCdssService;
 use Illuminate\Http\Request;
 use App\Models\LabValues;
+use Illuminate\Support\Facades\Log;
 
 class LabValuesComponent implements AdpieComponentInterface
 {
@@ -30,15 +31,56 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function startDiagnosis(string $component, $id)
     {
-        $patient = Patient::findOrFail($id);
-        $labValues = LabValues::where('patient_id', $id)->first();
-        
-        $diagnosis = NursingDiagnosis::where('patient_id', $id)
-            ->whereNull('physical_exam_id')
+        Log::info('LabValuesComponent@startDiagnosis: Starting diagnosis for id: ' . $id);
+        $labValues = LabValues::with('patient')->find($id); 
+
+        // Temporarily dump $labValues to inspect its content
+        // dd($labValues); 
+
+        if (!$labValues) {
+            Log::error('LabValuesComponent@startDiagnosis: LabValues record not found for id: ' . $id);
+            abort(404, 'LabValues record not found.');
+        }
+        Log::info('LabValuesComponent@startDiagnosis: Found lab values record.', ['lab_values_id' => $id]);
+
+        $patient = $labValues->patient;
+
+        if (!$patient) {
+            Log::error('LabValuesComponent@startDiagnosis: Patient not found for lab_values_id: ' . $id);
+            abort(404, 'Patient not found for the given lab values.');
+        }
+        Log::info('LabValuesComponent@startDiagnosis: Found patient.', ['patient_id' => $patient->patient_id]);
+
+        $diagnosis = NursingDiagnosis::where('lab_values_id', $id)
             ->latest()
             ->first();
 
         $findings = session('findings', []);
+
+        // Pre-calculate all 4 alerts
+        $alerts = [
+            'diagnosis' => $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosis->diagnosis ?? ''),
+            'planning' => $this->nursingDiagnosisCdssService->analyzePlanning($component, $diagnosis->planning ?? ''),
+            'intervention' => $this->nursingDiagnosisCdssService->analyzeIntervention($component, $diagnosis->intervention ?? ''),
+            'evaluation' => $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $diagnosis->evaluation ?? ''),
+        ];
+
+        // Check if the alert object AND its message exist before stripping html tags
+        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
+            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
+        }
+        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
+            $alerts['planning']->message = strip_tags($alerts['planning']->message);
+        }
+        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
+            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
+        }
+        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
+            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        }
+
+        // Put them in the session to persist across all pages
+        session()->put('lab-values-alerts', $alerts);
 
         return view('adpie.lab-values.diagnosis', [
             'patient' => $patient,
@@ -53,23 +95,20 @@ class LabValuesComponent implements AdpieComponentInterface
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
         
-        $patient = Patient::findOrFail($id);
+        $labValues = LabValues::findOrFail($id); // $id is lab_values_id
+        $patient = $labValues->patient;
         $diagnosisText = $request->input('diagnosis');
         
-        // Fetch the LabValues record for the patient
-        $labValues = LabValues::where('patient_id', $id)->first();
-        $componentData = $labValues ? $labValues->toArray() : [];
-
         // Get alert by analyzing the diagnosis text
         $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
         $diagnosisAlert = $alertObject->raw_message ?? null;
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                'patient_id' => $patient->patient_id,
-                'physical_exam_id' => null, 
+                'lab_values_id' => $id,
             ],
             [
+                'patient_id' => $patient->patient_id,
                 'diagnosis' => $diagnosisText,
                 'diagnosis_alert' => $diagnosisAlert,
             ]
@@ -113,20 +152,12 @@ class LabValuesComponent implements AdpieComponentInterface
             'evaluation' => $diagnosis->evaluation,
         ];
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $planningAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzePlanning($component, $request->input('planning'));
+        $planningAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'planning' => $nurseInput['planning'],
+            'planning' => $request->input('planning'),
             'planning_alert' => $planningAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -165,20 +196,12 @@ class LabValuesComponent implements AdpieComponentInterface
             'evaluation' => $diagnosis->evaluation,
         ];
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $interventionAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $request->input('intervention'));
+        $interventionAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'intervention' => $nurseInput['intervention'],
+            'intervention' => $request->input('intervention'),
             'intervention_alert' => $interventionAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -217,20 +240,12 @@ class LabValuesComponent implements AdpieComponentInterface
             'evaluation' => $request->input('evaluation'),
         ];
 
-        $generatedRules = $this->nursingDiagnosisCdssService->generateNursingDiagnosisRules(
-            $component,
-            $componentData,
-            $nurseInput,
-            $patient
-        );
-
-        $evaluationAlert = $generatedRules['alerts'][0]['alert'] ?? null;
-        $ruleFilePath = $generatedRules['rule_file_path'];
+        $alertObject = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $request->input('evaluation'));
+        $evaluationAlert = $alertObject->raw_message ?? null;
 
         $diagnosis->update([
-            'evaluation' => $nurseInput['evaluation'],
+            'evaluation' => $request->input('evaluation'),
             'evaluation_alert' => $evaluationAlert,
-            'rule_file_path' => $ruleFilePath,
         ]);
 
         if ($request->input('action') == 'save_and_finish') {

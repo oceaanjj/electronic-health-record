@@ -44,6 +44,31 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
 
         $findings = session('findings', []);
 
+        // Pre-calculate all 4 alerts
+        $alerts = [
+            'diagnosis' => $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosis->diagnosis ?? ''),
+            'planning' => $this->nursingDiagnosisCdssService->analyzePlanning($component, $diagnosis->planning ?? ''),
+            'intervention' => $this->nursingDiagnosisCdssService->analyzeIntervention($component, $diagnosis->intervention ?? ''),
+            'evaluation' => $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $diagnosis->evaluation ?? ''),
+        ];
+
+        // Check if the alert object AND its message exist before stripping html tags
+        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
+            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
+        }
+        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
+            $alerts['planning']->message = strip_tags($alerts['planning']->message);
+        }
+        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
+            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
+        }
+        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
+            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        }
+
+        // Put them in the session to persist across all pages
+        session()->put('act-of-daily-living-alerts', $alerts);
+
         return view('adpie.adl.diagnosis', [
             'patient' => $patient,
             'adlData' => $adlData,
@@ -57,7 +82,9 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
     {
         $request->validate(['diagnosis' => 'required|string|max:1000']);
         
-        $patient = Patient::findOrFail($id);
+        $adl = ActOfDailyLiving::findOrFail($id); // $id is adl_id
+        $patient = $adl->patient; // Get patient from the relationship
+
         $diagnosisText = $request->input('diagnosis');
 
         $alertObject = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosisText);
@@ -65,10 +92,10 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
             [
-                'patient_id' => $id,
-                'physical_exam_id' => null,
+                'adl_id' => $id,
             ],
             [
+                'patient_id' => $patient->patient_id,
                 'diagnosis' => $diagnosisText,
                 'diagnosis_alert' => $diagnosisAlert,
             ]

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use App\Models\Patient;
 use App\Models\MedicalHistory\Allergy;
 use App\Models\MedicalHistory\DevelopmentalHistory;
@@ -23,7 +25,6 @@ use App\Models\MedicalReconciliation\CurrentMedication;
 use App\Models\MedicalReconciliation\HomeMedication;
 use App\Models\DischargePlan;
 use App\Models\Diagnostic;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
@@ -39,21 +40,13 @@ class ReportController extends Controller
 
         $data = [
 
-            //NON - CDSS:
+            //NON-CDSS:
             'patient' => $patient,
             'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
             'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
             'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->first(),
-
-            //adpie:
-            'vitals' => Vitals::where('patient_id', $patient_id)->get(),
-            // 'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
-            'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
-            'labValues' => LabValues::where('patient_id', $patient_id)->get(),
-
-
             'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
             'medicationAdministrations' => MedicationAdministration::where('patient_id', $patient_id)->get(),
@@ -62,12 +55,12 @@ class ReportController extends Controller
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
 
-            //CDSS:
+            //COMPONENTS with CDSS (ADPIE):
             'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
-
-            //DITOILALAGAY YUNG MGA COMPOMENT NA MAY CDSS (IREMOVE YUNG SAME COMPONENT SA NON CDSS) KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS
-
+            'vitals' => Vitals::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+            'actOfDailyLiving' => ActOfDailyLiving::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+            'labValues' => LabValues::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
         ];
 
         return view('doctor.reports.patient-report-web', $data);
@@ -84,14 +77,6 @@ class ReportController extends Controller
             'allergies' => Allergy::where('patient_id', $patient_id)->get(),
             'vaccination' => Vaccination::where('patient_id', $patient_id)->get(),
             'developmentalHistory' => DevelopmentalHistory::where('patient_id', $patient_id)->first(),
-
-            //adpie:
-            'vitals' => Vitals::where('patient_id', $patient_id)->get(),
-            // 'intakeAndOutput' => IntakeAndOutput::where('patient_id', $patient_id)->get(),
-            'actOfDailyLiving' => ActOfDailyLiving::where('patient_id', $patient_id)->get(),
-            'labValues' => LabValues::where('patient_id', $patient_id)->get(),
-
-
             'diagnostics' => Diagnostic::where('patient_id', $patient_id)->get(),
             'ivsAndLines' => IvsAndLine::where('patient_id', $patient_id)->get(),
             'medicationAdministrations' => MedicationAdministration::where('patient_id', $patient_id)->get(),
@@ -100,16 +85,18 @@ class ReportController extends Controller
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
 
-            //CDSS RELATED:
+            //COMPONENTS with CDSS (ADPIE):
             'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
-            //DITOILALAGAY YUNG LUMANG TABLE SA TAAS KAPAG OK NA YUNG CDSS GAGAWING WITH NURSINGDIAGNOSeS 
+            'vitals' => Vitals::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+            'actOfDailyLiving' => ActOfDailyLiving::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
+            'labValues' => LabValues::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
 
         ];
 
         $pdf = Pdf::loadView('doctor.reports.patient-report-pdf', $data);
 
-        $pdf->setPaper('folio', 'portrait'); //pdf paper size update
+        $pdf->setPaper('folio', 'portrait'); //pdf paper size
 
         $pdf->setOption('isPhpEnabled', true);
         return $pdf->download($patient->name . '_Results.pdf');

@@ -34,6 +34,8 @@ class PatientFactory extends Factory
         ];
 
         $nurse_id = User::where('role', 'Nurse')->inRandomOrder()->first()?->id ?? 1;
+        $age = $this->faker->numberBetween(1, 18);
+        $birthdate = now()->subYears($age)->format('Y-m-d');
 
         return [
 
@@ -43,11 +45,11 @@ class PatientFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'middle_name' => $this->faker->firstName(),
-            'age' => $this->faker->numberBetween(1, 42),
+            'age' => $age,
+            'birthdate' => $birthdate,
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'address' => $this->faker->address(),
             'birthplace' => $this->faker->city(),
-            'birthdate' => $this->faker->date('Y-m-d'),
             'religion' => $this->faker->randomElement(['Catholic', 'Iglesia ni Cristo', 'Christian']),
             'ethnicity' => $this->faker->randomElement(['Filipino', 'Foreign']),
             'chief_complaints' => $this->faker->randomElement($complaints),

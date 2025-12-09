@@ -22,11 +22,6 @@
         padding-bottom: 40px;
 }*/
 
-
- 
-
-
-
 #chart-viewport {
     height: 530px;
     overflow: hidden;
@@ -46,14 +41,7 @@
 </style>
 
     <div id="form-content-container">
-        {{-- FORM OVERLAY (ALERT) --}}
-        @if (! session('selected_patient_id'))
-            <div
-                class="form-overlay mx-auto my-6 w-[70%] rounded-lg border border-gray-300 bg-gray-50 py-6 text-center shadow-sm"
-            >
-                <span class="font-creato text-gray-600">Please select a patient to input</span>
-            </div>
-        @endif
+        
 
         {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
         <div class="header mx-auto my-10 flex w-[80%] items-center gap-6">
@@ -222,6 +210,10 @@
                             class="pointer-events-none absolute bottom-0 left-0 z-20 h-10 w-full bg-gradient-to-t from-white/90 to-transparent rounded-b-[20px] hidden"></div>
                         </div>
 
+                    {{-- PATIENT NAME --}}
+                    <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
+                        PATIENT NAME :
+                    </label>
 
                         
 
@@ -462,7 +454,6 @@ document.addEventListener("DOMContentLoaded", updateUIVisibility);
 
             const lineColors = ['#0D47A1', '#7B1FA2', '#1B5E20', '#B71C1C', '#37474F', '#4E342E', '#006064', '#512DA8'];
 
-            // Define all vitals
             const vitals = {
                 temperature: { label: 'Temperature (°C)', elementId: 'tempChart', field: 'temperature' },
                 hr: { label: 'Heart Rate (bpm)', elementId: 'hrChart', field: 'hr' },
@@ -481,7 +472,6 @@ document.addEventListener("DOMContentLoaded", updateUIVisibility);
                 return `${h}:${minute.toString().padStart(2, '0')} ${suffix}`;
             };
 
-            // Create chart for each vital type
             Object.entries(vitals).forEach(([key, vital]) => {
                 const ctx = document.getElementById(vital.elementId)?.getContext('2d');
                 if (!ctx) return;
@@ -560,7 +550,9 @@ document.addEventListener("DOMContentLoaded", updateUIVisibility);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            window.initializeSearchableDropdown();
+            if (window.initSearchableDropdown) {
+                window.initSearchableDropdown();
+            }
         });
     </script>
 @endpush

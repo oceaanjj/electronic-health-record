@@ -4,13 +4,6 @@
 
     <div id="form-content-container">
 
-        @if (!session('selected_patient_id'))
-            <div
-                class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
-                <span class="text-gray-600 font-creato">Please select a patient to input</span>
-            </div>
-        @endif
-
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
             selectRoute="{{ route('ivs-and-lines.select') }}" inputPlaceholder="-Select or type to search-"
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
@@ -101,14 +94,6 @@
                 </div>
         </form>
         </fieldset>
-
-        {{-- @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-        <div class="alert alert-error">{{ session('error') }}</div>
-        @endif --}}
-
 
 @endsection
     @push('scripts')

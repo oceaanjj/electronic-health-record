@@ -4,25 +4,21 @@
 
 
 
-    {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
-        @if (!session('selected_patient_id'))
-            <div
-                class="form-overlay mx-auto w-[70%] my-6 text-center border border-gray-300 rounded-lg py-6 shadow-sm bg-gray-50">
-                <span class="text-gray-600 font-creato">Please select a patient to input</span>
-            </div>
-        @endif
-
-        <!-- dropdown component -->
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
             selectRoute="{{ route('medical-history.select') }}" inputPlaceholder="-Select or type to search-"
             inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
 
-        <form action="{{ route('medical.store') }}" method="POST">
+        {{-- Added 'relative' class here so the overlay stays inside the form --}}
+        <form action="{{ route('medical.store') }}" method="POST" class="relative">
             @csrf
 
-            {{-- Hidden input to send the selected patient's ID with the POST request --}}
-            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
+            <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}" id="patient_id_hidden">
+
+            {{-- If no patient, this transparent div covers the form. Clicking it triggers the alert. --}}
+            @if (!session('selected_patient_id'))
+                <div class="trigger-patient-alert absolute inset-0 z-50 bg-transparent cursor-not-allowed"></div>
+            @endif
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>

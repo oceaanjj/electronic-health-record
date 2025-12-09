@@ -49,7 +49,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
         }
 
         // Put them in the session to persist across all pages
-        session()->put('adpie_alerts', $alerts);
+        session()->put('physical-exam-alerts', $alerts);
 
         return view('adpie.physical-exam.diagnosis', [
             'physicalExamId' => $physicalExam->id,
@@ -77,7 +77,8 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $diagnosisAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $diagnosisAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+            $diagnosisAlert = strip_tags($message);
         }
 
         $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
@@ -122,12 +123,13 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $planningAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $planningAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+            $planningAlert = strip_tags($message);
         }
 
         $diagnosis->update([
             'planning' => $planningText,
-            'planning_alert' => $planningAlert, // Now plain text or null
+            'planning_alert' => $planningAlert,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -161,12 +163,13 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $interventionAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $interventionAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+            $interventionAlert = strip_tags($message);
         }
 
         $diagnosis->update([
             'intervention' => $interventionText,
-            'intervention_alert' => $interventionAlert, // Now plain text or null
+            'intervention_alert' => $interventionAlert,
         ]);
 
         if ($request->input('action') == 'save_and_proceed') {
@@ -200,7 +203,8 @@ class PhysicalExamComponent implements AdpieComponentInterface
         // Check if the object and property exist before stripping html tags
         $evaluationAlert = null;
         if ($alertObject && property_exists($alertObject, 'message')) {
-            $evaluationAlert = strip_tags($alertObject->message);
+            $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+            $evaluationAlert = strip_tags($message);
         }
 
         $diagnosis->update([

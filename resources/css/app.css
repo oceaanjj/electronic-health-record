@@ -89,6 +89,83 @@
 
 
 
+/* Loader Styles */
+    body.is-loading {
+        overflow: hidden;
+    }
+
+    body.is-loading > *:not(.cute-loader-wrapper) {
+        filter: blur(10px) grayscale(0.4) !important;
+        opacity: 0.6;
+        pointer-events: none;
+        transition: filter 0.4s ease;
+    }
+
+
+    body.is-loading .top-right-pattern, 
+    body.is-loading .bottom-left-pattern {
+        filter: blur(10px) !important;
+    }       
+
+    #form-content-container {
+        position: relative;
+        min-height: 500px;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+
+    #form-content-container.is-loading > *:not(.cute-loader-wrapper) {
+        filter: blur(8px) grayscale(0.5);
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+
+    .cute-loader-wrapper {
+        position: fixed;
+        top: 50%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2.5rem 3.5rem;
+        border-radius: 24px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        pointer-events: none;
+    }
+
+    .cute-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(16, 64, 59, 0.1);
+        border-top: 5px solid #10403b;
+        border-radius: 50%;
+        animation: cute-spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+
+    .loading-text {
+        font-weight: 700;
+        color: #10403b;
+        font-size: 1rem;
+        letter-spacing: -0.2px;
+        animation: pulse-text 1.5s ease-in-out infinite;
+    }
+
+    @keyframes cute-spin { to { transform: rotate(360deg); } }
+    @keyframes pulse-text {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(0.96); }
+    }
+/* End of loader styles */
+
+
+
 @layer components {
     input::placeholder,
     textarea::placeholder {

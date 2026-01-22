@@ -210,10 +210,7 @@
                             class="pointer-events-none absolute bottom-0 left-0 z-20 h-10 w-full bg-gradient-to-t from-white/90 to-transparent rounded-b-[20px] hidden"></div>
                         </div>
 
-                    {{-- PATIENT NAME --}}
-                    <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
-                        PATIENT NAME :
-                    </label>
+                
 
                         
 
@@ -379,7 +376,30 @@
                 </div>
             </form>
         </fieldset>
+
+       <div id="chart-modal" 
+            style="display:none;" 
+            class="absolute top-0 left-0 w-full h-full z-[50] flex items-center justify-center bg-white/40 backdrop-blur-sm rounded-[25px]">
+            
+            <div class="relative w-[95%] h-[90%] bg-white rounded-3xl shadow-2xl p-6 flex flex-col border border-gray-100">
+                
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-chart-title" class="text-2xl font-bold text-gray-800"></h3>
+                    <button onclick="closeChartModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="flex-grow">
+                    <canvas id="modalChartCanvas"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
+
+   
 @endsection
 
 @push('scripts')
@@ -389,167 +409,25 @@
         'resources/js/init.searchable-dropdown.js',
         'resources/js/date-day-sync.js',
         'resources/js/searchable-dropdown.js',
-        // 'resources/js/vital-signs-chart-updater.js'
+        'resources/js/vital-signs-charts.js'
     ])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-
-let chartIndex = 0;
-const totalCharts = 5;
-const visibleCharts = 2;
-const chartHeight = 244;
-const maxIndex = totalCharts - visibleCharts;
-
-const track = document.getElementById('chart-track');
-const upBtn = document.getElementById('chart-up');
-const downBtn = document.getElementById('chart-down');
-const fadeTop = document.getElementById('fade-top');
-const fadeBottom = document.getElementById('fade-bottom');
-
-function updateChartScroll() {
-    const offset = -(chartIndex * chartHeight);
-    track.style.transform = `translateY(${offset}px)`;
-
-    updateUIVisibility();
-}
-
-function updateUIVisibility() {
-    // hindi visible yung up button kapag nasa taas na (FIRST CHART)
-    if (chartIndex === 0) {
-        upBtn.classList.add("hidden");
-        fadeTop.classList.add("hidden");
-    } else {
-        upBtn.classList.remove("hidden");
-        fadeTop.classList.remove("hidden");
-    }
-
-    // hindi visible yung down button kapag nasa baba na (LAST CHART)
-    if (chartIndex === maxIndex) {
-        downBtn.classList.add("hidden");
-        fadeBottom.classList.add("hidden");
-    } else {
-        downBtn.classList.remove("hidden");
-        fadeBottom.classList.remove("hidden");
-    }
-}
-
-document.getElementById('chart-up').addEventListener('click', () => {
-    if (chartIndex > 0) chartIndex--;
-    updateChartScroll();
-});
-
-document.getElementById('chart-down').addEventListener('click', () => {
-    if (chartIndex < maxIndex) chartIndex++;
-    updateChartScroll();
-});
-
-// Load initial state
-document.addEventListener("DOMContentLoaded", updateUIVisibility);
-
-
+        const vitalsData = @json($vitalsData);
+        
         document.addEventListener('DOMContentLoaded', function () {
-            const timePoints = @json($times); // from PHP
-            const vitalsData = @json($vitalsData); // convert your PHP collection to JSON safely
+            const timePoints = @json($times);
 
-            const lineColors = ['#0D47A1', '#7B1FA2', '#1B5E20', '#B71C1C', '#37474F', '#4E342E', '#006064', '#512DA8'];
-
-            const vitals = {
-                temperature: { label: 'Temperature (°C)', elementId: 'tempChart', field: 'temperature' },
-                hr: { label: 'Heart Rate (bpm)', elementId: 'hrChart', field: 'hr' },
-                rr: { label: 'Respiratory Rate (bpm)', elementId: 'rrChart', field: 'rr' },
-                bp: { label: 'Blood Pressure (mmHg)', elementId: 'bpChart', field: 'bp' },
-                spo2: { label: 'SpO₂ (%)', elementId: 'spo2Chart', field: 'spo2' },
-            };
-
-            // Helper function to parse time (00:00 -> 12:00 AM)
-            const formatTimeLabel = (t) => {
-                if (!t) return 'N/A';
-                const [hour, minute] = t.split(':').map(Number);
-                if (hour === undefined || minute === undefined) return t;
-                const h = ((hour + 11) % 12) + 1;
-                const suffix = hour >= 12 ? 'PM' : 'AM';
-                return `${h}:${minute.toString().padStart(2, '0')} ${suffix}`;
-            };
-
-            Object.entries(vitals).forEach(([key, vital]) => {
-                const ctx = document.getElementById(vital.elementId)?.getContext('2d');
-                if (!ctx) return;
-
-                // Build data values for this vital from PHP JSON
-                const dataValues = timePoints.map((time) => {
-                    const record = vitalsData?.[time];
-                    return record ? parseFloat(record[vital.field]) || null : null;
-                });
-
-                const chart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: timePoints.map((t) => {
-                            if (!t) return 'N/A';
-                            const [hour, minute] = t.split(':');
-                            if (hour === undefined || minute === undefined) return t;
-                            const h = ((+hour + 11) % 12) + 1;
-                            const suffix = +hour >= 12 ? 'PM' : 'AM';
-                            return `${h}:${minute} ${suffix}`;
-                        }),
-                        datasets: [
-                            {
-                                label: vital.label,
-                                data: dataValues,
-                                borderColor: lineColors[0],
-                                backgroundColor: lineColors[0],
-                                borderWidth: 2.5,
-                                tension: 0.3,
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                fill: false,
-                            },
-                        ],
-                    },
-                    options: {
-                        responsive: true,
-                        animation: { duration: 800, easing: 'easeOutQuart' },
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: { color: '#2c3e50', font: { size: 13, weight: 'bold' } },
-                            },
-                            tooltip: {
-                                backgroundColor: '#333',
-                                titleColor: '#fff',
-                                bodyColor: '#f0f0f0',
-                            },
-                        },
-                        scales: {
-                            x: {
-                                ticks: { color: '#2c3e50', font: { weight: 'bold' } },
-                                grid: { color: 'rgba(0,0,0,0.1)' },
-                            },
-                            y: {
-                                beginAtZero: true,
-                                ticks: { color: '#2c3e50', font: { weight: 'bold' } },
-                                grid: { color: 'rgba(0,0,0,0.1)' },
-                            },
-                        },
-                    },
-                });
-
-                document.querySelectorAll(`input[data-field-name="${vital.field}"]`).forEach((input) => {
-                    input.addEventListener('input', () => {
-                        const time = input.getAttribute('data-time');
-                        const value = parseFloat(input.value) || null;
-                        const index = timePoints.indexOf(time);
-                        if (index !== -1) {
-                            chart.data.datasets[0].data[index] = value;
-                            chart.update('active');
-                        }
-                    });
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
+            if (window.initializeVitalSignsCharts) {
+                window.initializeVitalSignsCharts(timePoints, vitalsData);
+            }
+            
+            if (window.initializeChartScrolling) {
+                window.initializeChartScrolling();
+            }
+            
+            // Initialize searchable dropdown
             if (window.initSearchableDropdown) {
                 window.initSearchableDropdown();
             }

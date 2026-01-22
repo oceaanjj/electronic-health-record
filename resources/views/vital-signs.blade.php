@@ -376,7 +376,30 @@
                 </div>
             </form>
         </fieldset>
+
+       <div id="chart-modal" 
+            style="display:none;" 
+            class="absolute top-0 left-0 w-full h-full z-[50] flex items-center justify-center bg-white/40 backdrop-blur-sm rounded-[25px]">
+            
+            <div class="relative w-[95%] h-[90%] bg-white rounded-3xl shadow-2xl p-6 flex flex-col border border-gray-100">
+                
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-chart-title" class="text-2xl font-bold text-gray-800"></h3>
+                    <button onclick="closeChartModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="flex-grow">
+                    <canvas id="modalChartCanvas"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
+
+   
 @endsection
 
 @push('scripts')

@@ -1,5 +1,5 @@
 /**
- * vital-signs-charts.js - Optimized for instant loading
+ * vital-signs-charts.js - Compact Dashboard with Full-Detail Modal
  */
 
 // Store chart instances globally
@@ -8,227 +8,231 @@ window.vitalCharts = {
     hrChart: null,
     rrChart: null,
     bpChart: null,
-    spo2Chart: null
+    spo2Chart: null,
 };
+
+// Instance for the modal chart
+window.modalChartInstance = null;
 
 /**
  * Initialize all vital signs charts
- * @param {Array} timePoints - Array of time strings
- * @param {Object} vitalsData - Object with vital sign data keyed by time
- * @param {Object} options - { animate: boolean }
  */
-window.initializeVitalSignsCharts = function(timePoints, vitalsData, options = {}) {
+window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = {}) {
     const { animate = true } = options;
-    console.log('[VitalCharts] Initializing charts...', { timePoints, vitalsData, animate });
 
-    // Destroy existing charts first to prevent memory leaks
-    Object.keys(window.vitalCharts).forEach(key => {
+    // Cleanup existing charts to prevent memory leaks and ghosting
+    Object.keys(window.vitalCharts).forEach((key) => {
         if (window.vitalCharts[key]) {
             window.vitalCharts[key].destroy();
             window.vitalCharts[key] = null;
         }
     });
 
-    const lineColors = ['#0D47A1', '#7B1FA2', '#1B5E20', '#B71C1C', '#37474F'];
+    // Professional Medical Color Palette
+    const lineColors = {
+        temperature: '#d32f2f', // Red
+        hr: '#1976d2', // Blue
+        rr: '#388e3c', // Green
+        bp: '#7b1fa2', // Purple
+        spo2: '#f57c00', // Orange
+    };
 
     const vitals = {
-        temperature: { label: 'Temperature (°C)', elementId: 'tempChart', field: 'temperature', chartKey: 'tempChart' },
-        hr: { label: 'Heart Rate (bpm)', elementId: 'hrChart', field: 'hr', chartKey: 'hrChart' },
-        rr: { label: 'Respiratory Rate (bpm)', elementId: 'rrChart', field: 'rr', chartKey: 'rrChart' },
-        bp: { label: 'Blood Pressure (mmHg)', elementId: 'bpChart', field: 'bp', chartKey: 'bpChart' },
+        temperature: { label: 'Temp (°C)', elementId: 'tempChart', field: 'temperature', chartKey: 'tempChart' },
+        hr: { label: 'HR (bpm)', elementId: 'hrChart', field: 'hr', chartKey: 'hrChart' },
+        rr: { label: 'RR (bpm)', elementId: 'rrChart', field: 'rr', chartKey: 'rrChart' },
+        bp: { label: 'BP (mmHg)', elementId: 'bpChart', field: 'bp', chartKey: 'bpChart' },
         spo2: { label: 'SpO₂ (%)', elementId: 'spo2Chart', field: 'spo2', chartKey: 'spo2Chart' },
     };
 
-    // Format time labels efficiently
     const formatTimeLabel = (t) => {
-        if (!t) return 'N/A';
+        if (!t) return '';
         const parts = t.split(':');
-        if (parts.length !== 2) return t;
         const hour = parseInt(parts[0], 10);
-        const minute = parts[1];
-        if (isNaN(hour)) return t;
         const h = ((hour + 11) % 12) + 1;
         const suffix = hour >= 12 ? 'PM' : 'AM';
-        return `${h}:${minute} ${suffix}`;
+        return `${h}:${parts[1]} ${suffix}`;
     };
 
-    // Pre-format labels once
     const formattedLabels = timePoints.map(formatTimeLabel);
 
     Object.entries(vitals).forEach(([key, vital]) => {
         const canvas = document.getElementById(vital.elementId);
-        if (!canvas) {
-            console.warn(`[VitalCharts] Canvas not found: ${vital.elementId}`);
-            return;
-        }
+        if (!canvas) return;
 
         const ctx = canvas.getContext('2d');
-
-        // Extract data values - handle various data formats
         const dataValues = timePoints.map((time) => {
-            const record = vitalsData?.[time];
-            if (!record) return null;
-            
-            // Try to get the value
-            let value = record[vital.field];
-            
-            // Parse the value
-            if (value === null || value === undefined || value === '') {
-                return null;
-            }
-            
-            const parsed = parseFloat(value);
-            return isNaN(parsed) ? null : parsed;
+            const val = vitalsData?.[time]?.[vital.field];
+            return val === null || val === undefined || val === '' ? null : parseFloat(val);
         });
-        
-        console.log(`[VitalCharts] ${vital.field} data:`, dataValues);
 
-        // Create chart with optimized settings
+        // 1. Create the Dashboard Chart (Compact)
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: formattedLabels,
-                datasets: [{
-                    label: vital.label,
-                    data: dataValues,
-                    borderColor: lineColors[0],
-                    backgroundColor: lineColors[0],
-                    borderWidth: 2.5,
-                    tension: 0.3,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    fill: false,
-                }],
+                datasets: [
+                    {
+                        label: vital.label,
+                        data: dataValues,
+                        borderColor: lineColors[key],
+                        backgroundColor: lineColors[key],
+                        borderWidth: 1.5,
+                        tension: 0.3,
+                        pointRadius: 2,
+                        pointHoverRadius: 5,
+                        fill: false,
+                        spanGaps: true,
+                    },
+                ],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                animation: animate ? { 
-                    duration: 600, 
-                    easing: 'easeOutQuart' 
-                } : false, // Disable animation for instant display
+                layout: { padding: { top: 10, bottom: 5, left: 5, right: 10 } },
+                animation: animate ? { duration: 400 } : false,
                 plugins: {
                     legend: {
+                        display: true,
                         position: 'top',
-                        labels: { 
-                            color: '#2c3e50', 
-                            font: { size: 13, weight: 'bold' } 
-                        },
+                        align: 'end',
+                        labels: { boxWidth: 8, usePointStyle: true, font: { size: 10, weight: '600' } },
                     },
-                    tooltip: {
-                        backgroundColor: '#333',
-                        titleColor: '#fff',
-                        bodyColor: '#f0f0f0',
-                    },
+                    tooltip: { enabled: true, bodyFont: { size: 10 } },
                 },
                 scales: {
                     x: {
-                        ticks: { 
-                            color: '#2c3e50', 
-                            font: { weight: 'bold' } 
-                        },
-                        grid: { color: 'rgba(0,0,0,0.1)' },
+                        grid: { display: false },
+                        ticks: { font: { size: 9 }, maxTicksLimit: 6 },
                     },
                     y: {
-                        beginAtZero: true,
-                        ticks: { 
-                            color: '#2c3e50', 
-                            font: { weight: 'bold' } 
-                        },
-                        grid: { color: 'rgba(0,0,0,0.1)' },
+                        beginAtZero: false,
+                        grid: { color: 'rgba(0,0,0,0.03)' },
+                        ticks: { font: { size: 9 } },
                     },
                 },
             },
         });
 
-        // Store chart instance
+        // 2. Make Chart Clickable
+        canvas.style.cursor = 'zoom-in';
+        canvas.onclick = () => {
+            window.openChartModal(key, formattedLabels, dataValues, vital.label, lineColors[key]);
+        };
+
         window.vitalCharts[vital.chartKey] = chart;
 
-        // Attach input listeners for real-time updates
+        // 3. Setup Input Listeners for Live Updates
         const inputs = document.querySelectorAll(`input[data-field-name="${vital.field}"]`);
         inputs.forEach((input) => {
-            // Remove old listeners by cloning
             const newInput = input.cloneNode(true);
             input.parentNode.replaceChild(newInput, input);
-            
             newInput.addEventListener('input', () => {
                 const time = newInput.getAttribute('data-time');
-                const value = parseFloat(newInput.value) || null;
-                const index = timePoints.indexOf(time);
-                if (index !== -1 && window.vitalCharts[vital.chartKey]) {
-                    window.vitalCharts[vital.chartKey].data.datasets[0].data[index] = value;
-                    window.vitalCharts[vital.chartKey].update('none'); // Update without animation
+                const val = parseFloat(newInput.value) || null;
+                const idx = timePoints.indexOf(time);
+                if (idx !== -1 && window.vitalCharts[vital.chartKey]) {
+                    window.vitalCharts[vital.chartKey].data.datasets[0].data[idx] = val;
+                    window.vitalCharts[vital.chartKey].update('none');
                 }
             });
         });
     });
-
-    console.log('[VitalCharts] Charts initialized successfully');
 };
 
 /**
- * Initialize chart scrolling functionality
+ * Modal Management Logic
  */
-window.initializeChartScrolling = function() {
+window.openChartModal = function (vitalKey, labels, data, vitalLabel, color) {
+    const modal = document.getElementById('chart-modal');
+    const modalCanvas = document.getElementById('modalChartCanvas');
+    const modalTitle = document.getElementById('modal-chart-title');
+
+    if (!modal || !modalCanvas) return;
+
+    modalTitle.innerText = `Detailed View: ${vitalLabel}`;
+    modal.style.display = 'flex'; // Show modal
+
+    if (window.modalChartInstance) window.modalChartInstance.destroy();
+
+    window.modalChartInstance = new Chart(modalCanvas, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: vitalLabel,
+                    data: data,
+                    borderColor: color,
+                    backgroundColor: color + '15', // Transparent fill
+                    fill: true,
+                    borderWidth: 3,
+                    tension: 0.3,
+                    pointRadius: 6,
+                    pointHoverRadius: 10,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { padding: 15, titleFont: { size: 16 }, bodyFont: { size: 14 } },
+            },
+            scales: {
+                x: { ticks: { font: { size: 13, weight: 'bold' } } },
+                y: { ticks: { font: { size: 13, weight: 'bold' } } },
+            },
+        },
+    });
+};
+
+window.closeChartModal = function () {
+    const modal = document.getElementById('chart-modal');
+    if (modal) modal.style.display = 'none';
+};
+
+/**
+ * Initialize vertical scrolling for dashboard charts
+ */
+window.initializeChartScrolling = function () {
     let chartIndex = 0;
     const totalCharts = 5;
     const visibleCharts = 2;
-    const chartHeight = 244;
+    const chartHeight = 220;
     const maxIndex = totalCharts - visibleCharts;
 
     const track = document.getElementById('chart-track');
     const upBtn = document.getElementById('chart-up');
     const downBtn = document.getElementById('chart-down');
-    const fadeTop = document.getElementById('fade-top');
-    const fadeBottom = document.getElementById('fade-bottom');
 
-    if (!track || !upBtn || !downBtn) {
-        console.warn('[VitalCharts] Chart scrolling elements not found');
-        return;
-    }
+    if (!track || !upBtn || !downBtn) return;
 
     function updateChartScroll() {
-        const offset = -(chartIndex * chartHeight);
-        track.style.transform = `translateY(${offset}px)`;
-        updateUIVisibility();
+        track.style.transform = `translateY(${-(chartIndex * chartHeight)}px)`;
+        upBtn.style.opacity = chartIndex === 0 ? '0.3' : '1';
+        downBtn.style.opacity = chartIndex === maxIndex ? '0.3' : '1';
     }
 
-    function updateUIVisibility() {
-        if (chartIndex === 0) {
-            upBtn.classList.add("hidden");
-            if (fadeTop) fadeTop.classList.add("hidden");
-        } else {
-            upBtn.classList.remove("hidden");
-            if (fadeTop) fadeTop.classList.remove("hidden");
-        }
-
-        if (chartIndex === maxIndex) {
-            downBtn.classList.add("hidden");
-            if (fadeBottom) fadeBottom.classList.add("hidden");
-        } else {
-            downBtn.classList.remove("hidden");
-            if (fadeBottom) fadeBottom.classList.remove("hidden");
-        }
-    }
-
-    // Clone buttons to remove old event listeners
     const newUpBtn = upBtn.cloneNode(true);
     const newDownBtn = downBtn.cloneNode(true);
     upBtn.parentNode.replaceChild(newUpBtn, upBtn);
     downBtn.parentNode.replaceChild(newDownBtn, downBtn);
 
     newUpBtn.addEventListener('click', () => {
-        if (chartIndex > 0) chartIndex--;
-        updateChartScroll();
+        if (chartIndex > 0) {
+            chartIndex--;
+            updateChartScroll();
+        }
     });
-
     newDownBtn.addEventListener('click', () => {
-        if (chartIndex < maxIndex) chartIndex++;
-        updateChartScroll();
+        if (chartIndex < maxIndex) {
+            chartIndex++;
+            updateChartScroll();
+        }
     });
 
-    // Reset to top and update UI
     chartIndex = 0;
     updateChartScroll();
-    console.log('[VitalCharts] Chart scrolling initialized');
 };

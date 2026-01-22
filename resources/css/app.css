@@ -87,6 +87,25 @@
     --color-placeholder: #d1d5db;
 }
 
+.chart-wrapper canvas {
+        transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    
+    .chart-wrapper canvas:hover {
+        transform: scale(1.02);
+        filter: brightness(1.05);
+    }
+
+    /* Modal backdrop blur */
+    #chart-modal {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
 
 
 /* Loader Styles */

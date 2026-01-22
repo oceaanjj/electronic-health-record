@@ -1,8 +1,4 @@
-/**
- * vital-signs-charts.js - Compact Dashboard with Full-Detail Modal
- */
 
-// Store chart instances globally
 window.vitalCharts = {
     tempChart: null,
     hrChart: null,
@@ -11,16 +7,13 @@ window.vitalCharts = {
     spo2Chart: null,
 };
 
-// Instance for the modal chart
+
 window.modalChartInstance = null;
 
-/**
- * Initialize all vital signs charts
- */
+
 window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = {}) {
     const { animate = true } = options;
 
-    // Cleanup existing charts to prevent memory leaks and ghosting
     Object.keys(window.vitalCharts).forEach((key) => {
         if (window.vitalCharts[key]) {
             window.vitalCharts[key].destroy();
@@ -28,13 +21,13 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
         }
     });
 
-    // Professional Medical Color Palette
+
     const lineColors = {
-        temperature: '#d32f2f', // Red
-        hr: '#1976d2', // Blue
-        rr: '#388e3c', // Green
-        bp: '#7b1fa2', // Purple
-        spo2: '#f57c00', // Orange
+        temperature: '#d32f2f', 
+        hr: '#1976d2', 
+        rr: '#388e3c',
+        bp: '#7b1fa2', 
+        spo2: '#f57c00', 
     };
 
     const vitals = {
@@ -66,7 +59,7 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
             return val === null || val === undefined || val === '' ? null : parseFloat(val);
         });
 
-        // 1. Create the Dashboard Chart (Compact)
+    
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -114,7 +107,6 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
             },
         });
 
-        // 2. Make Chart Clickable
         canvas.style.cursor = 'zoom-in';
         canvas.onclick = () => {
             window.openChartModal(key, formattedLabels, dataValues, vital.label, lineColors[key]);
@@ -122,7 +114,7 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
 
         window.vitalCharts[vital.chartKey] = chart;
 
-        // 3. Setup Input Listeners for Live Updates
+        
         const inputs = document.querySelectorAll(`input[data-field-name="${vital.field}"]`);
         inputs.forEach((input) => {
             const newInput = input.cloneNode(true);
@@ -140,9 +132,7 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
     });
 };
 
-/**
- * Modal Management Logic
- */
+
 window.openChartModal = function (vitalKey, labels, data, vitalLabel, color) {
     const modal = document.getElementById('chart-modal');
     const modalCanvas = document.getElementById('modalChartCanvas');
@@ -164,7 +154,7 @@ window.openChartModal = function (vitalKey, labels, data, vitalLabel, color) {
                     label: vitalLabel,
                     data: data,
                     borderColor: color,
-                    backgroundColor: color + '15', // Transparent fill
+                    backgroundColor: color + '15', 
                     fill: true,
                     borderWidth: 3,
                     tension: 0.3,
@@ -193,9 +183,7 @@ window.closeChartModal = function () {
     if (modal) modal.style.display = 'none';
 };
 
-/**
- * Initialize vertical scrolling for dashboard charts
- */
+
 window.initializeChartScrolling = function () {
     let chartIndex = 0;
     const totalCharts = 5;

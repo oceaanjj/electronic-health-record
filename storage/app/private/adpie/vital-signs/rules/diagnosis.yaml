@@ -56,3 +56,399 @@ diagnosis:
   - keywords: ["bp < 90", "hr > 120"]
     alert: "Risk for shock related to hypotension and tachycardia. Consider fluid resuscitation."
     severity: "CRITICAL"
+
+  # Additional Temperature Rules
+  - keywords: ["temperature", "38-39"]
+    alert: "Fever related to possible infection as evidenced by temperature 38-39°C."
+    severity: "WARNING"
+  - keywords: ["temperature", "37.5-38"]
+    alert: "Low-grade fever related to mild infection or inflammation as evidenced by temperature 37.5-38°C."
+    severity: "INFO"
+  - keywords: ["temperature", "39-40"]
+    alert: "High fever related to severe infection as evidenced by temperature 39-40°C."
+    severity: "CRITICAL"
+  - keywords: ["temperature", "34-35"]
+    alert: "Moderate hypothermia related to environmental exposure as evidenced by temperature 34-35°C."
+    severity: "WARNING"
+  - keywords: ["temperature", "33-34"]
+    alert: "Severe hypothermia related to cold exposure as evidenced by temperature 33-34°C."
+    severity: "CRITICAL"
+  - keywords: ["temperature", "32-33"]
+    alert: "Critical hypothermia requiring immediate intervention as evidenced by temperature 32-33°C."
+    severity: "CRITICAL"
+  - keywords: ["temperature", "36-37"]
+    alert: "Normal temperature range."
+    severity: "INFO"
+  - keywords: ["temperature", "35-36"]
+    alert: "Slightly low temperature, monitor for hypothermia risk."
+    severity: "INFO"
+
+  # Additional Heart Rate Rules
+  - keywords: ["hr", "120-140"]
+    alert: "Tachycardia related to stress or infection as evidenced by heart rate 120-140 bpm."
+    severity: "WARNING"
+  - keywords: ["hr", "140-150"]
+    alert: "Severe tachycardia related to cardiac issue as evidenced by heart rate 140-150 bpm."
+    severity: "CRITICAL"
+  - keywords: ["hr", "100-120"]
+    alert: "Mild tachycardia related to anxiety as evidenced by heart rate 100-120 bpm."
+    severity: "INFO"
+  - keywords: ["hr", "60-70"]
+    alert: "Bradycardia related to medication as evidenced by heart rate 60-70 bpm."
+    severity: "WARNING"
+  - keywords: ["hr", "70-80"]
+    alert: "Normal heart rate range."
+    severity: "INFO"
+  - keywords: ["hr", "80-100"]
+    alert: "Normal to slightly elevated heart rate."
+    severity: "INFO"
+  - keywords: ["hr", "40-50"]
+    alert: "Severe bradycardia requiring intervention as evidenced by heart rate 40-50 bpm."
+    severity: "CRITICAL"
+  - keywords: ["hr", "30-40"]
+    alert: "Critical bradycardia, risk for cardiac arrest as evidenced by heart rate 30-40 bpm."
+    severity: "CRITICAL"
+
+  # Additional Respiratory Rate Rules
+  - keywords: ["rr", "20-25"]
+    alert: "Mild tachypnea related to anxiety as evidenced by respiratory rate 20-25 breaths/min."
+    severity: "INFO"
+  - keywords: ["rr", "25-30"]
+    alert: "Moderate tachypnea related to respiratory distress as evidenced by respiratory rate 25-30 breaths/min."
+    severity: "WARNING"
+  - keywords: ["rr", "12-15"]
+    alert: "Normal respiratory rate range."
+    severity: "INFO"
+  - keywords: ["rr", "15-20"]
+    alert: "Slightly elevated respiratory rate."
+    severity: "INFO"
+  - keywords: ["rr", "8-10"]
+    alert: "Mild bradypnea related to medication as evidenced by respiratory rate 8-10 breaths/min."
+    severity: "WARNING"
+  - keywords: ["rr", "6-8"]
+    alert: "Severe bradypnea, risk for respiratory failure as evidenced by respiratory rate 6-8 breaths/min."
+    severity: "CRITICAL"
+  - keywords: ["rr", "35-40"]
+    alert: "Extreme tachypnea, immediate intervention needed as evidenced by respiratory rate 35-40 breaths/min."
+    severity: "CRITICAL"
+  - keywords: ["rr", "40-50"]
+    alert: "Critical tachypnea, possible respiratory failure as evidenced by respiratory rate 40-50 breaths/min."
+    severity: "CRITICAL"
+
+  # Additional Blood Pressure Rules
+  - keywords: ["bp", "100-120"]
+    alert: "Normal systolic blood pressure range."
+    severity: "INFO"
+  - keywords: ["bp", "120-140"]
+    alert: "Mild hypertension related to stress as evidenced by systolic BP 120-140 mmHg."
+    severity: "WARNING"
+  - keywords: ["bp", "140-160"]
+    alert: "Moderate hypertension requiring management as evidenced by systolic BP 140-160 mmHg."
+    severity: "WARNING"
+  - keywords: ["bp", "160-180"]
+    alert: "Severe hypertension, risk for stroke as evidenced by systolic BP 160-180 mmHg."
+    severity: "CRITICAL"
+  - keywords: ["bp", "80-90"]
+    alert: "Borderline hypotension, monitor closely as evidenced by systolic BP 80-90 mmHg."
+    severity: "WARNING"
+  - keywords: ["bp", "70-80"]
+    alert: "Hypotension related to dehydration as evidenced by systolic BP 70-80 mmHg."
+    severity: "CRITICAL"
+  - keywords: ["bp", "60-70"]
+    alert: "Severe hypotension, shock risk as evidenced by systolic BP 60-70 mmHg."
+    severity: "CRITICAL"
+  - keywords: ["bp", "50-60"]
+    alert: "Critical hypotension, immediate intervention as evidenced by systolic BP 50-60 mmHg."
+    severity: "CRITICAL"
+
+  # Additional SpO2 Rules
+  - keywords: ["spo2", "92-94"]
+    alert: "Mild hypoxemia, supplemental oxygen may be needed as evidenced by SpO2 92-94%."
+    severity: "WARNING"
+  - keywords: ["spo2", "94-96"]
+    alert: "Borderline hypoxemia, monitor closely as evidenced by SpO2 94-96%."
+    severity: "INFO"
+  - keywords: ["spo2", "96-98"]
+    alert: "Normal oxygen saturation range."
+    severity: "INFO"
+  - keywords: ["spo2", "98-100"]
+    alert: "Excellent oxygen saturation."
+    severity: "INFO"
+  - keywords: ["spo2", "85-90"]
+    alert: "Moderate hypoxemia, oxygen therapy required as evidenced by SpO2 85-90%."
+    severity: "CRITICAL"
+  - keywords: ["spo2", "80-85"]
+    alert: "Severe hypoxemia, immediate oxygen as evidenced by SpO2 80-85%."
+    severity: "CRITICAL"
+  - keywords: ["spo2", "75-80"]
+    alert: "Critical hypoxemia, risk for organ damage as evidenced by SpO2 75-80%."
+    severity: "CRITICAL"
+
+  # More Combination Rules
+  - keywords: ["temperature > 38.5", "hr > 100", "rr > 20"]
+    alert: "Sepsis indicators: fever, tachycardia, and tachypnea. Activate sepsis protocol immediately."
+    severity: "CRITICAL"
+  - keywords: ["bp < 90", "hr > 110", "rr > 25"]
+    alert: "Septic shock signs: hypotension, tachycardia, and tachypnea. Urgent fluid resuscitation."
+    severity: "CRITICAL"
+  - keywords: ["temperature < 36", "hr < 60", "bp < 100"]
+    alert: "Hypothermia with bradycardia and hypotension, possible endocrine crisis."
+    severity: "CRITICAL"
+  - keywords: ["hr > 140", "bp > 160", "spo2 < 95"]
+    alert: "Cardiac stress with hypertension and hypoxemia, monitor for heart failure."
+    severity: "CRITICAL"
+  - keywords: ["rr > 35", "spo2 < 88", "hr > 130"]
+    alert: "Respiratory distress with tachycardia and severe hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["temperature > 39", "bp < 85", "hr > 125"]
+    alert: "Severe infection with shock: high fever, hypotension, tachycardia."
+    severity: "CRITICAL"
+  - keywords: ["temperature < 35.5", "rr < 12", "hr < 55"]
+    alert: "Hypothermia with bradypnea and bradycardia, risk for cardiac arrest."
+    severity: "CRITICAL"
+  - keywords: ["bp > 190", "hr > 100", "rr > 22"]
+    alert: "Hypertensive crisis with tachycardia and tachypnea."
+    severity: "CRITICAL"
+  - keywords: ["spo2 < 85", "rr > 30", "hr > 120"]
+    alert: "Acute respiratory failure with hypoxemia and tachycardia."
+    severity: "CRITICAL"
+  - keywords: ["temperature > 38", "bp > 150", "hr > 90"]
+    alert: "Fever with hypertension and mild tachycardia, possible infection."
+    severity: "WARNING"
+  - keywords: ["temperature < 36.5", "bp < 110", "hr < 70"]
+    alert: "Mild hypothermia with hypotension and bradycardia."
+    severity: "WARNING"
+  - keywords: ["rr > 24", "spo2 93-95", "hr > 95"]
+    alert: "Mild respiratory distress with borderline hypoxemia."
+    severity: "WARNING"
+  - keywords: ["bp 130-150", "hr 85-105", "rr 18-22"]
+    alert: "Mild hypertension with normal heart and respiratory rates."
+    severity: "INFO"
+  - keywords: ["temperature 37-37.5", "hr 70-90", "bp 110-130"]
+    alert: "Normal vital signs range."
+    severity: "INFO"
+  - keywords: ["spo2 95-97", "rr 14-18", "hr 75-95"]
+    alert: "Stable oxygenation with normal respiratory and heart rates."
+    severity: "INFO"
+  - keywords: ["temperature > 38.5", "hr > 110"]
+    alert: "Fever with tachycardia, possible early sepsis."
+    severity: "WARNING"
+  - keywords: ["bp < 95", "hr > 105"]
+    alert: "Hypotension with compensatory tachycardia."
+    severity: "WARNING"
+  - keywords: ["rr > 28", "spo2 < 93"]
+    alert: "Tachypnea with mild hypoxemia."
+    severity: "WARNING"
+  - keywords: ["temperature < 36", "hr < 65"]
+    alert: "Hypothermia with bradycardia."
+    severity: "WARNING"
+  - keywords: ["bp > 170", "hr > 85"]
+    alert: "Hypertension with tachycardia."
+    severity: "WARNING"
+  - keywords: ["spo2 < 92", "rr > 26"]
+    alert: "Hypoxemia with tachypnea."
+    severity: "WARNING"
+  - keywords: ["temperature > 39.5", "rr > 32"]
+    alert: "High fever with extreme tachypnea."
+    severity: "CRITICAL"
+  - keywords: ["bp < 80", "spo2 < 90"]
+    alert: "Hypotension with severe hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["hr > 160", "rr > 35"]
+    alert: "Extreme tachycardia with tachypnea."
+    severity: "CRITICAL"
+  - keywords: ["temperature < 34", "bp < 70"]
+    alert: "Severe hypothermia with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["spo2 < 88", "hr > 140", "rr > 30"]
+    alert: "Severe hypoxemia with tachycardia and tachypnea."
+    severity: "CRITICAL"
+  - keywords: ["bp > 200", "hr > 120"]
+    alert: "Malignant hypertension with tachycardia."
+    severity: "CRITICAL"
+  - keywords: ["temperature > 40", "bp < 80", "hr > 130"]
+    alert: "Hyperthermia with shock signs."
+    severity: "CRITICAL"
+  - keywords: ["rr < 8", "spo2 < 85", "hr < 50"]
+    alert: "Bradypnea with hypoxemia and bradycardia."
+    severity: "CRITICAL"
+  - keywords: ["temperature 38-38.5", "hr 100-120"]
+    alert: "Moderate fever with tachycardia."
+    severity: "WARNING"
+  - keywords: ["bp 140-160", "hr 90-110"]
+    alert: "Hypertension with mild tachycardia."
+    severity: "WARNING"
+  - keywords: ["rr 22-26", "spo2 90-94"]
+    alert: "Tachypnea with hypoxemia."
+    severity: "WARNING"
+  - keywords: ["temperature 36.5-37", "bp 100-120"]
+    alert: "Normal temperature and blood pressure."
+    severity: "INFO"
+  - keywords: ["hr 80-100", "rr 16-20"]
+    alert: "Normal heart and respiratory rates."
+    severity: "INFO"
+  - keywords: ["spo2 96-98", "temperature 36.8-37.2"]
+    alert: "Excellent oxygenation and normal temperature."
+    severity: "INFO"
+  - keywords: ["bp 120-135", "hr 75-90"]
+    alert: "Mild hypertension with normal heart rate."
+    severity: "INFO"
+  - keywords: ["rr 18-24", "spo2 94-96"]
+    alert: "Slight tachypnea with good oxygenation."
+    severity: "INFO"
+  - keywords: ["temperature 37.2-37.8", "bp 125-145"]
+    alert: "Low-grade fever with mild hypertension."
+    severity: "INFO"
+  - keywords: ["hr 95-115", "rr 20-25"]
+    alert: "Mild tachycardia with tachypnea."
+    severity: "INFO"
+  - keywords: ["spo2 92-95", "hr 105-125"]
+    alert: "Borderline hypoxemia with tachycardia."
+    severity: "WARNING"
+  - keywords: ["temperature > 38", "bp > 140"]
+    alert: "Fever with hypertension."
+    severity: "WARNING"
+  - keywords: ["rr > 22", "hr > 100"]
+    alert: "Tachypnea with tachycardia."
+    severity: "WARNING"
+  - keywords: ["spo2 < 94", "bp < 100"]
+    alert: "Hypoxemia with hypotension."
+    severity: "WARNING"
+  - keywords: ["temperature < 36.5", "rr < 14"]
+    alert: "Hypothermia with bradypnea."
+    severity: "WARNING"
+  - keywords: ["bp > 150", "spo2 < 96"]
+    alert: "Hypertension with mild hypoxemia."
+    severity: "WARNING"
+  - keywords: ["hr > 130", "temperature > 38.5"]
+    alert: "Tachycardia with fever."
+    severity: "WARNING"
+  - keywords: ["rr > 28", "bp < 95"]
+    alert: "Tachypnea with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["spo2 < 90", "temperature > 39"]
+    alert: "Severe hypoxemia with high fever."
+    severity: "CRITICAL"
+  - keywords: ["hr < 55", "bp < 85"]
+    alert: "Bradycardia with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["temperature < 35", "spo2 < 92"]
+    alert: "Hypothermia with hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["bp > 185", "rr > 24"]
+    alert: "Severe hypertension with tachypnea."
+    severity: "CRITICAL"
+  - keywords: ["hr > 150", "spo2 < 88"]
+    alert: "Extreme tachycardia with hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["rr < 10", "temperature > 38"]
+    alert: "Bradypnea with fever."
+    severity: "WARNING"
+  - keywords: ["bp 135-155", "hr 85-105"]
+    alert: "Moderate hypertension with normal heart rate."
+    severity: "INFO"
+  - keywords: ["spo2 93-96", "rr 19-23"]
+    alert: "Good oxygenation with mild tachypnea."
+    severity: "INFO"
+  - keywords: ["temperature 37.5-38.2", "bp 115-135"]
+    alert: "Mild fever with normal blood pressure."
+    severity: "INFO"
+  - keywords: ["hr 110-130", "rr 21-26"]
+    alert: "Tachycardia with tachypnea."
+    severity: "WARNING"
+  - keywords: ["spo2 89-93", "hr 115-135"]
+    alert: "Mild hypoxemia with tachycardia."
+    severity: "WARNING"
+  - keywords: ["temperature > 38.2", "bp > 145"]
+    alert: "Fever with hypertension."
+    severity: "WARNING"
+  - keywords: ["rr > 25", "hr > 105"]
+    alert: "Tachypnea with tachycardia."
+    severity: "WARNING"
+  - keywords: ["spo2 < 93", "bp < 105"]
+    alert: "Hypoxemia with mild hypotension."
+    severity: "WARNING"
+  - keywords: ["temperature < 36.8", "rr < 15"]
+    alert: "Slight hypothermia with bradypnea."
+    severity: "INFO"
+  - keywords: ["bp > 155", "spo2 < 97"]
+    alert: "Hypertension with borderline hypoxemia."
+    severity: "WARNING"
+  - keywords: ["hr > 135", "temperature > 38.8"]
+    alert: "Tachycardia with fever."
+    severity: "WARNING"
+  - keywords: ["rr > 30", "bp < 90"]
+    alert: "Extreme tachypnea with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["spo2 < 89", "temperature > 39.2"]
+    alert: "Hypoxemia with high fever."
+    severity: "CRITICAL"
+  - keywords: ["hr < 60", "bp < 90"]
+    alert: "Bradycardia with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["temperature < 34.5", "spo2 < 91"]
+    alert: "Severe hypothermia with hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["bp > 190", "rr > 26"]
+    alert: "Malignant hypertension with tachypnea."
+    severity: "CRITICAL"
+  - keywords: ["hr > 155", "spo2 < 87"]
+    alert: "Extreme tachycardia with severe hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["rr < 9", "temperature > 38.5"]
+    alert: "Bradypnea with fever."
+    severity: "WARNING"
+  - keywords: ["bp 140-165", "hr 90-110"]
+    alert: "Hypertension with tachycardia."
+    severity: "WARNING"
+  - keywords: ["spo2 90-94", "rr 22-28"]
+    alert: "Hypoxemia with tachypnea."
+    severity: "WARNING"
+  - keywords: ["temperature 38-39", "bp 120-140"]
+    alert: "Fever with normal blood pressure."
+    severity: "WARNING"
+  - keywords: ["hr 120-145", "rr 24-30"]
+    alert: "Tachycardia with tachypnea."
+    severity: "WARNING"
+  - keywords: ["spo2 86-92", "hr 125-145"]
+    alert: "Moderate hypoxemia with tachycardia."
+    severity: "CRITICAL"
+  - keywords: ["temperature > 39", "bp > 150"]
+    alert: "High fever with hypertension."
+    severity: "CRITICAL"
+  - keywords: ["rr > 32", "hr > 125"]
+    alert: "Extreme tachypnea with tachycardia."
+    severity: "CRITICAL"
+  - keywords: ["spo2 < 88", "bp < 95"]
+    alert: "Severe hypoxemia with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["temperature < 35.5", "rr < 12"]
+    alert: "Hypothermia with bradypnea."
+    severity: "CRITICAL"
+  - keywords: ["bp > 175", "spo2 < 94"]
+    alert: "Severe hypertension with hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["hr > 145", "temperature > 39.5"]
+    alert: "Extreme tachycardia with high fever."
+    severity: "CRITICAL"
+  - keywords: ["rr > 38", "bp < 85"]
+    alert: "Critical tachypnea with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["spo2 < 82", "temperature > 39.8"]
+    alert: "Critical hypoxemia with extreme fever."
+    severity: "CRITICAL"
+  - keywords: ["hr < 45", "bp < 75"]
+    alert: "Severe bradycardia with hypotension."
+    severity: "CRITICAL"
+  - keywords: ["temperature < 33", "spo2 < 88"]
+    alert: "Critical hypothermia with hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["bp > 210", "rr > 28"]
+    alert: "Extreme hypertension with tachypnea."
+    severity: "CRITICAL"
+  - keywords: ["hr > 170", "spo2 < 85"]
+    alert: "Critical tachycardia with hypoxemia."
+    severity: "CRITICAL"
+  - keywords: ["rr < 7", "temperature > 39"]
+    alert: "Severe bradypnea with fever."
+    severity: "CRITICAL"

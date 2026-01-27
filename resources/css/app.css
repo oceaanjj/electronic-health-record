@@ -87,7 +87,48 @@
     --color-placeholder: #d1d5db;
 }
 
-.chart-wrapper canvas {
+/* chart carousel */
+       #chart-viewport {
+            height: 250px; 
+            overflow: hidden;
+            position: relative;
+        
+            mask-image: linear-gradient(to bottom, 
+                transparent 0%, 
+                black 10%, 
+                black 90%, 
+                transparent 100%
+            );
+            -webkit-mask-image: linear-gradient(to bottom, 
+                transparent 0%, 
+                black 10%, 
+                black 90%, 
+                transparent 100%
+            );
+        }
+
+        #chart-track {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.5s ease-in-out;
+        
+        }
+
+        .btn-hidden {
+            opacity: 0;
+            display: none !important;
+
+            visibility: hidden !important;
+            pointer-events: none !important;    
+        
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+/* end of chart carousel */
+
+
+
+    .chart-wrapper canvas {
         transition: transform 0.2s ease, filter 0.2s ease;
     }
     
@@ -96,16 +137,38 @@
         filter: brightness(1.05);
     }
 
-    /* Modal backdrop blur */
-    #chart-modal {
-        animation: fadeIn 0.3s ease-out;
-    }
+    /* Make the cards look like buttons */
+#chart-track > div {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+#chart-track > div:hover {
+    filter: brightness(0.95);
+    transform: scale(1.01);
+}
 
+#chart-modal {
+    position: fixed !important; /* Forces it to stay on top of the whole screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;/* Higher than sidebar (usually 50-100) */
+    background-color: rgba(0, 0, 0, 0.6); /* Dim the background */
+    display: none; 
+    align-items: center;
+    justify-content: center;
+}
+
+#chart-modal > div {
+    z-index: 10000; /* Ensure the white box is on top of the dim background */
+    background: white;
+    border-radius: 24px;
+    width: 90%;
+    height: 85%;
+    padding: 2rem;
+}
 
 
 /* Loader Styles */

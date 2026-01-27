@@ -178,29 +178,29 @@
                         <!-- VIEWPORT (SHOWS 3 CHARTS) -->
                         <div id="chart-viewport" class="h-[530px] overflow-hidden rounded-[25px] relative">
 
-                            <div id="chart-track" class="space-y-6 transition-transform duration-700 ease-out">
+                            <div id="chart-track" class="transition-transform duration-700 ease-out">
                                 <!-- ✅ REUSABLE CHART CARD -->
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                <div class="h-[230px] rounded-2xl bg-yellow-200 p-4 shadow-lg pb-12">
                                     <h2 class="text-dark-green mb-1 text-center font-bold">Temperature Trend</h2>
                                     <canvas id="tempChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg pb-12">
                                     <h2 class="text-dark-green mb-1 text-center font-bold">Heart Rate Trend</h2>
                                     <canvas id="hrChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg pb-12">
                                     <h2 class="text-dark-green mb-1 text-center font-bold">Respiratory Rate Trend</h2>
                                     <canvas id="rrChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg pb-12">
                                     <h2 class="text-dark-green mb-1 text-center font-bold">Blood Pressure Trend</h2>
                                     <canvas id="bpChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
+                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg pb-12">
                                     <h2 class="text-dark-green mb-1 text-center font-bold">SpO₂ Trend</h2>
                                     <canvas id="spo2Chart"></canvas>
                                 </div>
@@ -217,8 +217,7 @@
 
                         <!-- DOWN BUTTON -->
                         <button id="chart-up" type="button"
-                                class="bg-dark-green absolute -top-8 left-1/2 z-30
-                                    -translate-x-1/2 h-10 w-10 rounded-full flex items-center justify-center text-white shadow-lg">
+                                class="bg-dark-green absolute -top-8 left-1/2 z-30 -translate-x-1/2 h-10 w-10 rounded-full flex items-center justify-center text-white shadow-lg btn-hidden">
                             <span class="material-symbols-outlined">arrow_drop_up</span>
                         </button>
 
@@ -379,21 +378,24 @@
 
        <div id="chart-modal" 
             style="display:none;" 
-            class="absolute top-0 left-0 w-full h-full z-[50] flex items-center justify-center bg-white/40 backdrop-blur-sm rounded-[25px]">
+            class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-md">
             
-            <div class="relative w-[95%] h-[90%] bg-white rounded-3xl shadow-2xl p-6 flex flex-col border border-gray-100">
+            <div class="relative w-[90%] h-[85%] bg-white rounded-[30px] shadow-2xl p-8 flex flex-col border border-gray-100">
                 
-                <div class="flex justify-between items-center mb-4">
-                    <h3 id="modal-chart-title" class="text-2xl font-bold text-gray-800"></h3>
-                    <button onclick="closeChartModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modal-chart-title" class="text-3xl font-bold text-dark-green"></h3>
+                    
+                    <button onclick="closeChartModal()" class="p-2 hover:bg-gray-100 rounded-full transition-all duration-200">
+                        <span class="material-symbols-outlined text-gray-500 text-4xl">close</span>
                     </button>
                 </div>
 
-                <div class="flex-grow">
+                <div class="flex-grow bg-gray-50 rounded-2xl p-4 border border-gray-100">
                     <canvas id="modalChartCanvas"></canvas>
+                </div>
+
+                <div class="mt-4 text-center text-gray-400 text-sm italic">
+                    Detailed trend view for the selected 24-hour period.
                 </div>
             </div>
         </div>
@@ -427,10 +429,77 @@
                 window.initializeChartScrolling();
             }
             
-            // Initialize searchable dropdown
             if (window.initSearchableDropdown) {
                 window.initSearchableDropdown();
             }
         });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    let currentStep = 0;
+    const totalSteps = 3; 
+
+    function updateCarousel() {
+
+        const track = document.getElementById('chart-track');
+        const upBtn = document.getElementById('chart-up');
+        const downBtn = document.getElementById('chart-down');
+        const cards = track ? track.querySelectorAll(':scope > div') : [];
+
+        if (!track || !upBtn || !downBtn || !cards.length) return;
+
+        const cardHeight = cards[0].offsetHeight;
+        const moveDistance = cardHeight; 
+        let translateY = 0;
+
+ 
+        upBtn.classList.remove('btn-hidden');
+        downBtn.classList.remove('btn-hidden');
+
+
+        if (currentStep === 0) {
+            translateY = 0;
+            upBtn.classList.add('btn-hidden'); 
+        } 
+        else if (currentStep === 1) {
+            translateY = moveDistance * 1.3; 
+        } 
+        else if (currentStep === 2) {
+            translateY = moveDistance * 2.3; 
+        }
+        else if (currentStep === 3) {
+            translateY = moveDistance * 3.3; 
+            downBtn.classList.add('btn-hidden'); 
+        }
+
+        track.style.transform = `translateY(-${translateY}px)`;
+    }
+
+
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('#chart-down')) {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateCarousel();
+            }
+        }
+
+        if (e.target.closest('#chart-up')) {
+            if (currentStep > 0) {
+                currentStep--;
+                updateCarousel();
+            }
+        }
+    });
+
+    updateCarousel();
+
+    window.resetChartCarousel = function() {
+        currentStep = 0;
+        updateCarousel();
+    };
+});
     </script>
 @endpush

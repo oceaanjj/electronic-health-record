@@ -1,4 +1,3 @@
-
 window.vitalCharts = {
     tempChart: null,
     hrChart: null,
@@ -141,41 +140,41 @@ window.openChartModal = function (vitalKey, labels, data, vitalLabel, color) {
     if (!modal || !modalCanvas) return;
 
     modalTitle.innerText = `Detailed View: ${vitalLabel}`;
-    modal.style.display = 'flex'; // Show modal
+    
+    // 1. Show the modal first
+    modal.style.display = 'flex'; 
 
-    if (window.modalChartInstance) window.modalChartInstance.destroy();
+    // 2. Destroy any old chart sitting in the modal
+    if (window.modalChartInstance) {
+        window.modalChartInstance.destroy();
+    }
 
-    window.modalChartInstance = new Chart(modalCanvas, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                {
+    // 3. WAIT 100ms for the browser to "see" the modal before drawing
+    setTimeout(() => {
+        window.modalChartInstance = new Chart(modalCanvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
                     label: vitalLabel,
                     data: data,
                     borderColor: color,
-                    backgroundColor: color + '15', 
+                    backgroundColor: color + '20', 
                     fill: true,
                     borderWidth: 3,
                     tension: 0.3,
                     pointRadius: 6,
-                    pointHoverRadius: 10,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: { padding: 15, titleFont: { size: 16 }, bodyFont: { size: 14 } },
+                }],
             },
-            scales: {
-                x: { ticks: { font: { size: 13, weight: 'bold' } } },
-                y: { ticks: { font: { size: 13, weight: 'bold' } } },
-            },
-        },
-    });
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // This ensures it fills the whole white box
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }, 100); 
 };
 
 window.closeChartModal = function () {

@@ -94,6 +94,13 @@ if (!window.patientSelectedListenerAttached) {
 function initializeUI(timePoints, vitalsData, selectUrl) {
     const formContainer = document.getElementById("form-content-container");
 
+    if (window.resetChartCarousel) {
+        window.resetChartCarousel();
+    }
+
+    if (window.resetChartCarousel) window.resetChartCarousel();
+    if (window.resetChartCarousel) window.resetChartCarousel();
+
     if (window.initializeVitalSignsCharts && timePoints.length > 0) {
         window.initializeVitalSignsCharts(timePoints, vitalsData, { animate: true });
     }

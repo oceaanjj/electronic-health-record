@@ -5,10 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electronic Health Record</title>
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+    
+    {{-- Google Icons --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- !important for instant alerts-->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+
+        /* Logic from Snippet 1: CSS handles the margin */
+        .sidebar-open #main {
+            margin-left: 260px;
+        }
+
+        .sidebar-transition {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Page enter animation */
+        @keyframes pageEnter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-transition {
+            animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+    </style>
+
+    {{-- Instant State Check (Prevents FOUC/Flicker) --}}
+    <script>
+        (function () {
+            const isOpen = localStorage.getItem("sidebarOpen") === "true";
+            const doc = document.documentElement;
+            if (isOpen) {
+                doc.classList.add("sidebar-open");
+            } else {
+                doc.classList.remove("sidebar-open");
+            }
+        })();
+    </script>
 </head>
 
 <body class="bg-white overflow-x-hidden">
@@ -16,155 +58,94 @@
     {{-- Sidebar --}}
     @include('components.admin-sidebar')
 
+    {{-- Script to position the sidebar element immediately --}}
+    <script>
+        const isOpen = localStorage.getItem("sidebarOpen") === "true";
+        const sidebar = document.getElementById("mySidenav");
+
+        if (sidebar) {
+            sidebar.style.transition = 'none'; // Disable transition for initial load
+            if (isOpen) {
+                sidebar.classList.remove("-translate-x-full");
+            } else {
+                sidebar.classList.add("-translate-x-full");
+            }
+            // Re-enable transition after small delay
+            setTimeout(() => {
+                sidebar.style.transition = '';
+            }, 0);
+        }
+    </script>
+
     {{-- Header --}}
     @include('components.header')
 
     {{-- SweetAlert Messages Component --}}
     <x-sweetalert-messages />
 
+    {{-- Main Content Wrapper --}}
+    {{-- Added 'sidebar-transition' class here --}}
+    <div id="main" class="relative min-h-screen overflow-x-hidden bg-white sidebar-transition">
 
-    {{--  
-    <div id="main" class="transition-transform duration-300 ease-in-out">
-        <div class="flex flex-col min-h-screen">
-            @include('components.header')
-            <!-- alerts -->
-            @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                role="alert" id="success-alert">
-                {{ session('success') }}
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-            </div>
-            @endif
+        {{-- Background Images --}}
+        <img src="{{ asset('img/bg-design-right.png') }}" 
+             alt="Top right design"
+             class="absolute top-[120px] right-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0">
+        
+        <img src="{{ asset('img/bg-design-left.png') }}" 
+             alt="Bottom left design"
+             class="absolute bottom-0 left-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0">
 
-            @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                role="alert" id="error-alert">
-                {{ session('error') }}
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-            </div>
-            @endif
-
-            @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show text-center w-75 mx-auto popup-alert"
-                role="alert" id="error-alert">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-            </div>
-            @endif
-            <main class="flex-1">
+        <div class="relative z-10">
+            {{-- Content --}}
+            <main class="pt-[120px] px-6 transition-all duration-300 ease-in-out page-transition">
                 @yield('content')
             </main>
         </div>
-
-        
     </div>
-    --}}
-    
 
-    {{-- Main Content --}}
-        <div id="main" class="relative min-h-screen overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
-
-    
-            <img 
-                src="{{ asset('img/bg-design-right.png') }}" 
-                alt="Top right design"
-                class="absolute top-[120px] right-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0"
-            >
-            <img 
-                src="{{ asset('img/bg-design-left.png') }}" 
-                alt="Bottom left design"
-                class="absolute bottom-0 left-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0"
-            >
-
-            
-
-            <div class="relative z-10">
-
-                {{-- content ng page --}}
-                <main class="pt-[120px] px-6 transition-all duration-300 ease-in-out">
-
-                    @yield('content')
-                </main>
-            </div>
-        </div>
-
-
-   
-
+    {{-- JavaScript Logic --}}
     <script>
-
-        window.addEventListener("DOMContentLoaded", function () {
-            const sidebar = document.getElementById("mySidenav");
-            const main = document.getElementById("main");
-            const arrow = document.getElementById("arrowBtn");
-            
-
-            sidebar.style.transition = "none";
-            main && (main.style.transition = "none")
-
-            const isOpen = localStorage.getItem("sidebarOpen") === "true";
-
-            if (isOpen) {
-                sidebar.classList.remove("-translate-x-full");
-                main?.classList.add("ml-[260px]");
-                arrow.classList.replace("-right-24", "-right-10");
-                arrow.classList.remove("hidden");
-            } else {
-                sidebar.classList.add("-translate-x-full");
-                main?.classList.remove("ml-[260px]");
-                arrow.classList.replace("-right-10", "-right-24");
-                arrow.classList.add("hidden");
-            }
-
-            void sidebar.offsetHeight;
-
-            requestAnimationFrame(() => {
-                sidebar.style.transition = "";
-                main && (main.style.transition = "");
-            });
-        });
-
         function openNav() {
             const sidebar = document.getElementById("mySidenav");
-            const main = document.getElementById("main");
             const arrow = document.getElementById("arrowBtn");
 
-            sidebar.classList.remove("-translate-x-full");
-            main.classList.add("ml-[260px]");
-            arrow.classList.replace("-right-24", "-right-10");
-            arrow.classList.remove("hidden");
+            // Slide sidebar in
+            if (sidebar) sidebar.classList.remove("-translate-x-full");
 
-            
+            // Add class to HTML to trigger CSS margin shift on #main
+            document.documentElement.classList.add("sidebar-open");
+
+            // Handle Arrow Button if it exists
+            if (arrow) {
+                arrow.classList.replace("-right-24", "-right-10");
+                arrow.classList.remove("hidden");
+            }
+
             localStorage.setItem("sidebarOpen", "true");
-
         }
 
         function closeNav() {
             const sidebar = document.getElementById("mySidenav");
-            const main = document.getElementById("main");
             const arrow = document.getElementById("arrowBtn");
 
-            sidebar.classList.add("-translate-x-full");
-            main.classList.remove("ml-[260px]");
-            arrow.classList.replace("-right-10", "-right-24");
+            // Slide sidebar out
+            if (sidebar) sidebar.classList.add("-translate-x-full");
+
+            // Remove class from HTML to reset #main margin
+            document.documentElement.classList.remove("sidebar-open");
+
+            // Handle Arrow Button
+            if (arrow) arrow.classList.replace("-right-10", "-right-24");
 
             localStorage.setItem("sidebarOpen", "false");
 
             setTimeout(() => {
-                arrowBtn.classList.add("hidden");
-            }, 0);
+                if (arrow) arrow.classList.add("hidden");
+            }, 200);
         }
     </script>
 
     @stack('scripts')
-
-    
-
-
 </body>
-
 </html>

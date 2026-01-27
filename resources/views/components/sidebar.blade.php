@@ -8,7 +8,7 @@
         shadow-xl hover:bg-dark-green hover:scale-105 
         transition-all duration-300 ease-in-out">
 
-        <span class="material-symbols-outlined hidden group-hover:block hover:text-white">arrow_left</span>
+        <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
        
 
     </button>

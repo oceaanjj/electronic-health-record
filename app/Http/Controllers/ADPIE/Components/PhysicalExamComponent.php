@@ -49,7 +49,7 @@ class PhysicalExamComponent implements AdpieComponentInterface
         }
 
         // Put them in the session to persist across all pages
-        session()->put('adpie_alerts', $alerts);
+        session()->put('physical-exam-alerts', $alerts);
 
         return view('adpie.physical-exam.diagnosis', [
             'physicalExamId' => $physicalExam->id,

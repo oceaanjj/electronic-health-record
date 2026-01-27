@@ -33,6 +33,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 4.0, 'max' => 13.5, 'alert' => 'Normal WBC.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 3.9, 'alert' => 'Leukopenia: Risk of infection.', 'severity' => self::CRITICAL],
         ['ageGroup' => 'adolescent', 'min' => 13.6, 'max' => null, 'alert' => 'Leukocytosis: Possible infection/inflammation.', 'severity' => self::WARNING],
+        // Adult (>18yr)
+        ['ageGroup' => 'adult', 'min' => 4.0, 'max' => 11.0, 'alert' => 'Normal WBC.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 3.9, 'alert' => 'Leukopenia: Significant risk of infection.', 'severity' => self::CRITICAL],
+        ['ageGroup' => 'adult', 'min' => 11.1, 'max' => null, 'alert' => 'Leukocytosis: Possible infection, inflammation, or malignancy.', 'severity' => self::WARNING],
     ];
 
     private $rbcRules = [
@@ -52,6 +56,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 4.0, 'max' => 5.3, 'alert' => 'Normal RBC.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 3.9, 'alert' => 'Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 5.4, 'max' => null, 'alert' => 'Erythrocytosis.', 'severity' => self::INFO],
+        // Adult (>18yr) - Note: Ranges can differ slightly by gender. Using a general range.
+        ['ageGroup' => 'adult', 'min' => 4.2, 'max' => 5.9, 'alert' => 'Normal RBC.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 4.1, 'alert' => 'Anemia.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 6.0, 'max' => null, 'alert' => 'Erythrocytosis: Investigate for causes like smoking or hypoxia.', 'severity' => self::WARNING],
     ];
 
     private $hgbRules = [
@@ -71,6 +79,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 12.0, 'max' => 16.1, 'alert' => 'Normal Hgb.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 11.9, 'alert' => 'Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 16.2, 'max' => null, 'alert' => 'High Hgb.', 'severity' => self::INFO],
+        // Adult (>18yr) - Note: Ranges differ by gender. Using a general range.
+        ['ageGroup' => 'adult', 'min' => 12.0, 'max' => 17.5, 'alert' => 'Normal Hgb.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 11.9, 'alert' => 'Anemia.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 17.6, 'max' => null, 'alert' => 'High Hgb: Possible polycythemia.', 'severity' => self::WARNING],
     ];
 
     private $hctRules = [
@@ -90,6 +102,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 35, 'max' => 47, 'alert' => 'Normal Hct.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 34, 'alert' => 'Low Hct: Anemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 48, 'max' => null, 'alert' => 'High Hct.', 'severity' => self::INFO],
+        // Adult (>18yr) - Note: Ranges differ by gender.
+        ['ageGroup' => 'adult', 'min' => 36, 'max' => 52, 'alert' => 'Normal Hct.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 35, 'alert' => 'Low Hct: Anemia.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 53, 'max' => null, 'alert' => 'High Hct: Possible erythrocytosis.', 'severity' => self::WARNING],
     ];
 
     private $plateletRules = [
@@ -107,6 +123,9 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 150, 'max' => 450, 'alert' => 'Normal Platelet count.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 149, 'alert' => 'Thrombocytopenia: Risk of bleeding.', 'severity' => self::CRITICAL],
         ['ageGroup' => 'adolescent', 'min' => 451, 'max' => null, 'alert' => 'Thrombocytosis: Possible inflammation/infection.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 150, 'max' => 450, 'alert' => 'Normal Platelet count.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 149, 'alert' => 'Thrombocytopenia: Risk of bleeding.', 'severity' => self::CRITICAL],
+        ['ageGroup' => 'adult', 'min' => 451, 'max' => null, 'alert' => 'Thrombocytosis: Possible inflammation, infection, or malignancy.', 'severity' => self::WARNING],
     ];
 
     // --- DIFFERENTIALS (Note: Physiologic Crossover) ---
@@ -131,6 +150,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 33, 'max' => 64, 'alert' => 'Normal neutrophil %.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 32, 'alert' => 'Neutropenia: Risk of infection.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 65, 'max' => null, 'alert' => 'Neutrophilia: Possible bacterial infection.', 'severity' => self::WARNING],
+        // Adult (>18yr)
+        ['ageGroup' => 'adult', 'min' => 40, 'max' => 75, 'alert' => 'Normal neutrophil %.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 39, 'alert' => 'Neutropenia: Risk of infection.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 76, 'max' => null, 'alert' => 'Neutrophilia: Possible bacterial infection or inflammation.', 'severity' => self::WARNING],
     ];
 
     private $lymphocytesRules = [
@@ -150,6 +173,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 25, 'max' => 48, 'alert' => 'Normal lymphocyte %.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 24, 'alert' => 'Lymphopenia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 49, 'max' => null, 'alert' => 'Lymphocytosis: Possible viral infection.', 'severity' => self::WARNING],
+        // Adult (>18yr)
+        ['ageGroup' => 'adult', 'min' => 20, 'max' => 45, 'alert' => 'Normal lymphocyte %.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 19, 'alert' => 'Lymphopenia: Possible immunodeficiency.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 46, 'max' => null, 'alert' => 'Lymphocytosis: Possible viral infection or leukemia.', 'severity' => self::WARNING],
     ];
 
     private $monocytesRules = [
@@ -189,6 +216,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 78, 'max' => 98, 'alert' => 'Normal MCV.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 77, 'alert' => 'Microcytosis: Possible iron deficiency, thalassemia.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 99, 'max' => null, 'alert' => 'Macrocytosis: Possible B12/folate deficiency.', 'severity' => self::WARNING],
+        // Adult (>18yr)
+        ['ageGroup' => 'adult', 'min' => 80, 'max' => 100, 'alert' => 'Normal MCV.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 79, 'alert' => 'Microcytosis: Possible iron deficiency or thalassemia.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 101, 'max' => null, 'alert' => 'Macrocytosis: Possible B12/folate deficiency or liver disease.', 'severity' => self::WARNING],
     ];
 
     private $mchRules = [
@@ -208,6 +239,10 @@ class LabValuesCdssService
         ['ageGroup' => 'adolescent', 'min' => 25, 'max' => 35, 'alert' => 'Normal MCH.', 'severity' => self::NONE],
         ['ageGroup' => 'adolescent', 'min' => null, 'max' => 24, 'alert' => 'Hypochromia: Possible iron deficiency.', 'severity' => self::WARNING],
         ['ageGroup' => 'adolescent', 'min' => 36, 'max' => null, 'alert' => 'Hyperchromia.', 'severity' => self::INFO],
+        // Adult (>18yr)
+        ['ageGroup' => 'adult', 'min' => 27, 'max' => 34, 'alert' => 'Normal MCH.', 'severity' => self::NONE],
+        ['ageGroup' => 'adult', 'min' => null, 'max' => 26, 'alert' => 'Hypochromia: Suggests iron deficiency.', 'severity' => self::WARNING],
+        ['ageGroup' => 'adult', 'min' => 35, 'max' => null, 'alert' => 'Hyperchromia.', 'severity' => self::INFO],
     ];
 
     private $mchcRules = [

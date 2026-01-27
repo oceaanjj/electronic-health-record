@@ -198,6 +198,62 @@ class LabValuesController extends Controller
         return response()->json($alert);
     }
 
+    public function runBatchCdssAnalysis(Request $request)
+    {
+        $batchData = $request->input('batch');
+        if (!$batchData) {
+            return response()->json(['error' => 'No batch data provided.'], 400);
+        }
+
+        $patientId = $request->session()->get('selected_patient_id');
+        if (!$patientId) {
+            return response()->json(['error' => 'No patient selected.'], 400);
+        }
+
+        $patient = Auth::user()->patients()->find($patientId);
+        if (!$patient) {
+            return response()->json(['error' => 'Patient not found or unauthorized.'], 403);
+        }
+
+        $cdssService = new LabValuesCdssService();
+        $ageGroup = $cdssService->getAgeGroup($patient);
+
+        $labParamMap = [
+            'wbc_result' => 'wbc',
+            'rbc_result' => 'rbc',
+            'hgb_result' => 'hgb',
+            'hct_result' => 'hct',
+            'platelets_result' => 'platelets',
+            'mcv_result' => 'mcv',
+            'mch_result' => 'mch',
+            'mchc_result' => 'mchc',
+            'rdw_result' => 'rdw',
+            'neutrophils_result' => 'neutrophils',
+            'lymphocytes_result' => 'lymphocytes',
+            'monocytes_result' => 'monocytes',
+            'eosinophils_result' => 'eosinophils',
+            'basophils_result' => 'basophils',
+        ];
+
+        $results = [];
+
+        foreach ($batchData as $item) {
+            $fieldName = $item['fieldName'] ?? null;
+            $finding = $item['finding'] ?? null;
+            
+            $param = $labParamMap[$fieldName] ?? null;
+
+            if ($param && $finding !== null) {
+                $alert = $cdssService->checkLabResult($param, $finding, $ageGroup);
+                $results[] = $alert;
+            } else {
+                $results[] = ['alert' => '', 'severity' => LabValuesCdssService::NONE];
+            }
+        }
+
+        return response()->json($results);
+    }
+
     private function runLabCdss($labValue, $cdssService, $ageGroup)
     {
         $alerts = [];

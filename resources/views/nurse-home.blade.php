@@ -3,50 +3,47 @@
 @section('title', 'EHR - Components')
 
 @section('content')
-
     <!-- ✅ SweetAlert Welcome Popup -->
-    @if(session('sweetalert'))
+    @if (session('sweetalert'))
         @push('scripts')
-        <script>
-            // Use setTimeout to ensure this doesn't block other JS initialization
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(function() {
-                    const opts = @json(session('sweetalert'));
-                    if (typeof showSuccess === 'function' && opts.type === 'success') {
-                        showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
-                    } else if (typeof showError === 'function' && opts.type === 'error') {
-                        showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
-                    } else if (typeof showWarning === 'function' && opts.type === 'warning') {
-                        showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
-                    } else if (typeof showInfo === 'function' && opts.type === 'info') {
-                        showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
-                    } else if (typeof Swal === 'function') {
-                        Swal.fire({
-                            icon: opts.type || 'info',
-                            title: opts.title || '',
-                            text: opts.text || '',
-                            timer: opts.timer || 2000
-                        });
-                    }
-                }, 100); // Small delay to ensure page is fully initialized
-            });
-        </script>
+            <script>
+                // Use setTimeout to ensure this doesn't block other JS initialization
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        const opts = @json(session('sweetalert'));
+                        if (typeof showSuccess === 'function' && opts.type === 'success') {
+                            showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
+                        } else if (typeof showError === 'function' && opts.type === 'error') {
+                            showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
+                        } else if (typeof showWarning === 'function' && opts.type === 'warning') {
+                            showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
+                        } else if (typeof showInfo === 'function' && opts.type === 'info') {
+                            showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
+                        } else if (typeof Swal === 'function') {
+                            Swal.fire({
+                                icon: opts.type || 'info',
+                                title: opts.title || '',
+                                text: opts.text || '',
+                                timer: opts.timer || 2000,
+                            });
+                        }
+                    }, 100); // Small delay to ensure page is fully initialized
+                });
+            </script>
         @endpush
     @endif
 
-    <div class="min-h-screen bg-white text-gray-800 font-sans px-10 py-12">
-
-        <div class="text-center mb-10">
-            <h1 class="text-2xl font-bold mb-2">EHR - COMPONENTS</h1>
+    <div class="min-h-screen bg-white px-10 py-12 font-sans text-gray-800">
+        <div class="mb-10 text-center">
+            <h1 class="mb-2 text-2xl font-bold">EHR - COMPONENTS</h1>
             <p class="text-sm text-gray-600">
-                Our system offers a set of integrated components that make patient data documentation
-                and healthcare management simple, secure, and accessible online.
+                Our system offers a set of integrated components that make patient data documentation and healthcare
+                management simple, secure, and accessible online.
             </p>
-            <div class="border-t-2 border-green-700 w-[90%] mx-auto mt-4"></div>
+            <div class="mx-auto mt-4 w-[90%] border-t-2 border-green-700"></div>
         </div>
 
-        <div class="grid grid-cols-5 gap-6 max-w-[1200px] mx-auto">
-
+        <div class="mx-auto grid max-w-[1200px] grid-cols-5 gap-6">
             @php
                 $cards = [
                     ['route' => 'patients.create', 'icon' => 'account_box', 'title' => 'REGISTER', 'desc' => 'This is where new patients are registered into the system.'],
@@ -61,36 +58,42 @@
                     ['route' => 'ivs-and-lines', 'icon' => 'blood_pressure', 'title' => "IV'S & LINES", 'desc' => 'Manage intravenous lines, infusions, and related treatments.'],
                     ['route' => 'medication-administration', 'icon' => 'medication', 'title' => 'MEDICATION ADMINISTRATION', 'desc' => 'Track prescribed medicines and record their administration schedules.'],
                     ['route' => 'medication-reconciliation', 'icon' => 'admin_meds', 'title' => 'MEDICATION RECONCILIATION', 'desc' => 'Compare medications to ensure accuracy and prevent duplication or errors.'],
-                   // ['route' => 'discharge-planning', 'icon' => 'discharge-planning.png', 'title' => 'DISCHARGE PLANNING', 'desc' => 'Plan and document the patient’s care instructions upon discharge.']
+                    //['route' => 'discharge-planning', 'icon' => 'discharge-planning.png', 'title' => 'DISCHARGE PLANNING', 'desc' => 'Plan and document the patient’s care instructions upon discharge.']
                 ];
             @endphp
 
             @foreach ($cards as $card)
-                <a href="{{ route($card['route']) }}"
-                    class="group border border-gray-300 rounded-[20px] p-8 flex flex-col justify-between text-left bg-white shadow-sm hover:shadow-md transition duration-200 hover:-translate-y-1 hover:border-green-600">
-
+                <a
+                    href="{{ route($card['route']) }}"
+                    class="group flex flex-col justify-between rounded-[20px] border border-gray-300 bg-white p-8 text-left shadow-sm transition duration-200 hover:-translate-y-1 hover:border-green-600 hover:shadow-md"
+                >
                     <div>
-
-                        <span class="material-symbols-outlined text-green-700 mb-4"  style="font-size: 50px;">
+                        <span class="material-symbols-outlined mb-4 text-green-700" style="font-size: 50px">
                             {{ $card['icon'] }}
                         </span>
-                        <h2 class="font-bold text-sm mb-2">{{ $card['title'] }}</h2>
-                        <p class="text-xs text-gray-600 mb-6 leading-relaxed">
+                        <h2 class="mb-2 text-sm font-bold">{{ $card['title'] }}</h2>
+                        <p class="mb-6 text-xs leading-relaxed text-gray-600">
                             {{ $card['desc'] }}
                         </p>
                     </div>
 
-                    <span class="text-green-700 text-xs font-semibold group-hover:underline flex items-center mt-auto">
+                    <span class="mt-auto flex items-center text-xs font-semibold text-green-700 group-hover:underline">
                         PROCEED
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="ml-1 h-3 w-3"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                fill-rule="evenodd"
                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0-1.414 0z"
-                                clip-rule="evenodd" />
+                                clip-rule="evenodd"
+                            />
                         </svg>
                     </span>
                 </a>
             @endforeach
-
         </div>
     </div>
 @endsection

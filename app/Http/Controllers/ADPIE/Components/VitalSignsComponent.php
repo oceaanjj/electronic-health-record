@@ -34,10 +34,39 @@ class VitalSignsComponent implements AdpieComponentInterface
     {
         $patient = Patient::findOrFail($id);
 
-        $diagnosis = NursingDiagnosis::where('patient_id', $id)
-            ->whereNull('physical_exam_id')
-            ->latest()
-            ->first();
+        $latestVitals = Vitals::where('patient_id', $id)->latest()->first();
+
+        $diagnosis = null;
+        if ($latestVitals) {
+            $diagnosis = NursingDiagnosis::where('vital_signs_id', $latestVitals->id)
+                ->latest()
+                ->first();
+        }
+
+        // Pre-calculate all 4 alerts
+        $alerts = [
+            'diagnosis' => $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $diagnosis->diagnosis ?? ''),
+            'planning' => $this->nursingDiagnosisCdssService->analyzePlanning($component, $diagnosis->planning ?? ''),
+            'intervention' => $this->nursingDiagnosisCdssService->analyzeIntervention($component, $diagnosis->intervention ?? ''),
+            'evaluation' => $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $diagnosis->evaluation ?? ''),
+        ];
+
+        // Check if the alert object AND its message exist before stripping html tags
+        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
+            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
+        }
+        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
+            $alerts['planning']->message = strip_tags($alerts['planning']->message);
+        }
+        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
+            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
+        }
+        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
+            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        }
+
+        // Put them in the session to persist across all pages
+        session()->put('vital-signs-alerts', $alerts);
 
         $findings = session('findings', []);
 
@@ -210,6 +239,7 @@ class VitalSignsComponent implements AdpieComponentInterface
             'evaluation_alert' => $evaluationAlert, // Now plain text or null
         ]);
 
+        session()->forget('vital-signs-alerts'); // Clear the session alerts
         return redirect()->route('vital-signs.show')
             ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
     }

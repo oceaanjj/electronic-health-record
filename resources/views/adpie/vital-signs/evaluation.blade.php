@@ -85,39 +85,43 @@
 
                     </div>
 
-                                        {{-- NEW: Pre-load alert from session ★ --}}
+                                                                                {{-- NEW: Pre-load alert from session ★ --}}
 
-                                        @php
+                                                                                @if ($component === 'vital-signs')
 
-                                            $alert = session('adpie_alerts')['evaluation'] ?? null;
+                                                                                    @php
 
-                                            $level = $alert->level ?? 'INFO';
+                                                                                        $alert = session('vital-signs-alerts')['evaluation'] ?? null;
 
-                                            $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
+                                                                                        $level = $alert->level ?? 'INFO';
 
-                                            $colorClass = 'alert-green';
+                                                                                        $message = $alert->message ?? '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>';
 
-                                            if ($level === 'CRITICAL')
+                                                                                        $colorClass = 'alert-green';
 
-                                                $colorClass = 'alert-red';
+                                                                                        if ($level === 'CRITICAL')
 
-                                            if ($level === 'WARNING')
+                                                                                            $colorClass = 'alert-red';
 
-                                                $colorClass = 'alert-orange';
+                                                                                        if ($level === 'WARNING')
 
-                                        @endphp
+                                                                                            $colorClass = 'alert-orange';
 
-                    
+                                                                                    @endphp
 
-                                        <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg {{ $colorClass }}"
+                                                                
 
-                                            data-alert-for="evaluation" style="border-top: none; height: 90px; margin: 2px;">
+                                                                                    <div class="alert-box my-0 py-4 px-3 flex justify-center items-center w-full rounded-b-lg {{ $colorClass }}"
 
-                                            <div class="alert-message p-1">{!! $message !!}</div>
+                                                                                        data-alert-for="evaluation" style="border-top: none; height: 90px; margin: 2px;">
 
-                                        </div>
+                                                                                        <div class="alert-message p-1">{!! $message !!}</div>
 
-                                        {{-- END NEW --}}
+                                                                                    </div>
+
+                                                                                @endif
+
+                                                                                {{-- END NEW --}}
 
                 </div>
 

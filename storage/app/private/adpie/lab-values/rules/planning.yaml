@@ -14,3 +14,348 @@ planning:
   - keywords: ["Imbalanced Nutrition"]
     alert: "Goal: Patient will achieve and maintain adequate nutritional status. Outcome: Patient's RBC, Hgb, and Hct levels will trend towards normal."
     severity: "INFO"
+  - keywords: ["Risk for Deficient Fluid Volume"]
+    alert: "Goal: Patient will maintain adequate fluid balance. Outcome: Patient's intake will equal output and vital signs will be stable."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will not experience neurological injury. Outcome: Patient's sodium levels will normalize and mental status will remain intact."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Dysrhythmia"]
+    alert: "Goal: Patient will maintain normal cardiac rhythm. Outcome: Patient's potassium levels will be within normal range and ECG will show sinus rhythm."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will not experience musculoskeletal injury. Outcome: Patient's potassium levels will stabilize and muscle strength will improve."
+    severity: "WARNING"
+  - keywords: ["Risk for Constipation"]
+    alert: "Goal: Patient will have regular bowel movements. Outcome: Patient's calcium levels will normalize and constipation will resolve."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will not experience tetany. Outcome: Patient's calcium levels will increase and neuromuscular signs will be absent."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will maintain adequate respiration. Outcome: Patient's magnesium levels will normalize and respiratory function will be stable."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will not experience neuromuscular injury. Outcome: Patient's magnesium levels will stabilize and reflexes will be normal."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will not develop hypocalcemia. Outcome: Patient's phosphate levels will decrease and calcium levels will normalize."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will maintain energy levels. Outcome: Patient's phosphate levels will increase and fatigue will resolve."
+    severity: "WARNING"
+  - keywords: ["Risk for Decreased Cardiac Output"]
+    alert: "Goal: Patient will maintain adequate cardiac output. Outcome: Patient's creatinine levels will decrease and vital signs will stabilize."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Renal Function"]
+    alert: "Goal: Patient will improve renal function. Outcome: Patient's BUN levels will decrease and urine output will be adequate."
+    severity: "CRITICAL"
+  - keywords: ["Chronic Kidney Disease"]
+    alert: "Goal: Patient will slow CKD progression. Outcome: Patient's GFR will stabilize and renal function will be preserved."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Impaired Skin Integrity"]
+    alert: "Goal: Patient will maintain skin integrity. Outcome: Patient's nutritional status will improve and skin will remain intact."
+    severity: "WARNING"
+  - keywords: ["Risk for Infection"]
+    alert: "Goal: Patient will remain free of UTI. Outcome: Patient's urine will be clear and hematuria will resolve."
+    severity: "WARNING"
+  - keywords: ["Impaired Liver Function"]
+    alert: "Goal: Patient will improve liver function. Outcome: Patient's ALT levels will decrease and liver enzymes will normalize."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Liver Function"]
+    alert: "Goal: Patient will protect liver. Outcome: Patient's AST levels will stabilize and liver damage will be minimized."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Liver Function"]
+    alert: "Goal: Patient will maintain bone health. Outcome: Patient's ALP levels will normalize and bone density will be preserved."
+    severity: "WARNING"
+  - keywords: ["Jaundice"]
+    alert: "Goal: Patient will resolve jaundice. Outcome: Patient's bilirubin levels will decrease and skin color will normalize."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition: Less Than Body Requirements"]
+    alert: "Goal: Patient will achieve nutritional balance. Outcome: Patient's albumin levels will increase and weight will stabilize."
+    severity: "WARNING"
+  - keywords: ["Risk for Unstable Blood Glucose Level"]
+    alert: "Goal: Patient will maintain stable glucose. Outcome: Patient's glucose levels will be within normal range and symptoms will be absent."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will avoid hypoglycemia injury. Outcome: Patient's glucose levels will stabilize and mental status will remain alert."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Health Maintenance"]
+    alert: "Goal: Patient will maintain cardiovascular health. Outcome: Patient's cholesterol levels will decrease with lifestyle changes."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will improve lipid profile. Outcome: Patient's LDL levels will decrease and perfusion will be adequate."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will enhance protective factors. Outcome: Patient's HDL levels will increase and cardiovascular risk will reduce."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will control triglycerides. Outcome: Patient's triglyceride levels will decrease and metabolism will improve."
+    severity: "WARNING"
+  - keywords: ["Hypothyroidism"]
+    alert: "Goal: Patient will manage hypothyroidism. Outcome: Patient's TSH levels will normalize and symptoms will resolve."
+    severity: "WARNING"
+  - keywords: ["Hyperthyroidism"]
+    alert: "Goal: Patient will control hyperthyroidism. Outcome: Patient's TSH levels will stabilize and thyroid function will normalize."
+    severity: "WARNING"
+  - keywords: ["Hyperthyroidism"]
+    alert: "Goal: Patient will reduce thyroid activity. Outcome: Patient's T4 levels will decrease and hyperthyroidism symptoms will subside."
+    severity: "WARNING"
+  - keywords: ["Hypothyroidism"]
+    alert: "Goal: Patient will improve thyroid function. Outcome: Patient's T4 levels will increase and hypothyroidism will resolve."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Goal: Patient will avoid bleeding. Outcome: Patient's PT levels will normalize and coagulation will be stable."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Goal: Patient will maintain therapeutic INR. Outcome: Patient's INR will be within range and bleeding will be prevented."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Goal: Patient will achieve clotting balance. Outcome: Patient's PTT levels will normalize and bleeding risk will decrease."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Goal: Patient will improve gas exchange. Outcome: Patient's pH will normalize and respiratory status will stabilize."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Goal: Patient will correct alkalosis. Outcome: Patient's pH will decrease and acid-base balance will restore."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Goal: Patient will reduce hypercapnia. Outcome: Patient's CO2 levels will decrease and ventilation will improve."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Goal: Patient will avoid hypocapnia. Outcome: Patient's CO2 levels will stabilize and breathing will be controlled."
+    severity: "WARNING"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Goal: Patient will correct hypoxemia. Outcome: Patient's oxygen levels will increase and hypoxia will resolve."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will avoid oxygen toxicity. Outcome: Patient's oxygen levels will be appropriate and lung function will be preserved."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will reduce blood viscosity. Outcome: Patient's hemoglobin levels will decrease and perfusion will improve."
+    severity: "WARNING"
+  - keywords: ["Activity Intolerance"]
+    alert: "Goal: Patient will increase oxygen capacity. Outcome: Patient's hemoglobin levels will increase and fatigue will decrease."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will normalize hematocrit. Outcome: Patient's hematocrit levels will decrease and viscosity will stabilize."
+    severity: "WARNING"
+  - keywords: ["Activity Intolerance"]
+    alert: "Goal: Patient will improve oxygen transport. Outcome: Patient's hematocrit levels will increase and energy will return."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will correct macrocytosis. Outcome: Patient's MCV levels will normalize and nutritional deficiencies will resolve."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will address microcytosis. Outcome: Patient's MCV levels will increase and anemia will improve."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will normalize hemoglobin content. Outcome: Patient's MCH levels will stabilize and anemia will resolve."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will correct hypochromia. Outcome: Patient's MCH levels will increase and red cells will be normal."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will manage spherocytosis. Outcome: Patient's MCHC levels will normalize and perfusion will improve."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will resolve iron deficiency. Outcome: Patient's MCHC levels will increase and nutrition will balance."
+    severity: "WARNING"
+  - keywords: ["Inflammation"]
+    alert: "Goal: Patient will reduce inflammation. Outcome: Patient's ESR levels will decrease and inflammatory response will subside."
+    severity: "WARNING"
+  - keywords: ["Inflammation"]
+    alert: "Goal: Patient will control acute phase. Outcome: Patient's CRP levels will normalize and infection will resolve."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will avoid iron overload. Outcome: Patient's ferritin levels will decrease and toxicity will be prevented."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will correct iron deficiency. Outcome: Patient's ferritin levels will increase and anemia will improve."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will prevent iron toxicity. Outcome: Patient's iron levels will decrease and overload will resolve."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will improve iron status. Outcome: Patient's iron levels will increase and deficiency will be corrected."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will normalize iron binding. Outcome: Patient's TIBC levels will stabilize and iron metabolism will balance."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will manage iron overload. Outcome: Patient's TIBC levels will decrease and saturation will normalize."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will avoid B12 toxicity. Outcome: Patient's vitamin B12 levels will decrease and excess will resolve."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will correct B12 deficiency. Outcome: Patient's vitamin B12 levels will increase and neurological symptoms will improve."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will prevent folate toxicity. Outcome: Patient's folate levels will decrease and excess will be managed."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will resolve folate deficiency. Outcome: Patient's folate levels will increase and anemia will improve."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will reduce CVD risk. Outcome: Patient's homocysteine levels will decrease and perfusion will improve."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Goal: Patient will maintain clotting. Outcome: Patient's homocysteine levels will increase appropriately and bleeding will be controlled."
+    severity: "WARNING"
+  - keywords: ["Acute Coronary Syndrome"]
+    alert: "Goal: Patient will resolve ACS. Outcome: Patient's troponin levels will normalize and cardiac function will restore."
+    severity: "CRITICAL"
+  - keywords: ["Myocardial Infarction"]
+    alert: "Goal: Patient will recover from MI. Outcome: Patient's CK-MB levels will decrease and heart damage will heal."
+    severity: "CRITICAL"
+  - keywords: ["Heart Failure"]
+    alert: "Goal: Patient will manage HF. Outcome: Patient's BNP levels will decrease and cardiac status will improve."
+    severity: "CRITICAL"
+  - keywords: ["Deep Vein Thrombosis"]
+    alert: "Goal: Patient will resolve DVT. Outcome: Patient's D-dimer levels will normalize and clotting will stabilize."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will prevent thrombosis. Outcome: Patient's fibrinogen levels will decrease and perfusion will be adequate."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Goal: Patient will control bleeding. Outcome: Patient's fibrinogen levels will increase and hemorrhage will stop."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Goal: Patient will manage hemophilia. Outcome: Patient's factor VIII levels will increase and clotting will normalize."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Goal: Patient will prevent bleeding. Outcome: Patient's factor VIII levels will increase and episodes will cease."
+    severity: "CRITICAL"
+  - keywords: ["Hepatic Encephalopathy"]
+    alert: "Goal: Patient will resolve encephalopathy. Outcome: Patient's ammonia levels will decrease and mental status will clear."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will maintain ammonia balance. Outcome: Patient's ammonia levels will stabilize and toxicity will be avoided."
+    severity: "WARNING"
+  - keywords: ["Lactic Acidosis"]
+    alert: "Goal: Patient will correct acidosis. Outcome: Patient's lactate levels will decrease and pH will normalize."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will avoid lactate deficiency. Outcome: Patient's lactate levels will increase appropriately and metabolism will balance."
+    severity: "WARNING"
+  - keywords: ["Gout"]
+    alert: "Goal: Patient will manage gout. Outcome: Patient's uric acid levels will decrease and joint pain will resolve."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will correct hypouricemia. Outcome: Patient's uric acid levels will increase and deficiency will resolve."
+    severity: "WARNING"
+  - keywords: ["Prostate Cancer"]
+    alert: "Goal: Patient will control prostate cancer. Outcome: Patient's PSA levels will decrease and cancer will be managed."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will maintain PSA balance. Outcome: Patient's PSA levels will stabilize and abnormalities will be monitored."
+    severity: "WARNING"
+  - keywords: ["Cancer"]
+    alert: "Goal: Patient will respond to cancer treatment. Outcome: Patient's CEA levels will decrease and tumor burden will reduce."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will monitor CEA. Outcome: Patient's CEA levels will remain stable and cancer will be detected early."
+    severity: "WARNING"
+  - keywords: ["Ovarian Cancer"]
+    alert: "Goal: Patient will manage ovarian cancer. Outcome: Patient's CA-125 levels will decrease and cancer will be treated."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will monitor CA-125. Outcome: Patient's CA-125 levels will stabilize and abnormalities will be addressed."
+    severity: "WARNING"
+  - keywords: ["Liver Cancer"]
+    alert: "Goal: Patient will control liver cancer. Outcome: Patient's AFP levels will decrease and liver function will improve."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will monitor AFP. Outcome: Patient's AFP levels will remain normal and cancer risk will be assessed."
+    severity: "WARNING"
+  - keywords: ["Pregnancy or Cancer"]
+    alert: "Goal: Patient will manage condition. Outcome: Patient's hCG levels will normalize and pregnancy or cancer will be addressed."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Goal: Patient will monitor hCG. Outcome: Patient's hCG levels will stabilize and condition will be evaluated."
+    severity: "WARNING"
+  - keywords: ["Hyperparathyroidism"]
+    alert: "Goal: Patient will control hyperparathyroidism. Outcome: Patient's PTH levels will decrease and calcium will normalize."
+    severity: "WARNING"
+  - keywords: ["Hypoparathyroidism"]
+    alert: "Goal: Patient will manage hypoparathyroidism. Outcome: Patient's PTH levels will increase and calcium will stabilize."
+    severity: "WARNING"
+  - keywords: ["Hypervitaminosis D"]
+    alert: "Goal: Patient will resolve vitamin D toxicity. Outcome: Patient's vitamin D levels will decrease and symptoms will subside."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Goal: Patient will correct vitamin D deficiency. Outcome: Patient's vitamin D levels will increase and deficiency will resolve."
+    severity: "WARNING"
+  - keywords: ["Cushing's Syndrome"]
+    alert: "Goal: Patient will manage Cushing's. Outcome: Patient's cortisol levels will decrease and symptoms will improve."
+    severity: "WARNING"
+  - keywords: ["Addison's Disease"]
+    alert: "Goal: Patient will treat Addison's. Outcome: Patient's cortisol levels will increase and adrenal function will restore."
+    severity: "CRITICAL"
+  - keywords: ["Cushing's Disease"]
+    alert: "Goal: Patient will control pituitary. Outcome: Patient's ACTH levels will decrease and Cushing's will resolve."
+    severity: "WARNING"
+  - keywords: ["Hypopituitarism"]
+    alert: "Goal: Patient will replace hormones. Outcome: Patient's ACTH levels will increase and deficiency will be corrected."
+    severity: "WARNING"
+  - keywords: ["Acromegaly"]
+    alert: "Goal: Patient will manage acromegaly. Outcome: Patient's GH levels will decrease and growth will stabilize."
+    severity: "WARNING"
+  - keywords: ["Growth Hormone Deficiency"]
+    alert: "Goal: Patient will correct GH deficiency. Outcome: Patient's GH levels will increase and deficiency symptoms will resolve."
+    severity: "WARNING"
+  - keywords: ["Hyperprolactinemia"]
+    alert: "Goal: Patient will reduce prolactin. Outcome: Patient's prolactin levels will decrease and symptoms will improve."
+    severity: "WARNING"
+  - keywords: ["Hypoprolactinemia"]
+    alert: "Goal: Patient will balance prolactin. Outcome: Patient's prolactin levels will increase appropriately."
+    severity: "WARNING"
+  - keywords: ["Polycystic Ovary Syndrome"]
+    alert: "Goal: Patient will manage PCOS. Outcome: Patient's testosterone levels will decrease and hormonal balance will restore."
+    severity: "WARNING"
+  - keywords: ["Hypogonadism"]
+    alert: "Goal: Patient will treat hypogonadism. Outcome: Patient's testosterone levels will increase and deficiency will resolve."
+    severity: "WARNING"
+  - keywords: ["Risk for Thromboembolism"]
+    alert: "Goal: Patient will prevent thrombosis. Outcome: Patient's estradiol levels will decrease and clotting risk will reduce."
+    severity: "WARNING"
+  - keywords: ["Menopause"]
+    alert: "Goal: Patient will manage menopause. Outcome: Patient's estradiol levels will stabilize and symptoms will ease."
+    severity: "WARNING"
+  - keywords: ["Polycystic Ovary Syndrome"]
+    alert: "Goal: Patient will regulate LH. Outcome: Patient's LH levels will decrease and ovulation will normalize."
+    severity: "WARNING"
+  - keywords: ["Hypogonadotropic Hypogonadism"]
+    alert: "Goal: Patient will stimulate gonads. Outcome: Patient's LH levels will increase and hypogonadism will resolve."
+    severity: "WARNING"
+  - keywords: ["Menopause"]
+    alert: "Goal: Patient will transition menopause. Outcome: Patient's FSH levels will stabilize and hormonal changes will be managed."
+    severity: "WARNING"
+  - keywords: ["Hypopituitarism"]
+    alert: "Goal: Patient will replace FSH. Outcome: Patient's FSH levels will increase and deficiency will be corrected."
+    severity: "WARNING"
+  - keywords: ["Insulin Resistance"]
+    alert: "Goal: Patient will improve insulin sensitivity. Outcome: Patient's insulin levels will decrease and glucose control will enhance."
+    severity: "WARNING"
+  - keywords: ["Diabetes Mellitus"]
+    alert: "Goal: Patient will manage diabetes. Outcome: Patient's insulin levels will increase and glucose will stabilize."
+    severity: "CRITICAL"
+  - keywords: ["Insulin Resistance"]
+    alert: "Goal: Patient will enhance beta cell function. Outcome: Patient's C-peptide levels will decrease and resistance will improve."
+    severity: "WARNING"
+  - keywords: ["Type 1 Diabetes"]
+    alert: "Goal: Patient will control diabetes. Outcome: Patient's C-peptide levels will increase and insulin needs will be met."
+    severity: "CRITICAL"
+  - keywords: ["Poor Glycemic Control"]
+    alert: "Goal: Patient will achieve glycemic control. Outcome: Patient's HbA1c levels will decrease and long-term glucose will stabilize."
+    severity: "WARNING"
+  - keywords: ["Risk for Hypoglycemia"]
+    alert: "Goal: Patient will avoid hypoglycemia. Outcome: Patient's HbA1c levels will increase appropriately and hypo episodes will prevent."
+    severity: "WARNING"
+  - keywords: ["Poor Glycemic Control"]
+    alert: "Goal: Patient will control short-term glucose. Outcome: Patient's fructosamine levels will decrease and glucose will normalize."
+    severity: "WARNING"
+  - keywords: ["Risk for Hypoglycemia"]
+    alert: "Goal: Patient will balance glucose. Outcome: Patient's fructosamine levels will stabilize and hypo risk will reduce."
+    severity: "WARNING"

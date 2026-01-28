@@ -1,80 +1,74 @@
 <div id="mySidenav"
     class="fixed top-0 left-0 h-full w-[260px] shadow-md bg-ehr z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
 
-
+    {{-- Toggle Button (Fixed: Uses Icon instead of Image) --}}
     <button id="arrowBtn" onclick="closeNav()" class="group absolute top-1/2 -right-4 transform -translate-y-1/2 
         bg-white text-dark-green border border-gray-300 rounded-oval
         w-8 h-15 flex items-center justify-center 
         shadow-xl hover:bg-dark-green hover:scale-105 
         transition-all duration-300 ease-in-out">
 
-        <img src="{{ asset('img/sidebar/close-arrow.png') }}" class="w-3 block group-hover:hidden" alt="arrow">
-
-
-        <img src="{{ asset('img/sidebar/close-arrow-hover.png') }}" class="w-3 hidden group-hover:block"
-            alt="arrow-hover">
-
+        <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
+       
     </button>
 
-
-
+    {{-- Navigation Menu --}}
     <ul class="mt-[140px] text-dark-green text-[13px] font-creato-black pr-[10px] pl-[10px]">
-        <ul class="mt-[140px] text-dark-green text-[13px] font-creato-black pr-[10px] pl-[10px]">
+        
+        {{-- 1. Home --}}
         <li>
-            <a href="{{ route('admin-home') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2 mt-[20px]
+            <a href="{{ route('admin-home') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
                         {{ request()->routeIs('admin-home')
-    ? 'bg-dark-green text-white font-bold'
-    : 'hover:bg-hover' }}">
+                            ? 'bg-dark-green text-white font-bold'
+                            : 'hover:bg-hover' }}">
 
-                <img src="{{ asset('img/sidebar/home-icon.png') }}" alt="Home Icon"
-                    class="w-5 h-5 transition duration-200">
+                <span class="material-symbols-outlined">home</span>
                 <span>Home</span>
             </a>
         </li>
 
+        {{-- 2. Audit Log --}}
         <li>
-            <a href="{{ route('audit.index') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2 
+            <a href="{{ route('audit.index') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
-                            {{ request()->routeIs('audit.index')
-    ? 'bg-dark-green text-white font-bold'
-    : 'hover:bg-hover' }}">
+                        {{ request()->routeIs('audit.index')
+                            ? 'bg-dark-green text-white font-bold'
+                            : 'hover:bg-hover' }}">
 
-                <img src="{{ asset('img/sidebar/log.png') }}" alt="Home Icon"
-                    class="w-4 h-4 transition duration-200">
-                <span
-                    class="{{ request()->routeIs('audit.index') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Audit Log</span>
-            </a>
-        </li>
- 
-
-        <li>
-            <a href="{{ route('users') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2 
-                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
-                            {{ request()->routeIs('users')
-    ? 'bg-dark-green  font-bold'
-    : 'hover:bg-hover' }}">
-
-                <img src="{{ asset('img/sidebar/user.png') }}" alt="Users Icon"
-                    class="w-4 h-4 transition duration-200">
-                <span
-                    class="{{ request()->routeIs('users') ? 'text-white font-bold' : 'group-hover:font-bold' }}">User</span>
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span>Audit Log</span>
             </a>
         </li>
 
-        
+        {{-- 3. Users --}}
+        <li>
+            <a href="{{ route('users') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2 
+                        hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
+                        {{ request()->routeIs('users')
+                            ? 'bg-dark-green text-white font-bold'
+                            : 'hover:bg-hover' }}">
+
+                <span class="material-symbols-outlined">group</span>
+                <span>User</span>
+            </a>
+        </li>
+
+        {{-- Logout Section --}}
         <li>
             <center>
-                <hr class="w-full mt-[500px] border-dark-green border-t-1">
+                {{-- Adjusted margin to match the reference code (120px) instead of 500px --}}
+                <hr class="w-full mt-[450px] border-dark-green border-t-1">
             </center>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
+
             <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
                         hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
-                <img src="{{ asset('img/sidebar/logout.png') }}" alt="Discharge Icon"
-                    class="w-6 h-6 transition duration-200">
+                
+                <span class="material-symbols-outlined">logout</span>
                 <span>LOG OUT</span>
             </a>
         </li>

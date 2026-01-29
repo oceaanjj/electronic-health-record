@@ -160,7 +160,7 @@
                     <!-- cdss btn m -->
                     @if (isset($physicalExam))
                         <a href="{{ route('nursing-diagnosis.start', ['component' => 'physical-exam', 'id' => $physicalExam->id]) }}"
-                            class="button-default text-center">
+                            class="button-default cdss-btn text-center">
                             CDSS
                         </a>
                     @endif

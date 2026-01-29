@@ -1,22 +1,22 @@
 evaluation:
-    - keywords: ['Risk for falls']
-      alert: "Evaluate for any falls or near-falls. Assess patient's ability to use call bell. Goal met if no falls occurred."
-      severity: 'INFO'
-    - keywords: ['Bathing self-care deficit']
-      alert: "Evaluate patient's participation in bathing. Assess skin condition. Goal met if patient's skin is clean and intact."
-      severity: 'INFO'
-    - keywords: ['Insomnia']
-      alert: "Evaluate patient's report of sleep quality. Assess number of awakenings. Goal met if patient reports improved sleep."
-      severity: 'INFO'
-    - keywords: ['Acute pain']
-      alert: 'Evaluate pain level. Assess for any side effects of pain medication. Goal met if pain is less than 3 on a 0-10 scale.'
-      severity: 'WARNING'
-    - keywords: ['Chronic pain']
-      alert: 'Evaluate pain level. Assess for any side effects of pain medication. Goal met if pain is at a manageable level.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced nutrition']
-      alert: "Evaluate food intake. Assess patient's weight. Goal met if patient is consuming at least 75% of meals and weight is stable."
-      severity: 'INFO'
-    - keywords: ['Deficient fluid volume']
-      alert: 'Evaluate intake and output. Assess for signs of dehydration. Goal met if urine output is adequate and there are no signs of dehydration.'
-      severity: 'WARNING'
+  - keywords: ["Risk for falls"]
+    alert: "Evaluate for any falls or near-falls. Assess patient's ability to use call bell. Goal met if no falls occurred."
+    severity: "INFO"
+  - keywords: ["Bathing self-care deficit"]
+    alert: "Evaluate patient's participation in bathing. Assess skin condition. Goal met if patient's skin is clean and intact."
+    severity: "INFO"
+  - keywords: ["Insomnia"]
+    alert: "Evaluate patient's report of sleep quality. Assess number of awakenings. Goal met if patient reports improved sleep."
+    severity: "INFO"
+  - keywords: ["Acute pain"]
+    alert: "Evaluate pain level. Assess for any side effects of pain medication. Goal met if pain is less than 3 on a 0-10 scale."
+    severity: "WARNING"
+  - keywords: ["Chronic pain"]
+    alert: "Evaluate pain level. Assess for any side effects of pain medication. Goal met if pain is at a manageable level."
+    severity: "WARNING"
+  - keywords: ["Imbalanced nutrition"]
+    alert: "Evaluate food intake. Assess patient's weight. Goal met if patient is consuming at least 75% of meals and weight is stable."
+    severity: "INFO"
+  - keywords: ["Deficient fluid volume"]
+    alert: "Evaluate intake and output. Assess for signs of dehydration. Goal met if urine output is adequate and there are no signs of dehydration."
+    severity: "WARNING"

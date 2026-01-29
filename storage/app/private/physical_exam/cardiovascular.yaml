@@ -1,196 +1,219 @@
 cardiovascular:
-    - keywords: ['central cyanosis', 'blue lips', 'blue tongue']
-      alert: 'indicates systemic hypoxemia and is a critical sign of a right-to-left shunt (cyanotic congenital heart disease) or severe respiratory distress. Requires immediate evaluation.'
-      severity: 'critical'
-    - keywords: ['peripheral cyanosis', 'acrocyanosis', 'blue hands', 'blue feet']
-      alert: 'peripheral cyanosis (acrocyanosis) can be a normal finding if transient and related to cold. However, persistent peripheral cyanosis or its presence in an older child may indicate poor perfusion or circulatory compromise.'
-      severity: 'warning'
-    - keywords: ['differential cyanosis', 'blue lower extremities', 'pink upper extremities']
-      alert: 'Differential cyanosis (pink upper body, blue lower body) is a specific sign of a right-to-left shunt through a patent ductus arteriosus, often seen with severe coarctation of the aorta or interrupted aortic arch.'
-      severity: 'critical'
-    - keywords: ['weak femoral pulse', 'absent femoral pulse', 'brachiofemoral delay']
-      alert: 'Weak, delayed, or absent femoral pulses compared to strong brachial pulses (brachiofemoral delay) are a hallmark of Coarctation of the Aorta. Blood pressure should be checked in all four extremities.'
-      severity: 'critical'
-    - keywords: ['bounding pulse', 'water-hammer pulse']
-      alert: 'Bounding peripheral pulses suggest a wide pulse pressure, commonly associated with a large Patent Ductus Arteriosus (PDA), aortic regurgitation, or truncus arteriosus.'
-      severity: 'warning'
-    - keywords: ['weak pulse', 'thready pulse']
-      alert: 'Generalized weak or thready pulses are a sign of low cardiac output and may indicate severe heart failure, shock, or critical aortic stenosis.'
-      severity: 'critical'
-    - keywords: ['precordial bulge', 'asymmetric chest']
-      alert: 'A precordial bulge or asymmetry of the chest wall suggests long-standing cardiomegaly, often from a large left-to-right shunt or cardiomyopathy.'
-      severity: 'warning'
-    - keywords: ['precordial heave', 'parasternal lift']
-      alert: 'A precordial heave or lift suggests significant right or left ventricular hypertrophy. A right ventricular heave is felt at the left sternal border; a left ventricular heave is felt at the apex.'
-      severity: 'warning'
-    - keywords: ['suprasternal notch thrill']
-      alert: 'A palpable thrill in the suprasternal notch is often associated with aortic stenosis, but can also be found with pulmonic stenosis or a patent ductus arteriosus.'
-      severity: 'warning'
-    - keywords: ['apical thrill']
-      alert: 'A systolic thrill at the apex is most commonly associated with severe mitral regurgitation. A diastolic thrill at the apex suggests mitral stenosis.'
-      severity: 'warning'
-    - keywords: ['left sternal border thrill']
-      alert: 'A thrill at the lower left sternal border is characteristic of a ventricular septal defect. A thrill at the upper left sternal border suggests pulmonic stenosis.'
-      severity: 'warning'
-    - keywords: ['tachycardia', 'persistent tachycardia']
-      alert: 'Persistent tachycardia for age is a non-specific but important sign of distress. In a cardiac context, it can indicate heart failure, hypoxia, anemia, or arrhythmia (e.g., SVT).'
-      severity: 'warning'
-    - keywords: ['bradycardia']
-      alert: 'Bradycardia in an infant or child is an ominous sign, often indicating severe hypoxia or impending cardiovascular collapse. It can also be caused by congenital heart block.'
-      severity: 'critical'
-    - keywords: ['irregular rhythm', 'arrhythmia']
-      alert: 'An irregular heart rhythm requires an ECG for diagnosis. While some irregularities are benign (e.g., sinus arrhythmia), others can be serious.'
-      severity: 'warning'
-    - keywords: ['diastolic murmur']
-      alert: 'Any diastolic murmur in a child is considered pathologic until proven otherwise and requires an urgent cardiology referral. It can indicate aortic or pulmonary regurgitation, or mitral/tricuspid stenosis.'
-      severity: 'critical'
-    - keywords: ['holosystolic murmur', 'pansystolic murmur']
-      alert: 'A holosystolic murmur is typically pathologic. Common causes include ventricular septal defect, mitral regurgitation, and tricuspid regurgitation.'
-      severity: 'warning'
-    - keywords: ['continuous murmur', 'machinery murmur']
-      alert: "A continuous 'machinery-like' murmur, heard best below the left clavicle, is the classic finding of a Patent Ductus Arteriosus (PDA)."
-      severity: 'warning'
-    - keywords: ['harsh murmur', 'grade 3 murmur', 'grade III murmur']
-      alert: 'A murmur of grade 3/6 intensity or louder, or one with a harsh quality, is a red flag for a pathologic cause, suggesting significant turbulent flow.'
-      severity: 'warning'
-    - keywords: ['murmur increases with standing']
-      alert: 'A systolic murmur that paradoxically increases in intensity when a child stands is a critical finding highly suggestive of hypertrophic cardiomyopathy (HOCM).'
-      severity: 'critical'
-    - keywords: ['murmur decreases with standing']
-      alert: "A systolic murmur that decreases or disappears with standing is a characteristic feature of an innocent murmur, such as a Still's murmur."
-      severity: 'info'
-    - keywords: ['murmur radiates to back', 'murmur between scapulae']
-      alert: 'A systolic ejection murmur that radiates to the back, particularly between the scapulae, is suggestive of Coarctation of the Aorta. It can also be heard with pulmonic stenosis.'
-      severity: 'warning'
-    - keywords: ['murmur radiates to axilla']
-      alert: 'A holosystolic murmur at the apex that radiates to the axilla is characteristic of mitral regurgitation.'
-      severity: 'warning'
-    - keywords: ['murmur radiates to neck', 'murmur radiates to carotids']
-      alert: 'A systolic ejection murmur at the upper right sternal border that radiates to the neck and carotid arteries is characteristic of aortic stenosis.'
-      severity: 'warning'
-    - keywords:
-      alert: 'Wide splitting of the second heart sound (S2) that persists through the respiratory cycle can be caused by delayed pulmonic valve closure, as in pulmonic stenosis or right bundle branch block.'
-      severity: 'warning'
-    - keywords:
-      alert: 'A single S2 is a pathologic finding that can indicate severe pulmonary stenosis, pulmonary atresia, truncus arteriosus, or transposition of the great arteries.'
-      severity: 'warning'
-    - keywords: ['loud P2', 'accentuated P2']
-      alert: 'A loud or accentuated pulmonic component of S2 (P2), especially if palpable, is a sign of pulmonary hypertension.'
-      severity: 'warning'
-    - keywords: ['ejection click', 'systolic click']
-      alert: 'A systolic ejection click suggests pathology of a semilunar valve (aortic or pulmonic). An aortic click is heard at the apex and base; a pulmonic click is heard at the upper left sternal border and varies with respiration.'
-      severity: 'warning'
-    - keywords: ['mid-systolic click', 'late systolic murmur']
-      alert: 'A mid-systolic click, often followed by a late systolic murmur, is the classic auscultatory finding of mitral valve prolapse.'
-      severity: 'warning'
-    - keywords:
-      alert: 'While a third heart sound (S3) can be physiologic in children, a loud S3 gallop suggests rapid ventricular filling into a noncompliant ventricle or volume overload, as seen in heart failure or a large left-to-right shunt.'
-      severity: 'warning'
-    - keywords:
-      alert: 'A fourth heart sound (S4) is almost always pathologic in children, indicating decreased ventricular compliance from conditions like severe hypertension, aortic stenosis, or hypertrophic cardiomyopathy.'
-      severity: 'warning'
-    - keywords: ['hepatomegaly', 'enlarged liver']
-      alert: 'Hepatomegaly in a pediatric patient is a key sign of right-sided heart failure and systemic venous congestion.'
-      severity: 'warning'
-    - keywords: ['peripheral edema', 'pitting edema', 'sacral edema', 'ascites']
-      alert: 'Peripheral edema, sacral edema (in infants), or ascites are signs of right-sided heart failure and significant fluid overload.'
-      severity: 'warning'
-    - keywords: ['poor feeding', 'diaphoresis with feeding', 'sweating with feeding']
-      alert: 'In an infant, poor feeding, fatigue during feeds, or sweating (diaphoresis) with feeding are classic signs of congestive heart failure due to the increased metabolic effort.'
-      severity: 'warning'
-    - keywords: ['failure to thrive', 'poor weight gain']
-      alert: 'Failure to thrive or poor weight gain is a common manifestation of significant congenital heart disease due to increased metabolic demand and/or poor cardiac output from a large shunt or obstruction.'
-      severity: 'warning'
-    - keywords: ['reduced exercise capacity', 'fatigue with exertion']
-      alert: 'In an older child, reduced exercise capacity or fatigue with exertion that is disproportionate to peers can indicate underlying cardiac disease, such as heart failure or pulmonary hypertension.'
-      severity: 'warning'
-    - keywords: ['syncope on exertion', 'presyncope with exercise']
-      alert: 'Syncope or presyncope, especially when associated with exercise, is a critical red flag for conditions like hypertrophic cardiomyopathy, severe aortic stenosis, or arrhythmias.'
-      severity: 'critical'
-    - keywords: ['chest pain', 'chest pain on exertion']
-      alert: 'Chest pain that occurs with exertion in a child is an abnormal finding that warrants urgent evaluation for conditions such as anomalous coronary arteries, severe outflow obstruction, or HOCM.'
-      severity: 'critical'
-    - keywords:
-      alert: "A low-pitched, vibratory, or musical systolic murmur at the left lower sternal border that decreases with standing is characteristic of a Still's murmur, a common and benign innocent murmur."
-      severity: 'info'
-    - keywords: ['venous hum']
-      alert: 'A continuous, low-pitched hum heard best at the upper sternal borders or below the clavicles, which disappears when the child lies down or turns their head, is a venous hum, a common innocent finding.'
-      severity: 'info'
-    - keywords: ['pulmonary flow murmur', 'systolic ejection murmur', 'upper left sternal border']
-      alert: 'A soft, high-pitched systolic ejection murmur at the upper left sternal border in an otherwise asymptomatic child is likely a pulmonary flow murmur, a common innocent murmur.'
-      severity: 'info'
-    - keywords: ['holosystolic murmur', 'lower left sternal border']
-      alert: 'A harsh holosystolic murmur at the lower left sternal border is the classic finding of a Ventricular Septal Defect (VSD).'
-      severity: 'warning'
-    - keywords:
-      alert: 'A systolic ejection murmur at the upper left sternal border combined with a wide, fixed splitting of S2 is pathognomonic for an Atrial Septal Defect (ASD).'
-      severity: 'warning'
-    - keywords: ['systolic ejection murmur', 'upper left sternal border', 'radiates to back']
-      alert: 'A harsh systolic ejection murmur at the upper left sternal border, often with an associated click and radiation to the back, suggests Pulmonic Stenosis.'
-      severity: 'warning'
-    - keywords: ['systolic ejection murmur', 'upper right sternal border', 'radiates to neck']
-      alert: 'A harsh systolic ejection murmur at the upper right sternal border that radiates to the neck is the classic finding of valvular Aortic Stenosis.'
-      severity: 'warning'
-    - keywords: ['crackles', 'rales', 'pulmonary congestion']
-      alert: 'Crackles or rales on lung auscultation can be a sign of pulmonary edema secondary to left-sided heart failure.'
-      severity: 'warning'
-    - keywords: ['clubbing', 'nail clubbing']
-      alert: 'Digital clubbing is a sign of chronic hypoxia and is associated with cyanotic congenital heart disease, such as Tetralogy of Fallot or Eisenmenger syndrome.'
-      severity: 'warning'
-    - keywords: ['maternal diabetes', 'gestational diabetes']
-      alert: 'A maternal history of diabetes is a risk factor for specific congenital heart defects, including asymmetric septal hypertrophy, VSD, TGA, and truncus arteriosus.'
-      severity: 'info'
-    - keywords:
-      alert: 'Maternal Systemic Lupus Erythematosus (SLE) is associated with an increased risk of congenital heart block in the infant.'
-      severity: 'info'
-    - keywords: ['family history of sudden death']
-      alert: 'A family history of sudden, unexplained death in a young person is a major red flag for heritable conditions like hypertrophic cardiomyopathy, long QT syndrome, or other channelopathies.'
-      severity: 'critical'
-    - keywords: ['Marfan syndrome', 'family history of Marfan']
-      alert: 'A personal or family history of Marfan syndrome warrants careful cardiac evaluation for associated conditions like mitral valve prolapse, aortic root dilation, and aortic regurgitation.'
-      severity: 'warning'
-    - keywords:
-      alert: 'Children with Trisomy 21 (Down syndrome) have a high incidence of congenital heart disease, most commonly atrioventricular septal defects.'
-      severity: 'info'
-    - keywords:
-      alert: 'Patients with Turner syndrome (XO) have an increased risk of coarctation of the aorta and bicuspid aortic valve.'
-      severity: 'info'
-    - keywords: ['fever', 'new murmur', 'arthralgia']
-      alert: 'The combination of fever, a new or changed heart murmur, and joint pain (arthralgia/arthritis) are major criteria for Acute Rheumatic Fever.'
-      severity: 'critical'
-    - keywords: ['fever', 'unexplained shock', 'new murmur']
-      alert: 'In a child with fever and signs of shock, a new murmur may indicate infective endocarditis with valvular destruction or sepsis-induced myocardial dysfunction.'
-      severity: 'critical'
-    - keywords:
-      alert: 'A long systolic murmur, especially a pansystolic murmur (PSM), is more likely to be pathologic than a short, early systolic murmur.'
-      severity: 'warning'
-    - keywords: ['opening snap']
-      alert: 'An opening snap is a high-pitched sound in early diastole caused by the forceful opening of a stenotic mitral or tricuspid valve. It is a key finding in mitral stenosis.'
-      severity: 'warning'
-    - keywords: ['displaced PMI', 'displaced apical impulse']
-      alert: 'A point of maximal impulse (PMI) that is displaced inferiorly and laterally suggests left ventricular enlargement (dilatation).'
-      severity: 'warning'
-    - keywords: ['respiratory distress', 'tachypnea']
-      alert: 'Respiratory distress (tachypnea, retractions) in an infant can be a primary sign of cardiac disease, reflecting pulmonary overcirculation (left-to-right shunt) or pulmonary venous congestion (heart failure).'
-      severity: 'warning'
-    - keywords: ['palpitations']
-      alert: 'A complaint of palpitations (a feeling of a fast or irregular heartbeat) in a child requires investigation for an underlying arrhythmia.'
-      severity: 'warning'
-    - keywords: ['squatting behavior']
-      alert: 'A history of a young child spontaneously squatting during play is a classic sign of Tetralogy of Fallot. Squatting increases systemic vascular resistance, which decreases the right-to-left shunt and improves pulmonary blood flow.'
-      severity: 'warning'
-    - keywords: ['boot-shaped heart', 'coeur en sabot']
-      alert: "A 'boot-shaped' heart on chest x-ray is the classic finding for Tetralogy of Fallot, caused by right ventricular hypertrophy and an upturned apex."
-      severity: 'info'
-    - keywords: ['egg on a string', 'egg on its side']
-      alert: "An 'egg on a string' appearance on chest x-ray is characteristic of Transposition of the Great Arteries (TGA), reflecting a narrow superior mediastinum."
-      severity: 'info'
-    - keywords:
-      alert: 'A loud, harsh holosystolic murmur with a palpable thrill at the lower left sternal border is highly indicative of a moderate to large Ventricular Septal Defect (VSD).'
-      severity: 'warning'
-    - keywords: ['early diastolic murmur', 'blowing murmur', 'left sternal border']
-      alert: 'A high-pitched, blowing, early diastolic decrescendo murmur at the left sternal border, best heard with the patient sitting and leaning forward, suggests aortic regurgitation.'
-      severity: 'warning'
-    - keywords: ['mid-diastolic rumble', 'apex']
-      alert: 'A low-pitched, rumbling mid-diastolic murmur at the apex is the classic finding of mitral stenosis, often preceded by an opening snap.'
-      severity: 'warning'
+  - keywords: ["central cyanosis", "blue lips", "blue tongue"]
+    alert: "indicates systemic hypoxemia and is a critical sign of a right-to-left shunt (cyanotic congenital heart disease) or severe respiratory distress. Requires immediate evaluation."
+    severity: "critical"
+  - keywords: ["peripheral cyanosis", "acrocyanosis", "blue hands", "blue feet"]
+    alert: "peripheral cyanosis (acrocyanosis) can be a normal finding if transient and related to cold. However, persistent peripheral cyanosis or its presence in an older child may indicate poor perfusion or circulatory compromise."
+    severity: "warning"
+  - keywords:
+      [
+        "differential cyanosis",
+        "blue lower extremities",
+        "pink upper extremities",
+      ]
+    alert: "Differential cyanosis (pink upper body, blue lower body) is a specific sign of a right-to-left shunt through a patent ductus arteriosus, often seen with severe coarctation of the aorta or interrupted aortic arch."
+    severity: "critical"
+  - keywords:
+      ["weak femoral pulse", "absent femoral pulse", "brachiofemoral delay"]
+    alert: "Weak, delayed, or absent femoral pulses compared to strong brachial pulses (brachiofemoral delay) are a hallmark of Coarctation of the Aorta. Blood pressure should be checked in all four extremities."
+    severity: "critical"
+  - keywords: ["bounding pulse", "water-hammer pulse"]
+    alert: "Bounding peripheral pulses suggest a wide pulse pressure, commonly associated with a large Patent Ductus Arteriosus (PDA), aortic regurgitation, or truncus arteriosus."
+    severity: "warning"
+  - keywords: ["weak pulse", "thready pulse"]
+    alert: "Generalized weak or thready pulses are a sign of low cardiac output and may indicate severe heart failure, shock, or critical aortic stenosis."
+    severity: "critical"
+  - keywords: ["precordial bulge", "asymmetric chest"]
+    alert: "A precordial bulge or asymmetry of the chest wall suggests long-standing cardiomegaly, often from a large left-to-right shunt or cardiomyopathy."
+    severity: "warning"
+  - keywords: ["precordial heave", "parasternal lift"]
+    alert: "A precordial heave or lift suggests significant right or left ventricular hypertrophy. A right ventricular heave is felt at the left sternal border; a left ventricular heave is felt at the apex."
+    severity: "warning"
+  - keywords: ["suprasternal notch thrill"]
+    alert: "A palpable thrill in the suprasternal notch is often associated with aortic stenosis, but can also be found with pulmonic stenosis or a patent ductus arteriosus."
+    severity: "warning"
+  - keywords: ["apical thrill"]
+    alert: "A systolic thrill at the apex is most commonly associated with severe mitral regurgitation. A diastolic thrill at the apex suggests mitral stenosis."
+    severity: "warning"
+  - keywords: ["left sternal border thrill"]
+    alert: "A thrill at the lower left sternal border is characteristic of a ventricular septal defect. A thrill at the upper left sternal border suggests pulmonic stenosis."
+    severity: "warning"
+  - keywords: ["tachycardia", "persistent tachycardia"]
+    alert: "Persistent tachycardia for age is a non-specific but important sign of distress. In a cardiac context, it can indicate heart failure, hypoxia, anemia, or arrhythmia (e.g., SVT)."
+    severity: "warning"
+  - keywords: ["bradycardia"]
+    alert: "Bradycardia in an infant or child is an ominous sign, often indicating severe hypoxia or impending cardiovascular collapse. It can also be caused by congenital heart block."
+    severity: "critical"
+  - keywords: ["irregular rhythm", "arrhythmia"]
+    alert: "An irregular heart rhythm requires an ECG for diagnosis. While some irregularities are benign (e.g., sinus arrhythmia), others can be serious."
+    severity: "warning"
+  - keywords: ["diastolic murmur"]
+    alert: "Any diastolic murmur in a child is considered pathologic until proven otherwise and requires an urgent cardiology referral. It can indicate aortic or pulmonary regurgitation, or mitral/tricuspid stenosis."
+    severity: "critical"
+  - keywords: ["holosystolic murmur", "pansystolic murmur"]
+    alert: "A holosystolic murmur is typically pathologic. Common causes include ventricular septal defect, mitral regurgitation, and tricuspid regurgitation."
+    severity: "warning"
+  - keywords: ["continuous murmur", "machinery murmur"]
+    alert: "A continuous 'machinery-like' murmur, heard best below the left clavicle, is the classic finding of a Patent Ductus Arteriosus (PDA)."
+    severity: "warning"
+  - keywords: ["harsh murmur", "grade 3 murmur", "grade III murmur"]
+    alert: "A murmur of grade 3/6 intensity or louder, or one with a harsh quality, is a red flag for a pathologic cause, suggesting significant turbulent flow."
+    severity: "warning"
+  - keywords: ["murmur increases with standing"]
+    alert: "A systolic murmur that paradoxically increases in intensity when a child stands is a critical finding highly suggestive of hypertrophic cardiomyopathy (HOCM)."
+    severity: "critical"
+  - keywords: ["murmur decreases with standing"]
+    alert: "A systolic murmur that decreases or disappears with standing is a characteristic feature of an innocent murmur, such as a Still's murmur."
+    severity: "info"
+  - keywords: ["murmur radiates to back", "murmur between scapulae"]
+    alert: "A systolic ejection murmur that radiates to the back, particularly between the scapulae, is suggestive of Coarctation of the Aorta. It can also be heard with pulmonic stenosis."
+    severity: "warning"
+  - keywords: ["murmur radiates to axilla"]
+    alert: "A holosystolic murmur at the apex that radiates to the axilla is characteristic of mitral regurgitation."
+    severity: "warning"
+  - keywords: ["murmur radiates to neck", "murmur radiates to carotids"]
+    alert: "A systolic ejection murmur at the upper right sternal border that radiates to the neck and carotid arteries is characteristic of aortic stenosis."
+    severity: "warning"
+  - keywords:
+    alert: "Wide splitting of the second heart sound (S2) that persists through the respiratory cycle can be caused by delayed pulmonic valve closure, as in pulmonic stenosis or right bundle branch block."
+    severity: "warning"
+  - keywords:
+    alert: "A single S2 is a pathologic finding that can indicate severe pulmonary stenosis, pulmonary atresia, truncus arteriosus, or transposition of the great arteries."
+    severity: "warning"
+  - keywords: ["loud P2", "accentuated P2"]
+    alert: "A loud or accentuated pulmonic component of S2 (P2), especially if palpable, is a sign of pulmonary hypertension."
+    severity: "warning"
+  - keywords: ["ejection click", "systolic click"]
+    alert: "A systolic ejection click suggests pathology of a semilunar valve (aortic or pulmonic). An aortic click is heard at the apex and base; a pulmonic click is heard at the upper left sternal border and varies with respiration."
+    severity: "warning"
+  - keywords: ["mid-systolic click", "late systolic murmur"]
+    alert: "A mid-systolic click, often followed by a late systolic murmur, is the classic auscultatory finding of mitral valve prolapse."
+    severity: "warning"
+  - keywords:
+    alert: "While a third heart sound (S3) can be physiologic in children, a loud S3 gallop suggests rapid ventricular filling into a noncompliant ventricle or volume overload, as seen in heart failure or a large left-to-right shunt."
+    severity: "warning"
+  - keywords:
+    alert: "A fourth heart sound (S4) is almost always pathologic in children, indicating decreased ventricular compliance from conditions like severe hypertension, aortic stenosis, or hypertrophic cardiomyopathy."
+    severity: "warning"
+  - keywords: ["hepatomegaly", "enlarged liver"]
+    alert: "Hepatomegaly in a pediatric patient is a key sign of right-sided heart failure and systemic venous congestion."
+    severity: "warning"
+  - keywords: ["peripheral edema", "pitting edema", "sacral edema", "ascites"]
+    alert: "Peripheral edema, sacral edema (in infants), or ascites are signs of right-sided heart failure and significant fluid overload."
+    severity: "warning"
+  - keywords:
+      ["poor feeding", "diaphoresis with feeding", "sweating with feeding"]
+    alert: "In an infant, poor feeding, fatigue during feeds, or sweating (diaphoresis) with feeding are classic signs of congestive heart failure due to the increased metabolic effort."
+    severity: "warning"
+  - keywords: ["failure to thrive", "poor weight gain"]
+    alert: "Failure to thrive or poor weight gain is a common manifestation of significant congenital heart disease due to increased metabolic demand and/or poor cardiac output from a large shunt or obstruction."
+    severity: "warning"
+  - keywords: ["reduced exercise capacity", "fatigue with exertion"]
+    alert: "In an older child, reduced exercise capacity or fatigue with exertion that is disproportionate to peers can indicate underlying cardiac disease, such as heart failure or pulmonary hypertension."
+    severity: "warning"
+  - keywords: ["syncope on exertion", "presyncope with exercise"]
+    alert: "Syncope or presyncope, especially when associated with exercise, is a critical red flag for conditions like hypertrophic cardiomyopathy, severe aortic stenosis, or arrhythmias."
+    severity: "critical"
+  - keywords: ["chest pain", "chest pain on exertion"]
+    alert: "Chest pain that occurs with exertion in a child is an abnormal finding that warrants urgent evaluation for conditions such as anomalous coronary arteries, severe outflow obstruction, or HOCM."
+    severity: "critical"
+  - keywords:
+    alert: "A low-pitched, vibratory, or musical systolic murmur at the left lower sternal border that decreases with standing is characteristic of a Still's murmur, a common and benign innocent murmur."
+    severity: "info"
+  - keywords: ["venous hum"]
+    alert: "A continuous, low-pitched hum heard best at the upper sternal borders or below the clavicles, which disappears when the child lies down or turns their head, is a venous hum, a common innocent finding."
+    severity: "info"
+  - keywords:
+      [
+        "pulmonary flow murmur",
+        "systolic ejection murmur",
+        "upper left sternal border",
+      ]
+    alert: "A soft, high-pitched systolic ejection murmur at the upper left sternal border in an otherwise asymptomatic child is likely a pulmonary flow murmur, a common innocent murmur."
+    severity: "info"
+  - keywords: ["holosystolic murmur", "lower left sternal border"]
+    alert: "A harsh holosystolic murmur at the lower left sternal border is the classic finding of a Ventricular Septal Defect (VSD)."
+    severity: "warning"
+  - keywords:
+    alert: "A systolic ejection murmur at the upper left sternal border combined with a wide, fixed splitting of S2 is pathognomonic for an Atrial Septal Defect (ASD)."
+    severity: "warning"
+  - keywords:
+      [
+        "systolic ejection murmur",
+        "upper left sternal border",
+        "radiates to back",
+      ]
+    alert: "A harsh systolic ejection murmur at the upper left sternal border, often with an associated click and radiation to the back, suggests Pulmonic Stenosis."
+    severity: "warning"
+  - keywords:
+      [
+        "systolic ejection murmur",
+        "upper right sternal border",
+        "radiates to neck",
+      ]
+    alert: "A harsh systolic ejection murmur at the upper right sternal border that radiates to the neck is the classic finding of valvular Aortic Stenosis."
+    severity: "warning"
+  - keywords: ["crackles", "rales", "pulmonary congestion"]
+    alert: "Crackles or rales on lung auscultation can be a sign of pulmonary edema secondary to left-sided heart failure."
+    severity: "warning"
+  - keywords: ["clubbing", "nail clubbing"]
+    alert: "Digital clubbing is a sign of chronic hypoxia and is associated with cyanotic congenital heart disease, such as Tetralogy of Fallot or Eisenmenger syndrome."
+    severity: "warning"
+  - keywords: ["maternal diabetes", "gestational diabetes"]
+    alert: "A maternal history of diabetes is a risk factor for specific congenital heart defects, including asymmetric septal hypertrophy, VSD, TGA, and truncus arteriosus."
+    severity: "info"
+  - keywords:
+    alert: "Maternal Systemic Lupus Erythematosus (SLE) is associated with an increased risk of congenital heart block in the infant."
+    severity: "info"
+  - keywords: ["family history of sudden death"]
+    alert: "A family history of sudden, unexplained death in a young person is a major red flag for heritable conditions like hypertrophic cardiomyopathy, long QT syndrome, or other channelopathies."
+    severity: "critical"
+  - keywords: ["Marfan syndrome", "family history of Marfan"]
+    alert: "A personal or family history of Marfan syndrome warrants careful cardiac evaluation for associated conditions like mitral valve prolapse, aortic root dilation, and aortic regurgitation."
+    severity: "warning"
+  - keywords:
+    alert: "Children with Trisomy 21 (Down syndrome) have a high incidence of congenital heart disease, most commonly atrioventricular septal defects."
+    severity: "info"
+  - keywords:
+    alert: "Patients with Turner syndrome (XO) have an increased risk of coarctation of the aorta and bicuspid aortic valve."
+    severity: "info"
+  - keywords: ["fever", "new murmur", "arthralgia"]
+    alert: "The combination of fever, a new or changed heart murmur, and joint pain (arthralgia/arthritis) are major criteria for Acute Rheumatic Fever."
+    severity: "critical"
+  - keywords: ["fever", "unexplained shock", "new murmur"]
+    alert: "In a child with fever and signs of shock, a new murmur may indicate infective endocarditis with valvular destruction or sepsis-induced myocardial dysfunction."
+    severity: "critical"
+  - keywords:
+    alert: "A long systolic murmur, especially a pansystolic murmur (PSM), is more likely to be pathologic than a short, early systolic murmur."
+    severity: "warning"
+  - keywords: ["opening snap"]
+    alert: "An opening snap is a high-pitched sound in early diastole caused by the forceful opening of a stenotic mitral or tricuspid valve. It is a key finding in mitral stenosis."
+    severity: "warning"
+  - keywords: ["displaced PMI", "displaced apical impulse"]
+    alert: "A point of maximal impulse (PMI) that is displaced inferiorly and laterally suggests left ventricular enlargement (dilatation)."
+    severity: "warning"
+  - keywords: ["respiratory distress", "tachypnea"]
+    alert: "Respiratory distress (tachypnea, retractions) in an infant can be a primary sign of cardiac disease, reflecting pulmonary overcirculation (left-to-right shunt) or pulmonary venous congestion (heart failure)."
+    severity: "warning"
+  - keywords: ["palpitations"]
+    alert: "A complaint of palpitations (a feeling of a fast or irregular heartbeat) in a child requires investigation for an underlying arrhythmia."
+    severity: "warning"
+  - keywords: ["squatting behavior"]
+    alert: "A history of a young child spontaneously squatting during play is a classic sign of Tetralogy of Fallot. Squatting increases systemic vascular resistance, which decreases the right-to-left shunt and improves pulmonary blood flow."
+    severity: "warning"
+  - keywords: ["boot-shaped heart", "coeur en sabot"]
+    alert: "A 'boot-shaped' heart on chest x-ray is the classic finding for Tetralogy of Fallot, caused by right ventricular hypertrophy and an upturned apex."
+    severity: "info"
+  - keywords: ["egg on a string", "egg on its side"]
+    alert: "An 'egg on a string' appearance on chest x-ray is characteristic of Transposition of the Great Arteries (TGA), reflecting a narrow superior mediastinum."
+    severity: "info"
+  - keywords:
+    alert: "A loud, harsh holosystolic murmur with a palpable thrill at the lower left sternal border is highly indicative of a moderate to large Ventricular Septal Defect (VSD)."
+    severity: "warning"
+  - keywords:
+      ["early diastolic murmur", "blowing murmur", "left sternal border"]
+    alert: "A high-pitched, blowing, early diastolic decrescendo murmur at the left sternal border, best heard with the patient sitting and leaning forward, suggests aortic regurgitation."
+    severity: "warning"
+  - keywords: ["mid-diastolic rumble", "apex"]
+    alert: "A low-pitched, rumbling mid-diastolic murmur at the apex is the classic finding of mitral stenosis, often preceded by an opening snap."
+    severity: "warning"

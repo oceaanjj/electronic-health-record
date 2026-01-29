@@ -1,4 +1,4 @@
-{{--
+{{-- 
     SweetAlert Session Messages Component
     Automatically displays session messages using SweetAlert2
     
@@ -10,8 +10,8 @@
 
 @if (session('success'))
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
                 if (typeof showSuccess === 'function') {
                     showSuccess(@json(session('success')));
                 }
@@ -22,8 +22,8 @@
 
 @if (session('error'))
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
                 if (typeof showError === 'function') {
                     showError(@json(session('error')));
                 }
@@ -34,8 +34,8 @@
 
 @if (session('warning'))
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
                 if (typeof showWarning === 'function') {
                     showWarning(@json(session('warning')));
                 }
@@ -46,8 +46,8 @@
 
 @if (session('info'))
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
                 if (typeof showInfo === 'function') {
                     showInfo(@json(session('info')));
                 }
@@ -56,22 +56,23 @@
     </script>
 @endif
 
+
 {{-- ** taena ito pala yung error letse 3 days ako dito ah ** --}}
 
-{{--
-    @if ($errors->any())
+{{-- 
+@if ($errors->any())
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-    if (typeof showError === 'function') {
-    @if ($errors->count() === 1)
-    showError(@json($errors->first()), 'Validation Error');
-    @else
-    showError(@json(implode("\n", $errors->all())), 'Validation Errors');
-    @endif
-    }
-    }, 100);
-    });
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof showError === 'function') {
+                    @if ($errors->count() === 1)
+                        showError(@json($errors->first()), 'Validation Error');
+                    @else
+                        showError(@json(implode("\n", $errors->all())), 'Validation Errors');
+                    @endif
+                }
+            }, 100);
+        });
     </script>
-    @endif
+@endif
 --}}

@@ -81,28 +81,12 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
 //-------------------------------------------------------------
 // Protected Routes for Doctor
 //-------------------------------------------------------------
-/* add this to have home
 Route::middleware(['auth', 'can:is-doctor'])->group(function () {
     Route::get('/doctor', [HomeController::class, 'doctorHome'])->name('doctor-home');
     Route::get('/doctor/patient-report', [ReportController::class, 'showPatientReportForm'])->name('doctor.patient-report');
     Route::post('/doctor/generate-report', [ReportController::class, 'generateReport'])->name('doctor.generate-report');
     Route::get('/doctor/patient-report/{patient_id}/pdf', [ReportController::class, 'downloadPDF'])->name('doctor.report.pdf');
-});*/
-
-// remove this to add home -----------------------------------------------------------------------
-Route::middleware(['auth', 'can:is-doctor'])->group(function () {
-    
-    // UPDATED: Now points /doctor directly to the ReportController
-    Route::get('/doctor', [ReportController::class, 'showPatientReportForm'])->name('doctor-home');
-
-    // You can technically remove this line below now since the one above does the same thing, 
-    // but you can keep it if you want both URLs to work.
-    Route::get('/doctor/patient-report', [ReportController::class, 'showPatientReportForm'])->name('doctor.patient-report');
-    
-    Route::post('/doctor/generate-report', [ReportController::class, 'generateReport'])->name('doctor.generate-report');
-    Route::get('/doctor/patient-report/{patient_id}/pdf', [ReportController::class, 'downloadPDF'])->name('doctor.report.pdf');
 });
-//----------------------------------------------------------------------------------
 
 
 //-------------------------------------------------------------

@@ -1,576 +1,577 @@
 neurological:
-    # Level of Consciousness
-    - keywords: ['unresponsive', 'no response to voice', 'no response to pain']
-      alert: 'Unresponsiveness to voice or pain indicates coma or severe brain injury. Initiate emergency assessment and airway management.'
-      severity: 'critical'
-    - keywords: ['drowsy but arousable', 'lethargic', 'somnolent']
-      alert: 'A drowsy yet arousable patient indicates mild depression of consciousness; monitor for deterioration.'
-      severity: 'warning'
-    - keywords: ['confused', 'disoriented', 'not oriented to time place person']
-      alert: 'Disorientation indicates acute confusion, delirium, or diffuse cortical dysfunction; investigate metabolic or neurologic causes.'
-      severity: 'warning'
-    - keywords: ['GCS less than 8', 'Glasgow Coma Scale 7']
-      alert: 'A Glasgow Coma Scale below 8 indicates severe brain injury and loss of airway reflexes; intubation likely required.'
-      severity: 'critical'
-    - keywords: ['GCS 15', 'alert and oriented x3']
-      alert: 'Normal level of consciousness documented. No acute neurological impairment noted.'
-      severity: 'none'
-    - keywords: ['agitated', 'restless', 'irritable behavior']
-      alert: 'Sudden agitation or restlessness can signal hypoxia, rising intracranial pressure, or metabolic disturbance.'
-      severity: 'warning'
-    - keywords: ['obtunded', 'difficult to arouse', 'responds only to pain']
-      alert: 'Obtundation suggests significant CNS depression; assess for intoxication, metabolic encephalopathy, or brain injury.'
-      severity: 'critical'
-    - keywords: ['coma vigil', 'opens eyes but no awareness']
-      alert: 'Eye opening without awareness represents vegetative state; consult neurology.'
-      severity: 'critical'
-    - keywords: ['delirium', 'acute confusion', 'hallucinations']
-      alert: 'Delirium is an acute medical emergency, often caused by infection, drugs, or metabolic imbalance.'
-      severity: 'critical'
-    - keywords: ['alert and calm']
-      alert: 'Normal alertness. No neurological deficit noted.'
-      severity: 'none'
+  # Level of Consciousness
+  - keywords: ["unresponsive", "no response to voice", "no response to pain"]
+    alert: "Unresponsiveness to voice or pain indicates coma or severe brain injury. Initiate emergency assessment and airway management."
+    severity: "critical"
+  - keywords: ["drowsy but arousable", "lethargic", "somnolent"]
+    alert: "A drowsy yet arousable patient indicates mild depression of consciousness; monitor for deterioration."
+    severity: "warning"
+  - keywords: ["confused", "disoriented", "not oriented to time place person"]
+    alert: "Disorientation indicates acute confusion, delirium, or diffuse cortical dysfunction; investigate metabolic or neurologic causes."
+    severity: "warning"
+  - keywords: ["GCS less than 8", "Glasgow Coma Scale 7"]
+    alert: "A Glasgow Coma Scale below 8 indicates severe brain injury and loss of airway reflexes; intubation likely required."
+    severity: "critical"
+  - keywords: ["GCS 15", "alert and oriented x3"]
+    alert: "Normal level of consciousness documented. No acute neurological impairment noted."
+    severity: "none"
+  - keywords: ["agitated", "restless", "irritable behavior"]
+    alert: "Sudden agitation or restlessness can signal hypoxia, rising intracranial pressure, or metabolic disturbance."
+    severity: "warning"
+  - keywords: ["obtunded", "difficult to arouse", "responds only to pain"]
+    alert: "Obtundation suggests significant CNS depression; assess for intoxication, metabolic encephalopathy, or brain injury."
+    severity: "critical"
+  - keywords: ["coma vigil", "opens eyes but no awareness"]
+    alert: "Eye opening without awareness represents vegetative state; consult neurology."
+    severity: "critical"
+  - keywords: ["delirium", "acute confusion", "hallucinations"]
+    alert: "Delirium is an acute medical emergency, often caused by infection, drugs, or metabolic imbalance."
+    severity: "critical"
+  - keywords: ["alert and calm"]
+    alert: "Normal alertness. No neurological deficit noted."
+    severity: "none"
 
-    # Cranial Nerves
-    - keywords: ['ptosis', 'drooping eyelid']
-      alert: 'Ptosis can indicate oculomotor nerve (CN III) palsy or Horner’s syndrome; assess pupil and ocular movements.'
-      severity: 'warning'
-    - keywords: ['anisocoria', 'unequal pupils']
-      alert: 'Unequal pupils may indicate intracranial pressure or cranial nerve III compression.'
-      severity: 'critical'
-    - keywords: ['pupils equal and reactive', 'PERRLA']
-      alert: 'Pupils equal, round, reactive to light and accommodation (PERRLA). Normal finding.'
-      severity: 'none'
-    - keywords: ['fixed dilated pupil']
-      alert: 'A fixed, dilated pupil indicates brain herniation or severe head injury; emergency response required.'
-      severity: 'critical'
-    - keywords: ['diplopia', 'double vision']
-      alert: 'Double vision suggests cranial nerve III, IV, or VI dysfunction or brainstem lesion.'
-      severity: 'warning'
-    - keywords: ['loss of smell', 'anosmia']
-      alert: 'Anosmia can result from head trauma or CN I dysfunction; evaluate olfactory nerve.'
-      severity: 'info'
-    - keywords: ['facial numbness', 'reduced sensation face']
-      alert: 'Facial sensory loss suggests trigeminal nerve (CN V) lesion or brainstem involvement.'
-      severity: 'warning'
-    - keywords: ['hearing loss', 'decreased hearing one ear']
-      alert: 'Unilateral hearing loss may indicate CN VIII lesion or acoustic neuroma.'
-      severity: 'warning'
-    - keywords: ['absent corneal reflex']
-      alert: 'Absent corneal reflex involves CN V or VII dysfunction; assess for brainstem injury.'
-      severity: 'critical'
-    - keywords: ['hoarse voice', 'uvula deviates']
-      alert: 'Hoarseness and uvular deviation suggest vagus nerve (CN X) lesion.'
-      severity: 'warning'
+  # Cranial Nerves
+  - keywords: ["ptosis", "drooping eyelid"]
+    alert: "Ptosis can indicate oculomotor nerve (CN III) palsy or Horner’s syndrome; assess pupil and ocular movements."
+    severity: "warning"
+  - keywords: ["anisocoria", "unequal pupils"]
+    alert: "Unequal pupils may indicate intracranial pressure or cranial nerve III compression."
+    severity: "critical"
+  - keywords: ["pupils equal and reactive", "PERRLA"]
+    alert: "Pupils equal, round, reactive to light and accommodation (PERRLA). Normal finding."
+    severity: "none"
+  - keywords: ["fixed dilated pupil"]
+    alert: "A fixed, dilated pupil indicates brain herniation or severe head injury; emergency response required."
+    severity: "critical"
+  - keywords: ["diplopia", "double vision"]
+    alert: "Double vision suggests cranial nerve III, IV, or VI dysfunction or brainstem lesion."
+    severity: "warning"
+  - keywords: ["loss of smell", "anosmia"]
+    alert: "Anosmia can result from head trauma or CN I dysfunction; evaluate olfactory nerve."
+    severity: "info"
+  - keywords: ["facial numbness", "reduced sensation face"]
+    alert: "Facial sensory loss suggests trigeminal nerve (CN V) lesion or brainstem involvement."
+    severity: "warning"
+  - keywords: ["hearing loss", "decreased hearing one ear"]
+    alert: "Unilateral hearing loss may indicate CN VIII lesion or acoustic neuroma."
+    severity: "warning"
+  - keywords: ["absent corneal reflex"]
+    alert: "Absent corneal reflex involves CN V or VII dysfunction; assess for brainstem injury."
+    severity: "critical"
+  - keywords: ["hoarse voice", "uvula deviates"]
+    alert: "Hoarseness and uvular deviation suggest vagus nerve (CN X) lesion."
+    severity: "warning"
 
-    # Motor Function
-    - keywords: ['paraplegia', 'bilateral leg weakness']
-      alert: 'Bilateral leg weakness indicates spinal cord lesion or severe polyneuropathy.'
-      severity: 'critical'
-    - keywords: ['quadriplegia', 'paralysis all limbs']
-      alert: 'Paralysis of all four limbs indicates cervical spinal cord injury; maintain airway and immobilize neck.'
-      severity: 'critical'
-    - keywords: ['muscle wasting', 'atrophy', 'reduced bulk']
-      alert: 'Muscle atrophy reflects chronic lower motor neuron or disuse pathology.'
-      severity: 'info'
-    - keywords: ['increased tone', 'spasticity', 'stiff limbs']
-      alert: 'Spasticity signifies upper motor neuron lesion.'
-      severity: 'warning'
-    - keywords: ['decreased tone', 'flaccid limbs']
-      alert: 'Flaccidity indicates lower motor neuron damage or acute spinal shock.'
-      severity: 'warning'
-    - keywords: ['muscle fasciculations']
-      alert: 'Fasciculations are visible twitches indicating motor neuron disease or peripheral nerve irritation.'
-      severity: 'warning'
-    - keywords: ['weak grip', 'decreased hand strength']
-      alert: 'Reduced grip strength can suggest corticospinal or peripheral nerve involvement.'
-      severity: 'info'
-    - keywords: ['foot drop', 'difficulty dorsiflexing foot']
-      alert: 'Foot drop is caused by peroneal nerve palsy or L5 radiculopathy.'
-      severity: 'warning'
-    - keywords: ['spastic hemiplegia', 'increased tone one side']
-      alert: 'Spastic hemiplegia is typical of chronic stroke affecting corticospinal tract.'
-      severity: 'warning'
-    - keywords: ['muscle strength 5/5']
-      alert: 'Normal muscle strength (5/5) documented. No motor deficit.'
-      severity: 'none'
+  # Motor Function
+  - keywords: ["paraplegia", "bilateral leg weakness"]
+    alert: "Bilateral leg weakness indicates spinal cord lesion or severe polyneuropathy."
+    severity: "critical"
+  - keywords: ["quadriplegia", "paralysis all limbs"]
+    alert: "Paralysis of all four limbs indicates cervical spinal cord injury; maintain airway and immobilize neck."
+    severity: "critical"
+  - keywords: ["muscle wasting", "atrophy", "reduced bulk"]
+    alert: "Muscle atrophy reflects chronic lower motor neuron or disuse pathology."
+    severity: "info"
+  - keywords: ["increased tone", "spasticity", "stiff limbs"]
+    alert: "Spasticity signifies upper motor neuron lesion."
+    severity: "warning"
+  - keywords: ["decreased tone", "flaccid limbs"]
+    alert: "Flaccidity indicates lower motor neuron damage or acute spinal shock."
+    severity: "warning"
+  - keywords: ["muscle fasciculations"]
+    alert: "Fasciculations are visible twitches indicating motor neuron disease or peripheral nerve irritation."
+    severity: "warning"
+  - keywords: ["weak grip", "decreased hand strength"]
+    alert: "Reduced grip strength can suggest corticospinal or peripheral nerve involvement."
+    severity: "info"
+  - keywords: ["foot drop", "difficulty dorsiflexing foot"]
+    alert: "Foot drop is caused by peroneal nerve palsy or L5 radiculopathy."
+    severity: "warning"
+  - keywords: ["spastic hemiplegia", "increased tone one side"]
+    alert: "Spastic hemiplegia is typical of chronic stroke affecting corticospinal tract."
+    severity: "warning"
+  - keywords: ["muscle strength 5/5"]
+    alert: "Normal muscle strength (5/5) documented. No motor deficit."
+    severity: "none"
 
-    # Sensory Function
-    - keywords: ['loss of sensation', 'numbness']
-      alert: 'Loss of sensation suggests peripheral neuropathy or spinal cord lesion; test dermatomes.'
-      severity: 'warning'
-    - keywords: ['paresthesia', 'tingling sensation']
-      alert: 'Paresthesia indicates nerve irritation or early neuropathy.'
-      severity: 'info'
-    - keywords: ['stocking distribution numbness']
-      alert: 'Stocking distribution numbness is typical of diabetic peripheral neuropathy.'
-      severity: 'warning'
-    - keywords: ['loss of vibration sense']
-      alert: 'Absent vibration sense indicates posterior column disease or peripheral neuropathy.'
-      severity: 'warning'
-    - keywords: ['loss of pain and temperature']
-      alert: 'Loss of pain and temperature sensation suggests spinothalamic tract lesion.'
-      severity: 'warning'
-    - keywords: ['loss of proprioception', 'poor joint position sense']
-      alert: 'Loss of position sense suggests posterior column or peripheral nerve lesion.'
-      severity: 'warning'
-    - keywords: ['sensory level at umbilicus']
-      alert: 'A sensory level at the umbilicus indicates a thoracic spinal cord lesion.'
-      severity: 'critical'
-    - keywords: ['hyperesthesia', 'increased sensitivity to touch']
-      alert: 'Hyperesthesia may be due to neuropathic pain or nerve irritation.'
-      severity: 'info'
-    - keywords: ['analgesia area', 'loss of pain in region']
-      alert: 'Localized analgesia suggests peripheral nerve or segmental spinal lesion.'
-      severity: 'warning'
-    - keywords: ['saddle anesthesia']
-      alert: 'Loss of sensation in perineal area (saddle anesthesia) is a hallmark of cauda equina syndrome. Urgent decompression needed.'
-      severity: 'critical'
+  # Sensory Function
+  - keywords: ["loss of sensation", "numbness"]
+    alert: "Loss of sensation suggests peripheral neuropathy or spinal cord lesion; test dermatomes."
+    severity: "warning"
+  - keywords: ["paresthesia", "tingling sensation"]
+    alert: "Paresthesia indicates nerve irritation or early neuropathy."
+    severity: "info"
+  - keywords: ["stocking distribution numbness"]
+    alert: "Stocking distribution numbness is typical of diabetic peripheral neuropathy."
+    severity: "warning"
+  - keywords: ["loss of vibration sense"]
+    alert: "Absent vibration sense indicates posterior column disease or peripheral neuropathy."
+    severity: "warning"
+  - keywords: ["loss of pain and temperature"]
+    alert: "Loss of pain and temperature sensation suggests spinothalamic tract lesion."
+    severity: "warning"
+  - keywords: ["loss of proprioception", "poor joint position sense"]
+    alert: "Loss of position sense suggests posterior column or peripheral nerve lesion."
+    severity: "warning"
+  - keywords: ["sensory level at umbilicus"]
+    alert: "A sensory level at the umbilicus indicates a thoracic spinal cord lesion."
+    severity: "critical"
+  - keywords: ["hyperesthesia", "increased sensitivity to touch"]
+    alert: "Hyperesthesia may be due to neuropathic pain or nerve irritation."
+    severity: "info"
+  - keywords: ["analgesia area", "loss of pain in region"]
+    alert: "Localized analgesia suggests peripheral nerve or segmental spinal lesion."
+    severity: "warning"
+  - keywords: ["saddle anesthesia"]
+    alert: "Loss of sensation in perineal area (saddle anesthesia) is a hallmark of cauda equina syndrome. Urgent decompression needed."
+    severity: "critical"
 
-    # Reflexes
-    - keywords: ['absent ankle jerk']
-      alert: 'Absent ankle jerk reflex indicates peripheral neuropathy or S1 lesion.'
-      severity: 'warning'
-    - keywords: ['brisk reflexes', '3+ reflexes']
-      alert: 'Brisk reflexes indicate upper motor neuron involvement.'
-      severity: 'warning'
-    - keywords: ['asymmetric reflexes']
-      alert: 'Asymmetric reflexes suggest focal spinal or peripheral nerve pathology.'
-      severity: 'warning'
-    - keywords: ['jaw jerk exaggerated']
-      alert: 'An exaggerated jaw jerk is seen in pseudobulbar palsy.'
-      severity: 'warning'
-    - keywords: ['Babinski positive', 'upgoing plantar']
-      alert: 'Positive Babinski sign indicates corticospinal tract lesion.'
-      severity: 'warning'
-    - keywords: ['absent knee jerk']
-      alert: 'Absent knee jerk suggests L3–L4 nerve root or peripheral nerve lesion.'
-      severity: 'warning'
-    - keywords: ['Hoffman sign positive']
-      alert: 'Positive Hoffman reflex indicates corticospinal tract irritation in cervical cord.'
-      severity: 'warning'
-    - keywords: ['clonus present']
-      alert: 'Sustained clonus indicates upper motor neuron lesion and hyperreflexia.'
-      severity: 'warning'
-    - keywords: ['reflexes 2+ and equal']
-      alert: 'Normal symmetrical reflexes documented. No abnormality.'
-      severity: 'none'
-    - keywords: ['no Babinski response', 'toes downgoing']
-      alert: 'Normal plantar response; upper motor neuron lesion not indicated.'
-      severity: 'none'
+  # Reflexes
+  - keywords: ["absent ankle jerk"]
+    alert: "Absent ankle jerk reflex indicates peripheral neuropathy or S1 lesion."
+    severity: "warning"
+  - keywords: ["brisk reflexes", "3+ reflexes"]
+    alert: "Brisk reflexes indicate upper motor neuron involvement."
+    severity: "warning"
+  - keywords: ["asymmetric reflexes"]
+    alert: "Asymmetric reflexes suggest focal spinal or peripheral nerve pathology."
+    severity: "warning"
+  - keywords: ["jaw jerk exaggerated"]
+    alert: "An exaggerated jaw jerk is seen in pseudobulbar palsy."
+    severity: "warning"
+  - keywords: ["Babinski positive", "upgoing plantar"]
+    alert: "Positive Babinski sign indicates corticospinal tract lesion."
+    severity: "warning"
+  - keywords: ["absent knee jerk"]
+    alert: "Absent knee jerk suggests L3–L4 nerve root or peripheral nerve lesion."
+    severity: "warning"
+  - keywords: ["Hoffman sign positive"]
+    alert: "Positive Hoffman reflex indicates corticospinal tract irritation in cervical cord."
+    severity: "warning"
+  - keywords: ["clonus present"]
+    alert: "Sustained clonus indicates upper motor neuron lesion and hyperreflexia."
+    severity: "warning"
+  - keywords: ["reflexes 2+ and equal"]
+    alert: "Normal symmetrical reflexes documented. No abnormality."
+    severity: "none"
+  - keywords: ["no Babinski response", "toes downgoing"]
+    alert: "Normal plantar response; upper motor neuron lesion not indicated."
+    severity: "none"
 
-    # Coordination & Gait
-    - keywords: ['finger to nose test abnormal']
-      alert: 'Abnormal finger-to-nose coordination suggests cerebellar dysfunction.'
-      severity: 'warning'
-    - keywords: ['heel to shin impaired']
-      alert: 'Heel-to-shin incoordination indicates cerebellar disease or sensory ataxia.'
-      severity: 'warning'
-    - keywords: ['unsteady gait', 'broad-based gait']
-      alert: 'Broad-based gait suggests cerebellar ataxia or intoxication.'
-      severity: 'warning'
-    - keywords: ['festinating gait', 'shuffling steps']
-      alert: 'Shuffling, festinating gait is characteristic of Parkinson’s disease.'
-      severity: 'warning'
-    - keywords: ['spastic gait', 'scissoring gait']
-      alert: 'Scissoring gait indicates spastic paraparesis due to upper motor neuron lesion.'
-      severity: 'warning'
-    - keywords: ['high stepping gait', 'foot slapping gait']
-      alert: 'High-stepping gait occurs in peripheral neuropathy or foot drop.'
-      severity: 'warning'
-    - keywords: ['ataxic gait', 'staggering gait']
-      alert: 'Ataxic, staggering gait indicates cerebellar or proprioceptive disorder.'
-      severity: 'warning'
-    - keywords: ['propulsive gait']
-      alert: 'Propulsive gait is typical of Parkinsonism; evaluate rigidity and balance.'
-      severity: 'warning'
-    - keywords: ['Romberg positive']
-      alert: 'Positive Romberg test indicates sensory ataxia due to proprioceptive loss.'
-      severity: 'warning'
-    - keywords: ['normal gait']
-      alert: 'Gait steady and coordinated. No neurological deficit noted.'
-      severity: 'none'
+  # Coordination & Gait
+  - keywords: ["finger to nose test abnormal"]
+    alert: "Abnormal finger-to-nose coordination suggests cerebellar dysfunction."
+    severity: "warning"
+  - keywords: ["heel to shin impaired"]
+    alert: "Heel-to-shin incoordination indicates cerebellar disease or sensory ataxia."
+    severity: "warning"
+  - keywords: ["unsteady gait", "broad-based gait"]
+    alert: "Broad-based gait suggests cerebellar ataxia or intoxication."
+    severity: "warning"
+  - keywords: ["festinating gait", "shuffling steps"]
+    alert: "Shuffling, festinating gait is characteristic of Parkinson’s disease."
+    severity: "warning"
+  - keywords: ["spastic gait", "scissoring gait"]
+    alert: "Scissoring gait indicates spastic paraparesis due to upper motor neuron lesion."
+    severity: "warning"
+  - keywords: ["high stepping gait", "foot slapping gait"]
+    alert: "High-stepping gait occurs in peripheral neuropathy or foot drop."
+    severity: "warning"
+  - keywords: ["ataxic gait", "staggering gait"]
+    alert: "Ataxic, staggering gait indicates cerebellar or proprioceptive disorder."
+    severity: "warning"
+  - keywords: ["propulsive gait"]
+    alert: "Propulsive gait is typical of Parkinsonism; evaluate rigidity and balance."
+    severity: "warning"
+  - keywords: ["Romberg positive"]
+    alert: "Positive Romberg test indicates sensory ataxia due to proprioceptive loss."
+    severity: "warning"
+  - keywords: ["normal gait"]
+    alert: "Gait steady and coordinated. No neurological deficit noted."
+    severity: "none"
 
-    # Speech and Language
-    - keywords: ['slurred speech', 'dysarthria']
-      alert: 'Slurred speech (dysarthria) can occur with brainstem stroke, cranial nerve lesions, or cerebellar dysfunction.'
-      severity: 'warning'
-    - keywords: ['aphasia', 'unable to speak', 'word finding difficulty']
-      alert: 'Aphasia indicates dominant hemisphere dysfunction, most often due to stroke in the middle cerebral artery distribution.'
-      severity: 'critical'
-    - keywords: ['receptive aphasia', 'cannot understand speech']
-      alert: 'Receptive aphasia (Wernicke’s) results from posterior temporal lobe injury; patient speaks fluently but comprehension is impaired.'
-      severity: 'warning'
-    - keywords: ['expressive aphasia', 'Broca’s aphasia']
-      alert: 'Expressive aphasia causes effortful, non-fluent speech with intact comprehension, seen in frontal lobe lesions.'
-      severity: 'warning'
-    - keywords: ['dysphonia', 'hoarse voice', 'weak voice']
-      alert: 'Hoarseness or weak voice indicates laryngeal or vagus nerve (CN X) involvement.'
-      severity: 'warning'
-    - keywords: ['neologisms', 'word salad']
-      alert: 'Disorganized or meaningless speech may reflect receptive aphasia or acute psychosis.'
-      severity: 'warning'
-    - keywords: ['monotone speech', 'reduced voice modulation']
-      alert: 'Monotone voice suggests basal ganglia disorder such as Parkinson’s disease.'
-      severity: 'info'
-    - keywords: ['stuttering', 'stammering']
-      alert: 'Stuttering is a fluency disorder; assess for anxiety or developmental pattern if chronic.'
-      severity: 'info'
-    - keywords: ['mutism', 'no verbal output']
-      alert: 'Sudden mutism may result from severe aphasia, psychiatric disorder, or brainstem lesion.'
-      severity: 'critical'
-    - keywords: ['nasal speech', 'hypernasal voice']
-      alert: 'Hypernasal voice suggests palatal weakness due to cranial nerve X dysfunction.'
-      severity: 'warning'
+  # Speech and Language
+  - keywords: ["slurred speech", "dysarthria"]
+    alert: "Slurred speech (dysarthria) can occur with brainstem stroke, cranial nerve lesions, or cerebellar dysfunction."
+    severity: "warning"
+  - keywords: ["aphasia", "unable to speak", "word finding difficulty"]
+    alert: "Aphasia indicates dominant hemisphere dysfunction, most often due to stroke in the middle cerebral artery distribution."
+    severity: "critical"
+  - keywords: ["receptive aphasia", "cannot understand speech"]
+    alert: "Receptive aphasia (Wernicke’s) results from posterior temporal lobe injury; patient speaks fluently but comprehension is impaired."
+    severity: "warning"
+  - keywords: ["expressive aphasia", "Broca’s aphasia"]
+    alert: "Expressive aphasia causes effortful, non-fluent speech with intact comprehension, seen in frontal lobe lesions."
+    severity: "warning"
+  - keywords: ["dysphonia", "hoarse voice", "weak voice"]
+    alert: "Hoarseness or weak voice indicates laryngeal or vagus nerve (CN X) involvement."
+    severity: "warning"
+  - keywords: ["neologisms", "word salad"]
+    alert: "Disorganized or meaningless speech may reflect receptive aphasia or acute psychosis."
+    severity: "warning"
+  - keywords: ["monotone speech", "reduced voice modulation"]
+    alert: "Monotone voice suggests basal ganglia disorder such as Parkinson’s disease."
+    severity: "info"
+  - keywords: ["stuttering", "stammering"]
+    alert: "Stuttering is a fluency disorder; assess for anxiety or developmental pattern if chronic."
+    severity: "info"
+  - keywords: ["mutism", "no verbal output"]
+    alert: "Sudden mutism may result from severe aphasia, psychiatric disorder, or brainstem lesion."
+    severity: "critical"
+  - keywords: ["nasal speech", "hypernasal voice"]
+    alert: "Hypernasal voice suggests palatal weakness due to cranial nerve X dysfunction."
+    severity: "warning"
 
-    # Cognitive and Mental Status
-    - keywords: ['not oriented', 'confused about time', 'disoriented']
-      alert: 'Disorientation is an early sign of cognitive impairment, delirium, or metabolic encephalopathy.'
-      severity: 'warning'
-    - keywords: ['memory loss', 'forgetful']
-      alert: 'Memory loss may indicate dementia, delirium, or depression; perform cognitive screening.'
-      severity: 'info'
-    - keywords: ['short term memory impaired']
-      alert: 'Short-term memory impairment suggests hippocampal dysfunction; assess for early dementia.'
-      severity: 'info'
-    - keywords: ['poor attention', 'cannot concentrate']
-      alert: 'Inattention is common in delirium and diffuse cortical dysfunction.'
-      severity: 'warning'
-    - keywords: ['slow thinking', 'bradyphrenia']
-      alert: 'Slow mental processing (bradyphrenia) is typical of Parkinson’s disease or depression.'
-      severity: 'info'
-    - keywords: ['flat affect', 'no facial expression']
-      alert: 'Flat affect can result from depression or basal ganglia disease.'
-      severity: 'info'
-    - keywords: ['inappropriate laughter', 'emotional lability']
-      alert: 'Emotional lability may occur in pseudobulbar palsy or frontal lobe lesions.'
-      severity: 'warning'
-    - keywords: ['hallucinations', 'visual hallucinations']
-      alert: 'Visual hallucinations can be due to delirium, Parkinson’s disease, or medication toxicity.'
-      severity: 'warning'
-    - keywords: ['depressed mood', 'sad affect']
-      alert: 'Depressed mood may indicate major depressive disorder or Parkinsonian affect.'
-      severity: 'info'
-    - keywords: ['anxious', 'nervous', 'restless']
-      alert: 'Anxiety and restlessness can worsen tremors or autonomic instability; ensure safety.'
-      severity: 'info'
+  # Cognitive and Mental Status
+  - keywords: ["not oriented", "confused about time", "disoriented"]
+    alert: "Disorientation is an early sign of cognitive impairment, delirium, or metabolic encephalopathy."
+    severity: "warning"
+  - keywords: ["memory loss", "forgetful"]
+    alert: "Memory loss may indicate dementia, delirium, or depression; perform cognitive screening."
+    severity: "info"
+  - keywords: ["short term memory impaired"]
+    alert: "Short-term memory impairment suggests hippocampal dysfunction; assess for early dementia."
+    severity: "info"
+  - keywords: ["poor attention", "cannot concentrate"]
+    alert: "Inattention is common in delirium and diffuse cortical dysfunction."
+    severity: "warning"
+  - keywords: ["slow thinking", "bradyphrenia"]
+    alert: "Slow mental processing (bradyphrenia) is typical of Parkinson’s disease or depression."
+    severity: "info"
+  - keywords: ["flat affect", "no facial expression"]
+    alert: "Flat affect can result from depression or basal ganglia disease."
+    severity: "info"
+  - keywords: ["inappropriate laughter", "emotional lability"]
+    alert: "Emotional lability may occur in pseudobulbar palsy or frontal lobe lesions."
+    severity: "warning"
+  - keywords: ["hallucinations", "visual hallucinations"]
+    alert: "Visual hallucinations can be due to delirium, Parkinson’s disease, or medication toxicity."
+    severity: "warning"
+  - keywords: ["depressed mood", "sad affect"]
+    alert: "Depressed mood may indicate major depressive disorder or Parkinsonian affect."
+    severity: "info"
+  - keywords: ["anxious", "nervous", "restless"]
+    alert: "Anxiety and restlessness can worsen tremors or autonomic instability; ensure safety."
+    severity: "info"
 
-    # Seizure Activity
-    - keywords: ['generalized tonic clonic', 'convulsion']
-      alert: 'Generalized tonic-clonic seizure involves loss of consciousness and convulsions; protect airway and prevent injury.'
-      severity: 'critical'
-    - keywords: ['focal seizure', 'partial seizure']
-      alert: 'Focal seizure may involve localized jerking or sensory change without full loss of consciousness.'
-      severity: 'warning'
-    - keywords: ['absence seizure', 'blank stare']
-      alert: 'Brief staring spells with unresponsiveness suggest absence seizures, common in children.'
-      severity: 'info'
-    - keywords: ['postictal confusion', 'drowsy after seizure']
-      alert: 'Postictal confusion follows seizures; ensure airway patency and monitor recovery.'
-      severity: 'warning'
-    - keywords: ['aura', 'strange smell before seizure']
-      alert: 'A sensory aura preceding a seizure suggests focal onset; document description carefully.'
-      severity: 'info'
-    - keywords: ['tongue bite', 'urinary incontinence during episode']
-      alert: 'Tongue biting or incontinence supports a diagnosis of generalized seizure.'
-      severity: 'warning'
-    - keywords: ['status epilepticus', 'continuous seizure activity']
-      alert: 'Status epilepticus is a neurological emergency; initiate benzodiazepine therapy and airway support immediately.'
-      severity: 'critical'
-    - keywords: ['myoclonic jerks', 'sudden muscle twitch']
-      alert: 'Myoclonic jerks are rapid, shock-like contractions seen in metabolic encephalopathy or epilepsy.'
-      severity: 'warning'
-    - keywords: ['drop attack', 'sudden collapse']
-      alert: 'Sudden brief loss of tone (drop attack) may indicate atonic seizure or vertebrobasilar insufficiency.'
-      severity: 'warning'
-    - keywords: ['seizure like activity reported']
-      alert: 'Witnessed seizure-like activity warrants full neurological evaluation and EEG testing.'
-      severity: 'warning'
+  # Seizure Activity
+  - keywords: ["generalized tonic clonic", "convulsion"]
+    alert: "Generalized tonic-clonic seizure involves loss of consciousness and convulsions; protect airway and prevent injury."
+    severity: "critical"
+  - keywords: ["focal seizure", "partial seizure"]
+    alert: "Focal seizure may involve localized jerking or sensory change without full loss of consciousness."
+    severity: "warning"
+  - keywords: ["absence seizure", "blank stare"]
+    alert: "Brief staring spells with unresponsiveness suggest absence seizures, common in children."
+    severity: "info"
+  - keywords: ["postictal confusion", "drowsy after seizure"]
+    alert: "Postictal confusion follows seizures; ensure airway patency and monitor recovery."
+    severity: "warning"
+  - keywords: ["aura", "strange smell before seizure"]
+    alert: "A sensory aura preceding a seizure suggests focal onset; document description carefully."
+    severity: "info"
+  - keywords: ["tongue bite", "urinary incontinence during episode"]
+    alert: "Tongue biting or incontinence supports a diagnosis of generalized seizure."
+    severity: "warning"
+  - keywords: ["status epilepticus", "continuous seizure activity"]
+    alert: "Status epilepticus is a neurological emergency; initiate benzodiazepine therapy and airway support immediately."
+    severity: "critical"
+  - keywords: ["myoclonic jerks", "sudden muscle twitch"]
+    alert: "Myoclonic jerks are rapid, shock-like contractions seen in metabolic encephalopathy or epilepsy."
+    severity: "warning"
+  - keywords: ["drop attack", "sudden collapse"]
+    alert: "Sudden brief loss of tone (drop attack) may indicate atonic seizure or vertebrobasilar insufficiency."
+    severity: "warning"
+  - keywords: ["seizure like activity reported"]
+    alert: "Witnessed seizure-like activity warrants full neurological evaluation and EEG testing."
+    severity: "warning"
 
-    # Posture and Tone
-    - keywords: ['decorticate posturing', 'flexor posture']
-      alert: 'Decorticate posture (flexion of arms, extension of legs) indicates lesion above the brainstem.'
-      severity: 'critical'
-    - keywords: ['decerebrate posturing', 'extensor posture']
-      alert: 'Decerebrate posture (extension of arms and legs) indicates brainstem injury or severe intracranial pressure.'
-      severity: 'critical'
-    - keywords: ['rigidity', 'lead pipe rigidity']
-      alert: 'Lead-pipe rigidity is characteristic of Parkinsonian syndromes.'
-      severity: 'warning'
-    - keywords: ['cogwheel rigidity']
-      alert: 'Cogwheel rigidity indicates Parkinson’s disease due to basal ganglia dysfunction.'
-      severity: 'info'
-    - keywords: ['flaccid tone', 'limp extremities']
-      alert: 'Flaccid tone suggests acute lower motor neuron lesion or spinal shock.'
-      severity: 'warning'
-    - keywords: ['opisthotonus', 'arched back spasm']
-      alert: 'Opisthotonus (extreme arching of the back) occurs in tetanus or severe meningeal irritation.'
-      severity: 'critical'
-    - keywords: ['spasticity', 'increased muscle tone']
-      alert: 'Spasticity is associated with chronic upper motor neuron lesions such as stroke or spinal cord injury.'
-      severity: 'warning'
-    - keywords: ['paratonia', 'gegenhalten']
-      alert: 'Paratonia (variable resistance) is seen in frontal lobe disease or advanced dementia.'
-      severity: 'info'
-    - keywords: ['frozen posture', 'unable to move spontaneously']
-      alert: 'Frozen posture occurs in severe Parkinsonism or catatonia.'
-      severity: 'warning'
-    - keywords: ['fluctuating tone', 'intermittent stiffness']
-      alert: 'Fluctuating tone may indicate extrapyramidal or dystonic movement disorder.'
-      severity: 'info'
+  # Posture and Tone
+  - keywords: ["decorticate posturing", "flexor posture"]
+    alert: "Decorticate posture (flexion of arms, extension of legs) indicates lesion above the brainstem."
+    severity: "critical"
+  - keywords: ["decerebrate posturing", "extensor posture"]
+    alert: "Decerebrate posture (extension of arms and legs) indicates brainstem injury or severe intracranial pressure."
+    severity: "critical"
+  - keywords: ["rigidity", "lead pipe rigidity"]
+    alert: "Lead-pipe rigidity is characteristic of Parkinsonian syndromes."
+    severity: "warning"
+  - keywords: ["cogwheel rigidity"]
+    alert: "Cogwheel rigidity indicates Parkinson’s disease due to basal ganglia dysfunction."
+    severity: "info"
+  - keywords: ["flaccid tone", "limp extremities"]
+    alert: "Flaccid tone suggests acute lower motor neuron lesion or spinal shock."
+    severity: "warning"
+  - keywords: ["opisthotonus", "arched back spasm"]
+    alert: "Opisthotonus (extreme arching of the back) occurs in tetanus or severe meningeal irritation."
+    severity: "critical"
+  - keywords: ["spasticity", "increased muscle tone"]
+    alert: "Spasticity is associated with chronic upper motor neuron lesions such as stroke or spinal cord injury."
+    severity: "warning"
+  - keywords: ["paratonia", "gegenhalten"]
+    alert: "Paratonia (variable resistance) is seen in frontal lobe disease or advanced dementia."
+    severity: "info"
+  - keywords: ["frozen posture", "unable to move spontaneously"]
+    alert: "Frozen posture occurs in severe Parkinsonism or catatonia."
+    severity: "warning"
+  - keywords: ["fluctuating tone", "intermittent stiffness"]
+    alert: "Fluctuating tone may indicate extrapyramidal or dystonic movement disorder."
+    severity: "info"
 
-    # Abnormal Movements
-    - keywords: ['chorea', 'rapid jerky movements']
-      alert: 'Chorea involves irregular, purposeless movements, commonly from Huntington’s disease or medication side effects.'
-      severity: 'warning'
-    - keywords: ['athetosis', 'slow writhing movements']
-      alert: 'Athetosis consists of slow, twisting movements from basal ganglia lesions or cerebral palsy.'
-      severity: 'warning'
-    - keywords: ['dystonia', 'sustained muscle contraction']
-      alert: 'Dystonia causes sustained muscle contractions and abnormal postures, often drug-induced or idiopathic.'
-      severity: 'warning'
-    - keywords: ['hemiballismus', 'flinging limb movements']
-      alert: 'Hemiballismus (violent flinging movements) results from subthalamic nucleus lesion.'
-      severity: 'critical'
-    - keywords: ['tics', 'involuntary facial twitch']
-      alert: 'Motor tics are brief, repetitive movements seen in Tourette’s syndrome or anxiety.'
-      severity: 'info'
-    - keywords: ['tremor at rest']
-      alert: 'Rest tremor indicates Parkinsonian disorder.'
-      severity: 'warning'
-    - keywords: ['intention tremor']
-      alert: 'Tremor that worsens with movement suggests cerebellar dysfunction or multiple sclerosis.'
-      severity: 'warning'
-    - keywords: ['asterixis', 'flapping tremor']
-      alert: 'Asterixis is a flapping tremor of hands seen in hepatic encephalopathy or metabolic failure.'
-      severity: 'critical'
-    - keywords: ['myoclonus', 'sudden jerks']
-      alert: 'Myoclonus is rapid, shock-like movement seen in metabolic or degenerative CNS disorders.'
-      severity: 'warning'
-    - keywords: ['akathisia', 'cannot stay still']
-      alert: 'Akathisia (inner restlessness) is a side effect of antipsychotics or dopaminergic agents.'
-      severity: 'info'
+  # Abnormal Movements
+  - keywords: ["chorea", "rapid jerky movements"]
+    alert: "Chorea involves irregular, purposeless movements, commonly from Huntington’s disease or medication side effects."
+    severity: "warning"
+  - keywords: ["athetosis", "slow writhing movements"]
+    alert: "Athetosis consists of slow, twisting movements from basal ganglia lesions or cerebral palsy."
+    severity: "warning"
+  - keywords: ["dystonia", "sustained muscle contraction"]
+    alert: "Dystonia causes sustained muscle contractions and abnormal postures, often drug-induced or idiopathic."
+    severity: "warning"
+  - keywords: ["hemiballismus", "flinging limb movements"]
+    alert: "Hemiballismus (violent flinging movements) results from subthalamic nucleus lesion."
+    severity: "critical"
+  - keywords: ["tics", "involuntary facial twitch"]
+    alert: "Motor tics are brief, repetitive movements seen in Tourette’s syndrome or anxiety."
+    severity: "info"
+  - keywords: ["tremor at rest"]
+    alert: "Rest tremor indicates Parkinsonian disorder."
+    severity: "warning"
+  - keywords: ["intention tremor"]
+    alert: "Tremor that worsens with movement suggests cerebellar dysfunction or multiple sclerosis."
+    severity: "warning"
+  - keywords: ["asterixis", "flapping tremor"]
+    alert: "Asterixis is a flapping tremor of hands seen in hepatic encephalopathy or metabolic failure."
+    severity: "critical"
+  - keywords: ["myoclonus", "sudden jerks"]
+    alert: "Myoclonus is rapid, shock-like movement seen in metabolic or degenerative CNS disorders."
+    severity: "warning"
+  - keywords: ["akathisia", "cannot stay still"]
+    alert: "Akathisia (inner restlessness) is a side effect of antipsychotics or dopaminergic agents."
+    severity: "info"
 
-    # Balance and Coordination (Additional)
-    - keywords: ['cannot stand unaided', 'needs support to walk']
-      alert: 'Inability to stand without support suggests severe ataxia, vestibular dysfunction, or weakness.'
-      severity: 'warning'
-    - keywords: ['falls frequently', 'unsteady on turning']
-      alert: 'Frequent falls indicate balance impairment or Parkinsonism.'
-      severity: 'warning'
-    - keywords: ['drags one foot']
-      alert: 'Dragging one foot while walking indicates hemiparesis or stroke.'
-      severity: 'warning'
-    - keywords: ['leans to one side when walking']
-      alert: 'Leaning to one side indicates cerebellar lesion on the same side.'
-      severity: 'warning'
-    - keywords: ['cannot perform heel-toe walk']
-      alert: 'Failure to walk heel-to-toe indicates cerebellar or proprioceptive dysfunction.'
-      severity: 'warning'
-    - keywords: ['positive tandem gait test']
-      alert: 'Abnormal tandem gait signifies balance or cerebellar disorder.'
-      severity: 'warning'
-    - keywords: ['vertigo', 'spinning sensation']
-      alert: 'Vertigo may result from vestibular or brainstem pathology; evaluate with positional testing.'
-      severity: 'warning'
-    - keywords: ['nystagmus', 'involuntary eye movement']
-      alert: 'Nystagmus suggests vestibular or cerebellar lesion, or drug toxicity.'
-      severity: 'warning'
-    - keywords: ['diplopia on lateral gaze', 'incomplete abduction']
-      alert: 'Double vision on lateral gaze suggests abducens (CN VI) palsy.'
-      severity: 'warning'
-    - keywords: ['normal coordination tests']
-      alert: 'Coordination intact. No cerebellar deficit detected.'
-      severity: 'none'
+  # Balance and Coordination (Additional)
+  - keywords: ["cannot stand unaided", "needs support to walk"]
+    alert: "Inability to stand without support suggests severe ataxia, vestibular dysfunction, or weakness."
+    severity: "warning"
+  - keywords: ["falls frequently", "unsteady on turning"]
+    alert: "Frequent falls indicate balance impairment or Parkinsonism."
+    severity: "warning"
+  - keywords: ["drags one foot"]
+    alert: "Dragging one foot while walking indicates hemiparesis or stroke."
+    severity: "warning"
+  - keywords: ["leans to one side when walking"]
+    alert: "Leaning to one side indicates cerebellar lesion on the same side."
+    severity: "warning"
+  - keywords: ["cannot perform heel-toe walk"]
+    alert: "Failure to walk heel-to-toe indicates cerebellar or proprioceptive dysfunction."
+    severity: "warning"
+  - keywords: ["positive tandem gait test"]
+    alert: "Abnormal tandem gait signifies balance or cerebellar disorder."
+    severity: "warning"
+  - keywords: ["vertigo", "spinning sensation"]
+    alert: "Vertigo may result from vestibular or brainstem pathology; evaluate with positional testing."
+    severity: "warning"
+  - keywords: ["nystagmus", "involuntary eye movement"]
+    alert: "Nystagmus suggests vestibular or cerebellar lesion, or drug toxicity."
+    severity: "warning"
+  - keywords: ["diplopia on lateral gaze", "incomplete abduction"]
+    alert: "Double vision on lateral gaze suggests abducens (CN VI) palsy."
+    severity: "warning"
+  - keywords: ["normal coordination tests"]
+    alert: "Coordination intact. No cerebellar deficit detected."
+    severity: "none"
 
-    # Brainstem and Pupillary Responses
-    - keywords: ['pupils pinpoint', 'pinpoint pupils']
-      alert: 'Pinpoint pupils are seen in pontine hemorrhage or opioid intoxication. Assess airway and ventilation.'
-      severity: 'critical'
-    - keywords: ['bilateral dilated pupils unreactive']
-      alert: 'Fixed dilated pupils indicate severe brain herniation or anoxic brain injury.'
-      severity: 'critical'
-    - keywords: ['one dilated pupil', 'unequal pupil after head injury']
-      alert: 'A unilateral dilated pupil following trauma suggests uncal herniation. Treat as an emergency.'
-      severity: 'critical'
-    - keywords: ["absent doll's eye reflex", 'no oculocephalic response']
-      alert: 'Absent oculocephalic reflex indicates brainstem dysfunction in comatose patients.'
-      severity: 'critical'
-    - keywords: ['abnormal vestibulo-ocular reflex', 'no eye movement with caloric test']
-      alert: 'Absent vestibulo-ocular response signifies severe brainstem injury.'
-      severity: 'critical'
-    - keywords: ['decorticate to pain', 'flexor posturing to pain']
-      alert: 'Decorticate posturing in response to pain indicates lesion above the brainstem.'
-      severity: 'critical'
-    - keywords: ['decerebrate to pain', 'extensor posturing to pain']
-      alert: 'Decerebrate response signifies brainstem or severe diencephalic lesion.'
-      severity: 'critical'
-    - keywords: ['absent gag reflex']
-      alert: 'Loss of gag reflex suggests glossopharyngeal or vagus nerve dysfunction; assess aspiration risk.'
-      severity: 'critical'
-    - keywords: ['absent cough reflex']
-      alert: 'Absent cough reflex implies impaired brainstem function and loss of airway protection.'
-      severity: 'critical'
-    - keywords: ['Cheyne-Stokes respiration']
-      alert: 'Cheyne-Stokes breathing pattern occurs in bilateral cerebral or diencephalic dysfunction.'
-      severity: 'critical'
+  # Brainstem and Pupillary Responses
+  - keywords: ["pupils pinpoint", "pinpoint pupils"]
+    alert: "Pinpoint pupils are seen in pontine hemorrhage or opioid intoxication. Assess airway and ventilation."
+    severity: "critical"
+  - keywords: ["bilateral dilated pupils unreactive"]
+    alert: "Fixed dilated pupils indicate severe brain herniation or anoxic brain injury."
+    severity: "critical"
+  - keywords: ["one dilated pupil", "unequal pupil after head injury"]
+    alert: "A unilateral dilated pupil following trauma suggests uncal herniation. Treat as an emergency."
+    severity: "critical"
+  - keywords: ["absent doll's eye reflex", "no oculocephalic response"]
+    alert: "Absent oculocephalic reflex indicates brainstem dysfunction in comatose patients."
+    severity: "critical"
+  - keywords:
+      ["abnormal vestibulo-ocular reflex", "no eye movement with caloric test"]
+    alert: "Absent vestibulo-ocular response signifies severe brainstem injury."
+    severity: "critical"
+  - keywords: ["decorticate to pain", "flexor posturing to pain"]
+    alert: "Decorticate posturing in response to pain indicates lesion above the brainstem."
+    severity: "critical"
+  - keywords: ["decerebrate to pain", "extensor posturing to pain"]
+    alert: "Decerebrate response signifies brainstem or severe diencephalic lesion."
+    severity: "critical"
+  - keywords: ["absent gag reflex"]
+    alert: "Loss of gag reflex suggests glossopharyngeal or vagus nerve dysfunction; assess aspiration risk."
+    severity: "critical"
+  - keywords: ["absent cough reflex"]
+    alert: "Absent cough reflex implies impaired brainstem function and loss of airway protection."
+    severity: "critical"
+  - keywords: ["Cheyne-Stokes respiration"]
+    alert: "Cheyne-Stokes breathing pattern occurs in bilateral cerebral or diencephalic dysfunction."
+    severity: "critical"
 
-    # Autonomic and Vital Sign Changes
-    - keywords: ['bradycardia with hypertension', 'Cushing reflex']
-      alert: 'Bradycardia with hypertension and irregular respirations (Cushing’s triad) indicates raised intracranial pressure.'
-      severity: 'critical'
-    - keywords: ['irregular respirations', 'neurogenic breathing pattern']
-      alert: 'Irregular respiratory rhythm may reflect brainstem compromise.'
-      severity: 'critical'
-    - keywords: ['anisocoria developing', 'unequal pupils progressive']
-      alert: 'Progressive anisocoria is an early sign of uncal herniation; urgent neuroimaging required.'
-      severity: 'critical'
-    - keywords: ['fluctuating heart rate', 'autonomic instability']
-      alert: 'Autonomic instability with fluctuating vitals occurs in brainstem or high spinal injury.'
-      severity: 'warning'
-    - keywords: ['orthostatic hypotension', 'dizzy on standing']
-      alert: 'Orthostatic hypotension suggests autonomic dysfunction, dehydration, or medication effect.'
-      severity: 'info'
-    - keywords: ['profuse sweating on one side', 'anhidrosis opposite side']
-      alert: 'Unilateral facial sweating with contralateral dryness occurs in Horner’s syndrome.'
-      severity: 'warning'
-    - keywords: ['loss of sweating below lesion']
-      alert: 'Anhidrosis below a spinal lesion indicates sympathetic pathway disruption.'
-      severity: 'info'
-    - keywords: ['labile blood pressure after spinal injury']
-      alert: 'Labile BP following spinal injury indicates autonomic dysreflexia; remove triggering stimulus.'
-      severity: 'critical'
-    - keywords: ['tachycardia unexplained', 'autonomic storming']
-      alert: 'Autonomic storming after head injury presents with tachycardia and hypertension; manage supportively.'
-      severity: 'warning'
-    - keywords: ['flushing with headache after SCI']
-      alert: 'Flushing and headache in spinal cord injury patients signal autonomic dysreflexia—medical emergency.'
-      severity: 'critical'
+  # Autonomic and Vital Sign Changes
+  - keywords: ["bradycardia with hypertension", "Cushing reflex"]
+    alert: "Bradycardia with hypertension and irregular respirations (Cushing’s triad) indicates raised intracranial pressure."
+    severity: "critical"
+  - keywords: ["irregular respirations", "neurogenic breathing pattern"]
+    alert: "Irregular respiratory rhythm may reflect brainstem compromise."
+    severity: "critical"
+  - keywords: ["anisocoria developing", "unequal pupils progressive"]
+    alert: "Progressive anisocoria is an early sign of uncal herniation; urgent neuroimaging required."
+    severity: "critical"
+  - keywords: ["fluctuating heart rate", "autonomic instability"]
+    alert: "Autonomic instability with fluctuating vitals occurs in brainstem or high spinal injury."
+    severity: "warning"
+  - keywords: ["orthostatic hypotension", "dizzy on standing"]
+    alert: "Orthostatic hypotension suggests autonomic dysfunction, dehydration, or medication effect."
+    severity: "info"
+  - keywords: ["profuse sweating on one side", "anhidrosis opposite side"]
+    alert: "Unilateral facial sweating with contralateral dryness occurs in Horner’s syndrome."
+    severity: "warning"
+  - keywords: ["loss of sweating below lesion"]
+    alert: "Anhidrosis below a spinal lesion indicates sympathetic pathway disruption."
+    severity: "info"
+  - keywords: ["labile blood pressure after spinal injury"]
+    alert: "Labile BP following spinal injury indicates autonomic dysreflexia; remove triggering stimulus."
+    severity: "critical"
+  - keywords: ["tachycardia unexplained", "autonomic storming"]
+    alert: "Autonomic storming after head injury presents with tachycardia and hypertension; manage supportively."
+    severity: "warning"
+  - keywords: ["flushing with headache after SCI"]
+    alert: "Flushing and headache in spinal cord injury patients signal autonomic dysreflexia—medical emergency."
+    severity: "critical"
 
-    # Pediatric Neurological Findings
-    - keywords: ['bulging fontanelle']
-      alert: 'Bulging anterior fontanelle in infants indicates raised intracranial pressure or meningitis.'
-      severity: 'critical'
-    - keywords: ['sunset eyes']
-      alert: 'Downward deviation of eyes (sunsetting) suggests increased intracranial pressure or hydrocephalus.'
-      severity: 'critical'
-    - keywords: ['high pitched cry', 'shrill cry']
-      alert: 'A high-pitched cry in an infant may indicate increased intracranial pressure or neurologic irritation.'
-      severity: 'warning'
-    - keywords: ['loss of developmental milestones']
-      alert: 'Regression of developmental milestones signals progressive neurologic disease or metabolic disorder.'
-      severity: 'critical'
-    - keywords: ['persistent primitive reflexes']
-      alert: 'Persistence of primitive reflexes beyond age norms suggests cerebral palsy or cortical dysfunction.'
-      severity: 'warning'
-    - keywords: ['asymmetric Moro reflex']
-      alert: 'An asymmetric Moro reflex indicates brachial plexus or clavicular injury.'
-      severity: 'warning'
-    - keywords: ['absent rooting reflex', 'absent suck reflex']
-      alert: 'Loss of neonatal reflexes implies brainstem or cranial nerve abnormality.'
-      severity: 'critical'
-    - keywords: ['seizure in neonate', 'twitching newborn']
-      alert: 'Neonatal seizures are medical emergencies often caused by hypoxia or metabolic disturbances.'
-      severity: 'critical'
-    - keywords: ['head lag persistent after 6 months']
-      alert: 'Persistent head lag beyond six months suggests hypotonia or neuromuscular delay.'
-      severity: 'warning'
-    - keywords: ['microcephaly']
-      alert: 'Microcephaly indicates congenital or acquired brain growth failure; refer for developmental assessment.'
-      severity: 'info'
+  # Pediatric Neurological Findings
+  - keywords: ["bulging fontanelle"]
+    alert: "Bulging anterior fontanelle in infants indicates raised intracranial pressure or meningitis."
+    severity: "critical"
+  - keywords: ["sunset eyes"]
+    alert: "Downward deviation of eyes (sunsetting) suggests increased intracranial pressure or hydrocephalus."
+    severity: "critical"
+  - keywords: ["high pitched cry", "shrill cry"]
+    alert: "A high-pitched cry in an infant may indicate increased intracranial pressure or neurologic irritation."
+    severity: "warning"
+  - keywords: ["loss of developmental milestones"]
+    alert: "Regression of developmental milestones signals progressive neurologic disease or metabolic disorder."
+    severity: "critical"
+  - keywords: ["persistent primitive reflexes"]
+    alert: "Persistence of primitive reflexes beyond age norms suggests cerebral palsy or cortical dysfunction."
+    severity: "warning"
+  - keywords: ["asymmetric Moro reflex"]
+    alert: "An asymmetric Moro reflex indicates brachial plexus or clavicular injury."
+    severity: "warning"
+  - keywords: ["absent rooting reflex", "absent suck reflex"]
+    alert: "Loss of neonatal reflexes implies brainstem or cranial nerve abnormality."
+    severity: "critical"
+  - keywords: ["seizure in neonate", "twitching newborn"]
+    alert: "Neonatal seizures are medical emergencies often caused by hypoxia or metabolic disturbances."
+    severity: "critical"
+  - keywords: ["head lag persistent after 6 months"]
+    alert: "Persistent head lag beyond six months suggests hypotonia or neuromuscular delay."
+    severity: "warning"
+  - keywords: ["microcephaly"]
+    alert: "Microcephaly indicates congenital or acquired brain growth failure; refer for developmental assessment."
+    severity: "info"
 
-    # Reflex Patterns and Pathological Signs
-    - keywords: ['positive grasp reflex adult']
-      alert: 'Presence of grasp reflex in adults suggests frontal lobe lesion.'
-      severity: 'warning'
-    - keywords: ['positive snout reflex']
-      alert: 'Snout reflex is a frontal release sign indicating diffuse cortical disease.'
-      severity: 'info'
-    - keywords: ['positive palmomental reflex']
-      alert: 'Palmomental reflex indicates frontal lobe or diffuse cortical dysfunction.'
-      severity: 'info'
-    - keywords: ['jaw jerk brisk']
-      alert: 'Brisk jaw jerk reflex occurs in pseudobulbar palsy.'
-      severity: 'warning'
-    - keywords: ['abdominal reflex absent']
-      alert: 'Absent abdominal reflexes suggest spinal cord lesion or obesity masking response.'
-      severity: 'info'
-    - keywords: ['cremasteric reflex absent']
-      alert: 'Loss of cremasteric reflex indicates L1-L2 or testicular torsion; evaluate urgently in acute scrotal pain.'
-      severity: 'critical'
-    - keywords: ['anal wink absent']
-      alert: 'Absent anal wink reflex points to sacral nerve or cauda equina lesion.'
-      severity: 'warning'
-    - keywords: ['plantar reflex extensor']
-      alert: 'Extensor plantar response (Babinski positive) confirms upper motor neuron lesion.'
-      severity: 'warning'
-    - keywords: ['grasp reflex bilateral']
-      alert: 'Bilateral grasp reflex indicates diffuse frontal lobe damage or dementia.'
-      severity: 'warning'
-    - keywords: ['primitive reflexes reappeared']
-      alert: 'Reappearance of primitive reflexes in adults is a sign of frontal release from cortical inhibition.'
-      severity: 'info'
+  # Reflex Patterns and Pathological Signs
+  - keywords: ["positive grasp reflex adult"]
+    alert: "Presence of grasp reflex in adults suggests frontal lobe lesion."
+    severity: "warning"
+  - keywords: ["positive snout reflex"]
+    alert: "Snout reflex is a frontal release sign indicating diffuse cortical disease."
+    severity: "info"
+  - keywords: ["positive palmomental reflex"]
+    alert: "Palmomental reflex indicates frontal lobe or diffuse cortical dysfunction."
+    severity: "info"
+  - keywords: ["jaw jerk brisk"]
+    alert: "Brisk jaw jerk reflex occurs in pseudobulbar palsy."
+    severity: "warning"
+  - keywords: ["abdominal reflex absent"]
+    alert: "Absent abdominal reflexes suggest spinal cord lesion or obesity masking response."
+    severity: "info"
+  - keywords: ["cremasteric reflex absent"]
+    alert: "Loss of cremasteric reflex indicates L1-L2 or testicular torsion; evaluate urgently in acute scrotal pain."
+    severity: "critical"
+  - keywords: ["anal wink absent"]
+    alert: "Absent anal wink reflex points to sacral nerve or cauda equina lesion."
+    severity: "warning"
+  - keywords: ["plantar reflex extensor"]
+    alert: "Extensor plantar response (Babinski positive) confirms upper motor neuron lesion."
+    severity: "warning"
+  - keywords: ["grasp reflex bilateral"]
+    alert: "Bilateral grasp reflex indicates diffuse frontal lobe damage or dementia."
+    severity: "warning"
+  - keywords: ["primitive reflexes reappeared"]
+    alert: "Reappearance of primitive reflexes in adults is a sign of frontal release from cortical inhibition."
+    severity: "info"
 
-    # Coma and Brain Injury Indicators
-    - keywords: ['decorticate rigidity']
-      alert: 'Flexor posturing of upper limbs and extension of lower limbs indicates severe brain injury.'
-      severity: 'critical'
-    - keywords: ['decerebrate rigidity']
-      alert: 'Full extension posturing signals brainstem lesion and grave prognosis.'
-      severity: 'critical'
-    - keywords: ['flaccid coma']
-      alert: 'Flaccid muscle tone with no reflexes indicates profound brain injury or brain death.'
-      severity: 'critical'
-    - keywords: ['no brainstem reflexes', 'absent pupillary and corneal reflex']
-      alert: 'Absence of all brainstem reflexes is consistent with brain death; confirm per protocol.'
-      severity: 'critical'
-    - keywords: ["positive doll's eyes", 'intact oculocephalic reflex']
-      alert: 'Intact oculocephalic reflex indicates functional brainstem in comatose patient.'
-      severity: 'info'
-    - keywords: ['pupils reactive', 'corneal reflex intact']
-      alert: 'Preserved brainstem reflexes suggest partial, not complete, brainstem function loss.'
-      severity: 'info'
-    - keywords: ['coma with extensor posturing']
-      alert: 'Coma with extensor response indicates midbrain or pons injury; prognosis guarded.'
-      severity: 'critical'
-    - keywords: ['agonal respirations', 'gasping breathing']
-      alert: 'Agonal respirations signal impending brain death or severe brainstem failure.'
-      severity: 'critical'
-    - keywords: ['no motor response to pain']
-      alert: 'Absence of motor response to painful stimuli suggests deep coma or spinal cord injury.'
-      severity: 'critical'
-    - keywords: ['opens eyes to pain only']
-      alert: 'Eye opening only to pain corresponds to GCS 2; severe neurologic impairment.'
-      severity: 'critical'
+  # Coma and Brain Injury Indicators
+  - keywords: ["decorticate rigidity"]
+    alert: "Flexor posturing of upper limbs and extension of lower limbs indicates severe brain injury."
+    severity: "critical"
+  - keywords: ["decerebrate rigidity"]
+    alert: "Full extension posturing signals brainstem lesion and grave prognosis."
+    severity: "critical"
+  - keywords: ["flaccid coma"]
+    alert: "Flaccid muscle tone with no reflexes indicates profound brain injury or brain death."
+    severity: "critical"
+  - keywords: ["no brainstem reflexes", "absent pupillary and corneal reflex"]
+    alert: "Absence of all brainstem reflexes is consistent with brain death; confirm per protocol."
+    severity: "critical"
+  - keywords: ["positive doll's eyes", "intact oculocephalic reflex"]
+    alert: "Intact oculocephalic reflex indicates functional brainstem in comatose patient."
+    severity: "info"
+  - keywords: ["pupils reactive", "corneal reflex intact"]
+    alert: "Preserved brainstem reflexes suggest partial, not complete, brainstem function loss."
+    severity: "info"
+  - keywords: ["coma with extensor posturing"]
+    alert: "Coma with extensor response indicates midbrain or pons injury; prognosis guarded."
+    severity: "critical"
+  - keywords: ["agonal respirations", "gasping breathing"]
+    alert: "Agonal respirations signal impending brain death or severe brainstem failure."
+    severity: "critical"
+  - keywords: ["no motor response to pain"]
+    alert: "Absence of motor response to painful stimuli suggests deep coma or spinal cord injury."
+    severity: "critical"
+  - keywords: ["opens eyes to pain only"]
+    alert: "Eye opening only to pain corresponds to GCS 2; severe neurologic impairment."
+    severity: "critical"
 
-    # Miscellaneous Neuro Signs
-    - keywords: ['papilledema', 'blurred optic disc margin']
-      alert: 'Papilledema indicates raised intracranial pressure; urgent neuroimaging required.'
-      severity: 'critical'
-    - keywords: ['visual field defect', 'hemianopia']
-      alert: 'Loss of half the visual field suggests optic tract or occipital lobe lesion.'
-      severity: 'warning'
-    - keywords: ['loss of smell both sides']
-      alert: 'Bilateral anosmia may occur in frontal lobe tumors or trauma.'
-      severity: 'info'
-    - keywords: ['hearing loss sudden']
-      alert: 'Sudden sensorineural hearing loss requires urgent ENT and neurologic evaluation.'
-      severity: 'warning'
-    - keywords: ['diplopia on downward gaze']
-      alert: 'Double vision on downward gaze implies trochlear nerve (CN IV) palsy.'
-      severity: 'info'
-    - keywords: ['dysmetria', 'overshoot on finger nose test']
-      alert: 'Dysmetria indicates cerebellar lesion.'
-      severity: 'warning'
-    - keywords: ['intention tremor worsening near target']
-      alert: 'Intention tremor increasing as target is approached reflects cerebellar dysfunction.'
-      severity: 'warning'
-    - keywords: ['poor rapid alternating movements']
-      alert: 'Dysdiadochokinesia (impaired rapid alternating movements) signals cerebellar disease.'
-      severity: 'warning'
-    - keywords: ['past pointing']
-      alert: 'Past pointing of finger-to-finger test indicates cerebellar lesion on same side.'
-      severity: 'info'
-    - keywords: ['normal neurological exam']
-      alert: 'All cranial nerves intact, strength 5/5, sensation normal, reflexes 2+. No deficit noted.'
-      severity: 'none'
+  # Miscellaneous Neuro Signs
+  - keywords: ["papilledema", "blurred optic disc margin"]
+    alert: "Papilledema indicates raised intracranial pressure; urgent neuroimaging required."
+    severity: "critical"
+  - keywords: ["visual field defect", "hemianopia"]
+    alert: "Loss of half the visual field suggests optic tract or occipital lobe lesion."
+    severity: "warning"
+  - keywords: ["loss of smell both sides"]
+    alert: "Bilateral anosmia may occur in frontal lobe tumors or trauma."
+    severity: "info"
+  - keywords: ["hearing loss sudden"]
+    alert: "Sudden sensorineural hearing loss requires urgent ENT and neurologic evaluation."
+    severity: "warning"
+  - keywords: ["diplopia on downward gaze"]
+    alert: "Double vision on downward gaze implies trochlear nerve (CN IV) palsy."
+    severity: "info"
+  - keywords: ["dysmetria", "overshoot on finger nose test"]
+    alert: "Dysmetria indicates cerebellar lesion."
+    severity: "warning"
+  - keywords: ["intention tremor worsening near target"]
+    alert: "Intention tremor increasing as target is approached reflects cerebellar dysfunction."
+    severity: "warning"
+  - keywords: ["poor rapid alternating movements"]
+    alert: "Dysdiadochokinesia (impaired rapid alternating movements) signals cerebellar disease."
+    severity: "warning"
+  - keywords: ["past pointing"]
+    alert: "Past pointing of finger-to-finger test indicates cerebellar lesion on same side."
+    severity: "info"
+  - keywords: ["normal neurological exam"]
+    alert: "All cranial nerves intact, strength 5/5, sensation normal, reflexes 2+. No deficit noted."
+    severity: "none"

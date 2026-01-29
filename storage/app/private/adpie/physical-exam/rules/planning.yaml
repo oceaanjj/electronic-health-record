@@ -1,167 +1,221 @@
 planning:
-    - keywords: ['patient will']
-      alert: "Goals are often patient-centered. Start with 'Patient will...'."
-      severity: 'INFO'
-      # This rule applies if "patient will" is NOT present
-    - keywords: ['smart']
-      alert: 'Ensure goals are Specific, Measurable, Achievable, Relevant, and Time-bound.'
-      severity: 'INFO'
-    - keywords: ['understand']
-      alert: "Avoid 'understand' or 'know'. Use measurable verbs like 'demonstrate', 'state', or 'list'."
-      severity: 'WARNING'
-    - keywords: ['maintain energy']
-      alert: 'Plan: Establish and maintain energy conservation measures; cluster care and schedule rest periods.'
-      severity: 'warning'
-    - keywords: ['lethargic', 'obtunded', 'stuporous', 'comatose']
-      alert: 'Plan: (EMERGENCY) Secure airway (prepare for intubation); initiate continuous neurological checks (q15 min) and notify senior clinician/code team immediately.'
-      severity: 'critical'
-    - keywords: ['clutchching chest', 'labored breathing', 'wheezing']
-      alert: 'Plan: (EMERGENCY) Apply supplemental oxygen (non-rebreather mask), place on cardiac/pulse-ox monitor, and prepare for immediate respiratory intervention (e.g., nebulizer, assisted ventilation).'
-      severity: 'critical'
-    - keywords: ['wincing', 'sweating', 'protecting painful area', 'fidgety']
-      alert: 'Plan: Assess pain using age-appropriate scale (e.g., FLACC, FACES, NIPS); administer analgesia as ordered within 30 minutes; non-pharmacologic comfort measures.'
-      severity: 'warning'
-    - keywords: ['flat affect', 'sad affect', 'poor eye contact', 'psychomotor slowing']
-      alert: 'Plan: Initiate psychosocial assessment and consult Child Life Specialist or social work; encourage therapeutic play and caregiver interaction.'
-      severity: 'info'
-    - keywords: ['fruity odor', 'acetone breath']
-      alert: 'Plan: (EMERGENCY) Obtain immediate point-of-care (POC) blood glucose; establish IV access for fluids and insulin infusion per DKA protocol.'
-      severity: 'critical'
-    - keywords: ['short stature', 'loss of height']
-      alert: 'Plan: Obtain accurate height and weight, plot on growth chart; initiate nutritional screening and consult endocrinology/nutrition.'
-      severity: 'info'
-    - keywords: ['barrel chest', 'increased AP diameter']
-      alert: 'Plan: Perform detailed respiratory assessment (auscultation, work of breathing); initiate pulmonary toilet/chest physiotherapy as appropriate.'
-      severity: 'warning'
-    - keywords: ['leans forward', 'arms braced', 'tripod position']
-      alert: 'Plan: (EMERGENCY) Do not leave patient unattended; allow position of comfort; apply oxygen and prepare for immediate respiratory support.'
-      severity: 'critical'
-    - keywords: ['alert', 'active', 'playful', 'interactive', 'smiling', 'cooing', 'babbles']
-      alert: 'Plan: Encourage age-appropriate developmental stimulation (e.g., play, caregiver interaction); provide positive reinforcement.'
-      severity: 'info'
-    - keywords: ['sleepy but arousable', 'drowsy but awakens', 'returns to sleep quickly']
-      alert: 'Plan: Cluster nursing care to allow for uninterrupted sleep cycles (at least 90 min); manage environmental stimuli (noise, light).'
-      severity: 'info'
-    - keywords: ['irritable', 'fussy', 'difficult to soothe', 'not acting like themself']
-      alert: 'Plan: Perform comprehensive pain assessment (FLACC/NIPS) and assess for other sources of discomfort (e.g., wet diaper, hunger, IV site); attempt non-pharmacologic soothing.'
-      severity: 'warning'
-    - keywords: ['inconsolable', 'crying continuously', 'cannot be comforted', 'high-pitched cry']
-      alert: 'Plan: (EMERGENCY) Perform immediate neurological assessment (fontanelle, pupils, LOC); assess for severe pain or signs of increased ICP.'
-      severity: 'critical'
-    - keywords: ['lethargic', 'listless', 'drowsy', 'difficult to arouse', 'poor interaction']
-      alert: 'Plan: (EMERGENCY) Place on continuous pulse oximetry and cardiorespiratory monitor; obtain POC glucose; notify provider for immediate assessment.'
-      severity: 'critical'
-    - keywords: ['obtunded', 'responds only to painful stimuli', 'responds to pain']
-      alert: 'Plan: (EMERGENCY) Secure airway (e.g., jaw thrust), prepare for intubation; establish IV access; obtain POC glucose; notify code team/senior clinician.'
-      severity: 'critical'
-    - keywords: ['unresponsive', 'unarousable', 'comatose', 'no response to pain']
-      alert: 'Plan: (EMERGENCY) Initiate BLS/PALS protocol; call for code team; secure airway and check for pulse immediately.'
-      severity: 'critical'
-    - keywords: ['confused', 'disoriented', 'not recognizing caregiver', 'glassy-eyed stare']
-      alert: 'Plan: (EMERGENCY) Assess airway and oxygenation; obtain POC glucose; initiate neurological checks q15-30 min; identify and treat underlying cause (AEIOU-TIPS).'
-      severity: 'critical'
-    - keywords: ['post-ictal', 'postictal']
-      alert: 'Plan: Maintain patient in recovery position (side-lying) to protect airway; monitor vital signs and neurological status until return to baseline.'
-      severity: 'warning'
-    - keywords: ['parent concerned', 'caregiver worried', 'just not right']
-      alert: 'Plan: Acknowledge and validate caregiver concern; perform a full set of vital signs and focused assessment; escalate to provider.'
-      severity: 'warning'
-    - keywords: ['good muscle tone', 'moving all extremities', 'resists examination']
-      alert: 'Plan: Continue to monitor; provide age-appropriate developmental activities.'
-      severity: 'info'
-    - keywords: ['floppy', 'limp', 'poor muscle tone', 'rag doll', 'hypotonic']
-      alert: 'Plan: (EMERGENCY) Assess airway and respiratory effort (hypotonia can lead to obstruction); prepare for supportive care; notify provider for neurologic workup.'
-      severity: 'critical'
-    - keywords: ['rigid', 'stiff', 'hypertonic', 'opisthotonus', 'arched back']
-      alert: 'Plan: (EMERGENCY) Minimize handling and stimuli; assess for signs of meningitis or severe neurologic event; notify provider immediately.'
-      severity: 'critical'
-    - keywords: ['tripod position', 'tripoding', 'leaning forward', 'arms braced']
-      alert: 'Plan: (EMERGENCY) Do not force patient to lie down; provide supplemental O2; prepare for immediate advanced airway management.'
-      severity: 'critical'
-    - keywords: ['sniffing position', 'head tilted back']
-      alert: 'Plan: (EMERGENCY) Do not attempt to visualize airway with tongue blade; keep patient calm; notify provider and anesthesiology immediately for controlled intubation.'
-      severity: 'critical'
-    - keywords: ['guarding', 'protecting painful area', 'refuses to move a limb']
-      alert: 'Plan: Immobilize affected limb in position of comfort; assess neurovascular status distal to injury; administer pain medication as ordered.'
-      severity: 'warning'
-    - keywords: ['labored breathing', 'working hard to breathe', 'respiratory distress']
-      alert: 'Plan: (EMERGENCY) Elevate head of bed, apply oxygen, place on continuous pulse oximetry; prepare respiratory treatments (e.g., nebulizers).'
-      severity: 'critical'
-    - keywords: ['nasal flaring']
-      alert: 'Plan: Elevate head of bed, assess O2 saturation, and perform focused respiratory assessment (auscultation) to determine cause.'
-      severity: 'warning'
-    - keywords: ['head bobbing']
-      alert: 'Plan: (EMERGENCY) Provide 100% oxygen via non-rebreather mask; prepare for non-invasive (CPAP/BiPAP) or invasive (intubation) ventilation.'
-      severity: 'critical'
-    - keywords: ['retractions', 'subcostal retractions', 'intercostal retractions']
-      alert: 'Plan: Place on continuous pulse oximetry, elevate head of bed; prepare appropriate respiratory intervention (e.g., suctioning, nebulizer).'
-      severity: 'warning'
-    - keywords: ['supraclavicular retractions', 'suprasternal retractions', 'tracheal tug']
-      alert: 'Plan: (EMERGENCY) Provide supplemental oxygen; minimize agitation; prepare for immediate advanced airway support.'
-      severity: 'critical'
-    - keywords: ['seesaw breathing', 'paradoxical breathing']
-      alert: 'Plan: (EMERGENCY) Initiate bag-mask ventilation (BMV); call for code team/immediate intubation; this is pre-arrest breathing.'
-      severity: 'critical'
-    - keywords: ['gasping', 'agonal breathing']
-      alert: 'Plan: (EMERGENCY) This is not effective breathing. Initiate BLS/PALS protocol; begin bag-mask ventilation and chest compressions.'
-      severity: 'critical'
-    - keywords: ['pink', 'well-perfused', 'warm']
-      alert: 'Plan: Continue routine monitoring of perfusion and vital signs per unit policy.'
-      severity: 'info'
-    - keywords: ['pale', 'pallor', 'ashen']
-      alert: 'Plan: Assess capillary refill, heart rate, and BP; check most recent hemoglobin/hematocrit; ensure IV access.'
-      severity: 'warning'
-    - keywords: ['mottled', 'mottling', 'lacy pattern on skin']
-      alert: 'Plan: (EMERGENCY) Assess central vs. peripheral perfusion; obtain full vital signs; establish IV access and notify provider for suspected shock.'
-      severity: 'critical'
-    - keywords: ['cyanotic', 'cyanosis', 'blue lips', 'blue nail beds', 'central cyanosis']
-      alert: 'Plan: (EMERGENCY) Apply 100% oxygen immediately; assess airway and breathing; place on cardiorespiratory monitor.'
-      severity: 'critical'
-    - keywords: ['flushed', 'bright red cheeks']
-      alert: 'Plan: Check temperature; assess for signs of sepsis (hypotension, tachycardia); review medication list for vasodilators.'
-      severity: 'warning'
-    - keywords: ['jaundiced', 'jaundice', 'yellow skin', 'icteric sclera']
-      alert: 'Plan: (Infant) Initiate phototherapy protocol as ordered, ensure adequate hydration/feeding. (Child) Obtain liver function tests (LFTs) as ordered.'
-      severity: 'warning'
-    - keywords: ['well-hydrated', 'moist mucous membranes']
-      alert: 'Plan: Maintain hydration; encourage oral fluids as tolerated or maintain IV fluid rate as ordered.'
-      severity: 'info'
-    - keywords: ['dry lips', 'dry mucous membranes', 'tacky mouth']
-      alert: 'Plan: Initiate oral rehydration therapy (ORT) if tolerated; monitor intake and output (I&O); provide oral care.'
-      severity: 'warning'
-    - keywords: ['sunken eyes', 'no tears when crying', 'absent tears']
-      alert: 'Plan: (EMERGENCY) Initiate IV fluid resuscitation with isotonic crystalloid (e.g., 20 mL/kg bolus) as ordered; monitor vital signs closely.'
-      severity: 'critical'
-    - keywords: ['sunken fontanelle', 'depressed fontanelle']
-      alert: 'Plan: (EMERGENCY) Initiate IV fluid bolus (20 mL/kg isotonic crystalloid) as ordered; monitor for signs of shock.'
-      severity: 'critical'
-    - keywords: ['well-nourished', 'well-developed']
-      alert: 'Plan: Continue to provide age-appropriate nutrition and developmental support.'
-      severity: 'info'
-    - keywords: ['thin', 'underweight', 'emaciated', 'wasting']
-      alert: 'Plan: Initiate 3-day calorie count; consult nutritionist/dietitian; implement high-calorie nutritional plan as ordered.'
-      severity: 'warning'
-    - keywords: ['cachectic', 'chronically ill appearance']
-      alert: 'Plan: Consult nutrition and social work/palliative care; focus on high-density nutrition and managing symptoms affecting intake.'
-      severity: 'warning'
-    - keywords: ['obese', 'overweight']
-      alert: 'Plan: Provide nutritional counseling and resources for healthy eating habits; consult dietitian.'
-      severity: 'info'
-    - keywords: ['fecal odor on breath', 'feculent breath']
-      alert: 'Plan: (EMERGENCY) Maintain NPO status; prepare for nasogastric (NG) tube placement for decompression; notify surgical team.'
-      severity: 'critical'
-    - keywords: ['well-groomed', 'clean', 'good hygiene']
-      alert: 'Plan: Encourage and facilitate continued self-care and hygiene practices.'
-      severity: 'info'
-    - keywords: ['poor hygiene', 'disheveled', 'malodorous']
-      alert: "Plan: Assist with activities of daily living (ADLs), provide bathing and hygiene supplies; assess caregiver's ability to provide care."
-      severity: 'info'
-    - keywords: ['dysmorphic features', 'unusual facies', 'low-set ears', 'epicanthal folds']
-      alert: 'Plan: Document specific features observed; ensure developmental screening is performed; support family and await genetics consultation.'
-      severity: 'info'
-    - keywords: ['bruising', 'multiple bruises', 'bruises in various stages of healing']
-      alert: 'Plan: Document size, location, and color of all bruises; follow hospital protocol for suspected non-accidental trauma (NAT) screen.'
-      severity: 'warning'
-    - keywords: ['petechiae', 'purpura', 'non-blanching rash']
-      alert: 'Plan: (EMERGENCY) Institute droplet precautions (for suspected meningococcemia); establish IV access; prepare for immediate blood work (CBC, Coags, Blood Culture) and antibiotics.'
-      severity: 'critical'
+  - keywords: ["patient will"]
+    alert: "Goals are often patient-centered. Start with 'Patient will...'."
+    severity: "INFO"
+    # This rule applies if "patient will" is NOT present
+  - keywords: ["smart"]
+    alert: "Ensure goals are Specific, Measurable, Achievable, Relevant, and Time-bound."
+    severity: "INFO"
+  - keywords: ["understand"]
+    alert: "Avoid 'understand' or 'know'. Use measurable verbs like 'demonstrate', 'state', or 'list'."
+    severity: "WARNING"
+  - keywords: ["maintain energy"]
+    alert: "Plan: Establish and maintain energy conservation measures; cluster care and schedule rest periods."
+    severity: "warning"
+  - keywords: ["lethargic", "obtunded", "stuporous", "comatose"]
+    alert: "Plan: (EMERGENCY) Secure airway (prepare for intubation); initiate continuous neurological checks (q15 min) and notify senior clinician/code team immediately."
+    severity: "critical"
+  - keywords: ["clutchching chest", "labored breathing", "wheezing"]
+    alert: "Plan: (EMERGENCY) Apply supplemental oxygen (non-rebreather mask), place on cardiac/pulse-ox monitor, and prepare for immediate respiratory intervention (e.g., nebulizer, assisted ventilation)."
+    severity: "critical"
+  - keywords: ["wincing", "sweating", "protecting painful area", "fidgety"]
+    alert: "Plan: Assess pain using age-appropriate scale (e.g., FLACC, FACES, NIPS); administer analgesia as ordered within 30 minutes; non-pharmacologic comfort measures."
+    severity: "warning"
+  - keywords:
+      ["flat affect", "sad affect", "poor eye contact", "psychomotor slowing"]
+    alert: "Plan: Initiate psychosocial assessment and consult Child Life Specialist or social work; encourage therapeutic play and caregiver interaction."
+    severity: "info"
+  - keywords: ["fruity odor", "acetone breath"]
+    alert: "Plan: (EMERGENCY) Obtain immediate point-of-care (POC) blood glucose; establish IV access for fluids and insulin infusion per DKA protocol."
+    severity: "critical"
+  - keywords: ["short stature", "loss of height"]
+    alert: "Plan: Obtain accurate height and weight, plot on growth chart; initiate nutritional screening and consult endocrinology/nutrition."
+    severity: "info"
+  - keywords: ["barrel chest", "increased AP diameter"]
+    alert: "Plan: Perform detailed respiratory assessment (auscultation, work of breathing); initiate pulmonary toilet/chest physiotherapy as appropriate."
+    severity: "warning"
+  - keywords: ["leans forward", "arms braced", "tripod position"]
+    alert: "Plan: (EMERGENCY) Do not leave patient unattended; allow position of comfort; apply oxygen and prepare for immediate respiratory support."
+    severity: "critical"
+  - keywords:
+      [
+        "alert",
+        "active",
+        "playful",
+        "interactive",
+        "smiling",
+        "cooing",
+        "babbles",
+      ]
+    alert: "Plan: Encourage age-appropriate developmental stimulation (e.g., play, caregiver interaction); provide positive reinforcement."
+    severity: "info"
+  - keywords:
+      ["sleepy but arousable", "drowsy but awakens", "returns to sleep quickly"]
+    alert: "Plan: Cluster nursing care to allow for uninterrupted sleep cycles (at least 90 min); manage environmental stimuli (noise, light)."
+    severity: "info"
+  - keywords:
+      ["irritable", "fussy", "difficult to soothe", "not acting like themself"]
+    alert: "Plan: Perform comprehensive pain assessment (FLACC/NIPS) and assess for other sources of discomfort (e.g., wet diaper, hunger, IV site); attempt non-pharmacologic soothing."
+    severity: "warning"
+  - keywords:
+      [
+        "inconsolable",
+        "crying continuously",
+        "cannot be comforted",
+        "high-pitched cry",
+      ]
+    alert: "Plan: (EMERGENCY) Perform immediate neurological assessment (fontanelle, pupils, LOC); assess for severe pain or signs of increased ICP."
+    severity: "critical"
+  - keywords:
+      [
+        "lethargic",
+        "listless",
+        "drowsy",
+        "difficult to arouse",
+        "poor interaction",
+      ]
+    alert: "Plan: (EMERGENCY) Place on continuous pulse oximetry and cardiorespiratory monitor; obtain POC glucose; notify provider for immediate assessment."
+    severity: "critical"
+  - keywords:
+      ["obtunded", "responds only to painful stimuli", "responds to pain"]
+    alert: "Plan: (EMERGENCY) Secure airway (e.g., jaw thrust), prepare for intubation; establish IV access; obtain POC glucose; notify code team/senior clinician."
+    severity: "critical"
+  - keywords: ["unresponsive", "unarousable", "comatose", "no response to pain"]
+    alert: "Plan: (EMERGENCY) Initiate BLS/PALS protocol; call for code team; secure airway and check for pulse immediately."
+    severity: "critical"
+  - keywords:
+      [
+        "confused",
+        "disoriented",
+        "not recognizing caregiver",
+        "glassy-eyed stare",
+      ]
+    alert: "Plan: (EMERGENCY) Assess airway and oxygenation; obtain POC glucose; initiate neurological checks q15-30 min; identify and treat underlying cause (AEIOU-TIPS)."
+    severity: "critical"
+  - keywords: ["post-ictal", "postictal"]
+    alert: "Plan: Maintain patient in recovery position (side-lying) to protect airway; monitor vital signs and neurological status until return to baseline."
+    severity: "warning"
+  - keywords: ["parent concerned", "caregiver worried", "just not right"]
+    alert: "Plan: Acknowledge and validate caregiver concern; perform a full set of vital signs and focused assessment; escalate to provider."
+    severity: "warning"
+  - keywords:
+      ["good muscle tone", "moving all extremities", "resists examination"]
+    alert: "Plan: Continue to monitor; provide age-appropriate developmental activities."
+    severity: "info"
+  - keywords: ["floppy", "limp", "poor muscle tone", "rag doll", "hypotonic"]
+    alert: "Plan: (EMERGENCY) Assess airway and respiratory effort (hypotonia can lead to obstruction); prepare for supportive care; notify provider for neurologic workup."
+    severity: "critical"
+  - keywords: ["rigid", "stiff", "hypertonic", "opisthotonus", "arched back"]
+    alert: "Plan: (EMERGENCY) Minimize handling and stimuli; assess for signs of meningitis or severe neurologic event; notify provider immediately."
+    severity: "critical"
+  - keywords: ["tripod position", "tripoding", "leaning forward", "arms braced"]
+    alert: "Plan: (EMERGENCY) Do not force patient to lie down; provide supplemental O2; prepare for immediate advanced airway management."
+    severity: "critical"
+  - keywords: ["sniffing position", "head tilted back"]
+    alert: "Plan: (EMERGENCY) Do not attempt to visualize airway with tongue blade; keep patient calm; notify provider and anesthesiology immediately for controlled intubation."
+    severity: "critical"
+  - keywords: ["guarding", "protecting painful area", "refuses to move a limb"]
+    alert: "Plan: Immobilize affected limb in position of comfort; assess neurovascular status distal to injury; administer pain medication as ordered."
+    severity: "warning"
+  - keywords:
+      ["labored breathing", "working hard to breathe", "respiratory distress"]
+    alert: "Plan: (EMERGENCY) Elevate head of bed, apply oxygen, place on continuous pulse oximetry; prepare respiratory treatments (e.g., nebulizers)."
+    severity: "critical"
+  - keywords: ["nasal flaring"]
+    alert: "Plan: Elevate head of bed, assess O2 saturation, and perform focused respiratory assessment (auscultation) to determine cause."
+    severity: "warning"
+  - keywords: ["head bobbing"]
+    alert: "Plan: (EMERGENCY) Provide 100% oxygen via non-rebreather mask; prepare for non-invasive (CPAP/BiPAP) or invasive (intubation) ventilation."
+    severity: "critical"
+  - keywords:
+      ["retractions", "subcostal retractions", "intercostal retractions"]
+    alert: "Plan: Place on continuous pulse oximetry, elevate head of bed; prepare appropriate respiratory intervention (e.g., suctioning, nebulizer)."
+    severity: "warning"
+  - keywords:
+      [
+        "supraclavicular retractions",
+        "suprasternal retractions",
+        "tracheal tug",
+      ]
+    alert: "Plan: (EMERGENCY) Provide supplemental oxygen; minimize agitation; prepare for immediate advanced airway support."
+    severity: "critical"
+  - keywords: ["seesaw breathing", "paradoxical breathing"]
+    alert: "Plan: (EMERGENCY) Initiate bag-mask ventilation (BMV); call for code team/immediate intubation; this is pre-arrest breathing."
+    severity: "critical"
+  - keywords: ["gasping", "agonal breathing"]
+    alert: "Plan: (EMERGENCY) This is not effective breathing. Initiate BLS/PALS protocol; begin bag-mask ventilation and chest compressions."
+    severity: "critical"
+  - keywords: ["pink", "well-perfused", "warm"]
+    alert: "Plan: Continue routine monitoring of perfusion and vital signs per unit policy."
+    severity: "info"
+  - keywords: ["pale", "pallor", "ashen"]
+    alert: "Plan: Assess capillary refill, heart rate, and BP; check most recent hemoglobin/hematocrit; ensure IV access."
+    severity: "warning"
+  - keywords: ["mottled", "mottling", "lacy pattern on skin"]
+    alert: "Plan: (EMERGENCY) Assess central vs. peripheral perfusion; obtain full vital signs; establish IV access and notify provider for suspected shock."
+    severity: "critical"
+  - keywords:
+      [
+        "cyanotic",
+        "cyanosis",
+        "blue lips",
+        "blue nail beds",
+        "central cyanosis",
+      ]
+    alert: "Plan: (EMERGENCY) Apply 100% oxygen immediately; assess airway and breathing; place on cardiorespiratory monitor."
+    severity: "critical"
+  - keywords: ["flushed", "bright red cheeks"]
+    alert: "Plan: Check temperature; assess for signs of sepsis (hypotension, tachycardia); review medication list for vasodilators."
+    severity: "warning"
+  - keywords: ["jaundiced", "jaundice", "yellow skin", "icteric sclera"]
+    alert: "Plan: (Infant) Initiate phototherapy protocol as ordered, ensure adequate hydration/feeding. (Child) Obtain liver function tests (LFTs) as ordered."
+    severity: "warning"
+  - keywords: ["well-hydrated", "moist mucous membranes"]
+    alert: "Plan: Maintain hydration; encourage oral fluids as tolerated or maintain IV fluid rate as ordered."
+    severity: "info"
+  - keywords: ["dry lips", "dry mucous membranes", "tacky mouth"]
+    alert: "Plan: Initiate oral rehydration therapy (ORT) if tolerated; monitor intake and output (I&O); provide oral care."
+    severity: "warning"
+  - keywords: ["sunken eyes", "no tears when crying", "absent tears"]
+    alert: "Plan: (EMERGENCY) Initiate IV fluid resuscitation with isotonic crystalloid (e.g., 20 mL/kg bolus) as ordered; monitor vital signs closely."
+    severity: "critical"
+  - keywords: ["sunken fontanelle", "depressed fontanelle"]
+    alert: "Plan: (EMERGENCY) Initiate IV fluid bolus (20 mL/kg isotonic crystalloid) as ordered; monitor for signs of shock."
+    severity: "critical"
+  - keywords: ["well-nourished", "well-developed"]
+    alert: "Plan: Continue to provide age-appropriate nutrition and developmental support."
+    severity: "info"
+  - keywords: ["thin", "underweight", "emaciated", "wasting"]
+    alert: "Plan: Initiate 3-day calorie count; consult nutritionist/dietitian; implement high-calorie nutritional plan as ordered."
+    severity: "warning"
+  - keywords: ["cachectic", "chronically ill appearance"]
+    alert: "Plan: Consult nutrition and social work/palliative care; focus on high-density nutrition and managing symptoms affecting intake."
+    severity: "warning"
+  - keywords: ["obese", "overweight"]
+    alert: "Plan: Provide nutritional counseling and resources for healthy eating habits; consult dietitian."
+    severity: "info"
+  - keywords: ["fecal odor on breath", "feculent breath"]
+    alert: "Plan: (EMERGENCY) Maintain NPO status; prepare for nasogastric (NG) tube placement for decompression; notify surgical team."
+    severity: "critical"
+  - keywords: ["well-groomed", "clean", "good hygiene"]
+    alert: "Plan: Encourage and facilitate continued self-care and hygiene practices."
+    severity: "info"
+  - keywords: ["poor hygiene", "disheveled", "malodorous"]
+    alert: "Plan: Assist with activities of daily living (ADLs), provide bathing and hygiene supplies; assess caregiver's ability to provide care."
+    severity: "info"
+  - keywords:
+      [
+        "dysmorphic features",
+        "unusual facies",
+        "low-set ears",
+        "epicanthal folds",
+      ]
+    alert: "Plan: Document specific features observed; ensure developmental screening is performed; support family and await genetics consultation."
+    severity: "info"
+  - keywords:
+      ["bruising", "multiple bruises", "bruises in various stages of healing"]
+    alert: "Plan: Document size, location, and color of all bruises; follow hospital protocol for suspected non-accidental trauma (NAT) screen."
+    severity: "warning"
+  - keywords: ["petechiae", "purpura", "non-blanching rash"]
+    alert: "Plan: (EMERGENCY) Institute droplet precautions (for suspected meningococcemia); establish IV access; prepare for immediate blood work (CBC, Coags, Blood Culture) and antibiotics."
+    severity: "critical"

@@ -1,163 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Electronic Health Record</title>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        {{-- **google icons library nyhahhahaha** --}}
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-        />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Health Record</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <!-- !important for instant alerts-->
+    {{-- **google icons library nyhahhahaha** --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- !important for instant alerts-->
 
-        <style>
-            .material-symbols-outlined {
-                font-variation-settings:
-                    'FILL' 1,
-                    'wght' 400,
-                    'GRAD' 0,
-                    'opsz' 20;
+    <style>
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 20
+        }
+
+        .sidebar-open #main {
+            margin-left: 260px;
+        }
+
+        .sidebar-transition {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+
+        @keyframes pageEnter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-transition {
+            animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+
+
+    </style>
+
+    <script>
+        (function () {
+            const isOpen = localStorage.getItem("sidebarOpen") === "true";
+            const doc = document.documentElement;
+
+            if (isOpen) {
+                doc.classList.add("sidebar-open");
+            } else {
+                doc.classList.remove("sidebar-open");
+            }
+        })();
+    </script>
+
+</head>
+
+<body class="bg-white overflow-x-hidden">
+
+    {{-- Sidebar --}}
+    @include('components.sidebar')
+
+   <script>
+        const isOpen = localStorage.getItem("sidebarOpen") === "true";
+        const sidebar = document.getElementById("mySidenav");
+
+        if (sidebar) {
+            sidebar.style.transition = 'none';
+
+            if (isOpen) {
+                sidebar.classList.remove("-translate-x-full");
+            } else {
+                sidebar.classList.add("-translate-x-full");
             }
 
-            .sidebar-open #main {
-                margin-left: 260px;
-            }
+            setTimeout(() => {
+                sidebar.style.transition = '';
+            }, 0);
+        }
+    </script>
 
-            .sidebar-transition {
-                transition: margin-left 0.3s ease-in-out;
-            }
+    {{-- Header --}}
+    @include('components.header')
 
-            @keyframes pageEnter {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
+    {{-- SweetAlert Messages Component --}}
+    <x-sweetalert-messages />
 
-            .page-transition {
-                animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            }
-        </style>
 
-        <script>
-            (function () {
-                const isOpen = localStorage.getItem('sidebarOpen') === 'true';
-                const doc = document.documentElement;
 
-                if (isOpen) {
-                    doc.classList.add('sidebar-open');
-                } else {
-                    doc.classList.remove('sidebar-open');
-                }
-            })();
-        </script>
-    </head>
 
-    <body class="overflow-x-hidden bg-white">
-        {{-- Sidebar --}}
-        @include('components.sidebar')
+    <div id="main" class="relative min-h-screen overflow-x-hidden bg-white sidebar-transition">
 
-        <script>
-            const isOpen = localStorage.getItem('sidebarOpen') === 'true';
-            const sidebar = document.getElementById('mySidenav');
 
-            if (sidebar) {
-                sidebar.style.transition = 'none';
+        <img src="{{ asset('img/bg-design-right.png') }}" alt="Top right design"
+            class="absolute top-[120px] right-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0">
+        <img src="{{ asset('img/bg-design-left.png') }}" alt="Bottom left design"
+            class="absolute bottom-0 left-0 w-[320px] object-contain opacity-90 select-none pointer-events-none z-0">
 
-                if (isOpen) {
-                    sidebar.classList.remove('-translate-x-full');
-                } else {
-                    sidebar.classList.add('-translate-x-full');
-                }
 
-                setTimeout(() => {
-                    sidebar.style.transition = '';
-                }, 0);
-            }
-        </script>
 
-        {{-- Header --}}
-        @include('components.header')
+        <div class="relative z-10">
 
-        {{-- SweetAlert Messages Component --}}
-        <x-sweetalert-messages />
+            {{-- content ng page --}}
+            <main class="pt-[120px] transition-all duration-300 ease-in-out page-transition">
 
-        <div id="main" class="sidebar-transition relative min-h-screen overflow-x-hidden bg-white">
-            <img
-                src="{{ asset('img/bg-design-right.png') }}"
-                alt="Top right design"
-                class="pointer-events-none absolute top-[120px] right-0 z-0 w-[320px] object-contain opacity-90 select-none"
-            />
-            <img
-                src="{{ asset('img/bg-design-left.png') }}"
-                alt="Bottom left design"
-                class="pointer-events-none absolute bottom-0 left-0 z-0 w-[320px] object-contain opacity-90 select-none"
-            />
 
-            <div class="relative z-10">
-                {{-- content ng page --}}
-                <main class="page-transition pt-[120px] transition-all duration-300 ease-in-out">
-                    @yield('content')
-                </main>
-            </div>
+                @yield('content')
+            </main>
         </div>
+    </div>
 
-        <script>
-            function openNav() {
-                const sidebar = document.getElementById('mySidenav');
-                const arrow = document.getElementById('arrowBtn');
 
-                if (sidebar) sidebar.classList.remove('-translate-x-full');
 
-                document.documentElement.classList.add('sidebar-open');
 
-                if (arrow) {
-                    arrow.classList.replace('-right-24', '-right-10');
-                    arrow.classList.remove('hidden');
-                }
+    <script>
+        function openNav() {
+            const sidebar = document.getElementById("mySidenav");
+            const arrow = document.getElementById("arrowBtn");
 
-                localStorage.setItem('sidebarOpen', 'true');
+            if (sidebar) sidebar.classList.remove("-translate-x-full");
 
-                if (window.modalChartInstance) {
-                    setTimeout(() => {
-                        window.modalChartInstance.resize();
-                    }, 300); // Wait for the 0.3s transition to finish
-                }
+            document.documentElement.classList.add("sidebar-open");
+
+            if (arrow) {
+                arrow.classList.replace("-right-24", "-right-10");
+                arrow.classList.remove("hidden");
             }
 
-            function closeNav() {
-                const sidebar = document.getElementById('mySidenav');
-                const arrow = document.getElementById('arrowBtn');
+            localStorage.setItem("sidebarOpen", "true");
+        }
 
-                if (sidebar) sidebar.classList.add('-translate-x-full');
+        function closeNav() {
+            const sidebar = document.getElementById("mySidenav");
+            const arrow = document.getElementById("arrowBtn");
 
-                document.documentElement.classList.remove('sidebar-open');
+            if (sidebar) sidebar.classList.add("-translate-x-full");
 
-                if (arrow) arrow.classList.replace('-right-10', '-right-24');
+            document.documentElement.classList.remove("sidebar-open");
 
-                localStorage.setItem('sidebarOpen', 'false');
+            if (arrow) arrow.classList.replace("-right-10", "-right-24");
 
-                setTimeout(() => {
-                    if (arrow) arrow.classList.add('hidden');
-                }, 200);
+            localStorage.setItem("sidebarOpen", "false");
 
-                if (window.modalChartInstance) {
-                    setTimeout(() => {
-                        window.modalChartInstance.resize();
-                    }, 300);
-                }
-            }
-        </script>
+            setTimeout(() => {
+                if (arrow) arrow.classList.add("hidden");
+            }, 200);
+        }
 
-        @stack('scripts')
-    </body>
+    </script>
+
+    @stack('scripts')
+
+    
+</body>
+
 </html>

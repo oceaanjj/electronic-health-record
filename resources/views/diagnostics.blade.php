@@ -412,11 +412,7 @@
 
                 {{-- Use the global button classes --}}
                 <div style="margin-top: 2rem; text-align: center">
-                    <button
-                        type="submit"
-                        class="button-default text-center"
-                        {{ ! $selectedPatient ? 'disabled' : '' }}
-                    >
+                    <button type="submit" class="button-default text-center" {{ ! $selectedPatient ? 'disabled' : '' }}>
                         SUBMIT
                     </button>
                 </div>

@@ -1,6 +1,6 @@
 // resources/js/vital-signs-chart-updater.js
 
-(function () {
+(function() {
     const ctx = document.getElementById('vitalSignChart');
     let vitalChart; // Declare vitalChart in a scope accessible by updateChart
 
@@ -12,7 +12,7 @@
         '#37474F', // steel gray
         '#4E342E', // cocoa brown
         '#006064', // deep cyan
-        '#512DA8', // indigo
+        '#512DA8'  // indigo
     ];
     const timePoints = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
     const labels = ['TEMP', 'HR (bpm)', 'RR (bpm)', 'BP (mmHg)', 'SpO₂ (%)'];
@@ -28,31 +28,31 @@
                     responsive: true,
                     animation: {
                         duration: 800,
-                        easing: 'easeOutQuart',
+                        easing: 'easeOutQuart'
                     },
                     plugins: {
                         legend: {
                             position: 'bottom',
-                            labels: { color: '#2c3e50', font: { size: 13, weight: 'bold' } },
+                            labels: { color: '#2c3e50', font: { size: 13, weight: 'bold' } }
                         },
                         tooltip: {
                             backgroundColor: '#333',
                             titleColor: '#fff',
-                            bodyColor: '#f0f0f0',
-                        },
+                            bodyColor: '#f0f0f0'
+                        }
                     },
                     scales: {
                         x: {
                             ticks: { color: '#2c3e50', font: { weight: 'bold' } },
-                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            grid: { color: 'rgba(0,0,0,0.1)' }
                         },
                         y: {
                             beginAtZero: true,
                             ticks: { color: '#2c3e50', font: { weight: 'bold' } },
-                            grid: { color: 'rgba(0,0,0,0.1)' },
-                        },
-                    },
-                },
+                            grid: { color: 'rgba(0,0,0,0.1)' }
+                        }
+                    }
+                }
             });
         }
     }
@@ -75,7 +75,7 @@
                 tension: 0,
                 pointRadius: 4,
                 pointHoverRadius: 6,
-                fill: false,
+                fill: false
             };
         });
     }
@@ -100,7 +100,7 @@
     window.initializeVitalSignChart = initializeChart;
 
     // Initial chart rendering when the DOM is loaded
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", function () {
         // Assuming initialVitalsData is passed from Blade as a global variable
         if (window.initialVitalsData) {
             initializeChart(window.initialVitalsData);
@@ -113,7 +113,7 @@
 
         if (patientSelectForm) {
             // Prevent default form submission
-            patientSelectForm.addEventListener('submit', function (e) {
+            patientSelectForm.addEventListener('submit', function(e) {
                 e.preventDefault();
             });
         }
@@ -135,13 +135,13 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({
                         patient_id: patientId,
                         date: date,
-                        day_no: dayNo,
-                    }),
+                        day_no: dayNo
+                    })
                 });
 
                 if (!response.ok) {
@@ -149,7 +149,7 @@
                 }
 
                 const data = await response.json();
-                console.log('Fetched data:', data); // Debugging
+                console.log("Fetched data:", data); // Debugging
 
                 // Update the chart with the new data
                 updateChart(data.vitalsData);
@@ -159,8 +159,9 @@
 
                 // Update the alerts section
                 updateAlerts(data.vitalsData);
+
             } catch (error) {
-                console.error('Error fetching vital signs data:', error);
+                console.error("Error fetching vital signs data:", error);
             }
         }
 
@@ -176,7 +177,7 @@
         }
 
         function updateFormFields(vitalsData) {
-            timePoints.forEach((time) => {
+            timePoints.forEach(time => {
                 const vitalRecord = vitalsData[time] || {};
                 document.querySelector(`input[name="temperature_${time}"]`).value = vitalRecord.temperature ?? '';
                 document.querySelector(`input[name="hr_${time}"]`).value = vitalRecord.hr ?? '';
@@ -187,7 +188,7 @@
         }
 
         function updateAlerts(vitalsData) {
-            timePoints.forEach((time) => {
+            timePoints.forEach(time => {
                 const vitalRecord = vitalsData[time] || {};
                 const alertBox = document.querySelector(`.alert-box[data-alert-for-time="${time}"]`);
                 if (alertBox) {

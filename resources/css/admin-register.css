@@ -37,9 +37,7 @@ form select {
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 0.95rem;
-    transition:
-        border-color 0.2s ease-in-out,
-        box-shadow 0.2s ease-in-out;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 form input:focus,
@@ -68,7 +66,7 @@ form button:hover {
 }
 
 /* --- Error Messages --- */
-div[style*='color:red'] {
+div[style*="color:red"] {
     max-width: 500px;
     margin: 0 auto 1.5rem;
     padding: 1rem;

@@ -8,7 +8,7 @@
 
 /* Page Background */
 body {
-    background-color: #1a6a24; /* Dark Green */
+    background-color: #1A6A24; /* Dark Green */
     color: white;
     padding: 20px;
 }
@@ -16,11 +16,11 @@ body {
 .header {
     font-size: 22px;
     font-weight: bold;
-    background: #1a6a24;
+    background: #1A6A24;
     color: #ffffff;
     padding: 12px;
     margin-bottom: 20px;
-    border: 3px solid #edb62c;
+    border: 3px solid #EDB62C;
     border-radius: 4px;
 }
 
@@ -48,20 +48,18 @@ form {
     grid-column: span 2;
 }
 
-.btnn {
+.btnn{
     display: flex;
     flex-direction: column;
 }
 
 label {
     font-weight: bold;
-    color: #1a6a24;
+    color: #1A6A24;
     margin-bottom: 6px;
 }
 
-input,
-select,
-textarea {
+input, select, textarea {
     padding: 10px;
     border: 1px solid #d4af37;
     border-radius: 4px;
@@ -74,11 +72,11 @@ textarea {
 }
 
 .btn-submit {
-    font-size: 14px;
+   font-size: 14px;
     font-weight: bold;
-    background: #1a6a24;
+    background: #1A6A24;
     color: #fff;
-    border: 2px solid #edb62c;
+    border: 2px solid #EDB62C;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
@@ -92,14 +90,13 @@ textarea {
     background: #1a4b20;
 }
 
-button,
-.clear-btn {
+button, .clear-btn {
     padding: 12px 20px;
     font-size: 14px;
     font-weight: bold;
-    background: #1a6a24;
+    background: #1A6A24;
     color: #fff;
-    border: 2px solid #edb62c;
+    border: 2px solid #EDB62C;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
@@ -108,7 +105,7 @@ button,
     display: inline;
 }
 
-button:hover,
-.clear-btn:hover {
+button:hover, .clear-btn:hover {
     background: #14501b;
 }
+

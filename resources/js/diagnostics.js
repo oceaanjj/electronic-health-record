@@ -2,9 +2,9 @@
 // for inline 'onclick' and 'onchange' event handlers.
 (function (window) {
     // Store dynamic data read from the DOM
-    let csrfToken = '';
-    let patientId = '';
-    let deleteAllUrlTemplate = '';
+    let csrfToken = "";
+    let patientId = "";
+    let deleteAllUrlTemplate = "";
 
     // Stores client-side selected files (File objects) before upload,
     // organized by diagnostic type (e.g., 'xray').
@@ -12,23 +12,27 @@
 
     // Reads data from the main container's data attributes
     function initData() {
-        const container = document.getElementById('form-content-container');
+        const container = document.getElementById("form-content-container");
         if (container) {
             csrfToken = container.dataset.csrfToken;
             patientId = container.dataset.patientId;
             deleteAllUrlTemplate = container.dataset.deleteAllUrlTemplate;
         } else {
-            console.error('Diagnostics container #form-content-container not found.');
+            console.error(
+                "Diagnostics container #form-content-container not found."
+            );
         }
 
         // Initialize the file store for each type
-        const types = ['xray', 'ultrasound', 'ct_scan', 'echocardiogram'];
+        const types = ["xray", "ultrasound", "ct_scan", "echocardiogram"];
         types.forEach((type) => selectedFilesStore.set(type, []));
     }
 
     // Updates the visibility of the "Drop files here..." prompt
     function updateUploadAreaState(type) {
-        const panel = document.querySelector(`.diagnostic-panel[data-type="${type}"]`);
+        const panel = document.querySelector(
+            `.diagnostic-panel[data-type="${type}"]`
+        );
         if (!panel) return;
 
         const prompt = panel.querySelector(`#prompt-${type}`);
@@ -39,7 +43,7 @@
         const hasOldFiles = oldPreview && oldPreview.children.length > 0;
 
         if (prompt) {
-            prompt.style.display = hasNewFiles || hasOldFiles ? 'none' : 'flex';
+            prompt.style.display = hasNewFiles || hasOldFiles ? "none" : "flex";
         }
     }
 
@@ -64,10 +68,10 @@
     // Renders preview items from the file store and updates the file input
     function renderPreviews(type) {
         const files = selectedFilesStore.get(type);
-        const previewContainer = document.getElementById('preview-' + type);
-        const input = document.getElementById('file-input-' + type);
+        const previewContainer = document.getElementById("preview-" + type);
+        const input = document.getElementById("file-input-" + type);
 
-        previewContainer.innerHTML = '';
+        previewContainer.innerHTML = "";
 
         // Use a DataTransfer object to repopulate the file input
         // This is necessary for the form to submit the managed file list
@@ -84,8 +88,8 @@
 
             const reader = new FileReader();
             reader.onload = (e) => {
-                const div = document.createElement('div');
-                div.classList.add('preview-item');
+                const div = document.createElement("div");
+                div.classList.add("preview-item");
                 div.innerHTML = `
                     <img src="${e.target.result}" alt="preview">
                     <button 
@@ -133,10 +137,14 @@
 
     // Handles the "Clear All" button click
     function handleClearButtonClick(type) {
-        const panel = document.querySelector(`.diagnostic-panel[data-type="${type}"]`);
+        const panel = document.querySelector(
+            `.diagnostic-panel[data-type="${type}"]`
+        );
         if (!panel) return;
 
-        const uploadedImageIds = JSON.parse(panel.dataset.uploadedImageIds || '[]');
+        const uploadedImageIds = JSON.parse(
+            panel.dataset.uploadedImageIds || "[]"
+        );
         const newFiles = selectedFilesStore.get(type) || [];
 
         if (uploadedImageIds.length > 0) {
@@ -152,19 +160,29 @@
 
     // Initializes drag-and-drop listeners for all upload areas
     function initDragAndDrop() {
-        const uploadAreas = document.querySelectorAll('.panel-upload-area');
+        const uploadAreas = document.querySelectorAll(".panel-upload-area");
 
         uploadAreas.forEach((area) => {
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
-                area.addEventListener(eventName, preventDefaults, false);
+            ["dragenter", "dragover", "dragleave", "drop"].forEach(
+                (eventName) => {
+                    area.addEventListener(eventName, preventDefaults, false);
+                }
+            );
+            ["dragenter", "dragover"].forEach((eventName) => {
+                area.addEventListener(
+                    eventName,
+                    () => area.classList.add("drag-over"),
+                    false
+                );
             });
-            ['dragenter', 'dragover'].forEach((eventName) => {
-                area.addEventListener(eventName, () => area.classList.add('drag-over'), false);
+            ["dragleave", "drop"].forEach((eventName) => {
+                area.addEventListener(
+                    eventName,
+                    () => area.classList.remove("drag-over"),
+                    false
+                );
             });
-            ['dragleave', 'drop'].forEach((eventName) => {
-                area.addEventListener(eventName, () => area.classList.remove('drag-over'), false);
-            });
-            area.addEventListener('drop', handleDrop, false);
+            area.addEventListener("drop", handleDrop, false);
         });
 
         function preventDefaults(e) {
@@ -195,28 +213,33 @@
         event.stopPropagation(); // Stop click from bubbling
 
         // Check for custom confirmation modal or SweetAlert
-        if (typeof window.showConfirm === 'function') {
+        if (typeof window.showConfirm === "function") {
             window
-                .showConfirm('Do you really want to delete this image?', 'Delete Image?', 'Yes, delete', 'Cancel')
+                .showConfirm(
+                    "Do you really want to delete this image?",
+                    "Delete Image?",
+                    "Yes, delete",
+                    "Cancel"
+                )
                 .then((result) => {
                     if (result.isConfirmed) fetchDelete(url);
                 });
-        } else if (typeof window.Swal === 'function') {
+        } else if (typeof window.Swal === "function") {
             window.Swal.fire({
-                title: 'Delete Image?',
-                text: 'Do you really want to delete this image?',
-                icon: 'warning',
+                title: "Delete Image?",
+                text: "Do you really want to delete this image?",
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete',
-                cancelButtonText: 'Cancel',
-                confirmButtonColor: '#2A1C0F',
-                cancelButtonColor: '#6c757d',
+                confirmButtonText: "Yes, delete",
+                cancelButtonText: "Cancel",
+                confirmButtonColor: "#2A1C0F",
+                cancelButtonColor: "#6c757d",
             }).then((result) => {
                 if (result.isConfirmed) fetchDelete(url);
             });
         } else {
             // Fallback to native confirm
-            if (confirm('Delete this image?')) {
+            if (confirm("Delete this image?")) {
                 fetchDelete(url);
             }
         }
@@ -227,12 +250,12 @@
     // Performs the fetch request to delete a single image
     function fetchDelete(url) {
         fetch(url, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'X-CSRF-TOKEN': csrfToken,
-                'X-Requested-With': 'XMLHttpRequest',
+                "X-CSRF-TOKEN": csrfToken,
+                "X-Requested-With": "XMLHttpRequest",
             },
-            body: new URLSearchParams({ _method: 'DELETE' }),
+            body: new URLSearchParams({ _method: "DELETE" }),
         })
             .then((res) => {
                 if (res.ok) {
@@ -246,25 +269,32 @@
 
     // Initiates the deletion of ALL *already uploaded* images for a type
     function deleteAllImages(type, imageIds) {
-        const url = deleteAllUrlTemplate.replace('__TYPE__', type).replace('__PATIENT_ID__', patientId);
+        const url = deleteAllUrlTemplate
+            .replace("__TYPE__", type)
+            .replace("__PATIENT_ID__", patientId);
 
-        const confirmText = 'Do you really want to delete ALL images for ' + type.toUpperCase() + '?';
-        const confirmTitle = 'Delete All Images?';
+        const confirmText =
+            "Do you really want to delete ALL images for " +
+            type.toUpperCase() +
+            "?";
+        const confirmTitle = "Delete All Images?";
 
-        if (typeof window.showConfirm === 'function') {
-            window.showConfirm(confirmText, confirmTitle, 'Yes', 'Cancel').then((result) => {
-                if (result.isConfirmed) fetchDeleteAll(url, imageIds);
-            });
-        } else if (typeof window.Swal === 'function') {
+        if (typeof window.showConfirm === "function") {
+            window
+                .showConfirm(confirmText, confirmTitle, "Yes", "Cancel")
+                .then((result) => {
+                    if (result.isConfirmed) fetchDeleteAll(url, imageIds);
+                });
+        } else if (typeof window.Swal === "function") {
             window.Swal.fire({
                 title: confirmTitle,
                 text: confirmText,
-                icon: 'warning',
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'Cancel',
-                confirmButtonColor: '#2A1C0F',
-                cancelButtonColor: '#6c757d',
+                confirmButtonText: "Yes",
+                cancelButtonText: "Cancel",
+                confirmButtonColor: "#2A1C0F",
+                cancelButtonColor: "#6c757d",
             }).then((result) => {
                 if (result.isConfirmed) fetchDeleteAll(url, imageIds);
             });
@@ -278,13 +308,13 @@
     // Performs the fetch request to delete all images
     function fetchDeleteAll(url, imageIds) {
         fetch(url, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'X-CSRF-TOKEN': csrfToken,
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
+                "X-CSRF-TOKEN": csrfToken,
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
             },
-            body: JSON.stringify({ _method: 'DELETE', image_ids: imageIds }),
+            body: JSON.stringify({ _method: "DELETE", image_ids: imageIds }),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -299,15 +329,15 @@
 
     // Generic error handler for delete failures
     function handleDeleteError() {
-        if (typeof window.showError === 'function') {
-            window.showError('Failed to delete image(s).', 'Error');
+        if (typeof window.showError === "function") {
+            window.showError("Failed to delete image(s).", "Error");
         } else {
-            alert('Failed to delete image(s).');
+            alert("Failed to delete image(s).");
         }
     }
 
     // --- ON PAGE LOAD ---
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
         // Read the dynamic data from the Blade template
         initData();
 
@@ -320,7 +350,7 @@
         initDragAndDrop();
 
         // Check initial state for all panels to hide/show prompts
-        const types = ['xray', 'ultrasound', 'ct_scan', 'echocardiogram'];
+        const types = ["xray", "ultrasound", "ct_scan", "echocardiogram"];
         types.forEach((type) => {
             updateUploadAreaState(type);
         });

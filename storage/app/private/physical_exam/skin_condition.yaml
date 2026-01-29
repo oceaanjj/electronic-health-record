@@ -1,339 +1,355 @@
 skin_condition:
-    - keywords: ['cyanosis', 'cyanotic', 'blue skin']
-      alert: 'Cyanosis (bluish discoloration) indicates hypoxia. Assess respiratory and cardiovascular status immediately.'
-      severity: 'critical'
-    - keywords: ['jaundice', 'yellow skin', 'icteric sclera']
-      alert: 'Jaundice (yellowing of skin and sclera) indicates high bilirubin levels. Assess for liver disease or hemolysis.'
-      severity: 'warning'
-    - keywords: ['pallor', 'pale skin']
-      alert: 'Pallor may suggest anemia, syncope, or shock. Assess hemoglobin and hemodynamic stability.'
-      severity: 'warning'
-    - keywords: ['decreased turgor', 'tenting', 'slow recoil']
-      alert: 'Poor skin turgor (tenting) is a sign of dehydration. Assess fluid status, oral intake, and urine output.'
-      severity: 'warning'
-    - keywords: ['petechiae', 'purpura']
-      alert: 'Petechiae or purpura (small, non-blanching red/purple spots) can indicate a bleeding disorder or emboli. This requires urgent hematologic evaluation.'
-      severity: 'critical'
-    - keywords: ['ecchymosis', 'unexplained bruising']
-      alert: 'Unexplained ecchymosis (bruising) may suggest a bleeding disorder or trauma. Evaluate coagulation studies and social situation if indicated.'
-      severity: 'warning'
-    - keywords: ['macule', 'patch']
-      alert: 'A macule or patch is a flat spot with a change in color. Document size, color, and location. If new or changing, consider dermatology referral.'
-      severity: 'info'
-    - keywords: ['papule', 'plaque']
-      alert: 'A papule or plaque is a raised, solid bump. Psoriasis often presents as plaques. Document characteristics.'
-      severity: 'info'
-    - keywords: ['vesicle', 'bulla']
-      alert: 'Vesicles or bullae are fluid-filled blisters. May indicate herpes simplex/zoster, insect bites, or other bullous diseases.'
-      severity: 'warning'
-    - keywords: ['pustule']
-      alert: 'A pustule is a pus-filled lesion, commonly seen in acne or folliculitis.'
-      severity: 'info'
-    - keywords: ['nodule', 'cyst']
-      alert: 'A nodule is a firm lesion deeper than a papule. A cyst is a nodule filled with expressible material. Evaluate for signs of inflammation or malignancy.'
-      severity: 'warning'
-    - keywords: ['ulcer', 'erosion']
-      alert: 'An ulcer is a deep loss of epidermis and dermis that may bleed or scar. An erosion is a more superficial loss. Assess for signs of infection and underlying cause (e.g., vascular insufficiency).'
-      severity: 'warning'
-    - keywords: ['actinic keratosis']
-      alert: 'Actinic keratosis is a precancerous lesion found on sun-exposed skin. Refer to dermatology for evaluation and potential treatment.'
-      severity: 'warning'
-    - keywords: ['basal cell carcinoma', 'translucent papule', 'telangiectasia']
-      alert: 'Findings suggest basal cell carcinoma, a slow-growing but malignant skin cancer. Refer to dermatology for biopsy.'
-      severity: 'warning'
-    - keywords: ['squamous cell carcinoma', 'firm red nodule', 'crusted lesion']
-      alert: 'Findings suggest squamous cell carcinoma, which can metastasize. Refer to dermatology for urgent evaluation.'
-      severity: 'critical'
-    - keywords: ['asymmetry', 'irregular border', 'color variation', 'diameter >6mm', 'evolving']
-      alert: 'Lesion meets ABCDE criteria for potential melanoma. This requires urgent referral to dermatology for biopsy.'
-      severity: 'critical'
-    - keywords: ['clubbing', 'nail clubbing']
-      alert: 'Nail clubbing is associated with chronic hypoxia, often from lung cancer or other pulmonary diseases. Initiate a thorough cardiopulmonary workup.'
-      severity: 'warning'
+  - keywords: ["cyanosis", "cyanotic", "blue skin"]
+    alert: "Cyanosis (bluish discoloration) indicates hypoxia. Assess respiratory and cardiovascular status immediately."
+    severity: "critical"
+  - keywords: ["jaundice", "yellow skin", "icteric sclera"]
+    alert: "Jaundice (yellowing of skin and sclera) indicates high bilirubin levels. Assess for liver disease or hemolysis."
+    severity: "warning"
+  - keywords: ["pallor", "pale skin"]
+    alert: "Pallor may suggest anemia, syncope, or shock. Assess hemoglobin and hemodynamic stability."
+    severity: "warning"
+  - keywords: ["decreased turgor", "tenting", "slow recoil"]
+    alert: "Poor skin turgor (tenting) is a sign of dehydration. Assess fluid status, oral intake, and urine output."
+    severity: "warning"
+  - keywords: ["petechiae", "purpura"]
+    alert: "Petechiae or purpura (small, non-blanching red/purple spots) can indicate a bleeding disorder or emboli. This requires urgent hematologic evaluation."
+    severity: "critical"
+  - keywords: ["ecchymosis", "unexplained bruising"]
+    alert: "Unexplained ecchymosis (bruising) may suggest a bleeding disorder or trauma. Evaluate coagulation studies and social situation if indicated."
+    severity: "warning"
+  - keywords: ["macule", "patch"]
+    alert: "A macule or patch is a flat spot with a change in color. Document size, color, and location. If new or changing, consider dermatology referral."
+    severity: "info"
+  - keywords: ["papule", "plaque"]
+    alert: "A papule or plaque is a raised, solid bump. Psoriasis often presents as plaques. Document characteristics."
+    severity: "info"
+  - keywords: ["vesicle", "bulla"]
+    alert: "Vesicles or bullae are fluid-filled blisters. May indicate herpes simplex/zoster, insect bites, or other bullous diseases."
+    severity: "warning"
+  - keywords: ["pustule"]
+    alert: "A pustule is a pus-filled lesion, commonly seen in acne or folliculitis."
+    severity: "info"
+  - keywords: ["nodule", "cyst"]
+    alert: "A nodule is a firm lesion deeper than a papule. A cyst is a nodule filled with expressible material. Evaluate for signs of inflammation or malignancy."
+    severity: "warning"
+  - keywords: ["ulcer", "erosion"]
+    alert: "An ulcer is a deep loss of epidermis and dermis that may bleed or scar. An erosion is a more superficial loss. Assess for signs of infection and underlying cause (e.g., vascular insufficiency)."
+    severity: "warning"
+  - keywords: ["actinic keratosis"]
+    alert: "Actinic keratosis is a precancerous lesion found on sun-exposed skin. Refer to dermatology for evaluation and potential treatment."
+    severity: "warning"
+  - keywords: ["basal cell carcinoma", "translucent papule", "telangiectasia"]
+    alert: "Findings suggest basal cell carcinoma, a slow-growing but malignant skin cancer. Refer to dermatology for biopsy."
+    severity: "warning"
+  - keywords: ["squamous cell carcinoma", "firm red nodule", "crusted lesion"]
+    alert: "Findings suggest squamous cell carcinoma, which can metastasize. Refer to dermatology for urgent evaluation."
+    severity: "critical"
+  - keywords:
+      [
+        "asymmetry",
+        "irregular border",
+        "color variation",
+        "diameter >6mm",
+        "evolving",
+      ]
+    alert: "Lesion meets ABCDE criteria for potential melanoma. This requires urgent referral to dermatology for biopsy."
+    severity: "critical"
+  - keywords: ["clubbing", "nail clubbing"]
+    alert: "Nail clubbing is associated with chronic hypoxia, often from lung cancer or other pulmonary diseases. Initiate a thorough cardiopulmonary workup."
+    severity: "warning"
 
-    - keywords: ['pallor', 'pale skin', 'ashen']
-      alert: 'Pallor may suggest anemia, syncope, or shock. Assess hemoglobin and hemodynamic stability.'
-      severity: 'warning'
-    - keywords: ['mottling', 'mottled skin', 'cutis marmorata', 'lacy pattern']
-      alert: 'Mottling (a lacy, purplish pattern) can be a normal response to cold but is also a sign of poor perfusion and shock. Assess in context of overall clinical picture.'
-      severity: 'warning'
-    - keywords: ['flushed', 'erythema', 'bright red skin']
-      alert: 'Flushed or erythematous skin can indicate fever, vasodilation (early sepsis), or certain poisonings (e.g., carbon monoxide). Correlate with vital signs.'
-      severity: 'warning'
-    - keywords: ['harlequin color change']
-      alert: 'Harlequin color change (demarcated erythema on one half of the body) is a benign, transient vascular phenomenon in newborns. Reassure caregivers.'
-      severity: 'info'
-    - keywords: ['decreased turgor', 'tenting', 'slow recoil', 'skin tenting']
-      alert: 'Poor skin turgor (tenting) is a sign of dehydration. Assess fluid status, oral intake, and urine output.'
-      severity: 'warning'
-    - keywords: ['doughy skin']
-      alert: 'Doughy skin texture upon turgor check is a specific sign suggestive of hypernatremic dehydration. Check serum sodium levels.'
-      severity: 'critical'
-    - keywords: ['dry skin', 'xerosis']
-      alert: 'Dry skin is a common finding. If associated with significant itching and rash, consider atopic dermatitis. Recommend emollients.'
-      severity: 'info'
-    - keywords: ['clammy skin', 'diaphoresis', 'cold sweat']
-      alert: 'Cool, clammy, or diaphoretic skin is a sign of sympathetic nervous system activation, often seen in shock, hypoglycemia, or severe pain/distress.'
-      severity: 'critical'
+  - keywords: ["pallor", "pale skin", "ashen"]
+    alert: "Pallor may suggest anemia, syncope, or shock. Assess hemoglobin and hemodynamic stability."
+    severity: "warning"
+  - keywords: ["mottling", "mottled skin", "cutis marmorata", "lacy pattern"]
+    alert: "Mottling (a lacy, purplish pattern) can be a normal response to cold but is also a sign of poor perfusion and shock. Assess in context of overall clinical picture."
+    severity: "warning"
+  - keywords: ["flushed", "erythema", "bright red skin"]
+    alert: "Flushed or erythematous skin can indicate fever, vasodilation (early sepsis), or certain poisonings (e.g., carbon monoxide). Correlate with vital signs."
+    severity: "warning"
+  - keywords: ["harlequin color change"]
+    alert: "Harlequin color change (demarcated erythema on one half of the body) is a benign, transient vascular phenomenon in newborns. Reassure caregivers."
+    severity: "info"
+  - keywords: ["decreased turgor", "tenting", "slow recoil", "skin tenting"]
+    alert: "Poor skin turgor (tenting) is a sign of dehydration. Assess fluid status, oral intake, and urine output."
+    severity: "warning"
+  - keywords: ["doughy skin"]
+    alert: "Doughy skin texture upon turgor check is a specific sign suggestive of hypernatremic dehydration. Check serum sodium levels."
+    severity: "critical"
+  - keywords: ["dry skin", "xerosis"]
+    alert: "Dry skin is a common finding. If associated with significant itching and rash, consider atopic dermatitis. Recommend emollients."
+    severity: "info"
+  - keywords: ["clammy skin", "diaphoresis", "cold sweat"]
+    alert: "Cool, clammy, or diaphoretic skin is a sign of sympathetic nervous system activation, often seen in shock, hypoglycemia, or severe pain/distress."
+    severity: "critical"
 
-    # Category: Primary Lesions (Basic Morphology)
-    - keywords: ['macule']
-      alert: 'A macule is a flat, non-palpable spot with a change in color, less than 1 cm. Document size, color, and location.'
-      severity: 'info'
-    - keywords: ['patch']
-      alert: 'A patch is a flat, non-palpable spot with a change in color, 1 cm or larger. Document size, color, and location.'
-      severity: 'info'
-    - keywords: ['papule']
-      alert: 'A papule is a raised, solid, palpable lesion that is 1 cm or less in diameter. Document characteristics.'
-      severity: 'info'
-    - keywords: ['plaque']
-      alert: 'A plaque is a raised, palpable lesion greater than 1 cm in diameter, often formed by a coalescence of papules. Psoriasis often presents as plaques.'
-      severity: 'info'
-    - keywords: ['nodule']
-      alert: 'A nodule is a firm, solid lesion deeper and larger than a papule (>0.5 cm). Evaluate for signs of inflammation or underlying pathology.'
-      severity: 'warning'
-    - keywords: ['cyst']
-      alert: 'A cyst is a nodule filled with expressible fluid or semi-solid material. Assess for signs of inflammation or infection.'
-      severity: 'warning'
-    - keywords: ['vesicle', 'small blister']
-      alert: 'Vesicles are fluid-filled blisters 1 cm or less in diameter. May indicate viral infections (herpes simplex/zoster), contact dermatitis, or other bullous diseases.'
-      severity: 'warning'
-    - keywords: ['bulla', 'large blister']
-      alert: 'A bulla is a fluid-filled blister greater than 1 cm in diameter. May indicate severe insect bites, bullous impetigo, or more serious bullous diseases.'
-      severity: 'warning'
-    - keywords: ['pustule', 'pimple']
-      alert: 'A pustule is a circumscribed, pus-filled lesion, commonly seen in acne, folliculitis, or pustular psoriasis.'
-      severity: 'info'
-    - keywords: ['wheal', 'hive', 'weal']
-      alert: 'A wheal is a transient, raised, erythematous, and edematous lesion caused by dermal edema. Characteristic of urticaria (hives).'
-      severity: 'warning'
-    - keywords: ['burrow']
-      alert: 'A burrow is a minute, slightly raised tunnel in the epidermis, often on finger webs. This is a pathognomonic sign of scabies.'
-      severity: 'warning'
-    - keywords: ['comedone', 'blackhead', 'whitehead']
-      alert: 'A comedone is a plugged hair follicle, the primary lesion of acne. Can be open (blackhead) or closed (whitehead).'
-      severity: 'info'
+  # Category: Primary Lesions (Basic Morphology)
+  - keywords: ["macule"]
+    alert: "A macule is a flat, non-palpable spot with a change in color, less than 1 cm. Document size, color, and location."
+    severity: "info"
+  - keywords: ["patch"]
+    alert: "A patch is a flat, non-palpable spot with a change in color, 1 cm or larger. Document size, color, and location."
+    severity: "info"
+  - keywords: ["papule"]
+    alert: "A papule is a raised, solid, palpable lesion that is 1 cm or less in diameter. Document characteristics."
+    severity: "info"
+  - keywords: ["plaque"]
+    alert: "A plaque is a raised, palpable lesion greater than 1 cm in diameter, often formed by a coalescence of papules. Psoriasis often presents as plaques."
+    severity: "info"
+  - keywords: ["nodule"]
+    alert: "A nodule is a firm, solid lesion deeper and larger than a papule (>0.5 cm). Evaluate for signs of inflammation or underlying pathology."
+    severity: "warning"
+  - keywords: ["cyst"]
+    alert: "A cyst is a nodule filled with expressible fluid or semi-solid material. Assess for signs of inflammation or infection."
+    severity: "warning"
+  - keywords: ["vesicle", "small blister"]
+    alert: "Vesicles are fluid-filled blisters 1 cm or less in diameter. May indicate viral infections (herpes simplex/zoster), contact dermatitis, or other bullous diseases."
+    severity: "warning"
+  - keywords: ["bulla", "large blister"]
+    alert: "A bulla is a fluid-filled blister greater than 1 cm in diameter. May indicate severe insect bites, bullous impetigo, or more serious bullous diseases."
+    severity: "warning"
+  - keywords: ["pustule", "pimple"]
+    alert: "A pustule is a circumscribed, pus-filled lesion, commonly seen in acne, folliculitis, or pustular psoriasis."
+    severity: "info"
+  - keywords: ["wheal", "hive", "weal"]
+    alert: "A wheal is a transient, raised, erythematous, and edematous lesion caused by dermal edema. Characteristic of urticaria (hives)."
+    severity: "warning"
+  - keywords: ["burrow"]
+    alert: "A burrow is a minute, slightly raised tunnel in the epidermis, often on finger webs. This is a pathognomonic sign of scabies."
+    severity: "warning"
+  - keywords: ["comedone", "blackhead", "whitehead"]
+    alert: "A comedone is a plugged hair follicle, the primary lesion of acne. Can be open (blackhead) or closed (whitehead)."
+    severity: "info"
 
-    # Category: Secondary Lesions (Resulting Changes)
-    - keywords: ['scale', 'scaling', 'flaking skin']
-      alert: 'Scale is a visible accumulation of keratin. Can be fine, silvery (psoriasis), or greasy (seborrheic dermatitis). Document character.'
-      severity: 'info'
-    - keywords: ['crust', 'scab']
-      alert: 'A crust is the dried residue of serum, pus, or blood. A honey-colored crust is characteristic of impetigo.'
-      severity: 'warning'
-    - keywords: ['erosion']
-      alert: 'An erosion is a superficial loss of the epidermis. Surface is moist but does not bleed. Seen after rupture of a vesicle.'
-      severity: 'info'
-    - keywords: ['ulcer', 'sore']
-      alert: 'An ulcer is a deeper loss of epidermis and dermis that may bleed and scar. Assess for signs of infection and underlying cause.'
-      severity: 'warning'
-    - keywords: ['fissure', 'skin crack']
-      alert: "A fissure is a linear crack in the skin, often resulting from excessive dryness, commonly seen in hand eczema or athlete's foot."
-      severity: 'info'
-    - keywords: ['excoriation', 'scratch mark']
-      alert: 'Excoriations are linear or punctate erosions caused by scratching. Indicates pruritus.'
-      severity: 'info'
-    - keywords: ['atrophy', 'thin skin']
-      alert: 'Atrophy is a thinning of the skin, which may appear shiny and translucent. Can be caused by chronic sun exposure or long-term topical steroid use.'
-      severity: 'info'
-    - keywords: ['lichenification']
-      alert: 'Lichenification is a visible thickening of the epidermis with exaggerated skin markings, resulting from chronic rubbing or scratching. Common in atopic dermatitis.'
-      severity: 'warning'
-    - keywords: ['scar']
-      alert: 'A scar is an area of fibrous tissue that replaces normal skin after an injury. Can be atrophic, hypertrophic, or normal.'
-      severity: 'info'
-    - keywords: ['keloid']
-      alert: 'A keloid is a hypertrophic scar that extends beyond the borders of the initiating injury. More common in individuals with darker skin tones.'
-      severity: 'info'
+  # Category: Secondary Lesions (Resulting Changes)
+  - keywords: ["scale", "scaling", "flaking skin"]
+    alert: "Scale is a visible accumulation of keratin. Can be fine, silvery (psoriasis), or greasy (seborrheic dermatitis). Document character."
+    severity: "info"
+  - keywords: ["crust", "scab"]
+    alert: "A crust is the dried residue of serum, pus, or blood. A honey-colored crust is characteristic of impetigo."
+    severity: "warning"
+  - keywords: ["erosion"]
+    alert: "An erosion is a superficial loss of the epidermis. Surface is moist but does not bleed. Seen after rupture of a vesicle."
+    severity: "info"
+  - keywords: ["ulcer", "sore"]
+    alert: "An ulcer is a deeper loss of epidermis and dermis that may bleed and scar. Assess for signs of infection and underlying cause."
+    severity: "warning"
+  - keywords: ["fissure", "skin crack"]
+    alert: "A fissure is a linear crack in the skin, often resulting from excessive dryness, commonly seen in hand eczema or athlete's foot."
+    severity: "info"
+  - keywords: ["excoriation", "scratch mark"]
+    alert: "Excoriations are linear or punctate erosions caused by scratching. Indicates pruritus."
+    severity: "info"
+  - keywords: ["atrophy", "thin skin"]
+    alert: "Atrophy is a thinning of the skin, which may appear shiny and translucent. Can be caused by chronic sun exposure or long-term topical steroid use."
+    severity: "info"
+  - keywords: ["lichenification"]
+    alert: "Lichenification is a visible thickening of the epidermis with exaggerated skin markings, resulting from chronic rubbing or scratching. Common in atopic dermatitis."
+    severity: "warning"
+  - keywords: ["scar"]
+    alert: "A scar is an area of fibrous tissue that replaces normal skin after an injury. Can be atrophic, hypertrophic, or normal."
+    severity: "info"
+  - keywords: ["keloid"]
+    alert: "A keloid is a hypertrophic scar that extends beyond the borders of the initiating injury. More common in individuals with darker skin tones."
+    severity: "info"
 
-    # Category: Vascular Lesions & Purpura
-    - keywords: ['petechiae', 'pinpoint red spots', 'non-blanching spots']
-      alert: 'Petechiae (small, non-blanching red/purple spots) can indicate a critical condition like meningococcemia, sepsis, or a bleeding disorder. Requires urgent evaluation.'
-      severity: 'critical'
-    - keywords: ['purpura', 'purple spots', 'non-blanching rash']
-      alert: 'Purpura (larger non-blanching lesions) can indicate a bleeding disorder, vasculitis (e.g., Henoch-Schönlein purpura), or sepsis. Requires urgent evaluation.'
-      severity: 'critical'
-    - keywords: ['ecchymosis', 'bruise', 'unexplained bruising']
-      alert: 'Unexplained ecchymosis (bruising), especially in unusual locations or in various stages of healing, may suggest a bleeding disorder or non-accidental trauma.'
-      severity: 'warning'
-    - keywords: ['cherry angioma']
-      alert: 'A cherry angioma is a common, benign, small, bright-red papule composed of dilated capillaries. No clinical significance.'
-      severity: 'info'
-    - keywords: ['spider angioma', 'spider nevus']
-      alert: 'A spider angioma has a central red body with radiating legs. A few can be normal, but multiple lesions may be associated with liver disease.'
-      severity: 'warning'
-    - keywords: ['telangiectasia', 'spider vein']
-      alert: 'Telangiectasias are dilated superficial blood vessels. Can be seen in various conditions, including sun damage, rosacea, or systemic diseases like scleroderma.'
-      severity: 'info'
+  # Category: Vascular Lesions & Purpura
+  - keywords: ["petechiae", "pinpoint red spots", "non-blanching spots"]
+    alert: "Petechiae (small, non-blanching red/purple spots) can indicate a critical condition like meningococcemia, sepsis, or a bleeding disorder. Requires urgent evaluation."
+    severity: "critical"
+  - keywords: ["purpura", "purple spots", "non-blanching rash"]
+    alert: "Purpura (larger non-blanching lesions) can indicate a bleeding disorder, vasculitis (e.g., Henoch-Schönlein purpura), or sepsis. Requires urgent evaluation."
+    severity: "critical"
+  - keywords: ["ecchymosis", "bruise", "unexplained bruising"]
+    alert: "Unexplained ecchymosis (bruising), especially in unusual locations or in various stages of healing, may suggest a bleeding disorder or non-accidental trauma."
+    severity: "warning"
+  - keywords: ["cherry angioma"]
+    alert: "A cherry angioma is a common, benign, small, bright-red papule composed of dilated capillaries. No clinical significance."
+    severity: "info"
+  - keywords: ["spider angioma", "spider nevus"]
+    alert: "A spider angioma has a central red body with radiating legs. A few can be normal, but multiple lesions may be associated with liver disease."
+    severity: "warning"
+  - keywords: ["telangiectasia", "spider vein"]
+    alert: "Telangiectasias are dilated superficial blood vessels. Can be seen in various conditions, including sun damage, rosacea, or systemic diseases like scleroderma."
+    severity: "info"
 
-    # Category: Common Newborn Rashes & Findings
-    - keywords: ['erythema toxicum neonatorum', 'newborn rash']
-      alert: "Erythema toxicum neonatorum is a common, benign rash in newborns with red blotches and central pale papules/pustules ('flea-bitten' appearance). Resolves spontaneously."
-      severity: 'info'
-    - keywords: ['milia', 'milk spots']
-      alert: 'Milia are tiny white bumps (keratin-filled cysts) on the nose and cheeks of newborns. Benign and will resolve on their own.'
-      severity: 'info'
-    - keywords: ['neonatal acne', 'baby acne']
-      alert: 'Neonatal acne consists of small red papules and pustules on the face, caused by maternal hormone stimulation. Typically resolves spontaneously in a few months.'
-      severity: 'info'
-    - keywords: ['transient neonatal pustular melanosis']
-      alert: 'Transient neonatal pustular melanosis presents at birth with pustules that rupture easily, leaving a collarette of scale and a hyperpigmented macule. Benign finding, more common in infants with darker skin.'
-      severity: 'info'
-    - keywords: ['cradle cap', 'infant seborrheic dermatitis']
-      alert: 'Cradle cap is seborrheic dermatitis of the scalp, appearing as greasy, yellowish, scaly patches. Benign and usually self-limited.'
-      severity: 'info'
-    - keywords: ['miliaria', 'heat rash', 'prickly heat']
-      alert: 'Miliaria is a rash of small red bumps caused by blocked sweat ducts in hot, humid weather. Advise keeping the infant cool and dry.'
-      severity: 'info'
+  # Category: Common Newborn Rashes & Findings
+  - keywords: ["erythema toxicum neonatorum", "newborn rash"]
+    alert: "Erythema toxicum neonatorum is a common, benign rash in newborns with red blotches and central pale papules/pustules ('flea-bitten' appearance). Resolves spontaneously."
+    severity: "info"
+  - keywords: ["milia", "milk spots"]
+    alert: "Milia are tiny white bumps (keratin-filled cysts) on the nose and cheeks of newborns. Benign and will resolve on their own."
+    severity: "info"
+  - keywords: ["neonatal acne", "baby acne"]
+    alert: "Neonatal acne consists of small red papules and pustules on the face, caused by maternal hormone stimulation. Typically resolves spontaneously in a few months."
+    severity: "info"
+  - keywords: ["transient neonatal pustular melanosis"]
+    alert: "Transient neonatal pustular melanosis presents at birth with pustules that rupture easily, leaving a collarette of scale and a hyperpigmented macule. Benign finding, more common in infants with darker skin."
+    severity: "info"
+  - keywords: ["cradle cap", "infant seborrheic dermatitis"]
+    alert: "Cradle cap is seborrheic dermatitis of the scalp, appearing as greasy, yellowish, scaly patches. Benign and usually self-limited."
+    severity: "info"
+  - keywords: ["miliaria", "heat rash", "prickly heat"]
+    alert: "Miliaria is a rash of small red bumps caused by blocked sweat ducts in hot, humid weather. Advise keeping the infant cool and dry."
+    severity: "info"
 
-    # Category: Common Birthmarks (Vascular & Pigmented)
-    - keywords: ['mongolian spot', 'congenital dermal melanocytosis', 'slate gray nevus']
-      alert: 'Congenital dermal melanocytosis (Mongolian spot) is a benign, flat, blue-gray patch, often on the lower back or buttocks. Common in infants of Asian, African, or Hispanic descent. Document to avoid confusion with bruising.'
-      severity: 'info'
-    - keywords: ['salmon patch', 'nevus simplex', 'stork bite', 'angel kiss']
-      alert: 'Nevus simplex (salmon patch) is a common, flat, pink or red patch on the eyelids, glabella, or nape of the neck. Benign and usually fades over time.'
-      severity: 'info'
-    - keywords: ['port-wine stain', 'nevus flammeus']
-      alert: 'A port-wine stain is a flat, dark red or purple patch present at birth that persists and grows with the child. If in the trigeminal nerve distribution, evaluate for Sturge-Weber syndrome.'
-      severity: 'warning'
-    - keywords: ['infantile hemangioma', 'strawberry hemangioma', 'strawberry mark']
-      alert: 'An infantile hemangioma is a bright red, raised lesion that appears in the first few weeks of life, grows rapidly, and then involutes. Most are benign, but monitor for ulceration or functional impairment (e.g., near the eye).'
-      severity: 'info'
-    - keywords: ['cafe-au-lait macule', 'cafe-au-lait spot']
-      alert: 'A café-au-lait macule is a flat, uniformly light-brown patch. The presence of six or more spots larger than 5 mm in a prepubertal child is a major diagnostic criterion for Neurofibromatosis Type 1.'
-      severity: 'warning'
-    - keywords: ['congenital nevus', 'congenital mole']
-      alert: 'A congenital nevus is a mole present at birth. Large or giant congenital nevi carry an increased risk of developing melanoma and warrant dermatology referral.'
-      severity: 'warning'
+  # Category: Common Birthmarks (Vascular & Pigmented)
+  - keywords:
+      ["mongolian spot", "congenital dermal melanocytosis", "slate gray nevus"]
+    alert: "Congenital dermal melanocytosis (Mongolian spot) is a benign, flat, blue-gray patch, often on the lower back or buttocks. Common in infants of Asian, African, or Hispanic descent. Document to avoid confusion with bruising."
+    severity: "info"
+  - keywords: ["salmon patch", "nevus simplex", "stork bite", "angel kiss"]
+    alert: "Nevus simplex (salmon patch) is a common, flat, pink or red patch on the eyelids, glabella, or nape of the neck. Benign and usually fades over time."
+    severity: "info"
+  - keywords: ["port-wine stain", "nevus flammeus"]
+    alert: "A port-wine stain is a flat, dark red or purple patch present at birth that persists and grows with the child. If in the trigeminal nerve distribution, evaluate for Sturge-Weber syndrome."
+    severity: "warning"
+  - keywords:
+      ["infantile hemangioma", "strawberry hemangioma", "strawberry mark"]
+    alert: "An infantile hemangioma is a bright red, raised lesion that appears in the first few weeks of life, grows rapidly, and then involutes. Most are benign, but monitor for ulceration or functional impairment (e.g., near the eye)."
+    severity: "info"
+  - keywords: ["cafe-au-lait macule", "cafe-au-lait spot"]
+    alert: "A café-au-lait macule is a flat, uniformly light-brown patch. The presence of six or more spots larger than 5 mm in a prepubertal child is a major diagnostic criterion for Neurofibromatosis Type 1."
+    severity: "warning"
+  - keywords: ["congenital nevus", "congenital mole"]
+    alert: "A congenital nevus is a mole present at birth. Large or giant congenital nevi carry an increased risk of developing melanoma and warrant dermatology referral."
+    severity: "warning"
 
-    # Category: Infectious Rashes (Exanthems)
-    - keywords: ['chickenpox', 'varicella', 'dewdrop on a rose petal']
-      alert: "Chickenpox (varicella) presents as an itchy rash of macules, papules, and vesicles in various stages of healing ('crops'). Highly contagious. Monitor for secondary bacterial infection or complications."
-      severity: 'warning'
-    - keywords: ['measles', 'rubeola', 'Koplik spots']
-      alert: "Measles presents with fever, cough, coryza, conjunctivitis, followed by Koplik's spots in the mouth and a maculopapular rash starting on the head and spreading down. This is a critical, reportable illness."
-      severity: 'critical'
-    - keywords: ['rubella', 'german measles']
-      alert: 'Rubella presents with a pink maculopapular rash starting on the face and spreading down, often with postauricular lymphadenopathy. Significant risk to pregnant contacts.'
-      severity: 'warning'
-    - keywords: ['fifth disease', 'erythema infectiosum', 'slapped cheek']
-      alert: "Fifth disease (Parvovirus B19) causes a 'slapped cheek' facial rash, followed by a lacy, reticular rash on the trunk and extremities. Can cause aplastic crisis in at-risk patients."
-      severity: 'warning'
-    - keywords: ['roseola infantum', 'sixth disease', 'exanthem subitum']
-      alert: 'Roseola presents with 3-5 days of high fever that resolves abruptly, followed by the appearance of a pink maculopapular rash on the trunk. Commonly associated with febrile seizures.'
-      severity: 'warning'
-    - keywords:
-      alert: 'Hand, Foot, and Mouth Disease (Coxsackievirus) causes oral ulcers and a papular or vesicular rash on the hands, feet, and sometimes buttocks. Usually benign and self-limited.'
-      severity: 'warning'
-    - keywords: ['scarlet fever', 'scarlatina']
-      alert: 'Scarlet fever is associated with strep throat and presents with a fine, red, sandpaper-like rash, strawberry tongue, and perioral pallor. Requires antibiotic treatment to prevent rheumatic fever.'
-      severity: 'critical'
-    - keywords: ['impetigo', 'honey-colored crust']
-      alert: 'Impetigo is a contagious bacterial infection causing erosions or bullae with a characteristic honey-colored crust, typically on the face. Requires topical or oral antibiotics.'
-      severity: 'warning'
-    - keywords: ['molluscum contagiosum', 'umbilicated papules']
-      alert: 'Molluscum contagiosum is a viral infection causing flesh-colored, dome-shaped papules, often with central umbilication. Benign and self-resolving, but can take months to years.'
-      severity: 'info'
-    - keywords: ['cellulitis']
-      alert: 'Cellulitis is an infection of the deeper layers of skin, presenting as a warm, red, tender, and swollen area. Requires   antibiotic treatment to prevent spread.'
-      severity: 'critical'
+  # Category: Infectious Rashes (Exanthems)
+  - keywords: ["chickenpox", "varicella", "dewdrop on a rose petal"]
+    alert: "Chickenpox (varicella) presents as an itchy rash of macules, papules, and vesicles in various stages of healing ('crops'). Highly contagious. Monitor for secondary bacterial infection or complications."
+    severity: "warning"
+  - keywords: ["measles", "rubeola", "Koplik spots"]
+    alert: "Measles presents with fever, cough, coryza, conjunctivitis, followed by Koplik's spots in the mouth and a maculopapular rash starting on the head and spreading down. This is a critical, reportable illness."
+    severity: "critical"
+  - keywords: ["rubella", "german measles"]
+    alert: "Rubella presents with a pink maculopapular rash starting on the face and spreading down, often with postauricular lymphadenopathy. Significant risk to pregnant contacts."
+    severity: "warning"
+  - keywords: ["fifth disease", "erythema infectiosum", "slapped cheek"]
+    alert: "Fifth disease (Parvovirus B19) causes a 'slapped cheek' facial rash, followed by a lacy, reticular rash on the trunk and extremities. Can cause aplastic crisis in at-risk patients."
+    severity: "warning"
+  - keywords: ["roseola infantum", "sixth disease", "exanthem subitum"]
+    alert: "Roseola presents with 3-5 days of high fever that resolves abruptly, followed by the appearance of a pink maculopapular rash on the trunk. Commonly associated with febrile seizures."
+    severity: "warning"
+  - keywords:
+    alert: "Hand, Foot, and Mouth Disease (Coxsackievirus) causes oral ulcers and a papular or vesicular rash on the hands, feet, and sometimes buttocks. Usually benign and self-limited."
+    severity: "warning"
+  - keywords: ["scarlet fever", "scarlatina"]
+    alert: "Scarlet fever is associated with strep throat and presents with a fine, red, sandpaper-like rash, strawberry tongue, and perioral pallor. Requires antibiotic treatment to prevent rheumatic fever."
+    severity: "critical"
+  - keywords: ["impetigo", "honey-colored crust"]
+    alert: "Impetigo is a contagious bacterial infection causing erosions or bullae with a characteristic honey-colored crust, typically on the face. Requires topical or oral antibiotics."
+    severity: "warning"
+  - keywords: ["molluscum contagiosum", "umbilicated papules"]
+    alert: "Molluscum contagiosum is a viral infection causing flesh-colored, dome-shaped papules, often with central umbilication. Benign and self-resolving, but can take months to years."
+    severity: "info"
+  - keywords: ["cellulitis"]
+    alert: "Cellulitis is an infection of the deeper layers of skin, presenting as a warm, red, tender, and swollen area. Requires   antibiotic treatment to prevent spread."
+    severity: "critical"
 
-    # Category: Fungal Infections & Infestations
-    - keywords: ['tinea corporis', 'ringworm']
-      alert: 'Tinea corporis (ringworm) is a fungal infection presenting as an annular (ring-shaped), scaling plaque with a raised border and central clearing.'
-      severity: 'info'
-    - keywords: ['tinea capitis', 'scalp ringworm', 'kerion']
-      alert: 'Tinea capitis is a fungal infection of the scalp causing scaling, alopecia, and sometimes a boggy, inflamed mass (kerion). Requires oral antifungal treatment.'
-      severity: 'warning'
-    - keywords: ['tinea pedis', "athlete's foot"]
-      alert: "Tinea pedis (athlete's foot) is a fungal infection of the feet causing scaling, maceration in the toe webs, or a moccasin-like scale on the soles."
-      severity: 'info'
-    - keywords: ['scabies', 'burrows']
-      alert: 'Scabies is an infestation by a mite causing intense pruritus, especially at night, with burrows, papules, and vesicles, often in finger webs, wrists, and axillae. Requires treatment of patient and contacts.'
-      severity: 'warning'
-    - keywords: ['head lice', 'pediculosis capitis', 'nits']
-      alert: 'Head lice infestation causes scalp pruritus. Diagnosis is confirmed by finding live lice or nits (eggs) on hair shafts close to the scalp.'
-      severity: 'info'
+  # Category: Fungal Infections & Infestations
+  - keywords: ["tinea corporis", "ringworm"]
+    alert: "Tinea corporis (ringworm) is a fungal infection presenting as an annular (ring-shaped), scaling plaque with a raised border and central clearing."
+    severity: "info"
+  - keywords: ["tinea capitis", "scalp ringworm", "kerion"]
+    alert: "Tinea capitis is a fungal infection of the scalp causing scaling, alopecia, and sometimes a boggy, inflamed mass (kerion). Requires oral antifungal treatment."
+    severity: "warning"
+  - keywords: ["tinea pedis", "athlete's foot"]
+    alert: "Tinea pedis (athlete's foot) is a fungal infection of the feet causing scaling, maceration in the toe webs, or a moccasin-like scale on the soles."
+    severity: "info"
+  - keywords: ["scabies", "burrows"]
+    alert: "Scabies is an infestation by a mite causing intense pruritus, especially at night, with burrows, papules, and vesicles, often in finger webs, wrists, and axillae. Requires treatment of patient and contacts."
+    severity: "warning"
+  - keywords: ["head lice", "pediculosis capitis", "nits"]
+    alert: "Head lice infestation causes scalp pruritus. Diagnosis is confirmed by finding live lice or nits (eggs) on hair shafts close to the scalp."
+    severity: "info"
 
-    # Category: Inflammatory & Papulosquamous Dermatoses
-    - keywords: ['atopic dermatitis', 'eczema']
-      alert: 'Atopic dermatitis (eczema) is a chronic, pruritic inflammatory condition causing erythematous, scaly, and sometimes weeping patches, typically in flexural areas in children. Management involves emollients and topical anti-inflammatories.'
-      severity: 'warning'
-    - keywords: ['contact dermatitis', 'poison ivy']
-      alert: 'Contact dermatitis is an inflammatory reaction to an external agent. Allergic contact dermatitis (e.g., poison ivy) often presents with linear vesicles and intense itching. Irritant contact dermatitis is more common.'
-      severity: 'warning'
-    - keywords: ['diaper dermatitis', 'diaper rash']
-      alert: 'Diaper dermatitis is an irritant contact dermatitis in the diaper area. If beefy red with satellite papules, consider secondary Candida infection.'
-      severity: 'info'
-    - keywords: ['hives', 'urticaria', 'wheals']
-      alert: 'Urticaria (hives) consists of transient, pruritic, edematous wheals. If associated with angioedema or respiratory symptoms, it is an emergency (anaphylaxis).'
-      severity: 'warning'
-    - keywords: ['psoriasis', 'silvery scale']
-      alert: 'Psoriasis is a chronic inflammatory disease presenting as well-demarcated erythematous plaques with a silvery scale, often on extensor surfaces like elbows and knees.'
-      severity: 'warning'
-    - keywords: ['keratosis pilaris', 'chicken skin']
-      alert: 'Keratosis pilaris is a common, benign condition of small, rough, follicular papules, typically on the posterior upper arms and anterior thighs.'
-      severity: 'info'
-    - keywords: ['pityriasis rosea', 'herald patch', 'christmas tree rash']
-      alert: "Pityriasis rosea is a self-limited rash that begins with a single 'herald patch' followed by a generalized eruption of smaller oval, pink papules with fine scale in a 'Christmas tree' distribution on the back."
-      severity: 'info'
+  # Category: Inflammatory & Papulosquamous Dermatoses
+  - keywords: ["atopic dermatitis", "eczema"]
+    alert: "Atopic dermatitis (eczema) is a chronic, pruritic inflammatory condition causing erythematous, scaly, and sometimes weeping patches, typically in flexural areas in children. Management involves emollients and topical anti-inflammatories."
+    severity: "warning"
+  - keywords: ["contact dermatitis", "poison ivy"]
+    alert: "Contact dermatitis is an inflammatory reaction to an external agent. Allergic contact dermatitis (e.g., poison ivy) often presents with linear vesicles and intense itching. Irritant contact dermatitis is more common."
+    severity: "warning"
+  - keywords: ["diaper dermatitis", "diaper rash"]
+    alert: "Diaper dermatitis is an irritant contact dermatitis in the diaper area. If beefy red with satellite papules, consider secondary Candida infection."
+    severity: "info"
+  - keywords: ["hives", "urticaria", "wheals"]
+    alert: "Urticaria (hives) consists of transient, pruritic, edematous wheals. If associated with angioedema or respiratory symptoms, it is an emergency (anaphylaxis)."
+    severity: "warning"
+  - keywords: ["psoriasis", "silvery scale"]
+    alert: "Psoriasis is a chronic inflammatory disease presenting as well-demarcated erythematous plaques with a silvery scale, often on extensor surfaces like elbows and knees."
+    severity: "warning"
+  - keywords: ["keratosis pilaris", "chicken skin"]
+    alert: "Keratosis pilaris is a common, benign condition of small, rough, follicular papules, typically on the posterior upper arms and anterior thighs."
+    severity: "info"
+  - keywords: ["pityriasis rosea", "herald patch", "christmas tree rash"]
+    alert: "Pityriasis rosea is a self-limited rash that begins with a single 'herald patch' followed by a generalized eruption of smaller oval, pink papules with fine scale in a 'Christmas tree' distribution on the back."
+    severity: "info"
 
-    # Category: Growths & Tumors
-    - keywords: ['pyogenic granuloma']
-      alert: 'A pyogenic granuloma is a benign, rapidly growing vascular lesion that appears as a friable, bright red papule that bleeds easily. Often requires removal.'
-      severity: 'warning'
-    - keywords: ['dermatofibroma']
-      alert: "A dermatofibroma is a common, benign, firm papule or nodule that dimples or retracts downward when pinched ('dimple sign')."
-      severity: 'info'
-    - keywords: ['asymmetry', 'irregular border', 'color variation', 'diameter >6mm', 'evolving']
-      alert: 'Lesion meets ABCDE criteria for potential melanoma. Although rare in children, this requires urgent referral to dermatology for evaluation and possible biopsy.'
-      severity: 'critical'
-    - keywords: ['actinic keratosis']
-      alert: 'Actinic keratosis is a precancerous scaly lesion on sun-exposed skin. Rare in children but indicates significant sun damage. Refer to dermatology.'
-      severity: 'warning'
-    - keywords: ['basal cell carcinoma', 'translucent papule', 'telangiectasia']
-      alert: 'Findings suggest basal cell carcinoma, a slow-growing skin cancer. Extremely rare in children without a predisposing genetic condition. Refer to dermatology.'
-      severity: 'warning'
-    - keywords: ['squamous cell carcinoma', 'firm red nodule', 'crusted lesion']
-      alert: 'Findings suggest squamous cell carcinoma. Rare in children but can metastasize. Refer to dermatology for urgent evaluation.'
-      severity: 'critical'
+  # Category: Growths & Tumors
+  - keywords: ["pyogenic granuloma"]
+    alert: "A pyogenic granuloma is a benign, rapidly growing vascular lesion that appears as a friable, bright red papule that bleeds easily. Often requires removal."
+    severity: "warning"
+  - keywords: ["dermatofibroma"]
+    alert: "A dermatofibroma is a common, benign, firm papule or nodule that dimples or retracts downward when pinched ('dimple sign')."
+    severity: "info"
+  - keywords:
+      [
+        "asymmetry",
+        "irregular border",
+        "color variation",
+        "diameter >6mm",
+        "evolving",
+      ]
+    alert: "Lesion meets ABCDE criteria for potential melanoma. Although rare in children, this requires urgent referral to dermatology for evaluation and possible biopsy."
+    severity: "critical"
+  - keywords: ["actinic keratosis"]
+    alert: "Actinic keratosis is a precancerous scaly lesion on sun-exposed skin. Rare in children but indicates significant sun damage. Refer to dermatology."
+    severity: "warning"
+  - keywords: ["basal cell carcinoma", "translucent papule", "telangiectasia"]
+    alert: "Findings suggest basal cell carcinoma, a slow-growing skin cancer. Extremely rare in children without a predisposing genetic condition. Refer to dermatology."
+    severity: "warning"
+  - keywords: ["squamous cell carcinoma", "firm red nodule", "crusted lesion"]
+    alert: "Findings suggest squamous cell carcinoma. Rare in children but can metastasize. Refer to dermatology for urgent evaluation."
+    severity: "critical"
 
-    # Category: Hair & Nail Disorders
-    - keywords: ['alopecia areata']
-      alert: 'Alopecia areata presents as clearly demarcated, round or oval patches of complete hair loss with no visible scaling or inflammation. An autoimmune condition.'
-      severity: 'warning'
-    - keywords: ['trichotillomania']
-      alert: 'Trichotillomania is hair loss from compulsive pulling, plucking, or twisting, resulting in broken hairs of varying lengths. Often related to psychosocial stress.'
-      severity: 'warning'
-    - keywords: ['clubbing', 'nail clubbing']
-      alert: 'Nail clubbing is a bulbous enlargement of the fingertips with loss of the normal nail bed angle. Associated with chronic hypoxia from lung or heart disease.'
-      severity: 'warning'
-    - keywords: ['paronychia']
-      alert: 'Paronychia is an inflammation or infection of the nail folds, presenting as redness, swelling, and pain. Common from nail-biting or thumb-sucking.'
-      severity: 'warning'
-    - keywords: ['onycholysis']
-      alert: 'Onycholysis is the painless separation of the nail plate from the nail bed. Can be caused by trauma, psoriasis, or fungal infection.'
-      severity: 'info'
-    - keywords: ['leukonychia', 'white spots on nails']
-      alert: 'Leukonychia consists of white spots or lines on the nail plate, typically caused by minor trauma to the nail matrix. They will grow out with the nail.'
-      severity: 'info'
-    - keywords:
-      alert: "Beau's lines are transverse depressions in the nail plate that occur after a systemic illness or stress disrupts nail growth. They will grow out with the nail."
-      severity: 'info'
+  # Category: Hair & Nail Disorders
+  - keywords: ["alopecia areata"]
+    alert: "Alopecia areata presents as clearly demarcated, round or oval patches of complete hair loss with no visible scaling or inflammation. An autoimmune condition."
+    severity: "warning"
+  - keywords: ["trichotillomania"]
+    alert: "Trichotillomania is hair loss from compulsive pulling, plucking, or twisting, resulting in broken hairs of varying lengths. Often related to psychosocial stress."
+    severity: "warning"
+  - keywords: ["clubbing", "nail clubbing"]
+    alert: "Nail clubbing is a bulbous enlargement of the fingertips with loss of the normal nail bed angle. Associated with chronic hypoxia from lung or heart disease."
+    severity: "warning"
+  - keywords: ["paronychia"]
+    alert: "Paronychia is an inflammation or infection of the nail folds, presenting as redness, swelling, and pain. Common from nail-biting or thumb-sucking."
+    severity: "warning"
+  - keywords: ["onycholysis"]
+    alert: "Onycholysis is the painless separation of the nail plate from the nail bed. Can be caused by trauma, psoriasis, or fungal infection."
+    severity: "info"
+  - keywords: ["leukonychia", "white spots on nails"]
+    alert: "Leukonychia consists of white spots or lines on the nail plate, typically caused by minor trauma to the nail matrix. They will grow out with the nail."
+    severity: "info"
+  - keywords:
+    alert: "Beau's lines are transverse depressions in the nail plate that occur after a systemic illness or stress disrupts nail growth. They will grow out with the nail."
+    severity: "info"
 
-    # Category: Skin Signs of Systemic Disease
-    - keywords: ['acanthosis nigricans']
-      alert: 'Acanthosis nigricans is characterized by hyperpigmented, velvety thickening of the skin, typically in flexural areas like the neck and axillae. Strongly associated with insulin resistance and obesity.'
-      severity: 'warning'
-    - keywords: ['erythema nodosum']
-      alert: 'Erythema nodosum presents as deep, tender, red nodules, usually on the anterior shins. It is a panniculitis (inflammation of subcutaneous fat) and is a reaction pattern to various systemic conditions, including infections and inflammatory bowel disease.'
-      severity: 'warning'
-    - keywords: ["Gottron's papules", 'heliotrope rash']
-      alert: "Gottron's papules (violaceous papules over knuckles) and a heliotrope rash (purple rash on eyelids) are pathognomonic for juvenile dermatomyositis. This is a critical finding requiring rheumatology consultation."
-      severity: 'critical'
-    - keywords: ['malar rash', 'butterfly rash']
-      alert: "A malar or 'butterfly' rash is an erythematous rash over the cheeks and nasal bridge, sparing the nasolabial folds. It is a classic sign of systemic lupus erythematosus (SLE)."
-      severity: 'critical'
-    - keywords: ['sclerodactyly', 'tight finger skin']
-      alert: 'Sclerodactyly is a hardening and tightening of the skin of the fingers and toes. It is a hallmark of scleroderma.'
-      severity: 'warning'
+  # Category: Skin Signs of Systemic Disease
+  - keywords: ["acanthosis nigricans"]
+    alert: "Acanthosis nigricans is characterized by hyperpigmented, velvety thickening of the skin, typically in flexural areas like the neck and axillae. Strongly associated with insulin resistance and obesity."
+    severity: "warning"
+  - keywords: ["erythema nodosum"]
+    alert: "Erythema nodosum presents as deep, tender, red nodules, usually on the anterior shins. It is a panniculitis (inflammation of subcutaneous fat) and is a reaction pattern to various systemic conditions, including infections and inflammatory bowel disease."
+    severity: "warning"
+  - keywords: ["Gottron's papules", "heliotrope rash"]
+    alert: "Gottron's papules (violaceous papules over knuckles) and a heliotrope rash (purple rash on eyelids) are pathognomonic for juvenile dermatomyositis. This is a critical finding requiring rheumatology consultation."
+    severity: "critical"
+  - keywords: ["malar rash", "butterfly rash"]
+    alert: "A malar or 'butterfly' rash is an erythematous rash over the cheeks and nasal bridge, sparing the nasolabial folds. It is a classic sign of systemic lupus erythematosus (SLE)."
+    severity: "critical"
+  - keywords: ["sclerodactyly", "tight finger skin"]
+    alert: "Sclerodactyly is a hardening and tightening of the skin of the fingers and toes. It is a hallmark of scleroderma."
+    severity: "warning"

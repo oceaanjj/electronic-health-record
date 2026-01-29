@@ -1,17 +1,17 @@
 intervention:
-    # Temperature interventions
-    - keywords: ['antipyretic', 'medication']
-      alert: 'Administer antipyretic medications as ordered and monitor effectiveness'
-      severity: 'INFO'
+  # Temperature interventions
+  - keywords: ["antipyretic", "medication"]
+    alert: "Administer antipyretic medications as ordered and monitor effectiveness"
+    severity: "INFO"
 
-    # Cardiac interventions
-    - keywords: ['position', 'cardiac']
-      alert: "Position patient semi-Fowler's to improve cardiac output"
-      severity: 'INFO'
+  # Cardiac interventions
+  - keywords: ["position", "cardiac"]
+    alert: "Position patient semi-Fowler's to improve cardiac output"
+    severity: "INFO"
 
-    # Blood pressure interventions
-    - keywords: ['fluid', 'hydration']
-      alert: 'Monitor fluid balance and maintain adequate hydration'
-      severity: 'INFO'
+  # Blood pressure interventions
+  - keywords: ["fluid", "hydration"]
+    alert: "Monitor fluid balance and maintain adequate hydration"
+    severity: "INFO"
 
-    # More intervention rules...
+  # More intervention rules...

@@ -1,61 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Doctor Login</title>
-        @vite(['resources/css/login-style.css'])
-    </head>
 
-    <body class="login-page">
-        <div class="login-container">
-            <div class="logo-section">
-                <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo" />
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Login</title>
+    @vite(['resources/css/login-style.css'])
+</head>
 
-            <div class="form-section">
-                <p id="upper-line"></p>
-                <div id="form-container">
-                    <p class="role">
-                        DOCTOR
-                        <strong>LOG IN</strong>
-                    </p>
+<body class="login-page">
+    <div class="login-container">
+        <div class="logo-section">
+            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo">
+        </div>
 
-                    <form action="{{ route('login.authenticate') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="role" value="doctor" />
-                        <label for="doctor_id">Name / Email</label>
-                        <br />
-                        <input type="text" name="username" placeholder="Enter your Doctor ID" />
-                        <br />
+        <div class="form-section">
+            <p id="upper-line"></p>
+            <div id="form-container">
 
-                        <label for="password">Password</label>
-                        <br />
-                        <input type="password" name="password" placeholder="Enter your password" />
+                <p class="role"> DOCTOR <strong>LOG IN</strong></p>
 
-                        <p class="forgot">Forgot password?</p>
+                <form action="{{ route('login.authenticate') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="role" value="doctor">
+                    <label for="doctor_id">Name / Email</label>
+                    <br>
+                    <input type="text" name="username" placeholder="Enter your Doctor ID">
+                    <br>
 
-                        @error('username')
-                            <p style="color: red">{{ $message }}</p>
-                        @enderror
+                    <label for="password">Password</label>
+                    <br>
+                    <input type="password" name="password" placeholder="Enter your password">
 
-                        @error('password')
-                            <p style="color: red">{{ $message }}</p>
-                        @enderror
+                    <p class="forgot">Forgot password?</p>
 
-                        <button type="submit" class="btn-login">Sign In</button>
-                    </form>
+                    @error('username') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
-                    <hr />
-                    <div>
-                        <!-- picture ng home icon -->
-                        <a href="{{ route('home') }}" class="return-home">
-                            <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon" />
-                            RETURN HOME
-                        </a>
-                    </div>
+                    <button type="submit" class="btn-login">Sign In</button>
+                </form>
+
+                <hr>
+                <div>
+                    <!-- picture ng home icon -->
+                    <a href="{{ route('home') }}" class="return-home">
+                        <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon">
+                        RETURN HOME</a>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

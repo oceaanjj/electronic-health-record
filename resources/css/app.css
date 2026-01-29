@@ -112,48 +112,46 @@
 /* end of chart carousel */
 
 
-/* 1. THE BACKDROP (Overlay) */
+/* modal window for charts ( zooming ) */
 #chart-modal {
     position: fixed !important;
 
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 100000; /* Stays above sidebar and headers */
-    display: none;   /* Toggled by JS */
+    z-index: 100000; 
+    display: none;  
     align-items: flex-start; 
     justify-content: center;
     padding-top: 13%;
-    background-color: rgba(15, 23, 42, 0.6); /* Modern Slate-Dark overlay */
-    backdrop-filter: blur(6px);              /* Professional medical blur */
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(6px);              
     transition: opacity 0.3s ease-in-out;
 }
 
-/* 2. THE MODAL WINDOW (The container) */
-/* This is where you manipulate size and color */
+
 .modal-container {
     position: relative;
     z-index: 100001;
     
-    /* SIZE SETTINGS */
+   
     width: 60%;
     height: 88%;
-
     padding: 50px;
 
-    /* PROFESSIONAL 3D COLOR SETTINGS */
+    
     background: linear-gradient(145deg, #ffffff, #c7c7c7);
     border-radius: 28px;
     border: 1px solid rgba(226, 232, 240, 0.8);
-    border-top: 2px solid #ffffff; /* 3D highlight edge */
+    border-top: 2px solid #ffffff; 
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     
-    /* Animation base state */
+    
     transform: scale(1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 3. ANIMATIONS (Working logic preserved) */
+
 @keyframes modalReveal {
     from { opacity: 0; transform: scale(0.95) translateY(20px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
@@ -167,7 +165,7 @@
 .modal-reveal { animation: modalReveal 0.4s ease-out forwards; }
 .modal-hide { animation: modalHide 0.3s ease-in forwards; }
 
-/* 4. DASHBOARD CARDS (Interaction) */
+
 #chart-track > div {
     cursor: pointer;
     transition: all 0.3s ease;
@@ -175,23 +173,20 @@
 
 #chart-track > div:hover {
     filter: brightness(0.98);
-    transform: translateY(-4px); /* Lifts the card when you hover */
+    transform: translateY(-4px); 
     box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
 }
 
 .chart-container-wrapper {
     position: relative;
-    margin: 0 auto; /* Centers the graph horizontally */
-    
-    /* MANIPULATE SIZE HERE */
-    height: 450px;  /* Change this to make the graph taller or shorter */
-    width: 100%;    /* Keep at 100% to fill the modal width */
-    max-width: 900px; /* Manipulation: Shrink this to make the graph narrower */
-    
-    /* Add some spacing below the title */
+    margin: 0 auto; 
+    height: 450px;  
+    width: 100%;   
+    max-width: 900px;
     margin-top: 20px; 
 }
 
+/* end of modal window for charts */
 
 
 

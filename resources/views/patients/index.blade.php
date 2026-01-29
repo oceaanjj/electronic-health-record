@@ -53,7 +53,7 @@
                                 class="p-3 border-b-2 border-line-brown/30 font-creato-black font-bold text-brown text-[13px] text-center">
                                 {{ $patient->patient_id }}</td>
                             <td class="p-3 border-b-2 border-line-brown/30">
-                                <a href="{{ route('patients.show', $patient->patient_id) }}"
+                                <a href="{{ route('patients.edit', $patient->patient_id) }}"
                                     class="p-3 font-creato-black font-bold text-brown text-[13px] hover:underline hover:text-brown transition-colors duration-150">
                                     {{ $patient->name }}
                                 </a>

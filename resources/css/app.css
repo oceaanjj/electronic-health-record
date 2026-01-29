@@ -127,15 +127,20 @@
 /* end of chart carousel */
 
 
+/* Base state: Overlay starts at the very left of the screen */
+#chart-modal {
+    left: 0;
+    transition: left 0.3s ease-in-out;
+}
 
-    .chart-wrapper canvas {
-        transition: transform 0.2s ease, filter 0.2s ease;
-    }
-    
-    .chart-wrapper canvas:hover {
-        transform: scale(1.02);
-        filter: brightness(1.05);
-    }
+/* Sidebar open: The left edge of the modal overlay pushes to the right */
+/* This makes the "center" of the modal shift into the open area */
+.sidebar-open #chart-modal {
+    left: 260px; /* Adjust this to match your sidebar width exactly */
+}
+
+
+
 
     /* Make the cards look like buttons */
 #chart-track > div {

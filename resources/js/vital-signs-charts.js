@@ -101,6 +101,8 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
                         beginAtZero: false,
                         grid: { color: 'rgba(0,0,0,0.03)' },
                         ticks: { font: { size: 9 } },
+                        beginAtZero: false, 
+                        grace: '10%'
                     },
                 },
             },
@@ -151,6 +153,7 @@ window.openChartModal = function (vitalKey, labels, data, vitalLabel, color) {
 
     // 3. WAIT 100ms for the browser to "see" the modal before drawing
     setTimeout(() => {
+        // Create the chart instance
         window.modalChartInstance = new Chart(modalCanvas, {
             type: 'line',
             data: {
@@ -174,6 +177,7 @@ window.openChartModal = function (vitalKey, labels, data, vitalLabel, color) {
                 }
             }
         });
+        window.modalChartInstance.resize();
     }, 100); 
 };
 

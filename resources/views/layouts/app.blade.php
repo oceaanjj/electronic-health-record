@@ -136,6 +136,12 @@
             }
 
             localStorage.setItem("sidebarOpen", "true");
+
+            if (window.modalChartInstance) {
+                setTimeout(() => {
+                    window.modalChartInstance.resize();
+                }, 300); // Wait for the 0.3s transition to finish
+            }
         }
 
         function closeNav() {
@@ -153,6 +159,12 @@
             setTimeout(() => {
                 if (arrow) arrow.classList.add("hidden");
             }, 200);
+
+           if (window.modalChartInstance) {
+        setTimeout(() => {
+            window.modalChartInstance.resize();
+        }, 300);
+    }
         }
 
     </script>

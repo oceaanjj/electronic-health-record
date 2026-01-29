@@ -42,3 +42,348 @@ diagnosis:
   - keywords: ["High RDW", "Anisocytosis"]
     alert: "Risk for Ineffective Tissue Perfusion related to variation in red blood cell size, possibly indicating a nutritional deficiency."
     severity: "WARNING"
+  - keywords: ["Hypernatremia"]
+    alert: "Risk for Deficient Fluid Volume related to high sodium levels."
+    severity: "CRITICAL"
+  - keywords: ["Hyponatremia"]
+    alert: "Risk for Injury related to low sodium levels causing neurological symptoms."
+    severity: "CRITICAL"
+  - keywords: ["Hyperkalemia"]
+    alert: "Risk for Dysrhythmia related to high potassium levels."
+    severity: "CRITICAL"
+  - keywords: ["Hypokalemia"]
+    alert: "Risk for Injury related to low potassium levels affecting muscle function."
+    severity: "WARNING"
+  - keywords: ["Hypercalcemia"]
+    alert: "Risk for Constipation related to high calcium levels."
+    severity: "WARNING"
+  - keywords: ["Hypocalcemia"]
+    alert: "Risk for Injury related to low calcium levels causing tetany."
+    severity: "CRITICAL"
+  - keywords: ["Hypermagnesemia"]
+    alert: "Risk for Injury related to high magnesium levels causing respiratory depression."
+    severity: "CRITICAL"
+  - keywords: ["Hypomagnesemia"]
+    alert: "Risk for Injury related to low magnesium levels affecting neuromuscular function."
+    severity: "WARNING"
+  - keywords: ["Hyperphosphatemia"]
+    alert: "Risk for Injury related to high phosphate levels causing hypocalcemia."
+    severity: "WARNING"
+  - keywords: ["Hypophosphatemia"]
+    alert: "Risk for Injury related to low phosphate levels affecting energy metabolism."
+    severity: "WARNING"
+  - keywords: ["High Creatinine"]
+    alert: "Risk for Decreased Cardiac Output related to renal dysfunction."
+    severity: "CRITICAL"
+  - keywords: ["High BUN"]
+    alert: "Impaired Renal Function related to elevated blood urea nitrogen."
+    severity: "CRITICAL"
+  - keywords: ["Low GFR"]
+    alert: "Chronic Kidney Disease related to decreased glomerular filtration rate."
+    severity: "CRITICAL"
+  - keywords: ["Proteinuria"]
+    alert: "Risk for Impaired Skin Integrity related to protein loss in urine."
+    severity: "WARNING"
+  - keywords: ["Hematuria"]
+    alert: "Risk for Infection related to blood in urine."
+    severity: "WARNING"
+  - keywords: ["High ALT"]
+    alert: "Impaired Liver Function related to elevated alanine aminotransferase."
+    severity: "CRITICAL"
+  - keywords: ["High AST"]
+    alert: "Impaired Liver Function related to elevated aspartate aminotransferase."
+    severity: "CRITICAL"
+  - keywords: ["High ALP"]
+    alert: "Impaired Liver Function related to elevated alkaline phosphatase."
+    severity: "WARNING"
+  - keywords: ["High Bilirubin"]
+    alert: "Jaundice related to elevated bilirubin levels."
+    severity: "WARNING"
+  - keywords: ["Low Albumin"]
+    alert: "Imbalanced Nutrition: Less Than Body Requirements related to low protein levels."
+    severity: "WARNING"
+  - keywords: ["Hyperglycemia"]
+    alert: "Risk for Unstable Blood Glucose Level related to high blood sugar."
+    severity: "WARNING"
+  - keywords: ["Hypoglycemia"]
+    alert: "Risk for Injury related to low blood sugar causing confusion."
+    severity: "CRITICAL"
+  - keywords: ["High Total Cholesterol"]
+    alert: "Risk for Ineffective Health Maintenance related to hypercholesterolemia."
+    severity: "WARNING"
+  - keywords: ["High LDL"]
+    alert: "Risk for Ineffective Tissue Perfusion related to high low-density lipoprotein."
+    severity: "WARNING"
+  - keywords: ["Low HDL"]
+    alert: "Risk for Ineffective Tissue Perfusion related to low high-density lipoprotein."
+    severity: "WARNING"
+  - keywords: ["High Triglycerides"]
+    alert: "Risk for Ineffective Tissue Perfusion related to hypertriglyceridemia."
+    severity: "WARNING"
+  - keywords: ["High TSH"]
+    alert: "Hypothyroidism related to elevated thyroid-stimulating hormone."
+    severity: "WARNING"
+  - keywords: ["Low TSH"]
+    alert: "Hyperthyroidism related to low thyroid-stimulating hormone."
+    severity: "WARNING"
+  - keywords: ["High T4"]
+    alert: "Hyperthyroidism related to elevated thyroxine."
+    severity: "WARNING"
+  - keywords: ["Low T4"]
+    alert: "Hypothyroidism related to low thyroxine."
+    severity: "WARNING"
+  - keywords: ["High PT"]
+    alert: "Risk for Bleeding related to prolonged prothrombin time."
+    severity: "CRITICAL"
+  - keywords: ["High INR"]
+    alert: "Risk for Bleeding related to high international normalized ratio."
+    severity: "CRITICAL"
+  - keywords: ["High PTT"]
+    alert: "Risk for Bleeding related to prolonged partial thromboplastin time."
+    severity: "CRITICAL"
+  - keywords: ["Acidosis"]
+    alert: "Impaired Gas Exchange related to low pH."
+    severity: "CRITICAL"
+  - keywords: ["Alkalosis"]
+    alert: "Impaired Gas Exchange related to high pH."
+    severity: "CRITICAL"
+  - keywords: ["Hypercapnia"]
+    alert: "Impaired Gas Exchange related to high carbon dioxide."
+    severity: "CRITICAL"
+  - keywords: ["Hypocapnia"]
+    alert: "Impaired Gas Exchange related to low carbon dioxide."
+    severity: "WARNING"
+  - keywords: ["Hypoxemia"]
+    alert: "Impaired Gas Exchange related to low oxygen."
+    severity: "CRITICAL"
+  - keywords: ["Hyperoxemia"]
+    alert: "Risk for Injury related to high oxygen levels."
+    severity: "WARNING"
+  - keywords: ["High Hemoglobin"]
+    alert: "Risk for Ineffective Tissue Perfusion related to polycythemia."
+    severity: "WARNING"
+  - keywords: ["Low Hemoglobin"]
+    alert: "Activity Intolerance related to anemia."
+    severity: "WARNING"
+  - keywords: ["High Hematocrit"]
+    alert: "Risk for Ineffective Tissue Perfusion related to increased viscosity."
+    severity: "WARNING"
+  - keywords: ["Low Hematocrit"]
+    alert: "Activity Intolerance related to decreased oxygen capacity."
+    severity: "WARNING"
+  - keywords: ["High MCV"]
+    alert: "Imbalanced Nutrition related to macrocytosis."
+    severity: "WARNING"
+  - keywords: ["Low MCV"]
+    alert: "Imbalanced Nutrition related to microcytosis."
+    severity: "WARNING"
+  - keywords: ["High MCH"]
+    alert: "Imbalanced Nutrition related to macrocytic anemia."
+    severity: "WARNING"
+  - keywords: ["Low MCH"]
+    alert: "Imbalanced Nutrition related to hypochromic anemia."
+    severity: "WARNING"
+  - keywords: ["High MCHC"]
+    alert: "Risk for Ineffective Tissue Perfusion related to spherocytosis."
+    severity: "WARNING"
+  - keywords: ["Low MCHC"]
+    alert: "Imbalanced Nutrition related to iron deficiency."
+    severity: "WARNING"
+  - keywords: ["High ESR"]
+    alert: "Inflammation related to elevated erythrocyte sedimentation rate."
+    severity: "WARNING"
+  - keywords: ["High CRP"]
+    alert: "Inflammation related to elevated C-reactive protein."
+    severity: "WARNING"
+  - keywords: ["High Ferritin"]
+    alert: "Risk for Injury related to iron overload."
+    severity: "WARNING"
+  - keywords: ["Low Ferritin"]
+    alert: "Imbalanced Nutrition related to iron deficiency."
+    severity: "WARNING"
+  - keywords: ["High Iron"]
+    alert: "Risk for Injury related to iron overload."
+    severity: "WARNING"
+  - keywords: ["Low Iron"]
+    alert: "Imbalanced Nutrition related to iron deficiency."
+    severity: "WARNING"
+  - keywords: ["High TIBC"]
+    alert: "Imbalanced Nutrition related to iron deficiency."
+    severity: "WARNING"
+  - keywords: ["Low TIBC"]
+    alert: "Risk for Injury related to iron overload."
+    severity: "WARNING"
+  - keywords: ["High Vitamin B12"]
+    alert: "Risk for Injury related to B12 toxicity."
+    severity: "WARNING"
+  - keywords: ["Low Vitamin B12"]
+    alert: "Imbalanced Nutrition related to B12 deficiency."
+    severity: "WARNING"
+  - keywords: ["High Folate"]
+    alert: "Risk for Injury related to folate toxicity."
+    severity: "WARNING"
+  - keywords: ["Low Folate"]
+    alert: "Imbalanced Nutrition related to folate deficiency."
+    severity: "WARNING"
+  - keywords: ["High Homocysteine"]
+    alert: "Risk for Ineffective Tissue Perfusion related to hyperhomocysteinemia."
+    severity: "WARNING"
+  - keywords: ["Low Homocysteine"]
+    alert: "Risk for Bleeding related to low homocysteine."
+    severity: "WARNING"
+  - keywords: ["High Troponin"]
+    alert: "Acute Coronary Syndrome related to elevated troponin."
+    severity: "CRITICAL"
+  - keywords: ["High CK-MB"]
+    alert: "Myocardial Infarction related to elevated creatine kinase-MB."
+    severity: "CRITICAL"
+  - keywords: ["High BNP"]
+    alert: "Heart Failure related to elevated B-type natriuretic peptide."
+    severity: "CRITICAL"
+  - keywords: ["High D-dimer"]
+    alert: "Deep Vein Thrombosis related to elevated D-dimer."
+    severity: "CRITICAL"
+  - keywords: ["High Fibrinogen"]
+    alert: "Risk for Ineffective Tissue Perfusion related to hyperfibrinogenemia."
+    severity: "WARNING"
+  - keywords: ["Low Fibrinogen"]
+    alert: "Risk for Bleeding related to hypofibrinogenemia."
+    severity: "CRITICAL"
+  - keywords: ["High Factor VIII"]
+    alert: "Risk for Ineffective Tissue Perfusion related to hemophilia."
+    severity: "WARNING"
+  - keywords: ["Low Factor VIII"]
+    alert: "Risk for Bleeding related to hemophilia."
+    severity: "CRITICAL"
+  - keywords: ["High Ammonia"]
+    alert: "Hepatic Encephalopathy related to elevated ammonia."
+    severity: "CRITICAL"
+  - keywords: ["Low Ammonia"]
+    alert: "Risk for Injury related to low ammonia."
+    severity: "WARNING"
+  - keywords: ["High Lactate"]
+    alert: "Lactic Acidosis related to elevated lactate."
+    severity: "CRITICAL"
+  - keywords: ["Low Lactate"]
+    alert: "Risk for Injury related to low lactate."
+    severity: "WARNING"
+  - keywords: ["High Uric Acid"]
+    alert: "Gout related to hyperuricemia."
+    severity: "WARNING"
+  - keywords: ["Low Uric Acid"]
+    alert: "Risk for Injury related to hypouricemia."
+    severity: "WARNING"
+  - keywords: ["High PSA"]
+    alert: "Prostate Cancer related to elevated prostate-specific antigen."
+    severity: "WARNING"
+  - keywords: ["Low PSA"]
+    alert: "Risk for Injury related to low PSA."
+    severity: "WARNING"
+  - keywords: ["High CEA"]
+    alert: "Cancer related to elevated carcinoembryonic antigen."
+    severity: "WARNING"
+  - keywords: ["Low CEA"]
+    alert: "Risk for Injury related to low CEA."
+    severity: "WARNING"
+  - keywords: ["High CA-125"]
+    alert: "Ovarian Cancer related to elevated cancer antigen 125."
+    severity: "WARNING"
+  - keywords: ["Low CA-125"]
+    alert: "Risk for Injury related to low CA-125."
+    severity: "WARNING"
+  - keywords: ["High AFP"]
+    alert: "Liver Cancer related to elevated alpha-fetoprotein."
+    severity: "WARNING"
+  - keywords: ["Low AFP"]
+    alert: "Risk for Injury related to low AFP."
+    severity: "WARNING"
+  - keywords: ["High hCG"]
+    alert: "Pregnancy or Cancer related to elevated human chorionic gonadotropin."
+    severity: "WARNING"
+  - keywords: ["Low hCG"]
+    alert: "Risk for Injury related to low hCG."
+    severity: "WARNING"
+  - keywords: ["High PTH"]
+    alert: "Hyperparathyroidism related to elevated parathyroid hormone."
+    severity: "WARNING"
+  - keywords: ["Low PTH"]
+    alert: "Hypoparathyroidism related to low parathyroid hormone."
+    severity: "WARNING"
+  - keywords: ["High Vitamin D"]
+    alert: "Hypervitaminosis D related to elevated vitamin D."
+    severity: "WARNING"
+  - keywords: ["Low Vitamin D"]
+    alert: "Imbalanced Nutrition related to vitamin D deficiency."
+    severity: "WARNING"
+  - keywords: ["High Cortisol"]
+    alert: "Cushing's Syndrome related to elevated cortisol."
+    severity: "WARNING"
+  - keywords: ["Low Cortisol"]
+    alert: "Addison's Disease related to low cortisol."
+    severity: "CRITICAL"
+  - keywords: ["High ACTH"]
+    alert: "Cushing's Disease related to elevated adrenocorticotropic hormone."
+    severity: "WARNING"
+  - keywords: ["Low ACTH"]
+    alert: "Hypopituitarism related to low ACTH."
+    severity: "WARNING"
+  - keywords: ["High GH"]
+    alert: "Acromegaly related to elevated growth hormone."
+    severity: "WARNING"
+  - keywords: ["Low GH"]
+    alert: "Growth Hormone Deficiency related to low growth hormone."
+    severity: "WARNING"
+  - keywords: ["High Prolactin"]
+    alert: "Hyperprolactinemia related to elevated prolactin."
+    severity: "WARNING"
+  - keywords: ["Low Prolactin"]
+    alert: "Hypoprolactinemia related to low prolactin."
+    severity: "WARNING"
+  - keywords: ["High Testosterone"]
+    alert: "Polycystic Ovary Syndrome related to elevated testosterone."
+    severity: "WARNING"
+  - keywords: ["Low Testosterone"]
+    alert: "Hypogonadism related to low testosterone."
+    severity: "WARNING"
+  - keywords: ["High Estradiol"]
+    alert: "Risk for Thromboembolism related to elevated estradiol."
+    severity: "WARNING"
+  - keywords: ["Low Estradiol"]
+    alert: "Menopause related to low estradiol."
+    severity: "WARNING"
+  - keywords: ["High LH"]
+    alert: "Polycystic Ovary Syndrome related to elevated luteinizing hormone."
+    severity: "WARNING"
+  - keywords: ["Low LH"]
+    alert: "Hypogonadotropic Hypogonadism related to low LH."
+    severity: "WARNING"
+  - keywords: ["High FSH"]
+    alert: "Menopause related to elevated follicle-stimulating hormone."
+    severity: "WARNING"
+  - keywords: ["Low FSH"]
+    alert: "Hypopituitarism related to low FSH."
+    severity: "WARNING"
+  - keywords: ["High Insulin"]
+    alert: "Insulin Resistance related to elevated insulin."
+    severity: "WARNING"
+  - keywords: ["Low Insulin"]
+    alert: "Diabetes Mellitus related to low insulin."
+    severity: "CRITICAL"
+  - keywords: ["High C-peptide"]
+    alert: "Insulin Resistance related to elevated C-peptide."
+    severity: "WARNING"
+  - keywords: ["Low C-peptide"]
+    alert: "Type 1 Diabetes related to low C-peptide."
+    severity: "CRITICAL"
+  - keywords: ["High HbA1c"]
+    alert: "Poor Glycemic Control related to elevated hemoglobin A1c."
+    severity: "WARNING"
+  - keywords: ["Low HbA1c"]
+    alert: "Risk for Hypoglycemia related to low HbA1c."
+    severity: "WARNING"
+  - keywords: ["High Fructosamine"]
+    alert: "Poor Glycemic Control related to elevated fructosamine."
+    severity: "WARNING"
+  - keywords: ["Low Fructosamine"]
+    alert: "Risk for Hypoglycemia related to low fructosamine."
+    severity: "WARNING"

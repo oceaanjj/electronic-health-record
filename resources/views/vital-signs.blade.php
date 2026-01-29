@@ -376,26 +376,21 @@
             </form>
         </fieldset>
 
-       <div id="chart-modal" 
+        <div id="chart-modal" 
             style="display:none;" 
-            class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-md">
-            
-            <div class="relative w-[90%] h-[85%] bg-white rounded-[30px] shadow-2xl p-8 flex flex-col border border-gray-100">
+            class="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm sidebar-transition 
+                    flex items-center justify-center p-4"> <div class="bg-white rounded-[20px] shadow-2xl p-6 flex flex-col border border-gray-100 
+                        w-[50%] h-[350px] max-w-[800px] transition-all duration-300">
                 
-                <div class="flex justify-between items-center mb-6">
-                    <h3 id="modal-chart-title" class="text-3xl font-bold text-dark-green"></h3>
-                    
-                    <button onclick="closeChartModal()" class="p-2 hover:bg-gray-100 rounded-full transition-all duration-200">
-                        <span class="material-symbols-outlined text-gray-500 text-4xl">close</span>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-chart-title" class="text-lg font-bold text-dark-green uppercase tracking-wide"></h3>
+                    <button onclick="closeChartModal()" class="hover:bg-gray-100 rounded-full p-1 transition-colors">
+                        <span class="material-symbols-outlined text-gray-500 text-3xl">close</span>
                     </button>
                 </div>
 
-                <div class="flex-grow bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                <div class="flex-grow relative overflow-hidden">
                     <canvas id="modalChartCanvas"></canvas>
-                </div>
-
-                <div class="mt-4 text-center text-gray-400 text-sm italic">
-                    Detailed trend view for the selected 24-hour period.
                 </div>
             </div>
         </div>

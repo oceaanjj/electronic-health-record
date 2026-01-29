@@ -1,358 +1,358 @@
 intervention:
-    - keywords: ['Risk for Infection']
-      alert: 'Monitor vital signs, especially temperature, every 4 hours. Assess for any signs of infection such as redness, swelling, or drainage. Monitor WBC count trends. Teach patient and family about the importance of hand hygiene.'
-      severity: 'INFO'
-    - keywords: ['Activity Intolerance']
-      alert: "Plan care to allow for rest periods. Assist with ADLs as needed. Monitor patient's response to activity, noting any signs of increased fatigue, shortness of breath, or changes in vital signs."
-      severity: 'INFO'
-    - keywords: ['Risk for Bleeding']
-      alert: 'Implement bleeding precautions. Monitor for signs of bleeding such as petechiae, ecchymosis, or bleeding from gums. Avoid unnecessary venipuncture. Apply pressure to sites for longer than usual.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Monitor for signs of poor tissue perfusion such as pallor, cyanosis, or cool extremities. Monitor hemoglobin and hematocrit levels. Administer blood products as ordered.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Provide a diet rich in iron, vitamin B12, and folate. Administer nutritional supplements as ordered. Monitor dietary intake and tolerance.'
-      severity: 'INFO'
-    - keywords: ['Risk for Deficient Fluid Volume']
-      alert: 'Monitor intake and output hourly. Encourage oral fluids. Administer IV fluids as ordered. Assess for signs of dehydration such as dry mucous membranes.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor neurological status. Restrict sodium intake. Administer sodium supplements cautiously. Educate on signs of hyponatremia.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Dysrhythmia']
-      alert: 'Monitor cardiac rhythm continuously. Administer potassium supplements as ordered. Avoid potassium-sparing diuretics.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor muscle strength. Encourage potassium-rich foods. Administer potassium as ordered. Assess for arrhythmias.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Constipation']
-      alert: 'Encourage fiber intake. Administer stool softeners as ordered. Monitor bowel movements. Increase physical activity.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: "Monitor for Chvostek's and Trousseau's signs. Administer calcium supplements. Educate on tetany prevention."
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor respiratory rate. Administer magnesium cautiously. Assess neuromuscular function.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor reflexes. Encourage magnesium-rich foods. Administer magnesium supplements as ordered.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor calcium levels. Administer phosphate binders. Educate on dietary phosphate restriction.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Encourage phosphate-rich foods. Administer phosphate supplements. Monitor energy levels.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Decreased Cardiac Output']
-      alert: 'Monitor vital signs. Restrict fluid and sodium. Administer diuretics as ordered. Assess renal function.'
-      severity: 'CRITICAL'
-    - keywords: ['Impaired Renal Function']
-      alert: 'Monitor urine output. Restrict protein intake. Administer medications to lower BUN. Assess for uremia.'
-      severity: 'CRITICAL'
-    - keywords: ['Chronic Kidney Disease']
-      alert: 'Monitor GFR trends. Encourage low-sodium diet. Administer ACE inhibitors as ordered. Educate on kidney protection.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Impaired Skin Integrity']
-      alert: 'Monitor skin condition. Encourage protein-rich diet. Administer albumin if ordered. Assess nutritional status.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Infection']
-      alert: 'Monitor urine for blood. Encourage hydration. Administer antibiotics if UTI suspected. Assess urinary symptoms.'
-      severity: 'WARNING'
-    - keywords: ['Impaired Liver Function']
-      alert: 'Monitor liver enzymes. Avoid hepatotoxic drugs. Administer liver protectants. Educate on alcohol cessation.'
-      severity: 'CRITICAL'
-    - keywords: ['Impaired Liver Function']
-      alert: 'Monitor AST levels. Provide rest. Administer antioxidants. Assess for liver damage.'
-      severity: 'CRITICAL'
-    - keywords: ['Impaired Liver Function']
-      alert: 'Monitor bone density. Administer vitamin D. Educate on fall prevention.'
-      severity: 'WARNING'
-    - keywords: ['Jaundice']
-      alert: 'Monitor skin color. Provide phototherapy if ordered. Administer bile salts. Assess liver function.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition: Less Than Body Requirements']
-      alert: 'Monitor weight. Provide high-protein diet. Administer nutritional supplements. Assess edema.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Unstable Blood Glucose Level']
-      alert: 'Monitor blood glucose. Administer insulin as ordered. Educate on diet and exercise.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor mental status. Administer glucose if hypoglycemic. Educate on hypoglycemia signs.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Ineffective Health Maintenance']
-      alert: 'Encourage low-cholesterol diet. Administer statins as ordered. Educate on cardiovascular risk.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Monitor lipid levels. Encourage exercise. Administer lipid-lowering agents.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Encourage healthy lifestyle. Monitor HDL levels. Administer niacin if ordered.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Encourage weight loss. Administer fibrates. Monitor triglyceride levels.'
-      severity: 'WARNING'
-    - keywords: ['Hypothyroidism']
-      alert: 'Monitor TSH levels. Administer thyroid hormone. Educate on medication adherence.'
-      severity: 'WARNING'
-    - keywords: ['Hyperthyroidism']
-      alert: 'Monitor thyroid levels. Administer antithyroid drugs. Educate on symptoms.'
-      severity: 'WARNING'
-    - keywords: ['Hyperthyroidism']
-      alert: 'Monitor T4 levels. Provide beta-blockers. Assess for thyroid storm.'
-      severity: 'WARNING'
-    - keywords: ['Hypothyroidism']
-      alert: 'Administer levothyroxine. Monitor T4 levels. Educate on hypothyroidism signs.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Bleeding']
-      alert: 'Monitor PT levels. Administer vitamin K. Avoid anticoagulants.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Bleeding']
-      alert: 'Monitor INR. Adjust anticoagulants. Educate on bleeding precautions.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Bleeding']
-      alert: 'Monitor PTT. Administer clotting factors. Assess for DIC.'
-      severity: 'CRITICAL'
-    - keywords: ['Impaired Gas Exchange']
-      alert: 'Monitor ABGs. Assist with ventilation. Administer bicarbonate if ordered.'
-      severity: 'CRITICAL'
-    - keywords: ['Impaired Gas Exchange']
-      alert: 'Monitor pH. Encourage deep breathing. Administer acetazolamide if ordered.'
-      severity: 'CRITICAL'
-    - keywords: ['Impaired Gas Exchange']
-      alert: 'Monitor CO2 levels. Assist with breathing exercises. Administer bronchodilators.'
-      severity: 'CRITICAL'
-    - keywords: ['Impaired Gas Exchange']
-      alert: 'Monitor respiratory rate. Encourage controlled breathing. Assess for hyperventilation.'
-      severity: 'WARNING'
-    - keywords: ['Impaired Gas Exchange']
-      alert: 'Administer oxygen. Monitor SpO2. Assess for hypoxia.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor oxygen levels. Adjust FiO2. Educate on oxygen toxicity.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Monitor hemoglobin. Administer phlebotomy if ordered. Assess viscosity.'
-      severity: 'WARNING'
-    - keywords: ['Activity Intolerance']
-      alert: 'Administer erythropoietin. Encourage iron intake. Monitor fatigue.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Monitor hematocrit. Administer fluids. Assess for dehydration.'
-      severity: 'WARNING'
-    - keywords: ['Activity Intolerance']
-      alert: 'Administer blood transfusion. Encourage nutrition. Monitor energy.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer vitamin B12. Encourage folate-rich foods. Monitor MCV.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer iron supplements. Encourage red meat. Monitor cell size.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer B12 injections. Monitor MCH. Educate on deficiency.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Encourage iron-rich diet. Administer supplements. Monitor hypochromia.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Monitor MCHC. Administer folate. Assess spherocytosis.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer iron. Monitor iron levels. Educate on absorption.'
-      severity: 'WARNING'
-    - keywords: ['Inflammation']
-      alert: 'Monitor ESR. Administer anti-inflammatories. Assess infection.'
-      severity: 'WARNING'
-    - keywords: ['Inflammation']
-      alert: 'Monitor CRP. Administer antibiotics if indicated. Educate on inflammation.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor ferritin. Administer chelators. Educate on iron overload.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer iron supplements. Encourage absorption aids. Monitor deficiency.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor iron levels. Administer chelation. Assess toxicity.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Encourage iron-rich foods. Administer supplements. Monitor TIBC.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor TIBC. Administer iron cautiously. Assess overload.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor B12 levels. Administer cautiously. Educate on toxicity.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer B12 supplements. Monitor neurological status. Educate on deficiency.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor folate levels. Administer cautiously. Assess toxicity.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer folate. Encourage green vegetables. Monitor anemia.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Administer B vitamins. Monitor homocysteine. Educate on CVD risk.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Bleeding']
-      alert: 'Monitor homocysteine. Administer supplements. Assess clotting.'
-      severity: 'WARNING'
-    - keywords: ['Acute Coronary Syndrome']
-      alert: 'Monitor troponin. Administer antiplatelets. Assess cardiac status.'
-      severity: 'CRITICAL'
-    - keywords: ['Myocardial Infarction']
-      alert: 'Monitor CK-MB. Administer thrombolytics. Educate on MI.'
-      severity: 'CRITICAL'
-    - keywords: ['Heart Failure']
-      alert: 'Monitor BNP. Administer diuretics. Assess fluid status.'
-      severity: 'CRITICAL'
-    - keywords: ['Deep Vein Thrombosis']
-      alert: 'Monitor D-dimer. Administer anticoagulants. Educate on DVT prevention.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Monitor fibrinogen. Administer anticoagulants. Assess clotting.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Bleeding']
-      alert: 'Administer clotting factors. Monitor fibrinogen. Assess hemorrhage.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Ineffective Tissue Perfusion']
-      alert: 'Administer factor VIII. Monitor levels. Educate on hemophilia.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Bleeding']
-      alert: 'Administer desmopressin. Monitor factor VIII. Assess bleeding.'
-      severity: 'CRITICAL'
-    - keywords: ['Hepatic Encephalopathy']
-      alert: 'Monitor ammonia. Administer lactulose. Educate on diet.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor ammonia. Administer cautiously. Assess metabolism.'
-      severity: 'WARNING'
-    - keywords: ['Lactic Acidosis']
-      alert: 'Monitor lactate. Administer bicarbonate. Assess acidosis.'
-      severity: 'CRITICAL'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor lactate. Administer glucose. Assess deficiency.'
-      severity: 'WARNING'
-    - keywords: ['Gout']
-      alert: 'Administer allopurinol. Encourage low-purine diet. Monitor joints.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor uric acid. Administer supplements. Assess hypouricemia.'
-      severity: 'WARNING'
-    - keywords: ['Prostate Cancer']
-      alert: 'Monitor PSA. Administer treatments. Educate on screening.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor PSA. Assess levels. Educate on normal ranges.'
-      severity: 'WARNING'
-    - keywords: ['Cancer']
-      alert: 'Monitor CEA. Administer chemotherapy. Assess tumor response.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor CEA. Assess markers. Educate on cancer screening.'
-      severity: 'WARNING'
-    - keywords: ['Ovarian Cancer']
-      alert: 'Monitor CA-125. Administer treatments. Educate on ovarian health.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor CA-125. Assess levels. Educate on normal ranges.'
-      severity: 'WARNING'
-    - keywords: ['Liver Cancer']
-      alert: 'Monitor AFP. Administer treatments. Assess liver function.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor AFP. Assess markers. Educate on liver health.'
-      severity: 'WARNING'
-    - keywords: ['Pregnancy or Cancer']
-      alert: 'Monitor hCG. Administer appropriate care. Assess condition.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Injury']
-      alert: 'Monitor hCG. Assess levels. Educate on pregnancy.'
-      severity: 'WARNING'
-    - keywords: ['Hyperparathyroidism']
-      alert: 'Administer calcimimetics. Monitor PTH. Educate on calcium.'
-      severity: 'WARNING'
-    - keywords: ['Hypoparathyroidism']
-      alert: 'Administer calcium. Monitor PTH. Educate on supplementation.'
-      severity: 'WARNING'
-    - keywords: ['Hypervitaminosis D']
-      alert: 'Monitor vitamin D. Administer cautiously. Educate on toxicity.'
-      severity: 'WARNING'
-    - keywords: ['Imbalanced Nutrition']
-      alert: 'Administer vitamin D. Encourage sunlight. Monitor deficiency.'
-      severity: 'WARNING'
-    - keywords: ["Cushing's Syndrome"]
-      alert: 'Administer steroids cautiously. Monitor cortisol. Educate on adrenal.'
-      severity: 'WARNING'
-    - keywords: ["Addison's Disease"]
-      alert: 'Administer glucocorticoids. Monitor cortisol. Educate on crisis.'
-      severity: 'CRITICAL'
-    - keywords: ["Cushing's Disease"]
-      alert: 'Administer dopamine agonists. Monitor ACTH. Assess pituitary.'
-      severity: 'WARNING'
-    - keywords: ['Hypopituitarism']
-      alert: 'Administer hormone replacement. Monitor ACTH. Educate on deficiency.'
-      severity: 'WARNING'
-    - keywords: ['Acromegaly']
-      alert: 'Administer somatostatin analogs. Monitor GH. Educate on growth.'
-      severity: 'WARNING'
-    - keywords: ['Growth Hormone Deficiency']
-      alert: 'Administer GH. Monitor levels. Educate on supplementation.'
-      severity: 'WARNING'
-    - keywords: ['Hyperprolactinemia']
-      alert: 'Administer dopamine agonists. Monitor prolactin. Educate on fertility.'
-      severity: 'WARNING'
-    - keywords: ['Hypoprolactinemia']
-      alert: 'Monitor prolactin. Administer cautiously. Assess lactation.'
-      severity: 'WARNING'
-    - keywords: ['Polycystic Ovary Syndrome']
-      alert: 'Administer metformin. Monitor testosterone. Educate on PCOS.'
-      severity: 'WARNING'
-    - keywords: ['Hypogonadism']
-      alert: 'Administer testosterone. Monitor levels. Educate on replacement.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Thromboembolism']
-      alert: 'Administer anticoagulants. Monitor estradiol. Educate on HRT.'
-      severity: 'WARNING'
-    - keywords: ['Menopause']
-      alert: 'Administer HRT. Monitor estradiol. Educate on symptoms.'
-      severity: 'WARNING'
-    - keywords: ['Polycystic Ovary Syndrome']
-      alert: 'Administer clomiphene. Monitor LH. Educate on ovulation.'
-      severity: 'WARNING'
-    - keywords: ['Hypogonadotropic Hypogonadism']
-      alert: 'Administer gonadotropins. Monitor LH. Educate on fertility.'
-      severity: 'WARNING'
-    - keywords: ['Menopause']
-      alert: 'Administer estrogen. Monitor FSH. Educate on menopause.'
-      severity: 'WARNING'
-    - keywords: ['Hypopituitarism']
-      alert: 'Administer FSH. Monitor levels. Educate on deficiency.'
-      severity: 'WARNING'
-    - keywords: ['Insulin Resistance']
-      alert: 'Administer metformin. Monitor insulin. Educate on diet.'
-      severity: 'WARNING'
-    - keywords: ['Diabetes Mellitus']
-      alert: 'Administer insulin. Monitor levels. Educate on glucose control.'
-      severity: 'CRITICAL'
-    - keywords: ['Insulin Resistance']
-      alert: 'Administer incretins. Monitor C-peptide. Educate on resistance.'
-      severity: 'WARNING'
-    - keywords: ['Type 1 Diabetes']
-      alert: 'Administer insulin. Monitor C-peptide. Educate on autoimmune.'
-      severity: 'CRITICAL'
-    - keywords: ['Poor Glycemic Control']
-      alert: 'Adjust diabetes regimen. Monitor HbA1c. Educate on lifestyle.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Hypoglycemia']
-      alert: 'Monitor glucose. Adjust medications. Educate on hypo signs.'
-      severity: 'WARNING'
-    - keywords: ['Poor Glycemic Control']
-      alert: 'Administer insulin. Monitor fructosamine. Educate on control.'
-      severity: 'WARNING'
-    - keywords: ['Risk for Hypoglycemia']
-      alert: 'Monitor glucose. Administer glucose. Educate on balance.'
-      severity: 'WARNING'
+  - keywords: ["Risk for Infection"]
+    alert: "Monitor vital signs, especially temperature, every 4 hours. Assess for any signs of infection such as redness, swelling, or drainage. Monitor WBC count trends. Teach patient and family about the importance of hand hygiene."
+    severity: "INFO"
+  - keywords: ["Activity Intolerance"]
+    alert: "Plan care to allow for rest periods. Assist with ADLs as needed. Monitor patient's response to activity, noting any signs of increased fatigue, shortness of breath, or changes in vital signs."
+    severity: "INFO"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Implement bleeding precautions. Monitor for signs of bleeding such as petechiae, ecchymosis, or bleeding from gums. Avoid unnecessary venipuncture. Apply pressure to sites for longer than usual."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Monitor for signs of poor tissue perfusion such as pallor, cyanosis, or cool extremities. Monitor hemoglobin and hematocrit levels. Administer blood products as ordered."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Provide a diet rich in iron, vitamin B12, and folate. Administer nutritional supplements as ordered. Monitor dietary intake and tolerance."
+    severity: "INFO"
+  - keywords: ["Risk for Deficient Fluid Volume"]
+    alert: "Monitor intake and output hourly. Encourage oral fluids. Administer IV fluids as ordered. Assess for signs of dehydration such as dry mucous membranes."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor neurological status. Restrict sodium intake. Administer sodium supplements cautiously. Educate on signs of hyponatremia."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Dysrhythmia"]
+    alert: "Monitor cardiac rhythm continuously. Administer potassium supplements as ordered. Avoid potassium-sparing diuretics."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor muscle strength. Encourage potassium-rich foods. Administer potassium as ordered. Assess for arrhythmias."
+    severity: "WARNING"
+  - keywords: ["Risk for Constipation"]
+    alert: "Encourage fiber intake. Administer stool softeners as ordered. Monitor bowel movements. Increase physical activity."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor for Chvostek's and Trousseau's signs. Administer calcium supplements. Educate on tetany prevention."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor respiratory rate. Administer magnesium cautiously. Assess neuromuscular function."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor reflexes. Encourage magnesium-rich foods. Administer magnesium supplements as ordered."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor calcium levels. Administer phosphate binders. Educate on dietary phosphate restriction."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Encourage phosphate-rich foods. Administer phosphate supplements. Monitor energy levels."
+    severity: "WARNING"
+  - keywords: ["Risk for Decreased Cardiac Output"]
+    alert: "Monitor vital signs. Restrict fluid and sodium. Administer diuretics as ordered. Assess renal function."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Renal Function"]
+    alert: "Monitor urine output. Restrict protein intake. Administer medications to lower BUN. Assess for uremia."
+    severity: "CRITICAL"
+  - keywords: ["Chronic Kidney Disease"]
+    alert: "Monitor GFR trends. Encourage low-sodium diet. Administer ACE inhibitors as ordered. Educate on kidney protection."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Impaired Skin Integrity"]
+    alert: "Monitor skin condition. Encourage protein-rich diet. Administer albumin if ordered. Assess nutritional status."
+    severity: "WARNING"
+  - keywords: ["Risk for Infection"]
+    alert: "Monitor urine for blood. Encourage hydration. Administer antibiotics if UTI suspected. Assess urinary symptoms."
+    severity: "WARNING"
+  - keywords: ["Impaired Liver Function"]
+    alert: "Monitor liver enzymes. Avoid hepatotoxic drugs. Administer liver protectants. Educate on alcohol cessation."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Liver Function"]
+    alert: "Monitor AST levels. Provide rest. Administer antioxidants. Assess for liver damage."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Liver Function"]
+    alert: "Monitor bone density. Administer vitamin D. Educate on fall prevention."
+    severity: "WARNING"
+  - keywords: ["Jaundice"]
+    alert: "Monitor skin color. Provide phototherapy if ordered. Administer bile salts. Assess liver function."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition: Less Than Body Requirements"]
+    alert: "Monitor weight. Provide high-protein diet. Administer nutritional supplements. Assess edema."
+    severity: "WARNING"
+  - keywords: ["Risk for Unstable Blood Glucose Level"]
+    alert: "Monitor blood glucose. Administer insulin as ordered. Educate on diet and exercise."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor mental status. Administer glucose if hypoglycemic. Educate on hypoglycemia signs."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Health Maintenance"]
+    alert: "Encourage low-cholesterol diet. Administer statins as ordered. Educate on cardiovascular risk."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Monitor lipid levels. Encourage exercise. Administer lipid-lowering agents."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Encourage healthy lifestyle. Monitor HDL levels. Administer niacin if ordered."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Encourage weight loss. Administer fibrates. Monitor triglyceride levels."
+    severity: "WARNING"
+  - keywords: ["Hypothyroidism"]
+    alert: "Monitor TSH levels. Administer thyroid hormone. Educate on medication adherence."
+    severity: "WARNING"
+  - keywords: ["Hyperthyroidism"]
+    alert: "Monitor thyroid levels. Administer antithyroid drugs. Educate on symptoms."
+    severity: "WARNING"
+  - keywords: ["Hyperthyroidism"]
+    alert: "Monitor T4 levels. Provide beta-blockers. Assess for thyroid storm."
+    severity: "WARNING"
+  - keywords: ["Hypothyroidism"]
+    alert: "Administer levothyroxine. Monitor T4 levels. Educate on hypothyroidism signs."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Monitor PT levels. Administer vitamin K. Avoid anticoagulants."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Monitor INR. Adjust anticoagulants. Educate on bleeding precautions."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Monitor PTT. Administer clotting factors. Assess for DIC."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Monitor ABGs. Assist with ventilation. Administer bicarbonate if ordered."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Monitor pH. Encourage deep breathing. Administer acetazolamide if ordered."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Monitor CO2 levels. Assist with breathing exercises. Administer bronchodilators."
+    severity: "CRITICAL"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Monitor respiratory rate. Encourage controlled breathing. Assess for hyperventilation."
+    severity: "WARNING"
+  - keywords: ["Impaired Gas Exchange"]
+    alert: "Administer oxygen. Monitor SpO2. Assess for hypoxia."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor oxygen levels. Adjust FiO2. Educate on oxygen toxicity."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Monitor hemoglobin. Administer phlebotomy if ordered. Assess viscosity."
+    severity: "WARNING"
+  - keywords: ["Activity Intolerance"]
+    alert: "Administer erythropoietin. Encourage iron intake. Monitor fatigue."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Monitor hematocrit. Administer fluids. Assess for dehydration."
+    severity: "WARNING"
+  - keywords: ["Activity Intolerance"]
+    alert: "Administer blood transfusion. Encourage nutrition. Monitor energy."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer vitamin B12. Encourage folate-rich foods. Monitor MCV."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer iron supplements. Encourage red meat. Monitor cell size."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer B12 injections. Monitor MCH. Educate on deficiency."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Encourage iron-rich diet. Administer supplements. Monitor hypochromia."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Monitor MCHC. Administer folate. Assess spherocytosis."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer iron. Monitor iron levels. Educate on absorption."
+    severity: "WARNING"
+  - keywords: ["Inflammation"]
+    alert: "Monitor ESR. Administer anti-inflammatories. Assess infection."
+    severity: "WARNING"
+  - keywords: ["Inflammation"]
+    alert: "Monitor CRP. Administer antibiotics if indicated. Educate on inflammation."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor ferritin. Administer chelators. Educate on iron overload."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer iron supplements. Encourage absorption aids. Monitor deficiency."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor iron levels. Administer chelation. Assess toxicity."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Encourage iron-rich foods. Administer supplements. Monitor TIBC."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor TIBC. Administer iron cautiously. Assess overload."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor B12 levels. Administer cautiously. Educate on toxicity."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer B12 supplements. Monitor neurological status. Educate on deficiency."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor folate levels. Administer cautiously. Assess toxicity."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer folate. Encourage green vegetables. Monitor anemia."
+    severity: "WARNING"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Administer B vitamins. Monitor homocysteine. Educate on CVD risk."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Monitor homocysteine. Administer supplements. Assess clotting."
+    severity: "WARNING"
+  - keywords: ["Acute Coronary Syndrome"]
+    alert: "Monitor troponin. Administer antiplatelets. Assess cardiac status."
+    severity: "CRITICAL"
+  - keywords: ["Myocardial Infarction"]
+    alert: "Monitor CK-MB. Administer thrombolytics. Educate on MI."
+    severity: "CRITICAL"
+  - keywords: ["Heart Failure"]
+    alert: "Monitor BNP. Administer diuretics. Assess fluid status."
+    severity: "CRITICAL"
+  - keywords: ["Deep Vein Thrombosis"]
+    alert: "Monitor D-dimer. Administer anticoagulants. Educate on DVT prevention."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Monitor fibrinogen. Administer anticoagulants. Assess clotting."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Administer clotting factors. Monitor fibrinogen. Assess hemorrhage."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Ineffective Tissue Perfusion"]
+    alert: "Administer factor VIII. Monitor levels. Educate on hemophilia."
+    severity: "WARNING"
+  - keywords: ["Risk for Bleeding"]
+    alert: "Administer desmopressin. Monitor factor VIII. Assess bleeding."
+    severity: "CRITICAL"
+  - keywords: ["Hepatic Encephalopathy"]
+    alert: "Monitor ammonia. Administer lactulose. Educate on diet."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor ammonia. Administer cautiously. Assess metabolism."
+    severity: "WARNING"
+  - keywords: ["Lactic Acidosis"]
+    alert: "Monitor lactate. Administer bicarbonate. Assess acidosis."
+    severity: "CRITICAL"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor lactate. Administer glucose. Assess deficiency."
+    severity: "WARNING"
+  - keywords: ["Gout"]
+    alert: "Administer allopurinol. Encourage low-purine diet. Monitor joints."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor uric acid. Administer supplements. Assess hypouricemia."
+    severity: "WARNING"
+  - keywords: ["Prostate Cancer"]
+    alert: "Monitor PSA. Administer treatments. Educate on screening."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor PSA. Assess levels. Educate on normal ranges."
+    severity: "WARNING"
+  - keywords: ["Cancer"]
+    alert: "Monitor CEA. Administer chemotherapy. Assess tumor response."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor CEA. Assess markers. Educate on cancer screening."
+    severity: "WARNING"
+  - keywords: ["Ovarian Cancer"]
+    alert: "Monitor CA-125. Administer treatments. Educate on ovarian health."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor CA-125. Assess levels. Educate on normal ranges."
+    severity: "WARNING"
+  - keywords: ["Liver Cancer"]
+    alert: "Monitor AFP. Administer treatments. Assess liver function."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor AFP. Assess markers. Educate on liver health."
+    severity: "WARNING"
+  - keywords: ["Pregnancy or Cancer"]
+    alert: "Monitor hCG. Administer appropriate care. Assess condition."
+    severity: "WARNING"
+  - keywords: ["Risk for Injury"]
+    alert: "Monitor hCG. Assess levels. Educate on pregnancy."
+    severity: "WARNING"
+  - keywords: ["Hyperparathyroidism"]
+    alert: "Administer calcimimetics. Monitor PTH. Educate on calcium."
+    severity: "WARNING"
+  - keywords: ["Hypoparathyroidism"]
+    alert: "Administer calcium. Monitor PTH. Educate on supplementation."
+    severity: "WARNING"
+  - keywords: ["Hypervitaminosis D"]
+    alert: "Monitor vitamin D. Administer cautiously. Educate on toxicity."
+    severity: "WARNING"
+  - keywords: ["Imbalanced Nutrition"]
+    alert: "Administer vitamin D. Encourage sunlight. Monitor deficiency."
+    severity: "WARNING"
+  - keywords: ["Cushing's Syndrome"]
+    alert: "Administer steroids cautiously. Monitor cortisol. Educate on adrenal."
+    severity: "WARNING"
+  - keywords: ["Addison's Disease"]
+    alert: "Administer glucocorticoids. Monitor cortisol. Educate on crisis."
+    severity: "CRITICAL"
+  - keywords: ["Cushing's Disease"]
+    alert: "Administer dopamine agonists. Monitor ACTH. Assess pituitary."
+    severity: "WARNING"
+  - keywords: ["Hypopituitarism"]
+    alert: "Administer hormone replacement. Monitor ACTH. Educate on deficiency."
+    severity: "WARNING"
+  - keywords: ["Acromegaly"]
+    alert: "Administer somatostatin analogs. Monitor GH. Educate on growth."
+    severity: "WARNING"
+  - keywords: ["Growth Hormone Deficiency"]
+    alert: "Administer GH. Monitor levels. Educate on supplementation."
+    severity: "WARNING"
+  - keywords: ["Hyperprolactinemia"]
+    alert: "Administer dopamine agonists. Monitor prolactin. Educate on fertility."
+    severity: "WARNING"
+  - keywords: ["Hypoprolactinemia"]
+    alert: "Monitor prolactin. Administer cautiously. Assess lactation."
+    severity: "WARNING"
+  - keywords: ["Polycystic Ovary Syndrome"]
+    alert: "Administer metformin. Monitor testosterone. Educate on PCOS."
+    severity: "WARNING"
+  - keywords: ["Hypogonadism"]
+    alert: "Administer testosterone. Monitor levels. Educate on replacement."
+    severity: "WARNING"
+  - keywords: ["Risk for Thromboembolism"]
+    alert: "Administer anticoagulants. Monitor estradiol. Educate on HRT."
+    severity: "WARNING"
+  - keywords: ["Menopause"]
+    alert: "Administer HRT. Monitor estradiol. Educate on symptoms."
+    severity: "WARNING"
+  - keywords: ["Polycystic Ovary Syndrome"]
+    alert: "Administer clomiphene. Monitor LH. Educate on ovulation."
+    severity: "WARNING"
+  - keywords: ["Hypogonadotropic Hypogonadism"]
+    alert: "Administer gonadotropins. Monitor LH. Educate on fertility."
+    severity: "WARNING"
+  - keywords: ["Menopause"]
+    alert: "Administer estrogen. Monitor FSH. Educate on menopause."
+    severity: "WARNING"
+  - keywords: ["Hypopituitarism"]
+    alert: "Administer FSH. Monitor levels. Educate on deficiency."
+    severity: "WARNING"
+  - keywords: ["Insulin Resistance"]
+    alert: "Administer metformin. Monitor insulin. Educate on diet."
+    severity: "WARNING"
+  - keywords: ["Diabetes Mellitus"]
+    alert: "Administer insulin. Monitor levels. Educate on glucose control."
+    severity: "CRITICAL"
+  - keywords: ["Insulin Resistance"]
+    alert: "Administer incretins. Monitor C-peptide. Educate on resistance."
+    severity: "WARNING"
+  - keywords: ["Type 1 Diabetes"]
+    alert: "Administer insulin. Monitor C-peptide. Educate on autoimmune."
+    severity: "CRITICAL"
+  - keywords: ["Poor Glycemic Control"]
+    alert: "Adjust diabetes regimen. Monitor HbA1c. Educate on lifestyle."
+    severity: "WARNING"
+  - keywords: ["Risk for Hypoglycemia"]
+    alert: "Monitor glucose. Adjust medications. Educate on hypo signs."
+    severity: "WARNING"
+  - keywords: ["Poor Glycemic Control"]
+    alert: "Administer insulin. Monitor fructosamine. Educate on control."
+    severity: "WARNING"
+  - keywords: ["Risk for Hypoglycemia"]
+    alert: "Monitor glucose. Administer glucose. Educate on balance."
+    severity: "WARNING"

@@ -1,48 +1,42 @@
 @extends('layouts.admin')
 
 @section('content')
+
     {{-- SweetAlert Logic (Kept as is) --}}
-    @if (session('sweetalert'))
+    @if(session('sweetalert'))
         @push('scripts')
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    setTimeout(function () {
-                        const opts = @json(session('sweetalert'));
-                        if (typeof Swal === 'function') {
-                            Swal.fire({
-                                icon: opts.type || 'info',
-                                title: opts.title || '',
-                                text: opts.text || '',
-                                timer: opts.timer || 2000,
-                            });
-                        }
-                    }, 100);
-                });
-            </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    const opts = @json(session('sweetalert'));
+                    if (typeof Swal === 'function') {
+                        Swal.fire({
+                            icon: opts.type || 'info',
+                            title: opts.title || '',
+                            text: opts.text || '',
+                            timer: opts.timer || 2000
+                        });
+                    }
+                }, 100); 
+            });
+        </script>
         @endpush
     @endif
 
     <section class="mb-8">
         {{-- Responsive Title Size --}}
-        <h2
-            class="text-dark-green font-alte mt-8 mb-8 text-center text-[32px] leading-tight font-black md:mt-18 md:text-[50px]"
-        >
+        <h2 class="text-[32px] md:text-[50px] font-black mb-8 text-dark-green mt-8 md:mt-18 text-center font-alte leading-tight">
             ADMIN OVERVIEW
         </h2>
-
+        
         <center>
             {{-- Responsive Grid & Width --}}
-            <div class="grid min-h-[auto] w-full grid-cols-1 gap-6 md:h-[250px] md:w-[90%] md:grid-cols-3 lg:w-[70%]">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full md:w-[90%] lg:w-[70%] min-h-[auto] md:h-[250px]">
+                
                 {{-- User Stats --}}
-                <div
-                    class="group gradient-gray justify-between rounded-[20px] border border-gray-300 text-left shadow-sm"
-                >
-                    <h3 class="font-neometric pt-10 pb-5 pl-10 text-sm leading-4 font-black text-gray-500">
-                        TOTAL OF
-                        <br />
-                        <span class="text-dark-green/80 font-creato-bold text-[20px] font-black">USERS</span>
-                    </h3>
-                    <p class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
+                <div class="group border border-gray-300 rounded-[20px] justify-between text-left gradient-gray shadow-sm">
+                    <h3 class="text-sm text-gray-500 font-neometric font-black pl-10 pt-10 pb-5 leading-4">TOTAL OF <br> <span class="text-dark-green/80 text-[20px] font-creato-bold font-black">USERS</span></h3>
+                    <p class="text-[70px] font-extrabold text-dark-green/70 text-center p-0">
                         {{ \App\Models\User::where('role', '!=', 'admin')->count() }}
                     </p>
                 </div>
@@ -76,36 +70,35 @@
         </center>
     </section>
 
-    <section class="mx-auto my-12 mb-[100px] w-full md:mb-[200px] md:w-[90%] lg:w-[75%] xl:w-[70%]">
-        <div class="overflow-hidden rounded-xl border border-gray-100 shadow-2xl">
-            <div class="main-header px-6 py-4 pl-6 text-left text-lg tracking-wider text-white md:pl-10 md:text-xl">
+    <section class="w-full md:w-[90%] lg:w-[75%] xl:w-[70%] mx-auto my-12 mb-[100px] md:mb-[200px]">
+        <div class="shadow-2xl rounded-xl overflow-hidden border border-gray-100">
+
+            <div class="main-header text-white text-left py-4 pl-6 md:pl-10 px-6 text-lg md:text-xl tracking-wider">
                 <h2>RECENT AUDIT LOGS</h2>
             </div>
 
             <div class="bg-white p-4 sm:p-6 md:p-8">
                 {{-- Responsive Table Container --}}
                 <div class="overflow-x-auto">
-                    <table class="min-w-full border-collapse rounded-lg border border-gray-200 whitespace-nowrap">
-                        <thead class="bg-gray-100 text-sm font-semibold text-gray-700 uppercase">
+                    <table class="min-w-full border-collapse border border-gray-200 rounded-lg whitespace-nowrap">
+                        <thead class="bg-gray-100 text-gray-700 text-sm uppercase font-semibold">
                             <tr>
-                                <th class="w-1/6 border-b px-4 py-3 text-left">User</th>
-                                <th class="w-1/4 border-b px-4 py-3 text-left">Action</th>
-                                <th class="w-2/3 border-b px-4 py-3 text-left">Details</th>
-                                <th class="w-1/6 border-b px-4 py-3 text-left">Date</th>
+                                <th class="px-4 py-3 text-left border-b w-1/6">User</th>
+                                <th class="px-4 py-3 text-left border-b w-1/4">Action</th>
+                                <th class="px-4 py-3 text-left border-b w-2/3">Details</th>
+                                <th class="px-4 py-3 text-left border-b w-1/6">Date</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
-                            @foreach (\App\Models\AuditLog::latest()->take(5)->get() as $log)
-                                <tr class="transition hover:bg-gray-50">
+                        <tbody class="text-gray-700 text-sm divide-y divide-gray-200">
+                            @foreach(\App\Models\AuditLog::latest()->take(5)->get() as $log)
+                                <tr class="hover:bg-gray-50 transition">
                                     <td class="px-4 py-3 font-medium">{{ $log->user->username ?? 'System' }}</td>
                                     <td class="px-4 py-3">
-                                        <span
-                                            class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800"
-                                        >
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
                                             {{ $log->action }}
                                         </span>
                                     </td>
-                                    <td class="max-w-[200px] truncate px-4 py-3 md:max-w-none">
+                                    <td class="px-4 py-3 max-w-[200px] md:max-w-none truncate">
                                         {{ $log->details }}
                                     </td>
                                     <td class="px-4 py-3 text-gray-500">
@@ -119,6 +112,7 @@
             </div>
         </div>
     </section>
+
 @endsection
 
 @push('styles')

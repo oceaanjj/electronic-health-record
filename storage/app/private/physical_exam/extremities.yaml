@@ -1,851 +1,538 @@
 extremities:
-  - keywords:
-      [
-        "calf tenderness",
-        "dependent cyanosis",
-        "pitting 2+",
-        "brown pigmentation",
-      ]
-    alert: "Findings indicate chronic venous changes such as stasis dermatitis and venous congestion; consider venous insufficiency management and skin care."
-    severity: "info"
-  - keywords:
-      ["dependent rubor", "pallor on elevation", "temperature asymmetry"]
-    alert: "Postural color changes and temperature differences suggest arterial insufficiency (PAD); consider vascular assessment and ABI testing."
-    severity: "warning"
-  - keywords:
-      ["unilateral calf swelling", "tender varix", "positive calf squeeze test"]
-    alert: "Unilateral calf swelling with tenderness and positive calf tests raises concern for DVT — urgent diagnostic imaging is indicated."
-    severity: "critical"
-  - keywords: ["pitting edema", "pedal edema"]
-    alert: "Pitting edema may reflect fluid overload from heart failure, renal disease, hepatic disease, or venous insufficiency; correlate clinically."
-    severity: "warning"
-  - keywords: ["absent pulses", "cold extremities"]
-    alert: "Absent or markedly diminished distal pulses with cold extremity suggest critical limb ischemia or acute arterial occlusion; urgent vascular assessment necessary."
-    severity: "critical"
-  - keywords: ["weak dorsalis pedis pulse", "weak posterior tibial pulse"]
-    alert: "Weak distal pulses can indicate peripheral arterial disease and decreased perfusion; consider ABI measurement and vascular referral."
-    severity: "warning"
-  - keywords:
-      ["stasis dermatitis", "hemosiderin staining", "brown pigmentation"]
-    alert: "Hyperpigmentation and dermatitis over the lower leg are typical of chronic venous insufficiency and venous hypertension."
-    severity: "info"
-  - keywords: ["arterial ulcer", "toe ulcer", "painful ulcer"]
-    alert: "Painful ulcers on distal toes or pressure points often reflect arterial insufficiency and require vascular evaluation and wound care."
-    severity: "critical"
-  - keywords: ["venous ulcer", "medial malleolus ulcer", "edema"]
-    alert: "Ulcer near the medial malleolus with surrounding edema is characteristic of venous ulceration due to chronic venous disease."
-    severity: "warning"
-  - keywords: ["lymphedema", "non-pitting edema"]
-    alert: "Non-pitting edema with lymphatic distribution suggests lymphedema; evaluate for lymphatic obstruction or prior surgery/irradiation."
-    severity: "info"
-  - keywords: ["intermittent claudication", "exertional leg pain"]
-    alert: "Exercise-induced cramping or pain relieved by rest suggests intermittent claudication from PAD; vascular studies recommended."
-    severity: "warning"
-  - keywords: ["pallor on elevation", "dependent rubor", "hair loss on legs"]
-    alert: "Combined findings of elevation pallor, dependent rubor, and hair loss suggest chronic arterial insufficiency."
-    severity: "warning"
-  - keywords: ["pulsatile mass in groin", "pulsatile limb mass"]
-    alert: "Palpable pulsatile mass may indicate an aneurysm or pseudoaneurysm and necessitates urgent vascular imaging."
-    severity: "critical"
-  - keywords: ["prominent superficial veins", "varicosities", "telangiectasia"]
-    alert: "Prominent superficial veins and telangiectasia reflect venous reflux and varicose vein disease; consider duplex evaluation if symptomatic."
-    severity: "info"
-  - keywords: ["shiny skin", "muscle wasting", "loss of hair on lower leg"]
-    alert: "Shiny, hairless skin with muscle atrophy is suggestive of chronic arterial insufficiency."
-    severity: "warning"
-  - keywords: ["delayed capillary refill", "capillary refill >3s"]
-    alert: "Prolonged capillary refill (>3 s) indicates impaired peripheral perfusion and may reflect hypoperfusion or arterial disease."
-    severity: "warning"
-  - keywords: ["cold pale foot", "pain at rest"]
-    alert: "Cold, pale foot with rest pain is concerning for critical limb ischemia and needs urgent vascular care."
-    severity: "critical"
-  - keywords: ["warm swollen leg", "erythema tracking up leg"]
-    alert: "Warm, erythematous, swollen leg may indicate cellulitis or deep infection; assess for systemic signs and consider antibiotics."
-    severity: "warning"
-  - keywords: ["pulsatile limb mass", "bruit over femoral artery"]
-    alert: "Pulsatile mass and vascular bruit suggest aneurysmal disease or high-flow lesion; vascular imaging recommended."
-    severity: "critical"
-  - keywords: ["palpable cord", "tender varix", "localized erythema"]
-    alert: "Tender palpable cord and local erythema indicate superficial thrombophlebitis; evaluate for extension to deep system if risk factors present."
-    severity: "warning"
-  - keywords: ["pitting 3+", "brawny edema", "weeping dermatitis"]
-    alert: "Marked pitting edema with brawny changes and weeping dermatitis suggests chronic venous insufficiency with advanced skin changes."
-    severity: "info"
-  - keywords: ["ankle brachial index low", "ABI <0.9"]
-    alert: "ABI <0.9 indicates peripheral arterial disease; lower ABI values denote more severe disease and warrant vascular follow-up."
-    severity: "warning"
-  - keywords: ["ABI <0.5", "ischemic rest pain"]
-    alert: "ABI <0.5 with rest pain indicates severe ischemia and high risk for limb loss — urgent vascular evaluation required."
-    severity: "critical"
-  - keywords: ["atrophy of calf", "muscle wasting"]
-    alert: "Calf muscle atrophy may result from chronic disuse or chronic ischemia; correlate with vascular and neurologic exam findings."
-    severity: "warning"
-  - keywords: ["callus over metatarsal head", "ulcer under metatarsal head"]
-    alert: "Callus and underlying ulceration at metatarsal heads suggest pressure concentration often seen in neuropathic (diabetic) feet."
-    severity: "warning"
-  - keywords: ["neuropathic foot", "loss of protective sensation"]
-    alert: "Loss of protective sensation increases risk for unrecognized trauma and ulceration, particularly in diabetic neuropathy."
-    severity: "warning"
-  - keywords: ["granulation tissue in ulcer", "foul smelling ulcer"]
-    alert: "Ulcer with granulation tissue and malodor suggests chronic infected ulcer and may require debridement and targeted antibiotics."
-    severity: "critical"
-  - keywords: ["skin shiny", "thin shiny skin", "reduced ankle dorsiflexion"]
-    alert: "Shiny, thin skin with limited joint motion can be associated with chronic ischemia or advanced peripheral vascular disease."
-    severity: "warning"
-  - keywords: ["varicosities", "tender varix", "thrombosed varix"]
-    alert: "Thrombosed varix presents with pain and localized swelling; manage symptomatically and evaluate thrombosis extent."
-    severity: "warning"
-  - keywords: ["non-pitting edema", "dorsum foot edema"]
-    alert: "Non-pitting edema localized to dorsum of foot suggests lymphatic obstruction or lymphedema rather than fluid overload."
-    severity: "info"
-  - keywords: ["temperature gradient between limbs", "asymmetric pulses"]
-    alert: "Temperature or pulse asymmetry between limbs suggests arterial occlusion or severe stenosis — further vascular testing is indicated."
-    severity: "warning"
-  - keywords: ["mottled extremity", "skin mottling"]
-    alert: "Mottling of the extremity can reflect poor perfusion and may be seen in shock or severe arterial compromise."
-    severity: "warning"
-  - keywords: ["pitting 1+", "mild pedal edema"]
-    alert: "Mild pitting edema may occur with venous insufficiency, prolonged standing, or early volume overload; correlate clinically."
-    severity: "info"
-  - keywords: ["pressure ulcer over heel", "ischemic wound bed"]
-    alert: "Pressure ulcer on heel with ischemic wound bed suggests combined pressure injury and poor perfusion — offloading and vascular assessment needed."
-    severity: "warning"
-  - keywords: ["foul smelling ulcer", "necrotic wound bed"]
-    alert: "Foul-smelling necrotic ulcer strongly suggests infection and tissue necrosis; urgent debridement and antibiotics may be necessary."
-    severity: "critical"
-  - keywords: ["positive Homans sign", "history of DVT"]
-    alert: "Positive Homans sign is nonspecific but combined with history of DVT increases suspicion for recurrent venous thrombosis — obtain diagnostic imaging."
-    severity: "warning"
-  - keywords: ["groin tender nodes", "lymphadenopathy in groin"]
-    alert: "Tender inguinal nodes may indicate local infection or lymphatic involvement; evaluate for source of infection or malignancy."
-    severity: "warning"
-  - keywords: ["lymphedema", "lymphangitic streaking"]
-    alert: "Lymphangitic streaking with localized erythema suggests lymphatic involvement of infection; treat underlying infection and consider lymphedema management."
-    severity: "warning"
-  - keywords: ["onychodystrophy", "fungal nail changes", "onychomycosis"]
-    alert: "Nail dystrophy and fungal infection increase the risk of secondary bacterial infection and may require topical or systemic antifungals."
-    severity: "info"
-  - keywords: ["hair loss on legs", "thin shiny skin"]
-    alert: "Hair loss and thin, shiny skin correlate with chronic arterial insufficiency and reduced cutaneous circulation."
-    severity: "warning"
-  - keywords: ["cold extremities", "pale cool limb", "absent capillary refill"]
-    alert: "Cold, pale extremities with absent capillary refill suggest severe peripheral perfusion deficit requiring urgent assessment."
-    severity: "critical"
-  - keywords: ["dependent rubor on standing", "elevation pallor"]
-    alert: "Elevation pallor and dependent rubor are classic signs of severe chronic arterial disease (PAD)."
-    severity: "warning"
-  - keywords: ["tender swollen calf", "recent travel", "long bone cast"]
-    alert: "Tender swollen calf in a patient with recent travel or immobilization increases pretest probability of DVT — urgent imaging is indicated."
-    severity: "critical"
-  - keywords: ["edematous dorsum of foot", "ankle circumference increased"]
-    alert: "Dorsal foot edema and increased ankle circumference may indicate venous insufficiency, heart failure, or lymphatic dysfunction; correlate with systemic signs."
-    severity: "warning"
-  - keywords: ["cold extremities", "temperature asymmetry", "ABI <0.9"]
-    alert: "Cold limbs with abnormal ABI suggest peripheral arterial disease and reduced perfusion; vascular referral recommended."
-    severity: "warning"
-  - keywords: ["pitting 4+", "brawny skin", "weeping dermatitis"]
-    alert: "Severe pitting edema with skin breakdown and exudate indicates advanced venous disease or severe fluid overload — address skin care and underlying cause."
-    severity: "warning"
-  - keywords: ["calf circumference asymmetry", "unilateral swelling"]
-    alert: "Asymmetric calf circumference suggests localized process such as DVT, hematoma, or localized infection — investigate promptly."
-    severity: "warning"
-  - keywords: ["crepitus in joint", "joint effusion", "erythema"]
-    alert: "Crepitus with joint effusion and erythema may reflect septic arthritis or severe inflammatory arthropathy requiring urgent evaluation."
-    severity: "critical"
-  - keywords: ["positive D-dimer history", "history of DVT", "recent surgery"]
-    alert: "History items that increase DVT risk (recent surgery, prior DVT, positive D-dimer) should lower threshold for diagnostic imaging."
-    severity: "warning"
-  - keywords: ["cold extremities", "mottled extremity", "shock signs"]
-    alert: "Mottled, cold extremities in a patient with systemic instability suggest poor perfusion and shock — immediate resuscitation and vascular evaluation needed."
-    severity: "critical"
-  - keywords:
-      ["pitting 2+", "venous stasis changes", "brown hemosiderin staining"]
-    alert: "Moderate pitting edema with stasis changes suggests chronic venous insufficiency; compression therapy and skin care may be indicated."
-    severity: "info"
-  - keywords: ["palpable thrill", "vascular graft", "fistula"]
-    alert: "Palpable thrill over vascular graft or dialysis fistula indicates high flow access; evaluate access function and complications if symptomatic."
-    severity: "info"
-  - keywords: ["tender lymphadenopathy in groin", "local infection"]
-    alert: "Tender inguinal lymphadenopathy often suggests local infection or dermatologic source and requires evaluation for a drainable focus."
-    severity: "warning"
-  - keywords:
-      [
-        "ulcer under metatarsal head",
-        "callus over metatarsal head",
-        "neuropathic foot",
-      ]
-    alert: "Plantar ulcer beneath callus commonly occurs in neuropathic feet and requires offloading and wound care to prevent progression."
-    severity: "warning"
-  - keywords: ["pallor on elevation", "ABI <0.9", "hair loss on legs"]
-    alert: "Combination of elevation pallor, low ABI, and hair loss strongly points to PAD and warrants expedited vascular assessment."
-    severity: "warning"
-  - keywords: ["heel pressure ulcer", "pressure injury", "offloading needed"]
-    alert: "Heel pressure ulcer requires immediate offloading, local wound management, and evaluation for contributing ischemia or infection."
-    severity: "warning"
-  - keywords:
-      ["ankle circumference increased", "pitting 1+", "venous engorgement"]
-    alert: "Mild asymmetric swelling with venous engorgement is commonly due to venous insufficiency or dependent edema — conservative management and assessment recommended."
-    severity: "info"
-  - keywords: ["pitting edema", "renal failure edema"]
-    alert: "Pitting edema in context of renal failure suggests fluid retention and requires management of fluid balance and renal therapy optimization."
-    severity: "warning"
-  - keywords: ["pitting edema", "heart failure edema", "orthopnea history"]
-    alert: "Edema with heart failure symptoms (orthopnea) likely reflects volume overload — consider diuresis and cardiac evaluation."
-    severity: "warning"
-  - keywords: ["tender varix", "palpable cord", "localized erythema"]
-    alert: "Tender varicose vein with cord-like structure indicates superficial thrombophlebitis; evaluate and treat symptomatically, consider anticoagulation if extension suspected."
-    severity: "warning"
-  - keywords:
-      [
-        "dependent cyanosis",
-        "venous engorgement",
-        "prominent superficial veins",
-      ]
-    alert: "Dependent cyanosis and venous engorgement are consistent with venous congestion; assess for heart failure or venous disease."
-    severity: "warning"
-  - keywords: ["clubbing of toes", "onycholysis"]
-    alert: "Digital clubbing may reflect chronic hypoxemia or underlying cardiopulmonary disease; investigate underlying causes."
-    severity: "warning"
-  - keywords: ["ischemic rest pain", "ABI <0.5", "cold pale foot"]
-    alert: "Rest pain with very low ABI indicates critical limb ischemia requiring urgent vascular intervention to prevent limb loss."
-    severity: "critical"
-  - keywords: ["pitting 3+", "sacral edema", "generalized edema"]
-    alert: "More generalized pitting edema involving sacrum and lower extremities suggests systemic fluid overload such as heart or renal failure."
-    severity: "warning"
-  - keywords:
-      ["erythema tracking up leg", "red hot swollen leg", "systemic fever"]
-    alert: "Erythema ascending the leg with systemic signs suggests spreading cellulitis or necrotizing infection — urgent treatment needed."
-    severity: "critical"
-  - keywords: ["atrophy of calf", "reduced ankle dorsiflexion", "drop foot"]
-    alert: "Calf atrophy with weakness and foot drop suggests neurologic compromise such as peroneal nerve palsy or severe disuse."
-    severity: "warning"
-  - keywords: ["telangiectasia", "spider veins", "reticular veins"]
-    alert: "Superficial telangiectasia and reticular veins are cosmetic venous findings but may indicate underlying reflux in symptomatic patients."
-    severity: "info"
-  - keywords:
-      ["pressure ulcer over heel", "necrotic wound bed", "foul smelling ulcer"]
-    alert: "Pressure ulcer with necrosis and malodor suggests deep tissue involvement and infection — urgent wound care and debridement indicated."
-    severity: "critical"
-  - keywords: ["varicose veins", "tender varix", "history of pregnancy"]
-    alert: "Varicose veins commonly worsen with pregnancy and may produce discomfort; conservative measures and evaluation for reflux can help."
-    severity: "info"
-  - keywords: ["palpable cord", "thrombosed varix", "local warmth"]
-    alert: "Thrombosed superficial vein with local inflammation is painful and warrants symptomatic care and assessment for deeper thrombosis."
-    severity: "warning"
-  - keywords:
-      ["loss of protective sensation", "numbness in toes", "diabetic foot"]
-    alert: "Loss of protective sensation in diabetes predisposes to unnoticed trauma and ulcer formation — implement foot care and screening."
-    severity: "warning"
-  - keywords: ["foot drop", "drop foot", "peroneal nerve palsy"]
-    alert: "Acute foot drop suggests peripheral nerve injury such as common peroneal nerve involvement; evaluate for entrapment or neuropathy."
-    severity: "warning"
-  - keywords: ["pitting edema", "hepatic failure edema", "ascites"]
-    alert: "Edema associated with hepatic failure and ascites implies hypoalbuminemia and portal hypertension contributing to peripheral swelling."
-    severity: "warning"
-  - keywords: ["pale cool limb", "absent pulses", "severe pain"]
-    alert: "Pale, cool limb with absent pulses and severe pain strongly suggests acute arterial occlusion — immediate revascularization needed."
-    severity: "critical"
-  - keywords:
-      [
-        "ulcer near medial malleolus",
-        "venous ulcer",
-        "edema",
-        "brown pigmentation",
-      ]
-    alert: "Medial ankle ulcer with edema and pigmentation is consistent with chronic venous ulceration and requires compression therapy if arterial supply adequate."
-    severity: "warning"
-  - keywords: ["skin tight", "compartment firmness", "tense swelling"]
-    alert: "Tense, firm swelling with severe pain is suspicious for compartment syndrome — emergent surgical evaluation recommended."
-    severity: "critical"
-  - keywords: ["peripheral cyanosis", "blue toes", "livedo reticularis"]
-    alert: "Peripheral cyanosis or blue toes may indicate arterial occlusion, embolic phenomena, or severe hypoperfusion; investigate promptly."
-    severity: "critical"
-  - keywords: ["ulcer with granulation tissue", "healing wound", "no erythema"]
-    alert: "Ulcer with healthy granulation tissue and absence of infection signs indicates a healing wound under appropriate management."
-    severity: "info"
-  - keywords: ["calf tenderness", "recent surgery", "immobile patient"]
-    alert: "Calf tenderness in postoperative or immobilized patients increases probability of DVT — consider duplex ultrasound."
-    severity: "critical"
-  - keywords: ["pitting edema", "orthostatic pallor", "elevation pallor"]
-    alert: "Edema with orthostatic pallor suggests mixed vascular contributions — evaluate for both arterial and venous components."
-    severity: "warning"
-  - keywords: ["hair loss on legs", "thin shiny skin", "decreased pulses"]
-    alert: "Combining trophic skin changes with reduced pulses suggests chronic arterial insufficiency."
-    severity: "warning"
-  - keywords:
-      [
-        "cold extremities",
-        "capillary refill prolonged",
-        "delayed capillary refill",
-      ]
-    alert: "Delayed capillary refill with cold extremities supports diagnosis of impaired peripheral perfusion; assess for systemic causes."
-    severity: "warning"
-  - keywords: ["palpable thrill", "arteriovenous fistula", "high-flow access"]
-    alert: "Palpable thrill over an AV fistula indicates functioning dialysis access; assess for complications if new changes occur."
-    severity: "info"
-  - keywords: ["tender swollen calf", "positive Homans sign"]
-    alert: "Tender calf with positive Homans sign is not diagnostic but increases suspicion for DVT; pursue objective testing."
-    severity: "warning"
-  - keywords: ["dependent rubor", "pain with elevation"]
-    alert: "Symptoms worsening with elevation and improvement when dependent are classic for arterial insufficiency and collateral circulation insufficiency."
-    severity: "warning"
-  - keywords: ["venous engorgement", "prominent superficial veins", "edema"]
-    alert: "Venous engorgement with edema commonly denotes venous hypertension; symptomatic management and further venous mapping may help."
-    severity: "info"
-  - keywords:
-      ["pitting 2+", "ankle circumference increased", "mild cellulitis signs"]
-    alert: "Moderate pitting edema with mild overlying skin inflammation may indicate early cellulitis superimposed on chronic edema."
-    severity: "warning"
-  - keywords: ["ulcer with necrotic slough", "gangrenous toe", "black eschar"]
-    alert: "Necrotic or gangrenous tissue on toes indicates severe ischemia with tissue loss risk — urgent vascular surgery consult required."
-    severity: "critical"
-  - keywords: ["dependant cyanosis", "venous stasis changes"]
-    alert: "Dependent cyanosis coupled with stasis changes suggests chronic venous congestion and poor venous return."
-    severity: "warning"
-  - keywords: ["pitting 1+", "mild varicosities"]
-    alert: "Mild pitting edema with superficial varicosities is often benign but should be assessed if symptomatic."
-    severity: "info"
-  - keywords: ["pitting 3+", "sacral edema", "generalized anasarca"]
-    alert: "Marked pitting edema with sacral involvement and anasarca indicates systemic fluid overload requiring medical management."
-    severity: "warning"
-  - keywords: ["ulcer edges undermined", "foul smelling ulcer", "sinus tract"]
-    alert: "Undermined ulcer edges and malodor suggest chronic infected wound with possible deep tissue involvement — surgical debridement and antibiotics may be needed."
-    severity: "critical"
-  - keywords: ["calf tenderness", "palpable cord", "history of DVT"]
-    alert: "Calf pain and cord-like structure with prior DVT increases concern for recurrent deep venous thrombosis — urgent imaging recommended."
-    severity: "critical"
-  - keywords: ["palpable pulse deficit", "asymmetric pulses", "cold limb"]
-    alert: "Asymmetric pulses with a palpable deficit suggest acute arterial occlusion and require emergent vascular evaluation."
-    severity: "critical"
-  - keywords: ["varicosities", "pregnancy related edema", "tender varix"]
-    alert: "Varicose changes aggravated by pregnancy are common and often managed conservatively unless complications occur."
-    severity: "info"
-  - keywords:
-      ["fissured skin", "stasis dermatitis oozing", "venous ulcer history"]
-    alert: "Oozing dermatitis with fissures in the lower leg indicates chronic venous disease and increased infection risk."
-    severity: "warning"
-  - keywords: ["pitting 2+", "edematous dorsum of foot", "dependent swelling"]
-    alert: "Moderate dependent swelling and pitting in the dorsum of foot suggests venous or lymphatic dysfunction."
-    severity: "warning"
-  - keywords:
-      [
-        "erythematous streaking",
-        "lymphangitic streak",
-        "red streaks toward groin",
-      ]
-    alert: "Erythematous streaking toward regional lymph nodes suggests lymphangitis commonly from streptococcal cellulitis; prompt antibiotics are indicated."
-    severity: "warning"
-  - keywords: ["tender warm localized area", "fluctuant mass", "abscess"]
-    alert: "Warm, tender, fluctuant mass suggests a soft-tissue abscess requiring drainage and antibiotics."
-    severity: "critical"
-  - keywords: ["boggy synovium", "joint warmth", "severe pain with ROM"]
-    alert: "Boggy, warm, and tender joint with markedly reduced range of motion suggests septic arthritis — urgent arthrocentesis required."
-    severity: "critical"
-  - keywords:
-      [
-        "ecchymosis after trauma",
-        "bruising around joint",
-        "swelling after injury",
-      ]
-    alert: "Periarticular ecchymosis and swelling post-injury may indicate ligamentous tear, hematoma, or fracture; immobilize and image as indicated."
-    severity: "warning"
-  - keywords:
-      ["hematoma with expanding size", "sentinel hemorrhage", "rapid swelling"]
-    alert: "Expanding hematoma with rapid swelling raises concern for ongoing bleeding or vascular injury — urgent evaluation required."
-    severity: "critical"
-  - keywords:
-      ["open wound with exposed bone", "open fracture", "compound fracture"]
-    alert: "Open fracture (bone exposed) carries high infection and complication risk — emergent orthopedic and wound management required."
-    severity: "critical"
-  - keywords:
-      [
-        "shortened externally rotated lower limb",
-        "leg shortened",
-        "external rotation deformity",
-      ]
-    alert: "Limb shortening with external rotation suggests a displaced femoral neck or intertrochanteric fracture — urgent orthopedic care."
-    severity: "critical"
-  - keywords:
-      [
-        "tenderness over fibular head",
-        "lateral knee swelling",
-        "peroneal nerve symptoms",
-      ]
-    alert: "Fibular head tenderness with nerve symptoms warrants evaluation for proximal fibular injury or common peroneal nerve compromise."
-    severity: "warning"
-  - keywords: ["positive Thompson test", "absent plantar flexion on squeeze"]
-    alert: "Positive Thompson test indicates Achilles tendon rupture — immobilize and arrange orthopedic follow-up."
-    severity: "warning"
-  - keywords:
-      [
-        "pain on passive stretch of compartment",
-        "pain out of proportion",
-        "paresthesia",
-      ]
-    alert: "Severe pain on passive stretch with paresthesia is highly suggestive of compartment syndrome — emergent fasciotomy may be needed."
-    severity: "critical"
-  - keywords:
-      [
-        "loss of two-point discrimination",
-        "decreased protective sensation",
-        "monofilament abnormal",
-      ]
-    alert: "Impaired two-point discrimination or monofilament testing indicates peripheral sensory loss and increased ulceration risk."
-    severity: "warning"
-  - keywords:
-      [
-        "erysipelas pattern raised border",
-        "skin sharply demarcated",
-        "hot bright erythema",
-      ]
-    alert: "Sharply demarcated, bright erythema with raised border is typical of erysipelas (group A strep) and usually responds to antibiotics."
-    severity: "warning"
-  - keywords:
-      ["tender swelling behind knee", "posterior knee mass", "popliteal cyst"]
-    alert: "Tender swelling in the popliteal fossa often represents a Baker cyst; assess for rupture or underlying intra-articular pathology."
-    severity: "info"
-  - keywords:
-      [
-        "pain at base of thumb",
-        "tender anatomic snuffbox",
-        "scaphoid tenderness",
-      ]
-    alert: "Anatomic snuffbox tenderness after fall suggests scaphoid fracture; treat as fracture and image even if initial x-ray negative."
-    severity: "warning"
-  - keywords:
-      [
-        "crepitus with motion of joint",
-        "grating sensation",
-        "joint osteoarthritis features",
-      ]
-    alert: "Crepitus with reduced range of motion commonly reflects osteoarthritic change; manage conservatively and consider imaging for definitive diagnosis."
-    severity: "info"
-  - keywords:
-      [
-        "erythematous raised nodule",
-        "tender subcutaneous nodule",
-        "erythema nodosum like",
-      ]
-    alert: "Tender subcutaneous nodules on the lower extremities can be erythema nodosum or panniculitis — evaluate for systemic causes (infection, sarcoid)."
-    severity: "warning"
-  - keywords:
-      [
-        "sharp bone point tenderness",
-        "focal bony tenderness",
-        "suspected osteomyelitis",
-      ]
-    alert: "Localized bone tenderness with overlying skin changes raises concern for osteomyelitis; obtain imaging and cultures for management."
-    severity: "critical"
-  - keywords:
-      ["hot swollen toe", "great toe erythema", "intense pain at MTP joint"]
-    alert: "Acute hot, swollen great toe with intense MTP pain is suggestive of gout or septic arthritis — aspirate joint to distinguish."
-    severity: "critical"
-  - keywords:
-      [
-        "creeping erythema",
-        "induration spreading from wound",
-        "increasing pain",
-      ]
-    alert: "Spreading induration and worsening pain from a wound site suggest progressive soft-tissue infection or cellulitis requiring antibiotics."
-    severity: "critical"
-  - keywords:
-      [
-        "tenderness over tibial shaft",
-        "localized swelling after strike",
-        "point tenderness",
-      ]
-    alert: "Point tenderness over bone after trauma suggests possible stress or acute fracture; immobilize and obtain radiographs."
-    severity: "warning"
-  - keywords:
-      [
-        "reduced capillary refill in toes",
-        "cyanotic toes",
-        "delayed digital refill",
-      ]
-    alert: "Delayed digital capillary refill and cyanotic toes indicate poor digital perfusion; investigate arterial supply and embolic sources."
-    severity: "warning"
-  - keywords:
-      [
-        "splinter hemorrhages under nail",
-        "nail fold hemorrhage",
-        "infective endocarditis sign",
-      ]
-    alert: "Splinter hemorrhages may be nonspecific but can indicate infective endocarditis in the appropriate clinical context."
-    severity: "warning"
-  - keywords:
-      [
-        "palpable fluctuance over bursa",
-        "prepatellar swelling",
-        "housemaid knee",
-      ]
-    alert: "Fluctuant prepatellar swelling suggests bursitis; aspirate if infection suspected and manage accordingly."
-    severity: "warning"
-  - keywords:
-      [
-        "painful subcutaneous nodule along tendon",
-        "tenosynovitis signs",
-        "triggering",
-      ]
-    alert: "Tenosynovitis presents with localized tendon sheath tenderness and may require immobilization and anti-inflammatory treatment."
-    severity: "warning"
-  - keywords:
-      ["dorsal foot blistering", "shear blister", "tense bullae on sole"]
-    alert: "Tense blisters on weight-bearing surfaces often result from repetitive shear or neuropathy and need protection and debridement if necessary."
-    severity: "info"
-  - keywords:
-      ["ischemic digit with sharp line of demarcation", "dry gangrene of toe"]
-    alert: "Dry gangrene with clear demarcation of an ischemic digit suggests chronic ischemia; vascular surgery consult for limb salvage options."
-    severity: "critical"
-  - keywords:
-      [
-        "erythema with central clearing",
-        "target lesion on leg",
-        "erythema migrans like",
-      ]
-    alert: "Target lesion with central clearing on extremity may represent erythema migrans (Lyme) or erythema multiforme; evaluate travel/exposure history."
-    severity: "warning"
-  - keywords:
-      [
-        "swollen painful metatarsophalangeal joint",
-        "heat and erythema over MTP",
-      ]
-    alert: "Acute painful MTP swelling suggests inflammatory arthropathy (gout) or septic involvement; consider aspiration and microscopy."
-    severity: "critical"
-  - keywords:
-      [
-        "ulcer at pressure point with undermining",
-        "deep tissue injury",
-        "dark violaceous skin",
-      ]
-    alert: "Deep pressure-related tissue injury with undermining suggests serious pressure ulceration and possible deep tissue necrosis — wound care urgently required."
-    severity: "critical"
-  - keywords:
-      ["pulses bounding", "wide pulse pressure", "bounding peripheral pulses"]
-    alert: "Bounding peripheral pulses and wide pulse pressure may indicate high-output states or aortic regurgitation — correlate with cardiovascular exam."
-    severity: "warning"
-  - keywords:
-      ["asymmetric limb length", "gait abnormality", "leg length discrepancy"]
-    alert: "Leg length discrepancy can cause gait disturbance and back pain; assess for developmental or post-traumatic causes and consider orthotic correction."
-    severity: "info"
-  - keywords:
-      [
-        "loss of active movement distal to injury",
-        "paralysis of limb",
-        "motor deficit",
-      ]
-    alert: "Acute loss of active movement distally suggests motor nerve injury or severe musculoskeletal disruption — urgent neurologic and orthopedic assessment."
-    severity: "critical"
-  - keywords:
-      [
-        "pain on weight bearing forefoot",
-        "metatarsalgia",
-        "Morton neuroma suspicion",
-      ]
-    alert: "Forefoot pain with localized tenderness between metatarsals may suggest Morton's neuroma; consider cushioning, steroid injection, or referral."
-    severity: "info"
-  - keywords:
-      ["bony deformity at joint", "subluxation visible", "joint malalignment"]
-    alert: "Visible joint malalignment suggests dislocation or chronic subluxation; reduce or refer for orthopedic management depending on acuity."
-    severity: "critical"
-  - keywords:
-      [
-        "dorsalis pedis pulse palpable but faint",
-        "difficult to palpate pulse",
-        "weak pedal pulses",
-      ]
-    alert: "Faint but palpable pedal pulses may reflect peripheral arterial disease or low cardiac output — further vascular assessment advised."
-    severity: "warning"
-  - keywords:
-      ["thickened painful Achilles tendon", "tendon swelling posterior ankle"]
-    alert: "Achilles tendon thickening with tenderness suggests tendinopathy; modify activity and consider physical therapy or steroid-sparing interventions."
-    severity: "info"
-  - keywords:
-      ["erythema with honey-colored crust", "periorbital or perioral crusting"]
-    alert: "Honey-colored crusts are characteristic of impetigo and require topical or systemic antibiotics depending on extent."
-    severity: "info"
-  - keywords:
-      ["ulcer with undermined edge and foul odor", "sinus tract to bone"]
-    alert: "Ulcer with sinus tract to bone and malodor strongly suggests chronic osteomyelitis; imaging and bone culture should be obtained."
-    severity: "critical"
-  - keywords:
-      [
-        "tender slender swelling along plantar fascia",
-        "plantar fasciitis point tenderness",
-      ]
-    alert: "Focal plantar heel tenderness at the plantar fascia insertion is typical of plantar fasciitis — treat with stretching, orthotics, and NSAIDs."
-    severity: "info"
-  - keywords:
-      ["erythema with sharply raised border on leg", "systemically well"]
-    alert: "Sharply raised, well-demarcated erythema may suggest erysipelas; treat early with appropriate antibiotics."
-    severity: "warning"
-  - keywords:
-      [
-        "fungal intertrigo between toes",
-        "maceration between toes",
-        "athlete's foot",
-      ]
-    alert: "Interdigital maceration and scaling commonly indicate tinea pedis and respond to topical antifungal therapy and drying measures."
-    severity: "info"
-  - keywords:
-      ["fungal nail with subungual debris", "thickened yellow nail plate"]
-    alert: "Onychomycosis presents as subungual debris and thickening of nail plates; treatment options include topical or systemic antifungal therapy."
-    severity: "info"
-  - keywords:
-      [
-        "acute swelling after insect bite",
-        "widespread urticarial wheals on limb",
-      ]
-    alert: "Rapid swelling and urticarial reaction after insect bite may represent allergic reaction; antihistamines and monitoring for systemic involvement are warranted."
-    severity: "warning"
-  - keywords:
-      [
-        "localized cool pallor following embolic event",
-        "sudden limb pain and pallor",
-      ]
-    alert: "Sudden limb pallor and pain are concerning for arterial embolus causing acute ischemia — urgent embolectomy may be necessary."
-    severity: "critical"
-  - keywords:
-      [
-        "tense bulla after frost exposure",
-        "white waxy skin after cold injury",
-        "frostbite blistering",
-      ]
-    alert: "Blistering and white waxy appearance after freezing exposure indicates frostbite; rapid rewarming and specialist care advised."
-    severity: "critical"
-  - keywords:
-      [
-        "lateral foot pain with swelling after inversion",
-        "ankle unstable",
-        "positive anterior drawer",
-      ]
-    alert: "Ankle instability with positive anterior drawer and lateral swelling suggests ATFL sprain or ligament rupture; immobilize and image if severe."
-    severity: "warning"
-  - keywords:
-      [
-        "ulcer with pale base and punched-out margins",
-        "neuropathic painless ulcer",
-      ]
-    alert: "Painless punched-out ulcers with pale bases are typical of neuropathic (diabetic) foot ulcers and require offloading and glycemic control."
-    severity: "warning"
-  - keywords:
-      [
-        "erythematous blistering with intense pain",
-        "herpetic whitlow like",
-        "grouped vesicles on finger or toe",
-      ]
-    alert: "Grouped vesicles with pain suggest herpetic infection and respond to antiviral therapy when diagnosed early."
-    severity: "info"
-  - keywords:
-      [
-        "localized warmth and tenderness over bone after puncture",
-        "puncture wound with deep infection risk",
-      ]
-    alert: "Puncture wound with localized bone tenderness raises concern for deep space infection or osteomyelitis — evaluate and image urgently."
-    severity: "critical"
-  - keywords:
-      ["varicosities with hemosiderin but no ulcer", "cosmetic venous changes"]
-    alert: "Superficial venous dilation with skin pigmentation but intact skin commonly indicates chronic venous disease; conservative measures often help."
-    severity: "info"
-  - keywords:
-      ["sudden nontraumatic swollen painful calf", "tachycardia", "hypoxia"]
-    alert: "Sudden painful calf with cardiopulmonary symptoms raises concern for DVT with possible pulmonary embolism — urgent workup needed."
-    severity: "critical"
-  - keywords:
-      [
-        "corn over bony prominence",
-        "hyperkeratotic lesion over toe",
-        "painful callus",
-      ]
-    alert: "Hyperkeratotic lesions and corns form over pressure points; treat with debridement and biomechanical correction."
-    severity: "info"
-  - keywords:
-      [
-        "erythema with systemic fever and chills",
-        "rapidly progressing cellulitis",
-      ]
-    alert: "Cellulitis accompanied by systemic fever and rapid progression may indicate severe soft-tissue infection or necrotizing process — urgent management."
-    severity: "critical"
-  - keywords:
-      [
-        "recurrent plantar ulcer",
-        "Charcot foot deformity suspicion",
-        "rocker-bottom foot",
-      ]
-    alert: "Recurrent plantar ulcers and rocker-bottom deformity suggest Charcot arthropathy in neuropathic patients requiring immobilization and referral."
-    severity: "critical"
-  - keywords:
-      [
-        "localized bone tenderness after puncture wound",
-        "deep erythema and drainage",
-      ]
-    alert: "Persistent drainage and focal bone tenderness after puncture imply deep infection or osteomyelitis — surgical and medical management necessary."
-    severity: "critical"
-  - keywords:
-      [
-        "reduced ankle reflexes",
-        "absent Achilles reflex",
-        "peripheral neuropathy sign",
-      ]
-    alert: "Diminished or absent Achilles reflex suggests peripheral neuropathy commonly due to diabetes or neuropathic processes."
-    severity: "warning"
-  - keywords:
-      [
-        "unequal limb temperature with recent trauma",
-        "cool distal to injury",
-        "decreased pulses distal to fracture",
-      ]
-    alert: "Cool distal limb and decreased pulses after fracture suggest vascular compromise secondary to injury — urgent reduction and vascular assessment required."
-    severity: "critical"
-  - keywords:
-      [
-        "bony tenderness with fever and elevated WBC",
-        "suspected osteomyelitis in foot",
-      ]
-    alert: "Fever, elevated inflammatory markers, and focal bone tenderness strongly suggest osteomyelitis — obtain bone imaging and cultures."
-    severity: "critical"
-  - keywords:
-      [
-        "tender nodular mass along extensor tendon",
-        "de Quervain like pain",
-        "Finkelstein positive",
-      ]
-    alert: "Radial wrist tendon sheath tenderness and positive Finkelstein test suggest de Quervain tenosynovitis — conservative therapy or steroid injection may help."
-    severity: "info"
-  - keywords:
-      [
-        "crepitant subcutaneous air",
-        "surgical emphysema after wound",
-        "crackling sensation",
-      ]
-    alert: "Subcutaneous crepitus suggests gas-forming infection or penetrating trauma with air tracking — urgent surgical evaluation required."
-    severity: "critical"
-  - keywords:
-      [
-        "stiff cold fingers with color change on exposure",
-        "episodic pallor and cyanosis",
-        "Raynaud phenomenon",
-      ]
-    alert: "Paroxysmal color changes (white-blue-red) in fingers with cold exposure are typical of Raynaud phenomenon; manage with avoidance and vasodilators if severe."
-    severity: "info"
-  - keywords:
-      [
-        "thickened plantar skin with underlying ulcer risk",
-        "callus with central hemorrhage",
-      ]
-    alert: "Thick callus with central hemorrhage over plantar surfaces indicates imminent skin breakdown and ulceration risk — debride and redistribute pressure."
-    severity: "warning"
-  - keywords:
-      [
-        "painful swollen first MTP with fever",
-        "septic arthritis suspicion in toe",
-      ]
-    alert: "First MTP swelling with fever warrants aspiration to rule out septic arthritis and prompt antibiotics if positive."
-    severity: "critical"
-  - keywords:
-      [
-        "localized hypesthesia over dorsal foot",
-        "sensory level change after injury",
-      ]
-    alert: "Focal sensory loss over foot suggests localized nerve injury or entrapment; electrodiagnostic or imaging tests may be warranted."
-    severity: "warning"
-  - keywords:
-      [
-        "blanching livedo pattern on leg",
-        "reticular mottling persist",
-        "cholesterol emboli suspicion",
-      ]
-    alert: "Persistent livedo reticularis or blue toe with other risk factors may indicate cholesterol embolization syndrome; assess vascular and systemic status."
-    severity: "warning"
-  - keywords:
-      [
-        "tender thickened skin along shin with nodularity",
-        "pretibial myxedema",
-        "thyroid dermopathy suspect",
-      ]
-    alert: "Pretibial plaques with nodularity and induration are characteristic of pretibial myxedema associated with thyroid disease."
-    severity: "info"
-  - keywords:
-      ["erythema and pain at nail fold with pus", "paronychia with abscess"]
-    alert: "Acute paronychia with purulence often requires drainage and antibiotic therapy if extensive."
-    severity: "warning"
-  - keywords:
-      [
-        "localized sensory and motor deficit in foot",
-        "foot numbness and weak dorsiflexion",
-      ]
-    alert: "Combination of sensory loss and motor weakness in foot indicates significant peripheral neuropathy or nerve compression requiring urgent evaluation."
-    severity: "warning"
-  - keywords:
-      [
-        "abnormal plantar thermography",
-        "hot swollen foot without erythema",
-        "Charcot suspicion in diabetic",
-      ]
-    alert: "Warm, swollen foot with diminished pain in diabetic patients suggests acute Charcot joint and requires offloading to prevent deformity."
-    severity: "critical"
-  - keywords:
-      [
-        "tenderness at base of 5th metatarsal",
-        "Jones fracture suspicion",
-        "acute lateral foot pain after inversion",
-      ]
-    alert: "Base of 5th metatarsal tenderness (Jones region) after inversion injury raises concern for Jones fracture — immobilize and image."
-    severity: "warning"
-  - keywords:
-      [
-        "skin fissures with interdigital maceration",
-        "secondary bacterial infection",
-        "weeping between toes",
-      ]
-    alert: "Maceration and fissuring between toes predispose to secondary bacterial cellulitis; keep area dry and treat fungal/bacterial causes."
-    severity: "warning"
-  - keywords:
-      [
-        "chronic nonhealing ulcer with exposed tendon",
-        "tendon exposure in wound",
-      ]
-    alert: "Ulcer exposing tendon indicates severe soft-tissue loss and high infection risk — urgent surgical and wound care."
-    severity: "critical"
-  - keywords:
-      [
-        "localized cold spot with palpable thrill absent",
-        "sudden ischemic change after catheterization",
-      ]
-    alert: "Sudden localized ischemia after vascular intervention or catheterization may signal arterial occlusion at access site — urgent review required."
-    severity: "critical"
-  - keywords:
-      [
-        "painful plantar callosity with underlying ulcer",
-        "punched-out neuropathic lesion under callus",
-      ]
-    alert: "Neuropathic punch-out ulcers under callus require aggressive offloading and wound care to prevent deep infection."
-    severity: "warning"
-  - keywords:
-      [
-        "erythematous tapered lesion following vein distribution",
-        "cellulitis following venous line",
-      ]
-    alert: "Erythema tracking along a superficial vein near an IV site suggests superficial thrombophlebitis or local infection — remove source and treat."
-    severity: "warning"
-  - keywords:
-      [
-        "atrophy of intrinsic hand muscles",
-        "hollowing between metacarpals",
-        "ulnar neuropathy features",
-      ]
-    alert: "Intrinsic hand muscle wasting and intermetacarpal hollowing suggests chronic ulnar neuropathy or denervation and needs neurophysiologic testing."
-    severity: "warning"
-  - keywords:
-      [
-        "subungual hematoma with pain",
-        "nail bed bleeding under nail after trauma",
-      ]
-    alert: "Subungual hematoma is painful and may require nail trephination for decompression if acute and symptomatic."
-    severity: "info"
-  - keywords:
-      [
-        "localized bone erythema with overlying pustule",
-        "suspected bone infection from puncture",
-      ]
-    alert: "Skin pustule over bone with erythema after puncture may indicate deep inoculation and possible bone infection — evaluate urgently."
-    severity: "critical"
+    - keywords: ['calf tenderness', 'dependent cyanosis', 'pitting 2+', 'brown pigmentation']
+      alert: 'Findings indicate chronic venous changes such as stasis dermatitis and venous congestion; consider venous insufficiency management and skin care.'
+      severity: 'info'
+    - keywords: ['dependent rubor', 'pallor on elevation', 'temperature asymmetry']
+      alert: 'Postural color changes and temperature differences suggest arterial insufficiency (PAD); consider vascular assessment and ABI testing.'
+      severity: 'warning'
+    - keywords: ['unilateral calf swelling', 'tender varix', 'positive calf squeeze test']
+      alert: 'Unilateral calf swelling with tenderness and positive calf tests raises concern for DVT — urgent diagnostic imaging is indicated.'
+      severity: 'critical'
+    - keywords: ['pitting edema', 'pedal edema']
+      alert: 'Pitting edema may reflect fluid overload from heart failure, renal disease, hepatic disease, or venous insufficiency; correlate clinically.'
+      severity: 'warning'
+    - keywords: ['absent pulses', 'cold extremities']
+      alert: 'Absent or markedly diminished distal pulses with cold extremity suggest critical limb ischemia or acute arterial occlusion; urgent vascular assessment necessary.'
+      severity: 'critical'
+    - keywords: ['weak dorsalis pedis pulse', 'weak posterior tibial pulse']
+      alert: 'Weak distal pulses can indicate peripheral arterial disease and decreased perfusion; consider ABI measurement and vascular referral.'
+      severity: 'warning'
+    - keywords: ['stasis dermatitis', 'hemosiderin staining', 'brown pigmentation']
+      alert: 'Hyperpigmentation and dermatitis over the lower leg are typical of chronic venous insufficiency and venous hypertension.'
+      severity: 'info'
+    - keywords: ['arterial ulcer', 'toe ulcer', 'painful ulcer']
+      alert: 'Painful ulcers on distal toes or pressure points often reflect arterial insufficiency and require vascular evaluation and wound care.'
+      severity: 'critical'
+    - keywords: ['venous ulcer', 'medial malleolus ulcer', 'edema']
+      alert: 'Ulcer near the medial malleolus with surrounding edema is characteristic of venous ulceration due to chronic venous disease.'
+      severity: 'warning'
+    - keywords: ['lymphedema', 'non-pitting edema']
+      alert: 'Non-pitting edema with lymphatic distribution suggests lymphedema; evaluate for lymphatic obstruction or prior surgery/irradiation.'
+      severity: 'info'
+    - keywords: ['intermittent claudication', 'exertional leg pain']
+      alert: 'Exercise-induced cramping or pain relieved by rest suggests intermittent claudication from PAD; vascular studies recommended.'
+      severity: 'warning'
+    - keywords: ['pallor on elevation', 'dependent rubor', 'hair loss on legs']
+      alert: 'Combined findings of elevation pallor, dependent rubor, and hair loss suggest chronic arterial insufficiency.'
+      severity: 'warning'
+    - keywords: ['pulsatile mass in groin', 'pulsatile limb mass']
+      alert: 'Palpable pulsatile mass may indicate an aneurysm or pseudoaneurysm and necessitates urgent vascular imaging.'
+      severity: 'critical'
+    - keywords: ['prominent superficial veins', 'varicosities', 'telangiectasia']
+      alert: 'Prominent superficial veins and telangiectasia reflect venous reflux and varicose vein disease; consider duplex evaluation if symptomatic.'
+      severity: 'info'
+    - keywords: ['shiny skin', 'muscle wasting', 'loss of hair on lower leg']
+      alert: 'Shiny, hairless skin with muscle atrophy is suggestive of chronic arterial insufficiency.'
+      severity: 'warning'
+    - keywords: ['delayed capillary refill', 'capillary refill >3s']
+      alert: 'Prolonged capillary refill (>3 s) indicates impaired peripheral perfusion and may reflect hypoperfusion or arterial disease.'
+      severity: 'warning'
+    - keywords: ['cold pale foot', 'pain at rest']
+      alert: 'Cold, pale foot with rest pain is concerning for critical limb ischemia and needs urgent vascular care.'
+      severity: 'critical'
+    - keywords: ['warm swollen leg', 'erythema tracking up leg']
+      alert: 'Warm, erythematous, swollen leg may indicate cellulitis or deep infection; assess for systemic signs and consider antibiotics.'
+      severity: 'warning'
+    - keywords: ['pulsatile limb mass', 'bruit over femoral artery']
+      alert: 'Pulsatile mass and vascular bruit suggest aneurysmal disease or high-flow lesion; vascular imaging recommended.'
+      severity: 'critical'
+    - keywords: ['palpable cord', 'tender varix', 'localized erythema']
+      alert: 'Tender palpable cord and local erythema indicate superficial thrombophlebitis; evaluate for extension to deep system if risk factors present.'
+      severity: 'warning'
+    - keywords: ['pitting 3+', 'brawny edema', 'weeping dermatitis']
+      alert: 'Marked pitting edema with brawny changes and weeping dermatitis suggests chronic venous insufficiency with advanced skin changes.'
+      severity: 'info'
+    - keywords: ['ankle brachial index low', 'ABI <0.9']
+      alert: 'ABI <0.9 indicates peripheral arterial disease; lower ABI values denote more severe disease and warrant vascular follow-up.'
+      severity: 'warning'
+    - keywords: ['ABI <0.5', 'ischemic rest pain']
+      alert: 'ABI <0.5 with rest pain indicates severe ischemia and high risk for limb loss — urgent vascular evaluation required.'
+      severity: 'critical'
+    - keywords: ['atrophy of calf', 'muscle wasting']
+      alert: 'Calf muscle atrophy may result from chronic disuse or chronic ischemia; correlate with vascular and neurologic exam findings.'
+      severity: 'warning'
+    - keywords: ['callus over metatarsal head', 'ulcer under metatarsal head']
+      alert: 'Callus and underlying ulceration at metatarsal heads suggest pressure concentration often seen in neuropathic (diabetic) feet.'
+      severity: 'warning'
+    - keywords: ['neuropathic foot', 'loss of protective sensation']
+      alert: 'Loss of protective sensation increases risk for unrecognized trauma and ulceration, particularly in diabetic neuropathy.'
+      severity: 'warning'
+    - keywords: ['granulation tissue in ulcer', 'foul smelling ulcer']
+      alert: 'Ulcer with granulation tissue and malodor suggests chronic infected ulcer and may require debridement and targeted antibiotics.'
+      severity: 'critical'
+    - keywords: ['skin shiny', 'thin shiny skin', 'reduced ankle dorsiflexion']
+      alert: 'Shiny, thin skin with limited joint motion can be associated with chronic ischemia or advanced peripheral vascular disease.'
+      severity: 'warning'
+    - keywords: ['varicosities', 'tender varix', 'thrombosed varix']
+      alert: 'Thrombosed varix presents with pain and localized swelling; manage symptomatically and evaluate thrombosis extent.'
+      severity: 'warning'
+    - keywords: ['non-pitting edema', 'dorsum foot edema']
+      alert: 'Non-pitting edema localized to dorsum of foot suggests lymphatic obstruction or lymphedema rather than fluid overload.'
+      severity: 'info'
+    - keywords: ['temperature gradient between limbs', 'asymmetric pulses']
+      alert: 'Temperature or pulse asymmetry between limbs suggests arterial occlusion or severe stenosis — further vascular testing is indicated.'
+      severity: 'warning'
+    - keywords: ['mottled extremity', 'skin mottling']
+      alert: 'Mottling of the extremity can reflect poor perfusion and may be seen in shock or severe arterial compromise.'
+      severity: 'warning'
+    - keywords: ['pitting 1+', 'mild pedal edema']
+      alert: 'Mild pitting edema may occur with venous insufficiency, prolonged standing, or early volume overload; correlate clinically.'
+      severity: 'info'
+    - keywords: ['pressure ulcer over heel', 'ischemic wound bed']
+      alert: 'Pressure ulcer on heel with ischemic wound bed suggests combined pressure injury and poor perfusion — offloading and vascular assessment needed.'
+      severity: 'warning'
+    - keywords: ['foul smelling ulcer', 'necrotic wound bed']
+      alert: 'Foul-smelling necrotic ulcer strongly suggests infection and tissue necrosis; urgent debridement and antibiotics may be necessary.'
+      severity: 'critical'
+    - keywords: ['positive Homans sign', 'history of DVT']
+      alert: 'Positive Homans sign is nonspecific but combined with history of DVT increases suspicion for recurrent venous thrombosis — obtain diagnostic imaging.'
+      severity: 'warning'
+    - keywords: ['groin tender nodes', 'lymphadenopathy in groin']
+      alert: 'Tender inguinal nodes may indicate local infection or lymphatic involvement; evaluate for source of infection or malignancy.'
+      severity: 'warning'
+    - keywords: ['lymphedema', 'lymphangitic streaking']
+      alert: 'Lymphangitic streaking with localized erythema suggests lymphatic involvement of infection; treat underlying infection and consider lymphedema management.'
+      severity: 'warning'
+    - keywords: ['onychodystrophy', 'fungal nail changes', 'onychomycosis']
+      alert: 'Nail dystrophy and fungal infection increase the risk of secondary bacterial infection and may require topical or systemic antifungals.'
+      severity: 'info'
+    - keywords: ['hair loss on legs', 'thin shiny skin']
+      alert: 'Hair loss and thin, shiny skin correlate with chronic arterial insufficiency and reduced cutaneous circulation.'
+      severity: 'warning'
+    - keywords: ['cold extremities', 'pale cool limb', 'absent capillary refill']
+      alert: 'Cold, pale extremities with absent capillary refill suggest severe peripheral perfusion deficit requiring urgent assessment.'
+      severity: 'critical'
+    - keywords: ['dependent rubor on standing', 'elevation pallor']
+      alert: 'Elevation pallor and dependent rubor are classic signs of severe chronic arterial disease (PAD).'
+      severity: 'warning'
+    - keywords: ['tender swollen calf', 'recent travel', 'long bone cast']
+      alert: 'Tender swollen calf in a patient with recent travel or immobilization increases pretest probability of DVT — urgent imaging is indicated.'
+      severity: 'critical'
+    - keywords: ['edematous dorsum of foot', 'ankle circumference increased']
+      alert: 'Dorsal foot edema and increased ankle circumference may indicate venous insufficiency, heart failure, or lymphatic dysfunction; correlate with systemic signs.'
+      severity: 'warning'
+    - keywords: ['cold extremities', 'temperature asymmetry', 'ABI <0.9']
+      alert: 'Cold limbs with abnormal ABI suggest peripheral arterial disease and reduced perfusion; vascular referral recommended.'
+      severity: 'warning'
+    - keywords: ['pitting 4+', 'brawny skin', 'weeping dermatitis']
+      alert: 'Severe pitting edema with skin breakdown and exudate indicates advanced venous disease or severe fluid overload — address skin care and underlying cause.'
+      severity: 'warning'
+    - keywords: ['calf circumference asymmetry', 'unilateral swelling']
+      alert: 'Asymmetric calf circumference suggests localized process such as DVT, hematoma, or localized infection — investigate promptly.'
+      severity: 'warning'
+    - keywords: ['crepitus in joint', 'joint effusion', 'erythema']
+      alert: 'Crepitus with joint effusion and erythema may reflect septic arthritis or severe inflammatory arthropathy requiring urgent evaluation.'
+      severity: 'critical'
+    - keywords: ['positive D-dimer history', 'history of DVT', 'recent surgery']
+      alert: 'History items that increase DVT risk (recent surgery, prior DVT, positive D-dimer) should lower threshold for diagnostic imaging.'
+      severity: 'warning'
+    - keywords: ['cold extremities', 'mottled extremity', 'shock signs']
+      alert: 'Mottled, cold extremities in a patient with systemic instability suggest poor perfusion and shock — immediate resuscitation and vascular evaluation needed.'
+      severity: 'critical'
+    - keywords: ['pitting 2+', 'venous stasis changes', 'brown hemosiderin staining']
+      alert: 'Moderate pitting edema with stasis changes suggests chronic venous insufficiency; compression therapy and skin care may be indicated.'
+      severity: 'info'
+    - keywords: ['palpable thrill', 'vascular graft', 'fistula']
+      alert: 'Palpable thrill over vascular graft or dialysis fistula indicates high flow access; evaluate access function and complications if symptomatic.'
+      severity: 'info'
+    - keywords: ['tender lymphadenopathy in groin', 'local infection']
+      alert: 'Tender inguinal lymphadenopathy often suggests local infection or dermatologic source and requires evaluation for a drainable focus.'
+      severity: 'warning'
+    - keywords: ['ulcer under metatarsal head', 'callus over metatarsal head', 'neuropathic foot']
+      alert: 'Plantar ulcer beneath callus commonly occurs in neuropathic feet and requires offloading and wound care to prevent progression.'
+      severity: 'warning'
+    - keywords: ['pallor on elevation', 'ABI <0.9', 'hair loss on legs']
+      alert: 'Combination of elevation pallor, low ABI, and hair loss strongly points to PAD and warrants expedited vascular assessment.'
+      severity: 'warning'
+    - keywords: ['heel pressure ulcer', 'pressure injury', 'offloading needed']
+      alert: 'Heel pressure ulcer requires immediate offloading, local wound management, and evaluation for contributing ischemia or infection.'
+      severity: 'warning'
+    - keywords: ['ankle circumference increased', 'pitting 1+', 'venous engorgement']
+      alert: 'Mild asymmetric swelling with venous engorgement is commonly due to venous insufficiency or dependent edema — conservative management and assessment recommended.'
+      severity: 'info'
+    - keywords: ['pitting edema', 'renal failure edema']
+      alert: 'Pitting edema in context of renal failure suggests fluid retention and requires management of fluid balance and renal therapy optimization.'
+      severity: 'warning'
+    - keywords: ['pitting edema', 'heart failure edema', 'orthopnea history']
+      alert: 'Edema with heart failure symptoms (orthopnea) likely reflects volume overload — consider diuresis and cardiac evaluation.'
+      severity: 'warning'
+    - keywords: ['tender varix', 'palpable cord', 'localized erythema']
+      alert: 'Tender varicose vein with cord-like structure indicates superficial thrombophlebitis; evaluate and treat symptomatically, consider anticoagulation if extension suspected.'
+      severity: 'warning'
+    - keywords: ['dependent cyanosis', 'venous engorgement', 'prominent superficial veins']
+      alert: 'Dependent cyanosis and venous engorgement are consistent with venous congestion; assess for heart failure or venous disease.'
+      severity: 'warning'
+    - keywords: ['clubbing of toes', 'onycholysis']
+      alert: 'Digital clubbing may reflect chronic hypoxemia or underlying cardiopulmonary disease; investigate underlying causes.'
+      severity: 'warning'
+    - keywords: ['ischemic rest pain', 'ABI <0.5', 'cold pale foot']
+      alert: 'Rest pain with very low ABI indicates critical limb ischemia requiring urgent vascular intervention to prevent limb loss.'
+      severity: 'critical'
+    - keywords: ['pitting 3+', 'sacral edema', 'generalized edema']
+      alert: 'More generalized pitting edema involving sacrum and lower extremities suggests systemic fluid overload such as heart or renal failure.'
+      severity: 'warning'
+    - keywords: ['erythema tracking up leg', 'red hot swollen leg', 'systemic fever']
+      alert: 'Erythema ascending the leg with systemic signs suggests spreading cellulitis or necrotizing infection — urgent treatment needed.'
+      severity: 'critical'
+    - keywords: ['atrophy of calf', 'reduced ankle dorsiflexion', 'drop foot']
+      alert: 'Calf atrophy with weakness and foot drop suggests neurologic compromise such as peroneal nerve palsy or severe disuse.'
+      severity: 'warning'
+    - keywords: ['telangiectasia', 'spider veins', 'reticular veins']
+      alert: 'Superficial telangiectasia and reticular veins are cosmetic venous findings but may indicate underlying reflux in symptomatic patients.'
+      severity: 'info'
+    - keywords: ['pressure ulcer over heel', 'necrotic wound bed', 'foul smelling ulcer']
+      alert: 'Pressure ulcer with necrosis and malodor suggests deep tissue involvement and infection — urgent wound care and debridement indicated.'
+      severity: 'critical'
+    - keywords: ['varicose veins', 'tender varix', 'history of pregnancy']
+      alert: 'Varicose veins commonly worsen with pregnancy and may produce discomfort; conservative measures and evaluation for reflux can help.'
+      severity: 'info'
+    - keywords: ['palpable cord', 'thrombosed varix', 'local warmth']
+      alert: 'Thrombosed superficial vein with local inflammation is painful and warrants symptomatic care and assessment for deeper thrombosis.'
+      severity: 'warning'
+    - keywords: ['loss of protective sensation', 'numbness in toes', 'diabetic foot']
+      alert: 'Loss of protective sensation in diabetes predisposes to unnoticed trauma and ulcer formation — implement foot care and screening.'
+      severity: 'warning'
+    - keywords: ['foot drop', 'drop foot', 'peroneal nerve palsy']
+      alert: 'Acute foot drop suggests peripheral nerve injury such as common peroneal nerve involvement; evaluate for entrapment or neuropathy.'
+      severity: 'warning'
+    - keywords: ['pitting edema', 'hepatic failure edema', 'ascites']
+      alert: 'Edema associated with hepatic failure and ascites implies hypoalbuminemia and portal hypertension contributing to peripheral swelling.'
+      severity: 'warning'
+    - keywords: ['pale cool limb', 'absent pulses', 'severe pain']
+      alert: 'Pale, cool limb with absent pulses and severe pain strongly suggests acute arterial occlusion — immediate revascularization needed.'
+      severity: 'critical'
+    - keywords: ['ulcer near medial malleolus', 'venous ulcer', 'edema', 'brown pigmentation']
+      alert: 'Medial ankle ulcer with edema and pigmentation is consistent with chronic venous ulceration and requires compression therapy if arterial supply adequate.'
+      severity: 'warning'
+    - keywords: ['skin tight', 'compartment firmness', 'tense swelling']
+      alert: 'Tense, firm swelling with severe pain is suspicious for compartment syndrome — emergent surgical evaluation recommended.'
+      severity: 'critical'
+    - keywords: ['peripheral cyanosis', 'blue toes', 'livedo reticularis']
+      alert: 'Peripheral cyanosis or blue toes may indicate arterial occlusion, embolic phenomena, or severe hypoperfusion; investigate promptly.'
+      severity: 'critical'
+    - keywords: ['ulcer with granulation tissue', 'healing wound', 'no erythema']
+      alert: 'Ulcer with healthy granulation tissue and absence of infection signs indicates a healing wound under appropriate management.'
+      severity: 'info'
+    - keywords: ['calf tenderness', 'recent surgery', 'immobile patient']
+      alert: 'Calf tenderness in postoperative or immobilized patients increases probability of DVT — consider duplex ultrasound.'
+      severity: 'critical'
+    - keywords: ['pitting edema', 'orthostatic pallor', 'elevation pallor']
+      alert: 'Edema with orthostatic pallor suggests mixed vascular contributions — evaluate for both arterial and venous components.'
+      severity: 'warning'
+    - keywords: ['hair loss on legs', 'thin shiny skin', 'decreased pulses']
+      alert: 'Combining trophic skin changes with reduced pulses suggests chronic arterial insufficiency.'
+      severity: 'warning'
+    - keywords: ['cold extremities', 'capillary refill prolonged', 'delayed capillary refill']
+      alert: 'Delayed capillary refill with cold extremities supports diagnosis of impaired peripheral perfusion; assess for systemic causes.'
+      severity: 'warning'
+    - keywords: ['palpable thrill', 'arteriovenous fistula', 'high-flow access']
+      alert: 'Palpable thrill over an AV fistula indicates functioning dialysis access; assess for complications if new changes occur.'
+      severity: 'info'
+    - keywords: ['tender swollen calf', 'positive Homans sign']
+      alert: 'Tender calf with positive Homans sign is not diagnostic but increases suspicion for DVT; pursue objective testing.'
+      severity: 'warning'
+    - keywords: ['dependent rubor', 'pain with elevation']
+      alert: 'Symptoms worsening with elevation and improvement when dependent are classic for arterial insufficiency and collateral circulation insufficiency.'
+      severity: 'warning'
+    - keywords: ['venous engorgement', 'prominent superficial veins', 'edema']
+      alert: 'Venous engorgement with edema commonly denotes venous hypertension; symptomatic management and further venous mapping may help.'
+      severity: 'info'
+    - keywords: ['pitting 2+', 'ankle circumference increased', 'mild cellulitis signs']
+      alert: 'Moderate pitting edema with mild overlying skin inflammation may indicate early cellulitis superimposed on chronic edema.'
+      severity: 'warning'
+    - keywords: ['ulcer with necrotic slough', 'gangrenous toe', 'black eschar']
+      alert: 'Necrotic or gangrenous tissue on toes indicates severe ischemia with tissue loss risk — urgent vascular surgery consult required.'
+      severity: 'critical'
+    - keywords: ['dependant cyanosis', 'venous stasis changes']
+      alert: 'Dependent cyanosis coupled with stasis changes suggests chronic venous congestion and poor venous return.'
+      severity: 'warning'
+    - keywords: ['pitting 1+', 'mild varicosities']
+      alert: 'Mild pitting edema with superficial varicosities is often benign but should be assessed if symptomatic.'
+      severity: 'info'
+    - keywords: ['pitting 3+', 'sacral edema', 'generalized anasarca']
+      alert: 'Marked pitting edema with sacral involvement and anasarca indicates systemic fluid overload requiring medical management.'
+      severity: 'warning'
+    - keywords: ['ulcer edges undermined', 'foul smelling ulcer', 'sinus tract']
+      alert: 'Undermined ulcer edges and malodor suggest chronic infected wound with possible deep tissue involvement — surgical debridement and antibiotics may be needed.'
+      severity: 'critical'
+    - keywords: ['calf tenderness', 'palpable cord', 'history of DVT']
+      alert: 'Calf pain and cord-like structure with prior DVT increases concern for recurrent deep venous thrombosis — urgent imaging recommended.'
+      severity: 'critical'
+    - keywords: ['palpable pulse deficit', 'asymmetric pulses', 'cold limb']
+      alert: 'Asymmetric pulses with a palpable deficit suggest acute arterial occlusion and require emergent vascular evaluation.'
+      severity: 'critical'
+    - keywords: ['varicosities', 'pregnancy related edema', 'tender varix']
+      alert: 'Varicose changes aggravated by pregnancy are common and often managed conservatively unless complications occur.'
+      severity: 'info'
+    - keywords: ['fissured skin', 'stasis dermatitis oozing', 'venous ulcer history']
+      alert: 'Oozing dermatitis with fissures in the lower leg indicates chronic venous disease and increased infection risk.'
+      severity: 'warning'
+    - keywords: ['pitting 2+', 'edematous dorsum of foot', 'dependent swelling']
+      alert: 'Moderate dependent swelling and pitting in the dorsum of foot suggests venous or lymphatic dysfunction.'
+      severity: 'warning'
+    - keywords: ['erythematous streaking', 'lymphangitic streak', 'red streaks toward groin']
+      alert: 'Erythematous streaking toward regional lymph nodes suggests lymphangitis commonly from streptococcal cellulitis; prompt antibiotics are indicated.'
+      severity: 'warning'
+    - keywords: ['tender warm localized area', 'fluctuant mass', 'abscess']
+      alert: 'Warm, tender, fluctuant mass suggests a soft-tissue abscess requiring drainage and antibiotics.'
+      severity: 'critical'
+    - keywords: ['boggy synovium', 'joint warmth', 'severe pain with ROM']
+      alert: 'Boggy, warm, and tender joint with markedly reduced range of motion suggests septic arthritis — urgent arthrocentesis required.'
+      severity: 'critical'
+    - keywords: ['ecchymosis after trauma', 'bruising around joint', 'swelling after injury']
+      alert: 'Periarticular ecchymosis and swelling post-injury may indicate ligamentous tear, hematoma, or fracture; immobilize and image as indicated.'
+      severity: 'warning'
+    - keywords: ['hematoma with expanding size', 'sentinel hemorrhage', 'rapid swelling']
+      alert: 'Expanding hematoma with rapid swelling raises concern for ongoing bleeding or vascular injury — urgent evaluation required.'
+      severity: 'critical'
+    - keywords: ['open wound with exposed bone', 'open fracture', 'compound fracture']
+      alert: 'Open fracture (bone exposed) carries high infection and complication risk — emergent orthopedic and wound management required.'
+      severity: 'critical'
+    - keywords: ['shortened externally rotated lower limb', 'leg shortened', 'external rotation deformity']
+      alert: 'Limb shortening with external rotation suggests a displaced femoral neck or intertrochanteric fracture — urgent orthopedic care.'
+      severity: 'critical'
+    - keywords: ['tenderness over fibular head', 'lateral knee swelling', 'peroneal nerve symptoms']
+      alert: 'Fibular head tenderness with nerve symptoms warrants evaluation for proximal fibular injury or common peroneal nerve compromise.'
+      severity: 'warning'
+    - keywords: ['positive Thompson test', 'absent plantar flexion on squeeze']
+      alert: 'Positive Thompson test indicates Achilles tendon rupture — immobilize and arrange orthopedic follow-up.'
+      severity: 'warning'
+    - keywords: ['pain on passive stretch of compartment', 'pain out of proportion', 'paresthesia']
+      alert: 'Severe pain on passive stretch with paresthesia is highly suggestive of compartment syndrome — emergent fasciotomy may be needed.'
+      severity: 'critical'
+    - keywords: ['loss of two-point discrimination', 'decreased protective sensation', 'monofilament abnormal']
+      alert: 'Impaired two-point discrimination or monofilament testing indicates peripheral sensory loss and increased ulceration risk.'
+      severity: 'warning'
+    - keywords: ['erysipelas pattern raised border', 'skin sharply demarcated', 'hot bright erythema']
+      alert: 'Sharply demarcated, bright erythema with raised border is typical of erysipelas (group A strep) and usually responds to antibiotics.'
+      severity: 'warning'
+    - keywords: ['tender swelling behind knee', 'posterior knee mass', 'popliteal cyst']
+      alert: 'Tender swelling in the popliteal fossa often represents a Baker cyst; assess for rupture or underlying intra-articular pathology.'
+      severity: 'info'
+    - keywords: ['pain at base of thumb', 'tender anatomic snuffbox', 'scaphoid tenderness']
+      alert: 'Anatomic snuffbox tenderness after fall suggests scaphoid fracture; treat as fracture and image even if initial x-ray negative.'
+      severity: 'warning'
+    - keywords: ['crepitus with motion of joint', 'grating sensation', 'joint osteoarthritis features']
+      alert: 'Crepitus with reduced range of motion commonly reflects osteoarthritic change; manage conservatively and consider imaging for definitive diagnosis.'
+      severity: 'info'
+    - keywords: ['erythematous raised nodule', 'tender subcutaneous nodule', 'erythema nodosum like']
+      alert: 'Tender subcutaneous nodules on the lower extremities can be erythema nodosum or panniculitis — evaluate for systemic causes (infection, sarcoid).'
+      severity: 'warning'
+    - keywords: ['sharp bone point tenderness', 'focal bony tenderness', 'suspected osteomyelitis']
+      alert: 'Localized bone tenderness with overlying skin changes raises concern for osteomyelitis; obtain imaging and cultures for management.'
+      severity: 'critical'
+    - keywords: ['hot swollen toe', 'great toe erythema', 'intense pain at MTP joint']
+      alert: 'Acute hot, swollen great toe with intense MTP pain is suggestive of gout or septic arthritis — aspirate joint to distinguish.'
+      severity: 'critical'
+    - keywords: ['creeping erythema', 'induration spreading from wound', 'increasing pain']
+      alert: 'Spreading induration and worsening pain from a wound site suggest progressive soft-tissue infection or cellulitis requiring antibiotics.'
+      severity: 'critical'
+    - keywords: ['tenderness over tibial shaft', 'localized swelling after strike', 'point tenderness']
+      alert: 'Point tenderness over bone after trauma suggests possible stress or acute fracture; immobilize and obtain radiographs.'
+      severity: 'warning'
+    - keywords: ['reduced capillary refill in toes', 'cyanotic toes', 'delayed digital refill']
+      alert: 'Delayed digital capillary refill and cyanotic toes indicate poor digital perfusion; investigate arterial supply and embolic sources.'
+      severity: 'warning'
+    - keywords: ['splinter hemorrhages under nail', 'nail fold hemorrhage', 'infective endocarditis sign']
+      alert: 'Splinter hemorrhages may be nonspecific but can indicate infective endocarditis in the appropriate clinical context.'
+      severity: 'warning'
+    - keywords: ['palpable fluctuance over bursa', 'prepatellar swelling', 'housemaid knee']
+      alert: 'Fluctuant prepatellar swelling suggests bursitis; aspirate if infection suspected and manage accordingly.'
+      severity: 'warning'
+    - keywords: ['painful subcutaneous nodule along tendon', 'tenosynovitis signs', 'triggering']
+      alert: 'Tenosynovitis presents with localized tendon sheath tenderness and may require immobilization and anti-inflammatory treatment.'
+      severity: 'warning'
+    - keywords: ['dorsal foot blistering', 'shear blister', 'tense bullae on sole']
+      alert: 'Tense blisters on weight-bearing surfaces often result from repetitive shear or neuropathy and need protection and debridement if necessary.'
+      severity: 'info'
+    - keywords: ['ischemic digit with sharp line of demarcation', 'dry gangrene of toe']
+      alert: 'Dry gangrene with clear demarcation of an ischemic digit suggests chronic ischemia; vascular surgery consult for limb salvage options.'
+      severity: 'critical'
+    - keywords: ['erythema with central clearing', 'target lesion on leg', 'erythema migrans like']
+      alert: 'Target lesion with central clearing on extremity may represent erythema migrans (Lyme) or erythema multiforme; evaluate travel/exposure history.'
+      severity: 'warning'
+    - keywords: ['swollen painful metatarsophalangeal joint', 'heat and erythema over MTP']
+      alert: 'Acute painful MTP swelling suggests inflammatory arthropathy (gout) or septic involvement; consider aspiration and microscopy.'
+      severity: 'critical'
+    - keywords: ['ulcer at pressure point with undermining', 'deep tissue injury', 'dark violaceous skin']
+      alert: 'Deep pressure-related tissue injury with undermining suggests serious pressure ulceration and possible deep tissue necrosis — wound care urgently required.'
+      severity: 'critical'
+    - keywords: ['pulses bounding', 'wide pulse pressure', 'bounding peripheral pulses']
+      alert: 'Bounding peripheral pulses and wide pulse pressure may indicate high-output states or aortic regurgitation — correlate with cardiovascular exam.'
+      severity: 'warning'
+    - keywords: ['asymmetric limb length', 'gait abnormality', 'leg length discrepancy']
+      alert: 'Leg length discrepancy can cause gait disturbance and back pain; assess for developmental or post-traumatic causes and consider orthotic correction.'
+      severity: 'info'
+    - keywords: ['loss of active movement distal to injury', 'paralysis of limb', 'motor deficit']
+      alert: 'Acute loss of active movement distally suggests motor nerve injury or severe musculoskeletal disruption — urgent neurologic and orthopedic assessment.'
+      severity: 'critical'
+    - keywords: ['pain on weight bearing forefoot', 'metatarsalgia', 'Morton neuroma suspicion']
+      alert: "Forefoot pain with localized tenderness between metatarsals may suggest Morton's neuroma; consider cushioning, steroid injection, or referral."
+      severity: 'info'
+    - keywords: ['bony deformity at joint', 'subluxation visible', 'joint malalignment']
+      alert: 'Visible joint malalignment suggests dislocation or chronic subluxation; reduce or refer for orthopedic management depending on acuity.'
+      severity: 'critical'
+    - keywords: ['dorsalis pedis pulse palpable but faint', 'difficult to palpate pulse', 'weak pedal pulses']
+      alert: 'Faint but palpable pedal pulses may reflect peripheral arterial disease or low cardiac output — further vascular assessment advised.'
+      severity: 'warning'
+    - keywords: ['thickened painful Achilles tendon', 'tendon swelling posterior ankle']
+      alert: 'Achilles tendon thickening with tenderness suggests tendinopathy; modify activity and consider physical therapy or steroid-sparing interventions.'
+      severity: 'info'
+    - keywords: ['erythema with honey-colored crust', 'periorbital or perioral crusting']
+      alert: 'Honey-colored crusts are characteristic of impetigo and require topical or systemic antibiotics depending on extent.'
+      severity: 'info'
+    - keywords: ['ulcer with undermined edge and foul odor', 'sinus tract to bone']
+      alert: 'Ulcer with sinus tract to bone and malodor strongly suggests chronic osteomyelitis; imaging and bone culture should be obtained.'
+      severity: 'critical'
+    - keywords: ['tender slender swelling along plantar fascia', 'plantar fasciitis point tenderness']
+      alert: 'Focal plantar heel tenderness at the plantar fascia insertion is typical of plantar fasciitis — treat with stretching, orthotics, and NSAIDs.'
+      severity: 'info'
+    - keywords: ['erythema with sharply raised border on leg', 'systemically well']
+      alert: 'Sharply raised, well-demarcated erythema may suggest erysipelas; treat early with appropriate antibiotics.'
+      severity: 'warning'
+    - keywords: ['fungal intertrigo between toes', 'maceration between toes', "athlete's foot"]
+      alert: 'Interdigital maceration and scaling commonly indicate tinea pedis and respond to topical antifungal therapy and drying measures.'
+      severity: 'info'
+    - keywords: ['fungal nail with subungual debris', 'thickened yellow nail plate']
+      alert: 'Onychomycosis presents as subungual debris and thickening of nail plates; treatment options include topical or systemic antifungal therapy.'
+      severity: 'info'
+    - keywords: ['acute swelling after insect bite', 'widespread urticarial wheals on limb']
+      alert: 'Rapid swelling and urticarial reaction after insect bite may represent allergic reaction; antihistamines and monitoring for systemic involvement are warranted.'
+      severity: 'warning'
+    - keywords: ['localized cool pallor following embolic event', 'sudden limb pain and pallor']
+      alert: 'Sudden limb pallor and pain are concerning for arterial embolus causing acute ischemia — urgent embolectomy may be necessary.'
+      severity: 'critical'
+    - keywords: ['tense bulla after frost exposure', 'white waxy skin after cold injury', 'frostbite blistering']
+      alert: 'Blistering and white waxy appearance after freezing exposure indicates frostbite; rapid rewarming and specialist care advised.'
+      severity: 'critical'
+    - keywords: ['lateral foot pain with swelling after inversion', 'ankle unstable', 'positive anterior drawer']
+      alert: 'Ankle instability with positive anterior drawer and lateral swelling suggests ATFL sprain or ligament rupture; immobilize and image if severe.'
+      severity: 'warning'
+    - keywords: ['ulcer with pale base and punched-out margins', 'neuropathic painless ulcer']
+      alert: 'Painless punched-out ulcers with pale bases are typical of neuropathic (diabetic) foot ulcers and require offloading and glycemic control.'
+      severity: 'warning'
+    - keywords:
+          ['erythematous blistering with intense pain', 'herpetic whitlow like', 'grouped vesicles on finger or toe']
+      alert: 'Grouped vesicles with pain suggest herpetic infection and respond to antiviral therapy when diagnosed early.'
+      severity: 'info'
+    - keywords: ['localized warmth and tenderness over bone after puncture', 'puncture wound with deep infection risk']
+      alert: 'Puncture wound with localized bone tenderness raises concern for deep space infection or osteomyelitis — evaluate and image urgently.'
+      severity: 'critical'
+    - keywords: ['varicosities with hemosiderin but no ulcer', 'cosmetic venous changes']
+      alert: 'Superficial venous dilation with skin pigmentation but intact skin commonly indicates chronic venous disease; conservative measures often help.'
+      severity: 'info'
+    - keywords: ['sudden nontraumatic swollen painful calf', 'tachycardia', 'hypoxia']
+      alert: 'Sudden painful calf with cardiopulmonary symptoms raises concern for DVT with possible pulmonary embolism — urgent workup needed.'
+      severity: 'critical'
+    - keywords: ['corn over bony prominence', 'hyperkeratotic lesion over toe', 'painful callus']
+      alert: 'Hyperkeratotic lesions and corns form over pressure points; treat with debridement and biomechanical correction.'
+      severity: 'info'
+    - keywords: ['erythema with systemic fever and chills', 'rapidly progressing cellulitis']
+      alert: 'Cellulitis accompanied by systemic fever and rapid progression may indicate severe soft-tissue infection or necrotizing process — urgent management.'
+      severity: 'critical'
+    - keywords: ['recurrent plantar ulcer', 'Charcot foot deformity suspicion', 'rocker-bottom foot']
+      alert: 'Recurrent plantar ulcers and rocker-bottom deformity suggest Charcot arthropathy in neuropathic patients requiring immobilization and referral.'
+      severity: 'critical'
+    - keywords: ['localized bone tenderness after puncture wound', 'deep erythema and drainage']
+      alert: 'Persistent drainage and focal bone tenderness after puncture imply deep infection or osteomyelitis — surgical and medical management necessary.'
+      severity: 'critical'
+    - keywords: ['reduced ankle reflexes', 'absent Achilles reflex', 'peripheral neuropathy sign']
+      alert: 'Diminished or absent Achilles reflex suggests peripheral neuropathy commonly due to diabetes or neuropathic processes.'
+      severity: 'warning'
+    - keywords:
+          [
+              'unequal limb temperature with recent trauma',
+              'cool distal to injury',
+              'decreased pulses distal to fracture',
+          ]
+      alert: 'Cool distal limb and decreased pulses after fracture suggest vascular compromise secondary to injury — urgent reduction and vascular assessment required.'
+      severity: 'critical'
+    - keywords: ['bony tenderness with fever and elevated WBC', 'suspected osteomyelitis in foot']
+      alert: 'Fever, elevated inflammatory markers, and focal bone tenderness strongly suggest osteomyelitis — obtain bone imaging and cultures.'
+      severity: 'critical'
+    - keywords: ['tender nodular mass along extensor tendon', 'de Quervain like pain', 'Finkelstein positive']
+      alert: 'Radial wrist tendon sheath tenderness and positive Finkelstein test suggest de Quervain tenosynovitis — conservative therapy or steroid injection may help.'
+      severity: 'info'
+    - keywords: ['crepitant subcutaneous air', 'surgical emphysema after wound', 'crackling sensation']
+      alert: 'Subcutaneous crepitus suggests gas-forming infection or penetrating trauma with air tracking — urgent surgical evaluation required.'
+      severity: 'critical'
+    - keywords:
+          ['stiff cold fingers with color change on exposure', 'episodic pallor and cyanosis', 'Raynaud phenomenon']
+      alert: 'Paroxysmal color changes (white-blue-red) in fingers with cold exposure are typical of Raynaud phenomenon; manage with avoidance and vasodilators if severe.'
+      severity: 'info'
+    - keywords: ['thickened plantar skin with underlying ulcer risk', 'callus with central hemorrhage']
+      alert: 'Thick callus with central hemorrhage over plantar surfaces indicates imminent skin breakdown and ulceration risk — debride and redistribute pressure.'
+      severity: 'warning'
+    - keywords: ['painful swollen first MTP with fever', 'septic arthritis suspicion in toe']
+      alert: 'First MTP swelling with fever warrants aspiration to rule out septic arthritis and prompt antibiotics if positive.'
+      severity: 'critical'
+    - keywords: ['localized hypesthesia over dorsal foot', 'sensory level change after injury']
+      alert: 'Focal sensory loss over foot suggests localized nerve injury or entrapment; electrodiagnostic or imaging tests may be warranted.'
+      severity: 'warning'
+    - keywords: ['blanching livedo pattern on leg', 'reticular mottling persist', 'cholesterol emboli suspicion']
+      alert: 'Persistent livedo reticularis or blue toe with other risk factors may indicate cholesterol embolization syndrome; assess vascular and systemic status.'
+      severity: 'warning'
+    - keywords: ['tender thickened skin along shin with nodularity', 'pretibial myxedema', 'thyroid dermopathy suspect']
+      alert: 'Pretibial plaques with nodularity and induration are characteristic of pretibial myxedema associated with thyroid disease.'
+      severity: 'info'
+    - keywords: ['erythema and pain at nail fold with pus', 'paronychia with abscess']
+      alert: 'Acute paronychia with purulence often requires drainage and antibiotic therapy if extensive.'
+      severity: 'warning'
+    - keywords: ['localized sensory and motor deficit in foot', 'foot numbness and weak dorsiflexion']
+      alert: 'Combination of sensory loss and motor weakness in foot indicates significant peripheral neuropathy or nerve compression requiring urgent evaluation.'
+      severity: 'warning'
+    - keywords: ['abnormal plantar thermography', 'hot swollen foot without erythema', 'Charcot suspicion in diabetic']
+      alert: 'Warm, swollen foot with diminished pain in diabetic patients suggests acute Charcot joint and requires offloading to prevent deformity.'
+      severity: 'critical'
+    - keywords:
+          [
+              'tenderness at base of 5th metatarsal',
+              'Jones fracture suspicion',
+              'acute lateral foot pain after inversion',
+          ]
+      alert: 'Base of 5th metatarsal tenderness (Jones region) after inversion injury raises concern for Jones fracture — immobilize and image.'
+      severity: 'warning'
+    - keywords: ['skin fissures with interdigital maceration', 'secondary bacterial infection', 'weeping between toes']
+      alert: 'Maceration and fissuring between toes predispose to secondary bacterial cellulitis; keep area dry and treat fungal/bacterial causes.'
+      severity: 'warning'
+    - keywords: ['chronic nonhealing ulcer with exposed tendon', 'tendon exposure in wound']
+      alert: 'Ulcer exposing tendon indicates severe soft-tissue loss and high infection risk — urgent surgical and wound care.'
+      severity: 'critical'
+    - keywords: ['localized cold spot with palpable thrill absent', 'sudden ischemic change after catheterization']
+      alert: 'Sudden localized ischemia after vascular intervention or catheterization may signal arterial occlusion at access site — urgent review required.'
+      severity: 'critical'
+    - keywords: ['painful plantar callosity with underlying ulcer', 'punched-out neuropathic lesion under callus']
+      alert: 'Neuropathic punch-out ulcers under callus require aggressive offloading and wound care to prevent deep infection.'
+      severity: 'warning'
+    - keywords: ['erythematous tapered lesion following vein distribution', 'cellulitis following venous line']
+      alert: 'Erythema tracking along a superficial vein near an IV site suggests superficial thrombophlebitis or local infection — remove source and treat.'
+      severity: 'warning'
+    - keywords: ['atrophy of intrinsic hand muscles', 'hollowing between metacarpals', 'ulnar neuropathy features']
+      alert: 'Intrinsic hand muscle wasting and intermetacarpal hollowing suggests chronic ulnar neuropathy or denervation and needs neurophysiologic testing.'
+      severity: 'warning'
+    - keywords: ['subungual hematoma with pain', 'nail bed bleeding under nail after trauma']
+      alert: 'Subungual hematoma is painful and may require nail trephination for decompression if acute and symptomatic.'
+      severity: 'info'
+    - keywords: ['localized bone erythema with overlying pustule', 'suspected bone infection from puncture']
+      alert: 'Skin pustule over bone with erythema after puncture may indicate deep inoculation and possible bone infection — evaluate urgently.'
+      severity: 'critical'

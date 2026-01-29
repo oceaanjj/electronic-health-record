@@ -2,7 +2,8 @@
 
 <div class="section">
     <h2 class="section-title">Developmental History</h2>
-    @if($developmentalHistory)
+
+    @if ($developmentalHistory)
         <table class="data-table">
             <thead>
                 <tr>

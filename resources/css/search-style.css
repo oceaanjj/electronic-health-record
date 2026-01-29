@@ -8,7 +8,7 @@
 
 /* Page Background */
 body {
-    background-color: #1A6A24; /* Dark Green */
+    background-color: #1a6a24; /* Dark Green */
     color: white;
     padding: 20px;
 }
@@ -17,11 +17,11 @@ body {
 .header {
     font-size: 22px;
     font-weight: bold;
-    background: #1A6A24;
+    background: #1a6a24;
     color: #ffffff;
     padding: 12px;
     margin-bottom: 20px;
-    border: 3px solid #EDB62C;
+    border: 3px solid #edb62c;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -35,32 +35,30 @@ form {
     margin-bottom: 30px;
 }
 
+form input {
+    padding: 6px;
+    border: 1px solid #edb62c;
+    border-radius: 4px;
+    background: #fffdf5;
+    font-size: 13px;
+    text-align: center;
+    width: 280px;
+    color: #000;
+}
 
-form input{
-      padding: 6px;
-      border: 1px solid #EDB62C;
-      border-radius: 4px;
-      background: #fffdf5;
-      font-size: 13px;
-      text-align: center;
-      width: 280px;
-      color: #000;
-      
-    }
-
-    form label {
-      margin-right: 8px;
-      font-size: 16px;
-    }
+form label {
+    margin-right: 8px;
+    font-size: 16px;
+}
 
 form button {
     padding: 10px 20px;
-    background: #EDB62C;
+    background: #edb62c;
     border: none;
     border-radius: 6px;
     font-size: 14px;
     font-weight: bold;
-    color: #1A6A24;
+    color: #1a6a24;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -73,7 +71,7 @@ form button:hover {
 h2 {
     text-align: center;
     margin-bottom: 15px;
-    color: #EDB62C;
+    color: #edb62c;
 }
 
 /* Table Styling */
@@ -83,20 +81,21 @@ table {
     background: #fff;
     color: #000;
     align-items: center;
-    border: 2px solid #EDB62C;
+    border: 2px solid #edb62c;
     border-radius: 8px;
     overflow: hidden;
 }
 
 thead {
-    background: #1A6A24;
+    background: #1a6a24;
     color: #fff;
 }
 
-th, td {
+th,
+td {
     padding: 12px 15px;
     text-align: center;
-    border: 1px solid #EDB62C;
+    border: 1px solid #edb62c;
     font-size: 14px;
 }
 
@@ -113,17 +112,18 @@ p {
     text-align: center;
     margin-top: 15px;
     font-size: 16px;
-    color: #EDB62C;
+    color: #edb62c;
     font-weight: bold;
 }
 
-button, .clear-btn {
+button,
+.clear-btn {
     padding: 12px 20px;
     font-size: 14px;
     font-weight: bold;
-    background: #1A6A24;
+    background: #1a6a24;
     color: #fff;
-    border: 2px solid #EDB62C;
+    border: 2px solid #edb62c;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
@@ -132,6 +132,7 @@ button, .clear-btn {
     display: inline;
 }
 
-button:hover, .clear-btn:hover {
+button:hover,
+.clear-btn:hover {
     background: #14501b;
 }

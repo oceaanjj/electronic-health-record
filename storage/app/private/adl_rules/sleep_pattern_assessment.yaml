@@ -1,1427 +1,1427 @@
 sleep_pattern_assessment:
-  - keywords:
-      - "difficulty falling asleep"
-      - "prolonged sleep onset"
-      - "trouble initiating sleep"
-      - "can't fall asleep"
-      - "sleep onset problems"
-      - "bedtime resistance"
-      - "fights sleep"
-      - "delayed sleep"
-      - "restless at bedtime"
-      - "bedtime struggles"
-      - "sleep refusal"
-      - "won't sleep"
-      - "awake in bed"
-      - "prolonged drowsiness"
-      - "sleep initiation issues"
-      - "bedtime anxiety"
-      - "sleep onset delay"
-      - "difficulty settling"
-      - "unable to sleep"
-      - "sleep latency increased"
-    alert: "Difficulty with sleep initiation noted. Assess for anxiety, environmental factors, or inappropriate sleep associations. Consider sleep hygiene education."
-    severity: "warning"
+    - keywords:
+          - 'difficulty falling asleep'
+          - 'prolonged sleep onset'
+          - 'trouble initiating sleep'
+          - "can't fall asleep"
+          - 'sleep onset problems'
+          - 'bedtime resistance'
+          - 'fights sleep'
+          - 'delayed sleep'
+          - 'restless at bedtime'
+          - 'bedtime struggles'
+          - 'sleep refusal'
+          - "won't sleep"
+          - 'awake in bed'
+          - 'prolonged drowsiness'
+          - 'sleep initiation issues'
+          - 'bedtime anxiety'
+          - 'sleep onset delay'
+          - 'difficulty settling'
+          - 'unable to sleep'
+          - 'sleep latency increased'
+      alert: 'Difficulty with sleep initiation noted. Assess for anxiety, environmental factors, or inappropriate sleep associations. Consider sleep hygiene education.'
+      severity: 'warning'
 
-  - keywords:
-      - "frequent awakenings"
-      - "night waking"
-      - "awakenings overnight"
-      - "multiple awakenings"
-      - "wakes frequently"
-      - "disrupted sleep"
-      - "broken sleep"
-      - "arousals overnight"
-      - "sleep fragmentation"
-      - "interrupted sleep"
-      - "non-restorative sleep"
-      - "sleep maintenance issues"
-      - "unrefreshing sleep"
-      - "light sleeper"
-      - "restless sleeper"
-      - "trouble staying asleep"
-      - "wakes multiple times"
-      - "sleep disruption"
-      - "arousals during sleep"
-      - "fragmented sleep"
-    alert: "Frequent nighttime awakenings documented. Evaluate for sleep disorders, environmental disturbances, or medical conditions causing disruption."
-    severity: "warning"
+    - keywords:
+          - 'frequent awakenings'
+          - 'night waking'
+          - 'awakenings overnight'
+          - 'multiple awakenings'
+          - 'wakes frequently'
+          - 'disrupted sleep'
+          - 'broken sleep'
+          - 'arousals overnight'
+          - 'sleep fragmentation'
+          - 'interrupted sleep'
+          - 'non-restorative sleep'
+          - 'sleep maintenance issues'
+          - 'unrefreshing sleep'
+          - 'light sleeper'
+          - 'restless sleeper'
+          - 'trouble staying asleep'
+          - 'wakes multiple times'
+          - 'sleep disruption'
+          - 'arousals during sleep'
+          - 'fragmented sleep'
+      alert: 'Frequent nighttime awakenings documented. Evaluate for sleep disorders, environmental disturbances, or medical conditions causing disruption.'
+      severity: 'warning'
 
-  - keywords:
-      - "apnea episodes"
-      - "breathing pauses"
-      - "apneic spells"
-      - "stopped breathing"
-      - "respiratory pauses"
-      - "breathing cessation"
-      - "apnea noted"
-      - "obstructive apnea"
-      - "breathing interruption"
-      - "witnessed apnea"
-      - "apnea during sleep"
-      - "breathing stops"
-      - "respiratory arrest"
-      - "apneic event"
-      - "breathing difficulty"
-      - "respiratory distress"
-      - "airway obstruction"
-      - "snoring loudly"
-      - "gasps during sleep"
-      - "choking sounds"
-    alert: "Observed apnea episodes or breathing pauses during sleep. Requires immediate evaluation for obstructive sleep apnea or other respiratory disorders."
-    severity: "critical"
+    - keywords:
+          - 'apnea episodes'
+          - 'breathing pauses'
+          - 'apneic spells'
+          - 'stopped breathing'
+          - 'respiratory pauses'
+          - 'breathing cessation'
+          - 'apnea noted'
+          - 'obstructive apnea'
+          - 'breathing interruption'
+          - 'witnessed apnea'
+          - 'apnea during sleep'
+          - 'breathing stops'
+          - 'respiratory arrest'
+          - 'apneic event'
+          - 'breathing difficulty'
+          - 'respiratory distress'
+          - 'airway obstruction'
+          - 'snoring loudly'
+          - 'gasps during sleep'
+          - 'choking sounds'
+      alert: 'Observed apnea episodes or breathing pauses during sleep. Requires immediate evaluation for obstructive sleep apnea or other respiratory disorders.'
+      severity: 'critical'
 
-  - keywords:
-      - "night terrors"
-      - "sleep terror"
-      - "screaming during sleep"
-      - "terror episodes"
-      - "panic during sleep"
-      - "confusional arousal"
-      - "agitated awakening"
-      - "frightened at night"
-      - "sleep screaming"
-      - "nocturnal panic"
-      - "terrified at night"
-      - "parasomnia events"
-      - "disoriented awakening"
-      - "nighttime fear"
-      - "sleep-related terror"
-      - "abrupt awakening"
-      - "arousal disorder"
-      - "NREM parasomnia"
-      - "agitated sleep"
-      - "fearful awakening"
-    alert: "Night terror episodes documented. Ensure safety during episodes. Differentiate from nightmares. Typically resolves without intervention; avoid waking child during episode."
-    severity: "warning"
+    - keywords:
+          - 'night terrors'
+          - 'sleep terror'
+          - 'screaming during sleep'
+          - 'terror episodes'
+          - 'panic during sleep'
+          - 'confusional arousal'
+          - 'agitated awakening'
+          - 'frightened at night'
+          - 'sleep screaming'
+          - 'nocturnal panic'
+          - 'terrified at night'
+          - 'parasomnia events'
+          - 'disoriented awakening'
+          - 'nighttime fear'
+          - 'sleep-related terror'
+          - 'abrupt awakening'
+          - 'arousal disorder'
+          - 'NREM parasomnia'
+          - 'agitated sleep'
+          - 'fearful awakening'
+      alert: 'Night terror episodes documented. Ensure safety during episodes. Differentiate from nightmares. Typically resolves without intervention; avoid waking child during episode.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleepwalking"
-      - "somnambulism"
-      - "ambulation during sleep"
-      - "walking while asleep"
-      - "nocturnal wandering"
-      - "sleep wandering"
-      - "arousal with ambulation"
-      - "automatic behavior"
-      - "complex sleep behavior"
-      - "unresponsive during sleep"
-      - "eyes open asleep"
-      - "blank stare sleeping"
-      - "motor activity sleep"
-      - "parasomnia with walking"
-      - "nocturnal locomotion"
-      - "sleep-related walking"
-      - "unconscious wandering"
-      - "automatic movements"
-      - "non-responsive sleep"
-      - "confused behavior sleep"
-    alert: "Sleepwalking episode observed. Implement safety measures to prevent injury. Evaluate triggers like sleep deprivation, fever, or medications."
-    severity: "warning"
+    - keywords:
+          - 'sleepwalking'
+          - 'somnambulism'
+          - 'ambulation during sleep'
+          - 'walking while asleep'
+          - 'nocturnal wandering'
+          - 'sleep wandering'
+          - 'arousal with ambulation'
+          - 'automatic behavior'
+          - 'complex sleep behavior'
+          - 'unresponsive during sleep'
+          - 'eyes open asleep'
+          - 'blank stare sleeping'
+          - 'motor activity sleep'
+          - 'parasomnia with walking'
+          - 'nocturnal locomotion'
+          - 'sleep-related walking'
+          - 'unconscious wandering'
+          - 'automatic movements'
+          - 'non-responsive sleep'
+          - 'confused behavior sleep'
+      alert: 'Sleepwalking episode observed. Implement safety measures to prevent injury. Evaluate triggers like sleep deprivation, fever, or medications.'
+      severity: 'warning'
 
-  - keywords:
-      - "bedwetting"
-      - "nocturnal enuresis"
-      - "wets bed"
-      - "enuretic episode"
-      - "incontinence at night"
-      - "nocturnal incontinence"
-      - "urinary accident"
-      - "wet bedding"
-      - "nighttime accidents"
-      - "primary enuresis"
-      - "secondary enuresis"
-      - "nocturnal bedwetting"
-      - "involuntary urination"
-      - "sleep incontinence"
-      - "bed wetting"
-      - "nocturnal voiding"
-      - "uncontrolled urination"
-      - "nighttime enuresis"
-      - "enuresis nocturna"
-      - "involuntary voiding"
-    alert: "Nocturnal enuresis documented. Assess pattern (primary vs. secondary), rule out medical causes, and provide appropriate management strategies."
-    severity: "info"
+    - keywords:
+          - 'bedwetting'
+          - 'nocturnal enuresis'
+          - 'wets bed'
+          - 'enuretic episode'
+          - 'incontinence at night'
+          - 'nocturnal incontinence'
+          - 'urinary accident'
+          - 'wet bedding'
+          - 'nighttime accidents'
+          - 'primary enuresis'
+          - 'secondary enuresis'
+          - 'nocturnal bedwetting'
+          - 'involuntary urination'
+          - 'sleep incontinence'
+          - 'bed wetting'
+          - 'nocturnal voiding'
+          - 'uncontrolled urination'
+          - 'nighttime enuresis'
+          - 'enuresis nocturna'
+          - 'involuntary voiding'
+      alert: 'Nocturnal enuresis documented. Assess pattern (primary vs. secondary), rule out medical causes, and provide appropriate management strategies.'
+      severity: 'info'
 
-  - keywords:
-      - "snoring loudly"
-      - "loud snoring"
-      - "habitual snoring"
-      - "noisy breathing"
-      - "sonorous respiration"
-      - "audible snoring"
-      - "heavy snoring"
-      - "snoring consistently"
-      - "persistent snoring"
-      - "snoring every night"
-      - "regular snoring"
-      - "snoring noted"
-      - "breathing noises"
-      - "respiratory sounds"
-      - "upper airway noise"
-      - "snoring present"
-      - "nocturnal snoring"
-      - "sleep snoring"
-      - "stertorous breathing"
-      - "snoring reported"
-    alert: "Loud or habitual snoring documented. Evaluate for obstructive sleep apnea, adenotonsillar hypertrophy, or other airway issues."
-    severity: "warning"
+    - keywords:
+          - 'snoring loudly'
+          - 'loud snoring'
+          - 'habitual snoring'
+          - 'noisy breathing'
+          - 'sonorous respiration'
+          - 'audible snoring'
+          - 'heavy snoring'
+          - 'snoring consistently'
+          - 'persistent snoring'
+          - 'snoring every night'
+          - 'regular snoring'
+          - 'snoring noted'
+          - 'breathing noises'
+          - 'respiratory sounds'
+          - 'upper airway noise'
+          - 'snoring present'
+          - 'nocturnal snoring'
+          - 'sleep snoring'
+          - 'stertorous breathing'
+          - 'snoring reported'
+      alert: 'Loud or habitual snoring documented. Evaluate for obstructive sleep apnea, adenotonsillar hypertrophy, or other airway issues.'
+      severity: 'warning'
 
-  - keywords:
-      - "restless legs"
-      - "leg discomfort"
-      - "urge to move"
-      - "leg jerking"
-      - "uncomfortable sensations"
-      - "creepy-crawly feelings"
-      - "leg movements"
-      - "involuntary movements"
-      - "periodic limb movements"
-      - "PLMD"
-      - "RLS symptoms"
-      - "restlessness at night"
-      - "leg twitching"
-      - "myoclonus"
-      - "nocturnal myoclonus"
-      - "limb movements"
-      - "motor restlessness"
-      - "uncomfortable legs"
-      - "tingling legs"
-      - "aching legs"
-    alert: "Symptoms suggestive of restless legs syndrome or periodic limb movement disorder. Assess iron status and consider neurological evaluation."
-    severity: "warning"
+    - keywords:
+          - 'restless legs'
+          - 'leg discomfort'
+          - 'urge to move'
+          - 'leg jerking'
+          - 'uncomfortable sensations'
+          - 'creepy-crawly feelings'
+          - 'leg movements'
+          - 'involuntary movements'
+          - 'periodic limb movements'
+          - 'PLMD'
+          - 'RLS symptoms'
+          - 'restlessness at night'
+          - 'leg twitching'
+          - 'myoclonus'
+          - 'nocturnal myoclonus'
+          - 'limb movements'
+          - 'motor restlessness'
+          - 'uncomfortable legs'
+          - 'tingling legs'
+          - 'aching legs'
+      alert: 'Symptoms suggestive of restless legs syndrome or periodic limb movement disorder. Assess iron status and consider neurological evaluation.'
+      severity: 'warning'
 
-  - keywords:
-      - "nightmares"
-      - "bad dreams"
-      - "frightening dreams"
-      - "disturbing dreams"
-      - "dream anxiety"
-      - "upsetting dreams"
-      - "recurrent nightmares"
-      - "dream disturbance"
-      - "fearful dreams"
-      - "anxiety dreams"
-      - "traumatic dreams"
-      - "nightmare disorder"
-      - "dream enactment"
-      - "vivid nightmares"
-      - "terrifying dreams"
-      - "distress after dreaming"
-      - "post-dream anxiety"
-      - "awakened by dream"
-      - "dream recall"
-      - "nightmare recall"
-    alert: "Frequent nightmares reported. Assess for anxiety, trauma, or stress. Provide reassurance and consider cognitive-behavioral approaches if persistent."
-    severity: "info"
+    - keywords:
+          - 'nightmares'
+          - 'bad dreams'
+          - 'frightening dreams'
+          - 'disturbing dreams'
+          - 'dream anxiety'
+          - 'upsetting dreams'
+          - 'recurrent nightmares'
+          - 'dream disturbance'
+          - 'fearful dreams'
+          - 'anxiety dreams'
+          - 'traumatic dreams'
+          - 'nightmare disorder'
+          - 'dream enactment'
+          - 'vivid nightmares'
+          - 'terrifying dreams'
+          - 'distress after dreaming'
+          - 'post-dream anxiety'
+          - 'awakened by dream'
+          - 'dream recall'
+          - 'nightmare recall'
+      alert: 'Frequent nightmares reported. Assess for anxiety, trauma, or stress. Provide reassurance and consider cognitive-behavioral approaches if persistent.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep talking"
-      - "somniloquy"
-      - "vocalizations during sleep"
-      - "talking in sleep"
-      - "verbalizations asleep"
-      - "speaking while asleep"
-      - "sleep speech"
-      - "nocturnal talking"
-      - "vocal episodes"
-      - "utterances during sleep"
-      - "mumbling asleep"
-      - "talking nonsense"
-      - "incoherent speech"
-      - "sleep-related talking"
-      - "verbal outbursts"
-      - "vocal sounds"
-      - "sleep utterances"
-      - "nocturnal vocalization"
-      - "parasomnia with talking"
-      - "speech during sleep"
-    alert: "Sleep talking observed. Typically benign but document content if concerning. Evaluate if associated with other parasomnias or sleep disruptions."
-    severity: "none"
+    - keywords:
+          - 'sleep talking'
+          - 'somniloquy'
+          - 'vocalizations during sleep'
+          - 'talking in sleep'
+          - 'verbalizations asleep'
+          - 'speaking while asleep'
+          - 'sleep speech'
+          - 'nocturnal talking'
+          - 'vocal episodes'
+          - 'utterances during sleep'
+          - 'mumbling asleep'
+          - 'talking nonsense'
+          - 'incoherent speech'
+          - 'sleep-related talking'
+          - 'verbal outbursts'
+          - 'vocal sounds'
+          - 'sleep utterances'
+          - 'nocturnal vocalization'
+          - 'parasomnia with talking'
+          - 'speech during sleep'
+      alert: 'Sleep talking observed. Typically benign but document content if concerning. Evaluate if associated with other parasomnias or sleep disruptions.'
+      severity: 'none'
 
-  - keywords:
-      - "bruxism"
-      - "teeth grinding"
-      - "jaw clenching"
-      - "dental grinding"
-      - "nocturnal grinding"
-      - "tooth grinding"
-      - "audible grinding"
-      - "mandibular tension"
-      - "dental wear"
-      - "enamel erosion"
-      - "jaw pain"
-      - "temporomandibular symptoms"
-      - "TMJ symptoms"
-      - "facial pain"
-      - "masseter hypertrophy"
-      - "grinding sounds"
-      - "occlusal wear"
-      - "dental damage"
-      - "oromandibular activity"
-      - "sleep-related bruxism"
-    alert: "Sleep bruxism (teeth grinding) documented. Evaluate for dental damage, jaw pain, or underlying stress. Consider dental referral if significant."
-    severity: "warning"
+    - keywords:
+          - 'bruxism'
+          - 'teeth grinding'
+          - 'jaw clenching'
+          - 'dental grinding'
+          - 'nocturnal grinding'
+          - 'tooth grinding'
+          - 'audible grinding'
+          - 'mandibular tension'
+          - 'dental wear'
+          - 'enamel erosion'
+          - 'jaw pain'
+          - 'temporomandibular symptoms'
+          - 'TMJ symptoms'
+          - 'facial pain'
+          - 'masseter hypertrophy'
+          - 'grinding sounds'
+          - 'occlusal wear'
+          - 'dental damage'
+          - 'oromandibular activity'
+          - 'sleep-related bruxism'
+      alert: 'Sleep bruxism (teeth grinding) documented. Evaluate for dental damage, jaw pain, or underlying stress. Consider dental referral if significant.'
+      severity: 'warning'
 
-  - keywords:
-      - "irregular schedule"
-      - "inconsistent bedtime"
-      - "variable sleep times"
-      - "irregular sleep-wake"
-      - "no routine"
-      - "unpredictable sleep"
-      - "erratic schedule"
-      - "inconsistent patterns"
-      - "variable rhythm"
-      - "lack of routine"
-      - "disorganized sleep"
-      - "chaotic schedule"
-      - "unstructured bedtime"
-      - "irregular timing"
-      - "inconsistent rhythm"
-      - "pattern variability"
-      - "schedule instability"
-      - "unpredictable timing"
-      - "irregular cycles"
-      - "variable bedtime"
-    alert: "Irregular sleep schedule noted. Establish consistent bedtime routine and wake time to reinforce circadian rhythm and improve sleep quality."
-    severity: "info"
+    - keywords:
+          - 'irregular schedule'
+          - 'inconsistent bedtime'
+          - 'variable sleep times'
+          - 'irregular sleep-wake'
+          - 'no routine'
+          - 'unpredictable sleep'
+          - 'erratic schedule'
+          - 'inconsistent patterns'
+          - 'variable rhythm'
+          - 'lack of routine'
+          - 'disorganized sleep'
+          - 'chaotic schedule'
+          - 'unstructured bedtime'
+          - 'irregular timing'
+          - 'inconsistent rhythm'
+          - 'pattern variability'
+          - 'schedule instability'
+          - 'unpredictable timing'
+          - 'irregular cycles'
+          - 'variable bedtime'
+      alert: 'Irregular sleep schedule noted. Establish consistent bedtime routine and wake time to reinforce circadian rhythm and improve sleep quality.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep deprivation"
-      - "inadequate sleep"
-      - "insufficient sleep"
-      - "chronic sleep loss"
-      - "sleep deficit"
-      - "cumulative sleep debt"
-      - "prolonged wakefulness"
-      - "extended arousal"
-      - "inadequate rest"
-      - "sleep restriction"
-      - "voluntary restriction"
-      - "behavioral insomnia"
-      - "insufficient total sleep"
-      - "sleep deficiency"
-      - "inadequate duration"
-      - "short sleep duration"
-      - "limited sleep time"
-      - "reduced sleep opportunity"
-      - "sleep curtailment"
-      - "incomplete sleep"
-    alert: "Signs of sleep deprivation or insufficient sleep documented. Assess sleep habits and educate on age-appropriate sleep requirements and consequences of sleep loss."
-    severity: "warning"
+    - keywords:
+          - 'sleep deprivation'
+          - 'inadequate sleep'
+          - 'insufficient sleep'
+          - 'chronic sleep loss'
+          - 'sleep deficit'
+          - 'cumulative sleep debt'
+          - 'prolonged wakefulness'
+          - 'extended arousal'
+          - 'inadequate rest'
+          - 'sleep restriction'
+          - 'voluntary restriction'
+          - 'behavioral insomnia'
+          - 'insufficient total sleep'
+          - 'sleep deficiency'
+          - 'inadequate duration'
+          - 'short sleep duration'
+          - 'limited sleep time'
+          - 'reduced sleep opportunity'
+          - 'sleep curtailment'
+          - 'incomplete sleep'
+      alert: 'Signs of sleep deprivation or insufficient sleep documented. Assess sleep habits and educate on age-appropriate sleep requirements and consequences of sleep loss.'
+      severity: 'warning'
 
-  - keywords:
-      - "excessive daytime sleepiness"
-      - "daytime drowsiness"
-      - "sleepy during day"
-      - "EDS"
-      - "hypersomnolence"
-      - "daytime fatigue"
-      - "sleepiness in class"
-      - "drowsy during day"
-      - "excessive sleepiness"
-      - "daytime somnolence"
-      - "tired during day"
-      - "falling asleep daytime"
-      - "inappropriate sleepiness"
-      - "daytime napping"
-      - "unintentional sleep"
-      - "difficulty staying awake"
-      - "sleep attacks"
-      - "overwhelming sleepiness"
-      - "persistent drowsiness"
-      - "constant fatigue"
-    alert: "Excessive daytime sleepiness reported. Evaluate for insufficient sleep, sleep disorders, or medical conditions. Consider sleep study if persistent."
-    severity: "warning"
+    - keywords:
+          - 'excessive daytime sleepiness'
+          - 'daytime drowsiness'
+          - 'sleepy during day'
+          - 'EDS'
+          - 'hypersomnolence'
+          - 'daytime fatigue'
+          - 'sleepiness in class'
+          - 'drowsy during day'
+          - 'excessive sleepiness'
+          - 'daytime somnolence'
+          - 'tired during day'
+          - 'falling asleep daytime'
+          - 'inappropriate sleepiness'
+          - 'daytime napping'
+          - 'unintentional sleep'
+          - 'difficulty staying awake'
+          - 'sleep attacks'
+          - 'overwhelming sleepiness'
+          - 'persistent drowsiness'
+          - 'constant fatigue'
+      alert: 'Excessive daytime sleepiness reported. Evaluate for insufficient sleep, sleep disorders, or medical conditions. Consider sleep study if persistent.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep paralysis"
-      - "unable to move"
-      - "temporary paralysis"
-      - "conscious but paralyzed"
-      - "awake but paralyzed"
-      - "cannot move awakening"
-      - "sleep-onset paralysis"
-      - "hypnagogic paralysis"
-      - "hypnopompic paralysis"
-      - "paralyzed upon waking"
-      - "immobile upon awakening"
-      - "transient paralysis"
-      - "inability to move"
-      - "motor inhibition"
-      - "atonia while awake"
-      - "conscious immobility"
-      - "sleep-wake transition paralysis"
-      - "isolated sleep paralysis"
-      - "recurrent sleep paralysis"
-      - "frightening immobility"
-    alert: "Sleep paralysis episodes reported. Typically benign but can be frightening. Reassure and evaluate for narcolepsy if accompanied by other symptoms."
-    severity: "info"
+    - keywords:
+          - 'sleep paralysis'
+          - 'unable to move'
+          - 'temporary paralysis'
+          - 'conscious but paralyzed'
+          - 'awake but paralyzed'
+          - 'cannot move awakening'
+          - 'sleep-onset paralysis'
+          - 'hypnagogic paralysis'
+          - 'hypnopompic paralysis'
+          - 'paralyzed upon waking'
+          - 'immobile upon awakening'
+          - 'transient paralysis'
+          - 'inability to move'
+          - 'motor inhibition'
+          - 'atonia while awake'
+          - 'conscious immobility'
+          - 'sleep-wake transition paralysis'
+          - 'isolated sleep paralysis'
+          - 'recurrent sleep paralysis'
+          - 'frightening immobility'
+      alert: 'Sleep paralysis episodes reported. Typically benign but can be frightening. Reassure and evaluate for narcolepsy if accompanied by other symptoms.'
+      severity: 'info'
 
-  - keywords:
-      - "confusional arousals"
-      - "sleep drunkenness"
-      - "disoriented upon waking"
-      - "confused awakening"
-      - "groggy upon waking"
-      - "mental fog awakening"
-      - "cognitive impairment awakening"
-      - "slow to awaken"
-      - "prolonged confusion"
-      - "impaired cognition awakening"
-      - "disorientation after sleep"
-      - "sleep inertia"
-      - "post-sleep confusion"
-      - "awakening confusion"
-      - "transient disorientation"
-      - "impaired alertness awakening"
-      - "cognitive fog"
-      - "mental cloudiness"
-      - "slow awakening"
-      - "delayed alertness"
-    alert: "Confusional arousals or significant sleep inertia documented. Evaluate sleep quality, duration, and rule out sleep disorders causing incomplete awakenings."
-    severity: "info"
+    - keywords:
+          - 'confusional arousals'
+          - 'sleep drunkenness'
+          - 'disoriented upon waking'
+          - 'confused awakening'
+          - 'groggy upon waking'
+          - 'mental fog awakening'
+          - 'cognitive impairment awakening'
+          - 'slow to awaken'
+          - 'prolonged confusion'
+          - 'impaired cognition awakening'
+          - 'disorientation after sleep'
+          - 'sleep inertia'
+          - 'post-sleep confusion'
+          - 'awakening confusion'
+          - 'transient disorientation'
+          - 'impaired alertness awakening'
+          - 'cognitive fog'
+          - 'mental cloudiness'
+          - 'slow awakening'
+          - 'delayed alertness'
+      alert: 'Confusional arousals or significant sleep inertia documented. Evaluate sleep quality, duration, and rule out sleep disorders causing incomplete awakenings.'
+      severity: 'info'
 
-  - keywords:
-      - "head banging"
-      - "body rocking"
-      - "rhythmic movement"
-      - "jactatio capitis"
-      - "head rolling"
-      - "body rolling"
-      - "rhythmic motions"
-      - "repetitive movements"
-      - "stereotyped movements"
-      - "sleep-related movement"
-      - "rhythmic behavior"
-      - "head knocking"
-      - "body banging"
-      - "repetitive rhythm"
-      - "movement disorder sleep"
-      - "nocturnal movements"
-      - "rhythmic pattern"
-      - "self-soothing behavior"
-      - "repetitive behavior"
-      - "stereotypic movements"
-    alert: "Rhythmic movement disorder (head banging, body rocking) observed. Ensure safety from injury. Typically self-limited; evaluate if causing injury or disruption."
-    severity: "warning"
+    - keywords:
+          - 'head banging'
+          - 'body rocking'
+          - 'rhythmic movement'
+          - 'jactatio capitis'
+          - 'head rolling'
+          - 'body rolling'
+          - 'rhythmic motions'
+          - 'repetitive movements'
+          - 'stereotyped movements'
+          - 'sleep-related movement'
+          - 'rhythmic behavior'
+          - 'head knocking'
+          - 'body banging'
+          - 'repetitive rhythm'
+          - 'movement disorder sleep'
+          - 'nocturnal movements'
+          - 'rhythmic pattern'
+          - 'self-soothing behavior'
+          - 'repetitive behavior'
+          - 'stereotypic movements'
+      alert: 'Rhythmic movement disorder (head banging, body rocking) observed. Ensure safety from injury. Typically self-limited; evaluate if causing injury or disruption.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep-related eating"
-      - "nocturnal eating"
-      - "eating while asleep"
-      - "sleep eating"
-      - "nocturnal ingestion"
-      - "unconscious eating"
-      - "food consumption sleep"
-      - "sleep-related feeding"
-      - "parasomnia with eating"
-      - "nocturnal foraging"
-      - "sleep cooking"
-      - "eating episodes"
-      - "ingestion during sleep"
-      - "nocturnal snacking"
-      - "unremembered eating"
-      - "amnesic eating"
-      - "sleepwalking with eating"
-      - "nocturnal eating syndrome"
-      - "SRED"
-      - "sleep-related eating disorder"
-    alert: "Sleep-related eating behavior documented. Evaluate for safety risks (ingestion of non-food items, cooking injuries) and consider sleep study."
-    severity: "warning"
+    - keywords:
+          - 'sleep-related eating'
+          - 'nocturnal eating'
+          - 'eating while asleep'
+          - 'sleep eating'
+          - 'nocturnal ingestion'
+          - 'unconscious eating'
+          - 'food consumption sleep'
+          - 'sleep-related feeding'
+          - 'parasomnia with eating'
+          - 'nocturnal foraging'
+          - 'sleep cooking'
+          - 'eating episodes'
+          - 'ingestion during sleep'
+          - 'nocturnal snacking'
+          - 'unremembered eating'
+          - 'amnesic eating'
+          - 'sleepwalking with eating'
+          - 'nocturnal eating syndrome'
+          - 'SRED'
+          - 'sleep-related eating disorder'
+      alert: 'Sleep-related eating behavior documented. Evaluate for safety risks (ingestion of non-food items, cooking injuries) and consider sleep study.'
+      severity: 'warning'
 
-  - keywords:
-      - "nocturnal seizures"
-      - "seizure during sleep"
-      - "convulsions at night"
-      - "sleep convulsions"
-      - "nocturnal episode"
-      - "seizure activity sleep"
-      - "tonic-clonic sleep"
-      - "epilepsy during sleep"
-      - "nocturnal event"
-      - "seizure upon awakening"
-      - "sleep-related seizure"
-      - "ictal event sleep"
-      - "post-ictal state"
-      - "seizure manifestations"
-      - "epileptic event"
-      - "nocturnal epilepsy"
-      - "sleep-associated seizures"
-      - "seizure disorder sleep"
-      - "convulsive episode"
-      - "paroxysmal event"
-    alert: "Possible nocturnal seizure activity observed. Requires urgent neurological evaluation and possibly EEG monitoring to characterize events."
-    severity: "critical"
+    - keywords:
+          - 'nocturnal seizures'
+          - 'seizure during sleep'
+          - 'convulsions at night'
+          - 'sleep convulsions'
+          - 'nocturnal episode'
+          - 'seizure activity sleep'
+          - 'tonic-clonic sleep'
+          - 'epilepsy during sleep'
+          - 'nocturnal event'
+          - 'seizure upon awakening'
+          - 'sleep-related seizure'
+          - 'ictal event sleep'
+          - 'post-ictal state'
+          - 'seizure manifestations'
+          - 'epileptic event'
+          - 'nocturnal epilepsy'
+          - 'sleep-associated seizures'
+          - 'seizure disorder sleep'
+          - 'convulsive episode'
+          - 'paroxysmal event'
+      alert: 'Possible nocturnal seizure activity observed. Requires urgent neurological evaluation and possibly EEG monitoring to characterize events.'
+      severity: 'critical'
 
-  - keywords:
-      - "sleep position"
-      - "prone sleeping"
-      - "side sleeping"
-      - "supine position"
-      - "position preference"
-      - "sleep posture"
-      - "body position"
-      - "positioning during sleep"
-      - "sleeping on stomach"
-      - "sleeping on back"
-      - "sleeping on side"
-      - "position changes"
-      - "nocturnal positioning"
-      - "sleep alignment"
-      - "postural habits"
-      - "preferred position"
-      - "positional preference"
-      - "sleep orientation"
-      - "body alignment"
-      - "position variability"
-    alert: "Sleep position documented. For infants, supine position is recommended to reduce SIDS risk. For older children, position may affect breathing in certain conditions."
-    severity: "info"
+    - keywords:
+          - 'sleep position'
+          - 'prone sleeping'
+          - 'side sleeping'
+          - 'supine position'
+          - 'position preference'
+          - 'sleep posture'
+          - 'body position'
+          - 'positioning during sleep'
+          - 'sleeping on stomach'
+          - 'sleeping on back'
+          - 'sleeping on side'
+          - 'position changes'
+          - 'nocturnal positioning'
+          - 'sleep alignment'
+          - 'postural habits'
+          - 'preferred position'
+          - 'positional preference'
+          - 'sleep orientation'
+          - 'body alignment'
+          - 'position variability'
+      alert: 'Sleep position documented. For infants, supine position is recommended to reduce SIDS risk. For older children, position may affect breathing in certain conditions.'
+      severity: 'info'
 
-  - keywords:
-      - "environmental factors"
-      - "room temperature"
-      - "noise disturbance"
-      - "light exposure"
-      - "sleep environment"
-      - "bedding issues"
-      - "uncomfortable bed"
-      - "temperature extreme"
-      - "noise disruption"
-      - "light disruption"
-      - "environmental disruption"
-      - "sleep setting"
-      - "bedroom conditions"
-      - "environmental stimuli"
-      - "external factors"
-      - "ambient conditions"
-      - "sleep disturbances"
-      - "environmental interference"
-      - "sleep habitat"
-      - "surrounding conditions"
-    alert: "Environmental factors affecting sleep documented. Optimize sleep environment: cool, dark, quiet room with comfortable bedding and minimal disruptions."
-    severity: "info"
+    - keywords:
+          - 'environmental factors'
+          - 'room temperature'
+          - 'noise disturbance'
+          - 'light exposure'
+          - 'sleep environment'
+          - 'bedding issues'
+          - 'uncomfortable bed'
+          - 'temperature extreme'
+          - 'noise disruption'
+          - 'light disruption'
+          - 'environmental disruption'
+          - 'sleep setting'
+          - 'bedroom conditions'
+          - 'environmental stimuli'
+          - 'external factors'
+          - 'ambient conditions'
+          - 'sleep disturbances'
+          - 'environmental interference'
+          - 'sleep habitat'
+          - 'surrounding conditions'
+      alert: 'Environmental factors affecting sleep documented. Optimize sleep environment: cool, dark, quiet room with comfortable bedding and minimal disruptions.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep duration short"
-      - "inadequate sleep time"
-      - "short sleeper"
-      - "reduced sleep"
-      - "limited duration"
-      - "sleep time insufficient"
-      - "below recommended sleep"
-      - "decreased sleep quantity"
-      - "sleep amount low"
-      - "total sleep time low"
-      - "sleep duration decreased"
-      - "insufficient nighttime sleep"
-      - "shortened sleep"
-      - "truncated sleep"
-      - "abbreviated sleep"
-      - "minimal sleep"
-      - "brief sleep periods"
-      - "sleep period short"
-      - "duration deficiency"
-      - "sleep quantity inadequate"
-    alert: "Short sleep duration documented. Compare to age-appropriate recommendations and address contributing factors to ensure adequate restorative sleep."
-    severity: "warning"
+    - keywords:
+          - 'sleep duration short'
+          - 'inadequate sleep time'
+          - 'short sleeper'
+          - 'reduced sleep'
+          - 'limited duration'
+          - 'sleep time insufficient'
+          - 'below recommended sleep'
+          - 'decreased sleep quantity'
+          - 'sleep amount low'
+          - 'total sleep time low'
+          - 'sleep duration decreased'
+          - 'insufficient nighttime sleep'
+          - 'shortened sleep'
+          - 'truncated sleep'
+          - 'abbreviated sleep'
+          - 'minimal sleep'
+          - 'brief sleep periods'
+          - 'sleep period short'
+          - 'duration deficiency'
+          - 'sleep quantity inadequate'
+      alert: 'Short sleep duration documented. Compare to age-appropriate recommendations and address contributing factors to ensure adequate restorative sleep.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep duration long"
-      - "excessive sleep"
-      - "prolonged sleep"
-      - "hypersomnia"
-      - "extended sleep"
-      - "increased sleep time"
-      - "long sleeper"
-      - "sleeping too much"
-      - "excessive duration"
-      - "prolonged sleep period"
-      - "extended sleep time"
-      - "increased sleep need"
-      - "sleep requirement high"
-      - "lengthy sleep"
-      - "protracted sleep"
-      - "sleep extension"
-      - "duration increased"
-      - "sleep quantity excessive"
-      - "oversleeping"
-      - "hypersomnolence pattern"
-    alert: "Excessive sleep duration documented. Evaluate for underlying medical conditions, depression, or sleep disorders if accompanied by daytime sleepiness."
-    severity: "warning"
+    - keywords:
+          - 'sleep duration long'
+          - 'excessive sleep'
+          - 'prolonged sleep'
+          - 'hypersomnia'
+          - 'extended sleep'
+          - 'increased sleep time'
+          - 'long sleeper'
+          - 'sleeping too much'
+          - 'excessive duration'
+          - 'prolonged sleep period'
+          - 'extended sleep time'
+          - 'increased sleep need'
+          - 'sleep requirement high'
+          - 'lengthy sleep'
+          - 'protracted sleep'
+          - 'sleep extension'
+          - 'duration increased'
+          - 'sleep quantity excessive'
+          - 'oversleeping'
+          - 'hypersomnolence pattern'
+      alert: 'Excessive sleep duration documented. Evaluate for underlying medical conditions, depression, or sleep disorders if accompanied by daytime sleepiness.'
+      severity: 'warning'
 
-  - keywords:
-      - "circadian rhythm disorder"
-      - "delayed sleep phase"
-      - "advanced sleep phase"
-      - "sleep-wake disorder"
-      - "rhythm disturbance"
-      - "circadian misalignment"
-      - "phase shift"
-      - "delayed timing"
-      - "advanced timing"
-      - "irregular rhythm"
-      - "non-24-hour rhythm"
-      - "free-running rhythm"
-      - "circadian disruption"
-      - "phase delay"
-      - "phase advance"
-      - "timing disorder"
-      - "rhythm abnormality"
-      - "circadian dysfunction"
-      - "sleep timing issues"
-      - "chronobiology disorder"
-    alert: "Circadian rhythm disturbance suspected. Evaluate sleep-wake patterns and consider chronotherapy, light therapy, or melatonin under guidance."
-    severity: "warning"
+    - keywords:
+          - 'circadian rhythm disorder'
+          - 'delayed sleep phase'
+          - 'advanced sleep phase'
+          - 'sleep-wake disorder'
+          - 'rhythm disturbance'
+          - 'circadian misalignment'
+          - 'phase shift'
+          - 'delayed timing'
+          - 'advanced timing'
+          - 'irregular rhythm'
+          - 'non-24-hour rhythm'
+          - 'free-running rhythm'
+          - 'circadian disruption'
+          - 'phase delay'
+          - 'phase advance'
+          - 'timing disorder'
+          - 'rhythm abnormality'
+          - 'circadian dysfunction'
+          - 'sleep timing issues'
+          - 'chronobiology disorder'
+      alert: 'Circadian rhythm disturbance suspected. Evaluate sleep-wake patterns and consider chronotherapy, light therapy, or melatonin under guidance.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep anxiety"
-      - "bedtime fear"
-      - "afraid to sleep"
-      - "nighttime anxiety"
-      - "sleep-related worry"
-      - "apprehension about sleep"
-      - "fear of sleeping"
-      - "nocturnal anxiety"
-      - "sleep apprehension"
-      - "bedtime distress"
-      - "sleep-related fear"
-      - "anxious at bedtime"
-      - "sleep resistance anxiety"
-      - "nighttime nervousness"
-      - "sleep phobia"
-      - "fearful of bed"
-      - "bedtime panic"
-      - "sleep avoidance anxiety"
-      - "nocturnal apprehension"
-      - "sleep-related distress"
-    alert: "Sleep-related anxiety documented. Implement calming bedtime routine, address fears, and consider cognitive-behavioral approaches for anxiety management."
-    severity: "warning"
+    - keywords:
+          - 'sleep anxiety'
+          - 'bedtime fear'
+          - 'afraid to sleep'
+          - 'nighttime anxiety'
+          - 'sleep-related worry'
+          - 'apprehension about sleep'
+          - 'fear of sleeping'
+          - 'nocturnal anxiety'
+          - 'sleep apprehension'
+          - 'bedtime distress'
+          - 'sleep-related fear'
+          - 'anxious at bedtime'
+          - 'sleep resistance anxiety'
+          - 'nighttime nervousness'
+          - 'sleep phobia'
+          - 'fearful of bed'
+          - 'bedtime panic'
+          - 'sleep avoidance anxiety'
+          - 'nocturnal apprehension'
+          - 'sleep-related distress'
+      alert: 'Sleep-related anxiety documented. Implement calming bedtime routine, address fears, and consider cognitive-behavioral approaches for anxiety management.'
+      severity: 'warning'
 
-  - keywords:
-      - "pain disrupting sleep"
-      - "painful awakening"
-      - "nocturnal pain"
-      - "pain during night"
-      - "discomfort at night"
-      - "pain-induced awakening"
-      - "sleep interruption pain"
-      - "nighttime discomfort"
-      - "pain affecting sleep"
-      - "nociceptive disruption"
-      - "pain-related arousal"
-      - "sleep disturbance pain"
-      - "nocturnal symptoms"
-      - "pain at nighttime"
-      - "discomfort disrupting"
-      - "pain causing awakening"
-      - "symptoms at night"
-      - "nocturnal symptom exacerbation"
-      - "painful episodes"
-      - "symptom disruption"
-    alert: "Pain disrupting sleep documented. Optimize pain management regimen to ensure adequate pain control during nighttime hours for restorative sleep."
-    severity: "warning"
+    - keywords:
+          - 'pain disrupting sleep'
+          - 'painful awakening'
+          - 'nocturnal pain'
+          - 'pain during night'
+          - 'discomfort at night'
+          - 'pain-induced awakening'
+          - 'sleep interruption pain'
+          - 'nighttime discomfort'
+          - 'pain affecting sleep'
+          - 'nociceptive disruption'
+          - 'pain-related arousal'
+          - 'sleep disturbance pain'
+          - 'nocturnal symptoms'
+          - 'pain at nighttime'
+          - 'discomfort disrupting'
+          - 'pain causing awakening'
+          - 'symptoms at night'
+          - 'nocturnal symptom exacerbation'
+          - 'painful episodes'
+          - 'symptom disruption'
+      alert: 'Pain disrupting sleep documented. Optimize pain management regimen to ensure adequate pain control during nighttime hours for restorative sleep.'
+      severity: 'warning'
 
-  - keywords:
-      - "medication affecting sleep"
-      - "drug-induced insomnia"
-      - "medication side effect"
-      - "pharmacological impact"
-      - "drug-related sleepiness"
-      - "medication causing drowsiness"
-      - "pharmaceutical effect"
-      - "medication disrupting sleep"
-      - "drug-induced somnolence"
-      - "medication altering sleep"
-      - "pharmacologic influence"
-      - "side effect sleep"
-      - "medication interaction"
-      - "drug effect sleep"
-      - "medication-induced change"
-      - "pharmacotherapy impact"
-      - "medication consequence"
-      - "drug-related alteration"
-      - "medication affecting rhythm"
-      - "pharmacological disruption"
-    alert: "Medication affecting sleep pattern documented. Review medication list for drugs that disrupt sleep architecture or cause daytime sedation."
-    severity: "warning"
+    - keywords:
+          - 'medication affecting sleep'
+          - 'drug-induced insomnia'
+          - 'medication side effect'
+          - 'pharmacological impact'
+          - 'drug-related sleepiness'
+          - 'medication causing drowsiness'
+          - 'pharmaceutical effect'
+          - 'medication disrupting sleep'
+          - 'drug-induced somnolence'
+          - 'medication altering sleep'
+          - 'pharmacologic influence'
+          - 'side effect sleep'
+          - 'medication interaction'
+          - 'drug effect sleep'
+          - 'medication-induced change'
+          - 'pharmacotherapy impact'
+          - 'medication consequence'
+          - 'drug-related alteration'
+          - 'medication affecting rhythm'
+          - 'pharmacological disruption'
+      alert: 'Medication affecting sleep pattern documented. Review medication list for drugs that disrupt sleep architecture or cause daytime sedation.'
+      severity: 'warning'
 
-  - keywords:
-      - "breathing difficulty"
-      - "labored breathing"
-      - "respiratory effort"
-      - "breathing struggle"
-      - "dyspnea at night"
-      - "nocturnal dyspnea"
-      - "breathing problems"
-      - "respiratory difficulty"
-      - "airway obstruction"
-      - "breathing discomfort"
-      - "respiratory distress"
-      - "breathing labor"
-      - "respiratory challenge"
-      - "breathing impediment"
-      - "airway difficulty"
-      - "breathing obstruction"
-      - "respiratory compromise"
-      - "breathing limitation"
-      - "ventilatory problem"
-      - "respiration difficulty"
-    alert: "Nocturnal breathing difficulties documented. Evaluate for asthma, respiratory infections, or anatomical issues causing nighttime respiratory distress."
-    severity: "critical"
+    - keywords:
+          - 'breathing difficulty'
+          - 'labored breathing'
+          - 'respiratory effort'
+          - 'breathing struggle'
+          - 'dyspnea at night'
+          - 'nocturnal dyspnea'
+          - 'breathing problems'
+          - 'respiratory difficulty'
+          - 'airway obstruction'
+          - 'breathing discomfort'
+          - 'respiratory distress'
+          - 'breathing labor'
+          - 'respiratory challenge'
+          - 'breathing impediment'
+          - 'airway difficulty'
+          - 'breathing obstruction'
+          - 'respiratory compromise'
+          - 'breathing limitation'
+          - 'ventilatory problem'
+          - 'respiration difficulty'
+      alert: 'Nocturnal breathing difficulties documented. Evaluate for asthma, respiratory infections, or anatomical issues causing nighttime respiratory distress.'
+      severity: 'critical'
 
-  - keywords:
-      - "GERD symptoms"
-      - "acid reflux"
-      - "heartburn at night"
-      - "nocturnal reflux"
-      - "regurgitation during sleep"
-      - "reflux symptoms"
-      - "gastroesophageal reflux"
-      - "acid regurgitation"
-      - "reflux awakening"
-      - "heartburn awakening"
-      - "nocturnal heartburn"
-      - "reflux during sleep"
-      - "GERD at night"
-      - "acid symptoms"
-      - "reflux episode"
-      - "gastric reflux"
-      - "esophageal symptoms"
-      - "reflux disease"
-      - "nocturnal regurgitation"
-      - "reflux discomfort"
-    alert: "Nocturnal GERD/reflux symptoms documented. Elevate head of bed, avoid late meals, and consider medical management to prevent sleep disruption and complications."
-    severity: "warning"
+    - keywords:
+          - 'GERD symptoms'
+          - 'acid reflux'
+          - 'heartburn at night'
+          - 'nocturnal reflux'
+          - 'regurgitation during sleep'
+          - 'reflux symptoms'
+          - 'gastroesophageal reflux'
+          - 'acid regurgitation'
+          - 'reflux awakening'
+          - 'heartburn awakening'
+          - 'nocturnal heartburn'
+          - 'reflux during sleep'
+          - 'GERD at night'
+          - 'acid symptoms'
+          - 'reflux episode'
+          - 'gastric reflux'
+          - 'esophageal symptoms'
+          - 'reflux disease'
+          - 'nocturnal regurgitation'
+          - 'reflux discomfort'
+      alert: 'Nocturnal GERD/reflux symptoms documented. Elevate head of bed, avoid late meals, and consider medical management to prevent sleep disruption and complications.'
+      severity: 'warning'
 
-  - keywords:
-      - "night sweats"
-      - "nocturnal sweating"
-      - "sweating at night"
-      - "drenching sweats"
-      - "nocturnal diaphoresis"
-      - "sleep hyperhidrosis"
-      - "bedclothes soaked"
-      - "profuse sweating"
-      - "nighttime perspiration"
-      - "nocturnal moisture"
-      - "sweating episodes"
-      - "nocturnal clamminess"
-      - "drenched at night"
-      - "perspiration at night"
-      - "sweating during sleep"
-      - "nocturnal dampness"
-      - "sleep sweating"
-      - "nighttime sweating"
-      - "nocturnal sweat"
-      - "hyperhidrosis nocturnal"
-    alert: "Night sweats documented. Evaluate for infections, endocrine disorders, or environmental factors. Consider changing bedding and sleepwear for comfort."
-    severity: "warning"
+    - keywords:
+          - 'night sweats'
+          - 'nocturnal sweating'
+          - 'sweating at night'
+          - 'drenching sweats'
+          - 'nocturnal diaphoresis'
+          - 'sleep hyperhidrosis'
+          - 'bedclothes soaked'
+          - 'profuse sweating'
+          - 'nighttime perspiration'
+          - 'nocturnal moisture'
+          - 'sweating episodes'
+          - 'nocturnal clamminess'
+          - 'drenched at night'
+          - 'perspiration at night'
+          - 'sweating during sleep'
+          - 'nocturnal dampness'
+          - 'sleep sweating'
+          - 'nighttime sweating'
+          - 'nocturnal sweat'
+          - 'hyperhidrosis nocturnal'
+      alert: 'Night sweats documented. Evaluate for infections, endocrine disorders, or environmental factors. Consider changing bedding and sleepwear for comfort.'
+      severity: 'warning'
 
-  - keywords:
-      - "allergy symptoms"
-      - "nasal congestion"
-      - "allergic rhinitis"
-      - "postnasal drip"
-      - "nasal obstruction"
-      - "allergic symptoms"
-      - "rhinitis symptoms"
-      - "nasal stuffiness"
-      - "congestion at night"
-      - "allergic congestion"
-      - "nasal symptoms"
-      - "rhinorrhea nocturnal"
-      - "allergy disruption"
-      - "nasal blockage"
-      - "airway congestion"
-      - "allergic manifestation"
-      - "nasal inflammation"
-      - "allergic reaction"
-      - "upper airway symptoms"
-      - "nasal breathing difficulty"
-    alert: "Allergy symptoms disrupting sleep documented. Optimize allergy management, consider environmental controls, and evaluate for sleep-disordered breathing."
-    severity: "warning"
+    - keywords:
+          - 'allergy symptoms'
+          - 'nasal congestion'
+          - 'allergic rhinitis'
+          - 'postnasal drip'
+          - 'nasal obstruction'
+          - 'allergic symptoms'
+          - 'rhinitis symptoms'
+          - 'nasal stuffiness'
+          - 'congestion at night'
+          - 'allergic congestion'
+          - 'nasal symptoms'
+          - 'rhinorrhea nocturnal'
+          - 'allergy disruption'
+          - 'nasal blockage'
+          - 'airway congestion'
+          - 'allergic manifestation'
+          - 'nasal inflammation'
+          - 'allergic reaction'
+          - 'upper airway symptoms'
+          - 'nasal breathing difficulty'
+      alert: 'Allergy symptoms disrupting sleep documented. Optimize allergy management, consider environmental controls, and evaluate for sleep-disordered breathing.'
+      severity: 'warning'
 
-  - keywords:
-      - "itchy skin"
-      - "pruritus at night"
-      - "nocturnal itching"
-      - "skin discomfort"
-      - "eczema symptoms"
-      - "dermatological symptoms"
-      - "itchiness at night"
-      - "nocturnal pruritus"
-      - "skin irritation"
-      - "cutaneous symptoms"
-      - "itching during sleep"
-      - "dermatitis symptoms"
-      - "skin condition"
-      - "pruritic symptoms"
-      - "nocturnal scratching"
-      - "skin inflammation"
-      - "cutaneous discomfort"
-      - "itchy at night"
-      - "dermatologic issue"
-      - "skin sensitivity"
-    alert: "Nocturnal pruritus or skin discomfort documented. Optimize skin care regimen, consider antihistamines, and prevent scratching to minimize sleep disruption."
-    severity: "warning"
+    - keywords:
+          - 'itchy skin'
+          - 'pruritus at night'
+          - 'nocturnal itching'
+          - 'skin discomfort'
+          - 'eczema symptoms'
+          - 'dermatological symptoms'
+          - 'itchiness at night'
+          - 'nocturnal pruritus'
+          - 'skin irritation'
+          - 'cutaneous symptoms'
+          - 'itching during sleep'
+          - 'dermatitis symptoms'
+          - 'skin condition'
+          - 'pruritic symptoms'
+          - 'nocturnal scratching'
+          - 'skin inflammation'
+          - 'cutaneous discomfort'
+          - 'itchy at night'
+          - 'dermatologic issue'
+          - 'skin sensitivity'
+      alert: 'Nocturnal pruritus or skin discomfort documented. Optimize skin care regimen, consider antihistamines, and prevent scratching to minimize sleep disruption.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep association"
-      - "dependent on parent"
-      - "needs assistance"
-      - "parental presence"
-      - "sleep dependency"
-      - "requires help"
-      - "dependent sleep"
-      - "needs intervention"
-      - "parental intervention"
-      - "assistance needed"
-      - "sleep reliance"
-      - "dependent behavior"
-      - "requires presence"
-      - "needs company"
-      - "sleep attachment"
-      - "dependent on conditions"
-      - "requires specific conditions"
-      - "sleep crutch"
-      - "dependent on object"
-      - "needs specific routine"
-    alert: "Problematic sleep associations documented. Gradually fade dependent behaviors to encourage self-soothing and independent sleep initiation."
-    severity: "info"
+    - keywords:
+          - 'sleep association'
+          - 'dependent on parent'
+          - 'needs assistance'
+          - 'parental presence'
+          - 'sleep dependency'
+          - 'requires help'
+          - 'dependent sleep'
+          - 'needs intervention'
+          - 'parental intervention'
+          - 'assistance needed'
+          - 'sleep reliance'
+          - 'dependent behavior'
+          - 'requires presence'
+          - 'needs company'
+          - 'sleep attachment'
+          - 'dependent on conditions'
+          - 'requires specific conditions'
+          - 'sleep crutch'
+          - 'dependent on object'
+          - 'needs specific routine'
+      alert: 'Problematic sleep associations documented. Gradually fade dependent behaviors to encourage self-soothing and independent sleep initiation.'
+      severity: 'info'
 
-  - keywords:
-      - "developmental regression"
-      - "sleep regression"
-      - "regression in sleep"
-      - "developmental change"
-      - "sleep pattern change"
-      - "temporary disruption"
-      - "developmental transition"
-      - "regressive behavior"
-      - "temporary regression"
-      - "developmental phase"
-      - "transition period"
-      - "developmental milestone"
-      - "pattern change"
-      - "temporary alteration"
-      - "developmental adjustment"
-      - "phase-related change"
-      - "milestone effect"
-      - "developmental impact"
-      - "transitional phase"
-      - "developmental period"
-    alert: "Developmental sleep regression noted. Typically temporary; maintain consistent routines and provide reassurance during developmental transitions."
-    severity: "info"
+    - keywords:
+          - 'developmental regression'
+          - 'sleep regression'
+          - 'regression in sleep'
+          - 'developmental change'
+          - 'sleep pattern change'
+          - 'temporary disruption'
+          - 'developmental transition'
+          - 'regressive behavior'
+          - 'temporary regression'
+          - 'developmental phase'
+          - 'transition period'
+          - 'developmental milestone'
+          - 'pattern change'
+          - 'temporary alteration'
+          - 'developmental adjustment'
+          - 'phase-related change'
+          - 'milestone effect'
+          - 'developmental impact'
+          - 'transitional phase'
+          - 'developmental period'
+      alert: 'Developmental sleep regression noted. Typically temporary; maintain consistent routines and provide reassurance during developmental transitions.'
+      severity: 'info'
 
-  - keywords:
-      - "behavioral insomnia"
-      - "limit-setting issues"
-      - "bedtime stalling"
-      - "behavioral issues"
-      - "sleep behavior problems"
-      - "behavioral resistance"
-      - "limit testing"
-      - "behavioral challenges"
-      - "non-compliance bedtime"
-      - "behavioral refusal"
-      - "stalling behavior"
-      - "limit pushing"
-      - "behavioral opposition"
-      - "resistance to sleep"
-      - "behavioral avoidance"
-      - "non-adherence routine"
-      - "behavioral non-compliance"
-      - "defiance at bedtime"
-      - "behavioral struggle"
-      - "limit resistance"
-    alert: "Behavioral insomnia or limit-setting issues documented. Implement consistent bedtime routines and clear limits to establish healthy sleep habits."
-    severity: "warning"
+    - keywords:
+          - 'behavioral insomnia'
+          - 'limit-setting issues'
+          - 'bedtime stalling'
+          - 'behavioral issues'
+          - 'sleep behavior problems'
+          - 'behavioral resistance'
+          - 'limit testing'
+          - 'behavioral challenges'
+          - 'non-compliance bedtime'
+          - 'behavioral refusal'
+          - 'stalling behavior'
+          - 'limit pushing'
+          - 'behavioral opposition'
+          - 'resistance to sleep'
+          - 'behavioral avoidance'
+          - 'non-adherence routine'
+          - 'behavioral non-compliance'
+          - 'defiance at bedtime'
+          - 'behavioral struggle'
+          - 'limit resistance'
+      alert: 'Behavioral insomnia or limit-setting issues documented. Implement consistent bedtime routines and clear limits to establish healthy sleep habits.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep onset association"
-      - "negative association"
-      - "conditioned arousal"
-      - "association disorder"
-      - "learned association"
-      - "conditioned response"
-      - "association pattern"
-      - "negative conditioning"
-      - "learned behavior"
-      - "conditioned behavior"
-      - "association issue"
-      - "negative pattern"
-      - "conditioned difficulty"
-      - "learned response"
-      - "association problem"
-      - "conditioned problem"
-      - "negative learning"
-      - "association disorder"
-      - "conditioned disorder"
-      - "learned disorder"
-    alert: "Negative sleep onset associations documented. Gradually modify associations to help child learn to fall asleep independently without specific conditions."
-    severity: "info"
+    - keywords:
+          - 'sleep onset association'
+          - 'negative association'
+          - 'conditioned arousal'
+          - 'association disorder'
+          - 'learned association'
+          - 'conditioned response'
+          - 'association pattern'
+          - 'negative conditioning'
+          - 'learned behavior'
+          - 'conditioned behavior'
+          - 'association issue'
+          - 'negative pattern'
+          - 'conditioned difficulty'
+          - 'learned response'
+          - 'association problem'
+          - 'conditioned problem'
+          - 'negative learning'
+          - 'association disorder'
+          - 'conditioned disorder'
+          - 'learned disorder'
+      alert: 'Negative sleep onset associations documented. Gradually modify associations to help child learn to fall asleep independently without specific conditions.'
+      severity: 'info'
 
-  - keywords:
-      - "night feeding"
-      - "nocturnal feeding"
-      - "feeding at night"
-      - "nighttime feeding"
-      - "nocturnal nutrition"
-      - "feeding during sleep"
-      - "night nursing"
-      - "nocturnal eating"
-      - "feeding association"
-      - "nighttime nutrition"
-      - "nocturnal consumption"
-      - "feeding habit"
-      - "night feeding routine"
-      - "nocturnal feeding pattern"
-      - "feeding dependency"
-      - "nighttime dependency"
-      - "feeding necessity"
-      - "nocturnal requirement"
-      - "feeding expectation"
-      - "night feeding habit"
-    alert: "Night feeding documented beyond nutritional need. Consider weaning night feeds if age-appropriate to prevent sleep association and dental caries."
-    severity: "info"
+    - keywords:
+          - 'night feeding'
+          - 'nocturnal feeding'
+          - 'feeding at night'
+          - 'nighttime feeding'
+          - 'nocturnal nutrition'
+          - 'feeding during sleep'
+          - 'night nursing'
+          - 'nocturnal eating'
+          - 'feeding association'
+          - 'nighttime nutrition'
+          - 'nocturnal consumption'
+          - 'feeding habit'
+          - 'night feeding routine'
+          - 'nocturnal feeding pattern'
+          - 'feeding dependency'
+          - 'nighttime dependency'
+          - 'feeding necessity'
+          - 'nocturnal requirement'
+          - 'feeding expectation'
+          - 'night feeding habit'
+      alert: 'Night feeding documented beyond nutritional need. Consider weaning night feeds if age-appropriate to prevent sleep association and dental caries.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep environment transition"
-      - "new sleep location"
-      - "environment change"
-      - "location transition"
-      - "sleep setting change"
-      - "environment adjustment"
-      - "new sleeping arrangement"
-      - "sleep location change"
-      - "environment modification"
-      - "sleep arrangement change"
-      - "bed transition"
-      - "room change"
-      - "sleeping place change"
-      - "environment shift"
-      - "location adjustment"
-      - "sleep space change"
-      - "bedroom transition"
-      - "sleep setting transition"
-      - "environment alteration"
-      - "sleep placement change"
-    alert: "Sleep environment transition documented. Prepare child for changes, maintain familiar elements, and provide extra reassurance during adjustment period."
-    severity: "info"
+    - keywords:
+          - 'sleep environment transition'
+          - 'new sleep location'
+          - 'environment change'
+          - 'location transition'
+          - 'sleep setting change'
+          - 'environment adjustment'
+          - 'new sleeping arrangement'
+          - 'sleep location change'
+          - 'environment modification'
+          - 'sleep arrangement change'
+          - 'bed transition'
+          - 'room change'
+          - 'sleeping place change'
+          - 'environment shift'
+          - 'location adjustment'
+          - 'sleep space change'
+          - 'bedroom transition'
+          - 'sleep setting transition'
+          - 'environment alteration'
+          - 'sleep placement change'
+      alert: 'Sleep environment transition documented. Prepare child for changes, maintain familiar elements, and provide extra reassurance during adjustment period.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep pattern change"
-      - "altered pattern"
-      - "pattern shift"
-      - "sleep change"
-      - "pattern alteration"
-      - "sleep modification"
-      - "pattern transformation"
-      - "sleep adjustment"
-      - "pattern variation"
-      - "sleep transformation"
-      - "pattern evolution"
-      - "sleep evolution"
-      - "pattern modification"
-      - "sleep alteration"
-      - "pattern adaptation"
-      - "sleep adaptation"
-      - "pattern revision"
-      - "sleep revision"
-      - "pattern amendment"
-      - "sleep amendment"
-    alert: "Significant sleep pattern change documented. Monitor for underlying medical, psychological, or environmental causes and intervene appropriately."
-    severity: "warning"
+    - keywords:
+          - 'sleep pattern change'
+          - 'altered pattern'
+          - 'pattern shift'
+          - 'sleep change'
+          - 'pattern alteration'
+          - 'sleep modification'
+          - 'pattern transformation'
+          - 'sleep adjustment'
+          - 'pattern variation'
+          - 'sleep transformation'
+          - 'pattern evolution'
+          - 'sleep evolution'
+          - 'pattern modification'
+          - 'sleep alteration'
+          - 'pattern adaptation'
+          - 'sleep adaptation'
+          - 'pattern revision'
+          - 'sleep revision'
+          - 'pattern amendment'
+          - 'sleep amendment'
+      alert: 'Significant sleep pattern change documented. Monitor for underlying medical, psychological, or environmental causes and intervene appropriately.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep quality poor"
-      - "non-restorative sleep"
-      - "poor sleep quality"
-      - "unrefreshing sleep"
-      - "low sleep quality"
-      - "sleep unsatisfying"
-      - "inadequate restoration"
-      - "poor sleep restoration"
-      - "unsatisfactory sleep"
-      - "non-refreshing sleep"
-      - "sleep inefficiency"
-      - "reduced sleep quality"
-      - "diminished restoration"
-      - "impaired sleep quality"
-      - "suboptimal sleep"
-      - "compromised restoration"
-      - "deficient sleep quality"
-      - "inferior sleep"
-      - "unsatisfactory restoration"
-      - "poor sleep efficacy"
-    alert: "Poor sleep quality reported despite adequate duration. Evaluate for sleep disorders, medical conditions, or environmental factors affecting sleep architecture."
-    severity: "warning"
+    - keywords:
+          - 'sleep quality poor'
+          - 'non-restorative sleep'
+          - 'poor sleep quality'
+          - 'unrefreshing sleep'
+          - 'low sleep quality'
+          - 'sleep unsatisfying'
+          - 'inadequate restoration'
+          - 'poor sleep restoration'
+          - 'unsatisfactory sleep'
+          - 'non-refreshing sleep'
+          - 'sleep inefficiency'
+          - 'reduced sleep quality'
+          - 'diminished restoration'
+          - 'impaired sleep quality'
+          - 'suboptimal sleep'
+          - 'compromised restoration'
+          - 'deficient sleep quality'
+          - 'inferior sleep'
+          - 'unsatisfactory restoration'
+          - 'poor sleep efficacy'
+      alert: 'Poor sleep quality reported despite adequate duration. Evaluate for sleep disorders, medical conditions, or environmental factors affecting sleep architecture.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep timing early"
-      - "early awakening"
-      - "morning awakening"
-      - "awakening too early"
-      - "early morning waking"
-      - "premature awakening"
-      - "awakening early"
-      - "early arousal"
-      - "morning arousal"
-      - "dawn awakening"
-      - "early wake time"
-      - "advanced phase"
-      - "early rise time"
-      - "premature waking"
-      - "early morning arousal"
-      - "awake too early"
-      - "early wakefulness"
-      - "morning wakefulness"
-      - "advanced awakening"
-      - "early alertness"
-    alert: "Early morning awakenings documented. Evaluate for advanced sleep phase, environmental factors, or underlying medical conditions causing premature awakening."
-    severity: "warning"
+    - keywords:
+          - 'sleep timing early'
+          - 'early awakening'
+          - 'morning awakening'
+          - 'awakening too early'
+          - 'early morning waking'
+          - 'premature awakening'
+          - 'awakening early'
+          - 'early arousal'
+          - 'morning arousal'
+          - 'dawn awakening'
+          - 'early wake time'
+          - 'advanced phase'
+          - 'early rise time'
+          - 'premature waking'
+          - 'early morning arousal'
+          - 'awake too early'
+          - 'early wakefulness'
+          - 'morning wakefulness'
+          - 'advanced awakening'
+          - 'early alertness'
+      alert: 'Early morning awakenings documented. Evaluate for advanced sleep phase, environmental factors, or underlying medical conditions causing premature awakening.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep timing late"
-      - "late sleep onset"
-      - "delayed bedtime"
-      - "late to bed"
-      - "delayed sleep"
-      - "late sleep time"
-      - "delayed timing"
-      - "phase delay"
-      - "late bedtime"
-      - "delayed onset"
-      - "late sleep initiation"
-      - "delayed phase"
-      - "late sleep start"
-      - "delayed sleep time"
-      - "late sleep beginning"
-      - "delayed beginning"
-      - "phase-shifted later"
-      - "delayed pattern"
-      - "late sleep pattern"
-      - "delayed schedule"
-    alert: "Delayed sleep timing documented. Consider circadian rhythm disorder, evening light exposure, or behavioral factors contributing to delayed sleep phase."
-    severity: "warning"
+    - keywords:
+          - 'sleep timing late'
+          - 'late sleep onset'
+          - 'delayed bedtime'
+          - 'late to bed'
+          - 'delayed sleep'
+          - 'late sleep time'
+          - 'delayed timing'
+          - 'phase delay'
+          - 'late bedtime'
+          - 'delayed onset'
+          - 'late sleep initiation'
+          - 'delayed phase'
+          - 'late sleep start'
+          - 'delayed sleep time'
+          - 'late sleep beginning'
+          - 'delayed beginning'
+          - 'phase-shifted later'
+          - 'delayed pattern'
+          - 'late sleep pattern'
+          - 'delayed schedule'
+      alert: 'Delayed sleep timing documented. Consider circadian rhythm disorder, evening light exposure, or behavioral factors contributing to delayed sleep phase.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep routine inconsistent"
-      - "inconsistent bedtime routine"
-      - "variable routine"
-      - "irregular habits"
-      - "inconsistent habits"
-      - "routine variability"
-      - "unpredictable routine"
-      - "inconsistent pattern"
-      - "routine instability"
-      - "habit inconsistency"
-      - "variable habits"
-      - "routine change frequently"
-      - "habit variability"
-      - "inconsistent schedule"
-      - "routine unpredictability"
-      - "habit irregularity"
-      - "routine fluctuation"
-      - "habit fluctuation"
-      - "routine variation"
-      - "habit variation"
-    alert: "Inconsistent sleep routine documented. Establish consistent, calming pre-sleep routines to signal sleep time and facilitate smoother transitions to sleep."
-    severity: "info"
+    - keywords:
+          - 'sleep routine inconsistent'
+          - 'inconsistent bedtime routine'
+          - 'variable routine'
+          - 'irregular habits'
+          - 'inconsistent habits'
+          - 'routine variability'
+          - 'unpredictable routine'
+          - 'inconsistent pattern'
+          - 'routine instability'
+          - 'habit inconsistency'
+          - 'variable habits'
+          - 'routine change frequently'
+          - 'habit variability'
+          - 'inconsistent schedule'
+          - 'routine unpredictability'
+          - 'habit irregularity'
+          - 'routine fluctuation'
+          - 'habit fluctuation'
+          - 'routine variation'
+          - 'habit variation'
+      alert: 'Inconsistent sleep routine documented. Establish consistent, calming pre-sleep routines to signal sleep time and facilitate smoother transitions to sleep.'
+      severity: 'info'
 
-  - keywords:
-      - "electronic media use"
-      - "screen time before bed"
-      - "electronic device use"
-      - "media before bedtime"
-      - "screen exposure"
-      - "device use evening"
-      - "electronic stimulation"
-      - "media consumption"
-      - "screen time late"
-      - "device usage"
-      - "electronic entertainment"
-      - "media engagement"
-      - "screen interaction"
-      - "device engagement"
-      - "electronic interaction"
-      - "media usage"
-      - "screen activity"
-      - "device activity"
-      - "electronic activity"
-      - "media activity"
-    alert: "Electronic media use near bedtime documented. Recommend screen-free time at least 1 hour before bed to minimize blue light exposure and mental stimulation."
-    severity: "warning"
+    - keywords:
+          - 'electronic media use'
+          - 'screen time before bed'
+          - 'electronic device use'
+          - 'media before bedtime'
+          - 'screen exposure'
+          - 'device use evening'
+          - 'electronic stimulation'
+          - 'media consumption'
+          - 'screen time late'
+          - 'device usage'
+          - 'electronic entertainment'
+          - 'media engagement'
+          - 'screen interaction'
+          - 'device engagement'
+          - 'electronic interaction'
+          - 'media usage'
+          - 'screen activity'
+          - 'device activity'
+          - 'electronic activity'
+          - 'media activity'
+      alert: 'Electronic media use near bedtime documented. Recommend screen-free time at least 1 hour before bed to minimize blue light exposure and mental stimulation.'
+      severity: 'warning'
 
-  - keywords:
-      - "caffeine consumption"
-      - "caffeine intake"
-      - "caffeine use"
-      - "caffeine ingestion"
-      - "caffeine products"
-      - "caffeine exposure"
-      - "caffeine effect"
-      - "caffeine containing"
-      - "caffeine beverages"
-      - "caffeine foods"
-      - "caffeine sources"
-      - "caffeine intake late"
-      - "caffeine consumption evening"
-      - "caffeine before bed"
-      - "caffeine proximity"
-      - "caffeine timing"
-      - "caffeine late day"
-      - "caffeine afternoon"
-      - "caffeine evening"
-      - "caffeine night"
-    alert: "Caffeine consumption documented, particularly near bedtime. Educate about caffeine's half-life and sleep-disrupting effects. Recommend avoidance in afternoon/evening."
-    severity: "warning"
+    - keywords:
+          - 'caffeine consumption'
+          - 'caffeine intake'
+          - 'caffeine use'
+          - 'caffeine ingestion'
+          - 'caffeine products'
+          - 'caffeine exposure'
+          - 'caffeine effect'
+          - 'caffeine containing'
+          - 'caffeine beverages'
+          - 'caffeine foods'
+          - 'caffeine sources'
+          - 'caffeine intake late'
+          - 'caffeine consumption evening'
+          - 'caffeine before bed'
+          - 'caffeine proximity'
+          - 'caffeine timing'
+          - 'caffeine late day'
+          - 'caffeine afternoon'
+          - 'caffeine evening'
+          - 'caffeine night'
+      alert: "Caffeine consumption documented, particularly near bedtime. Educate about caffeine's half-life and sleep-disrupting effects. Recommend avoidance in afternoon/evening."
+      severity: 'warning'
 
-  - keywords:
-      - "sleep talking responsive"
-      - "interactive sleep talking"
-      - "conversational sleep talk"
-      - "responsive during sleep"
-      - "interactive during sleep"
-      - "conversation during sleep"
-      - "responsive sleep speech"
-      - "interactive somniloquy"
-      - "conversational somniloquy"
-      - "responsive vocalization"
-      - "interactive vocalization"
-      - "conversational vocalization"
-      - "sleep dialogue"
-      - "responsive during somniloquy"
-      - "interactive during somniloquy"
-      - "conversation while asleep"
-      - "responsive sleep behavior"
-      - "interactive sleep behavior"
-      - "conversational sleep behavior"
-      - "sleep interaction"
-    alert: "Interactive or responsive sleep talking documented. Differentiate from other parasomnias or seizure activity. Consider video monitoring if concerning."
-    severity: "info"
+    - keywords:
+          - 'sleep talking responsive'
+          - 'interactive sleep talking'
+          - 'conversational sleep talk'
+          - 'responsive during sleep'
+          - 'interactive during sleep'
+          - 'conversation during sleep'
+          - 'responsive sleep speech'
+          - 'interactive somniloquy'
+          - 'conversational somniloquy'
+          - 'responsive vocalization'
+          - 'interactive vocalization'
+          - 'conversational vocalization'
+          - 'sleep dialogue'
+          - 'responsive during somniloquy'
+          - 'interactive during somniloquy'
+          - 'conversation while asleep'
+          - 'responsive sleep behavior'
+          - 'interactive sleep behavior'
+          - 'conversational sleep behavior'
+          - 'sleep interaction'
+      alert: 'Interactive or responsive sleep talking documented. Differentiate from other parasomnias or seizure activity. Consider video monitoring if concerning.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep-related groaning"
-      - "catathrenia"
-      - "nocturnal groaning"
-      - "groaning during sleep"
-      - "expiratory groaning"
-      - "nocturnal vocalization groaning"
-      - "sleep groaning"
-      - "expiratory sound"
-      - "vocal groaning"
-      - "groaning episodes"
-      - "nocturnal expiratory noise"
-      - "sleep-related expiratory sound"
-      - "groaning at night"
-      - "nocturnal moaning"
-      - "sleep moaning"
-      - "expiratory moan"
-      - "vocalization during expiration"
-      - "expiratory vocalization"
-      - "nocturnal expiratory vocalization"
-      - "sleep-related expiratory vocalization"
-    alert: "Sleep-related groaning (catathrenia) documented. Typically benign but can be disturbing to others. Differentiate from respiratory distress or other sleep sounds."
-    severity: "info"
+    - keywords:
+          - 'sleep-related groaning'
+          - 'catathrenia'
+          - 'nocturnal groaning'
+          - 'groaning during sleep'
+          - 'expiratory groaning'
+          - 'nocturnal vocalization groaning'
+          - 'sleep groaning'
+          - 'expiratory sound'
+          - 'vocal groaning'
+          - 'groaning episodes'
+          - 'nocturnal expiratory noise'
+          - 'sleep-related expiratory sound'
+          - 'groaning at night'
+          - 'nocturnal moaning'
+          - 'sleep moaning'
+          - 'expiratory moan'
+          - 'vocalization during expiration'
+          - 'expiratory vocalization'
+          - 'nocturnal expiratory vocalization'
+          - 'sleep-related expiratory vocalization'
+      alert: 'Sleep-related groaning (catathrenia) documented. Typically benign but can be disturbing to others. Differentiate from respiratory distress or other sleep sounds.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep-related hallucinations"
-      - "hypnagogic hallucinations"
-      - "hypnopompic hallucinations"
-      - "hallucinations upon waking"
-      - "hallucinations when falling asleep"
-      - "sleep-wake transition hallucinations"
-      - "visual hallucinations sleep"
-      - "auditory hallucinations sleep"
-      - "sensory hallucinations"
-      - "perceptual disturbances"
-      - "hallucinatory experiences"
-      - "sleep-associated hallucinations"
-      - "nocturnal hallucinations"
-      - "dream-like experiences"
-      - "vivid perceptions"
-      - "sensory experiences"
-      - "perceptual experiences"
-      - "hallucinatory phenomena"
-      - "sensory phenomena"
-      - "perceptual phenomena"
-    alert: "Sleep-related hallucinations documented. Evaluate for narcolepsy, other sleep disorders, or psychiatric conditions if persistent or distressing."
-    severity: "warning"
+    - keywords:
+          - 'sleep-related hallucinations'
+          - 'hypnagogic hallucinations'
+          - 'hypnopompic hallucinations'
+          - 'hallucinations upon waking'
+          - 'hallucinations when falling asleep'
+          - 'sleep-wake transition hallucinations'
+          - 'visual hallucinations sleep'
+          - 'auditory hallucinations sleep'
+          - 'sensory hallucinations'
+          - 'perceptual disturbances'
+          - 'hallucinatory experiences'
+          - 'sleep-associated hallucinations'
+          - 'nocturnal hallucinations'
+          - 'dream-like experiences'
+          - 'vivid perceptions'
+          - 'sensory experiences'
+          - 'perceptual experiences'
+          - 'hallucinatory phenomena'
+          - 'sensory phenomena'
+          - 'perceptual phenomena'
+      alert: 'Sleep-related hallucinations documented. Evaluate for narcolepsy, other sleep disorders, or psychiatric conditions if persistent or distressing.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep enuresis new"
-      - "new onset enuresis"
-      - "secondary enuresis"
-      - "recent bedwetting"
-      - "new bedwetting"
-      - "enuresis development"
-      - "new incontinence"
-      - "recent incontinence"
-      - "new nocturnal enuresis"
-      - "recent enuresis"
-      - "enuresis onset"
-      - "new nighttime accidents"
-      - "recent accidents"
-      - "new onset incontinence"
-      - "recent onset enuresis"
-      - "secondary bedwetting"
-      - "new enuretic episodes"
-      - "recent enuretic episodes"
-      - "enuresis emergence"
-      - "new urinary incontinence"
-    alert: "New onset or secondary enuresis documented. Evaluate for urinary tract infection, diabetes, constipation, or psychological stressors."
-    severity: "warning"
+    - keywords:
+          - 'sleep enuresis new'
+          - 'new onset enuresis'
+          - 'secondary enuresis'
+          - 'recent bedwetting'
+          - 'new bedwetting'
+          - 'enuresis development'
+          - 'new incontinence'
+          - 'recent incontinence'
+          - 'new nocturnal enuresis'
+          - 'recent enuresis'
+          - 'enuresis onset'
+          - 'new nighttime accidents'
+          - 'recent accidents'
+          - 'new onset incontinence'
+          - 'recent onset enuresis'
+          - 'secondary bedwetting'
+          - 'new enuretic episodes'
+          - 'recent enuretic episodes'
+          - 'enuresis emergence'
+          - 'new urinary incontinence'
+      alert: 'New onset or secondary enuresis documented. Evaluate for urinary tract infection, diabetes, constipation, or psychological stressors.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep-related headache"
-      - "nocturnal headache"
-      - "headache upon waking"
-      - "morning headache"
-      - "headache during sleep"
-      - "sleep-associated headache"
-      - "nocturnal migraine"
-      - "headache awakening"
-      - "headache upon awakening"
-      - "morning head pain"
-      - "sleep-related head pain"
-      - "nocturnal head pain"
-      - "headache at night"
-      - "nighttime headache"
-      - "head pain during sleep"
-      - "sleep-induced headache"
-      - "awakening with headache"
-      - "headache upon arousal"
-      - "nocturnal cranial pain"
-      - "sleep-related cranial pain"
-    alert: "Sleep-related headaches documented. Evaluate for sleep apnea, bruxism, migraine, or other causes of morning headaches or headaches that awaken from sleep."
-    severity: "warning"
+    - keywords:
+          - 'sleep-related headache'
+          - 'nocturnal headache'
+          - 'headache upon waking'
+          - 'morning headache'
+          - 'headache during sleep'
+          - 'sleep-associated headache'
+          - 'nocturnal migraine'
+          - 'headache awakening'
+          - 'headache upon awakening'
+          - 'morning head pain'
+          - 'sleep-related head pain'
+          - 'nocturnal head pain'
+          - 'headache at night'
+          - 'nighttime headache'
+          - 'head pain during sleep'
+          - 'sleep-induced headache'
+          - 'awakening with headache'
+          - 'headache upon arousal'
+          - 'nocturnal cranial pain'
+          - 'sleep-related cranial pain'
+      alert: 'Sleep-related headaches documented. Evaluate for sleep apnea, bruxism, migraine, or other causes of morning headaches or headaches that awaken from sleep.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep-related eating new"
-      - "new nocturnal eating"
-      - "recent sleep eating"
-      - "new onset SRED"
-      - "recent onset sleep eating"
-      - "sleep eating emergence"
-      - "new parasomnia eating"
-      - "recent parasomnia eating"
-      - "sleep eating development"
-      - "new sleep-related eating"
-      - "recent sleep-related eating"
-      - "nocturnal eating onset"
-      - "sleep eating onset"
-      - "new nighttime eating"
-      - "recent nighttime eating"
-      - "sleep eating new"
-      - "nocturnal eating new"
-      - "SRED onset"
-      - "sleep-related eating disorder new"
-      - "recent SRED"
-    alert: "New onset sleep-related eating documented. Evaluate for medication effects, other sleep disorders, or psychological factors. Ensure safety from injury."
-    severity: "warning"
+    - keywords:
+          - 'sleep-related eating new'
+          - 'new nocturnal eating'
+          - 'recent sleep eating'
+          - 'new onset SRED'
+          - 'recent onset sleep eating'
+          - 'sleep eating emergence'
+          - 'new parasomnia eating'
+          - 'recent parasomnia eating'
+          - 'sleep eating development'
+          - 'new sleep-related eating'
+          - 'recent sleep-related eating'
+          - 'nocturnal eating onset'
+          - 'sleep eating onset'
+          - 'new nighttime eating'
+          - 'recent nighttime eating'
+          - 'sleep eating new'
+          - 'nocturnal eating new'
+          - 'SRED onset'
+          - 'sleep-related eating disorder new'
+          - 'recent SRED'
+      alert: 'New onset sleep-related eating documented. Evaluate for medication effects, other sleep disorders, or psychological factors. Ensure safety from injury.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep movement violent"
-      - "violent movements"
-      - "violent movement"
-      - "aggressive movements"
-      - "aggressive movement"
-      - "injurious movements"
-      - "harmful movements"
-      - "harmful movements"
-      - "violent behavior"
-      - "aggressive behavior"
-      - "injurious behavior"
-      - "harmful behavior"
-      - "violent activity"
-      - "aggressive activity"
-      - "injurious activity"
-      - "harmful activity"
-      - "violent actions"
-      - "aggressive actions"
-      - "injurious actions"
-      - "harmful actions"
-      - "violent episodes"
-      - "aggressive episodes"
-      - "injurious episodes"
-    alert: "Violent or injurious movements during sleep documented. Implement immediate safety measures and evaluate for REM sleep behavior disorder or other parasomnias."
-    severity: "critical"
+    - keywords:
+          - 'sleep movement violent'
+          - 'violent movements'
+          - 'violent movement'
+          - 'aggressive movements'
+          - 'aggressive movement'
+          - 'injurious movements'
+          - 'harmful movements'
+          - 'harmful movements'
+          - 'violent behavior'
+          - 'aggressive behavior'
+          - 'injurious behavior'
+          - 'harmful behavior'
+          - 'violent activity'
+          - 'aggressive activity'
+          - 'injurious activity'
+          - 'harmful activity'
+          - 'violent actions'
+          - 'aggressive actions'
+          - 'injurious actions'
+          - 'harmful actions'
+          - 'violent episodes'
+          - 'aggressive episodes'
+          - 'injurious episodes'
+      alert: 'Violent or injurious movements during sleep documented. Implement immediate safety measures and evaluate for REM sleep behavior disorder or other parasomnias.'
+      severity: 'critical'
 
-  - keywords:
-      - "sleep talking distressing"
-      - "distressing content"
-      - "frightening content"
-      - "upsetting content"
-      - "disturbing content"
-      - "emotional content"
-      - "fearful content"
-      - "anxious content"
-      - "violent content"
-      - "aggressive content"
-      - "distressful content"
-      - "concerning content"
-      - "worrisome content"
-      - "troubling content"
-      - "alarming content"
-      - "unsettling content"
-      - "emotional speech"
-      - "fearful speech"
-      - "anxious speech"
-      - "distressed speech"
-    alert: "Distressing content in sleep talking documented. Evaluate for underlying anxiety, trauma, or other psychological distress requiring attention."
-    severity: "warning"
+    - keywords:
+          - 'sleep talking distressing'
+          - 'distressing content'
+          - 'frightening content'
+          - 'upsetting content'
+          - 'disturbing content'
+          - 'emotional content'
+          - 'fearful content'
+          - 'anxious content'
+          - 'violent content'
+          - 'aggressive content'
+          - 'distressful content'
+          - 'concerning content'
+          - 'worrisome content'
+          - 'troubling content'
+          - 'alarming content'
+          - 'unsettling content'
+          - 'emotional speech'
+          - 'fearful speech'
+          - 'anxious speech'
+          - 'distressed speech'
+      alert: 'Distressing content in sleep talking documented. Evaluate for underlying anxiety, trauma, or other psychological distress requiring attention.'
+      severity: 'warning'
 
-  - keywords:
-      - "sleep pattern seasonal"
-      - "seasonal variation"
-      - "winter sleep"
-      - "summer sleep"
-      - "seasonal change"
-      - "seasonal pattern"
-      - "weather-related sleep"
-      - "seasonal effect"
-      - "light exposure effect"
-      - "daylight effect"
-      - "seasonal influence"
-      - "weather influence"
-      - "seasonal fluctuation"
-      - "seasonal adjustment"
-      - "seasonal difference"
-      - "seasonal modification"
-      - "seasonal alteration"
-      - "seasonal shift"
-      - "seasonal transition"
-      - "seasonal adaptation"
-    alert: "Seasonal variation in sleep pattern documented. Consider light exposure changes and potential for seasonal affective disorder if accompanied by mood changes."
-    severity: "info"
+    - keywords:
+          - 'sleep pattern seasonal'
+          - 'seasonal variation'
+          - 'winter sleep'
+          - 'summer sleep'
+          - 'seasonal change'
+          - 'seasonal pattern'
+          - 'weather-related sleep'
+          - 'seasonal effect'
+          - 'light exposure effect'
+          - 'daylight effect'
+          - 'seasonal influence'
+          - 'weather influence'
+          - 'seasonal fluctuation'
+          - 'seasonal adjustment'
+          - 'seasonal difference'
+          - 'seasonal modification'
+          - 'seasonal alteration'
+          - 'seasonal shift'
+          - 'seasonal transition'
+          - 'seasonal adaptation'
+      alert: 'Seasonal variation in sleep pattern documented. Consider light exposure changes and potential for seasonal affective disorder if accompanied by mood changes.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep during illness"
-      - "illness affecting sleep"
-      - "sick sleep pattern"
-      - "disease affecting sleep"
-      - "infection affecting sleep"
-      - "illness disruption"
-      - "sickness disruption"
-      - "disease disruption"
-      - "infection disruption"
-      - "illness-related sleep"
-      - "sickness-related sleep"
-      - "disease-related sleep"
-      - "infection-related sleep"
-      - "illness effect"
-      - "sickness effect"
-      - "disease effect"
-      - "infection effect"
-      - "illness impact"
-      - "sickness impact"
-      - "disease impact"
-    alert: "Illness affecting sleep documented. Expect temporary changes during acute illness. Monitor for return to baseline pattern as illness resolves."
-    severity: "info"
+    - keywords:
+          - 'sleep during illness'
+          - 'illness affecting sleep'
+          - 'sick sleep pattern'
+          - 'disease affecting sleep'
+          - 'infection affecting sleep'
+          - 'illness disruption'
+          - 'sickness disruption'
+          - 'disease disruption'
+          - 'infection disruption'
+          - 'illness-related sleep'
+          - 'sickness-related sleep'
+          - 'disease-related sleep'
+          - 'infection-related sleep'
+          - 'illness effect'
+          - 'sickness effect'
+          - 'disease effect'
+          - 'infection effect'
+          - 'illness impact'
+          - 'sickness impact'
+          - 'disease impact'
+      alert: 'Illness affecting sleep documented. Expect temporary changes during acute illness. Monitor for return to baseline pattern as illness resolves.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep post-operative"
-      - "post-surgery sleep"
-      - "post-operative sleep"
-      - "surgery affecting sleep"
-      - "post-procedure sleep"
-      - "operative effect"
-      - "surgical effect"
-      - "post-operative pattern"
-      - "post-surgical pattern"
-      - "surgery disruption"
-      - "operative disruption"
-      - "surgical disruption"
-      - "post-operative change"
-      - "post-surgical change"
-      - "surgery effect"
-      - "operative effect"
-      - "surgical effect"
-      - "post-operative adjustment"
-      - "post-surgical adjustment"
-      - "surgery adjustment"
-    alert: "Post-operative sleep disruption documented. Expect temporary changes due to pain, medications, and healing process. Optimize pain management and comfort measures."
-    severity: "info"
+    - keywords:
+          - 'sleep post-operative'
+          - 'post-surgery sleep'
+          - 'post-operative sleep'
+          - 'surgery affecting sleep'
+          - 'post-procedure sleep'
+          - 'operative effect'
+          - 'surgical effect'
+          - 'post-operative pattern'
+          - 'post-surgical pattern'
+          - 'surgery disruption'
+          - 'operative disruption'
+          - 'surgical disruption'
+          - 'post-operative change'
+          - 'post-surgical change'
+          - 'surgery effect'
+          - 'operative effect'
+          - 'surgical effect'
+          - 'post-operative adjustment'
+          - 'post-surgical adjustment'
+          - 'surgery adjustment'
+      alert: 'Post-operative sleep disruption documented. Expect temporary changes due to pain, medications, and healing process. Optimize pain management and comfort measures.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep medication use"
-      - "sleep aid use"
-      - "medication for sleep"
-      - "pharmacological sleep aid"
-      - "sleep medication"
-      - "sleep aid medication"
-      - "hypnotic use"
-      - "sedative use"
-      - "sleep-inducing medication"
-      - "soporific use"
-      - "sleep pharmacotherapy"
-      - "medication-assisted sleep"
-      - "pharmaceutical sleep help"
-      - "medication sleep support"
-      - "drug-induced sleep"
-      - "pharmacologic sleep"
-      - "medication sleep aid"
-      - "sleep pharmaceutical"
-      - "hypnotic medication"
-      - "sedative medication"
-    alert: "Sleep medication use documented. Use caution with pharmacological sleep aids in children. Prefer behavioral interventions first-line. Monitor for side effects and dependency."
-    severity: "warning"
+    - keywords:
+          - 'sleep medication use'
+          - 'sleep aid use'
+          - 'medication for sleep'
+          - 'pharmacological sleep aid'
+          - 'sleep medication'
+          - 'sleep aid medication'
+          - 'hypnotic use'
+          - 'sedative use'
+          - 'sleep-inducing medication'
+          - 'soporific use'
+          - 'sleep pharmacotherapy'
+          - 'medication-assisted sleep'
+          - 'pharmaceutical sleep help'
+          - 'medication sleep support'
+          - 'drug-induced sleep'
+          - 'pharmacologic sleep'
+          - 'medication sleep aid'
+          - 'sleep pharmaceutical'
+          - 'hypnotic medication'
+          - 'sedative medication'
+      alert: 'Sleep medication use documented. Use caution with pharmacological sleep aids in children. Prefer behavioral interventions first-line. Monitor for side effects and dependency.'
+      severity: 'warning'
 
-  - keywords:
-      - "melatonin use"
-      - "melatonin supplementation"
-      - "melatonin administration"
-      - "melatonin supplement"
-      - "exogenous melatonin"
-      - "melatonin intake"
-      - "melatonin consumption"
-      - "melatonin usage"
-      - "melatonin product"
-      - "melatonin preparation"
-      - "melatonin supplementation"
-      - "melatonin therapy"
-      - "melatonin treatment"
-      - "melatonin aid"
-      - "melatonin support"
-      - "melatonin assistance"
-      - "melatonin intervention"
-      - "melatonin management"
-      - "melatonin regimen"
-      - "melatonin schedule"
-    alert: "Melatonin use documented. Use under medical guidance for specific indications. Ensure appropriate dosing and timing. Not recommended long-term without supervision."
-    severity: "info"
+    - keywords:
+          - 'melatonin use'
+          - 'melatonin supplementation'
+          - 'melatonin administration'
+          - 'melatonin supplement'
+          - 'exogenous melatonin'
+          - 'melatonin intake'
+          - 'melatonin consumption'
+          - 'melatonin usage'
+          - 'melatonin product'
+          - 'melatonin preparation'
+          - 'melatonin supplementation'
+          - 'melatonin therapy'
+          - 'melatonin treatment'
+          - 'melatonin aid'
+          - 'melatonin support'
+          - 'melatonin assistance'
+          - 'melatonin intervention'
+          - 'melatonin management'
+          - 'melatonin regimen'
+          - 'melatonin schedule'
+      alert: 'Melatonin use documented. Use under medical guidance for specific indications. Ensure appropriate dosing and timing. Not recommended long-term without supervision.'
+      severity: 'info'
 
-  - keywords:
-      - "sleep assessment needed"
-      - "evaluation required"
-      - "sleep study consideration"
-      - "polysomnography consideration"
-      - "sleep specialist referral"
-      - "further evaluation"
-      - "comprehensive assessment"
-      - "detailed evaluation"
-      - "sleep medicine consultation"
-      - "specialist assessment"
-      - "sleep clinic referral"
-      - "sleep center evaluation"
-      - "polysomnography indicated"
-      - "sleep study indicated"
-      - "formal evaluation"
-      - "specialized assessment"
-      - "comprehensive evaluation"
-      - "in-depth assessment"
-      - "thorough evaluation"
-      - "complete assessment"
-    alert: "Comprehensive sleep evaluation indicated. Consider referral to sleep specialist or polysomnography based on concerning symptoms and persistence of issues."
-    severity: "warning"
+    - keywords:
+          - 'sleep assessment needed'
+          - 'evaluation required'
+          - 'sleep study consideration'
+          - 'polysomnography consideration'
+          - 'sleep specialist referral'
+          - 'further evaluation'
+          - 'comprehensive assessment'
+          - 'detailed evaluation'
+          - 'sleep medicine consultation'
+          - 'specialist assessment'
+          - 'sleep clinic referral'
+          - 'sleep center evaluation'
+          - 'polysomnography indicated'
+          - 'sleep study indicated'
+          - 'formal evaluation'
+          - 'specialized assessment'
+          - 'comprehensive evaluation'
+          - 'in-depth assessment'
+          - 'thorough evaluation'
+          - 'complete assessment'
+      alert: 'Comprehensive sleep evaluation indicated. Consider referral to sleep specialist or polysomnography based on concerning symptoms and persistence of issues.'
+      severity: 'warning'
 
-  - keywords:
-      - "normal"
-      - "alert"
-      - "no numbness"
-      - "no weakness"
-    alert: "Normal Findings"
-    severity: "none"
+    - keywords:
+          - 'normal'
+          - 'alert'
+          - 'no numbness'
+          - 'no weakness'
+      alert: 'Normal Findings'
+      severity: 'none'

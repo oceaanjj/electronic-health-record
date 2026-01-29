@@ -1,7 +1,7 @@
 /*Font Import*/
 @font-face {
-  font-family: 'alte-bold';
-  src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
+    font-family: 'alte-bold';
+    src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
 }
 
 a {
@@ -33,13 +33,13 @@ body.login-page {
 
 /* Logo Section */
 .logo-section {
-    flex: 1; 
+    flex: 1;
     text-align: center;
     width: 50%;
 }
 
 .logo {
-    width: 75%; 
+    width: 75%;
     margin-left: 70px; /* Keep this for Desktop view */
 }
 
@@ -50,14 +50,14 @@ body.login-page {
     padding: 0px;
     border-radius: 5px;
     width: auto;
-    max-width: 500px; 
+    max-width: 500px;
     margin: 0 auto 0 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 #upper-line {
     height: 7px;
-    background: #EDB62C;
+    background: #edb62c;
     margin: 0;
     padding: 0;
     border-top-left-radius: 5px;
@@ -65,7 +65,7 @@ body.login-page {
 }
 
 #form-container {
-    flex: 1; 
+    flex: 1;
     display: flex;
     flex-direction: column;
     padding: 80px 80px 40px 80px;
@@ -77,20 +77,20 @@ p.role {
     padding: 0;
     font-family: 'alte-bold';
     font-size: 30px;
-    color: #9E9E9E;
+    color: #9e9e9e;
     line-height: 1;
 }
 
 p strong {
-    display: block; 
+    display: block;
     font-size: 50px;
-    color: #1A6A24;
+    color: #1a6a24;
     margin-bottom: 25px;
 }
 
 .form-section label {
     text-align: left;
-    color: #1A6A24;
+    color: #1a6a24;
     font-family: 'alte-bold';
     font-size: 15px;
 }
@@ -105,9 +105,9 @@ p strong {
 }
 
 .form-section input:focus {
-    border-color: #1A6A24;  
-    outline: none;         
-    box-shadow: 0 0 5px #1A6A24;
+    border-color: #1a6a24;
+    outline: none;
+    box-shadow: 0 0 5px #1a6a24;
 }
 
 .forgot {
@@ -115,20 +115,20 @@ p strong {
     display: block;
     text-align: right;
     font-size: 12px;
-    color: #1A6A24;
+    color: #1a6a24;
     margin: 0 15px 30px 0;
 }
 
 .forgot:hover {
     text-decoration: underline 1px;
-    color: #1A6A24;
+    color: #1a6a24;
     cursor: pointer;
 }
 
 .btn-login {
     width: 100%;
     padding: 10px;
-    background: #1A6A24;
+    background: #1a6a24;
     border: none;
     color: white;
     border-radius: 50px;
@@ -140,19 +140,19 @@ p strong {
 }
 
 .btn-login:hover {
-    background: #EDB62C;
-    color: #1A6A24;
+    background: #edb62c;
+    color: #1a6a24;
 }
 
 .return-home {
     font-family: 'alte-bold';
-    color: #1A6A24;
+    color: #1a6a24;
     font-size: 14px;
     margin: 10px 15px 0px 0px;
-    vertical-align: middle; 
-    display: inline-flex;  
-    align-items: center;  
-    gap: 5px;  
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     float: right;
 }
 
@@ -163,7 +163,7 @@ p strong {
 }
 
 .return-home:hover {
-    color: #EDB62C;
+    color: #edb62c;
 }
 
 .return-home:hover .home-icon {
@@ -179,32 +179,32 @@ p strong {
     .login-container {
         flex-direction: column; /* Stack vertically */
         padding: 40px 20px;
-        align-items: center;    /* Center everything horizontally */
+        align-items: center; /* Center everything horizontally */
     }
 
     /* Fix Container Width */
     .logo-section {
-        width: 100%;      /* Full width so it can center */
-        text-align: center; 
+        width: 100%; /* Full width so it can center */
+        text-align: center;
         margin-bottom: 30px;
-        flex: none;       
+        flex: none;
     }
 
     /* Fix Logo Alignment */
     .logo {
-        margin: 0 auto;   /* THIS fixes the off-center issue */
-        width: 180px;     /* Neat size for mobile */
-        max-width: 100%;  
-        display: block;   
+        margin: 0 auto; /* THIS fixes the off-center issue */
+        width: 180px; /* Neat size for mobile */
+        max-width: 100%;
+        display: block;
     }
 
     .form-section {
         width: 100%;
         max-width: 400px;
-        margin: 0;        
+        margin: 0;
     }
-    
+
     #form-container {
-        padding: 40px 30px; 
+        padding: 40px 30px;
     }
 }

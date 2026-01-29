@@ -2,7 +2,6 @@
 @section('title', 'Doctor Home')
 
 @section('content')
-
     <!-- nasa doctor/report/partials yung mga components -->
     <style>
         .section {
@@ -49,7 +48,8 @@
             margin-top: 5px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 5px;
             text-align: left;
@@ -74,14 +74,15 @@
         }
     </style>
 
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div class="bg-white shadow-md rounded-lg p-6">
-
-            <div class="flex justify-between items-center mb-4">
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        <div class="rounded-lg bg-white p-6 shadow-md">
+            <div class="mb-4 flex items-center justify-between">
                 <h1 class="text-2xl font-bold">Patient Report</h1>
 
-                <a href="{{ route('doctor.report.pdf', ['patient_id' => $patient->patient_id]) }}"
-                   class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                <a
+                    href="{{ route('doctor.report.pdf', ['patient_id' => $patient->patient_id]) }}"
+                    class="rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
+                >
                     Download PDF
                 </a>
             </div>
@@ -91,24 +92,33 @@
             </div>
 
             <div class="section">
-                @include('doctor.reports.partials._medical_history', [
-                    'presentIllness' => $presentIllness,
-                    'pastMedicalSurgical' => $pastMedicalSurgical,
-                    'allergies' => $allergies,
-                    'vaccination' => $vaccination,
-                ])
+                @include(
+                    'doctor.reports.partials._medical_history',
+                    [
+                        'presentIllness' => $presentIllness,
+                        'pastMedicalSurgical' => $pastMedicalSurgical,
+                        'allergies' => $allergies,
+                        'vaccination' => $vaccination,
+                    ]
+                )
             </div>
 
             <div class="section">
-                @include('doctor.reports.partials._developmental-history', [
-                    'developmentalHistory' => $developmentalHistory
-                ])
+                @include(
+                    'doctor.reports.partials._developmental-history',
+                    [
+                        'developmentalHistory' => $developmentalHistory,
+                    ]
+                )
             </div>
 
             <div class="section">
-                @include('doctor.reports.partials._physical_exam', [
-                    'physicalExam' => $physicalExam
-                ])
+                @include(
+                    'doctor.reports.partials._physical_exam',
+                    [
+                        'physicalExam' => $physicalExam,
+                    ]
+                )
             </div>
 
             <div class="section">
@@ -116,15 +126,21 @@
             </div>
 
             <div class="section">
-                @include('doctor.reports.partials._intake_and_output', [
-                    'intakeAndOutput' => $intakeAndOutput
-                ])
+                @include(
+                    'doctor.reports.partials._intake_and_output',
+                    [
+                        'intakeAndOutput' => $intakeAndOutput,
+                    ]
+                )
             </div>
 
             <div class="section">
-                @include('doctor.reports.partials._activities_of_daily_living', [
-                    'actOfDailyLiving' => $actOfDailyLiving
-                ])
+                @include(
+                    'doctor.reports.partials._activities_of_daily_living',
+                    [
+                        'actOfDailyLiving' => $actOfDailyLiving,
+                    ]
+                )
             </div>
 
             <div class="section">
@@ -140,26 +156,33 @@
             </div>
 
             <div class="section">
-                @include('doctor.reports.partials._medication_administrations', [
-                    'medicationAdministrations' => $medicationAdministrations
-                ])
+                @include(
+                    'doctor.reports.partials._medication_administrations',
+                    [
+                        'medicationAdministrations' => $medicationAdministrations,
+                    ]
+                )
             </div>
 
             <div class="section">
-                @include('doctor.reports.partials._medication_reconciliation', [
-                    'currentMedication'     => $currentMedication,
-                    'homeMedication'       => $homeMedication,
-                    'changesInMedication'  => $changesInMedication,
-                ])
+                @include(
+                    'doctor.reports.partials._medication_reconciliation',
+                    [
+                        'currentMedication' => $currentMedication,
+                        'homeMedication' => $homeMedication,
+                        'changesInMedication' => $changesInMedication,
+                    ]
+                )
             </div>
 
             <!-- <div class="section">
-                @include('doctor.reports.partials._discharge_planning', [
-                    'dischargePlanning' => $dischargePlanning
-                ])
+                @include(
+                    'doctor.reports.partials._discharge_planning',
+                    [
+                        'dischargePlanning' => $dischargePlanning,
+                    ]
+                )
             </div> -->
-
         </div>
     </div>
-
 @endsection

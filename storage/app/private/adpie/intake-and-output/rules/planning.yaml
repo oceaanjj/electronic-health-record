@@ -1,18 +1,18 @@
 planning:
-  # Fluid Balance Monitoring Plans
-  - keywords: ["monitor intake", "track output"]
-    match_type: any
-    severity: "INFO"
-    alert: "Plan: Implement strict I&O monitoring every shift"
+    # Fluid Balance Monitoring Plans
+    - keywords: ['monitor intake', 'track output']
+      match_type: any
+      severity: 'INFO'
+      alert: 'Plan: Implement strict I&O monitoring every shift'
 
-  - keywords: ["fluid restriction", "limit intake"]
-    match_type: any
-    severity: "WARNING"
-    alert: "Plan: Maintain fluid restriction as ordered, monitor for compliance"
+    - keywords: ['fluid restriction', 'limit intake']
+      match_type: any
+      severity: 'WARNING'
+      alert: 'Plan: Maintain fluid restriction as ordered, monitor for compliance'
 
-  - keywords: ["daily weight", "weight monitoring"]
-    match_type: any
-    severity: "INFO"
-    alert: "Plan: Monitor daily weights at same time each day"
+    - keywords: ['daily weight', 'weight monitoring']
+      match_type: any
+      severity: 'INFO'
+      alert: 'Plan: Monitor daily weights at same time each day'
 
-  # Continue with 397+ more planning rules...
+    # Continue with 397+ more planning rules...

@@ -23,83 +23,59 @@ function findAlertCellForInput(input) {
 // Initialize CDSS listeners for a form
 window.initializeAdpieCdssForForm = function (form) {
     const analyzeUrl = form.dataset.analyzeUrl;
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const component = form.dataset.component;
     const patientId = form.dataset.patientId;
 
     if (!analyzeUrl || !csrfToken || !component || !patientId) {
-        console.error(
-            "[ADPIE] Missing form data: analyze-url, component, patient-id, or CSRF token.",
-            form
-        );
+        console.error('[ADPIE] Missing form data: analyze-url, component, patient-id, or CSRF token.', form);
         return;
     }
 
     console.log(`[ADPIE] Initializing typing listeners for: ${component}`);
 
-    const inputs = form.querySelectorAll(".cdss-input");
+    const inputs = form.querySelectorAll('.cdss-input');
     inputs.forEach((input) => {
         if (input.dataset.alertListenerAttached) return; // Prevent duplicate listeners
 
         const handleInput = (e) => {
             clearTimeout(debounceTimer);
             const fieldName = e.target.dataset.fieldName;
-            const fieldNameFormatted =
-                fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+            const fieldNameFormatted = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
             const finding = e.target.value.trim();
             const alertCell = findAlertCellForInput(e.target);
 
-            if (alertCell && finding === "") {
+            if (alertCell && finding === '') {
                 showDefaultNoAlerts(alertCell); // Show default if field is cleared
                 return;
             }
 
             debounceTimer = setTimeout(() => {
-                if (fieldName && finding !== "" && alertCell) {
-                    console.log(
-                        `[ADPIE] Input → Field: ${fieldNameFormatted} | Value: ${finding}`
-                    );
+                if (fieldName && finding !== '' && alertCell) {
+                    console.log(`[ADPIE] Input → Field: ${fieldNameFormatted} | Value: ${finding}`);
 
                     showAlertLoading(alertCell); // Show loading spinner *only when typing*
-                    analyzeField(
-                        fieldName,
-                        finding,
-                        patientId,
-                        component,
-                        alertCell,
-                        analyzeUrl,
-                        csrfToken
-                    );
+                    analyzeField(fieldName, finding, patientId, component, alertCell, analyzeUrl, csrfToken);
                 }
             }, TYPING_DELAY_MS);
         };
 
-        input.addEventListener("input", handleInput);
-        input.dataset.alertListenerAttached = "true";
+        input.addEventListener('input', handleInput);
+        input.dataset.alertListenerAttached = 'true';
     });
 };
 
 // Analyze ONE field via API (for live typing)
-async function analyzeField(
-    fieldName,
-    finding,
-    patientId,
-    component,
-    alertCell,
-    url,
-    token
-) {
+async function analyzeField(fieldName, finding, patientId, component, alertCell, url, token) {
     if (!alertCell) return;
     console.log(`[ADPIE] Sending single analysis for: ${fieldName}`);
 
     try {
         const response = await fetch(url, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": token,
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token,
             },
             body: JSON.stringify({
                 fieldName,
@@ -111,16 +87,13 @@ async function analyzeField(
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         const alertData = await response.json();
-        console.log(
-            `[ADPIE] Single response received for: ${fieldName}`,
-            alertData
-        );
+        console.log(`[ADPIE] Single response received for: ${fieldName}`, alertData);
         displayAlert(alertCell, alertData); // Display immediately
     } catch (error) {
-        console.error("[ADPIE] Single analysis failed:", error);
+        console.error('[ADPIE] Single analysis failed:', error);
         displayAlert(alertCell, {
-            message: "Error analyzing...",
-            level: "CRITICAL",
+            message: 'Error analyzing...',
+            level: 'CRITICAL',
         });
     }
 }
@@ -138,22 +111,20 @@ async function analyzeField(
 function displayAlert(alertCell, alertData) {
     if (!alertCell) return;
 
-    console.log(
-        `[ADPIE] Displaying alert → Level: ${alertData.level} | Message: ${alertData.message}`
-    );
+    console.log(`[ADPIE] Displaying alert → Level: ${alertData.level} | Message: ${alertData.message}`);
 
-    let colorClass = "alert-green";
-    if (alertData.level === "CRITICAL") colorClass = "alert-red";
-    else if (alertData.level === "WARNING") colorClass = "alert-orange";
+    let colorClass = 'alert-green';
+    if (alertData.level === 'CRITICAL') colorClass = 'alert-red';
+    else if (alertData.level === 'WARNING') colorClass = 'alert-orange';
 
-    let alertContent = "";
+    let alertContent = '';
     let hasNoAlerts = false;
 
     if (
         !alertData.message ||
-        alertData.message.toLowerCase().includes("no findings") ||
-        alertData.message.toLowerCase().includes("no recommendations") ||
-        alertData.message.includes("No Recommendations")
+        alertData.message.toLowerCase().includes('no findings') ||
+        alertData.message.toLowerCase().includes('no recommendations') ||
+        alertData.message.includes('No Recommendations')
     ) {
         hasNoAlerts = true;
         alertContent =
@@ -163,25 +134,21 @@ function displayAlert(alertCell, alertData) {
     }
 
     alertCell.innerHTML = `
-      <div class="alert-box fade-in ${colorClass} ${
-        hasNoAlerts ? "has-no-alert" : ""
-    }" 
+      <div class="alert-box fade-in ${colorClass} ${hasNoAlerts ? 'has-no-alert' : ''}" 
            style="height:90px; margin:2px;">
         <div class="alert-message p-1">${alertContent}</div>
       </div>
     `;
 
     if (!hasNoAlerts) {
-        alertCell
-            .querySelector(".alert-box")
-            ?.addEventListener("click", () => openAlertModal(alertData));
+        alertCell.querySelector('.alert-box')?.addEventListener('click', () => openAlertModal(alertData));
     }
 }
 
 // Show "No Alerts" state (ADPIE version)
 function showDefaultNoAlerts(alertCell) {
     if (!alertCell) return;
-    console.log("[ADPIE] Clearing alert box (No Alerts)");
+    console.log('[ADPIE] Clearing alert box (No Alerts)');
     alertCell.innerHTML = `
       <div class="alert-box has-no-alert alert-green" style="height:90px; margin:2.8px;">
         <span class="alert-message text-white text-center font-semibold uppercase opacity-80">NO RECOMMENDATIONS</span>
@@ -193,7 +160,7 @@ function showDefaultNoAlerts(alertCell) {
 // Show loading spinner
 function showAlertLoading(alertCell) {
     if (!alertCell) return;
-    console.log("[ADPIE] Analyzing... showing loader");
+    console.log('[ADPIE] Analyzing... showing loader');
     alertCell.innerHTML = `
       <div class="alert-box alert-green flex justify-center items-center" style="height:90px; margin:2px;">
         <div class="flex items-center gap-2 text-white font-semibold">
@@ -207,27 +174,22 @@ function showAlertLoading(alertCell) {
 
 // Open modal with alert details (ADPIE version)
 function openAlertModal(alertData) {
-    if (document.querySelector(".alert-modal-overlay")) return;
+    if (document.querySelector('.alert-modal-overlay')) return;
 
-    const overlay = document.createElement("div");
-    overlay.className = "alert-modal-overlay fade-in";
+    const overlay = document.createElement('div');
+    overlay.className = 'alert-modal-overlay fade-in';
 
-    const alertContent =
-        alertData.message || alertData.alert || "No details available.";
+    const alertContent = alertData.message || alertData.alert || 'No details available.';
 
     const recommendation = alertData.recommendation || null;
 
-    const modal = document.createElement("div");
-    modal.className = "alert-modal fade-in";
+    const modal = document.createElement('div');
+    modal.className = 'alert-modal fade-in';
     modal.innerHTML = `
       <button class="close-btn">&times;</button>
       <h2>Alert Details</h2>
       <p>${alertContent}</p>
-      ${
-          recommendation
-              ? `<h3>Recommendation:</h3><p>${recommendation}</p>`
-              : ""
-      }
+      ${recommendation ? `<h3>Recommendation:</h3><p>${recommendation}</p>` : ''}
     `;
 
     overlay.appendChild(modal);
@@ -237,17 +199,17 @@ function openAlertModal(alertData) {
         overlay.remove();
     };
 
-    overlay.addEventListener("click", (e) => {
+    overlay.addEventListener('click', (e) => {
         if (e.target === overlay) close();
     });
-    modal.querySelector(".close-btn").addEventListener("click", close);
+    modal.querySelector('.close-btn').addEventListener('click', close);
 }
 
 // Add fade-in animation & modal styles
 (function () {
-    if (document.getElementById("adpie-alert-styles")) return;
-    const style = document.createElement("style");
-    style.id = "adpie-alert-styles";
+    if (document.getElementById('adpie-alert-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'adpie-alert-styles';
     style.textContent = `
       .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
       @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
@@ -287,8 +249,8 @@ function openAlertModal(alertData) {
 
 // Initializes all ADPIE CDSS forms on the page.
 function initializeAllAdpieCdssForms() {
-    console.log("[ADPIE] Initializing all forms D-P-I-E");
-    const cdssForms = document.querySelectorAll(".cdss-form");
+    console.log('[ADPIE] Initializing all forms D-P-I-E');
+    const cdssForms = document.querySelectorAll('.cdss-form');
     cdssForms.forEach((form) => {
         // Check if it's an ADPIE form by looking for 'data-component'
         if (form.dataset.component) {
@@ -300,13 +262,11 @@ function initializeAllAdpieCdssForms() {
 // Listener for when a patient/form is changed
 if (!window.adpieCdssFormReloadListenerAttached) {
     window.adpieCdssFormReloadListenerAttached = true;
-    document.addEventListener("cdss:form-reloaded", (event) => {
+    document.addEventListener('cdss:form-reloaded', (event) => {
         const formContainer = event.detail.formContainer;
-        const cdssForm = formContainer.querySelector(".cdss-form");
+        const cdssForm = formContainer.querySelector('.cdss-form');
         if (cdssForm && cdssForm.dataset.component) {
-            console.log(
-                "[ADPIE] Form reloaded — reinitializing typing listeners"
-            );
+            console.log('[ADPIE] Form reloaded — reinitializing typing listeners');
             window.initializeAdpieCdssForForm(cdssForm);
         }
     });
@@ -315,9 +275,9 @@ if (!window.adpieCdssFormReloadListenerAttached) {
 // Listener for the very first page load
 if (!window.adpieCdssDomLoadListenerAttached) {
     window.adpieCdssDomLoadListenerAttached = true;
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener('DOMContentLoaded', () => {
         if (window.cdssFormReloaded === true) return; // Prevent double-loading
-        console.log("[ADPIE] DOM fully loaded — initializing forms");
+        console.log('[ADPIE] DOM fully loaded — initializing forms');
         initializeAllAdpieCdssForms();
     });
 }

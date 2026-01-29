@@ -5,7 +5,7 @@
 
     <h3>Patient's Current Medication</h3>
 
-    @if($currentMedication->isEmpty())
+    @if ($currentMedication->isEmpty())
         <p class="no-data">No Current Medication data available.</p>
     @else
         <table>
@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($currentMedication as $item)
+                @foreach ($currentMedication as $item)
                     <tr>
                         <td>{{ $item->current_med ?? '-' }}</td>
                         <td>{{ $item->current_dose ?? '-' }}</td>
@@ -36,7 +36,7 @@
 
     <h3>Patient's Home Medication</h3>
 
-    @if($homeMedication->isEmpty())
+    @if ($homeMedication->isEmpty())
         <p class="no-data">No Home Medication data available.</p>
     @else
         <table>
@@ -51,7 +51,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($homeMedication as $item)
+                @foreach ($homeMedication as $item)
                     <tr>
                         <td>{{ $item->home_med ?? '-' }}</td>
                         <td>{{ $item->home_dose ?? '-' }}</td>
@@ -67,7 +67,7 @@
 
     <h3>Changes in Medication During Hospitalization</h3>
 
-    @if($changesInMedication->isEmpty())
+    @if ($changesInMedication->isEmpty())
         <p class="no-data">No Changes in Medication data available.</p>
     @else
         <table>
@@ -81,7 +81,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($changesInMedication as $item)
+                @foreach ($changesInMedication as $item)
                     <tr>
                         <td>{{ $item->change_med ?? '-' }}</td>
                         <td>{{ $item->change_dose ?? '-' }}</td>

@@ -6,18 +6,16 @@
     @php
         $adl = $actOfDailyLiving;
     @endphp
-    @if($adl)
 
-        @foreach($adl as $item)
+    @if ($adl)
+        @foreach ($adl as $item)
             <table>
                 <tbody>
                     <tr>
                         <th colspan="2">
                             Date: {{ isset($item->date) ? \Carbon\Carbon::parse($item->date)->format('F j, Y') : '-' }}
                         </th>
-                        <th colspan="1">
-                            Day: {{ $item->day_no ?? '-' }}
-                        </th>
+                        <th colspan="1">Day: {{ $item->day_no ?? '-' }}</th>
                     </tr>
 
                     <tr>
@@ -25,7 +23,6 @@
                         <th>Findings</th>
                         <th>Alerts</th>
                     </tr>
-
 
                     {{-- Mobility --}}
                     <tr>
@@ -81,7 +78,7 @@
             <!-- ADPIE Table -->
 
             <h2 class="section-title-adpie">ADPIE</h2>
-            <table class="data-table" style="padding-bottom:5px;">
+            <table class="data-table" style="padding-bottom: 5px">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -113,16 +110,12 @@
                 </tbody>
             </table>
 
-
-            @if(!$loop->last)
-                <div style="margin-bottom:10px">
-                    <hr class="pdf-hr">
+            @if (! $loop->last)
+                <div style="margin-bottom: 10px">
+                    <hr class="pdf-hr" />
                 </div>
             @endif
-
-
         @endforeach
-
     @else
         <p class="no-data">No Activities of Daily Living data available.</p>
     @endif

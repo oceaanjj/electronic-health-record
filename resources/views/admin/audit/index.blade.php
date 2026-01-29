@@ -3,6 +3,51 @@
 @extends('layouts.admin')
 
 @section('content')
+    {{-- Responsive Title Size --}}
+    <h2 class="text-dark-green font-alte mt-8 mb-8 text-center text-[32px] font-black md:mt-18 md:text-[50px]">
+        AUDIT LOGS
+    </h2>
+
+    <div class="mx-auto my-12 w-full px-4 md:w-[90%] md:px-0 lg:w-[85%]">
+        {{--
+            SEARCH & FILTER BAR
+            - Mobile/Tablet: Stacked (flex-col)
+            - Laptop/Desktop: Row (lg:flex-row)
+        --}}
+        <div class="mb-10 flex flex-col items-center justify-between gap-6 lg:flex-row">
+            {{-- Search Input Wrapper --}}
+            <div class="relative w-full lg:ml-10 lg:w-auto">
+                <input
+                    type="text"
+                    id="audit-search"
+                    placeholder="Search by username..."
+                    value="{{ request('username_search') }}"
+                    class="focus:ring-dark-green focus:border-dark-green w-full rounded-full border border-gray-300 px-5 py-2 text-gray-700 shadow-sm transition duration-300 ease-in-out outline-none focus:ring-2 lg:w-[300px]"
+                />
+
+                <div id="audit-loading" class="absolute top-1/2 right-4 hidden -translate-y-1/2">
+                    <svg
+                        class="text-dark-green h-5 w-5 animate-spin"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
+                        <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                        ></circle>
+                        <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l3 3-3 3v-4a8 8 0 01-8-8z"
+                        ></path>
+                    </svg>
+                </div>
+            </div>
 
 {{-- Responsive Title Size --}}
 <h2 class="text-[32px] md:text-[50px] font-black mb-8 text-dark-green mt-8 md:mt-18 text-center font-alte">
@@ -29,12 +74,20 @@
                         focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none 
                         shadow-sm transition duration-300 ease-in-out text-gray-700"
             >
+                <span class="text-sm font-medium tracking-wide">SORT BY DATE:</span>
 
-            <div id="audit-loading" class="hidden absolute right-4 top-1/2 -translate-y-1/2">
-                <svg class="w-5 h-5 text-dark-green animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l3 3-3 3v-4a8 8 0 01-8-8z"></path>
-                </svg>
+                <a
+                    href="{{ route('audit.index', array_merge(request()->query(), ['sort_by' => 'created_at', 'sort_direction' => 'asc'])) }}"
+                    class="rounded-full border border-gray-300 px-4 py-1.5 text-sm transition-all duration-300 hover:bg-gray-100"
+                >
+                    Oldest
+                </a>
+                <a
+                    href="{{ route('audit.index', array_merge(request()->query(), ['sort_by' => 'created_at', 'sort_direction' => 'desc'])) }}"
+                    class="rounded-full border border-gray-300 px-4 py-1.5 text-sm transition-all duration-300 hover:bg-gray-100"
+                >
+                    Newest
+                </a>
             </div>
         </div>
 
@@ -122,7 +175,7 @@
                                             @endforeach
                                         </div>
                                     @else
-                                        <span class="text-gray-800">{{ $log->details }}</span>
+                                        <span class="text-gray-400 italic">No details provided.</span>
                                     @endif
                                 @else
                                     <span class="text-gray-400 italic">No details provided.</span>
@@ -145,8 +198,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
 
     {{-- BOTTOM ACTIONS --}}
     <div class="mt-12 flex flex-col items-center pb-20 w-full">

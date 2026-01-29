@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
         element.classList.add('opacity-100', 'translate-y-0');
     }
 
-
     function fadeOut(element) {
         element.classList.remove('opacity-100', 'translate-y-0');
         element.classList.add('opacity-0', 'translate-y-2');
@@ -26,7 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let newHTML = '';
 
         if (patients.length > 0) {
-            newHTML = patients.map(patient => `
+            newHTML = patients
+                .map(
+                    (patient) => `
                 <tr class="${
                     patient.deleted_at ? 'bg-red-100 text-red-700' : 'bg-beige'
                 } hover:bg-white hover:bg-opacity-50 transition-all duration-300 opacity-0 translate-y-2" data-id="${patient.patient_id}">
@@ -59,7 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     </td>
                 </tr>
-            `).join('');
+            `,
+                )
+                .join('');
         } else {
             newHTML = `
                 <tr class="opacity-0 translate-y-2 transition-all duration-300">
@@ -73,14 +76,14 @@ document.addEventListener('DOMContentLoaded', function () {
         lastRenderedHTML = newHTML;
 
         // Fade out existing rows first
-        patientTableBody.querySelectorAll('tr').forEach(tr => fadeOut(tr));
+        patientTableBody.querySelectorAll('tr').forEach((tr) => fadeOut(tr));
 
         // Wait for fade-out transition (200ms)
         setTimeout(() => {
             patientTableBody.innerHTML = newHTML;
 
             // Fade-in each row
-            patientTableBody.querySelectorAll('tr').forEach(tr => {
+            patientTableBody.querySelectorAll('tr').forEach((tr) => {
                 setTimeout(() => fadeIn(tr), 50);
             });
         }, 200);
@@ -95,11 +98,11 @@ document.addEventListener('DOMContentLoaded', function () {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
                 fetch(`/patients/live-search?input=${encodeURIComponent(searchTerm)}`)
-                    .then(response => response.json())
-                    .then(patients => {
+                    .then((response) => response.json())
+                    .then((patients) => {
                         renderPatientRows(patients);
                     })
-                    .catch(error => console.error('Error fetching patients:', error));
+                    .catch((error) => console.error('Error fetching patients:', error));
             }, 250);
         });
     }
@@ -121,12 +124,12 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken,
-                'X-HTTP-Method-Override': method
+                'X-HTTP-Method-Override': method,
             },
-            body: JSON.stringify({})
+            body: JSON.stringify({}),
         })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 if (data.success && data.patient) {
                     const row = target.closest('tr');
                     if (!row) return;
@@ -155,6 +158,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             })
-            .catch(error => console.error('Error toggling patient status:', error));
+            .catch((error) => console.error('Error toggling patient status:', error));
     });
 });

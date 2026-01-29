@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Patient Vital Signs')
 @section('content')
-<style>
-/*
+    <style>
+        /*
     #chart-viewport {
     overflow: hidden;
-    height: 530px; 
+    height: 530px;
     position: relative;
     }
 
@@ -22,27 +22,23 @@
         padding-bottom: 40px;
 }*/
 
-#chart-viewport {
-    height: 530px;
-    overflow: hidden;
-    position: relative;
-}
+        #chart-viewport {
+            height: 530px;
+            overflow: hidden;
+            position: relative;
+        }
 
+        #chart-track {
+            padding-top: 50px;
+            padding-bottom: 40px;
+        }
 
-#chart-track {
-    padding-top: 50px;
-    padding-bottom: 40px;
-}
-
-#chart-track > div {
-    margin: 10px 0;
-}
-
-</style>
+        #chart-track > div {
+            margin: 10px 0;
+        }
+    </style>
 
     <div id="form-content-container">
-        
-
         {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
         <div class="header mx-auto my-10 flex w-[80%] items-center gap-6">
             <form
@@ -164,70 +160,96 @@
                 />
 
                 <div class="mx-auto mt-6 flex w-[90%] items-start justify-between gap-1">
-                    <div class="relative w-[30%] mr-3">
+                    <div class="relative mr-3 w-[30%]">
+                        <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
 
-                         <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
-
-                         
-                            <div id="fade-top"
-                                class="pointer-events-none absolute top-0 left-0 z-20 h-10 w-full
-                                        bg-gradient-to-b from-white/90 to-transparent rounded-t-[20px] hidden">
-                            </div>
-            
+                        <div
+                            id="fade-top"
+                            class="pointer-events-none absolute top-0 left-0 z-20 hidden h-10 w-full rounded-t-[20px] bg-gradient-to-b from-white/90 to-transparent"
+                        ></div>
 
                         <!-- VIEWPORT (SHOWS 3 CHARTS) -->
-                        <div id="chart-viewport" class="h-[530px] overflow-hidden rounded-[25px] relative">
-
-                            <div id="chart-track" class="space-y-6 transition-transform duration-700 ease-out">
+                        <div id="chart-viewport" class="relative h-[530px] overflow-hidden rounded-[25px]">
+                            <div id="chart-track" class="transition-transform duration-700 ease-out">
                                 <!-- ✅ REUSABLE CHART CARD -->
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
-                                    <h2 class="text-dark-green mb-1 text-center font-bold">Temperature Trend</h2>
+                                <div
+                                    class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl"
+                                >
+                                    <h2
+                                        class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80"
+                                    >
+                                        TEMPERATURE CHART
+                                    </h2>
                                     <canvas id="tempChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
-                                    <h2 class="text-dark-green mb-1 text-center font-bold">Heart Rate Trend</h2>
+                                <div
+                                    class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl"
+                                >
+                                    <h2
+                                        class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80"
+                                    >
+                                        HEART RATE CHART
+                                    </h2>
                                     <canvas id="hrChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
-                                    <h2 class="text-dark-green mb-1 text-center font-bold">Respiratory Rate Trend</h2>
+                                <div
+                                    class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl"
+                                >
+                                    <h2
+                                        class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80"
+                                    >
+                                        RESPIRATORY RATE CHART
+                                    </h2>
                                     <canvas id="rrChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
-                                    <h2 class="text-dark-green mb-1 text-center font-bold">Blood Pressure Trend</h2>
+                                <div
+                                    class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl"
+                                >
+                                    <h2
+                                        class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80"
+                                    >
+                                        BLOOD PRESSURE CHART
+                                    </h2>
                                     <canvas id="bpChart"></canvas>
                                 </div>
 
-                                <div class="h-[220px] rounded-2xl bg-yellow-200 p-4 shadow-lg">
-                                    <h2 class="text-dark-green mb-1 text-center font-bold">SpO₂ Trend</h2>
+                                <div
+                                    class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl"
+                                >
+                                    <h2
+                                        class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80"
+                                    >
+                                        SpO₂ CHART
+                                    </h2>
                                     <canvas id="spo2Chart"></canvas>
                                 </div>
                             </div>
 
-                            <div id="fade-bottom"
-                            class="pointer-events-none absolute bottom-0 left-0 z-20 h-10 w-full bg-gradient-to-t from-white/90 to-transparent rounded-b-[20px] hidden"></div>
+                            <div
+                                id="fade-bottom"
+                                class="pointer-events-none absolute bottom-0 left-0 z-20 hidden h-10 w-full rounded-b-[20px] bg-gradient-to-t from-white/90 to-transparent"
+                            ></div>
                         </div>
 
-                
-
-                        
-
-
                         <!-- DOWN BUTTON -->
-                        <button id="chart-up" type="button"
-                                class="bg-dark-green absolute -top-8 left-1/2 z-30
-                                    -translate-x-1/2 h-10 w-10 rounded-full flex items-center justify-center text-white shadow-lg">
-                            <span class="material-symbols-outlined">arrow_drop_up</span>
+                        <button
+                            id="chart-up"
+                            type="button"
+                            class="btn-hidden absolute -top-8 left-1/2 z-30 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-[#e2e8f0] bg-gradient-to-b from-white to-[#f1f5f9] text-[#64748b] shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-all duration-200 hover:bg-white hover:text-[#334155] hover:shadow-md"
+                        >
+                            <span class="material-symbols-outlined text-[32px]">arrow_drop_up</span>
                         </button>
 
-                        <button id="chart-down" type="button"
-                                class="bg-dark-green absolute -bottom-8 left-1/2 z-30
-                                    -translate-x-1/2 h-10 w-10 rounded-full flex items-center justify-center text-white shadow-lg">
-                            <span class="material-symbols-outlined">arrow_drop_down</span>
+                        <button
+                            id="chart-down"
+                            type="button"
+                            class="absolute -bottom-8 left-1/2 z-30 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-[#e2e8f0] bg-gradient-to-b from-white to-[#f1f5f9] text-[#64748b] shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-all duration-200 hover:bg-white hover:text-[#334155] hover:shadow-md"
+                        >
+                            <span class="material-symbols-outlined text-[32px]">arrow_drop_down</span>
                         </button>
-                        
                     </div>
                     <div class="w-[68%] overflow-hidden rounded-[15px]">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
@@ -377,29 +399,25 @@
             </form>
         </fieldset>
 
-       <div id="chart-modal" 
-            style="display:none;" 
-            class="absolute top-0 left-0 w-full h-full z-[50] flex items-center justify-center bg-white/40 backdrop-blur-sm rounded-[25px]">
-            
-            <div class="relative w-[95%] h-[90%] bg-white rounded-3xl shadow-2xl p-6 flex flex-col border border-gray-100">
-                
-                <div class="flex justify-between items-center mb-4">
-                    <h3 id="modal-chart-title" class="text-2xl font-bold text-gray-800"></h3>
-                    <button onclick="closeChartModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+        <div id="chart-modal">
+            <div class="modal-container">
+                <div class="mb-4 flex items-center justify-between">
+                    <h3 id="modal-chart-title" class="text-dark-green text-lg font-bold uppercase"></h3>
+                    <button
+                        type="button"
+                        onclick="closeChartModal()"
+                        class="cursor-pointer rounded-full p-2 transition-colors hover:bg-gray-100"
+                    >
+                        <span class="material-symbols-outlined text-3xl text-gray-500">close</span>
                     </button>
                 </div>
 
-                <div class="flex-grow">
+                <div class="relative h-[400px]">
                     <canvas id="modalChartCanvas"></canvas>
                 </div>
             </div>
         </div>
     </div>
-
-   
 @endsection
 
 @push('scripts')
@@ -409,28 +427,125 @@
         'resources/js/init.searchable-dropdown.js',
         'resources/js/date-day-sync.js',
         'resources/js/searchable-dropdown.js',
-        'resources/js/vital-signs-charts.js'
+        'resources/js/vital-signs-charts.js',
     ])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         const vitalsData = @json($vitalsData);
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             const timePoints = @json($times);
 
             if (window.initializeVitalSignsCharts) {
                 window.initializeVitalSignsCharts(timePoints, vitalsData);
             }
-            
+
             if (window.initializeChartScrolling) {
                 window.initializeChartScrolling();
             }
-            
-            // Initialize searchable dropdown
+
             if (window.initSearchableDropdown) {
                 window.initSearchableDropdown();
             }
+        });
+
+        // 1. GLOBAL CLOSE FUNCTION
+        window.closeChartModal = function () {
+            const modal = document.getElementById('chart-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+
+            // Cleanup Chart instance to prevent errors when re-opening
+            if (window.modalChartInstance) {
+                window.modalChartInstance.destroy();
+                window.modalChartInstance = null;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalWrapper = document.getElementById('chart-modal');
+
+            if (modalWrapper) {
+                modalWrapper.addEventListener('click', function (event) {
+                    // If the user clicks the dark background (the wrapper) and NOT the white box
+                    if (event.target === modalWrapper) {
+                        closeChartModal();
+                    }
+                });
+            }
+
+            const sidebar = document.getElementById('mySidenav');
+            if (sidebar) {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.attributeName === 'class') {
+                            const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
+                            if (isSidebarOpen) closeChartModal();
+                        }
+                    });
+                });
+                observer.observe(sidebar, { attributes: true });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let currentStep = 0;
+            const totalSteps = 3;
+
+            function updateCarousel() {
+                const track = document.getElementById('chart-track');
+                const upBtn = document.getElementById('chart-up');
+                const downBtn = document.getElementById('chart-down');
+                const cards = track ? track.querySelectorAll(':scope > div') : [];
+
+                if (!track || !upBtn || !downBtn || !cards.length) return;
+
+                const cardHeight = cards[0].offsetHeight;
+                const moveDistance = cardHeight;
+                let translateY = 0;
+
+                upBtn.classList.remove('btn-hidden');
+                downBtn.classList.remove('btn-hidden');
+
+                if (currentStep === 0) {
+                    translateY = 0;
+                    upBtn.classList.add('btn-hidden');
+                } else if (currentStep === 1) {
+                    translateY = moveDistance * 1.3;
+                } else if (currentStep === 2) {
+                    translateY = moveDistance * 2.3;
+                } else if (currentStep === 3) {
+                    translateY = moveDistance * 3.3;
+                    downBtn.classList.add('btn-hidden');
+                }
+
+                track.style.transform = `translateY(-${translateY}px)`;
+            }
+
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('#chart-down')) {
+                    if (currentStep < totalSteps) {
+                        currentStep++;
+                        updateCarousel();
+                    }
+                }
+
+                if (e.target.closest('#chart-up')) {
+                    if (currentStep > 0) {
+                        currentStep--;
+                        updateCarousel();
+                    }
+                }
+            });
+
+            updateCarousel();
+
+            window.resetChartCarousel = function () {
+                currentStep = 0;
+                updateCarousel();
+            };
         });
     </script>
 @endpush

@@ -1,7 +1,7 @@
 /*Font Import*/
 @font-face {
-  font-family: 'alte-bold';
-  src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
+    font-family: 'alte-bold';
+    src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
 }
 
 a {
@@ -57,7 +57,7 @@ body.login-page {
 
 #upper-line {
     height: 7px;
-    background: #EDB62C;
+    background: #edb62c;
     margin: 0;
     padding: 0;
     border-top-left-radius: 5px;
@@ -65,7 +65,7 @@ body.login-page {
 }
 
 #form-container {
-    flex: 1; 
+    flex: 1;
     display: flex;
     flex-direction: column;
     padding: 80px 80px 40px 80px;
@@ -90,7 +90,7 @@ p strong {
 
 .form-section label {
     text-align: left;
-    color: #1A6A24;
+    color: #1a6a24;
     font-family: 'alte-bold';
     font-size: 15px;
 }
@@ -105,9 +105,9 @@ p strong {
 }
 
 .form-section input:focus {
-    border-color: #1A6A24;  
-    outline: none;         
-    box-shadow: 0 0 5px #1A6A24;
+    border-color: #1a6a24;
+    outline: none;
+    box-shadow: 0 0 5px #1a6a24;
 }
 
 .forgot {
@@ -128,7 +128,7 @@ p strong {
 .btn-login {
     width: 100%;
     padding: 10px;
-    background: #1A6A24;
+    background: #1a6a24;
     border: none;
     color: white;
     border-radius: 50px;
@@ -140,13 +140,13 @@ p strong {
 }
 
 .btn-login:hover {
-    background: #EDB62C;
-    color: #1A6A24;
+    background: #edb62c;
+    color: #1a6a24;
 }
 
 .return-home {
     font-family: 'alte-bold';
-    color: #1A6A24;
+    color: #1a6a24;
     font-size: 14px;
     margin: 10px 15px 0px 0px;
     vertical-align: middle; 
@@ -163,7 +163,7 @@ p strong {
 }
 
 .return-home:hover {
-    color: #EDB62C;
+    color: #edb62c;
 }
 
 .return-home:hover .home-icon {

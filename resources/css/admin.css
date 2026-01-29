@@ -89,7 +89,7 @@ body {
     background: #fff;
     padding: 30px;
     border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .audit-logs h2 {
@@ -114,13 +114,12 @@ body {
     color: #fff;
 }
 
-.logs-table th, 
+.logs-table th,
 .logs-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
-
 
 /* Action Badge */
 .action-badge {
@@ -169,7 +168,16 @@ body {
 }
 
 @keyframes popUp {
-    0% { transform: scale(0.8) translateX(-50%); opacity: 0; }
-    70% { transform: scale(1.01) translateX(-50%); opacity: 1; }
-    100% { transform: scale(1) translateX(-50%); opacity: 1; }
+    0% {
+        transform: scale(0.8) translateX(-50%);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.01) translateX(-50%);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) translateX(-50%);
+        opacity: 1;
+    }
 }

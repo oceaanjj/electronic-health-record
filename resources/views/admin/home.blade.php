@@ -40,18 +40,29 @@
                         {{ \App\Models\User::where('role', '!=', 'admin')->count() }}
                     </p>
                 </div>
-                
-                <div class="group border border-gray-300 rounded-[20px] justify-between text-left gradient-gray shadow-sm">
-                    <h3 class="text-sm text-gray-500 font-neometric font-black pl-10 pt-10 pb-5 leading-4">TOTAL OF <br> <span class="text-dark-green/80 text-[20px] font-creato-bold font-black">DOCTORS</span></h3>
-                    <p class="text-[70px] font-extrabold text-dark-green/70 text-center p-0">
+
+                <div
+                    class="group gradient-gray justify-between rounded-[20px] border border-gray-300 text-left shadow-sm"
+                >
+                    <h3 class="font-neometric pt-10 pb-5 pl-10 text-sm leading-4 font-black text-gray-500">
+                        TOTAL OF
+                        <br />
+                        <span class="text-dark-green/80 font-creato-bold text-[20px] font-black">DOCTORS</span>
+                    </h3>
+                    <p class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
                         {{ \App\Models\User::where('role', 'doctor')->count() }}
                     </p>
                 </div>
-                
-                
-                <div class="group border border-gray-300 rounded-[20px] justify-between text-left gradient-gray shadow-sm">
-                    <h3 class="text-sm text-gray-500 font-neometric font-black pl-10 pt-10 pb-5 leading-4">TOTAL OF <br> <span class="text-dark-green/80 text-[20px] font-creato-bold font-black">NURSES</span></h3>
-                    <p class="text-[70px] font-extrabold text-dark-green/70 text-center p-0">
+
+                <div
+                    class="group gradient-gray justify-between rounded-[20px] border border-gray-300 text-left shadow-sm"
+                >
+                    <h3 class="font-neometric pt-10 pb-5 pl-10 text-sm leading-4 font-black text-gray-500">
+                        TOTAL OF
+                        <br />
+                        <span class="text-dark-green/80 font-creato-bold text-[20px] font-black">NURSES</span>
+                    </h3>
+                    <p class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
                         {{ \App\Models\User::where('role', 'nurse')->count() }}
                     </p>
                 </div>

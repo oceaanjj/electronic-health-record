@@ -8,7 +8,7 @@
 
 /* Page Background */
 body {
-    background-color: #1A6A24; /* Dark Green */
+    background-color: #1a6a24; /* Dark Green */
     color: white;
     padding: 20px;
 }
@@ -16,11 +16,11 @@ body {
 .header {
     font-size: 22px;
     font-weight: bold;
-    background: #1A6A24;
+    background: #1a6a24;
     color: #ffffff;
     padding: 12px;
     margin-bottom: 20px;
-    border: 3px solid #EDB62C;
+    border: 3px solid #edb62c;
     border-radius: 4px;
 }
 
@@ -29,7 +29,7 @@ body {
     max-width: 600px;
     margin: 10px auto;
     background: #fff;
-    border: 2px solid #EDB62C;
+    border: 2px solid #edb62c;
     border-radius: 10px;
     padding: 20px 25px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
@@ -62,7 +62,7 @@ body {
     background: #f9faf9;
     color: #166534;
     font-weight: bold;
-    border-right: 2px solid #EDB62C;
+    border-right: 2px solid #edb62c;
 }
 
 /* Values */
@@ -79,7 +79,7 @@ body {
 .details-container a {
     display: inline-block;
     margin-top: 25px;
-    background: #1A6A24;
+    background: #1a6a24;
     color: #fff;
     padding: 10px 18px;
     border-radius: 6px;
@@ -90,17 +90,18 @@ body {
 }
 
 .details-container a:hover {
-    background: #1A6A24;
-    border-color: #EDB62C;
+    background: #1a6a24;
+    border-color: #edb62c;
 }
 
-button, .clear-btn {
+button,
+.clear-btn {
     padding: 12px 20px;
     font-size: 14px;
     font-weight: bold;
-    background: #1A6A24;
+    background: #1a6a24;
     color: #fff;
-    border: 2px solid #EDB62C;
+    border: 2px solid #edb62c;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
@@ -109,6 +110,7 @@ button, .clear-btn {
     display: inline;
 }
 
-button:hover, .clear-btn:hover {
+button:hover,
+.clear-btn:hover {
     background: #14501b;
 }

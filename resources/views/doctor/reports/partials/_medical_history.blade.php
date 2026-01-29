@@ -15,12 +15,11 @@
                 </tr>
             </thead>
             <tbody>
-
                 {{-- 1. Present Illness Section --}}
-                @forelse($presentIllness as $item)
+                @forelse ($presentIllness as $item)
                     <tr>
                         <td>Present Illness</td>
-                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->condition_name ?? '' }}</td>
                         <td>{{ $item->description ?? '' }}</td>
                         <td>{{ $item->medication ?? '' }}</td>
                         <td>{{ $item->dosage ?? '' }}</td>
@@ -35,10 +34,10 @@
                 @endforelse
 
                 {{-- 2. Past Medical / Surgical Section --}}
-                @forelse($pastMedicalSurgical as $item)
+                @forelse ($pastMedicalSurgical as $item)
                     <tr>
                         <td>Past Medical / Surgical</td>
-                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->condition_name ?? '' }}</td>
                         <td>{{ $item->description ?? '' }}</td>
                         <td>{{ $item->medication ?? '' }}</td>
                         <td>{{ $item->dosage ?? '' }}</td>
@@ -52,12 +51,11 @@
                     </tr>
                 @endforelse
 
-
                 {{-- 3. Known Conditions or Allergies Section --}}
-                @forelse($allergies as $item)
+                @forelse ($allergies as $item)
                     <tr>
                         <td>Known Conditions or Allergies</td>
-                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->condition_name ?? '' }}</td>
                         <td>{{ $item->description ?? '' }}</td>
                         <td>{{ $item->medication ?? '' }}</td>
                         <td>{{ $item->dosage ?? '' }}</td>
@@ -72,10 +70,10 @@
                 @endforelse
 
                 {{-- 4. Vaccination Section --}}
-                @forelse($vaccination as $item)
+                @forelse ($vaccination as $item)
                     <tr>
                         <td>Vaccination</td>
-                        <td>{{$item->condition_name ?? '' }}</td>
+                        <td>{{ $item->condition_name ?? '' }}</td>
                         <td>{{ $item->description ?? '' }}</td>
                         <td>{{ $item->medication ?? '' }}</td>
                         <td>{{ $item->dosage ?? '' }}</td>

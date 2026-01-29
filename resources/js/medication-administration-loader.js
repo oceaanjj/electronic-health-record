@@ -1,16 +1,16 @@
 function initializeMedicationAdministrationForm() {
-    const form = document.querySelector("#medication-administration-form");
+    const form = document.querySelector('#medication-administration-form');
     if (!form) return;
 
-    const hiddenPatientIdInput = document.getElementById("patient_id_hidden");
-    const dateInput = document.getElementById("date_selector");
-    const medicationInputs = document.querySelectorAll(".medication-input");
-    const submitButton = document.getElementById("submit_button");
+    const hiddenPatientIdInput = document.getElementById('patient_id_hidden');
+    const dateInput = document.getElementById('date_selector');
+    const medicationInputs = document.querySelectorAll('.medication-input');
+    const submitButton = document.getElementById('submit_button');
 
     const timeMap = {
-        "10:00:00": 0,
-        "14:00:00": 1,
-        "18:00:00": 2,
+        '10:00:00': 0,
+        '14:00:00': 1,
+        '18:00:00': 2,
     };
 
     function toggleFormElements(enable) {
@@ -20,7 +20,7 @@ function initializeMedicationAdministrationForm() {
     }
 
     function clearMedicationInputs() {
-        medicationInputs.forEach((input) => (input.value = ""));
+        medicationInputs.forEach((input) => (input.value = ''));
     }
 
     function populateMedicationInputs(records) {
@@ -30,18 +30,11 @@ function initializeMedicationAdministrationForm() {
             const timeIndex = timeMap[record.time];
             if (timeIndex !== undefined) {
                 const baseIndex = timeIndex * 5;
-                if (medicationInputs[baseIndex])
-                    medicationInputs[baseIndex].value = record.medication || "";
-                if (medicationInputs[baseIndex + 1])
-                    medicationInputs[baseIndex + 1].value = record.dose || "";
-                if (medicationInputs[baseIndex + 2])
-                    medicationInputs[baseIndex + 2].value = record.route || "";
-                if (medicationInputs[baseIndex + 3])
-                    medicationInputs[baseIndex + 3].value =
-                        record.frequency || "";
-                if (medicationInputs[baseIndex + 4])
-                    medicationInputs[baseIndex + 4].value =
-                        record.comments || "";
+                if (medicationInputs[baseIndex]) medicationInputs[baseIndex].value = record.medication || '';
+                if (medicationInputs[baseIndex + 1]) medicationInputs[baseIndex + 1].value = record.dose || '';
+                if (medicationInputs[baseIndex + 2]) medicationInputs[baseIndex + 2].value = record.route || '';
+                if (medicationInputs[baseIndex + 3]) medicationInputs[baseIndex + 3].value = record.frequency || '';
+                if (medicationInputs[baseIndex + 4]) medicationInputs[baseIndex + 4].value = record.comments || '';
             }
         });
     }
@@ -56,16 +49,14 @@ function initializeMedicationAdministrationForm() {
         }
 
         try {
-            const response = await fetch(
-                `/medication-administration/records?patient_id=${patientId}&date=${date}`
-            );
+            const response = await fetch(`/medication-administration/records?patient_id=${patientId}&date=${date}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const records = await response.json();
             populateMedicationInputs(records);
         } catch (error) {
-            console.error("Error fetching medication records:", error);
+            console.error('Error fetching medication records:', error);
         }
     }
 
@@ -76,7 +67,7 @@ function initializeMedicationAdministrationForm() {
         fetchAndDisplayRecords();
     }
 
-    dateInput.addEventListener("change", () => {
+    dateInput.addEventListener('change', () => {
         if (hiddenPatientIdInput.value) {
             fetchAndDisplayRecords();
         } else {
@@ -128,18 +119,18 @@ function initializeMedicationAdministrationForm() {
     // });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     initializeMedicationAdministrationForm();
 });
 
 // Listener for patient cleared
-document.addEventListener("patient:cleared", () => {
-    const form = document.querySelector("#medication-administration-form");
+document.addEventListener('patient:cleared', () => {
+    const form = document.querySelector('#medication-administration-form');
     if (!form) return;
 
-    const dateInput = document.getElementById("date_selector");
-    const medicationInputs = document.querySelectorAll(".medication-input");
-    const submitButton = document.getElementById("submit_button");
+    const dateInput = document.getElementById('date_selector');
+    const medicationInputs = document.querySelectorAll('.medication-input');
+    const submitButton = document.getElementById('submit_button');
 
     function toggleFormElements(enable) {
         dateInput.disabled = !enable;
@@ -148,7 +139,7 @@ document.addEventListener("patient:cleared", () => {
     }
 
     function clearMedicationInputs() {
-        medicationInputs.forEach((input) => (input.value = ""));
+        medicationInputs.forEach((input) => (input.value = ''));
     }
 
     toggleFormElements(false);
@@ -156,12 +147,10 @@ document.addEventListener("patient:cleared", () => {
 });
 
 // Listener for patient selection
-document.addEventListener("patient:selected", async (event) => {
+document.addEventListener('patient:selected', async (event) => {
     const { patientId, selectUrl } = event.detail;
-    const formContainer = document.getElementById("form-content-container");
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
+    const formContainer = document.getElementById('form-content-container');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     if (!formContainer || !selectUrl || !patientId) {
         return;
@@ -169,37 +158,34 @@ document.addEventListener("patient:selected", async (event) => {
 
     try {
         const response = await fetch(selectUrl, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "X-CSRF-TOKEN": csrfToken,
-                "X-Requested-With": "XMLHttpRequest",
-                "X-Fetch-Form-Content": "true",
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-Fetch-Form-Content': 'true',
             },
             body: `patient_id=${encodeURIComponent(patientId)}`,
         });
 
-        if (!response.ok)
-            throw new Error(`Server responded with status: ${response.status}`);
+        if (!response.ok) throw new Error(`Server responded with status: ${response.status}`);
 
         const htmlText = await response.text();
         const parser = new DOMParser();
-        const newHtml = parser.parseFromString(htmlText, "text/html");
-        const newContent = newHtml.getElementById("form-content-container");
+        const newHtml = parser.parseFromString(htmlText, 'text/html');
+        const newContent = newHtml.getElementById('form-content-container');
 
         if (newContent) {
             formContainer.innerHTML = newContent.innerHTML;
-            if (typeof window.initSearchableDropdown === "function") {
+            if (typeof window.initSearchableDropdown === 'function') {
                 window.initSearchableDropdown();
             }
             initializeMedicationAdministrationForm();
         } else {
-            throw new Error(
-                "Could not find '#form-content-container' in response."
-            );
+            throw new Error("Could not find '#form-content-container' in response.");
         }
     } catch (error) {
-        console.error("Patient loading failed:", error);
+        console.error('Patient loading failed:', error);
         window.location.reload();
     }
 });

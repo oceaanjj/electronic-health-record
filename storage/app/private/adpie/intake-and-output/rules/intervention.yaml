@@ -1,18 +1,18 @@
 intervention:
-  # Fluid Management Interventions
-  - keywords: ["oral hydration", "encourage fluids"]
-    match_type: any
-    severity: "INFO"
-    alert: "Intervention: Encourage oral fluid intake within prescribed limits"
+    # Fluid Management Interventions
+    - keywords: ['oral hydration', 'encourage fluids']
+      match_type: any
+      severity: 'INFO'
+      alert: 'Intervention: Encourage oral fluid intake within prescribed limits'
 
-  - keywords: ["iv fluid administration", "fluid bolus"]
-    match_type: any
-    severity: "CRITICAL"
-    alert: "Intervention: Administer IV fluids as prescribed, monitor vital signs"
+    - keywords: ['iv fluid administration', 'fluid bolus']
+      match_type: any
+      severity: 'CRITICAL'
+      alert: 'Intervention: Administer IV fluids as prescribed, monitor vital signs'
 
-  - keywords: ["intake documentation", "output measurement"]
-    match_type: any
-    severity: "INFO"
-    alert: "Intervention: Document all intake and output accurately every shift"
+    - keywords: ['intake documentation', 'output measurement']
+      match_type: any
+      severity: 'INFO'
+      alert: 'Intervention: Document all intake and output accurately every shift'
 
-  # Continue with 397+ more intervention rules...
+    # Continue with 397+ more intervention rules...

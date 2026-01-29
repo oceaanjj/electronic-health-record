@@ -22,6 +22,7 @@ import "./init-searchable-dropdown.js";
 import "./page-initializer.js";
 import "./intake-output-patient-loader.js";
 import "./form-disable-alert.js";
+import "./form-saver.js";
 
 // Import CSS
 import "../css/app.css";

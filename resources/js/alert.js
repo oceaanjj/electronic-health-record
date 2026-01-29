@@ -18,6 +18,43 @@ function findAlertCellForInput(input) {
 }
 
 // =======================================================
+// BUTTON STATE MANAGEMENT
+// =======================================================
+
+/**
+ * Checks if any input in the form has a value and toggles the CDSS button state.
+ * @param {HTMLElement} form
+ */
+function updateCdssButtonState(form) {
+    const cdssBtn = form.querySelector(".cdss-btn");
+    if (!cdssBtn) return;
+
+    const inputs = form.querySelectorAll(".cdss-input");
+    let hasInput = false;
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value.trim() !== "") {
+            hasInput = true;
+            break;
+        }
+    }
+
+    if (hasInput) {
+        // Enable button
+        cdssBtn.classList.remove("opacity-50", "pointer-events-none", "cursor-not-allowed");
+        if (cdssBtn.tagName === "BUTTON") {
+            cdssBtn.disabled = false;
+        }
+    } else {
+        // Disable button
+        cdssBtn.classList.add("opacity-50", "pointer-events-none", "cursor-not-allowed");
+        if (cdssBtn.tagName === "BUTTON") {
+            cdssBtn.disabled = true;
+        }
+    }
+}
+
+// =======================================================
 // LIVE TYPING ANALYSIS (Requires analyzeField)
 // =======================================================
 
@@ -27,6 +64,10 @@ window.initializeCdssForForm = function (form) {
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
         ?.getAttribute("content");
+    
+    // Initial check for button state
+    updateCdssButtonState(form);
+
     if (!analyzeUrl || !csrfToken) {
         console.error('Missing "data-analyze-url" or CSRF token.', form);
         return;
@@ -43,6 +84,9 @@ window.initializeCdssForForm = function (form) {
         if (input.dataset.alertListenerAttached) return; // Prevent duplicate listeners
 
         const handleInput = (e) => {
+            // Update button state on every input
+            updateCdssButtonState(form);
+
             clearTimeout(debounceTimer);
             const fieldName = e.target.dataset.fieldName;
             const finding = e.target.value.trim();

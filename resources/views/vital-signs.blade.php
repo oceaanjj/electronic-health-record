@@ -366,7 +366,7 @@
                         <button
                             type="submit"
                             formaction="{{ route('vital-signs.cdss') }}"
-                            class="button-default text-center"
+                            class="button-default cdss-btn text-center"
                         >
                             CDSS
                         </button>

@@ -1,13 +1,8 @@
-<header class="fixed flex items-center justify-between bg-white shadow-md h-[120px] z-50 top-0 left-0 right-0">
-    <div class="flex items-center space-x-10 pr-10 pl-10">
-
+<header class="fixed top-0 right-0 left-0 z-50 flex h-[120px] items-center justify-between bg-white shadow-md px-20">
+    <div class="flex items-center space-x-10">
         <button onclick="toggleNav()">
-            <span class="material-symbols-outlined text-dark-green cursor-pointer"
-                style="font-size: 25px;">
-                dehaze
-            </span>
+            <span class="material-symbols-outlined text-dark-green cursor-pointer" style="font-size: 25px">dehaze</span>
         </button>
-
 
         <script>
             let isNavOpen = false;
@@ -23,14 +18,14 @@
             }
         </script>
 
-
-
         @php
             $user = Auth::user();
 
-            if (!$user) {
+            if (! $user) {
                 $homeRoute = 'login';
+                $userName = 'Guest';
             } else {
+                $userName = $user->username;
                 switch ($user->role) {
                     case 'Admin':
                         $homeRoute = 'admin-home';
@@ -48,13 +43,20 @@
         @endphp
 
         <a href="{{ route($homeRoute) }}" class="flex items-center gap-10">
-            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-20">
+            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-20" />
             <div class="flex flex-col leading-tight">
-                <span class="text-[30px] font-trajan-bold font-black text-black">ELECTRONIC HEALTH RECORD</span>
-                <span class="text-[20px] font-creato-black font-bold text-yellow">Bachelor of Science in Nursing</span>
-            </div>    
+                <span class="font-trajan-bold text-[30px] font-black text-black">ELECTRONIC HEALTH RECORD</span>
+                <span class="font-creato-black text-yellow text-[20px] font-bold">Bachelor of Science in Nursing</span>
+            </div>
         </a>
-
     </div>
 
+    <div class="flex flex-col items-end leading-tight">
+        <span class="font-[minion] italic text-[#2D6A4F] text-[28px]">
+            Hello, <span class="font-[minion] italic text-[#2D6A4F] text-[28px] font-bold">{{ $userName }}</span>
+        </span>
+        <span class="font-alte text-[#B2B2B2] text-[16px] font-bold">
+            {{ now()->format('l, F j') }}
+        </span>
+    </div>
 </header>

@@ -5,7 +5,7 @@
  * leveraging the alert.js framework.
  */
 
-(function() {
+(function () {
     let debounceTimer;
 
     function initializeIntakeOutputCdss() {
@@ -16,8 +16,7 @@
         }
 
         const analyzeUrl = ioForm.dataset.analyzeUrl;
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
         if (!analyzeUrl || !csrfToken) {
             console.error('Intake/Output CDSS: Form missing "data-analyze-url" or CSRF token not found.');
@@ -35,8 +34,8 @@
 
         // --- Local function: Default NO ALERTS state ---
         function showDefaultNoAlertsLocal(alertBoxDiv) {
-            alertBoxDiv.classList.remove("alert-loading", "alert-red", "alert-orange", "alert-green"); // Remove loading and severity classes
-            alertBoxDiv.classList.add("has-no-alert", "alert-green"); // Add no alerts state, green color
+            alertBoxDiv.classList.remove('alert-loading', 'alert-red', 'alert-orange', 'alert-green'); // Remove loading and severity classes
+            alertBoxDiv.classList.add('has-no-alert', 'alert-green'); // Add no alerts state, green color
             alertBoxDiv.innerHTML = `
                 <span class="opacity-70 text-white font-semibold text-center">NO ALERTS</span>
             `;
@@ -45,8 +44,8 @@
 
         // --- Local function: Loading spinner (continuous) ---
         function showAlertLoadingLocal(alertBoxDiv) {
-            alertBoxDiv.classList.remove("has-no-alert", "alert-red", "alert-orange", "alert-green"); // Remove all previous state and animation classes
-            alertBoxDiv.classList.add("alert-loading"); // Add loading state class
+            alertBoxDiv.classList.remove('has-no-alert', 'alert-red', 'alert-orange', 'alert-green'); // Remove all previous state and animation classes
+            alertBoxDiv.classList.add('alert-loading'); // Add loading state class
             alertBoxDiv.innerHTML = `
                 <div class="alert-message" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
                     <div class="loading-spinner"></div>
@@ -58,19 +57,19 @@
 
         // --- Local function: Display alert content ---
         function displayAlertLocal(alertBoxDiv, alertData) {
-            alertBoxDiv.classList.remove("alert-loading", "has-no-alert", "alert-red", "alert-orange", "alert-green"); // Remove previous state classes
+            alertBoxDiv.classList.remove('alert-loading', 'has-no-alert', 'alert-red', 'alert-orange', 'alert-green'); // Remove previous state classes
 
             // Set color by severity
-            let colorClass = "alert-green";
-            if (alertData.severity === "CRITICAL") colorClass = "alert-red";
-            else if (alertData.severity === "WARNING") colorClass = "alert-orange";
-            else if (alertData.severity === "INFO") colorClass = "alert-green";
+            let colorClass = 'alert-green';
+            if (alertData.severity === 'CRITICAL') colorClass = 'alert-red';
+            else if (alertData.severity === 'WARNING') colorClass = 'alert-orange';
+            else if (alertData.severity === 'INFO') colorClass = 'alert-green';
 
             alertBoxDiv.classList.add(colorClass);
 
             let innerHtmlContent;
-            if (alertData.alert?.toLowerCase().includes("no findings")) {
-                alertBoxDiv.classList.add("has-no-alert");
+            if (alertData.alert?.toLowerCase().includes('no findings')) {
+                alertBoxDiv.classList.add('has-no-alert');
                 innerHtmlContent = `
                     <span class="opacity-70 text-white text-center uppercase font-semibold">
                         NO FINDINGS
@@ -104,7 +103,7 @@
         // Function to trigger analysis
         const triggerAnalysis = async () => {
             const intakeData = collectInputData();
-            const allEmpty = Object.values(intakeData).every(val => val === '');
+            const allEmpty = Object.values(intakeData).every((val) => val === '');
 
             if (allEmpty) {
                 // Use alert.js's showDefaultNoAlerts
@@ -123,10 +122,10 @@
 
                 try {
                     const response = await fetch(analyzeUrl, {
-                        method: "POST",
+                        method: 'POST',
                         headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": csrfToken,
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
                         },
                         body: JSON.stringify(intakeData),
                     });
@@ -144,7 +143,7 @@
                         }
                     }, 150);
                 } catch (error) {
-                    console.error("Intake/Output CDSS analysis failed:", error);
+                    console.error('Intake/Output CDSS analysis failed:', error);
                     // Display a generic error using alert.js's displayAlert
                     if (typeof displayAlertLocal === 'function') {
                         displayAlertLocal(alertBoxDiv, { alert: 'Error analyzing...', severity: 'CRITICAL' });
@@ -154,7 +153,7 @@
         };
 
         // Event listeners for input changes
-        inputs.forEach(input => {
+        inputs.forEach((input) => {
             input.addEventListener('input', () => {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(triggerAnalysis, 300);
@@ -163,7 +162,7 @@
 
         // Initial analysis on page load if patient is selected and fields are not empty
         const initialIntakeData = collectInputData();
-        const initialAllEmpty = Object.values(initialIntakeData).every(val => val === '');
+        const initialAllEmpty = Object.values(initialIntakeData).every((val) => val === '');
         const patientIdInput = ioForm.querySelector('input[name="patient_id"]');
         const patientSelected = patientIdInput && patientIdInput.value;
 
@@ -206,11 +205,11 @@
 
     // --- Modal popup for details (copied from alert.js) ---
     function openAlertModal(alertData) {
-        const overlay = document.createElement("div");
-        overlay.className = "alert-modal-overlay";
+        const overlay = document.createElement('div');
+        overlay.className = 'alert-modal-overlay';
 
-        const modal = document.createElement("div");
-        modal.className = "alert-modal fade-in";
+        const modal = document.createElement('div');
+        modal.className = 'alert-modal fade-in';
         modal.innerHTML = `
             <button class="close-btn">&times;</button>
             <h2>Alert Details</h2>
@@ -221,14 +220,14 @@
         document.body.appendChild(overlay);
 
         const closeModal = () => overlay.remove();
-        overlay.addEventListener("click", (e) => {
+        overlay.addEventListener('click', (e) => {
             if (e.target === overlay) closeModal();
         });
-        modal.querySelector(".close-btn").addEventListener("click", closeModal);
+        modal.querySelector('.close-btn').addEventListener('click', closeModal);
     }
 
     // --- Fade-in animation (copied from alert.js) ---
-    const style = document.createElement("style");
+    const style = document.createElement('style');
     style.textContent = `
         .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
         @keyframes fadeIn {

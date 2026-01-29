@@ -12,8 +12,7 @@ function findAlertCellForInput(input) {
     const fieldName = input.dataset.fieldName;
     const time = input.dataset.time;
     if (time) return document.querySelector(`[data-alert-for-time="${time}"]`);
-    if (fieldName)
-        return document.querySelector(`[data-alert-for="${fieldName}"]`);
+    if (fieldName) return document.querySelector(`[data-alert-for="${fieldName}"]`);
     return null;
 }
 
@@ -61,25 +60,15 @@ function updateCdssButtonState(form) {
 // Initialize CDSS listeners for a form
 window.initializeCdssForForm = function (form) {
     const analyzeUrl = form.dataset.analyzeUrl;
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
-    
-    // Initial check for button state
-    updateCdssButtonState(form);
-
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     if (!analyzeUrl || !csrfToken) {
         console.error('Missing "data-analyze-url" or CSRF token.', form);
         return;
     }
 
-    console.log(
-        `[CDSS] Initializing typing listeners for form: ${
-            form.id || "(unnamed)"
-        }`
-    );
+    console.log(`[CDSS] Initializing typing listeners for form: ${form.id || '(unnamed)'}`);
 
-    const inputs = form.querySelectorAll(".cdss-input");
+    const inputs = form.querySelectorAll('.cdss-input');
     inputs.forEach((input) => {
         if (input.dataset.alertListenerAttached) return; // Prevent duplicate listeners
 
@@ -93,7 +82,7 @@ window.initializeCdssForForm = function (form) {
             const time = e.target.dataset.time;
             const alertCell = findAlertCellForInput(e.target);
 
-            if (alertCell && finding === "") {
+            if (alertCell && finding === '') {
                 showDefaultNoAlerts(alertCell);
                 delete alertCell.dataset.startTime;
                 return;
@@ -101,51 +90,32 @@ window.initializeCdssForForm = function (form) {
 
             debounceTimer = setTimeout(() => {
                 if ((fieldName || time) && alertCell) {
-                    console.log(
-                        `Input → Field: ${fieldName} | Value: ${finding}`
-                    );
+                    console.log(`Input → Field: ${fieldName} | Value: ${finding}`);
 
                     if (alertCell) {
                         showAlertLoading(alertCell);
                         alertCell.dataset.startTime = performance.now();
                     }
-                    analyzeField(
-                        fieldName,
-                        finding,
-                        time,
-                        alertCell,
-                        analyzeUrl,
-                        csrfToken
-                    );
+                    analyzeField(fieldName, finding, time, alertCell, analyzeUrl, csrfToken);
                 }
             }, TYPING_DELAY_MS);
         };
 
-        input.addEventListener("input", handleInput);
-        input.dataset.alertListenerAttached = "true";
+        input.addEventListener('input', handleInput);
+        input.dataset.alertListenerAttached = 'true';
     });
 };
 
 // Analyze ONE field or time group via API (for live typing)
-async function analyzeField(
-    fieldName,
-    finding,
-    time,
-    alertCell,
-    url,
-    token,
-    vitalsOverride = null
-) {
+async function analyzeField(fieldName, finding, time, alertCell, url, token, vitalsOverride = null) {
     if (!alertCell) return;
 
     let bodyData = {};
     if (time) {
         let vitalsToSend = vitalsOverride || {};
         if (!vitalsOverride) {
-            const form = alertCell.closest(".cdss-form");
-            const vitalInputs = form?.querySelectorAll(
-                `.cdss-input[data-time="${time}"]`
-            );
+            const form = alertCell.closest('.cdss-form');
+            const vitalInputs = form?.querySelectorAll(`.cdss-input[data-time="${time}"]`);
             vitalInputs?.forEach((input) => {
                 const name = input.dataset.fieldName;
                 vitalsToSend[name] = input.value.trim();
@@ -158,10 +128,10 @@ async function analyzeField(
 
     try {
         const response = await fetch(url, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": token,
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token,
             },
             body: JSON.stringify(bodyData),
         });
@@ -177,10 +147,10 @@ async function analyzeField(
         // Display alert immediately (no 300ms delay)
         displayAlert(alertCell, alertData, duration);
     } catch (error) {
-        console.error("[CDSS] Single analysis failed:", error);
+        console.error('[CDSS] Single analysis failed:', error);
         displayAlert(alertCell, {
-            alert: "Error analyzing...",
-            severity: "CRITICAL",
+            alert: 'Error analyzing...',
+            severity: 'CRITICAL',
         });
     }
 }
@@ -193,29 +163,27 @@ async function analyzeField(
 window.triggerInitialCdssAnalysis = async function (form) {
     const analyzeUrl = form.dataset.analyzeUrl; // Single URL (for fallback)
     const batchAnalyzeUrl = form.dataset.batchAnalyzeUrl; // Batch URL
-    const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     if (!batchAnalyzeUrl || !csrfToken) {
         console.error('Missing "data-batch-analyze-url" or CSRF token.', form);
         // Fallback to old, slow method if batch URL is missing
         if (analyzeUrl) {
             console.warn(
-                "[CDSS] data-batch-analyze-url not found!, \n Falling back to old (single-analyze) analysis method."
+                '[CDSS] data-batch-analyze-url not found!, \n Falling back to old (single-analyze) analysis method.',
             );
-            const inputs = form.querySelectorAll(".cdss-input");
+            const inputs = form.querySelectorAll('.cdss-input');
             inputs.forEach((input) => {
                 const finding = input.value.trim();
                 const alertCell = findAlertCellForInput(input);
-                if (finding !== "" && alertCell) {
+                if (finding !== '' && alertCell) {
                     analyzeField(
                         input.dataset.fieldName,
                         finding,
                         input.dataset.time,
                         alertCell,
                         analyzeUrl,
-                        csrfToken
+                        csrfToken,
                     );
                 } else if (alertCell) {
                     showDefaultNoAlerts(alertCell);
@@ -225,11 +193,9 @@ window.triggerInitialCdssAnalysis = async function (form) {
         return;
     }
 
-    console.log(
-        `[CDSS] Triggering BATCH analysis for form: ${form.id || "(unnamed)"}`
-    );
+    console.log(`[CDSS] Triggering BATCH analysis for form: ${form.id || '(unnamed)'}`);
 
-    const inputs = form.querySelectorAll(".cdss-input");
+    const inputs = form.querySelectorAll('.cdss-input');
     const analysisGroups = new Map();
 
     // 1. GATHER ALL GROUPS
@@ -240,7 +206,7 @@ window.triggerInitialCdssAnalysis = async function (form) {
         const alertCell = findAlertCellForInput(input);
 
         if (!alertCell) return;
-        if (finding === "") {
+        if (finding === '') {
             showDefaultNoAlerts(alertCell);
             return;
         }
@@ -249,9 +215,7 @@ window.triggerInitialCdssAnalysis = async function (form) {
         if (!analysisGroups.has(key)) {
             analysisGroups.set(
                 key,
-                time
-                    ? { time, alertCell, fields: {} }
-                    : { time: null, alertCell, fieldName, finding }
+                time ? { time, alertCell, fields: {} } : { time: null, alertCell, fieldName, finding },
             );
         }
         if (time) analysisGroups.get(key).fields[fieldName] = finding;
@@ -260,7 +224,7 @@ window.triggerInitialCdssAnalysis = async function (form) {
     // 2. PREPARE BATCH
     const groups = Array.from(analysisGroups.values());
     if (groups.length === 0) {
-        console.log("[CDSS] No pre-filled inputs to analyze.");
+        console.log('[CDSS] No pre-filled inputs to analyze.');
         return; // Nothing to analyze
     }
 
@@ -277,17 +241,15 @@ window.triggerInitialCdssAnalysis = async function (form) {
         }
     });
 
-    console.log(
-        `[CDSS] Sending ${batchPayload.length} items for batch analysis...`
-    );
+    console.log(`[CDSS] Sending ${batchPayload.length} items for batch analysis...`);
 
     // 3. SEND ONE SINGLE FETCH REQUEST
     try {
         const response = await fetch(batchAnalyzeUrl, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrfToken,
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
             },
             body: JSON.stringify({ batch: batchPayload }), // Send as { "batch": [...] }
         });
@@ -296,11 +258,8 @@ window.triggerInitialCdssAnalysis = async function (form) {
 
         const batchResults = await response.json(); // Expecting an array
 
-        if (
-            !Array.isArray(batchResults) ||
-            batchResults.length !== groups.length
-        ) {
-            throw new Error("Batch response mismatch or invalid format.");
+        if (!Array.isArray(batchResults) || batchResults.length !== groups.length) {
+            throw new Error('Batch response mismatch or invalid format.');
         }
 
         console.log(`[CDSS] Received ${batchResults.length} batch results.`);
@@ -310,20 +269,18 @@ window.triggerInitialCdssAnalysis = async function (form) {
             const group = groups[index];
             const alertCell = group.alertCell;
             const endTime = performance.now();
-            const startTime = parseFloat(
-                alertCell.dataset.startTime || endTime
-            );
+            const startTime = parseFloat(alertCell.dataset.startTime || endTime);
             const duration = (endTime - startTime).toFixed(2);
 
             // Display alert immediately
             displayAlert(alertCell, alertData, duration);
         });
     } catch (error) {
-        console.error("[CDSS] Batch analysis failed:", error);
+        console.error('[CDSS] Batch analysis failed:', error);
         groups.forEach((group) => {
             displayAlert(group.alertCell, {
-                alert: "Batch Error",
-                severity: "CRITICAL",
+                alert: 'Batch Error',
+                severity: 'CRITICAL',
             });
         });
     }
@@ -335,36 +292,31 @@ window.triggerInitialCdssAnalysis = async function (form) {
 
 // Get alert box height class from form
 function getAlertHeightClass(alertCell) {
-    const form = alertCell.closest(".cdss-form");
-    return form?.dataset.alertHeightClass || "h-[90px]"; // Default height
+    const form = alertCell.closest('.cdss-form');
+    return form?.dataset.alertHeightClass || 'h-[90px]'; // Default height
 }
 
 // Display alert result
 function displayAlert(alertCell, alertData, duration = null) {
     if (!alertCell) return;
     const heightClass = getAlertHeightClass(alertCell);
-    let colorClass = "alert-green";
-    if (alertData.severity === "CRITICAL") colorClass = "alert-red";
-    else if (alertData.severity === "WARNING") colorClass = "alert-orange";
+    let colorClass = 'alert-green';
+    if (alertData.severity === 'CRITICAL') colorClass = 'alert-red';
+    else if (alertData.severity === 'WARNING') colorClass = 'alert-orange';
 
-    let alertContent = "";
+    let alertContent = '';
     let hasNoAlerts = false;
     let isClickable = false;
 
-    if (
-        !alertData.alert ||
-        alertData.alert.toLowerCase().includes("no findings")
-    ) {
+    if (!alertData.alert || alertData.alert.toLowerCase().includes('no findings')) {
         hasNoAlerts = true;
         alertContent = `<span class="text-white text-center uppercase font-semibold opacity-80">NO FINDINGS</span>`;
     } else {
-        if (alertData.alert.includes(";")) {
-            const items = alertData.alert
-                .split("; ")
-                .filter((a) => a.trim() !== "");
+        if (alertData.alert.includes(';')) {
+            const items = alertData.alert.split('; ').filter((a) => a.trim() !== '');
             alertContent = `<ul class="list-disc list-inside text-left">${items
                 .map((a) => `<li>${a}</li>`)
-                .join("")}</ul>`;
+                .join('')}</ul>`;
         } else {
             alertContent = `<span>${alertData.alert}</span>`;
         }
@@ -373,16 +325,14 @@ function displayAlert(alertCell, alertData, duration = null) {
 
     alertCell.innerHTML = `
       <div class="alert-box fade-in ${heightClass} ${colorClass} ${
-        hasNoAlerts ? "has-no-alert" : ""
-    }" style="margin:2px;">
+          hasNoAlerts ? 'has-no-alert' : ''
+      }" style="margin:2px;">
         <div class="alert-message p-1">${alertContent}</div>
       </div>
     `;
 
     if (isClickable) {
-        alertCell
-            .querySelector(".alert-box")
-            ?.addEventListener("click", () => openAlertModal(alertData));
+        alertCell.querySelector('.alert-box')?.addEventListener('click', () => openAlertModal(alertData));
     }
     delete alertCell.dataset.startTime;
 }
@@ -417,29 +367,25 @@ function showAlertLoading(alertCell) {
 // Open modal with alert details
 // alertData → object
 function openAlertModal(alertData) {
-    if (document.querySelector(".alert-modal-overlay")) return;
+    if (document.querySelector('.alert-modal-overlay')) return;
 
-    const overlay = document.createElement("div");
-    overlay.className = "alert-modal-overlay";
+    const overlay = document.createElement('div');
+    overlay.className = 'alert-modal-overlay';
 
-    const alerts = alertData.alert.includes(";")
+    const alerts = alertData.alert.includes(';')
         ? `<ul class="list-disc list-inside text-left">${alertData.alert
-              .split("; ")
+              .split('; ')
               .map((a) => `<li>${a.trim()}</li>`)
-              .join("")}</ul>`
+              .join('')}</ul>`
         : `<p>${alertData.alert}</p>`;
 
-    const modal = document.createElement("div");
-    modal.className = "alert-modal fade-in";
+    const modal = document.createElement('div');
+    modal.className = 'alert-modal fade-in';
     modal.innerHTML = `
       <button class="close-btn">&times;</button>
       <h2>Alert Details</h2>
       ${alerts}
-      ${
-          alertData.recommendation
-              ? `<h3>Recommendation:</h3><p>${alertData.recommendation}</p>`
-              : ""
-      }
+      ${alertData.recommendation ? `<h3>Recommendation:</h3><p>${alertData.recommendation}</p>` : ''}
     `;
 
     overlay.appendChild(modal);
@@ -449,15 +395,15 @@ function openAlertModal(alertData) {
         overlay.remove();
     };
 
-    overlay.addEventListener("click", (e) => {
+    overlay.addEventListener('click', (e) => {
         if (e.target === overlay) close();
     });
-    modal.querySelector(".close-btn").addEventListener("click", close);
+    modal.querySelector('.close-btn').addEventListener('click', close);
 }
 
 // Add fade-in animation
 (function () {
-    const style = document.createElement("style");
+    const style = document.createElement('style');
     style.textContent = `
       .fade-in { animation: fadeIn 0.25s ease-in-out forwards; }
       @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
@@ -474,8 +420,8 @@ function openAlertModal(alertData) {
  * Runs both typing listeners and initial batch analysis.
  */
 function initializeAllCdssForms() {
-    console.log("[CDSS] Initializing all forms...");
-    const cdssForms = document.querySelectorAll(".cdss-form");
+    console.log('[CDSS] Initializing all forms...');
+    const cdssForms = document.querySelectorAll('.cdss-form');
     cdssForms.forEach((form) => {
         window.initializeCdssForForm(form); // Init typing
         window.triggerInitialCdssAnalysis(form); // Init batch load
@@ -486,11 +432,11 @@ function initializeAllCdssForms() {
 // (Fired by patient-loader.js)
 if (!window.cdssFormReloadListenerAttached) {
     window.cdssFormReloadListenerAttached = true;
-    document.addEventListener("cdss:form-reloaded", (event) => {
+    document.addEventListener('cdss:form-reloaded', (event) => {
         const formContainer = event.detail.formContainer;
-        const cdssForm = formContainer.querySelector(".cdss-form");
+        const cdssForm = formContainer.querySelector('.cdss-form');
         if (cdssForm) {
-            console.log("[CDSS] Form reloaded — reinitializing CDSS");
+            console.log('[CDSS] Form reloaded — reinitializing CDSS');
             window.initializeCdssForForm(cdssForm); // Re-init typing
             window.triggerInitialCdssAnalysis(cdssForm); // Re-init batch load
         }
@@ -500,11 +446,11 @@ if (!window.cdssFormReloadListenerAttached) {
 // --- Listener for the very first page load ---
 if (!window.cdssDomLoadListenerAttached) {
     window.cdssDomLoadListenerAttached = true;
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener('DOMContentLoaded', () => {
         // This flag is set by patient-loader.js to prevent double-loading
         if (window.cdssFormReloaded === true) return;
 
-        console.log("[CDSS] DOM fully loaded — initializing all CDSS forms");
+        console.log('[CDSS] DOM fully loaded — initializing all CDSS forms');
         initializeAllCdssForms();
     });
 }

@@ -18,15 +18,11 @@ function runPageInitializers() {
     if (window.pageInitializers && Array.isArray(window.pageInitializers)) {
         window.pageInitializers.forEach((initializer) => {
             // Check if the item in the array is a function before calling it.
-            if (typeof initializer === "function") {
+            if (typeof initializer === 'function') {
                 try {
                     initializer();
                 } catch (error) {
-                    console.error(
-                        "Error running initializer:",
-                        initializer.name,
-                        error
-                    );
+                    console.error('Error running initializer:', initializer.name, error);
                 }
             }
         });
@@ -35,7 +31,7 @@ function runPageInitializers() {
 }
 
 // Main initialization on first page load.
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
     runPageInitializers();
 
     // The MutationObserver has been removed.

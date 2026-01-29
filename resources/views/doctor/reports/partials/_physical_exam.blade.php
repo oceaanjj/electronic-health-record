@@ -4,12 +4,10 @@
     <h2 class="section-title">Physical Exam</h2>
 
     {{--
-    FIX: Check if the whole list is empty, not just the first item.
+        FIX: Check if the whole list is empty, not just the first item.
     --}}
-    @if($physicalExam->isNotEmpty())
-
-        @foreach($physicalExam as $item)
-
+    @if ($physicalExam->isNotEmpty())
+        @foreach ($physicalExam as $item)
             {{-- This table shows the findings for this specific exam --}}
             <table class="data-table">
                 <thead>
@@ -63,7 +61,6 @@
                 </tbody>
             </table>
 
-
             <!-- ADPIE Table -->
 
             <h2 class="section-title-adpie">ADPIE</h2>
@@ -100,12 +97,10 @@
             </table>
 
             {{-- If this is NOT the last exam, add a page break --}}
-            @if(!$loop->last)
+            @if (! $loop->last)
                 <div class="page-break"></div>
             @endif
-
         @endforeach
-
     @else
         <p class="no-data">No Physical Exam data available.</p>
     @endif

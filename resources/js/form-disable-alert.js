@@ -1,8 +1,8 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
     let alertTimeout;
 
-    const alertMessage = document.createElement("div");
-    alertMessage.id = "patient-selection-alert";
+    const alertMessage = document.createElement('div');
+    alertMessage.id = 'patient-selection-alert';
 
     alertMessage.style.cssText = `
         position: fixed;
@@ -25,44 +25,43 @@ document.addEventListener("DOMContentLoaded", function () {
         visibility: hidden; /* Prevents clicking when invisible */
     `;
 
-    alertMessage.textContent = "Please select a patient first!";
+    alertMessage.textContent = 'Please select a patient first!';
     document.body.appendChild(alertMessage);
 
     function showAlertDialog() {
         // Clear existing timeout if the user clicks rapidly
         clearTimeout(alertTimeout);
 
-        alertMessage.style.visibility = "visible";
+        alertMessage.style.visibility = 'visible';
 
         requestAnimationFrame(() => {
-            alertMessage.style.opacity = "1";
-            alertMessage.style.transform = "translateY(0)"; // Pop up to normal position
+            alertMessage.style.opacity = '1';
+            alertMessage.style.transform = 'translateY(0)'; // Pop up to normal position
         });
 
         // timeout to Fade Out
         alertTimeout = setTimeout(() => {
-            alertMessage.style.opacity = "0";
-            alertMessage.style.transform = "translateY(20px)"; // Slide back down
+            alertMessage.style.opacity = '0';
+            alertMessage.style.transform = 'translateY(20px)'; // Slide back down
 
             setTimeout(() => {
-                if (alertMessage.style.opacity === "0") {
-                    alertMessage.style.visibility = "hidden";
+                if (alertMessage.style.opacity === '0') {
+                    alertMessage.style.visibility = 'hidden';
                 }
             }, 200);
         }, 2000);
     }
 
     function isPatientSelected() {
-        const patientIdHiddenInput =
-            document.getElementById("patient_id_hidden");
-        return patientIdHiddenInput && patientIdHiddenInput.value.trim() !== "";
+        const patientIdHiddenInput = document.getElementById('patient_id_hidden');
+        return patientIdHiddenInput && patientIdHiddenInput.value.trim() !== '';
     }
 
     // Event Delegation for the Overlay
-    document.body.addEventListener("click", function (event) {
+    document.body.addEventListener('click', function (event) {
         if (
-            event.target.classList.contains("trigger-patient-alert") ||
-            event.target.closest(".trigger-patient-alert")
+            event.target.classList.contains('trigger-patient-alert') ||
+            event.target.closest('.trigger-patient-alert')
         ) {
             event.preventDefault();
             event.stopPropagation();

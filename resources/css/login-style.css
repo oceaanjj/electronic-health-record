@@ -1,7 +1,7 @@
 /*Font Import*/
 @font-face {
-  font-family: 'alte-bold';
-  src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
+    font-family: 'alte-bold';
+    src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
 }
 
 a {
@@ -14,56 +14,50 @@ hr {
     margin: 50px 0 0 0;
 }
 
-
-
 /* Background */
 body.login-page {
     margin: 0;
     padding: 0;
     background: url('/public/img/login-bg.png') no-repeat center center fixed;
     background-size: cover;
+    min-height: 100vh; /* Ensures bg covers full height */
 }
-
 
 /* Container */
 .login-container {
     display: flex;
     height: auto;
     padding: 10%;
+    align-items: center; /* Aligns items vertically center on desktop */
 }
-
 
 /* Logo Section */
 .logo-section {
-    flex: 1; /* para maging equal yung size baka malimot ko e */
+    flex: 1; 
     text-align: center;
     width: 50%;
 }
+
 .logo {
     width: 75%; 
-    margin-left: 70px;
+    margin-left: 70px; /* Keep this for Desktop view */
 }
 
-
-.form-section {
-    flex: 1;
-    max-width: 500px; 
-}
-
-
+/* Form Section */
 .form-section {
     flex: 1;
     background: #fff;
     padding: 0px;
     border-radius: 5px;
     width: auto;
+    max-width: 500px; 
     margin: 0 auto 0 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
-
 
 #upper-line {
     height: 7px;
-    background: #EDB62C;
+    background: #edb62c;
     margin: 0;
     padding: 0;
     border-top-left-radius: 5px;
@@ -71,38 +65,32 @@ body.login-page {
 }
 
 #form-container {
-    flex: 1; 
+    flex: 1;
     display: flex;
     flex-direction: column;
     padding: 80px 80px 40px 80px;
 }
 
+/* Login title */
+p.role {
+    margin: 0;
+    padding: 0;
+    font-family: 'alte-bold';
+    font-size: 30px;
+    color: #9E9E9E;
+    line-height: 1;
+}
 
-
-
-        /* Login title */
-        p.role {
-            margin: 0;
-            padding: 0;
-            font-family: 'alte-bold';
-            font-size: 30px;
-            color: #9E9E9E;
-            line-height: 1;
-        }
-
-        p strong {
-            display: block; 
-            font-size: 50px;
-            color: #1A6A24;
-            margin-bottom: 25px;
-        }
-
-
+p strong {
+    display: block; 
+    font-size: 50px;
+    color: #1A6A24;
+    margin-bottom: 25px;
+}
 
 .form-section label {
-    /*display: block;*/
     text-align: left;
-    color: #1A6A24;
+    color: #1a6a24;
     font-family: 'alte-bold';
     font-size: 15px;
 }
@@ -117,56 +105,54 @@ body.login-page {
 }
 
 .form-section input:focus {
-    border-color: #1A6A24;  
-    outline: none;         
-    box-shadow: 0 0 5px #1A6A24;
+    border-color: #1a6a24;
+    outline: none;
+    box-shadow: 0 0 5px #1a6a24;
 }
 
-        .forgot {
-        font-family: 'alte-bold';
-        display: block;
-        text-align: right;
-        font-size: 12px;
-        color: #1A6A24;
-        margin: 0 15px 30px 0;
+.forgot {
+    font-family: 'alte-bold';
+    display: block;
+    text-align: right;
+    font-size: 12px;
+    color: #1A6A24;
+    margin: 0 15px 30px 0;
+}
 
-        }
-
-        .forgot:hover {
-            text-decoration: underline 1px;
-            color: #1A6A24;
-            cursor: pointer;
-        }
-
+.forgot:hover {
+    text-decoration: underline 1px;
+    color: #1A6A24;
+    cursor: pointer;
+}
 
 .btn-login {
     width: 100%;
     padding: 10px;
-    background: #1A6A24;
+    background: #1a6a24;
     border: none;
     color: white;
     border-radius: 50px;
     cursor: pointer;
     font-family: 'alte-bold';
     box-sizing: border-box;
+    font-size: 16px;
+    transition: background 0.3s ease;
 }
 
 .btn-login:hover {
-    background: #EDB62C;
-    color: #1A6A24;
+    background: #edb62c;
+    color: #1a6a24;
 }
-
 
 .return-home {
     font-family: 'alte-bold';
-    color: #1A6A24;
+    color: #1a6a24;
     font-size: 14px;
     margin: 10px 15px 0px 0px;
     vertical-align: middle; 
     display: inline-flex;  
     align-items: center;  
     gap: 5px;  
-    align-items: right;
     float: right;
 }
 
@@ -177,31 +163,48 @@ body.login-page {
 }
 
 .return-home:hover {
-    color: #EDB62C;
+    color: #edb62c;
 }
 
 .return-home:hover .home-icon {
     content: url('public/img/home-icon-hover.png');
 }
 
+/* =========================================
+   RESPONSIVE MEDIA QUERIES (The Fix)
+   ========================================= */
 
+/* Tablets and Mobile (Max Width 992px) */
+@media screen and (max-width: 992px) {
+    .login-container {
+        flex-direction: column; /* Stack vertically */
+        padding: 40px 20px;
+        align-items: center;    /* Center everything horizontally */
+    }
 
+    /* Fix Container Width */
+    .logo-section {
+        width: 100%;      /* Full width so it can center */
+        text-align: center; 
+        margin-bottom: 30px;
+        flex: none;       
+    }
 
+    /* Fix Logo Alignment */
+    .logo {
+        margin: 0 auto;   /* THIS fixes the off-center issue */
+        width: 180px;     /* Neat size for mobile */
+        max-width: 100%;  
+        display: block;   
+    }
 
-/* wag niyo remove okayyyyy
-background: #1A6A24;
-    color: white;
-    margin: 0;
-    padding: 10px 0;
-    font-family: 'alte';
-    font-size: 20px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    text-align: center;
-*/
-
-
-
-
-
-
+    .form-section {
+        width: 100%;
+        max-width: 400px;
+        margin: 0;        
+    }
+    
+    #form-container {
+        padding: 40px 30px; 
+    }
+}

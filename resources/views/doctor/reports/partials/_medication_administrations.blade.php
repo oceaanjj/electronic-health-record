@@ -2,7 +2,7 @@
 <div class="section">
     <h2 class="section-title">Medication Administrations</h2>
 
-    @if($medicationAdministrations->isEmpty())
+    @if ($medicationAdministrations->isEmpty())
         <p class="no-data">No Medication Administration data available.</p>
     @else
         <table>
@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($medicationAdministrations as $item)
+                @foreach ($medicationAdministrations as $item)
                     <tr>
                         <td>{{ isset($item->date) ? \Carbon\Carbon::parse($item->date)->format('F j, Y') : '-' }}</td>
                         <td>{{ isset($item->time) ? \Carbon\Carbon::parse($item->time)->format('h:i A') : '-' }}</td>

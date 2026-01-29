@@ -3,12 +3,10 @@
 <div class="section">
     <h2 class="section-title">Discharge Planning</h2>
 
-    @if($dischargePlanning->isEmpty())
+    @if ($dischargePlanning->isEmpty())
         <p class="no-data">No Discharge Planning data available.</p>
     @else
-
-        @foreach($dischargePlanning as $item)
-
+        @foreach ($dischargePlanning as $item)
             <table>
                 <thead>
                     <tr>
@@ -35,7 +33,6 @@
                     </tr>
                 </tbody>
             </table>
-
 
             <h2 class="section-title">Discharge Instructions</h2>
 
@@ -70,8 +67,8 @@
                 </tbody>
             </table>
 
-            @if(!$loop->last)
-                <hr>
+            @if (! $loop->last)
+                <hr />
             @endif
         @endforeach
     @endif

@@ -5,6 +5,7 @@
 @section('content')
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
+
         {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR INTAKE AND OUTPUT --}}
         <div class="header mx-auto my-10 flex w-[80%] items-center gap-6">
             <form id="patient-select-form" class="flex w-full items-center gap-6">
@@ -17,46 +18,30 @@
 
                 <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('io.select') }}">
                     {{-- Text input for search --}}
-                    <input
-                        type="text"
-                        id="patient_search_input"
-                        placeholder="Select or type Patient Name"
-                        value="@isset($selectedPatient){{ trim($selectedPatient->name) }}@endisset"
-                        autocomplete="off"
-                        class="font-creato-bold w-full rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                    />
+                    <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
+                        value="@isset($selectedPatient){{ trim($selectedPatient->name) }}@endisset" autocomplete="off"
+                        class="font-creato-bold w-full rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
 
                     {{-- Dropdown list --}}
-                    <div
-                        id="patient_options_container"
-                        class="absolute z-50 mt-2 hidden max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
-                    >
+                    <div id="patient_options_container"
+                        class="absolute z-50 mt-2 hidden max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
                         @foreach ($patients as $patient)
-                            <div
-                                class="option cursor-pointer px-4 py-2 transition duration-150 hover:bg-blue-100"
-                                data-value="{{ $patient->patient_id }}"
-                            >
+                            <div class="option cursor-pointer px-4 py-2 transition duration-150 hover:bg-blue-100"
+                                data-value="{{ $patient->patient_id }}">
                                 {{ trim($patient->name) }}
                             </div>
                         @endforeach
                     </div>
 
                     {{-- Hidden input to store selected patient ID --}}
-                    <input
-                        type="hidden"
-                        id="patient_id_hidden"
-                        name="patient_id"
-                        value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset"
-                    />
+                    <input type="hidden" id="patient_id_hidden" name="patient_id"
+                        value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset" />
                 </div>
 
                 {{-- DAY NO --}}
                 <label for="day_no" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
-                <select
-                    id="day_no_selector"
-                    name="day_no"
-                    class="font-creato-bold focus->ring-blue-500 w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
-                >
+                <select id="day_no_selector" name="day_no"
+                    class="font-creato-bold focus->ring-blue-500 w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2">
                     @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
                         <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
                             {{ $i }}
@@ -68,21 +53,12 @@
         {{-- END SEARCHABLE PATIENT DROPDOWN FOR INTAKE AND OUTPUT --}}
 
         <fieldset>
-            <form
-                id="io-form"
-                class="cdss-form"
-                method="POST"
-                action="{{ route('io.store') }}"
-                data-analyze-url="{{ route('io.check') }}"
-                data-batch-analyze-url="{{ route('io.analyze-batch') }}"
-            >
+            <form id="io-form" class="cdss-form" method="POST" action="{{ route('io.store') }}"
+                data-analyze-url="{{ route('io.check') }}" data-batch-analyze-url="{{ route('io.analyze-batch') }}">
                 @csrf
 
-                <input
-                    type="hidden"
-                    name="patient_id"
-                    value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset  "
-                />
+                <input type="hidden" name="patient_id"
+                    value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset " />
                 <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
                 <div class="mx-auto mt-6 flex w-[85%] items-start justify-center gap-1">
@@ -97,41 +73,26 @@
                             <tr class="bg-beige text-brown">
                                 {{-- ORAL INTAKE --}}
                                 <td class="text-center align-middle">
-                                    <input
-                                        type="number"
-                                        name="oral_intake"
-                                        placeholder="Enter Oral Intake"
-                                        value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}"
-                                        min="0"
+                                    <input type="number" name="oral_intake" placeholder="Enter Oral Intake"
+                                        value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}" min="0"
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
-                                        data-field-name="oral_intake"
-                                    />
+                                        data-field-name="oral_intake" />
                                 </td>
 
                                 {{-- IV FLUIDS --}}
                                 <td class="text-center align-middle">
-                                    <input
-                                        type="number"
-                                        name="iv_fluids_volume"
-                                        placeholder="Enter IV Fluids"
-                                        value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}"
-                                        min="0"
+                                    <input type="number" name="iv_fluids_volume" placeholder="Enter IV Fluids"
+                                        value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}" min="0"
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
-                                        data-field-name="iv_fluids_volume"
-                                    />
+                                        data-field-name="iv_fluids_volume" />
                                 </td>
 
                                 {{-- URINE OUTPUT --}}
                                 <td class="text-center align-middle">
-                                    <input
-                                        type="number"
-                                        name="urine_output"
-                                        placeholder="Enter Urine Output"
-                                        value="{{ old('urine_output', $ioData->urine_output ?? '') }}"
-                                        min="0"
+                                    <input type="number" name="urine_output" placeholder="Enter Urine Output"
+                                        value="{{ old('urine_output', $ioData->urine_output ?? '') }}" min="0"
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
-                                        data-field-name="urine_output"
-                                    />
+                                        data-field-name="urine_output" />
                                 </td>
                             </tr>
                         </table>
@@ -143,10 +104,8 @@
                         <table class="w-full border-collapse">
                             <tr>
                                 <td class="align-middle">
-                                    <div
-                                        class="alert-box my-[3px] flex h-[90px] w-full items-center justify-center"
-                                        data-alert-for="io_alert"
-                                    >
+                                    <div class="alert-box my-[3px] flex h-[90px] w-full items-center justify-center"
+                                        data-alert-for="io_alert">
                                         <span class="font-semibold text-white opacity-70">No Alerts</span>
                                     </div>
                                 </td>
@@ -157,7 +116,7 @@
                 <div class="mx-auto mt-5 mb-30 flex w-[80%] justify-end space-x-4">
                     {{-- <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button> --}}
                     @if ($ioData)
-                        <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default">CDSS</button>
+                        <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default cdss-btn">CDSS</button>
                     @endif
 
                     <button type="submit" class="button-default">SUBMIT</button>
@@ -198,4 +157,5 @@
         });
     </script>
     -->
+
 @endpush

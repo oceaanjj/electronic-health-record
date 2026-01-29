@@ -3,7 +3,7 @@
 <div class="section">
     <h2 class="section-title">Diagnostics</h2>
 
-    @if ($diagnostics->isEmpty())
+    @if($diagnostics->isEmpty())
         <p class="no-data">No Diagnostics data available.</p>
     @else
         <table>
@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($diagnostics as $item)
+                @foreach($diagnostics as $item)
                     @php
                         $imageHtml = 'Image not found: ' . $item->path;
 
@@ -30,10 +30,9 @@
                             }
                         }
                     @endphp
-
                     <tr>
                         <td>{{ strtoupper(str_replace('_', ' ', $item->type)) ?? 'N/A' }}</td>
-                        <td style="text-align: center">{!! $imageHtml !!}</td>
+                        <td style="text-align: center;">{!! $imageHtml !!}</td>
                     </tr>
                 @endforeach
             </tbody>

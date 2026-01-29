@@ -1,22 +1,22 @@
 planning:
-    - keywords: ['Risk for falls']
-      alert: 'Goal: Patient will remain free from falls. Outcome: Patient will demonstrate ability to use call bell for assistance.'
-      severity: 'INFO'
-    - keywords: ['Bathing self-care deficit']
-      alert: "Goal: Patient will participate in bathing to the best of their ability. Outcome: Patient's skin will remain clean and intact."
-      severity: 'INFO'
-    - keywords: ['Insomnia']
-      alert: 'Goal: Patient will report an improvement in sleep quality. Outcome: Patient will sleep for at least 6 hours without interruption.'
-      severity: 'INFO'
-    - keywords: ['Acute pain']
-      alert: "Goal: Patient will report a decrease in pain. Outcome: Patient's pain level will be less than 3 on a 0-10 scale."
-      severity: 'WARNING'
-    - keywords: ['Chronic pain']
-      alert: "Goal: Patient will report a decrease in pain. Outcome: Patient's pain level will be at a manageable level."
-      severity: 'WARNING'
-    - keywords: ['Imbalanced nutrition']
-      alert: 'Goal: Patient will consume adequate nutrition. Outcome: Patient will consume at least 75% of meals.'
-      severity: 'INFO'
-    - keywords: ['Deficient fluid volume']
-      alert: "Goal: Patient will maintain adequate hydration. Outcome: Patient's urine output will be at least 30 mL/hr."
-      severity: 'WARNING'
+  - keywords: ["Risk for falls"]
+    alert: "Goal: Patient will remain free from falls. Outcome: Patient will demonstrate ability to use call bell for assistance."
+    severity: "INFO"
+  - keywords: ["Bathing self-care deficit"]
+    alert: "Goal: Patient will participate in bathing to the best of their ability. Outcome: Patient's skin will remain clean and intact."
+    severity: "INFO"
+  - keywords: ["Insomnia"]
+    alert: "Goal: Patient will report an improvement in sleep quality. Outcome: Patient will sleep for at least 6 hours without interruption."
+    severity: "INFO"
+  - keywords: ["Acute pain"]
+    alert: "Goal: Patient will report a decrease in pain. Outcome: Patient's pain level will be less than 3 on a 0-10 scale."
+    severity: "WARNING"
+  - keywords: ["Chronic pain"]
+    alert: "Goal: Patient will report a decrease in pain. Outcome: Patient's pain level will be at a manageable level."
+    severity: "WARNING"
+  - keywords: ["Imbalanced nutrition"]
+    alert: "Goal: Patient will consume adequate nutrition. Outcome: Patient will consume at least 75% of meals."
+    severity: "INFO"
+  - keywords: ["Deficient fluid volume"]
+    alert: "Goal: Patient will maintain adequate hydration. Outcome: Patient's urine output will be at least 30 mL/hr."
+    severity: "WARNING"

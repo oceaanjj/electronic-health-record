@@ -20,28 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
             tableBody.style.opacity = 0.3;
 
             fetch(url.toString(), {
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
             })
-                .then((res) => res.text())
-                .then((html) => {
-                    const parser = new DOMParser();
-                    const newDoc = parser.parseFromString(html, 'text/html');
-                    const newTbody = newDoc.querySelector('#audit-table-body');
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const newDoc = parser.parseFromString(html, 'text/html');
+                const newTbody = newDoc.querySelector('#audit-table-body');
 
-                    if (newTbody) {
-                        tableBody.innerHTML = newTbody.innerHTML;
+                if (newTbody) {
 
-                        tableBody.style.opacity = 0;
-                        requestAnimationFrame(() => {
-                            tableBody.style.transition = 'opacity 0.4s ease';
-                            tableBody.style.opacity = 1;
-                        });
-                    }
-                })
-                .catch(() => console.error('Search failed'))
-                .finally(() => {
-                    setTimeout(() => loader.classList.add('hidden'), 300);
-                });
+                    tableBody.innerHTML = newTbody.innerHTML;
+
+                    tableBody.style.opacity = 0;
+                    requestAnimationFrame(() => {
+                        tableBody.style.transition = 'opacity 0.4s ease';
+                        tableBody.style.opacity = 1;
+                    });
+                }
+            })
+            .catch(() => console.error('Search failed'))
+            .finally(() => {
+                setTimeout(() => loader.classList.add('hidden'), 300);
+            });
         }, 400);
     });
 });

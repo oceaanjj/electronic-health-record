@@ -1,574 +1,577 @@
 abdomen_condition:
-    # General Appearance & Inspection
-    - keywords: ['flat abdomen', 'non-distended', 'soft on palpation']
-      alert: 'A flat, soft, and non-distended abdomen with no tenderness indicates normal findings.'
-      severity: 'none'
-    - keywords: ['distended abdomen', 'abdominal distension']
-      alert: 'Abdominal distension may indicate gas accumulation, ascites, or intestinal obstruction. Assess bowel sounds and percussion note.'
-      severity: 'warning'
-    - keywords: ['scaphoid abdomen', 'sunken abdomen']
-      alert: 'A scaphoid (sunken) abdomen may suggest malnutrition or severe dehydration.'
-      severity: 'info'
-    - keywords: ['visible peristalsis']
-      alert: 'Visible peristaltic waves across the abdomen may be a sign of intestinal obstruction, especially in thin patients.'
-      severity: 'warning'
-    - keywords: ['abdominal asymmetry', 'uneven contour']
-      alert: 'Asymmetry of the abdomen may indicate a localized mass, enlarged organ, or hernia. Further palpation and imaging are needed.'
-      severity: 'warning'
-    - keywords: ['pulsating mass midline', 'expansile pulsation abdomen']
-      alert: 'A midline pulsatile mass suggests an abdominal aortic aneurysm (AAA). Avoid deep palpation and notify provider immediately.'
-      severity: 'critical'
-    - keywords: ['abdominal scars', 'surgical scars']
-      alert: 'Previous abdominal scars should be documented; they may explain altered anatomy or adhesions causing pain.'
-      severity: 'info'
-    - keywords: ['striae', 'stretch marks on abdomen']
-      alert: 'Striae (stretch marks) can occur due to obesity, pregnancy, or Cushing syndrome.'
-      severity: 'info'
-    - keywords: ['dilated abdominal veins', 'caput medusae']
-      alert: 'Prominent, dilated abdominal veins (caput medusae) suggest portal hypertension from liver disease.'
-      severity: 'warning'
-    - keywords: ['ecchymosis around umbilicus', 'Cullen sign']
-      alert: 'Periumbilical ecchymosis (Cullen sign) suggests intraperitoneal bleeding, such as from pancreatitis or ruptured ectopic pregnancy.'
-      severity: 'critical'
+  # General Appearance & Inspection
+  - keywords: ["flat abdomen", "non-distended", "soft on palpation"]
+    alert: "A flat, soft, and non-distended abdomen with no tenderness indicates normal findings."
+    severity: "none"
+  - keywords: ["distended abdomen", "abdominal distension"]
+    alert: "Abdominal distension may indicate gas accumulation, ascites, or intestinal obstruction. Assess bowel sounds and percussion note."
+    severity: "warning"
+  - keywords: ["scaphoid abdomen", "sunken abdomen"]
+    alert: "A scaphoid (sunken) abdomen may suggest malnutrition or severe dehydration."
+    severity: "info"
+  - keywords: ["visible peristalsis"]
+    alert: "Visible peristaltic waves across the abdomen may be a sign of intestinal obstruction, especially in thin patients."
+    severity: "warning"
+  - keywords: ["abdominal asymmetry", "uneven contour"]
+    alert: "Asymmetry of the abdomen may indicate a localized mass, enlarged organ, or hernia. Further palpation and imaging are needed."
+    severity: "warning"
+  - keywords: ["pulsating mass midline", "expansile pulsation abdomen"]
+    alert: "A midline pulsatile mass suggests an abdominal aortic aneurysm (AAA). Avoid deep palpation and notify provider immediately."
+    severity: "critical"
+  - keywords: ["abdominal scars", "surgical scars"]
+    alert: "Previous abdominal scars should be documented; they may explain altered anatomy or adhesions causing pain."
+    severity: "info"
+  - keywords: ["striae", "stretch marks on abdomen"]
+    alert: "Striae (stretch marks) can occur due to obesity, pregnancy, or Cushing syndrome."
+    severity: "info"
+  - keywords: ["dilated abdominal veins", "caput medusae"]
+    alert: "Prominent, dilated abdominal veins (caput medusae) suggest portal hypertension from liver disease."
+    severity: "warning"
+  - keywords: ["ecchymosis around umbilicus", "Cullen sign"]
+    alert: "Periumbilical ecchymosis (Cullen sign) suggests intraperitoneal bleeding, such as from pancreatitis or ruptured ectopic pregnancy."
+    severity: "critical"
 
-    # Palpation & Tenderness
-    - keywords: ['tenderness in right lower quadrant', 'RLQ tenderness']
-      alert: 'Right lower quadrant tenderness may indicate appendicitis, ovarian pathology, or Crohn’s disease. Evaluate for rebound tenderness.'
-      severity: 'warning'
-    - keywords: ['right upper quadrant tenderness', 'RUQ tenderness']
-      alert: 'Right upper quadrant tenderness suggests hepatobiliary disease such as cholecystitis or hepatitis.'
-      severity: 'warning'
-    - keywords: ['left lower quadrant tenderness', 'LLQ tenderness']
-      alert: 'Left lower quadrant tenderness may indicate diverticulitis, colitis, or constipation.'
-      severity: 'warning'
-    - keywords: ['epigastric tenderness', 'epigastric pain']
-      alert: 'Epigastric tenderness can indicate gastritis, peptic ulcer disease, or pancreatitis.'
-      severity: 'warning'
-    - keywords: ['diffuse abdominal tenderness']
-      alert: 'Diffuse tenderness may be seen in peritonitis or severe gastroenteritis. Monitor for guarding or rigidity.'
-      severity: 'warning'
-    - keywords: ['rebound tenderness', 'pain on release']
-      alert: 'Rebound tenderness is a hallmark of peritoneal irritation and peritonitis; this is a surgical emergency.'
-      severity: 'critical'
-    - keywords: ['guarding', 'rigidity', 'board-like abdomen']
-      alert: 'Involuntary guarding or rigidity indicates peritoneal irritation. Notify the provider immediately.'
-      severity: 'critical'
-    - keywords: ['localized tenderness at McBurney’s point', 'RLQ pain McBurney']
-      alert: 'Localized tenderness at McBurney’s point is highly suggestive of appendicitis.'
-      severity: 'critical'
-    - keywords: ['tenderness over suprapubic area']
-      alert: 'Suprapubic tenderness may indicate bladder distension, urinary tract infection, or cystitis.'
-      severity: 'warning'
-    - keywords: ['left upper quadrant tenderness', 'LUQ pain']
-      alert: 'LUQ tenderness may result from splenic enlargement, gastritis, or pancreatitis.'
-      severity: 'warning'
+  # Palpation & Tenderness
+  - keywords: ["tenderness in right lower quadrant", "RLQ tenderness"]
+    alert: "Right lower quadrant tenderness may indicate appendicitis, ovarian pathology, or Crohn’s disease. Evaluate for rebound tenderness."
+    severity: "warning"
+  - keywords: ["right upper quadrant tenderness", "RUQ tenderness"]
+    alert: "Right upper quadrant tenderness suggests hepatobiliary disease such as cholecystitis or hepatitis."
+    severity: "warning"
+  - keywords: ["left lower quadrant tenderness", "LLQ tenderness"]
+    alert: "Left lower quadrant tenderness may indicate diverticulitis, colitis, or constipation."
+    severity: "warning"
+  - keywords: ["epigastric tenderness", "epigastric pain"]
+    alert: "Epigastric tenderness can indicate gastritis, peptic ulcer disease, or pancreatitis."
+    severity: "warning"
+  - keywords: ["diffuse abdominal tenderness"]
+    alert: "Diffuse tenderness may be seen in peritonitis or severe gastroenteritis. Monitor for guarding or rigidity."
+    severity: "warning"
+  - keywords: ["rebound tenderness", "pain on release"]
+    alert: "Rebound tenderness is a hallmark of peritoneal irritation and peritonitis; this is a surgical emergency."
+    severity: "critical"
+  - keywords: ["guarding", "rigidity", "board-like abdomen"]
+    alert: "Involuntary guarding or rigidity indicates peritoneal irritation. Notify the provider immediately."
+    severity: "critical"
+  - keywords: ["localized tenderness at McBurney’s point", "RLQ pain McBurney"]
+    alert: "Localized tenderness at McBurney’s point is highly suggestive of appendicitis."
+    severity: "critical"
+  - keywords: ["tenderness over suprapubic area"]
+    alert: "Suprapubic tenderness may indicate bladder distension, urinary tract infection, or cystitis."
+    severity: "warning"
+  - keywords: ["left upper quadrant tenderness", "LUQ pain"]
+    alert: "LUQ tenderness may result from splenic enlargement, gastritis, or pancreatitis."
+    severity: "warning"
 
-    # Percussion
-    - keywords: ['tympanic abdomen', 'increased tympany']
-      alert: 'A tympanic percussion note indicates gaseous distension, as seen in obstruction or aerophagia.'
-      severity: 'info'
-    - keywords: ['dullness in flanks', 'shifting dullness']
-      alert: 'Flank dullness and shifting dullness are signs of ascites, commonly due to liver disease or heart failure.'
-      severity: 'warning'
-    - keywords: ['dullness in suprapubic area']
-      alert: 'Dullness in the suprapubic region suggests bladder distension; assess for urinary retention.'
-      severity: 'warning'
-    - keywords: ['generalized dullness', 'uniform dullness']
-      alert: 'Generalized dullness may indicate massive ascites or organomegaly.'
-      severity: 'warning'
-    - keywords: ['hyperresonance abdomen']
-      alert: 'Hyperresonance over the abdomen suggests excessive gas, as in bowel obstruction or aerophagia.'
-      severity: 'info'
-    - keywords: ['shifting dullness positive', 'fluid wave positive']
-      alert: 'Positive shifting dullness or fluid wave test indicates free fluid (ascites) in the peritoneal cavity.'
-      severity: 'warning'
-    - keywords: ['no dullness change', 'negative shifting dullness']
-      alert: 'Absence of shifting dullness suggests no free fluid. Normal finding.'
-      severity: 'none'
-    - keywords: ['resonant throughout']
-      alert: 'Resonant percussion throughout indicates normal gas pattern and no fluid accumulation.'
-      severity: 'none'
-    - keywords: ['dullness over liver', 'liver span percussion']
-      alert: 'Normal liver span is 6–12 cm; increased span indicates hepatomegaly, reduced span indicates atrophy.'
-      severity: 'warning'
-    - keywords: ['dullness over spleen', 'Traube space dullness']
-      alert: 'Dullness at Traube’s space suggests splenic enlargement (splenomegaly).'
-      severity: 'warning'
+  # Percussion
+  - keywords: ["tympanic abdomen", "increased tympany"]
+    alert: "A tympanic percussion note indicates gaseous distension, as seen in obstruction or aerophagia."
+    severity: "info"
+  - keywords: ["dullness in flanks", "shifting dullness"]
+    alert: "Flank dullness and shifting dullness are signs of ascites, commonly due to liver disease or heart failure."
+    severity: "warning"
+  - keywords: ["dullness in suprapubic area"]
+    alert: "Dullness in the suprapubic region suggests bladder distension; assess for urinary retention."
+    severity: "warning"
+  - keywords: ["generalized dullness", "uniform dullness"]
+    alert: "Generalized dullness may indicate massive ascites or organomegaly."
+    severity: "warning"
+  - keywords: ["hyperresonance abdomen"]
+    alert: "Hyperresonance over the abdomen suggests excessive gas, as in bowel obstruction or aerophagia."
+    severity: "info"
+  - keywords: ["shifting dullness positive", "fluid wave positive"]
+    alert: "Positive shifting dullness or fluid wave test indicates free fluid (ascites) in the peritoneal cavity."
+    severity: "warning"
+  - keywords: ["no dullness change", "negative shifting dullness"]
+    alert: "Absence of shifting dullness suggests no free fluid. Normal finding."
+    severity: "none"
+  - keywords: ["resonant throughout"]
+    alert: "Resonant percussion throughout indicates normal gas pattern and no fluid accumulation."
+    severity: "none"
+  - keywords: ["dullness over liver", "liver span percussion"]
+    alert: "Normal liver span is 6–12 cm; increased span indicates hepatomegaly, reduced span indicates atrophy."
+    severity: "warning"
+  - keywords: ["dullness over spleen", "Traube space dullness"]
+    alert: "Dullness at Traube’s space suggests splenic enlargement (splenomegaly)."
+    severity: "warning"
 
-    # Auscultation
-    - keywords: ['normal bowel sounds', 'active bowel sounds']
-      alert: 'Normal bowel sounds (5–30 clicks per minute) indicate active peristalsis. Normal finding.'
-      severity: 'none'
-    - keywords: ['hypoactive bowel sounds', 'diminished bowel sounds']
-      alert: 'Hypoactive bowel sounds may occur after surgery or in peritonitis. Monitor for ileus.'
-      severity: 'warning'
-    - keywords: ['absent bowel sounds']
-      alert: 'Absence of bowel sounds after 5 minutes of auscultation suggests paralytic ileus or peritonitis.'
-      severity: 'critical'
-    - keywords: ['hyperactive bowel sounds', 'tinkling sounds']
-      alert: "High-pitched, hyperactive 'tinkling' sounds suggest mechanical bowel obstruction."
-      severity: 'warning'
-    - keywords: ['abdominal bruit', 'renal artery bruit']
-      alert: 'A bruit over the aorta or renal arteries may indicate vascular disease or aneurysm.'
-      severity: 'warning'
-    - keywords: ['venous hum', 'epigastric hum']
-      alert: 'Venous hums over the epigastrium may indicate portal hypertension due to liver disease.'
-      severity: 'info'
-    - keywords: ['friction rub over liver', 'friction rub over spleen']
-      alert: 'A friction rub indicates inflammation of the liver or spleen capsule, as seen in infection or tumor.'
-      severity: 'warning'
-    - keywords: ['succussion splash']
-      alert: 'A succussion splash heard after shaking the abdomen suggests gastric outlet obstruction.'
-      severity: 'warning'
-    - keywords: ['borborygmi', 'loud gurgling sounds']
-      alert: 'Loud, prolonged gurgling sounds (borborygmi) indicate hypermotility as seen in diarrhea or early obstruction.'
-      severity: 'info'
-    - keywords: ['high-pitched bowel sounds with cramping']
-      alert: 'High-pitched sounds with colicky pain suggest mechanical small-bowel obstruction.'
-      severity: 'critical'
+  # Auscultation
+  - keywords: ["normal bowel sounds", "active bowel sounds"]
+    alert: "Normal bowel sounds (5–30 clicks per minute) indicate active peristalsis. Normal finding."
+    severity: "none"
+  - keywords: ["hypoactive bowel sounds", "diminished bowel sounds"]
+    alert: "Hypoactive bowel sounds may occur after surgery or in peritonitis. Monitor for ileus."
+    severity: "warning"
+  - keywords: ["absent bowel sounds"]
+    alert: "Absence of bowel sounds after 5 minutes of auscultation suggests paralytic ileus or peritonitis."
+    severity: "critical"
+  - keywords: ["hyperactive bowel sounds", "tinkling sounds"]
+    alert: "High-pitched, hyperactive 'tinkling' sounds suggest mechanical bowel obstruction."
+    severity: "warning"
+  - keywords: ["abdominal bruit", "renal artery bruit"]
+    alert: "A bruit over the aorta or renal arteries may indicate vascular disease or aneurysm."
+    severity: "warning"
+  - keywords: ["venous hum", "epigastric hum"]
+    alert: "Venous hums over the epigastrium may indicate portal hypertension due to liver disease."
+    severity: "info"
+  - keywords: ["friction rub over liver", "friction rub over spleen"]
+    alert: "A friction rub indicates inflammation of the liver or spleen capsule, as seen in infection or tumor."
+    severity: "warning"
+  - keywords: ["succussion splash"]
+    alert: "A succussion splash heard after shaking the abdomen suggests gastric outlet obstruction."
+    severity: "warning"
+  - keywords: ["borborygmi", "loud gurgling sounds"]
+    alert: "Loud, prolonged gurgling sounds (borborygmi) indicate hypermotility as seen in diarrhea or early obstruction."
+    severity: "info"
+  - keywords: ["high-pitched bowel sounds with cramping"]
+    alert: "High-pitched sounds with colicky pain suggest mechanical small-bowel obstruction."
+    severity: "critical"
 
-    # Organomegaly
-    - keywords: ['palpable liver edge', 'hepatomegaly']
-      alert: 'A palpable liver edge below the costal margin suggests hepatomegaly due to hepatitis, fatty liver, or heart failure.'
-      severity: 'warning'
-    - keywords: ['tender enlarged liver']
-      alert: 'A tender, enlarged liver is commonly due to hepatitis or right heart failure.'
-      severity: 'warning'
-    - keywords: ['non-tender enlarged liver', 'firm nodular liver']
-      alert: 'A firm, nodular, non-tender liver suggests cirrhosis or malignancy.'
-      severity: 'critical'
-    - keywords: ['palpable spleen', 'splenomegaly']
-      alert: 'An enlarged spleen can result from infection, hematologic disorder, or portal hypertension.'
-      severity: 'warning'
-    - keywords: ['mass in left upper quadrant']
-      alert: 'A LUQ mass may represent splenomegaly, gastric tumor, or renal enlargement. Requires imaging.'
-      severity: 'warning'
-    - keywords: ['enlarged kidney palpable', 'renal mass']
-      alert: 'A ballotable mass in the flank suggests an enlarged kidney. Assess for hydronephrosis or tumor.'
-      severity: 'warning'
-    - keywords: ['palpable gallbladder', 'Courvoisier sign']
-      alert: 'A palpable, non-tender gallbladder with jaundice suggests obstructive jaundice due to malignancy.'
-      severity: 'critical'
-    - keywords: ['palpable pulsatile mass', 'aortic aneurysm suspicion']
-      alert: 'A pulsatile abdominal mass greater than 3 cm in width suggests abdominal aortic aneurysm. Do not palpate repeatedly.'
-      severity: 'critical'
-    - keywords: ['liver edge smooth and soft']
-      alert: 'A smooth, soft liver edge is usually normal or seen in mild hepatomegaly.'
-      severity: 'info'
-    - keywords: ['spleen not palpable']
-      alert: 'Non-palpable spleen indicates normal finding.'
-      severity: 'none'
+  # Organomegaly
+  - keywords: ["palpable liver edge", "hepatomegaly"]
+    alert: "A palpable liver edge below the costal margin suggests hepatomegaly due to hepatitis, fatty liver, or heart failure."
+    severity: "warning"
+  - keywords: ["tender enlarged liver"]
+    alert: "A tender, enlarged liver is commonly due to hepatitis or right heart failure."
+    severity: "warning"
+  - keywords: ["non-tender enlarged liver", "firm nodular liver"]
+    alert: "A firm, nodular, non-tender liver suggests cirrhosis or malignancy."
+    severity: "critical"
+  - keywords: ["palpable spleen", "splenomegaly"]
+    alert: "An enlarged spleen can result from infection, hematologic disorder, or portal hypertension."
+    severity: "warning"
+  - keywords: ["mass in left upper quadrant"]
+    alert: "A LUQ mass may represent splenomegaly, gastric tumor, or renal enlargement. Requires imaging."
+    severity: "warning"
+  - keywords: ["enlarged kidney palpable", "renal mass"]
+    alert: "A ballotable mass in the flank suggests an enlarged kidney. Assess for hydronephrosis or tumor."
+    severity: "warning"
+  - keywords: ["palpable gallbladder", "Courvoisier sign"]
+    alert: "A palpable, non-tender gallbladder with jaundice suggests obstructive jaundice due to malignancy."
+    severity: "critical"
+  - keywords: ["palpable pulsatile mass", "aortic aneurysm suspicion"]
+    alert: "A pulsatile abdominal mass greater than 3 cm in width suggests abdominal aortic aneurysm. Do not palpate repeatedly."
+    severity: "critical"
+  - keywords: ["liver edge smooth and soft"]
+    alert: "A smooth, soft liver edge is usually normal or seen in mild hepatomegaly."
+    severity: "info"
+  - keywords: ["spleen not palpable"]
+    alert: "Non-palpable spleen indicates normal finding."
+    severity: "none"
 
-    # Special Signs
-    - keywords: ['Murphy’s sign positive', 'RUQ pain on inspiration']
-      alert: 'Positive Murphy’s sign (pain and inspiratory arrest on deep palpation of RUQ) suggests acute cholecystitis.'
-      severity: 'warning'
-    - keywords: ['Rovsing’s sign positive']
-      alert: 'Pain in RLQ upon LLQ palpation (positive Rovsing’s sign) suggests appendicitis.'
-      severity: 'critical'
-    - keywords: ['Psoas sign positive', 'pain on hip extension']
-      alert: 'Pain with right hip extension (psoas sign) indicates irritation from appendicitis or retrocecal abscess.'
-      severity: 'critical'
-    - keywords: ['Obturator sign positive']
-      alert: 'Pain with internal rotation of the flexed right thigh (obturator sign) indicates pelvic appendicitis or abscess.'
-      severity: 'critical'
-    - keywords: ['Cullen’s sign', 'bluish discoloration around umbilicus']
-      alert: 'Periumbilical ecchymosis (Cullen’s sign) indicates retroperitoneal or intraperitoneal bleeding.'
-      severity: 'critical'
-    - keywords: ['Grey Turner’s sign', 'flank ecchymosis']
-      alert: 'Flank ecchymosis (Grey Turner’s sign) suggests retroperitoneal bleeding, as seen in severe pancreatitis or trauma.'
-      severity: 'critical'
-    - keywords: ['Blumberg sign positive']
-      alert: 'Positive Blumberg sign (rebound tenderness) confirms peritoneal irritation; this is a surgical emergency.'
-      severity: 'critical'
-    - keywords: ['fluid thrill positive']
-      alert: 'A palpable fluid thrill is a classic sign of ascites. Assess for liver disease.'
-      severity: 'warning'
-    - keywords: ['shifting dullness present']
-      alert: 'Shifting dullness confirms free fluid in peritoneal cavity, typical of ascites.'
-      severity: 'warning'
-    - keywords: ['negative rebound tenderness']
-      alert: 'Absence of rebound tenderness suggests no peritoneal irritation. Normal finding.'
-      severity: 'none'
-    # Palpation: Abdominal Masses
-    - keywords: ['palpable mass in right upper quadrant', 'RUQ mass']
-      alert: 'A palpable RUQ mass may indicate hepatomegaly, gallbladder distension, or hepatic tumor. Requires further imaging.'
-      severity: 'warning'
-    - keywords: ['mass in right lower quadrant', 'RLQ mass palpable']
-      alert: 'A palpable RLQ mass could represent an inflamed appendix, abscess, or cecal tumor. Needs urgent evaluation.'
-      severity: 'critical'
-    - keywords: ['midline mass above umbilicus', 'epigastric mass']
-      alert: 'A firm epigastric mass may indicate pancreatic pseudocyst, aneurysm, or hernia. Assess for pulsation.'
-      severity: 'warning'
-    - keywords: ['tender mass periumbilical', 'umbilical mass']
-      alert: 'Tender periumbilical swelling suggests umbilical hernia, abscess, or strangulated bowel loop. Monitor for obstruction.'
-      severity: 'warning'
-    - keywords: ['suprapubic mass', 'bladder distension palpable']
-      alert: 'Palpable suprapubic mass may indicate urinary retention or bladder distension. Assess urine output and bladder scan.'
-      severity: 'warning'
-    - keywords: ['mass in left upper quadrant', 'LUQ mass palpable']
-      alert: 'A LUQ mass may be due to splenomegaly, gastric tumor, or renal enlargement. Imaging needed.'
-      severity: 'warning'
-    - keywords: ['mass in left lower quadrant', 'LLQ palpable mass']
-      alert: 'LLQ mass may indicate sigmoid diverticulitis, fecal impaction, or ovarian cyst. Correlate with tenderness and fever.'
-      severity: 'warning'
-    - keywords: ['smooth mobile mass abdomen']
-      alert: 'A smooth, mobile, non-tender mass is likely benign (lipoma or cyst), but documentation and follow-up are needed.'
-      severity: 'info'
-    - keywords: ['hard irregular mass abdomen']
-      alert: 'A hard, irregular, immobile abdominal mass may suggest malignancy or advanced cirrhosis. Requires urgent imaging.'
-      severity: 'critical'
-    - keywords: ['tender pulsatile mass', 'painful pulsation midline']
-      alert: 'A tender pulsatile mass indicates an expanding or rupturing abdominal aortic aneurysm (AAA). Emergency situation.'
-      severity: 'critical'
+  # Special Signs
+  - keywords: ["Murphy’s sign positive", "RUQ pain on inspiration"]
+    alert: "Positive Murphy’s sign (pain and inspiratory arrest on deep palpation of RUQ) suggests acute cholecystitis."
+    severity: "warning"
+  - keywords: ["Rovsing’s sign positive"]
+    alert: "Pain in RLQ upon LLQ palpation (positive Rovsing’s sign) suggests appendicitis."
+    severity: "critical"
+  - keywords: ["Psoas sign positive", "pain on hip extension"]
+    alert: "Pain with right hip extension (psoas sign) indicates irritation from appendicitis or retrocecal abscess."
+    severity: "critical"
+  - keywords: ["Obturator sign positive"]
+    alert: "Pain with internal rotation of the flexed right thigh (obturator sign) indicates pelvic appendicitis or abscess."
+    severity: "critical"
+  - keywords: ["Cullen’s sign", "bluish discoloration around umbilicus"]
+    alert: "Periumbilical ecchymosis (Cullen’s sign) indicates retroperitoneal or intraperitoneal bleeding."
+    severity: "critical"
+  - keywords: ["Grey Turner’s sign", "flank ecchymosis"]
+    alert: "Flank ecchymosis (Grey Turner’s sign) suggests retroperitoneal bleeding, as seen in severe pancreatitis or trauma."
+    severity: "critical"
+  - keywords: ["Blumberg sign positive"]
+    alert: "Positive Blumberg sign (rebound tenderness) confirms peritoneal irritation; this is a surgical emergency."
+    severity: "critical"
+  - keywords: ["fluid thrill positive"]
+    alert: "A palpable fluid thrill is a classic sign of ascites. Assess for liver disease."
+    severity: "warning"
+  - keywords: ["shifting dullness present"]
+    alert: "Shifting dullness confirms free fluid in peritoneal cavity, typical of ascites."
+    severity: "warning"
+  - keywords: ["negative rebound tenderness"]
+    alert: "Absence of rebound tenderness suggests no peritoneal irritation. Normal finding."
+    severity: "none"
+  # Palpation: Abdominal Masses
+  - keywords: ["palpable mass in right upper quadrant", "RUQ mass"]
+    alert: "A palpable RUQ mass may indicate hepatomegaly, gallbladder distension, or hepatic tumor. Requires further imaging."
+    severity: "warning"
+  - keywords: ["mass in right lower quadrant", "RLQ mass palpable"]
+    alert: "A palpable RLQ mass could represent an inflamed appendix, abscess, or cecal tumor. Needs urgent evaluation."
+    severity: "critical"
+  - keywords: ["midline mass above umbilicus", "epigastric mass"]
+    alert: "A firm epigastric mass may indicate pancreatic pseudocyst, aneurysm, or hernia. Assess for pulsation."
+    severity: "warning"
+  - keywords: ["tender mass periumbilical", "umbilical mass"]
+    alert: "Tender periumbilical swelling suggests umbilical hernia, abscess, or strangulated bowel loop. Monitor for obstruction."
+    severity: "warning"
+  - keywords: ["suprapubic mass", "bladder distension palpable"]
+    alert: "Palpable suprapubic mass may indicate urinary retention or bladder distension. Assess urine output and bladder scan."
+    severity: "warning"
+  - keywords: ["mass in left upper quadrant", "LUQ mass palpable"]
+    alert: "A LUQ mass may be due to splenomegaly, gastric tumor, or renal enlargement. Imaging needed."
+    severity: "warning"
+  - keywords: ["mass in left lower quadrant", "LLQ palpable mass"]
+    alert: "LLQ mass may indicate sigmoid diverticulitis, fecal impaction, or ovarian cyst. Correlate with tenderness and fever."
+    severity: "warning"
+  - keywords: ["smooth mobile mass abdomen"]
+    alert: "A smooth, mobile, non-tender mass is likely benign (lipoma or cyst), but documentation and follow-up are needed."
+    severity: "info"
+  - keywords: ["hard irregular mass abdomen"]
+    alert: "A hard, irregular, immobile abdominal mass may suggest malignancy or advanced cirrhosis. Requires urgent imaging."
+    severity: "critical"
+  - keywords: ["tender pulsatile mass", "painful pulsation midline"]
+    alert: "A tender pulsatile mass indicates an expanding or rupturing abdominal aortic aneurysm (AAA). Emergency situation."
+    severity: "critical"
 
-    # Hernias
-    - keywords: ['umbilical hernia', 'bulge at umbilicus']
-      alert: 'Umbilical hernias are common in infants and obese adults. If tender or irreducible, suspect strangulation.'
-      severity: 'warning'
-    - keywords: ['epigastric hernia', 'midline bulge above umbilicus']
-      alert: 'Epigastric hernias occur through linea alba and may cause localized pain or tenderness.'
-      severity: 'info'
-    - keywords: ['inguinal hernia right', 'groin bulge right']
-      alert: 'A reducible right inguinal bulge is likely an inguinal hernia; if irreducible or painful, suspect incarceration.'
-      severity: 'warning'
-    - keywords: ['inguinal hernia left', 'groin bulge left']
-      alert: 'A bulge in the left inguinal region indicates possible hernia; evaluate reducibility and bowel sounds over the area.'
-      severity: 'warning'
-    - keywords: ['femoral hernia', 'bulge below inguinal ligament']
-      alert: 'A tender bulge below the inguinal ligament suggests a femoral hernia, which carries high risk for strangulation.'
-      severity: 'critical'
-    - keywords: ['incisional hernia', 'bulge along surgical scar']
-      alert: 'Bulging along a previous incision site indicates incisional hernia. Supportive care and surgical review are recommended.'
-      severity: 'warning'
-    - keywords: ['reducible hernia']
-      alert: 'A soft, reducible hernia is generally benign but should be monitored for signs of strangulation or pain.'
-      severity: 'info'
-    - keywords: ['irreducible hernia', 'incarcerated hernia']
-      alert: 'An irreducible hernia indicates incarceration and risk of strangulation. Immediate surgical referral is warranted.'
-      severity: 'critical'
-    - keywords: ['strangulated hernia', 'tender discolored hernia']
-      alert: 'A painful, discolored hernia indicates strangulation and compromised blood supply. This is a surgical emergency.'
-      severity: 'critical'
-    - keywords: ['bilateral inguinal bulges']
-      alert: 'Bilateral inguinal bulges may represent hernias or lymphadenopathy; evaluate consistency and reducibility.'
-      severity: 'info'
+  # Hernias
+  - keywords: ["umbilical hernia", "bulge at umbilicus"]
+    alert: "Umbilical hernias are common in infants and obese adults. If tender or irreducible, suspect strangulation."
+    severity: "warning"
+  - keywords: ["epigastric hernia", "midline bulge above umbilicus"]
+    alert: "Epigastric hernias occur through linea alba and may cause localized pain or tenderness."
+    severity: "info"
+  - keywords: ["inguinal hernia right", "groin bulge right"]
+    alert: "A reducible right inguinal bulge is likely an inguinal hernia; if irreducible or painful, suspect incarceration."
+    severity: "warning"
+  - keywords: ["inguinal hernia left", "groin bulge left"]
+    alert: "A bulge in the left inguinal region indicates possible hernia; evaluate reducibility and bowel sounds over the area."
+    severity: "warning"
+  - keywords: ["femoral hernia", "bulge below inguinal ligament"]
+    alert: "A tender bulge below the inguinal ligament suggests a femoral hernia, which carries high risk for strangulation."
+    severity: "critical"
+  - keywords: ["incisional hernia", "bulge along surgical scar"]
+    alert: "Bulging along a previous incision site indicates incisional hernia. Supportive care and surgical review are recommended."
+    severity: "warning"
+  - keywords: ["reducible hernia"]
+    alert: "A soft, reducible hernia is generally benign but should be monitored for signs of strangulation or pain."
+    severity: "info"
+  - keywords: ["irreducible hernia", "incarcerated hernia"]
+    alert: "An irreducible hernia indicates incarceration and risk of strangulation. Immediate surgical referral is warranted."
+    severity: "critical"
+  - keywords: ["strangulated hernia", "tender discolored hernia"]
+    alert: "A painful, discolored hernia indicates strangulation and compromised blood supply. This is a surgical emergency."
+    severity: "critical"
+  - keywords: ["bilateral inguinal bulges"]
+    alert: "Bilateral inguinal bulges may represent hernias or lymphadenopathy; evaluate consistency and reducibility."
+    severity: "info"
 
-    # Bowel Pattern and Movement
-    - keywords: ['constipation', 'no bowel movement for days']
-      alert: 'Prolonged absence of bowel movements may indicate constipation; assess diet, hydration, and medications.'
-      severity: 'info'
-    - keywords: ['diarrhea', 'frequent loose stools']
-      alert: 'Frequent watery stools suggest diarrhea; monitor fluid balance and evaluate for infection or malabsorption.'
-      severity: 'warning'
-    - keywords: ['bloody stool', 'hematochezia']
-      alert: 'Bright red blood in stool (hematochezia) indicates lower GI bleeding; notify provider immediately.'
-      severity: 'critical'
-    - keywords: ['tarry stool', 'melena']
-      alert: 'Black, tarry stools (melena) indicate upper gastrointestinal bleeding. Assess hemodynamic stability.'
-      severity: 'critical'
-    - keywords: ['absent flatus', 'no gas passage']
-      alert: 'Failure to pass gas may indicate bowel obstruction or ileus; assess bowel sounds and abdominal distension.'
-      severity: 'warning'
-    - keywords: ['bowel incontinence', 'loss of bowel control']
-      alert: 'Loss of bowel control may suggest neurological impairment or sphincter dysfunction.'
-      severity: 'info'
-    - keywords: ['abdominal cramping', 'colicky pain']
-      alert: 'Cramping or colicky abdominal pain suggests intestinal obstruction or gastroenteritis.'
-      severity: 'warning'
-    - keywords: ['bloated feeling', 'gas pain']
-      alert: 'Feeling of bloating or gas may indicate dyspepsia, aerophagia, or irritable bowel syndrome.'
-      severity: 'info'
-    - keywords: ['bowel movement with mucus', 'mucus in stool']
-      alert: 'Mucus in stool may indicate inflammation such as irritable bowel syndrome or infection.'
-      severity: 'warning'
-    - keywords: ['steatorrhea', 'greasy foul-smelling stool']
-      alert: 'Pale, bulky, foul-smelling stools indicate fat malabsorption, as seen in celiac disease or chronic pancreatitis.'
-      severity: 'warning'
+  # Bowel Pattern and Movement
+  - keywords: ["constipation", "no bowel movement for days"]
+    alert: "Prolonged absence of bowel movements may indicate constipation; assess diet, hydration, and medications."
+    severity: "info"
+  - keywords: ["diarrhea", "frequent loose stools"]
+    alert: "Frequent watery stools suggest diarrhea; monitor fluid balance and evaluate for infection or malabsorption."
+    severity: "warning"
+  - keywords: ["bloody stool", "hematochezia"]
+    alert: "Bright red blood in stool (hematochezia) indicates lower GI bleeding; notify provider immediately."
+    severity: "critical"
+  - keywords: ["tarry stool", "melena"]
+    alert: "Black, tarry stools (melena) indicate upper gastrointestinal bleeding. Assess hemodynamic stability."
+    severity: "critical"
+  - keywords: ["absent flatus", "no gas passage"]
+    alert: "Failure to pass gas may indicate bowel obstruction or ileus; assess bowel sounds and abdominal distension."
+    severity: "warning"
+  - keywords: ["bowel incontinence", "loss of bowel control"]
+    alert: "Loss of bowel control may suggest neurological impairment or sphincter dysfunction."
+    severity: "info"
+  - keywords: ["abdominal cramping", "colicky pain"]
+    alert: "Cramping or colicky abdominal pain suggests intestinal obstruction or gastroenteritis."
+    severity: "warning"
+  - keywords: ["bloated feeling", "gas pain"]
+    alert: "Feeling of bloating or gas may indicate dyspepsia, aerophagia, or irritable bowel syndrome."
+    severity: "info"
+  - keywords: ["bowel movement with mucus", "mucus in stool"]
+    alert: "Mucus in stool may indicate inflammation such as irritable bowel syndrome or infection."
+    severity: "warning"
+  - keywords: ["steatorrhea", "greasy foul-smelling stool"]
+    alert: "Pale, bulky, foul-smelling stools indicate fat malabsorption, as seen in celiac disease or chronic pancreatitis."
+    severity: "warning"
 
-    # Percussion & Auscultation (continued)
-    - keywords: ['borborygmi hyperactive', 'increased bowel activity']
-      alert: 'Increased bowel activity (borborygmi) is seen in early bowel obstruction, gastroenteritis, or diarrhea.'
-      severity: 'info'
-    - keywords: ['high-pitched metallic bowel sounds']
-      alert: 'High-pitched metallic sounds suggest advanced mechanical obstruction. This is a critical finding.'
-      severity: 'critical'
-    - keywords: ['decreased bowel sounds after surgery']
-      alert: 'Diminished bowel sounds after abdominal surgery indicate postoperative ileus; monitor closely.'
-      severity: 'warning'
-    - keywords: ['succussion splash after meals']
-      alert: 'A splash sound after shaking the abdomen suggests retained gastric contents (gastric outlet obstruction).'
-      severity: 'warning'
-    - keywords: ['no bowel sounds with distension']
-      alert: 'Distension with absent bowel sounds indicates complete obstruction or peritonitis; surgical emergency.'
-      severity: 'critical'
-    - keywords: ['intermittent gurgling sounds']
-      alert: 'Intermittent gurgles are normal peristaltic sounds; frequency less than 30 per minute is typical.'
-      severity: 'none'
-    - keywords: ['bruit over aorta']
-      alert: 'A bruit over the aorta suggests aneurysm or arterial stenosis; requires vascular imaging.'
-      severity: 'warning'
-    - keywords: ['friction rub over liver area']
-      alert: 'A rough grating sound over liver area may indicate tumor infiltration or perihepatitis.'
-      severity: 'warning'
-    - keywords: ['abdominal venous hum']
-      alert: 'Venous hums may indicate increased collateral circulation from portal hypertension.'
-      severity: 'info'
-    - keywords: ['normal bowel sounds every quadrant']
-      alert: 'Normal bowel sounds in all four quadrants indicate healthy peristaltic activity.'
-      severity: 'none'
+  # Percussion & Auscultation (continued)
+  - keywords: ["borborygmi hyperactive", "increased bowel activity"]
+    alert: "Increased bowel activity (borborygmi) is seen in early bowel obstruction, gastroenteritis, or diarrhea."
+    severity: "info"
+  - keywords: ["high-pitched metallic bowel sounds"]
+    alert: "High-pitched metallic sounds suggest advanced mechanical obstruction. This is a critical finding."
+    severity: "critical"
+  - keywords: ["decreased bowel sounds after surgery"]
+    alert: "Diminished bowel sounds after abdominal surgery indicate postoperative ileus; monitor closely."
+    severity: "warning"
+  - keywords: ["succussion splash after meals"]
+    alert: "A splash sound after shaking the abdomen suggests retained gastric contents (gastric outlet obstruction)."
+    severity: "warning"
+  - keywords: ["no bowel sounds with distension"]
+    alert: "Distension with absent bowel sounds indicates complete obstruction or peritonitis; surgical emergency."
+    severity: "critical"
+  - keywords: ["intermittent gurgling sounds"]
+    alert: "Intermittent gurgles are normal peristaltic sounds; frequency less than 30 per minute is typical."
+    severity: "none"
+  - keywords: ["bruit over aorta"]
+    alert: "A bruit over the aorta suggests aneurysm or arterial stenosis; requires vascular imaging."
+    severity: "warning"
+  - keywords: ["friction rub over liver area"]
+    alert: "A rough grating sound over liver area may indicate tumor infiltration or perihepatitis."
+    severity: "warning"
+  - keywords: ["abdominal venous hum"]
+    alert: "Venous hums may indicate increased collateral circulation from portal hypertension."
+    severity: "info"
+  - keywords: ["normal bowel sounds every quadrant"]
+    alert: "Normal bowel sounds in all four quadrants indicate healthy peristaltic activity."
+    severity: "none"
 
-    # Postoperative & Special Findings
-    - keywords: ['abdominal distension post surgery']
-      alert: 'Postoperative abdominal distension may indicate paralytic ileus or bowel obstruction. Assess bowel sounds.'
-      severity: 'warning'
-    - keywords: ['wound dehiscence', 'open surgical wound']
-      alert: 'Abdominal wound dehiscence is a surgical emergency. Cover with sterile dressing and notify surgeon immediately.'
-      severity: 'critical'
-    - keywords: ['serosanguinous drainage from incision']
-      alert: 'Small amount of serosanguinous drainage may be normal post-op, but excessive drainage requires evaluation.'
-      severity: 'info'
-    - keywords: ['purulent drainage from incision', 'foul wound odor']
-      alert: 'Purulent or foul-smelling drainage indicates surgical site infection; obtain cultures and notify provider.'
-      severity: 'warning'
-    - keywords: ['evisceration', 'bowel visible in wound']
-      alert: 'Evisceration (protrusion of bowel through incision) is life-threatening. Cover with moist sterile dressing and call for emergency surgery.'
-      severity: 'critical'
-    - keywords: ['abdominal pain with hypotension', 'rigid abdomen after trauma']
-      alert: 'Rigid abdomen with low blood pressure after trauma suggests internal bleeding or ruptured organ. Emergency response needed.'
-      severity: 'critical'
-    - keywords: ['surgical drain output high', 'increased drain fluid']
-      alert: 'Sudden increase in drain output postoperatively may indicate bleeding or anastomotic leak.'
-      severity: 'critical'
-    - keywords: ['no flatus after 48 hours post-op']
-      alert: 'Absence of flatus after 48 hours post-op suggests postoperative ileus; encourage ambulation and monitor.'
-      severity: 'warning'
-    - keywords: ['abdominal tenderness with guarding post-op']
-      alert: 'Guarding and tenderness postoperatively indicate possible peritonitis or leak. Notify surgical team.'
-      severity: 'critical'
-    - keywords: ['fever with distended abdomen after surgery']
-      alert: 'Fever and distension postoperatively suggest intra-abdominal abscess or infection. Imaging required.'
-      severity: 'critical'
+  # Postoperative & Special Findings
+  - keywords: ["abdominal distension post surgery"]
+    alert: "Postoperative abdominal distension may indicate paralytic ileus or bowel obstruction. Assess bowel sounds."
+    severity: "warning"
+  - keywords: ["wound dehiscence", "open surgical wound"]
+    alert: "Abdominal wound dehiscence is a surgical emergency. Cover with sterile dressing and notify surgeon immediately."
+    severity: "critical"
+  - keywords: ["serosanguinous drainage from incision"]
+    alert: "Small amount of serosanguinous drainage may be normal post-op, but excessive drainage requires evaluation."
+    severity: "info"
+  - keywords: ["purulent drainage from incision", "foul wound odor"]
+    alert: "Purulent or foul-smelling drainage indicates surgical site infection; obtain cultures and notify provider."
+    severity: "warning"
+  - keywords: ["evisceration", "bowel visible in wound"]
+    alert: "Evisceration (protrusion of bowel through incision) is life-threatening. Cover with moist sterile dressing and call for emergency surgery."
+    severity: "critical"
+  - keywords: ["abdominal pain with hypotension", "rigid abdomen after trauma"]
+    alert: "Rigid abdomen with low blood pressure after trauma suggests internal bleeding or ruptured organ. Emergency response needed."
+    severity: "critical"
+  - keywords: ["surgical drain output high", "increased drain fluid"]
+    alert: "Sudden increase in drain output postoperatively may indicate bleeding or anastomotic leak."
+    severity: "critical"
+  - keywords: ["no flatus after 48 hours post-op"]
+    alert: "Absence of flatus after 48 hours post-op suggests postoperative ileus; encourage ambulation and monitor."
+    severity: "warning"
+  - keywords: ["abdominal tenderness with guarding post-op"]
+    alert: "Guarding and tenderness postoperatively indicate possible peritonitis or leak. Notify surgical team."
+    severity: "critical"
+  - keywords: ["fever with distended abdomen after surgery"]
+    alert: "Fever and distension postoperatively suggest intra-abdominal abscess or infection. Imaging required."
+    severity: "critical"
 
-    # Pediatric & Geriatric Abdomen
-    - keywords: ['abdominal distension in newborn']
-      alert: 'Abdominal distension in neonates can indicate intestinal obstruction or Hirschsprung’s disease. Urgent pediatric evaluation needed.'
-      severity: 'critical'
-    - keywords: ['visible umbilical hernia infant']
-      alert: 'Umbilical hernias in infants are usually benign and close spontaneously by age 2–3.'
-      severity: 'info'
-    - keywords: ['projectile vomiting infant']
-      alert: "Projectile vomiting in an infant suggests pyloric stenosis. Observe for palpable 'olive' mass in epigastrium."
-      severity: 'critical'
-    - keywords: ['abdominal mass in child', 'palpable mass pediatric']
-      alert: 'Palpable abdominal mass in children may represent Wilms tumor or neuroblastoma. Urgent imaging required.'
-      severity: 'critical'
-    - keywords: ['abdominal distension elderly', 'bloating older adult']
-      alert: 'Abdominal distension in older adults may result from constipation, obstruction, or malignancy. Requires evaluation.'
-      severity: 'warning'
-    - keywords: ['absent bowel sounds elderly']
-      alert: 'Absence of bowel sounds in the elderly may indicate ileus, ischemia, or severe peritonitis.'
-      severity: 'critical'
-    - keywords: ['pain after eating', 'postprandial pain']
-      alert: 'Postprandial abdominal pain may suggest chronic mesenteric ischemia, especially in older adults.'
-      severity: 'warning'
-    - keywords: ['abdominal bruising after fall']
-      alert: 'Bruising on abdomen after a fall may indicate internal injury or bleeding. Monitor for hypotension.'
-      severity: 'warning'
-    - keywords: ['umbilical redness newborn']
-      alert: 'Redness around umbilical stump indicates omphalitis; can progress rapidly to sepsis in infants.'
-      severity: 'critical'
-    - keywords: ['visible peristalsis in infant']
-      alert: 'Visible peristalsis in newborn may indicate pyloric stenosis or obstruction. Immediate pediatric review required.'
-      severity: 'critical'
-    # Special Signs & Trauma Findings
-    - keywords: ['abdominal tenderness after trauma', 'pain on palpation post injury']
-      alert: 'Tenderness after blunt trauma raises concern for internal bleeding or organ rupture; monitor vitals and prepare for imaging.'
-      severity: 'critical'
-    - keywords: ['rigid abdomen after accident', 'board-like abdomen trauma']
-      alert: 'A rigid, board-like abdomen following trauma indicates peritoneal irritation or hemorrhage; this is an emergency.'
-      severity: 'critical'
-    - keywords: ['bruising around flanks', 'Grey Turner’s sign trauma']
-      alert: 'Flank bruising (Grey Turner’s sign) following trauma suggests retroperitoneal bleeding or pancreatitis.'
-      severity: 'critical'
-    - keywords: ['abdominal tenderness with hypotension', 'shock with abdominal pain']
-      alert: 'Abdominal pain with hypotension and tachycardia suggests internal bleeding, possibly from ruptured spleen or liver.'
-      severity: 'critical'
-    - keywords: ['seatbelt mark abdomen', 'ecchymosis lower abdomen']
-      alert: 'A horizontal ecchymotic line (seatbelt sign) may indicate underlying bowel or mesenteric injury.'
-      severity: 'critical'
-    - keywords: ['abdominal distension with vomiting post trauma']
-      alert: 'Distension and vomiting following abdominal trauma may suggest bowel perforation or obstruction.'
-      severity: 'critical'
-    - keywords: ['guarding post injury', 'involuntary rigidity after accident']
-      alert: 'Involuntary guarding post trauma indicates peritonitis or internal bleeding; urgent imaging required.'
-      severity: 'critical'
-    - keywords: ['peritoneal signs positive', 'tender with rebound and rigidity']
-      alert: 'Rebound tenderness with rigidity confirms peritoneal inflammation. Requires surgical evaluation.'
-      severity: 'critical'
-    - keywords: ['palpable splenic tip after trauma']
-      alert: 'Palpable spleen after trauma may indicate splenic enlargement or rupture. Monitor for hypotension and refer immediately.'
-      severity: 'critical'
-    - keywords: ['umbilical discoloration trauma']
-      alert: 'Bluish discoloration around umbilicus post trauma (Cullen sign) suggests intraperitoneal bleeding.'
-      severity: 'critical'
+  # Pediatric & Geriatric Abdomen
+  - keywords: ["abdominal distension in newborn"]
+    alert: "Abdominal distension in neonates can indicate intestinal obstruction or Hirschsprung’s disease. Urgent pediatric evaluation needed."
+    severity: "critical"
+  - keywords: ["visible umbilical hernia infant"]
+    alert: "Umbilical hernias in infants are usually benign and close spontaneously by age 2–3."
+    severity: "info"
+  - keywords: ["projectile vomiting infant"]
+    alert: "Projectile vomiting in an infant suggests pyloric stenosis. Observe for palpable 'olive' mass in epigastrium."
+    severity: "critical"
+  - keywords: ["abdominal mass in child", "palpable mass pediatric"]
+    alert: "Palpable abdominal mass in children may represent Wilms tumor or neuroblastoma. Urgent imaging required."
+    severity: "critical"
+  - keywords: ["abdominal distension elderly", "bloating older adult"]
+    alert: "Abdominal distension in older adults may result from constipation, obstruction, or malignancy. Requires evaluation."
+    severity: "warning"
+  - keywords: ["absent bowel sounds elderly"]
+    alert: "Absence of bowel sounds in the elderly may indicate ileus, ischemia, or severe peritonitis."
+    severity: "critical"
+  - keywords: ["pain after eating", "postprandial pain"]
+    alert: "Postprandial abdominal pain may suggest chronic mesenteric ischemia, especially in older adults."
+    severity: "warning"
+  - keywords: ["abdominal bruising after fall"]
+    alert: "Bruising on abdomen after a fall may indicate internal injury or bleeding. Monitor for hypotension."
+    severity: "warning"
+  - keywords: ["umbilical redness newborn"]
+    alert: "Redness around umbilical stump indicates omphalitis; can progress rapidly to sepsis in infants."
+    severity: "critical"
+  - keywords: ["visible peristalsis in infant"]
+    alert: "Visible peristalsis in newborn may indicate pyloric stenosis or obstruction. Immediate pediatric review required."
+    severity: "critical"
+  # Special Signs & Trauma Findings
+  - keywords:
+      ["abdominal tenderness after trauma", "pain on palpation post injury"]
+    alert: "Tenderness after blunt trauma raises concern for internal bleeding or organ rupture; monitor vitals and prepare for imaging."
+    severity: "critical"
+  - keywords: ["rigid abdomen after accident", "board-like abdomen trauma"]
+    alert: "A rigid, board-like abdomen following trauma indicates peritoneal irritation or hemorrhage; this is an emergency."
+    severity: "critical"
+  - keywords: ["bruising around flanks", "Grey Turner’s sign trauma"]
+    alert: "Flank bruising (Grey Turner’s sign) following trauma suggests retroperitoneal bleeding or pancreatitis."
+    severity: "critical"
+  - keywords:
+      ["abdominal tenderness with hypotension", "shock with abdominal pain"]
+    alert: "Abdominal pain with hypotension and tachycardia suggests internal bleeding, possibly from ruptured spleen or liver."
+    severity: "critical"
+  - keywords: ["seatbelt mark abdomen", "ecchymosis lower abdomen"]
+    alert: "A horizontal ecchymotic line (seatbelt sign) may indicate underlying bowel or mesenteric injury."
+    severity: "critical"
+  - keywords: ["abdominal distension with vomiting post trauma"]
+    alert: "Distension and vomiting following abdominal trauma may suggest bowel perforation or obstruction."
+    severity: "critical"
+  - keywords: ["guarding post injury", "involuntary rigidity after accident"]
+    alert: "Involuntary guarding post trauma indicates peritonitis or internal bleeding; urgent imaging required."
+    severity: "critical"
+  - keywords: ["peritoneal signs positive", "tender with rebound and rigidity"]
+    alert: "Rebound tenderness with rigidity confirms peritoneal inflammation. Requires surgical evaluation."
+    severity: "critical"
+  - keywords: ["palpable splenic tip after trauma"]
+    alert: "Palpable spleen after trauma may indicate splenic enlargement or rupture. Monitor for hypotension and refer immediately."
+    severity: "critical"
+  - keywords: ["umbilical discoloration trauma"]
+    alert: "Bluish discoloration around umbilicus post trauma (Cullen sign) suggests intraperitoneal bleeding."
+    severity: "critical"
 
-    # Ascites & Fluid Assessment
-    - keywords: ['abdominal fullness', 'fluid wave positive']
-      alert: 'Abdominal fullness with a positive fluid wave indicates ascites, commonly due to cirrhosis or heart failure.'
-      severity: 'warning'
-    - keywords: ['shifting dullness positive']
-      alert: 'Positive shifting dullness suggests free intraperitoneal fluid, typical of ascites.'
-      severity: 'warning'
-    - keywords: ['fluid thrill positive']
-      alert: 'Palpable fluid thrill confirms large-volume ascites. Assess for signs of portal hypertension.'
-      severity: 'warning'
-    - keywords: ['distended abdomen with dull flanks']
-      alert: 'Flank dullness with central tympany indicates ascites; check for underlying liver disease.'
-      severity: 'warning'
-    - keywords: ['tense ascites', 'taut abdomen with fluid']
-      alert: 'Tense ascites causes discomfort and dyspnea; paracentesis may be required for relief.'
-      severity: 'warning'
-    - keywords: ['umbilical eversion ascites']
-      alert: 'Everted umbilicus with tense abdomen is characteristic of massive ascites.'
-      severity: 'info'
-    - keywords: ['caput medusae ascites', 'dilated veins radiating from umbilicus']
-      alert: 'Caput medusae indicates portal hypertension due to cirrhosis. Document liver signs and order liver function tests.'
-      severity: 'warning'
-    - keywords: ['fluid wave absent', 'negative shifting dullness']
-      alert: 'No evidence of free fluid. Normal finding or mild bloating.'
-      severity: 'none'
-    - keywords: ['ascitic fluid leak from paracentesis site']
-      alert: 'Oozing from paracentesis site indicates continued leak; apply sterile dressing and notify provider.'
-      severity: 'warning'
-    - keywords: ['abdominal girth increased']
-      alert: 'Progressive increase in abdominal girth is a reliable indicator of worsening ascites or obesity; track serially.'
-      severity: 'info'
+  # Ascites & Fluid Assessment
+  - keywords: ["abdominal fullness", "fluid wave positive"]
+    alert: "Abdominal fullness with a positive fluid wave indicates ascites, commonly due to cirrhosis or heart failure."
+    severity: "warning"
+  - keywords: ["shifting dullness positive"]
+    alert: "Positive shifting dullness suggests free intraperitoneal fluid, typical of ascites."
+    severity: "warning"
+  - keywords: ["fluid thrill positive"]
+    alert: "Palpable fluid thrill confirms large-volume ascites. Assess for signs of portal hypertension."
+    severity: "warning"
+  - keywords: ["distended abdomen with dull flanks"]
+    alert: "Flank dullness with central tympany indicates ascites; check for underlying liver disease."
+    severity: "warning"
+  - keywords: ["tense ascites", "taut abdomen with fluid"]
+    alert: "Tense ascites causes discomfort and dyspnea; paracentesis may be required for relief."
+    severity: "warning"
+  - keywords: ["umbilical eversion ascites"]
+    alert: "Everted umbilicus with tense abdomen is characteristic of massive ascites."
+    severity: "info"
+  - keywords:
+      ["caput medusae ascites", "dilated veins radiating from umbilicus"]
+    alert: "Caput medusae indicates portal hypertension due to cirrhosis. Document liver signs and order liver function tests."
+    severity: "warning"
+  - keywords: ["fluid wave absent", "negative shifting dullness"]
+    alert: "No evidence of free fluid. Normal finding or mild bloating."
+    severity: "none"
+  - keywords: ["ascitic fluid leak from paracentesis site"]
+    alert: "Oozing from paracentesis site indicates continued leak; apply sterile dressing and notify provider."
+    severity: "warning"
+  - keywords: ["abdominal girth increased"]
+    alert: "Progressive increase in abdominal girth is a reliable indicator of worsening ascites or obesity; track serially."
+    severity: "info"
 
-    # Hepatic Signs
-    - keywords: ['jaundiced sclera', 'yellow eyes with enlarged liver']
-      alert: 'Jaundice with hepatomegaly indicates hepatic dysfunction or biliary obstruction.'
-      severity: 'warning'
-    - keywords: ['firm irregular liver edge', 'nodular hepatomegaly']
-      alert: 'Firm, nodular liver edge suggests cirrhosis or metastatic disease. Requires ultrasound.'
-      severity: 'critical'
-    - keywords: ['smooth tender liver edge']
-      alert: 'Tender, smooth hepatomegaly is consistent with hepatitis or congestive hepatopathy.'
-      severity: 'warning'
-    - keywords: ['liver span increased', 'palpable liver below costal margin']
-      alert: 'Increased liver span indicates hepatomegaly from fatty liver or infection. Monitor liver enzymes.'
-      severity: 'warning'
-    - keywords: ['liver edge palpable and smooth', 'soft liver margin']
-      alert: 'A soft, smooth palpable liver may be normal in thin individuals. Document as normal variant.'
-      severity: 'none'
-    - keywords: ['liver tenderness with fever']
-      alert: 'Tender liver with fever may indicate hepatic abscess or acute viral hepatitis. Requires further workup.'
-      severity: 'critical'
-    - keywords: ['hepatic bruit', 'sound over liver']
-      alert: 'A hepatic bruit suggests hepatocellular carcinoma or vascular abnormality.'
-      severity: 'warning'
-    - keywords: ['palmar erythema', 'spider angiomas abdomen']
-      alert: 'Palmar erythema and spider nevi are signs of chronic liver disease. Correlate with other hepatic findings.'
-      severity: 'info'
-    - keywords: ['jaundice with distended abdomen', 'ascites with jaundice']
-      alert: 'Ascites and jaundice together indicate decompensated cirrhosis or hepatic failure.'
-      severity: 'critical'
-    - keywords: ['liver edge non-palpable']
-      alert: 'Non-palpable liver is typically normal; no hepatomegaly detected.'
-      severity: 'none'
+  # Hepatic Signs
+  - keywords: ["jaundiced sclera", "yellow eyes with enlarged liver"]
+    alert: "Jaundice with hepatomegaly indicates hepatic dysfunction or biliary obstruction."
+    severity: "warning"
+  - keywords: ["firm irregular liver edge", "nodular hepatomegaly"]
+    alert: "Firm, nodular liver edge suggests cirrhosis or metastatic disease. Requires ultrasound."
+    severity: "critical"
+  - keywords: ["smooth tender liver edge"]
+    alert: "Tender, smooth hepatomegaly is consistent with hepatitis or congestive hepatopathy."
+    severity: "warning"
+  - keywords: ["liver span increased", "palpable liver below costal margin"]
+    alert: "Increased liver span indicates hepatomegaly from fatty liver or infection. Monitor liver enzymes."
+    severity: "warning"
+  - keywords: ["liver edge palpable and smooth", "soft liver margin"]
+    alert: "A soft, smooth palpable liver may be normal in thin individuals. Document as normal variant."
+    severity: "none"
+  - keywords: ["liver tenderness with fever"]
+    alert: "Tender liver with fever may indicate hepatic abscess or acute viral hepatitis. Requires further workup."
+    severity: "critical"
+  - keywords: ["hepatic bruit", "sound over liver"]
+    alert: "A hepatic bruit suggests hepatocellular carcinoma or vascular abnormality."
+    severity: "warning"
+  - keywords: ["palmar erythema", "spider angiomas abdomen"]
+    alert: "Palmar erythema and spider nevi are signs of chronic liver disease. Correlate with other hepatic findings."
+    severity: "info"
+  - keywords: ["jaundice with distended abdomen", "ascites with jaundice"]
+    alert: "Ascites and jaundice together indicate decompensated cirrhosis or hepatic failure."
+    severity: "critical"
+  - keywords: ["liver edge non-palpable"]
+    alert: "Non-palpable liver is typically normal; no hepatomegaly detected."
+    severity: "none"
 
-    # Splenic Findings
-    - keywords: ['palpable spleen tip', 'splenomegaly']
-      alert: 'Palpable spleen tip below costal margin suggests splenomegaly due to infection or portal hypertension.'
-      severity: 'warning'
-    - keywords: ['tender enlarged spleen']
-      alert: 'A tender spleen indicates splenic infarction or acute infection such as mononucleosis.'
-      severity: 'warning'
-    - keywords: ['mass in LUQ non-tender']
-      alert: 'A non-tender LUQ mass likely indicates chronic splenomegaly. Avoid deep palpation to prevent rupture.'
-      severity: 'warning'
-    - keywords: ['enlarged spleen with anemia']
-      alert: 'Splenomegaly with anemia may occur in hemolytic disorders or malaria. Further testing required.'
-      severity: 'warning'
-    - keywords: ['splenic rub heard']
-      alert: 'A friction rub over LUQ indicates splenic infarction or inflammation of capsule.'
-      severity: 'warning'
-    - keywords: ['splenomegaly with fever']
-      alert: 'Enlarged tender spleen with fever suggests infection such as typhoid or endocarditis.'
-      severity: 'warning'
-    - keywords: ['splenic rupture suspected', 'LUQ tenderness after trauma']
-      alert: 'LUQ tenderness and hypotension post trauma indicate possible splenic rupture. Emergency imaging needed.'
-      severity: 'critical'
-    - keywords: ['palpable spleen 2 cm below costal margin']
-      alert: 'Mildly enlarged spleen may occur in viral infection or hematologic disorder. Monitor progression.'
-      severity: 'info'
-    - keywords: ['spleen not palpable']
-      alert: 'Non-palpable spleen is a normal finding in most adults.'
-      severity: 'none'
-    - keywords: ['massive splenomegaly']
-      alert: 'Massive splenomegaly extending to umbilicus occurs in chronic malaria, leukemia, or myelofibrosis.'
-      severity: 'critical'
+  # Splenic Findings
+  - keywords: ["palpable spleen tip", "splenomegaly"]
+    alert: "Palpable spleen tip below costal margin suggests splenomegaly due to infection or portal hypertension."
+    severity: "warning"
+  - keywords: ["tender enlarged spleen"]
+    alert: "A tender spleen indicates splenic infarction or acute infection such as mononucleosis."
+    severity: "warning"
+  - keywords: ["mass in LUQ non-tender"]
+    alert: "A non-tender LUQ mass likely indicates chronic splenomegaly. Avoid deep palpation to prevent rupture."
+    severity: "warning"
+  - keywords: ["enlarged spleen with anemia"]
+    alert: "Splenomegaly with anemia may occur in hemolytic disorders or malaria. Further testing required."
+    severity: "warning"
+  - keywords: ["splenic rub heard"]
+    alert: "A friction rub over LUQ indicates splenic infarction or inflammation of capsule."
+    severity: "warning"
+  - keywords: ["splenomegaly with fever"]
+    alert: "Enlarged tender spleen with fever suggests infection such as typhoid or endocarditis."
+    severity: "warning"
+  - keywords: ["splenic rupture suspected", "LUQ tenderness after trauma"]
+    alert: "LUQ tenderness and hypotension post trauma indicate possible splenic rupture. Emergency imaging needed."
+    severity: "critical"
+  - keywords: ["palpable spleen 2 cm below costal margin"]
+    alert: "Mildly enlarged spleen may occur in viral infection or hematologic disorder. Monitor progression."
+    severity: "info"
+  - keywords: ["spleen not palpable"]
+    alert: "Non-palpable spleen is a normal finding in most adults."
+    severity: "none"
+  - keywords: ["massive splenomegaly"]
+    alert: "Massive splenomegaly extending to umbilicus occurs in chronic malaria, leukemia, or myelofibrosis."
+    severity: "critical"
 
-    # Gastrointestinal Findings
-    - keywords: ['abdominal pain after meals', 'epigastric burning']
-      alert: 'Epigastric burning postprandially suggests gastritis or peptic ulcer disease.'
-      severity: 'warning'
-    - keywords: ['vomiting undigested food', 'delayed gastric emptying']
-      alert: 'Vomiting undigested food after eating may indicate gastric outlet obstruction.'
-      severity: 'warning'
-    - keywords: ['projectile vomiting adult']
-      alert: 'Projectile vomiting in adults suggests increased intracranial pressure or gastric outlet obstruction.'
-      severity: 'critical'
-    - keywords: ['hematemesis', 'vomiting blood']
-      alert: 'Vomiting blood is a sign of upper GI bleeding; requires emergency stabilization and endoscopy.'
-      severity: 'critical'
-    - keywords: ['coffee-ground vomitus']
-      alert: 'Dark, coffee-ground emesis suggests digested blood from upper GI bleed. Monitor vital signs closely.'
-      severity: 'critical'
-    - keywords: ['abdominal bloating after meals']
-      alert: 'Post-meal bloating suggests dyspepsia, delayed gastric emptying, or food intolerance.'
-      severity: 'info'
-    - keywords: ['tender epigastrium radiating to back']
-      alert: 'Epigastric pain radiating to back indicates pancreatitis; check amylase and lipase.'
-      severity: 'critical'
-    - keywords: ['dark stools', 'black tarry stool']
-      alert: 'Melena (black tarry stool) indicates upper GI bleeding; monitor hemoglobin and hemodynamics.'
-      severity: 'critical'
-    - keywords: ['bloody vomitus and abdominal pain']
-      alert: 'Bloody vomitus with abdominal pain suggests peptic ulcer perforation or gastric bleed.'
-      severity: 'critical'
-    - keywords: ['abdominal pain relieved by defecation']
-      alert: 'Pain relief after defecation suggests irritable bowel syndrome (IBS).'
-      severity: 'info'
+  # Gastrointestinal Findings
+  - keywords: ["abdominal pain after meals", "epigastric burning"]
+    alert: "Epigastric burning postprandially suggests gastritis or peptic ulcer disease."
+    severity: "warning"
+  - keywords: ["vomiting undigested food", "delayed gastric emptying"]
+    alert: "Vomiting undigested food after eating may indicate gastric outlet obstruction."
+    severity: "warning"
+  - keywords: ["projectile vomiting adult"]
+    alert: "Projectile vomiting in adults suggests increased intracranial pressure or gastric outlet obstruction."
+    severity: "critical"
+  - keywords: ["hematemesis", "vomiting blood"]
+    alert: "Vomiting blood is a sign of upper GI bleeding; requires emergency stabilization and endoscopy."
+    severity: "critical"
+  - keywords: ["coffee-ground vomitus"]
+    alert: "Dark, coffee-ground emesis suggests digested blood from upper GI bleed. Monitor vital signs closely."
+    severity: "critical"
+  - keywords: ["abdominal bloating after meals"]
+    alert: "Post-meal bloating suggests dyspepsia, delayed gastric emptying, or food intolerance."
+    severity: "info"
+  - keywords: ["tender epigastrium radiating to back"]
+    alert: "Epigastric pain radiating to back indicates pancreatitis; check amylase and lipase."
+    severity: "critical"
+  - keywords: ["dark stools", "black tarry stool"]
+    alert: "Melena (black tarry stool) indicates upper GI bleeding; monitor hemoglobin and hemodynamics."
+    severity: "critical"
+  - keywords: ["bloody vomitus and abdominal pain"]
+    alert: "Bloody vomitus with abdominal pain suggests peptic ulcer perforation or gastric bleed."
+    severity: "critical"
+  - keywords: ["abdominal pain relieved by defecation"]
+    alert: "Pain relief after defecation suggests irritable bowel syndrome (IBS)."
+    severity: "info"
 
-    # Renal & Urinary Findings
-    - keywords: ['CVA tenderness', 'costovertebral angle tenderness']
-      alert: 'Tenderness at the costovertebral angle indicates pyelonephritis or renal inflammation.'
-      severity: 'warning'
-    - keywords: ['flank pain radiating to groin', 'renal colic']
-      alert: 'Severe flank pain radiating to groin indicates renal calculi; urgent evaluation needed.'
-      severity: 'critical'
-    - keywords: ['right flank tenderness', 'tender kidney area']
-      alert: 'Tenderness over right flank suggests renal infection or hydronephrosis.'
-      severity: 'warning'
-    - keywords: ['palpable kidney', 'ballotable kidney']
-      alert: 'Palpable or ballotable kidney indicates hydronephrosis, cyst, or tumor; confirm with ultrasound.'
-      severity: 'warning'
-    - keywords: ['flank mass palpable']
-      alert: 'A palpable flank mass may be due to renal cyst, tumor, or enlarged kidney.'
-      severity: 'warning'
-    - keywords: ['dull ache in flank', 'flank discomfort']
-      alert: 'Dull flank ache may occur with renal congestion, infection, or musculoskeletal strain.'
-      severity: 'info'
-    - keywords: ['CVA tenderness bilateral']
-      alert: 'Bilateral CVA tenderness suggests pyelonephritis or bilateral hydronephrosis.'
-      severity: 'warning'
-    - keywords: ['flank bruising after trauma']
-      alert: 'Flank ecchymosis indicates possible renal injury or retroperitoneal bleeding. Requires imaging.'
-      severity: 'critical'
-    - keywords: ['no CVA tenderness']
-      alert: 'Absence of CVA tenderness suggests normal kidney status or non-renal pain.'
-      severity: 'none'
-    - keywords: ['flank pain with hematuria']
-      alert: 'Flank pain with hematuria is classic for renal calculi. Ensure hydration and urology consult.'
-      severity: 'critical'
+  # Renal & Urinary Findings
+  - keywords: ["CVA tenderness", "costovertebral angle tenderness"]
+    alert: "Tenderness at the costovertebral angle indicates pyelonephritis or renal inflammation."
+    severity: "warning"
+  - keywords: ["flank pain radiating to groin", "renal colic"]
+    alert: "Severe flank pain radiating to groin indicates renal calculi; urgent evaluation needed."
+    severity: "critical"
+  - keywords: ["right flank tenderness", "tender kidney area"]
+    alert: "Tenderness over right flank suggests renal infection or hydronephrosis."
+    severity: "warning"
+  - keywords: ["palpable kidney", "ballotable kidney"]
+    alert: "Palpable or ballotable kidney indicates hydronephrosis, cyst, or tumor; confirm with ultrasound."
+    severity: "warning"
+  - keywords: ["flank mass palpable"]
+    alert: "A palpable flank mass may be due to renal cyst, tumor, or enlarged kidney."
+    severity: "warning"
+  - keywords: ["dull ache in flank", "flank discomfort"]
+    alert: "Dull flank ache may occur with renal congestion, infection, or musculoskeletal strain."
+    severity: "info"
+  - keywords: ["CVA tenderness bilateral"]
+    alert: "Bilateral CVA tenderness suggests pyelonephritis or bilateral hydronephrosis."
+    severity: "warning"
+  - keywords: ["flank bruising after trauma"]
+    alert: "Flank ecchymosis indicates possible renal injury or retroperitoneal bleeding. Requires imaging."
+    severity: "critical"
+  - keywords: ["no CVA tenderness"]
+    alert: "Absence of CVA tenderness suggests normal kidney status or non-renal pain."
+    severity: "none"
+  - keywords: ["flank pain with hematuria"]
+    alert: "Flank pain with hematuria is classic for renal calculi. Ensure hydration and urology consult."
+    severity: "critical"

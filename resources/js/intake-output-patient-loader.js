@@ -8,58 +8,66 @@
  * 5. It replaces the old content and re-initializes all necessary scripts.
  */
 
-document.addEventListener('patient:selected', async (event) => {
+document.addEventListener("patient:selected", async (event) => {
     const { patientId, selectUrl } = event.detail;
-    const formContainer = document.getElementById('form-content-container');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const formContainer = document.getElementById("form-content-container");
+    const csrfToken = document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute("content");
 
     // Get header elements on the current page (may or may not exist)
-    const patientSearchInput = document.getElementById('patient_search_input');
-    const dateSelector = document.getElementById('date_selector');
-    const dayNoSelector = document.getElementById('day_no_selector');
+    const patientSearchInput = document.getElementById("patient_search_input");
+    const dateSelector = document.getElementById("date_selector");
+    const dayNoSelector = document.getElementById("day_no_selector");
 
     // Check if this form *has* date/day selectors (e.g., ADL form)
     const isDateDayForm = dateSelector && dayNoSelector;
 
     if (!formContainer || !selectUrl || !patientId) {
-        console.error('Intake/Output Patient Loader: Missing required data for fetch or patientId.', event.detail);
+        console.error(
+            "Intake/Output Patient Loader: Missing required data for fetch or patientId.",
+            event.detail
+        );
         return;
     }
 
     // Show loading state
-    const overlay = formContainer.querySelector('.form-overlay');
-    if (overlay) overlay.style.display = 'flex';
+    const overlay = formContainer.querySelector(".form-overlay");
+    if (overlay) overlay.style.display = "flex";
 
     try {
         const response = await fetch(selectUrl, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRF-TOKEN': csrfToken,
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-Fetch-Form-Content': 'true', // Custom header to request full form content
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRF-TOKEN": csrfToken,
+                "X-Requested-With": "XMLHttpRequest",
+                "X-Fetch-Form-Content": "true", // Custom header to request full form content
             },
             body: `patient_id=${encodeURIComponent(patientId)}`,
         });
 
-        if (!response.ok) throw new Error(`Server responded with status: ${response.status}`);
+        if (!response.ok)
+            throw new Error(`Server responded with status: ${response.status}`);
 
         const htmlText = await response.text();
         const parser = new DOMParser();
-        const newHtml = parser.parseFromString(htmlText, 'text/html');
+        const newHtml = parser.parseFromString(htmlText, "text/html");
 
         // --- Step 1: Update Header Elements (Date, Day) from the Response ---
 
         // 1. Update patient search input
-        const newPatientSearchInput = newHtml.getElementById('patient_search_input');
+        const newPatientSearchInput = newHtml.getElementById(
+            "patient_search_input"
+        );
         if (patientSearchInput && newPatientSearchInput) {
             patientSearchInput.value = newPatientSearchInput.value;
         }
 
         // 2. Only process Date/Day if the selectors exist on the current page
         if (isDateDayForm) {
-            const newDateSelector = newHtml.getElementById('date_selector');
-            const newDayNoSelector = newHtml.getElementById('day_no_selector');
+            const newDateSelector = newHtml.getElementById("date_selector");
+            const newDayNoSelector = newHtml.getElementById("day_no_selector");
 
             if (newDateSelector) {
                 // Set the value based on the admission date provided by the server response
@@ -74,47 +82,48 @@ document.addEventListener('patient:selected', async (event) => {
         }
 
         // --- Step 2: Replace the Main Form Content ---
-        const newContent = newHtml.getElementById('form-content-container');
+        const newContent = newHtml.getElementById("form-content-container");
 
         if (newContent) {
             formContainer.innerHTML = newContent.innerHTML;
 
             // Re-initialize the searchable dropdown if it exists in the new content
-            if (typeof window.initSearchableDropdown === 'function') {
+            if (typeof window.initSearchableDropdown === "function") {
                 window.initSearchableDropdown();
             }
 
             // --- Step 3: Re-initialize Scripts ---
             // Re-initialize the date-day loader
-            if (typeof window.initializeDateDayLoader === 'function') {
+            if (typeof window.initializeDateDayLoader === "function") {
                 window.initializeDateDayLoader();
             }
 
             // Re-initialize the intake-output CDSS
             // Assuming intakeOutputCdss is a function or object with an init method
-            if (typeof window.intakeOutputCdss === 'function') {
+            if (typeof window.intakeOutputCdss === "function") {
                 window.intakeOutputCdss();
-            } else if (typeof window.intakeOutputCdss?.init === 'function') {
+            } else if (typeof window.intakeOutputCdss?.init === "function") {
                 window.intakeOutputCdss.init();
             }
 
             // Re-initialize the intake-output data loader
-            if (typeof window.initializeIntakeOutputDataLoader === 'function') {
+            if (typeof window.initializeIntakeOutputDataLoader === "function") {
                 window.initializeIntakeOutputDataLoader();
             }
 
+
             // Dispatch a custom event to signal that the form content has been reloaded
-            document.dispatchEvent(
-                new CustomEvent('cdss:form-reloaded', {
-                    bubbles: true,
-                    detail: { formContainer: formContainer },
-                }),
-            );
+            document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {
+                bubbles: true,
+                detail: { formContainer: formContainer }
+            }));
         } else {
-            throw new Error("Intake/Output Patient Loader: Could not find '#form-content-container' in response.");
+            throw new Error(
+                "Intake/Output Patient Loader: Could not find '#form-content-container' in response."
+            );
         }
     } catch (error) {
-        console.error('Intake/Output Patient loading failed:', error);
+        console.error("Intake/Output Patient loading failed:", error);
         window.location.reload(); // Fallback to a full refresh on error
     }
 });

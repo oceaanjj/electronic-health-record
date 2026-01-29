@@ -1,56 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Nurse Login</title>
-        @vite(['resources/css/login-style.css'])
-    </head>
 
-    <body class="login-page">
-        <div class="login-container">
-            <div class="logo-section">
-                <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo" />
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Login</title>
+    @vite(['resources/css/login-style.css'])
+</head>
 
-            <div class="form-section">
-                <p id="upper-line"></p>
-                <div id="form-container">
-                    <p class="role">
-                        NURSE
-                        <strong>LOG IN</strong>
-                    </p>
+<body class="login-page">
+    <div class="login-container">
+        <div class="logo-section">
+            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo">
+        </div>
 
-                    <form action="{{ route('login.authenticate') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="role" value="nurse" />
-                        <label for="nurse_id">Nurse ID / Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter your Nurse ID" />
+        <div class="form-section">
+            <p id="upper-line"></p>
+            <div id="form-container">
 
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" />
+                <p class="role"> NURSE <strong>LOG IN</strong></p>
 
-                        @error('username')
-                            <p style="color: red">{{ $message }}</p>
-                        @enderror
+                <form action="{{ route('login.authenticate') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="role" value="nurse">
+                    <label for="nurse_id">Nurse ID / Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your Nurse ID">
 
-                        @error('password')
-                            <p style="color: red">{{ $message }}</p>
-                        @enderror
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
 
-                        <button type="submit" class="btn-login">Sign In</button>
-                    </form>
+                    @error('username') <p style="color:red;">{{ $message }}</p> @enderror
+                    @error('password') <p style="color:red;">{{ $message }}</p> @enderror
 
-                    <hr />
-                    <div>
-                        <!-- picture ng home icon -->
-                        <a href="{{ route('home') }}" class="return-home">
-                            <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon" />
-                            RETURN HOME
-                        </a>
-                    </div>
+                    <button type="submit" class="btn-login">Sign In</button>
+                </form>
+
+                <hr>
+                <div>
+                    <!-- picture ng home icon -->
+                    <a href="{{ route('home') }}" class="return-home">
+                        <img src="{{ asset('img/home-icon.png') }}" alt="home icon" class="home-icon">
+                        RETURN HOME</a>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

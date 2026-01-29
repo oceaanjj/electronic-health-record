@@ -1,521 +1,521 @@
 hydration_assessment:
-    # CRITICAL Rules (H-CRIT-0001 to H-CRIT-0400)
-    - rule_id: H-CRIT-0001
-      keywords:
-          - 'systolic blood pressure <85'
-          - 'capillary refill >5 seconds'
-          - 'extreme lethargy'
-          - 'Bun/Cr ratio 50:1'
-          - 'acute-hypovolemic-shock-0001'
-      alert: 'CRITICAL: Impending hypovolemic shock. Initiate STAT IV fluid bolus, secure central access, and notify MD immediately.'
-      severity: 'critical'
+  # CRITICAL Rules (H-CRIT-0001 to H-CRIT-0400)
+  - rule_id: H-CRIT-0001
+    keywords:
+      - "systolic blood pressure <85"
+      - "capillary refill >5 seconds"
+      - "extreme lethargy"
+      - "Bun/Cr ratio 50:1"
+      - "acute-hypovolemic-shock-0001"
+    alert: "CRITICAL: Impending hypovolemic shock. Initiate STAT IV fluid bolus, secure central access, and notify MD immediately."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0002
-      keywords:
-          - 'anuria for 8 hours'
-          - 'pulmonary edema'
-          - 'SaO2 drop 85%'
-          - 'history of ESRD'
-          - 'anuric-aki-respiratory-0002'
-      alert: 'CRITICAL: Anuric AKI with acute respiratory compromise. Elevate HOB, administer oxygen, and notify Renal/Pulmonary MD STAT.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0002
+    keywords:
+      - "anuria for 8 hours"
+      - "pulmonary edema"
+      - "SaO2 drop 85%"
+      - "history of ESRD"
+      - "anuric-aki-respiratory-0002"
+    alert: "CRITICAL: Anuric AKI with acute respiratory compromise. Elevate HOB, administer oxygen, and notify Renal/Pulmonary MD STAT."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0003
-      keywords:
-          - 'sodium 165 mEq/L'
-          - 'frank seizure documented'
-          - 'GCS drop 3 points'
-          - 'severe confusion'
-          - 'hypernatremia-seizure-crisis-0003'
-      alert: 'CRITICAL: Severe hypernatremia with neurological crisis. Institute seizure precautions. Initiate controlled hypotonic fluid replacement STAT.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0003
+    keywords:
+      - "sodium 165 mEq/L"
+      - "frank seizure documented"
+      - "GCS drop 3 points"
+      - "severe confusion"
+      - "hypernatremia-seizure-crisis-0003"
+    alert: "CRITICAL: Severe hypernatremia with neurological crisis. Institute seizure precautions. Initiate controlled hypotonic fluid replacement STAT."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0004
-      keywords:
-          - 'potassium 2.5 mEq/L'
-          - 'cardiac arrhythmia'
-          - 'severe muscle weakness'
-          - 'receiving Digoxin'
-          - 'critical-hypokalemia-digoxin-0004'
-      alert: 'CRITICAL: Severe hypokalemia (arrhythmia risk, Digoxin toxicity). Hold diuretics, initiate cardiac monitoring, and administer potassium replacement per protocol.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0004
+    keywords:
+      - "potassium 2.5 mEq/L"
+      - "cardiac arrhythmia"
+      - "severe muscle weakness"
+      - "receiving Digoxin"
+      - "critical-hypokalemia-digoxin-0004"
+    alert: "CRITICAL: Severe hypokalemia (arrhythmia risk, Digoxin toxicity). Hold diuretics, initiate cardiac monitoring, and administer potassium replacement per protocol."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0005
-      keywords:
-          - 'vomiting persistent bile-stained'
-          - 'HR 140 bpm'
-          - 'BP 80/40 mmHg'
-          - 'rapid weight loss 5 kg'
-          - 'massive-gi-fluid-loss-0005'
-      alert: 'CRITICAL: Massive GI fluid losses leading to shock. Aggressive IV fluid resuscitation required. Consult GI and monitor for metabolic acidosis.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0005
+    keywords:
+      - "vomiting persistent bile-stained"
+      - "HR 140 bpm"
+      - "BP 80/40 mmHg"
+      - "rapid weight loss 5 kg"
+      - "massive-gi-fluid-loss-0005"
+    alert: "CRITICAL: Massive GI fluid losses leading to shock. Aggressive IV fluid resuscitation required. Consult GI and monitor for metabolic acidosis."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0006
-      keywords:
-          - 'sodium 118 mEq/L'
-          - 'status epilepticus'
-          - 'cerebral edema suspected'
-          - 'history of psychogenic polydipsia'
-          - 'extreme-hyponatremia-seizure-0006'
-      alert: 'CRITICAL: Extreme symptomatic hyponatremia. Restrict free water. Prepare for hypertonic saline administration under strict monitoring.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0006
+    keywords:
+      - "sodium 118 mEq/L"
+      - "status epilepticus"
+      - "cerebral edema suspected"
+      - "history of psychogenic polydipsia"
+      - "extreme-hyponatremia-seizure-0006"
+    alert: "CRITICAL: Extreme symptomatic hyponatremia. Restrict free water. Prepare for hypertonic saline administration under strict monitoring."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0007
-      keywords:
-          - 'potassium 7.0 mEq/L'
-          - 'peaked T-waves EKG'
-          - 'history of CKD stage 5'
-          - 'urine output zero'
-          - 'life-threatening-hyperkalemia-0007'
-      alert: 'CRITICAL: Life-threatening hyperkalemia with EKG changes. Administer Calcium, Insulin/Dextrose, and prepare for dialysis. Notify MD STAT.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0007
+    keywords:
+      - "potassium 7.0 mEq/L"
+      - "peaked T-waves EKG"
+      - "history of CKD stage 5"
+      - "urine output zero"
+      - "life-threatening-hyperkalemia-0007"
+    alert: "CRITICAL: Life-threatening hyperkalemia with EKG changes. Administer Calcium, Insulin/Dextrose, and prepare for dialysis. Notify MD STAT."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0008
-      keywords:
-          - 'JVD >15 cm'
-          - 'severe respiratory distress'
-          - 'new S3 gallop noted'
-          - 'refractory to max diuretic dose'
-          - 'refractory-cardiac-overload-0008'
-      alert: 'CRITICAL: Refractory volume overload causing cardiac strain. Contact cardiology/RRT for urgent intervention (e.g., Ultrafiltration/Vasodilators).'
-      severity: 'critical'
+  - rule_id: H-CRIT-0008
+    keywords:
+      - "JVD >15 cm"
+      - "severe respiratory distress"
+      - "new S3 gallop noted"
+      - "refractory to max diuretic dose"
+      - "refractory-cardiac-overload-0008"
+    alert: "CRITICAL: Refractory volume overload causing cardiac strain. Contact cardiology/RRT for urgent intervention (e.g., Ultrafiltration/Vasodilators)."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0009
-      keywords:
-          - 'urine specific gravity 1.050'
-          - 'Bun/Cr ratio 60:1'
-          - 'profound lethargy'
-          - 'no oral intake 72 hours'
-          - 'extreme-hemoconcentration-0009'
-      alert: 'CRITICAL: Extreme hemoconcentration/dehydration. Requires immediate initiation of IV hydration. Assess for altered mental status causes.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0009
+    keywords:
+      - "urine specific gravity 1.050"
+      - "Bun/Cr ratio 60:1"
+      - "profound lethargy"
+      - "no oral intake 72 hours"
+      - "extreme-hemoconcentration-0009"
+    alert: "CRITICAL: Extreme hemoconcentration/dehydration. Requires immediate initiation of IV hydration. Assess for altered mental status causes."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0010
-      keywords:
-          - 'Hct 60%'
-          - 'BP dropping rapidly'
-          - 'confusion new onset'
-          - 'receiving blood products'
-          - 'transfusion-induced-deficit-0010'
-      alert: 'CRITICAL: Suspected circulatory shock or severe volume shift during transfusion. Hold blood products. Assess for transfusion reaction/volume depletion.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0010
+    keywords:
+      - "Hct 60%"
+      - "BP dropping rapidly"
+      - "confusion new onset"
+      - "receiving blood products"
+      - "transfusion-induced-deficit-0010"
+    alert: "CRITICAL: Suspected circulatory shock or severe volume shift during transfusion. Hold blood products. Assess for transfusion reaction/volume depletion."
+    severity: "critical"
 
-    # ... (Rules H-CRIT-0011 to H-CRIT-0390 continue in this systematic, unique pattern) ...
+  # ... (Rules H-CRIT-0011 to H-CRIT-0390 continue in this systematic, unique pattern) ...
 
-    - rule_id: H-CRIT-0391
-      keywords:
-          - 'sodium 170 mEq/L'
-          - 'oliguria <0.3ml/kg/hr x 6h'
-          - 'severe generalized weakness'
-          - 'receiving enteral feeds only'
-          - 'tube-feed-hypernatremia-0391'
-      alert: 'CRITICAL: Severe hypernatremia due to insufficient free water in tube feeds. Hold feeds, administer free water bolus (IV/NGT), and notify MD.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0391
+    keywords:
+      - "sodium 170 mEq/L"
+      - "oliguria <0.3ml/kg/hr x 6h"
+      - "severe generalized weakness"
+      - "receiving enteral feeds only"
+      - "tube-feed-hypernatremia-0391"
+    alert: "CRITICAL: Severe hypernatremia due to insufficient free water in tube feeds. Hold feeds, administer free water bolus (IV/NGT), and notify MD."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0392
-      keywords:
-          - 'calcium 6.5 mg/dL'
-          - 'laryngeal stridor'
-          - "positive Chvostek's sign"
-          - 'recent neck surgery'
-          - 'critical-hypocalcemia-larynx-0392'
-      alert: 'CRITICAL: Symptomatic hypocalcemia with airway risk. Administer IV calcium gluconate STAT. Monitor airway patency closely.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0392
+    keywords:
+      - "calcium 6.5 mg/dL"
+      - "laryngeal stridor"
+      - "positive Chvostek's sign"
+      - "recent neck surgery"
+      - "critical-hypocalcemia-larynx-0392"
+    alert: "CRITICAL: Symptomatic hypocalcemia with airway risk. Administer IV calcium gluconate STAT. Monitor airway patency closely."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0393
-      keywords:
-          - 'I/O negative 4000ml in 48h'
-          - 'BP 90/60 mmHg'
-          - 'tachycardia 120 bpm'
-          - 'post-surgical massive drain output'
-          - 'massive-drain-deficit-0393'
-      alert: 'CRITICAL: Massive uncompensated drain output causing severe deficit/shock risk. Notify surgical team and MD STAT for aggressive volume replacement.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0393
+    keywords:
+      - "I/O negative 4000ml in 48h"
+      - "BP 90/60 mmHg"
+      - "tachycardia 120 bpm"
+      - "post-surgical massive drain output"
+      - "massive-drain-deficit-0393"
+    alert: "CRITICAL: Massive uncompensated drain output causing severe deficit/shock risk. Notify surgical team and MD STAT for aggressive volume replacement."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0394
-      keywords:
-          - 'potassium 7.5 mEq/L'
-          - 'ventricular fibrillation documented'
-          - 'Creatinine 4.0 mg/dL'
-          - 'receiving ACE inhibitor'
-          - 'malignant-hyperkalemia-acei-0394'
-      alert: 'CRITICAL: Malignant hyperkalemia with V-Fib risk. Hold ACEi and initiate emergency hyperkalemia protocol (Calcium, Insulin/Dextrose).'
-      severity: 'critical'
+  - rule_id: H-CRIT-0394
+    keywords:
+      - "potassium 7.5 mEq/L"
+      - "ventricular fibrillation documented"
+      - "Creatinine 4.0 mg/dL"
+      - "receiving ACE inhibitor"
+      - "malignant-hyperkalemia-acei-0394"
+    alert: "CRITICAL: Malignant hyperkalemia with V-Fib risk. Hold ACEi and initiate emergency hyperkalemia protocol (Calcium, Insulin/Dextrose)."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0395
-      keywords:
-          - 'systolic blood pressure <90'
-          - 'urine output <0.5ml/kg/hr x 4h'
-          - 'dry oral mucosa'
-          - 'Bun/Cr ratio 45:1'
-          - 'impending-prerenal-shock-0395'
-      alert: 'CRITICAL: Impending prerenal shock (low BP, oliguria, high BUN/Cr). Requires STAT fluid challenge and MD notification.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0395
+    keywords:
+      - "systolic blood pressure <90"
+      - "urine output <0.5ml/kg/hr x 4h"
+      - "dry oral mucosa"
+      - "Bun/Cr ratio 45:1"
+      - "impending-prerenal-shock-0395"
+    alert: "CRITICAL: Impending prerenal shock (low BP, oliguria, high BUN/Cr). Requires STAT fluid challenge and MD notification."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0396
-      keywords:
-          - 'sodium 115 mEq/L'
-          - 'severe headache new onset'
-          - 'gait instability leading to fall'
-          - 'patient elderly frailty'
-          - 'hyponatremia-fall-risk-0396'
-      alert: 'CRITICAL: Severe hyponatremia causing fall/injury. Implement strict bed rest, neuro checks, and prepare for controlled sodium correction.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0396
+    keywords:
+      - "sodium 115 mEq/L"
+      - "severe headache new onset"
+      - "gait instability leading to fall"
+      - "patient elderly frailty"
+      - "hyponatremia-fall-risk-0396"
+    alert: "CRITICAL: Severe hyponatremia causing fall/injury. Implement strict bed rest, neuro checks, and prepare for controlled sodium correction."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0397
-      keywords:
-          - 'JVD >12 cm'
-          - 'crackles noted up to mid-scapula'
-          - 'dyspnea at rest'
-          - 'diuretic dose maxed'
-          - 'refractory-pulmonary-overload-0397'
-      alert: 'CRITICAL: Refractory volume overload with severe pulmonary congestion. Elevate HOB, administer oxygen. Urgent consultation needed for fluid removal.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0397
+    keywords:
+      - "JVD >12 cm"
+      - "crackles noted up to mid-scapula"
+      - "dyspnea at rest"
+      - "diuretic dose maxed"
+      - "refractory-pulmonary-overload-0397"
+    alert: "CRITICAL: Refractory volume overload with severe pulmonary congestion. Elevate HOB, administer oxygen. Urgent consultation needed for fluid removal."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0398
-      keywords:
-          - 'Hct 62%'
-          - 'profound confusion'
-          - 'oliguria <300ml/24h'
-          - 'hyperglycemia >400 mg/dL'
-          - 'hyperglycemic-dehydration-0398'
-      alert: 'CRITICAL: Severe dehydration secondary to hyperosmolar state (high Hct/Glucose). Requires IV fluid and insulin management. Notify MD STAT.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0398
+    keywords:
+      - "Hct 62%"
+      - "profound confusion"
+      - "oliguria <300ml/24h"
+      - "hyperglycemia >400 mg/dL"
+      - "hyperglycemic-dehydration-0398"
+    alert: "CRITICAL: Severe dehydration secondary to hyperosmolar state (high Hct/Glucose). Requires IV fluid and insulin management. Notify MD STAT."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0399
-      keywords:
-          - 'potassium 8.0 mEq/L'
-          - 'wide QRS complexes EKG'
-          - 'acidosis pH 7.1'
-          - 'receiving high-dose succinylcholine'
-          - 'iatrogenic-hyperkalemia-0399'
-      alert: 'CRITICAL: Iatrogenic hyperkalemia risk (wide QRS). Initiate emergency protocol immediately. Hold K+ containing solutions.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0399
+    keywords:
+      - "potassium 8.0 mEq/L"
+      - "wide QRS complexes EKG"
+      - "acidosis pH 7.1"
+      - "receiving high-dose succinylcholine"
+      - "iatrogenic-hyperkalemia-0399"
+    alert: "CRITICAL: Iatrogenic hyperkalemia risk (wide QRS). Initiate emergency protocol immediately. Hold K+ containing solutions."
+    severity: "critical"
 
-    - rule_id: H-CRIT-0400
-      keywords:
-          - 'sodium 160 mEq/L'
-          - 'BUN 60 mg/dL'
-          - 'fever 39.5C'
-          - 'altered mental status'
-          - 'hypernatremia-febrile-aki-0400'
-      alert: 'CRITICAL: Severe hypernatremia, fever, and AKI. Requires cooling measures and controlled hypotonic IV fluid administration. Notify MD STAT.'
-      severity: 'critical'
+  - rule_id: H-CRIT-0400
+    keywords:
+      - "sodium 160 mEq/L"
+      - "BUN 60 mg/dL"
+      - "fever 39.5C"
+      - "altered mental status"
+      - "hypernatremia-febrile-aki-0400"
+    alert: "CRITICAL: Severe hypernatremia, fever, and AKI. Requires cooling measures and controlled hypotonic IV fluid administration. Notify MD STAT."
+    severity: "critical"
 
-    # WARNING Rules (H-WARN-0401 to H-WARN-0800)
-    - rule_id: H-WARN-0401
-      keywords:
-          - 'orthostatic systolic drop 20 mmHg'
-          - 'tachycardia persistent 105'
-          - 'reports feeling lightheaded'
-          - 'I/O negative 1500ml in 24h'
-          - 'moderate-orthostatic-volume-0401'
-      alert: 'WARNING: Moderate orthostatic hypotension confirming volume deficit. Implement fall precautions. Increase oral fluids and notify MD for possible IV orders.'
-      severity: 'warning'
+  # WARNING Rules (H-WARN-0401 to H-WARN-0800)
+  - rule_id: H-WARN-0401
+    keywords:
+      - "orthostatic systolic drop 20 mmHg"
+      - "tachycardia persistent 105"
+      - "reports feeling lightheaded"
+      - "I/O negative 1500ml in 24h"
+      - "moderate-orthostatic-volume-0401"
+    alert: "WARNING: Moderate orthostatic hypotension confirming volume deficit. Implement fall precautions. Increase oral fluids and notify MD for possible IV orders."
+    severity: "warning"
 
-    - rule_id: H-WARN-0402
-      keywords:
-          - 'mild edema bilateral +2'
-          - 'weight gain 3 kg overnight'
-          - 'I/O positive 2000ml in 24h'
-          - 'diuretic dose needed'
-          - 'acute-weight-gain-2kg-0402'
-      alert: 'WARNING: Significant positive fluid balance and rapid weight gain. Restrict fluids and notify provider for possible change in diuretic dose.'
-      severity: 'warning'
+  - rule_id: H-WARN-0402
+    keywords:
+      - "mild edema bilateral +2"
+      - "weight gain 3 kg overnight"
+      - "I/O positive 2000ml in 24h"
+      - "diuretic dose needed"
+      - "acute-weight-gain-2kg-0402"
+    alert: "WARNING: Significant positive fluid balance and rapid weight gain. Restrict fluids and notify provider for possible change in diuretic dose."
+    severity: "warning"
 
-    - rule_id: H-WARN-0403
-      keywords:
-          - 'potassium 3.0 mEq/L'
-          - 'receiving high-dose diuretics'
-          - 'mild muscle cramps'
-          - 'history of pre-renal failure'
-          - 'moderate-hypokalemia-diuretic-0403'
-      alert: 'WARNING: Moderate hypokalemia. Initiate oral potassium supplement and monitor closely. Recheck labs in 4-6 hours, notify MD.'
-      severity: 'warning'
+  - rule_id: H-WARN-0403
+    keywords:
+      - "potassium 3.0 mEq/L"
+      - "receiving high-dose diuretics"
+      - "mild muscle cramps"
+      - "history of pre-renal failure"
+      - "moderate-hypokalemia-diuretic-0403"
+    alert: "WARNING: Moderate hypokalemia. Initiate oral potassium supplement and monitor closely. Recheck labs in 4-6 hours, notify MD."
+    severity: "warning"
 
-    - rule_id: H-WARN-0404
-      keywords:
-          - 'urine output <30 ml/hr x 6h'
-          - 'BUN 35 mg/dL'
-          - 'postural dizziness'
-          - 'needs help to walk'
-          - 'early-oliguria-prerenal-0404'
-      alert: 'WARNING: Early sign of oliguria/prerenal state. Increase oral intake immediately and recheck output hourly. Notify provider if output does not improve.'
-      severity: 'warning'
+  - rule_id: H-WARN-0404
+    keywords:
+      - "urine output <30 ml/hr x 6h"
+      - "BUN 35 mg/dL"
+      - "postural dizziness"
+      - "needs help to walk"
+      - "early-oliguria-prerenal-0404"
+    alert: "WARNING: Early sign of oliguria/prerenal state. Increase oral intake immediately and recheck output hourly. Notify provider if output does not improve."
+    severity: "warning"
 
-    - rule_id: H-WARN-0405
-      keywords:
-          - 'sodium 148 mEq/L'
-          - 'increased thirst'
-          - 'confusion intermittent'
-          - 'history of diabetes insipidus'
-          - 'pre-hypernatremic-di-0405'
-      alert: 'WARNING: Mild hypernatremia in high-risk DI patient. Monitor neurological status and encourage free water intake. Notify MD for possible vasopressin adjustment.'
-      severity: 'warning'
+  - rule_id: H-WARN-0405
+    keywords:
+      - "sodium 148 mEq/L"
+      - "increased thirst"
+      - "confusion intermittent"
+      - "history of diabetes insipidus"
+      - "pre-hypernatremic-di-0405"
+    alert: "WARNING: Mild hypernatremia in high-risk DI patient. Monitor neurological status and encourage free water intake. Notify MD for possible vasopressin adjustment."
+    severity: "warning"
 
-    # ... (Rules H-WARN-0406 to H-WARN-0790 continue in this systematic, unique pattern) ...
+  # ... (Rules H-WARN-0406 to H-WARN-0790 continue in this systematic, unique pattern) ...
 
-    - rule_id: H-WARN-0791
-      keywords:
-          - 'JVD visible at 45 degrees'
-          - 'trace crackles in lung bases'
-          - 'I/O positive 1000ml x 3 days'
-          - 'history of chronic renal failure'
-          - 'chronic-volume-overload-0791'
-      alert: 'WARNING: Chronic volume overload (positive I/O trend, trace crackles). Notify MD of trend. Maintain strict fluid and sodium restrictions.'
-      severity: 'warning'
+  - rule_id: H-WARN-0791
+    keywords:
+      - "JVD visible at 45 degrees"
+      - "trace crackles in lung bases"
+      - "I/O positive 1000ml x 3 days"
+      - "history of chronic renal failure"
+      - "chronic-volume-overload-0791"
+    alert: "WARNING: Chronic volume overload (positive I/O trend, trace crackles). Notify MD of trend. Maintain strict fluid and sodium restrictions."
+    severity: "warning"
 
-    - rule_id: H-WARN-0792
-      keywords:
-          - 'urine output <400ml/24h'
-          - 'BUN 40 mg/dL'
-          - 'Hct 52%'
-          - 'dry oral mucosa'
-          - 'oliguria-high-hct-0792'
-      alert: 'WARNING: Oliguria and high Hct indicating hemoconcentration. Increase oral/IV hydration. Notify MD for possible AKI staging.'
-      severity: 'warning'
+  - rule_id: H-WARN-0792
+    keywords:
+      - "urine output <400ml/24h"
+      - "BUN 40 mg/dL"
+      - "Hct 52%"
+      - "dry oral mucosa"
+      - "oliguria-high-hct-0792"
+    alert: "WARNING: Oliguria and high Hct indicating hemoconcentration. Increase oral/IV hydration. Notify MD for possible AKI staging."
+    severity: "warning"
 
-    - rule_id: H-WARN-0793
-      keywords:
-          - 'sodium 130 mEq/L'
-          - 'Nausea noted'
-          - 'patient on SSRI and diuretic'
-          - 'mild gait instability'
-          - 'ssri-diuretic-hyponatremia-0793'
-      alert: 'WARNING: Hyponatremia risk due to polypharmacy. Notify MD of lab value for potential medication adjustment. Implement fall precautions.'
-      severity: 'warning'
+  - rule_id: H-WARN-0793
+    keywords:
+      - "sodium 130 mEq/L"
+      - "Nausea noted"
+      - "patient on SSRI and diuretic"
+      - "mild gait instability"
+      - "ssri-diuretic-hyponatremia-0793"
+    alert: "WARNING: Hyponatremia risk due to polypharmacy. Notify MD of lab value for potential medication adjustment. Implement fall precautions."
+    severity: "warning"
 
-    - rule_id: H-WARN-0794
-      keywords:
-          - 'potassium 5.5 mEq/L'
-          - 'patient on ACE inhibitor'
-          - 'Creatinine 2.0 mg/dL'
-          - 'urine output decreasing trend'
-          - 'acei-hyperkalemia-risk-0794'
-      alert: 'WARNING: Mild hyperkalemia in high-risk patient (ACEi/CKD). Hold K+ supplements/sparing diuretics. Recheck K+ in 2 hours.'
-      severity: 'warning'
+  - rule_id: H-WARN-0794
+    keywords:
+      - "potassium 5.5 mEq/L"
+      - "patient on ACE inhibitor"
+      - "Creatinine 2.0 mg/dL"
+      - "urine output decreasing trend"
+      - "acei-hyperkalemia-risk-0794"
+    alert: "WARNING: Mild hyperkalemia in high-risk patient (ACEi/CKD). Hold K+ supplements/sparing diuretics. Recheck K+ in 2 hours."
+    severity: "warning"
 
-    - rule_id: H-WARN-0795
-      keywords:
-          - 'abdominal girth increasing'
-          - 'peripheral edema +2'
-          - 'history of cirrhosis'
-          - 'low urine sodium'
-          - 'compensated-ascites-worsening-0795'
-      alert: 'WARNING: Worsening fluid retention/ascites in cirrhosis. Notify hepatology/MD. Consider maximizing spironolactone/diuretic dose.'
-      severity: 'warning'
+  - rule_id: H-WARN-0795
+    keywords:
+      - "abdominal girth increasing"
+      - "peripheral edema +2"
+      - "history of cirrhosis"
+      - "low urine sodium"
+      - "compensated-ascites-worsening-0795"
+    alert: "WARNING: Worsening fluid retention/ascites in cirrhosis. Notify hepatology/MD. Consider maximizing spironolactone/diuretic dose."
+    severity: "warning"
 
-    - rule_id: H-WARN-0796
-      keywords:
-          - 'orthostatic HR increase 25 bpm'
-          - 'dizziness upon standing'
-          - 'dry flaky skin'
-          - 'intake less than 1000ml'
-          - 'moderate-compensated-deficit-0796'
-      alert: 'WARNING: Moderate compensated deficit (high HR, low intake). Aggressively push oral fluids. Monitor vitals and I/O hourly.'
-      severity: 'warning'
+  - rule_id: H-WARN-0796
+    keywords:
+      - "orthostatic HR increase 25 bpm"
+      - "dizziness upon standing"
+      - "dry flaky skin"
+      - "intake less than 1000ml"
+      - "moderate-compensated-deficit-0796"
+    alert: "WARNING: Moderate compensated deficit (high HR, low intake). Aggressively push oral fluids. Monitor vitals and I/O hourly."
+    severity: "warning"
 
-    - rule_id: H-WARN-0797
-      keywords:
-          - 'Hct 55%'
-          - 'urine specific gravity 1.035'
-          - 'severe headache'
-          - 'elderly patient with fever'
-          - 'febrile-geriatric-dehydration-0797'
-      alert: 'WARNING: Moderate to severe dehydration in febrile elderly patient. Aggressive IV/Oral rehydration necessary. Notify MD.'
-      severity: 'warning'
+  - rule_id: H-WARN-0797
+    keywords:
+      - "Hct 55%"
+      - "urine specific gravity 1.035"
+      - "severe headache"
+      - "elderly patient with fever"
+      - "febrile-geriatric-dehydration-0797"
+    alert: "WARNING: Moderate to severe dehydration in febrile elderly patient. Aggressive IV/Oral rehydration necessary. Notify MD."
+    severity: "warning"
 
-    - rule_id: H-WARN-0798
-      keywords:
-          - 'vomiting intermittent x 48h'
-          - 'dry oral mucosa'
-          - 'mild confusion'
-          - 'patient refusing ORS'
-          - 'protracted-vomiting-refusal-0798'
-      alert: 'WARNING: Protracted vomiting leading to deficit. Try alternative ORS flavoring. If refusal persists, request IV hydration order.'
-      severity: 'warning'
+  - rule_id: H-WARN-0798
+    keywords:
+      - "vomiting intermittent x 48h"
+      - "dry oral mucosa"
+      - "mild confusion"
+      - "patient refusing ORS"
+      - "protracted-vomiting-refusal-0798"
+    alert: "WARNING: Protracted vomiting leading to deficit. Try alternative ORS flavoring. If refusal persists, request IV hydration order."
+    severity: "warning"
 
-    - rule_id: H-WARN-0799
-      keywords:
-          - 'sodium 152 mEq/L'
-          - 'thirst persistent'
-          - 'BUN 40 mg/dL'
-          - 'receiving tube feeds high protein'
-          - 'tube-feed-hyperosmolar-0799'
-      alert: 'WARNING: Hyperosmolar state due to high protein tube feed. Increase free water flushes. Notify dietician/MD for feed adjustment.'
-      severity: 'warning'
+  - rule_id: H-WARN-0799
+    keywords:
+      - "sodium 152 mEq/L"
+      - "thirst persistent"
+      - "BUN 40 mg/dL"
+      - "receiving tube feeds high protein"
+      - "tube-feed-hyperosmolar-0799"
+    alert: "WARNING: Hyperosmolar state due to high protein tube feed. Increase free water flushes. Notify dietician/MD for feed adjustment."
+    severity: "warning"
 
-    - rule_id: H-WARN-0800
-      keywords:
-          - 'JVD visible at 30 degrees'
-          - 'daily weight up 1.5 kg'
-          - 'history of heart failure'
-          - 'trace peripheral edema'
-          - 'early-chf-exacerbation-0800'
-      alert: 'WARNING: Early sign of CHF exacerbation. Restrict fluids and sodium. Elevate HOB. Notify provider for possible diuretic dose increase.'
-      severity: 'warning'
+  - rule_id: H-WARN-0800
+    keywords:
+      - "JVD visible at 30 degrees"
+      - "daily weight up 1.5 kg"
+      - "history of heart failure"
+      - "trace peripheral edema"
+      - "early-chf-exacerbation-0800"
+    alert: "WARNING: Early sign of CHF exacerbation. Restrict fluids and sodium. Elevate HOB. Notify provider for possible diuretic dose increase."
+    severity: "warning"
 
-    # ADVISORY Rules (H-ADVS-0801 to H-ADVS-1499)
-    - rule_id: H-ADVS-0801
-      keywords:
-          - 'mild thirst noted'
-          - 'urine color dark yellow'
-          - 'I/O negative 500ml in 24h'
-          - 'patient compliant with oral intake'
-          - 'low-grade-dehydration-500-0801'
-      alert: 'ADVISORY: Mild deficit noted. Increase fluid goal by 500ml and continue monitoring I/O hourly.'
-      severity: 'advisory'
+  # ADVISORY Rules (H-ADVS-0801 to H-ADVS-1499)
+  - rule_id: H-ADVS-0801
+    keywords:
+      - "mild thirst noted"
+      - "urine color dark yellow"
+      - "I/O negative 500ml in 24h"
+      - "patient compliant with oral intake"
+      - "low-grade-dehydration-500-0801"
+    alert: "ADVISORY: Mild deficit noted. Increase fluid goal by 500ml and continue monitoring I/O hourly."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-0802
-      keywords:
-          - 'peripheral edema trace'
-          - 'daily weight up 0.5 kg'
-          - 'input 500ml > output in 24h'
-          - 'patient sedentary'
-          - 'minimal-fluid-retention-0802'
-      alert: 'ADVISORY: Minimal fluid retention noted. Encourage mild activity and re-enforce current fluid restriction.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-0802
+    keywords:
+      - "peripheral edema trace"
+      - "daily weight up 0.5 kg"
+      - "input 500ml > output in 24h"
+      - "patient sedentary"
+      - "minimal-fluid-retention-0802"
+    alert: "ADVISORY: Minimal fluid retention noted. Encourage mild activity and re-enforce current fluid restriction."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-0803
-      keywords:
-          - 'patient prefers juice only'
-          - 'refuses plain water'
-          - 'intake of sugar high'
-          - 'urine specific gravity 1.025'
-          - 'poor-fluid-choice-sugar-0803'
-      alert: 'ADVISORY: Intake quality concern (high sugar). Educate patient on the importance of water and offer sugar-free alternatives.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-0803
+    keywords:
+      - "patient prefers juice only"
+      - "refuses plain water"
+      - "intake of sugar high"
+      - "urine specific gravity 1.025"
+      - "poor-fluid-choice-sugar-0803"
+    alert: "ADVISORY: Intake quality concern (high sugar). Educate patient on the importance of water and offer sugar-free alternatives."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-0804
-      keywords:
-          - 'dry flaky skin'
-          - 'needs consistent reminders'
-          - 'patient elderly dementia'
-          - 'intake below goal consistently'
-          - 'non-compliant-geriatric-0804'
-      alert: 'ADVISORY: Chronic low intake in high-risk patient. Implement scheduled, timed fluid rounds (e.g., every hour) to ensure minimum intake.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-0804
+    keywords:
+      - "dry flaky skin"
+      - "needs consistent reminders"
+      - "patient elderly dementia"
+      - "intake below goal consistently"
+      - "non-compliant-geriatric-0804"
+    alert: "ADVISORY: Chronic low intake in high-risk patient. Implement scheduled, timed fluid rounds (e.g., every hour) to ensure minimum intake."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-0805
-      keywords:
-          - 'urine output normal'
-          - 'mild constipation'
-          - 'fiber intake low'
-          - 'needs more water with meals'
-          - 'hydration-related-constipation-0805'
-      alert: 'ADVISORY: Mild constipation may be related to hydration status. Encourage water intake with meals to soften stool.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-0805
+    keywords:
+      - "urine output normal"
+      - "mild constipation"
+      - "fiber intake low"
+      - "needs more water with meals"
+      - "hydration-related-constipation-0805"
+    alert: "ADVISORY: Mild constipation may be related to hydration status. Encourage water intake with meals to soften stool."
+    severity: "advisory"
 
-    # ... (Rules H-ADVS-0806 to H-ADVS-1489 continue in this systematic, unique pattern) ...
+  # ... (Rules H-ADVS-0806 to H-ADVS-1489 continue in this systematic, unique pattern) ...
 
-    - rule_id: H-ADVS-1490
-      keywords:
-          - 'sodium 134 mEq/L'
-          - 'patient on SSRI'
-          - 'no symptoms reported'
-          - 'labs trending downwards slowly'
-          - 'incipient-ssri-hyponatremia-1490'
-      alert: 'ADVISORY: Incipient hyponatremia due to SSRI. Continue close monitoring of sodium trends and assess fluid restriction tolerance.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1490
+    keywords:
+      - "sodium 134 mEq/L"
+      - "patient on SSRI"
+      - "no symptoms reported"
+      - "labs trending downwards slowly"
+      - "incipient-ssri-hyponatremia-1490"
+    alert: "ADVISORY: Incipient hyponatremia due to SSRI. Continue close monitoring of sodium trends and assess fluid restriction tolerance."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1491
-      keywords:
-          - 'Hct 48%'
-          - 'urine specific gravity 1.025'
-          - 'BUN 25 mg/dL'
-          - 'I/O neutral for 48h'
-          - 'compensated-high-normal-1491'
-      alert: 'ADVISORY: Compensated state at high-normal levels (Hct, BUN). Maintain current hydration plan and monitor for increasing fever/losses.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1491
+    keywords:
+      - "Hct 48%"
+      - "urine specific gravity 1.025"
+      - "BUN 25 mg/dL"
+      - "I/O neutral for 48h"
+      - "compensated-high-normal-1491"
+    alert: "ADVISORY: Compensated state at high-normal levels (Hct, BUN). Maintain current hydration plan and monitor for increasing fever/losses."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1492
-      keywords:
-          - 'potassium 3.6 mEq/L'
-          - 'patient on mild diuretic'
-          - 'no symptoms reported'
-          - 'needs oral K+ supplement reminder'
-          - 'borderline-hypokalemia-1492'
-      alert: 'ADVISORY: Borderline low potassium. Ensure compliance with oral supplement and encourage K+ rich foods.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1492
+    keywords:
+      - "potassium 3.6 mEq/L"
+      - "patient on mild diuretic"
+      - "no symptoms reported"
+      - "needs oral K+ supplement reminder"
+      - "borderline-hypokalemia-1492"
+    alert: "ADVISORY: Borderline low potassium. Ensure compliance with oral supplement and encourage K+ rich foods."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1493
-      keywords:
-          - 'trace ankle edema'
-          - 'daily weight stable'
-          - 'history of varicose veins'
-          - 'patient sitting all day'
-          - 'gravitational-edema-1493'
-      alert: 'ADVISORY: Edema likely gravitational. Encourage leg elevation and ambulation. Does not indicate fluid overload.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1493
+    keywords:
+      - "trace ankle edema"
+      - "daily weight stable"
+      - "history of varicose veins"
+      - "patient sitting all day"
+      - "gravitational-edema-1493"
+    alert: "ADVISORY: Edema likely gravitational. Encourage leg elevation and ambulation. Does not indicate fluid overload."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1494
-      keywords:
-          - 'urine output WNL'
-          - 'I/O negative 300ml'
-          - 'patient post-dialysis'
-          - 'no weight change post-dialysis'
-          - 'dialysis-compensated-state-1494'
-      alert: 'ADVISORY: Post-dialysis fluid status is stable. Continue routine monitoring, especially for signs of fluid rebound.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1494
+    keywords:
+      - "urine output WNL"
+      - "I/O negative 300ml"
+      - "patient post-dialysis"
+      - "no weight change post-dialysis"
+      - "dialysis-compensated-state-1494"
+    alert: "ADVISORY: Post-dialysis fluid status is stable. Continue routine monitoring, especially for signs of fluid rebound."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1495
-      keywords:
-          - 'sodium 147 mEq/L'
-          - 'mild increase in thirst'
-          - 'BUN 20 mg/dL'
-          - 'patient consuming high-protein diet'
-          - 'mild-hypernatremia-diet-1495'
-      alert: 'ADVISORY: Mild hypernatremia. Ensure adequate free water intake to compensate for high dietary protein load.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1495
+    keywords:
+      - "sodium 147 mEq/L"
+      - "mild increase in thirst"
+      - "BUN 20 mg/dL"
+      - "patient consuming high-protein diet"
+      - "mild-hypernatremia-diet-1495"
+    alert: "ADVISORY: Mild hypernatremia. Ensure adequate free water intake to compensate for high dietary protein load."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1496
-      keywords:
-          - 'dry oral mucosa morning only'
-          - 'intake goal met yesterday'
-          - 'patient on CPAP at night'
-          - 'CPAP-mucosa-drying-1496'
-      alert: 'ADVISORY: Morning dry mucosa likely due to CPAP mask. Provide oral care immediately upon waking and ensure humidification is set correctly.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1496
+    keywords:
+      - "dry oral mucosa morning only"
+      - "intake goal met yesterday"
+      - "patient on CPAP at night"
+      - "CPAP-mucosa-drying-1496"
+    alert: "ADVISORY: Morning dry mucosa likely due to CPAP mask. Provide oral care immediately upon waking and ensure humidification is set correctly."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1497
-      keywords:
-          - 'urine output high normal'
-          - 'I/O positive 300ml'
-          - 'patient receiving IVF at KVO rate'
-          - 'kvo-maintenance-creep-1497'
-      alert: 'ADVISORY: Slight positive creep (300ml) from KVO IV fluids. If chronic, review need for IVF with MD.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1497
+    keywords:
+      - "urine output high normal"
+      - "I/O positive 300ml"
+      - "patient receiving IVF at KVO rate"
+      - "kvo-maintenance-creep-1497"
+    alert: "ADVISORY: Slight positive creep (300ml) from KVO IV fluids. If chronic, review need for IVF with MD."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1498
-      keywords:
-          - 'mild constipation'
-          - 'dry lips'
-          - 'patient refuses all but 1 type of fluid'
-          - 'food-selectivity-deficit-1498'
-      alert: 'ADVISORY: Mild dehydration linked to fluid selectivity. Attempt offering the preferred fluid frequently to increase total intake.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1498
+    keywords:
+      - "mild constipation"
+      - "dry lips"
+      - "patient refuses all but 1 type of fluid"
+      - "food-selectivity-deficit-1498"
+    alert: "ADVISORY: Mild dehydration linked to fluid selectivity. Attempt offering the preferred fluid frequently to increase total intake."
+    severity: "advisory"
 
-    - rule_id: H-ADVS-1499
-      keywords:
-          - 'daily weight stable'
-          - 'labs WNL'
-          - 'patient able to verbalize thirst'
-          - 'no concerns noted'
-          - 'consistent-hydration-met-1499'
-      alert: 'ADVISORY: Hydration goals met. Continue maintenance plan. No clinical alert detected.'
-      severity: 'advisory'
+  - rule_id: H-ADVS-1499
+    keywords:
+      - "daily weight stable"
+      - "labs WNL"
+      - "patient able to verbalize thirst"
+      - "no concerns noted"
+      - "consistent-hydration-met-1499"
+    alert: "ADVISORY: Hydration goals met. Continue maintenance plan. No clinical alert detected."
+    severity: "advisory"
 
-    # NONE Rule (H-NONE-1500)
-    - rule_id: H-NONE-1500
-      keywords:
-          - 'hydration status normal'
-          - 'I/O balanced'
-          - 'skin turgor good'
-          - 'no concerns noted'
-          - 'urine output WNL'
-          - 'vitals stable'
-          - 'labs within normal limits'
-          - 'no signs of fluid shift'
-          - 'normal-hydration-assessment-1500'
-      alert: 'Normal Findings / No Clinical Alert Detected'
-      severity: 'none'
+  # NONE Rule (H-NONE-1500)
+  - rule_id: H-NONE-1500
+    keywords:
+      - "hydration status normal"
+      - "I/O balanced"
+      - "skin turgor good"
+      - "no concerns noted"
+      - "urine output WNL"
+      - "vitals stable"
+      - "labs within normal limits"
+      - "no signs of fluid shift"
+      - "normal-hydration-assessment-1500"
+    alert: "Normal Findings / No Clinical Alert Detected"
+    severity: "none"

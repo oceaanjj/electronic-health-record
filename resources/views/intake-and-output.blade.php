@@ -36,6 +36,19 @@
                     {{-- Hidden input to store selected patient ID --}}
                     <input type="hidden" id="patient_id_hidden" name="patient_id"
                         value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset" />
+
+                    {{-- CDSS Availability Message --}}
+                    @isset($selectedPatient)
+                        @if ($ioData)
+                            <div class="mt-2 text-xs text-green-600 font-bold ml-4">
+                                Clinical Decision Support System is now available
+                            </div>
+                        @else
+                            <div class="mt-2 text-xs text-gray-500 italic ml-4">
+                                Clinical Decision Support System is not yet available
+                            </div>
+                        @endif
+                    @endisset
                 </div>
 
                 {{-- DAY NO --}}
@@ -73,24 +86,27 @@
                             <tr class="bg-beige text-brown">
                                 {{-- ORAL INTAKE --}}
                                 <td class="text-center align-middle">
-                                    <input type="number" name="oral_intake" placeholder="Enter Oral Intake"
-                                        value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}" min="0"
+                                    <input type="text" name="oral_intake" placeholder="Enter Oral Intake"
+                                        value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
                                         data-field-name="oral_intake" />
                                 </td>
 
                                 {{-- IV FLUIDS --}}
                                 <td class="text-center align-middle">
-                                    <input type="number" name="iv_fluids_volume" placeholder="Enter IV Fluids"
-                                        value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}" min="0"
+                                    <input type="text" name="iv_fluids_volume" placeholder="Enter IV Fluids"
+                                        value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
                                         data-field-name="iv_fluids_volume" />
                                 </td>
 
                                 {{-- URINE OUTPUT --}}
                                 <td class="text-center align-middle">
-                                    <input type="number" name="urine_output" placeholder="Enter Urine Output"
-                                        value="{{ old('urine_output', $ioData->urine_output ?? '') }}" min="0"
+                                    <input type="text" name="urine_output" placeholder="Enter Urine Output"
+                                        value="{{ old('urine_output', $ioData->urine_output ?? '') }}"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
                                         data-field-name="urine_output" />
                                 </td>

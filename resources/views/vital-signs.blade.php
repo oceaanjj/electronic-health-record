@@ -100,6 +100,19 @@
                         name="patient_id"
                         value="{{ $selectedPatient->patient_id ?? '' }}"
                     />
+
+                    {{-- CDSS Availability Message --}}
+                    @if ($selectedPatient)
+                        @if (isset($vitalsData) && $vitalsData->count() > 0)
+                            <div class="mt-2 text-xs text-green-600 font-bold ml-4">
+                                Clinical Decision Support System is now available
+                            </div>
+                        @else
+                            <div class="mt-2 text-xs text-gray-500 italic ml-4">
+                                Clinical Decision Support System is not yet available
+                            </div>
+                        @endif
+                    @endif
                 </div>
 
                 {{-- DATE --}}
@@ -261,6 +274,7 @@
                                                 name="temperature_{{ $time }}"
                                                 placeholder="temperature"
                                                 value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="temperature"
                                                 data-time="{{ $time }}"
@@ -274,6 +288,7 @@
                                                 name="hr_{{ $time }}"
                                                 placeholder="bpm"
                                                 value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="hr"
                                                 data-time="{{ $time }}"
@@ -287,6 +302,7 @@
                                                 name="rr_{{ $time }}"
                                                 placeholder="bpm"
                                                 value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="rr"
                                                 data-time="{{ $time }}"
@@ -300,6 +316,7 @@
                                                 name="bp_{{ $time }}"
                                                 placeholder="mmHg"
                                                 value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
+                                                oninput="this.value = this.value.replace(/[^0-9\/]/g, '');"
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="bp"
                                                 data-time="{{ $time }}"
@@ -313,6 +330,7 @@
                                                 name="spo2_{{ $time }}"
                                                 placeholder="%"
                                                 value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="spo2"
                                                 data-time="{{ $time }}"

@@ -1,3 +1,13 @@
+@props([
+    'patients',
+    'selectedPatient',
+    'selectRoute',
+    'inputPlaceholder' => 'Select or type Patient Name',
+    'inputName' => 'patient_id',
+    'inputValue' => '',
+    'cdssAvailable' => null
+])
+
 <div class="header flex items-center gap-4 my-10 mx-auto w-[70%]">
     <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
         PATIENT NAME :
@@ -22,5 +32,18 @@
         {{-- Hidden input to store selected patient ID --}}
         <input type="hidden" id="patient_id_hidden" name="{{ $inputName ?? 'patient_id' }}"
             value="{{ $inputValue ?? ($selectedPatient->patient_id ?? '') }}">
+        
+        {{-- CDSS Availability Message --}}
+        @if (!is_null($cdssAvailable) && $selectedPatient)
+            @if ($cdssAvailable)
+                <div class="mt-2 text-xs text-green-600 font-bold ml-4">
+                    Clinical Decision Support System is now available
+                </div>
+            @else
+                <div class="mt-2 text-xs text-gray-500 italic ml-4">
+                    Clinical Decision Support System is not yet available
+                </div>
+            @endif
+        @endif
     </div>
 </div>

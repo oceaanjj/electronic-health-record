@@ -6,7 +6,8 @@
 
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
             selectRoute="{{ route('physical-exam.select') }}" inputPlaceholder="-Select or type to search-"
-            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
+            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" 
+            :cdssAvailable="isset($physicalExam)" />
 
         <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form relative w-[70%] mx-auto"
             data-analyze-url="{{ route('physical-exam.analyze-field') }}"

@@ -6,7 +6,8 @@
 
         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
             selectRoute="{{ route('lab-values.select') }}" inputPlaceholder="-Select or type to search-"
-            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
+            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" 
+            :cdssAvailable="isset($labValue)" />
 
         <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
             data-analyze-url="{{ route('lab-values.run-cdss-field') }}"
@@ -55,8 +56,9 @@
                                         {{ $label }}
                                     </td>
                                     <td class="p-2 bg-beige text-center">
-                                        <input type="number" step="any" name="{{ $name }}_result" placeholder="Result"
+                                        <input type="text" name="{{ $name }}_result" placeholder="Result"
                                             value="{{ old($name . '_result', optional($labValue)->{$name . '_result'}) }}"
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                             class="w-full h-[40px] focus:outline-none text-center cdss-input"
                                             data-field-name="{{ $name }}_result">
                                     </td>

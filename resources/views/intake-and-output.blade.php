@@ -8,11 +8,12 @@
 
         {{-- 1. STRUCTURED HEADER (Layout & CDSS Banner) --}}
         <div class="mx-auto mt-6 w-[80%] space-y-4">
-            
+
             {{-- CDSS ALERT BANNER --}}
             @isset($selectedPatient)
                 @if ($ioData)
-                    <div class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md">
+                    <div
+                        class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md">
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-[#dcb44e]">info</span>
                             <span class="text-sm font-semibold text-[#dcb44e]">
@@ -29,7 +30,8 @@
             {{-- PATIENT SELECTION ROW --}}
             <div class="flex flex-col gap-4">
                 <div class="flex items-center gap-6">
-                    <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">
+                    <label for="patient_search_input"
+                        class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">
                         PATIENT NAME :
                     </label>
 
@@ -55,17 +57,18 @@
 
                 {{-- DAY NO ROW --}}
                 @isset($selectedPatient)
-                <div class="flex items-center gap-6">
-                    <label for="day_no_selector" class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">DAY NO :</label>
-                    <select id="day_no_selector" name="day_no" form="io-form"
-                        class="font-creato-bold w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2">
-                        @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
-                            <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
-                                {{ $i }}
-                            </option>
-                        @endfor
-                    </select>
-                </div>
+                    <div class="flex items-center gap-6">
+                        <label for="day_no_selector"
+                            class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">DAY NO :</label>
+                        <select id="day_no_selector" name="day_no" form="io-form"
+                            class="font-creato-bold w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2">
+                            @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
+                                <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
+                                    {{ $i }}
+                                </option>
+                            @endfor
+                        </select>
+                    </div>
                 @endisset
 
                 {{-- NOT AVAILABLE FOOTER --}}
@@ -137,7 +140,7 @@
                                 <td class="align-middle">
                                     <div class="alert-box my-[3px] flex h-[90px] w-full items-center justify-center"
                                         data-alert-for="io_alert">
-                                        <span class="font-semibold text-white opacity-70">No Alerts</span>
+                                        <span class="font-semibold text-white opacity-70">NO ALERTS</span>
                                     </div>
                                 </td>
                             </tr>
@@ -168,25 +171,25 @@
 
     {{-- Define the specific initializers for this page --}}
     <!--
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            window.pageInitializers = [
-                window.initializeSearchableDropdown,
-                window.initializeDateDayLoader,
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                window.pageInitializers = [
+                    window.initializeSearchableDropdown,
+                    window.initializeDateDayLoader,
 
-                // Assuming intakeOutputCdss has an init method or is directly callable
-                () => {
-                    if (typeof window.intakeOutputCdss === 'function') {
-                        window.intakeOutputCdss();
-                    } else if (
-                        typeof window.intakeOutputCdss?.init === 'function'
-                    ) {
-                        window.intakeOutputCdss.init();
+                    // Assuming intakeOutputCdss has an init method or is directly callable
+                    () => {
+                        if (typeof window.intakeOutputCdss === 'function') {
+                            window.intakeOutputCdss();
+                        } else if (
+                            typeof window.intakeOutputCdss?.init === 'function'
+                        ) {
+                            window.intakeOutputCdss.init();
+                        }
                     }
-                }
-            ];
-        });
-    </script>
-    -->
+                ];
+            });
+        </script>
+        -->
 
 @endpush

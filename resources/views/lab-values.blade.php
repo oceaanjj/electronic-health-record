@@ -4,10 +4,46 @@
 
     <div id="form-content-container">
 
-        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-            selectRoute="{{ route('lab-values.select') }}" inputPlaceholder="-Select or type to search-"
-            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" 
-            :cdssAvailable="isset($labValue)" />
+        {{-- 1. STRUCTURED HEADER (Layout & CDSS Banner) --}}
+    <div class="mx-auto mt-6 w-[80%] space-y-4">
+        
+        {{-- CDSS ALERT BANNER --}}
+        @if (session('selected_patient_id') && isset($labValue))
+            <div class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#dcb44e]">info</span>
+                    <span class="text-sm font-semibold text-[#dcb44e]">
+                        Clinical Decision Support System is now available for this date.
+                    </span>
+                </div>
+                <button type="button" onclick="this.closest('.relative').remove()" class="text-amber-700">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+        @endif
+
+        {{-- PATIENT SELECTION ROW --}}
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-6">
+                
+                <x-searchable-patient-dropdown 
+                    :patients="$patients" 
+                    :selectedPatient="$selectedPatient"
+                    selectRoute="{{ route('lab-values.select') }}" 
+                    inputPlaceholder="-Select or type to search-"
+                    inputName="patient_id" 
+                    inputValue="{{ session('selected_patient_id') }}" 
+                />
+            </div>
+
+            {{-- NOT AVAILABLE FOOTER --}}
+            @if (session('selected_patient_id') && !isset($labValue))
+                <div class="text-xs text-gray-500 italic flex items-center gap-2 px-2">
+                    <span class="material-symbols-outlined text-[14px]">pending_actions</span>
+                    Clinical Decision Support System is not yet available (No lab records found).
+                </div>
+            @endif
+        </div>
 
         <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
             data-analyze-url="{{ route('lab-values.run-cdss-field') }}"

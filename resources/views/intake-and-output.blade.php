@@ -6,64 +6,79 @@
     {{-- FORM OVERLAY (ALERT) --}}
     <div id="form-content-container">
 
-        {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR INTAKE AND OUTPUT --}}
-        <div class="header mx-auto my-10 flex w-[80%] items-center gap-6">
-            <form id="patient-select-form" class="flex w-full items-center gap-6">
-                @csrf
-
-                {{-- PATIENT NAME --}}
-                <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap">
-                    PATIENT NAME :
-                </label>
-
-                <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('io.select') }}">
-                    {{-- Text input for search --}}
-                    <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
-                        value="@isset($selectedPatient){{ trim($selectedPatient->name) }}@endisset" autocomplete="off"
-                        class="font-creato-bold w-full rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-
-                    {{-- Dropdown list --}}
-                    <div id="patient_options_container"
-                        class="absolute z-50 mt-2 hidden max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
-                        @foreach ($patients as $patient)
-                            <div class="option cursor-pointer px-4 py-2 transition duration-150 hover:bg-blue-100"
-                                data-value="{{ $patient->patient_id }}">
-                                {{ trim($patient->name) }}
-                            </div>
-                        @endforeach
+        {{-- 1. STRUCTURED HEADER (Layout & CDSS Banner) --}}
+        <div class="mx-auto mt-6 w-[80%] space-y-4">
+            
+            {{-- CDSS ALERT BANNER --}}
+            @isset($selectedPatient)
+                @if ($ioData)
+                    <div class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#dcb44e]">info</span>
+                            <span class="text-sm font-semibold text-[#dcb44e]">
+                                Clinical Decision Support System is now available for this date.
+                            </span>
+                        </div>
+                        <button type="button" onclick="this.closest('.relative').remove()" class="text-amber-700">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                        </button>
                     </div>
+                @endif
+            @endisset
 
-                    {{-- Hidden input to store selected patient ID --}}
-                    <input type="hidden" id="patient_id_hidden" name="patient_id"
-                        value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset" />
+            {{-- PATIENT SELECTION ROW --}}
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-6">
+                    <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">
+                        PATIENT NAME :
+                    </label>
 
-                    {{-- CDSS Availability Message --}}
-                    @isset($selectedPatient)
-                        @if ($ioData)
-                            <div class="mt-2 text-xs text-green-600 font-bold ml-4">
-                                Clinical Decision Support System is now available
-                            </div>
-                        @else
-                            <div class="mt-2 text-xs text-gray-500 italic ml-4">
-                                Clinical Decision Support System is not yet available
-                            </div>
-                        @endif
-                    @endisset
+                    <div class="searchable-dropdown relative w-[400px]" data-select-url="{{ route('io.select') }}">
+                        <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
+                            value="@isset($selectedPatient){{ trim($selectedPatient->name) }}@endisset" autocomplete="off"
+                            class="font-creato-bold w-full rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2" />
+
+                        <div id="patient_options_container"
+                            class="absolute z-50 mt-2 hidden max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
+                            @foreach ($patients as $patient)
+                                <div class="option cursor-pointer px-4 py-2 transition duration-150 hover:bg-blue-100"
+                                    data-value="{{ $patient->patient_id }}">
+                                    {{ trim($patient->name) }}
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <input type="hidden" id="patient_id_hidden" name="patient_id"
+                            value="@isset($selectedPatient){{ $selectedPatient->patient_id }}@endisset" />
+                    </div>
                 </div>
 
-                {{-- DAY NO --}}
-                <label for="day_no" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
-                <select id="day_no_selector" name="day_no"
-                    class="font-creato-bold focus->ring-blue-500 w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2">
-                    @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
-                        <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
-                            {{ $i }}
-                        </option>
-                    @endfor
-                </select>
-            </form>
+                {{-- DAY NO ROW --}}
+                @isset($selectedPatient)
+                <div class="flex items-center gap-6">
+                    <label for="day_no_selector" class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">DAY NO :</label>
+                    <select id="day_no_selector" name="day_no" form="io-form"
+                        class="font-creato-bold w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2">
+                        @for ($i = 1; $i <= ($daysSinceAdmission ?? 30); $i++)
+                            <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
+                                {{ $i }}
+                            </option>
+                        @endfor
+                    </select>
+                </div>
+                @endisset
+
+                {{-- NOT AVAILABLE FOOTER --}}
+                @isset($selectedPatient)
+                    @if (!$ioData)
+                        <div class="text-xs text-gray-500 italic flex items-center gap-2 px-2">
+                            <span class="material-symbols-outlined text-[14px]">pending_actions</span>
+                            Clinical Decision Support System is not yet available (No data for this day).
+                        </div>
+                    @endif
+                @endisset
+            </div>
         </div>
-        {{-- END SEARCHABLE PATIENT DROPDOWN FOR INTAKE AND OUTPUT --}}
 
         <fieldset>
             <form id="io-form" class="cdss-form" method="POST" action="{{ route('io.store') }}"

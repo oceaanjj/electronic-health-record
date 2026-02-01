@@ -4,82 +4,84 @@
 
 <div id="form-content-container">
 
-    {{-- SEARCHABLE PATIENT DROPDOWN & DATE/DAY SELECTOR --}}
-    {{-- Kept OUTSIDE the form so the disabled overlay doesn't block it --}}
-    <div class="header flex items-center gap-6 my-10 mx-auto w-[80%]">
-        <div class="flex items-center gap-6 w-full">
-            @csrf
-
-            {{-- PATIENT NAME --}}
-            <label for="patient_search_input" class="whitespace-nowrap font-alte font-bold text-dark-green">
-                PATIENT NAME :
-            </label>
-
-            <div class="searchable-dropdown relative w-[400px]" 
-                 data-select-url="{{ route('adl.select') }}" 
-                 data-admission-date="{{ $selectedPatient ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : '' }}"
-                 data-sync-mode="html-reload">
-                <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
-                    value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off"
-                    class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                
-                <div id="patient_options_container"
-                    class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto">
-                    @foreach ($patients as $patient)
-                        <div class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150"
-                            data-value="{{ $patient->patient_id }}">
-                            {{ trim($patient->name) }}
-                        </div>
-                    @endforeach
+    {{-- 1. NEW STRUCTURED HEADER (Layout Fix) --}}
+    <div class="mx-auto mt-6 w-[80%] space-y-4">
+        
+        {{-- CDSS ALERT BANNER --}}
+        @if ($selectedPatient && isset($adlData))
+            <div class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#dcb44e]">info</span>
+                    <span class="text-sm font-semibold text-[#dcb44e]">
+                        Clinical Decision Support System is now available for this date.
+                    </span>
                 </div>
-                <input type="hidden" id="patient_id_hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+                <button type="button" onclick="this.closest('.relative').remove()" class="text-amber-700">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+        @endif
 
-                {{-- CDSS Availability Message --}}
-                @if ($selectedPatient)
-                    @if (isset($adlData))
-                        <div class="mt-2 text-xs text-green-600 font-bold ml-4">
-                            Clinical Decision Support System is now available
-                        </div>
-                    @else
-                        <div class="mt-2 text-xs text-gray-500 italic ml-4">
-                            Clinical Decision Support System is not yet available
-                        </div>
-                    @endif
-                @endif
+        {{-- PATIENT SELECTION ROW --}}
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-6">
+                <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">
+                    PATIENT NAME :
+                </label>
+
+                <div class="searchable-dropdown relative w-[400px]" 
+                     data-select-url="{{ route('adl.select') }}" 
+                     data-admission-date="{{ $selectedPatient ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : '' }}"
+                     data-sync-mode="html-reload">
+                    
+                    <input type="text" id="patient_search_input" placeholder="Select or type Patient Name"
+                        value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off"
+                        class="w-full text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
+                    
+                    <div id="patient_options_container"
+                        class="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg hidden max-h-60 overflow-y-auto">
+                        @foreach ($patients as $patient)
+                            <div class="option px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-150"
+                                data-value="{{ $patient->patient_id }}">
+                                {{ trim($patient->name) }}
+                            </div>
+                        @endforeach
+                    </div>
+                    <input type="hidden" id="patient_id_hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+                </div>
             </div>
 
-            {{-- DATE --}}
-            <label for="date_selector" class="whitespace-nowrap font-alte font-bold text-dark-green">
-                DATE :
-            </label>
-            <input type="date" id="date_selector" name="date"
-                value="{{ $currentDate  ?? now()->format('Y-m-d') }}"
-                @if (!$selectedPatient) disabled @endif
-                class="text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-1 focus:ring-gray-400 focus:border-gray-400 outline-none shadow-sm bg-gray-100">
-                {{-- DATE --}}
-                <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DATE :</label>
-                <input
-                    type="date"
-                    id="date_selector"
-                    name="date"
-                    value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-                    @if (!$selectedPatient) disabled @endif
-                    class="font-creato-bold rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400"
-                />
+            {{-- DATE AND DAY NO ROW --}}
+            @if($selectedPatient)
+            <div class="flex items-center gap-10">
+                <div class="flex items-center gap-6">
+                    <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap min-w-[120px]">DATE :</label>
+                    <input type="date" id="date_selector" name="date" form="adl-form"
+                        value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+                        class="font-creato-bold rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
+                    />
+                </div>
 
-            {{-- DAY NO --}}
-            <label for="day_no" class="whitespace-nowrap font-alte font-bold text-dark-green">
-                DAY NO :
-            </label>
-            <select id="day_no_selector" name="day_no"
-                @if (!$selectedPatient) disabled @endif
-                class="w-[120px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm">
-                @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
-                    <option value="{{ $i }}" @if($currentDayNo == $i) selected @endif>
-                        {{  $i }}
-                    </option>
-                @endfor
-            </select>
+                <div class="flex items-center gap-6">
+                    <label for="day_no_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
+                    <select id="day_no_selector" name="day_no" form="adl-form"
+                        class="font-creato-bold w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
+                    >
+                        @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
+                            <option value="{{ $i }}" @if($currentDayNo == $i) selected @endif>{{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
+            </div>
+            @endif
+
+            {{-- "NOT AVAILABLE" FOOTER --}}
+            @if ($selectedPatient && !isset($adlData))
+                <div class="text-xs text-gray-500 italic flex items-center gap-2 px-2">
+                    <span class="material-symbols-outlined text-[14px]">pending_actions</span>
+                    Clinical Decision Support System is not yet available (No records for this date).
+                </div>
+            @endif
         </div>
     </div>
     

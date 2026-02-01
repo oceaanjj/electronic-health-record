@@ -2,26 +2,6 @@
 @section('title', 'Patient Vital Signs')
 @section('content')
     <style>
-        /*
-    #chart-viewport {
-    overflow: hidden;
-    height: 530px;
-    position: relative;
-    }
-
-    #chart-track > div:not(:first-child) {
-        margin-top: 10px;
-    }
-
-    #chart-track > div:not(:last-child) {
-        margin-bottom: 10px;
-    }
-
-    #chart-track {
-        padding-top: 50px;
-        padding-bottom: 40px;
-}*/
-
         #chart-viewport {
             height: 530px;
             overflow: hidden;
@@ -39,94 +19,79 @@
     </style>
 
     <div id="form-content-container">
-        {{-- NEW SEARCHABLE PATIENT DROPDOWN FOR VITAL SIGNS --}}
-        <div class="header mx-auto my-10 flex w-[80%] items-center gap-6">
-            <form
-                action="{{ route('vital-signs.select') }}"
-                method="POST"
-                id="patient-select-form"
-                class="flex w-full items-center gap-6"
-            >
-                @csrf
-
-                {{-- PATIENT NAME --}}
-                <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap">
-                    PATIENT NAME :
-                </label>
-
-                {{--
-                    UPDATED:
-                    - Added data-sync-mode="json-vitals"
-                --}}
-                <div
-                    class="searchable-dropdown relative w-[400px]"
-                    data-select-url="{{ route('vital-signs.select') }}"
-                    data-admission-date="{{ $selectedPatient ? \Carbon\Carbon::parse($selectedPatient->admission_date)->format('Y-m-d') : '' }}"
-                    data-sync-mode="json-vitals"
-                >
-                    {{-- Text input for search --}}
-                    <input
-                        type="text"
-                        id="patient_search_input"
-                        placeholder="Select or type Patient Name"
-                        value="{{ trim($selectedPatient->name ?? '') }}"
-                        autocomplete="off"
-                        class="font-creato-bold w-full rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                    />
-
-                    {{-- Dropdown list --}}
-                    <div
-                        id="patient_options_container"
-                        class="absolute z-50 mt-2 hidden max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg"
-                    >
-                        @foreach ($patients as $patient)
-                            <div
-                                class="option cursor-pointer px-4 py-2 transition duration-150 hover:bg-blue-100"
-                                data-value="{{ $patient->patient_id }}"
-                            >
-                                {{ trim($patient->name) }}
-                            </div>
-                        @endforeach
+        {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS data exists) --}}
+        @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
+            <div class="mt-3 w-full px-2">
+                <div class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[#dcb44e]">info</span>
+                        <span class="text-sm font-semibold text-[#dcb44e]">
+                            Clinical Decision Support System is now available.
+                        </span>
                     </div>
-
-                    {{-- Hidden input to store selected patient ID --}}
-                    <input
-                        type="hidden"
-                        id="patient_id_hidden"
-                        name="patient_id"
-                        value="{{ $selectedPatient->patient_id ?? '' }}"
-                    />
+                    <button type="button" 
+                            onclick="this.closest('.relative').remove()" 
+                            class="flex items-center justify-center text-amber-700 hover:text-amber-950 hover:bg-amber-200/50 rounded-full p-1 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">close</span>
+                    </button>
                 </div>
+            </div>
+        @endif
 
-                {{-- DATE --}}
-                <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DATE :</label>
-
-                <input
-                    type="date"
-                    id="date_selector"
-                    name="date"
-                    value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-                    @if (!$selectedPatient) disabled @endif
-                    class="font-creato-bold rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+        {{-- 2. THE PATIENT SELECTION ROW (Using the reusable component) --}}
+        <div class="header mx-auto my-10 flex w-[90%] flex-col gap-6">
+            <div class="flex flex-wrap items-center gap-6">
+                <x-searchable-patient-dropdown 
+                    :patients="$patients" 
+                    :selectedPatient="$selectedPatient"
+                    selectRoute="{{ route('vital-signs.select') }}" 
+                    inputPlaceholder="Select or type Patient Name"
+                    inputName="patient_id" 
+                    inputValue="{{ $selectedPatient->patient_id ?? '' }}" 
                 />
 
-                {{-- DAY NO --}}
-                <label for="day_no" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
+                {{-- DATE & DAY NO (Only visible if patient selected) --}}
+                @if($selectedPatient)
+                <div class="flex items-center gap-4">
+                    <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DATE :</label>
+                    <input
+                        type="date"
+                        id="date_selector"
+                        form="patient-select-form"
+                        name="date"
+                        value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+                        class="font-creato-bold rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
+                    />
 
-                <select
-                    id="day_no_selector"
-                    name="day_no"
-                    @if (!$selectedPatient) disabled @endif
-                    class="font-creato-bold focus->ring-blue-500 w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
-                >
-                    @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
-                        <option value="{{ $i }}" @if($currentDayNo == $i) selected @endif>
-                            {{ $i }}
-                        </option>
-                    @endfor
-                </select>
-            </form>
+                    <label for="day_no" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
+                    <select
+                        id="day_no_selector"
+                        form="patient-select-form"
+                        name="day_no"
+                        class="font-creato-bold w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
+                    >
+                        @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
+                            <option value="{{ $i }}" @if($currentDayNo == $i) selected @endif>{{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
+                @endif
+            </div>
+
+            {{-- 3. THE "NOT AVAILABLE" MESSAGE --}}
+            @if ($selectedPatient && (!isset($vitalsData) || $vitalsData->count() == 0))
+                <div class="text-xs text-gray-500 italic flex items-center gap-2 px-2">
+                    <span class="material-symbols-outlined text-[14px]">pending_actions</span>
+                    Clinical Decision Support System is not yet available (No data recorded for this date).
+                </div>
+            @endif
         </div>
+
+        {{-- Hidden form for synchronization of Date/Day No --}}
+        <form id="patient-select-form" action="{{ route('vital-signs.select') }}" method="POST" class="hidden">
+            @csrf
+            <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+        </form>
         {{-- END OF HEADER --}}
 
         {{-- MAIN TABLE FOR INPUTS --}}

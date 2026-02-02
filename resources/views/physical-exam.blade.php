@@ -4,19 +4,19 @@
 
     <div id="form-content-container">
 
-       {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS is available) --}}
+        {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS is available) --}}
         @if ($selectedPatient && isset($physicalExam) && $physicalExam)
             <div class="mt-3w-full px-2">
-                <div class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
+                <div
+                    class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-[#dcb44e]">info</span>
                         <span class="text-sm font-semibold text-[#dcb44e]">
                             Clinical Decision Support System is now available.
                         </span>
                     </div>
-                    <button type="button" 
-                            onclick="this.closest('.relative').remove()" 
-                            class="flex items-center justify-center text-amber-700 hover:text-amber-950 hover:bg-amber-200/50 rounded-full p-1 transition-colors">
+                    <button type="button" onclick="this.closest('.relative').remove()"
+                        class="flex items-center justify-center text-amber-700 hover:text-amber-950 hover:bg-amber-200/50 rounded-full p-1 transition-colors">
                         <span class="material-symbols-outlined text-[20px]">close</span>
                     </button>
                 </div>
@@ -26,14 +26,9 @@
         {{-- 2. THE PATIENT SELECTION ROW --}}
         <div class="flex flex-col gap-2 mb-6">
             <div class="flex flex-wrap items-center gap-4">
-                <x-searchable-patient-dropdown 
-                    :patients="$patients" 
-                    :selectedPatient="$selectedPatient"
-                    selectRoute="{{ route('physical-exam.select') }}" 
-                    inputPlaceholder="-Select or type to search-"
-                    inputName="patient_id" 
-                    inputValue="{{ session('selected_patient_id') }}" 
-                />
+                <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
+                    selectRoute="{{ route('physical-exam.select') }}" inputPlaceholder="-Select or type to search-"
+                    inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
             </div>
         </div>
 
@@ -43,7 +38,7 @@
             data-analyze-url="{{ route('physical-exam.analyze-field') }}"
             data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}" data-alert-height-class="h-[90px]">
 
-            
+
             {{-- 3. THE "NOT AVAILABLE" MESSAGE (Stays at the bottom of the dropdown) --}}
             @if ($selectedPatient && (!isset($physicalExam) || !$physicalExam))
                 <div class="text-xs text-gray-500 italic flex items-center gap-2">
@@ -51,7 +46,7 @@
                     Clinical Decision Support System is not yet available.
                 </div>
             @endif
-            
+
             @csrf
 
             {{-- HIDDEN INPUT FOR JS TO CHECK --}}
@@ -62,7 +57,7 @@
                     <div class="w-[100%] flex justify-center items-start gap-0 mt-2">
 
                         <div class="w-full rounded-[15px] overflow-hidden mr-1">
-                            
+
                             <table class="w-full border-separate border-spacing-0">
                                 <tr>
                                     <th class="w-[30%] main-header py-2 text-white rounded-tl-lg">SYSTEM</th>
@@ -186,7 +181,7 @@
                                             <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center w-full h-[92px]"
                                                 data-alert-for="{{ $fieldKey }}">
                                                 {{-- Dynamic alert content will load here --}}
-                                                <span class="opacity-70 text-white font-semibold">No Alerts</span>
+                                                <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
                                             </div>
                                         </td>
                                     </tr>

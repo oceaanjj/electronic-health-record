@@ -452,3 +452,47 @@ diagnosis:
   - keywords: ["rr < 7", "temperature > 39"]
     alert: "Severe bradypnea with fever."
     severity: "CRITICAL"
+
+  # Diagnosis Keywords (Medical Terms)
+  - keywords: ["hyperthermia"]
+    alert: "Hyperthermia detected. Monitor core temperature and implement cooling measures."
+    severity: "WARNING"
+  - keywords: ["fever"]
+    alert: "Fever indicated. Check for infection source and monitor vitals."
+    severity: "WARNING"
+  - keywords: ["hypothermia"]
+    alert: "Hypothermia detected. Implement warming measures and monitor cardiac rhythm."
+    severity: "CRITICAL"
+  - keywords: ["tachycardia"]
+    alert: "Tachycardia indicated. Assess for pain, fever, dehydration, or anxiety."
+    severity: "WARNING"
+  - keywords: ["bradycardia"]
+    alert: "Bradycardia indicated. Monitor perfusion and check for medication effects."
+    severity: "WARNING"
+  - keywords: ["tachypnea"]
+    alert: "Tachypnea indicated. Assess respiratory effort and O2 saturation."
+    severity: "WARNING"
+  - keywords: ["bradypnea"]
+    alert: "Bradypnea indicated. Assess for respiratory depression (e.g., opioids)."
+    severity: "CRITICAL"
+  - keywords: ["hypotension"]
+    alert: "Hypotension indicated. Assess fluid status, perfusion, and signs of shock."
+    severity: "CRITICAL"
+  - keywords: ["hypertension"]
+    alert: "Hypertension indicated. Monitor for symptoms (headache, vision changes)."
+    severity: "WARNING"
+  - keywords: ["hypoxemia"]
+    alert: "Hypoxemia indicated. Ensure O2 delivery and assess airway."
+    severity: "CRITICAL"
+  - keywords: ["shock"]
+    alert: "Shock indicated. Immediate assessment of perfusion and fluid status required."
+    severity: "CRITICAL"
+  - keywords: ["sepsis"]
+    alert: "Sepsis indicated. Initiate sepsis protocol immediately."
+    severity: "CRITICAL"
+  - keywords: ["desaturation"]
+    alert: "Desaturation indicated. Check probe placement and patient status."
+    severity: "WARNING"
+  - keywords: ["arrhythmia"]
+    alert: "Arrhythmia indicated. Obtain ECG and monitor cardiac rhythm."
+    severity: "WARNING"

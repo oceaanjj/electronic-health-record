@@ -22,7 +22,7 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <div class="w-[85%] mx-auto flex justify-center items-start gap-1">
+                    <div class="w-[85%] flex justify-center items-start gap-2 mt-2">
 
 
                         <div class="w-full rounded-[15px] overflow-hidden">

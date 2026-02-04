@@ -3,8 +3,10 @@
 @section('title', 'Diagnostics')
 
 @section('content')
+ 
+
     <div
-        class="mx-auto my-8 max-w-[90%] w-[90%] relative"
+        id="form-content-container"
         data-csrf-token="{{ csrf_token() }}"
         data-patient-id="{{ $selectedPatient->patient_id ?? '' }}"
         data-delete-all-url-template="{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}"

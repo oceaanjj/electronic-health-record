@@ -139,8 +139,6 @@ function openChartModal(chartId, title) {
     // 1. Start closing the sidebar immediately
     window.closeNav();
 
-    
-
     // 2. Wait for the sidebar transition (300ms) before showing the modal
     setTimeout(() => {
         const modal = document.getElementById('chart-modal');
@@ -219,25 +217,7 @@ window.handleSidebarToggle = function() {
 
 
 
-// function closeChartModal() {
-//     document.getElementById('chart-modal').style.display = 'none';
-//     if (modalChartInstance) {
-//         modalChartInstance.destroy();
-//         modalChartInstance = null;
-//     }
-//     // Optional: Uncomment the next line if you want the sidebar to return on close
-//     //window.openNav(); 
-// }
 
-// window.openNav = function() {
-//     const sidebar = document.getElementById("mySidenav");
-//     if (sidebar) {
-//         sidebar.classList.remove("-translate-x-full");
-//         sidebar.classList.add("translate-x-0");
-//     }
-// };
-
-// Add click listeners to your chart cards
 document.addEventListener('DOMContentLoaded', function() {
     const chartCards = [
         { id: 'tempChart', title: 'Temperature Trend' },
@@ -247,16 +227,25 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 'spo2Chart', title: 'SpO2 Trend' }
     ];
 
-    chartCards.forEach(item => {
-        const canvas = document.getElementById(item.id);
-        if (canvas) {
-            // Make the parent div look clickable
-            canvas.parentElement.style.cursor = 'pointer';
-            canvas.parentElement.addEventListener('click', () => {
-                openChartModal(item.id, item.title);
-            });
-        }
-    });
+    // Optimized click handler using Event Delegation
+document.addEventListener('click', function(e) {
+    // Check if the clicked element (or its parent) is a chart canvas
+    const canvas = e.target.closest('canvas');
+    if (canvas && (canvas.id.endsWith('Chart') && canvas.id !== 'modalChartCanvas')) {
+        const chartId = canvas.id;
+        
+        // Map IDs to Titles
+        const titles = {
+            'tempChart': 'Temperature Trend',
+            'hrChart': 'Heart Rate Trend',
+            'rrChart': 'Respiratory Rate Trend',
+            'bpChart': 'Blood Pressure Trend',
+            'spo2Chart': 'SpO2 Trend'
+        };
+
+        openChartModal(chartId, titles[chartId] || 'Vital Trend');
+    }
+});
     
     // Close modal on background click
     document.getElementById('chart-modal').addEventListener('click', function(e) {

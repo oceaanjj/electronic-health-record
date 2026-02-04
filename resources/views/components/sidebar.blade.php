@@ -1,6 +1,6 @@
 <div
     id="mySidenav"
-    class="bg-ehr fixed top-0 left-0 z-40 h-full w-[260px] -translate-x-full transform shadow-md transition-transform duration-300 ease-in-out"
+    class="bg-ehr fixed top-0 left-0 z-40 h-full w-[260px] -translate-x-full transform shadow-md transition-transform duration-300 ease-in-out flex flex-col"
 >
     <button
         id="arrowBtn"
@@ -10,7 +10,7 @@
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
     </button>
 
-    <ul class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px]">
+    <ul class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px] flex-grow">
         <li>
             <a
                 href="{{ route('nurse-home') }}"
@@ -185,43 +185,25 @@
                 </span>
             </a>
         </li>
+    </ul>
 
-        {{--
-            -
-            <li>
-            <a href="{{ route('discharge-planning') }}" class="group flex items-center gap-3 pl-5 pb-2 pt-2
-            hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
-            {{ request()->routeIs('discharge-planning')
-            ? 'bg-dark-green text-white font-bold'
-            : 'hover:bg-hover' }}">
-            <img src="{{ asset('img/sidebar/discharge-planning.png') }}" alt="Discharge Icon"
-            class="w-5 h-5 transition duration-200">
-            <span
-            class="{{ request()->routeIs('discharge-planning') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Discharge
-            Planning</span>
-            </a>
-            </li>
-        --}}
+    <div class="mt-auto px-[10px] pb-10">
+        <hr class="border-dark-green w-full border-t-1 mb-4" />
 
-        <li>
-            <center>
-                <hr class="border-dark-green mt-[120px] w-full border-t-1" />
-            </center>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+            @csrf
+        </form>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
-                @csrf
-            </form>
-
-            <a
-                href="#"
-                id="logout-btn"
-                class="group hover:bg-hover mt-[20px] flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200 hover:font-bold"
-            >
-                <span class="material-symbols-outlined">logout</span>
-
-                <span>LOG OUT</span>
-            </a>
-        </li>
+        <a
+            href="#"
+            id="logout-btn"
+            class="group hover:bg-hover flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200 hover:font-bold text-dark-green text-[13px] font-creato-black"
+        >
+            <span class="material-symbols-outlined">logout</span>
+            <span>LOG OUT</span>
+        </a>
+    </div>
+</div>
 
         @push('scripts')
             <script>

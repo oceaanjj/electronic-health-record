@@ -81,7 +81,7 @@
 
             <fieldset @if(!$selectedPatient) disabled @endif>
                 {{-- MAIN CONTAINER --}}
-                <div class="mx-auto flex w-[100%] items-start justify-center gap-1 mt-10">
+                <div class="mx-auto mt-10 flex w-[100%] items-start justify-center gap-1">
                     <center>
                         <div class="w-[85%] overflow-hidden rounded-[15px]">
                             <table class="w-full table-fixed border-collapse border-spacing-y-0">

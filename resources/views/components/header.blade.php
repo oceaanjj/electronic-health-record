@@ -1,5 +1,5 @@
 <header
-    class="fixed top-0 right-0 left-0 z-50 flex h-[80px] items-center justify-between bg-white px-4 shadow-md sm:px-10 md:h-[120px] lg:px-20"
+    class="fixed top-0 right-0 left-0 z-100 flex h-[80px] items-center justify-between bg-white px-4 shadow-md sm:px-10 md:h-[120px] lg:px-20"
 >
     <div class="flex items-center space-x-2 md:space-x-10">
         <button

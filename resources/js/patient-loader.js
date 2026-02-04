@@ -8,15 +8,18 @@ if (!window.patientSelectedListenerAttached) {
 
         if (!formContainer || !selectUrl || !patientId) return;
 
+        // 1. Create and Show Full-Screen Loader
         const cuteLoader = document.createElement('div');
         cuteLoader.className = 'cute-loader-wrapper';
         cuteLoader.innerHTML = `
-            <div class="cute-spinner"></div>
-            <span class="loading-text">One moment please...</span>
+            <div class="loader-card">
+                <div class="cute-spinner"></div>
+                <span class="loading-text">One moment please...</span>
+            </div>
         `;
 
-        formContainer.classList.add('is-loading');
-        formContainer.appendChild(cuteLoader);
+        document.body.classList.add('is-loading');
+        document.body.appendChild(cuteLoader);
 
         try {
             const response = await fetch(selectUrl, {
@@ -36,14 +39,13 @@ if (!window.patientSelectedListenerAttached) {
             const newDoc = parser.parseFromString(htmlText, 'text/html');
             const newContentHTML = newDoc.getElementById('form-content-container')?.innerHTML;
 
-            if (!newContentHTML) throw new Error('Content container missing in response');
-
+            // Extract Vitals Data from the new HTML (as you had before)
             const vitalsForm = newDoc.querySelector('#vitals-form');
-            let timePoints = [];
-            let vitalsData = {};
-
+            let timePoints = [], vitalsData = {};
             if (vitalsForm) {
                 timePoints = JSON.parse(vitalsForm.dataset.times || '[]');
+
+
                 const fetchUrl = vitalsForm.dataset.fetchUrl;
                 const pId = vitalsForm.querySelector('input[name="patient_id"]')?.value;
                 const dAt = vitalsForm.querySelector('#hidden_date_for_vitals_form')?.value;
@@ -67,24 +69,27 @@ if (!window.patientSelectedListenerAttached) {
                 }
             }
 
-            formContainer.style.opacity = '0.3';
+            // Smooth transition: Hide content before swap
+            formContainer.style.opacity = '0';
 
             setTimeout(() => {
+                // Cleanup Body
                 cuteLoader.remove();
-                formContainer.classList.remove('is-loading');
+                document.body.classList.remove('is-loading');
+                
                 formContainer.innerHTML = newContentHTML;
                 window.cdssFormReloaded = true;
 
                 requestAnimationFrame(() => {
                     formContainer.style.opacity = '1';
-
                     initializeUI(timePoints, vitalsData, selectUrl);
                 });
             }, 150);
+
         } catch (error) {
             console.error('Patient loading failed:', error);
             cuteLoader.remove();
-            formContainer.classList.remove('is-loading');
+            document.body.classList.remove('is-loading');
             formContainer.style.opacity = '1';
         }
     });

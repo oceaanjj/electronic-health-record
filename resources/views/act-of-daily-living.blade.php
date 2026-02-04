@@ -79,7 +79,7 @@
         <form
             id="adl-form"
             method="POST"
-            class="cdss-form relative mx-auto w-full mt-5"
+            class="cdss-form relative mx-auto mt-5 w-full"
             action="{{ route('adl.store') }}"
             data-analyze-url="{{ route('adl.analyze-field') }}"
             data-batch-analyze-url="{{ route('adl.analyze-batch') }}"
@@ -92,7 +92,7 @@
                 <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
                 <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="w-[90%] mx-auto flex justify-center items-start gap-1 mt-6">
+                <div class="mx-auto mt-6 flex w-[90%] items-start justify-center gap-1">
                     {{-- LEFT SIDE TABLE (INPUTS) --}}
                     <div class="w-[70%] overflow-hidden rounded-[15px]">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">

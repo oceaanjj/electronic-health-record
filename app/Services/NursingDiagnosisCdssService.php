@@ -141,8 +141,9 @@ class NursingDiagnosisCdssService
                 continue;
             }
 
-            $keywords = array_map('strtolower', array_map('trim', $rule['keywords']));
-            $matchType = $rule['match_type'] ?? 'all';
+            // Do not trim to preserve leading spaces for boundary matching (e.g. " 40" vs "140")
+            $keywords = array_map('strtolower', $rule['keywords']);
+            $matchType = $rule['match_type'] ?? 'any'; // Changed from 'all' to 'any' to show potential alerts while typing
             $negate = (bool) ($rule['negate'] ?? false);
             $match = false;
 

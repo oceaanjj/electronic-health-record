@@ -70,3 +70,4 @@ window.initializeDateDayLoader = function (selectUrl) {
     console.log('initializeDateDayLoader called with selectUrl:', selectUrl);
     // TODO: Add actual Date/Day loader initialization logic here
 };
+

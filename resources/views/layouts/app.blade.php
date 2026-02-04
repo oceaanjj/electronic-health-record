@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Electronic Health Record</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="preload" as="image" href="img/ehr-logo.png">
+        <link rel="preload" as="image" href="img/loading.png">
 
         {{-- **google icons library nyhahhahaha** --}}
         <link

@@ -114,39 +114,80 @@
         </div>
 
         <script>
-            function openNav() {
-                const sidebar = document.getElementById('mySidenav');
-                const arrow = document.getElementById('arrowBtn');
+        function openNav() {
+            const sidebar = document.getElementById('mySidenav');
+            const arrow = document.getElementById('arrowBtn');
 
-                if (sidebar) sidebar.classList.remove('-translate-x-full');
+            if (sidebar) sidebar.classList.remove('-translate-x-full');
+            document.documentElement.classList.add('sidebar-open');
 
-                document.documentElement.classList.add('sidebar-open');
+            if (arrow) {
+                // Remove hidden immediately so it shows up as the sidebar slides out
+                arrow.classList.remove('hidden');
+            }
 
-                if (arrow) {
-                    arrow.classList.replace('-right-24', '-right-10');
-                    arrow.classList.remove('hidden');
+            localStorage.setItem('sidebarOpen', 'true');
+        }
+
+        function closeNav() {
+            const sidebar = document.getElementById('mySidenav');
+            const arrow = document.getElementById('arrowBtn');
+
+            if (sidebar) sidebar.classList.add('-translate-x-full');
+            document.documentElement.classList.remove('sidebar-open');
+
+            localStorage.setItem('sidebarOpen', 'false');
+
+            // Hide the arrow after the sidebar finishes sliding so it doesn't "peek"
+            setTimeout(() => {
+                if (arrow) arrow.classList.add('hidden');
+            }, 300); // 300ms matches your transition-duration
+        }
+
+        // --- SCROLL PERSISTENCE LOGIC ---
+        (function () {
+            const observer = new MutationObserver((mutations, obs) => {
+                const sidebar = document.getElementById('sidebarScroll');
+                if (sidebar) {
+                    const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
+                    if (scrollPos) {
+                        sidebar.scrollTop = scrollPos;
+                    }
+                    // Check if it should be open on refresh
+                    if (localStorage.getItem('sidebarOpen') === 'true') {
+                        openNav();
+                    }
+                    obs.disconnect();
                 }
+            });
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+        })();
 
-                localStorage.setItem('sidebarOpen', 'true');
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebarScroll');
+            sidebar.addEventListener('click', (e) => {
+                if (e.target.closest('a')) {
+                    sessionStorage.setItem('sidebar-scroll-pos', sidebar.scrollTop);
+                }
+            });
+
+            // Logout Confirmation
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutForm = document.getElementById('logout-form');
+            if (logoutBtn && logoutForm) {
+                logoutBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (typeof showConfirm === 'function') {
+                        showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then((result) => {
+                            if (result.isConfirmed) logoutForm.submit();
+                        });
+                    } else if (confirm('Are you sure you want to logout?')) {
+                        logoutForm.submit();
+                    }
+                });
             }
-
-            function closeNav() {
-                const sidebar = document.getElementById('mySidenav');
-                const arrow = document.getElementById('arrowBtn');
-
-                if (sidebar) sidebar.classList.add('-translate-x-full');
-
-                document.documentElement.classList.remove('sidebar-open');
-
-                if (arrow) arrow.classList.replace('-right-10', '-right-24');
-
-                localStorage.setItem('sidebarOpen', 'false');
-
-                setTimeout(() => {
-                    if (arrow) arrow.classList.add('hidden');
-                }, 200);
-            }
-        </script>
+        });
+    </script>
 
         @stack('scripts')
     </body>

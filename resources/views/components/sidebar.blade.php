@@ -1,6 +1,6 @@
 <div
     id="mySidenav"
-    class="bg-ehr fixed top-0 left-0 z-40 h-full w-[260px] -translate-x-full transform shadow-md transition-transform duration-300 ease-in-out flex flex-col"
+    class="bg-ehr fixed top-0 left-0 z-40 h-full w-[260px] -translate-x-full transform shadow-md transition-transform duration-300 ease-in-out"
 >
     <button
         id="arrowBtn"
@@ -10,7 +10,7 @@
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
     </button>
 
-    <ul class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px] flex-grow">
+    <ul id="sidebarScroll" class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px] h-[calc(100vh-140px)] overflow-y-auto">
         <li>
             <a
                 href="{{ route('nurse-home') }}"
@@ -135,7 +135,6 @@
             </a>
         </li>
 
-        {{-- NOTEE : MAY PROBLEM SA MAIN PAGE NG IV & LINES --}}
         <li>
             <a
                 href="{{ route('ivs-and-lines') }}"
@@ -185,82 +184,100 @@
                 </span>
             </a>
         </li>
-    </ul>
 
-    <div class="mt-auto px-[10px] pb-10">
-        <hr class="border-dark-green w-full border-t-1 mb-4" />
+        <li>
+            <center>
+                <hr class="border-dark-green mt-[120px] w-full border-t-1" />
+            </center>
 
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
-            @csrf
-        </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+                @csrf
+            </form>
 
-        <a
-            href="#"
-            id="logout-btn"
-            class="group hover:bg-hover flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200 hover:font-bold text-dark-green text-[13px] font-creato-black"
-        >
-            <span class="material-symbols-outlined">logout</span>
-            <span>LOG OUT</span>
-        </a>
-    </div>
-</div>
+            <a
+                href="#"
+                id="logout-btn"
+                class="group hover:bg-hover mt-[20px] flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200 hover:font-bold"
+            >
+                <span class="material-symbols-outlined">logout</span>
+                <span>LOG OUT</span>
+            </a>
+        </li>
 
         @push('scripts')
             <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const logoutBtn = document.getElementById('logout-btn');
-                    const logoutForm = document.getElementById('logout-form');
-
-                    if (logoutBtn && logoutForm) {
-                        logoutBtn.addEventListener('click', function (e) {
-                            e.preventDefault();
-
-                            if (typeof showConfirm === 'function') {
-                                showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then(
-                                    (result) => {
-                                        if (result.isConfirmed) {
-                                            logoutForm.submit();
-                                        }
-                                    },
-                                );
-                            } else if (typeof Swal === 'function') {
-                                Swal.fire({
-                                    title: 'Are you sure?',
-                                    text: 'Do you really want to logout?',
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Yes',
-                                    cancelButtonText: 'Cancel',
-                                    confirmButtonColor: '#2A1C0F',
-                                    cancelButtonColor: '#6c757d',
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        logoutForm.submit();
-                                    }
-                                });
-                            } else {
-                                if (confirm('Are you sure you want to logout?')) {
-                                    logoutForm.submit();
-                                }
-                            }
-                        });
+            // We use a MutationObserver to catch the element the millisecond it's added to the DOM
+            // This is usually faster than DOMContentLoaded and reduces the flicker
+            (function() {
+                const observer = new MutationObserver((mutations, obs) => {
+                    const sidebar = document.getElementById('sidebarScroll');
+                    if (sidebar) {
+                        const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
+                        if (scrollPos) {
+                            sidebar.scrollTop = scrollPos;
+                        }
+                        obs.disconnect(); // Stop looking once we found it
                     }
                 });
-            </script>
-        @endpush
 
-        {{--
-            <li>
-            <a href="about.php" class="group flex items-center gap-3 pl-5 pb-2 pt-2
-            hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]
-            {{ request()->routeIs('about')
-            ? 'bg-dark-green text-white font-bold'
-            : 'hover:bg-hover' }}">
-            <img src="./img/sidebar/about.png" alt="About Icon" class="w-5 h-5 transition duration-200">
-            <span
-            class="{{ request()->routeIs('about') ? 'text-white font-bold' : 'group-hover:font-bold' }}">About</span>
-            </a>
-            </li>
-        --}}
+                observer.observe(document.documentElement, {
+                    childList: true,
+                    subtree: true
+                });
+            })();
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const sidebar = document.getElementById('mySidenav');
+                const sidebarScroll = document.getElementById('sidebarScroll');
+                const arrowBtn = document.getElementById('arrowBtn');
+                
+                // Function to update arrow visibility based on sidebar state
+                function updateArrowVisibility() {
+                    if (sidebar.classList.contains('-translate-x-full')) {
+                        // Sidebar is closed
+                        arrowBtn.classList.add('opacity-0', 'pointer-events-none');
+                    } else {
+                        // Sidebar is open
+                        arrowBtn.classList.remove('opacity-0', 'pointer-events-none');
+                    }
+                }
+                
+                // Initialize arrow visibility on page load
+                updateArrowVisibility();
+                
+                // Update arrow visibility whenever sidebar state changes
+                // This handles cases where the sidebar is toggled
+                const sidebarObserver = new MutationObserver(updateArrowVisibility);
+                sidebarObserver.observe(sidebar, { 
+                    attributes: true, 
+                    attributeFilter: ['class'] 
+                });
+                
+                // Save position on any click within the sidebar
+                sidebarScroll.addEventListener('click', (e) => {
+                    if (e.target.closest('a')) {
+                        sessionStorage.setItem('sidebar-scroll-pos', sidebarScroll.scrollTop);
+                    }
+                });
+
+                // Original Logout Logic
+                const logoutBtn = document.getElementById('logout-btn');
+                const logoutForm = document.getElementById('logout-form');
+
+                if (logoutBtn && logoutForm) {
+                    logoutBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        if (typeof showConfirm === 'function') {
+                            showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then((result) => {
+                                if (result.isConfirmed) logoutForm.submit();
+                            });
+                        } else {
+                            if (confirm('Are you sure you want to logout?')) logoutForm.submit();
+                        }
+                    });
+                }
+            });
+        </script>
+        @endpush
     </ul>
 </div>

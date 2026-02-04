@@ -65,24 +65,24 @@
                                 <tr class="border-b-2 border-line-brown/70 h-[100px]">
                                     <td class="bg-beige text-center">
                                         <input type="text" name="medication[]" placeholder="Medication"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                         <input type="hidden" name="time[]" value="10:00:00">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="dose[]" placeholder="Dose"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input">
+                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="route[]" placeholder="Route"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input">
+                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="frequency[]" placeholder="Frequency"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input">
+                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="comments[]" placeholder="Comments"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input">
+                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
                                     </td>
                                     <th class="bg-yellow-light text-brown font-semibold">10:00 AM</th>
                                 </tr>
@@ -91,24 +91,24 @@
                                 <tr class="border-b-2 border-line-brown/70 h-[100px]">
                                     <td class="bg-beige text-center">
                                         <input type="text" name="medication[]" placeholder="Medication"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                         <input type="hidden" name="time[]" value="14:00:00">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="dose[]" placeholder="Dose"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="route[]" placeholder="Route"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="frequency[]" placeholder="Frequency"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="comments[]" placeholder="Comments"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <th class="bg-yellow-light text-brown font-semibold">2:00 PM</th>
                                 </tr>
@@ -117,24 +117,24 @@
                                 <tr>
                                     <td class="bg-beige text-center h-[100px]">
                                         <input type="text" name="medication[]" placeholder="Medication"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                         <input type="hidden" name="time[]" value="18:00:00">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="dose[]" placeholder="Dose"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="route[]" placeholder="Route"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="frequency[]" placeholder="Frequency"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <td class="bg-beige text-center">
                                         <input type="text" name="comments[]" placeholder="Comments"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input">
+                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
                                     </td>
                                     <th class=" text-brown font-semibold bg-yellow-light">6:00 PM</th>
                                 </tr>
@@ -142,7 +142,7 @@
                         </div>
 
                         <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                            <button class="button-default" type="submit" id="submit_button">SUBMIT</button>
+                            <button class="button-default cdss-btn opacity-50 pointer-events-none" type="submit" id="submit_button">SUBMIT</button>
                         </div>
                     </center>
                 </div>
@@ -161,6 +161,7 @@
             'resources/js/date-day-loader.js',
             'resources/js/searchable-dropdown.js',
             'resources/js/medication-administration-loader.js',
+            'resources/js/medication-form-validation.js',
         ]
     )
 

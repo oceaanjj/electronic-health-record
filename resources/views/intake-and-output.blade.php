@@ -101,7 +101,7 @@
                 {{-- ALERT MESSAGE (Aligned with ml-20) --}}
                 @isset($selectedPatient)
                     @if (! $ioData || $ioData->count() == 0)
-                        <div class="mt-4 ml-20 flex items-center gap-2 text-xs text-gray-500 italic">
+                        <div class="mt-4 ml-24 flex items-center gap-2 text-xs text-gray-500 italic">
                             <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                             Clinical Decision Support System is not yet available (No data for this day).
                         </div>

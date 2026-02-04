@@ -29,7 +29,7 @@
                             <input
                                 type="text"
                                 id="patient_search_input"
-                                placeholder="- Select or type to search -"
+                                placeholder="Select or type Patient Name..."
                                 value="{{ trim($selectedPatient->name ?? '') }}"
                                 autocomplete="off"
                                 {{-- Updated classes for UI consistency --}}

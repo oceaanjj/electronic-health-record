@@ -34,7 +34,7 @@
 
         {{-- 2. THE PATIENT SELECTION ROW (Synced with Vital Signs UI) --}}
         <div class="mx-auto w-full pt-10">
-            <div class="mb-10 ml-23 flex flex-wrap items-center gap-x-10 gap-y-4">
+            <div class="mb-5 ml-23 flex flex-wrap items-center gap-x-10 gap-y-4">
                 {{-- LINE 1: PATIENT SELECTION --}}
                 <div class="flex items-center gap-4">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
@@ -57,7 +57,7 @@
 
             {{-- 3. THE "NOT AVAILABLE" MESSAGE (Synced margin and style) --}}
             @if ($selectedPatient && (! isset($physicalExam) || ! $physicalExam))
-                <div class="mt-4 ml-23 flex items-center gap-2 text-xs text-gray-500 italic">
+                <div class="ml-23 flex items-center gap-2 text-xs text-gray-500 italic">
                     <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available.
                 </div>
@@ -84,7 +84,7 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <div class="mt-2 flex w-[100%] items-start justify-center gap-0">
+                    <div class="mt-10 flex w-[100%] items-start justify-center gap-0">
                         <div class="mr-1 w-full overflow-hidden rounded-[15px]">
                             <table class="w-full border-separate border-spacing-0">
                                 <tr>

@@ -126,7 +126,7 @@
                     value="{{ $currentDayNo ?? 1 }}"
                 />
 
-                <div class="mx-auto mt-6 flex w-[90%] items-start justify-between gap-1">
+                <div class="mx-auto mt-15 flex w-[90%] items-start justify-between gap-1">
                     <div class="relative mr-3 w-[30%]">
                         <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
 

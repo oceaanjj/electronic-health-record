@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 /* @import "bootstrap"; */
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -7,51 +7,55 @@
 @source '../**/*.js';
 
 @font-face {
-    font-family: 'Alte Haas Grotesk Bold';
-    src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
+    font-family: "Alte Haas Grotesk Bold";
+    src: url("/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf")
+        format("truetype");
     font-weight: bold;
     font-style: normal;
 
-    font-family: 'Creato Display Bold';
-    src: url('/public/font/creato_display/CreatoDisplay-Bold.otf') format('truetype');
+    font-family: "Creato Display Bold";
+    src: url("/public/font/creato_display/CreatoDisplay-Bold.otf")
+        format("truetype");
     font-weight: bold;
     font-style: normal;
 
-    font-family: 'Creato Display Black';
-    src: url('/public/font/creato_display/CreatoDisplay-Black.otf') format('truetype');
+    font-family: "Creato Display Black";
+    src: url("/public/font/creato_display/CreatoDisplay-Black.otf")
+        format("truetype");
     font-weight: bold;
     font-style: normal;
 
-    font-family: 'Trajan Pro';
-    src: url('/public/font/trajan-pro/TrajanPro-Bold.otf') format('truetype');
+    font-family: "Trajan Pro";
+    src: url("/public/font/trajan-pro/TrajanPro-Bold.otf") format("truetype");
     font-weight: bold;
     font-style: normal;
 
-    font-family: 'typewriter';
-    src: url('/public/font/jmh_typewriter/JMH\ Typewriter-Bold.otf') format('truetype');
+    font-family: "typewriter";
+    src: url("/public/font/jmh_typewriter/JMH\ Typewriter-Bold.otf")
+        format("truetype");
     font-weight: normal;
     font-style: normal;
 
-    font-family: 'neometric';
-    src: url('/public/font/neometric/Neometric-Regular.otf') format('truetype');
+    font-family: "neometric";
+    src: url("/public/font/neometric/Neometric-Regular.otf") format("truetype");
     font-weight: normal;
     font-style: normal;
 
-    font-family: 'rubik';
-    src: url('/public/font/rubik/Rubik-Regular.ttf') format('truetype');
+    font-family: "rubik";
+    src: url("/public/font/rubik/Rubik-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 
-    font-family: 'TASA';
-    src: url('/public/font/tasa/TASA-Regular.ttf') format('truetype');
+    font-family: "TASA";
+    src: url("/public/font/tasa/TASA-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 
     --color-white: #ffffff;
     --color-black: #000000;
@@ -70,14 +74,14 @@
     --color-dark-red: #8b0000;
     --color-neon-green: #39ff14;
 
-    --font-alte: 'Alte Haas Grotesk Bold', arial;
-    --font-creato-bold: 'Creato Display Bold', arial;
-    --font-creato-black: 'Creato Display Black', arial;
-    --font-trajan-bold: 'Trajan Pro', serif;
-    --font-typewriter: 'typewriter', monospace;
-    --font-neometric: 'neometric', sans-serif;
-    --font-rubik: 'rubik', sans-serif;
-    --fonr-tasa: 'TASA', sans-serif;
+    --font-alte: "Alte Haas Grotesk Bold", arial;
+    --font-creato-bold: "Creato Display Bold", arial;
+    --font-creato-black: "Creato Display Black", arial;
+    --font-trajan-bold: "Trajan Pro", serif;
+    --font-typewriter: "typewriter", monospace;
+    --font-neometric: "neometric", sans-serif;
+    --font-rubik: "rubik", sans-serif;
+    --fonr-tasa: "TASA", sans-serif;
 
     --radius-oval: 50%;
     --color-placeholder: #d1d5db;
@@ -111,6 +115,7 @@
 }
 /* End of cdss alert animation */
 
+
 /* chart carousel */
 #chart-viewport {
     height: 250px;
@@ -139,6 +144,7 @@
 }
 /* end of chart carousel */
 
+
 /* 1. THE BACKDROP (Overlay) */
 #chart-modal {
     position: fixed !important;
@@ -147,12 +153,12 @@
     width: 100%;
     height: 100%;
     z-index: 100000; /* Stays above sidebar and headers */
-    display: none; /* Toggled by JS */
-    align-items: flex-start;
+    display: none;   /* Toggled by JS */
+    align-items: flex-start; 
     justify-content: center;
     padding-top: 13%;
     background-color: rgba(15, 23, 42, 0.6); /* Modern Slate-Dark overlay */
-    backdrop-filter: blur(6px); /* Professional medical blur */
+    backdrop-filter: blur(6px);              /* Professional medical blur */
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -161,7 +167,7 @@
 .modal-container {
     position: relative;
     z-index: 100001;
-
+    
     /* SIZE SETTINGS */
     width: 60%;
     height: 88%;
@@ -174,7 +180,7 @@
     border: 1px solid rgba(226, 232, 240, 0.8);
     border-top: 2px solid #ffffff; /* 3D highlight edge */
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-
+    
     /* Animation base state */
     transform: scale(1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -182,33 +188,17 @@
 
 /* 3. ANIMATIONS (Working logic preserved) */
 @keyframes modalReveal {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @keyframes modalHide {
-    from {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.95) translateY(20px);
-    }
+    from { opacity: 1; transform: scale(1) translateY(0); }
+    to { opacity: 0; transform: scale(0.95) translateY(20px); }
 }
 
-.modal-reveal {
-    animation: modalReveal 0.4s ease-out forwards;
-}
-.modal-hide {
-    animation: modalHide 0.3s ease-in forwards;
-}
+.modal-reveal { animation: modalReveal 0.4s ease-out forwards; }
+.modal-hide { animation: modalHide 0.3s ease-in forwards; }
 
 /* 4. DASHBOARD CARDS (Interaction) */
 #chart-track > div {
@@ -225,107 +215,99 @@
 .chart-container-wrapper {
     position: relative;
     margin: 0 auto; /* Centers the graph horizontally */
-
+    
     /* MANIPULATE SIZE HERE */
-    height: 450px; /* Change this to make the graph taller or shorter */
-    width: 100%; /* Keep at 100% to fill the modal width */
+    height: 450px;  /* Change this to make the graph taller or shorter */
+    width: 100%;    /* Keep at 100% to fill the modal width */
     max-width: 900px; /* Manipulation: Shrink this to make the graph narrower */
-
+    
     /* Add some spacing below the title */
-    margin-top: 20px;
+    margin-top: 20px; 
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
-    to {
-        opacity: 1;
-    }
-}
+
+
 
 /* Loader Styles */
-body.is-loading {
-    overflow: hidden;
-}
-
-body.is-loading > *:not(.cute-loader-wrapper) {
-    filter: blur(10px) grayscale(0.4) !important;
-    opacity: 0.6;
-    pointer-events: none;
-    transition: filter 0.4s ease;
-}
-
-body.is-loading .top-right-pattern,
-body.is-loading .bottom-left-pattern {
-    filter: blur(10px) !important;
-}
-
-#form-content-container {
-    position: relative;
-    min-height: 500px;
-    transition: opacity 0.2s ease-in-out;
-}
-
-#form-content-container.is-loading > *:not(.cute-loader-wrapper) {
-    filter: blur(8px) grayscale(0.5);
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.cute-loader-wrapper {
-    position: fixed;
-    top: 50%;
-    left: 60%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    z-index: 9999;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2.5rem 3.5rem;
-    border-radius: 24px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    pointer-events: none;
-}
-
-.cute-spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(16, 64, 59, 0.1);
-    border-top: 5px solid #10403b;
-    border-radius: 50%;
-    animation: cute-spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
-}
-
-.loading-text {
-    font-weight: 700;
-    color: #10403b;
-    font-size: 1rem;
-    letter-spacing: -0.2px;
-    animation: pulse-text 1.5s ease-in-out infinite;
-}
-
-@keyframes cute-spin {
-    to {
-        transform: rotate(360deg);
+    body.is-loading {
+        overflow: hidden;
     }
-}
-@keyframes pulse-text {
-    0%,
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
+
+    body.is-loading > *:not(.cute-loader-wrapper) {
+        filter: blur(10px) grayscale(0.4) !important;
         opacity: 0.6;
-        transform: scale(0.96);
+        pointer-events: none;
+        transition: filter 0.4s ease;
     }
-}
+
+
+    body.is-loading .top-right-pattern, 
+    body.is-loading .bottom-left-pattern {
+        filter: blur(10px) !important;
+    }       
+
+    #form-content-container {
+        position: relative;
+        min-height: 500px;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+
+    #form-content-container.is-loading > *:not(.cute-loader-wrapper) {
+        filter: blur(8px) grayscale(0.5);
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+
+    .cute-loader-wrapper {
+        position: fixed;
+        top: 50%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2.5rem 3.5rem;
+        border-radius: 24px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        pointer-events: none;
+    }
+
+    .cute-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(16, 64, 59, 0.1);
+        border-top: 5px solid #10403b;
+        border-radius: 50%;
+        animation: cute-spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+
+    .loading-text {
+        font-weight: 700;
+        color: #10403b;
+        font-size: 1rem;
+        letter-spacing: -0.2px;
+        animation: pulse-text 1.5s ease-in-out infinite;
+    }
+
+    @keyframes cute-spin { to { transform: rotate(360deg); } }
+    @keyframes pulse-text {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(0.96); }
+    }
 /* End of loader styles */
+
+
 
 @layer components {
     input::placeholder,
@@ -334,6 +316,7 @@ body.is-loading .bottom-left-pattern {
         font-family: var(--font-creato-bold);
         font-weight: medium;
     }
+    
 
     input::-webkit-input-placeholder,
     textarea::-webkit-input-placeholder {
@@ -348,9 +331,9 @@ body.is-loading .bottom-left-pattern {
     }
 
     .main-header {
-        @apply bg-dark-green py-2 text-center font-bold text-white;
+        @apply bg-dark-green text-center text-white font-bold py-2;
         background: linear-gradient(180deg, #006400, #004d00);
-        @apply font-creato-black text-[15px] font-black;
+        @apply font-creato-black font-black text-[15px];
     }
 
     .gradient-gray {
@@ -428,21 +411,16 @@ body.is-loading .bottom-left-pattern {
     .vital-section {
         background: linear-gradient(180deg, #fff6e5 0%, #fddf9b 100%);
         border-radius: 20px;
-        box-shadow:
-            inset 0 3px 6px rgba(255, 255, 255, 0.5),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.15),
-            0 8px 20px rgba(0, 0, 0, 0.25);
+        box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.5),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.15), 0 8px 20px rgba(0, 0, 0, 0.25);
         padding: 25px;
-        transition:
-            transform 0.2s ease,
-            box-shadow 0.3s ease;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
 
     /* hover lift effect */
     .vital-section:hover {
         transform: translateY(-4px);
-        box-shadow:
-            0 10px 25px rgba(0, 0, 0, 0.3),
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3),
             inset 0 3px 6px rgba(255, 255, 255, 0.5);
     }
 
@@ -452,8 +430,7 @@ body.is-loading .bottom-left-pattern {
         border-collapse: separate;
         border-spacing: 0;
         border-radius: 15px;
-        box-shadow:
-            inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6),
             0 4px 8px rgba(0, 0, 0, 0.2);
         overflow: hidden;
     }
@@ -506,8 +483,7 @@ body.is-loading .bottom-left-pattern {
     .vital-chart-container {
         background: linear-gradient(180deg, #ffe699, #f9c74f);
         border-radius: 20px;
-        box-shadow:
-            inset 0 3px 6px rgba(255, 255, 255, 0.6),
+        box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.6),
             0 6px 15px rgba(0, 0, 0, 0.25);
         padding: 25px;
         margin-top: 40px;
@@ -577,7 +553,7 @@ body.is-loading .bottom-left-pattern {
     }
 
     .button-default {
-        @apply font-creato-bold w-[120px] rounded-full border-2 px-4 py-2 transition-all duration-300;
+        @apply w-[120px] border-2 rounded-full py-2 px-4 font-creato-bold transition-all duration-300;
         border-color: var(--color-dark-green);
         color: var(--color-dark-green);
         background-color: var(--color-button-default-green);
@@ -589,7 +565,7 @@ body.is-loading .bottom-left-pattern {
     }
 
     .button-default::before {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         background: linear-gradient(
@@ -611,8 +587,7 @@ body.is-loading .bottom-left-pattern {
         color: white;
         border-color: var(--color-button-green);
         transform: scale(1.03);
-        box-shadow:
-            0 0 10px var(--color-dark-green),
+        box-shadow: 0 0 10px var(--color-dark-green),
             0 0 20px rgba(0, 255, 0, 0.3);
     }
 
@@ -623,14 +598,15 @@ body.is-loading .bottom-left-pattern {
     }
 
     .vital-input {
-        @apply focus:ring-dark-green w-full px-4 py-5 text-center focus:outline-none;
+        @apply w-full text-center px-4 py-5
+            focus:outline-none focus:ring-dark-green;
         font-family: var(--font-creato-bold);
         font-size: 13px;
     }
 
     /* ===== ito yung alert box ===== */
     .alert-box {
-        @apply w-full rounded-[15px] font-semibold text-white transition-all duration-300;
+        @apply w-full rounded-[15px] text-white font-semibold transition-all duration-300;
 
         background: linear-gradient(to bottom, #8fd89a, #0c5f1c);
         width: 100%;
@@ -693,7 +669,7 @@ body.is-loading .bottom-left-pattern {
 
     .alert-box::before,
     .alert-box::after {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         right: 0;
@@ -705,12 +681,20 @@ body.is-loading .bottom-left-pattern {
 
     .alert-box::before {
         top: 0;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
+        background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.35),
+            transparent
+        );
     }
 
     .alert-box::after {
         bottom: 0;
-        background: linear-gradient(to top, rgba(255, 255, 255, 0.35), transparent);
+        background: linear-gradient(
+            to top,
+            rgba(255, 255, 255, 0.35),
+            transparent
+        );
     }
 
     .alert-box.is-scrollable::after {
@@ -987,7 +971,11 @@ body.is-loading .bottom-left-pattern {
 }
 
 .swal2-timer-progress-bar {
-    background: linear-gradient(to right, var(--color-yellow), var(--color-yellow-light)) !important;
+    background: linear-gradient(
+        to right,
+        var(--color-yellow),
+        var(--color-yellow-light)
+    ) !important;
 }
 
 .swal2-icon {
@@ -998,7 +986,7 @@ body.is-loading .bottom-left-pattern {
     border-color: var(--color-button-middle-green) !important;
 }
 
-.swal2-icon.swal2-success [class^='swal2-success-line'] {
+.swal2-icon.swal2-success [class^="swal2-success-line"] {
     background-color: var(--color-dark-green) !important;
 }
 
@@ -1006,6 +994,6 @@ body.is-loading .bottom-left-pattern {
     border-color: var(--color-dark-red) !important;
 }
 
-.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+.swal2-icon.swal2-error [class^="swal2-x-mark-line"] {
     background-color: var(--color-dark-red) !important;
 }

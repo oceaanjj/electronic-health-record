@@ -32,6 +32,6 @@ class Vitals extends Model
     // FOR ADPIE:
     public function nursingDiagnoses()
     {
-        return $this->hasOne(NursingDiagnosis::class);
+        return $this->hasOne(NursingDiagnosis::class, 'vital_signs_id');
     }
 }

@@ -8,11 +8,7 @@
         shadow-xl hover:bg-dark-green hover:scale-105 
         transition-all duration-300 ease-in-out">
 
-        <img src="{{ asset('img/sidebar/close-arrow.png') }}" class="w-3 block group-hover:hidden" alt="arrow">
-
-
-        <img src="{{ asset('img/sidebar/close-arrow-hover.png') }}" class="w-3 hidden group-hover:block"
-            alt="arrow-hover">
+        <i class="fa-solid fa-chevron-left"></i>
 
     </button>
 
@@ -22,9 +18,9 @@
         <li>
             <a href="{{ route('doctor-home') }}" class="group flex items-center gap-3 pl-4 pb-2 pt-2
                         hover:bg-dark-green transition-all duration-200 rounded-l-[10px] rounded-r-[10px]">
-                <img src="{{ asset('img/sidebar/home-icon.png') }}" alt="Home Icon"
-                    class="w-5 h-5 transition duration-200">
+                <i class="fa-solid fa-house w-5 h-5 mt-3 transition duration-200 group-hover:text-white"></i>
                 <span class=" group-hover:text-white group-hover:font-bold">Home</span>
+  
             </a>
         </li>
 
@@ -35,8 +31,7 @@
     ? 'bg-dark-green text-white font-bold'
     : '' }}">
 
-                <img src="{{ asset('img/sidebar/demographic-profile.png') }}" alt="Home Icon"
-                    class="w-5 h-5 transition duration-200">
+                <i class="fa-solid fa-file-alt w-5 h-5 mt-3 transition duration-200 group-hover:text-white"></i>
                 <span
                     class="{{ request()->routeIs('doctor.patient-report') ? 'text-white font-bold' : 'group-hover:font-bold group-hover:text-white' }}">Patient
                     Report</span>
@@ -52,8 +47,7 @@
             </form>
             <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
                         hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
-               <img src="{{ asset('img/sidebar/logout.png') }}" alt="Discharge Icon"
-                    class="w-6 h-6 transition duration-200">
+               <i class="fa-solid fa-right-from-bracket w-6 h-6 transition duration-200"></i>
                 <span>LOG OUT</span>
             </a>
         

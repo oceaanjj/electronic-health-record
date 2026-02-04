@@ -7,7 +7,7 @@ function initializeDischargePlanningForm() {
     const hiddenPatientIdInput = document.querySelector('input[name="patient_id"][type="hidden"]');
 
     function clearInputs() {
-        textareas.forEach(textarea => {
+        textareas.forEach((textarea) => {
             textarea.value = '';
         });
     }
@@ -32,7 +32,6 @@ function initializeDischargePlanningForm() {
     window.handleDischargePatientCleared = handlePatientCleared; // Store it globally to remove it later
     document.addEventListener('patient:cleared', window.handleDischargePatientCleared);
 
-
     // Initial state check
     if (!hiddenPatientIdInput || !hiddenPatientIdInput.value) {
         toggleForm(false);
@@ -42,15 +41,15 @@ function initializeDischargePlanningForm() {
 }
 
 // This listener is attached once and handles the AJAX loading
-document.addEventListener("patient:selected", async (event) => {
+document.addEventListener('patient:selected', async (event) => {
     // Only act if we are on the discharge planning page
     if (!document.querySelector('form[action*="discharge-planning"]')) {
         return;
     }
 
     const { patientId, selectUrl } = event.detail;
-    const formContainer = document.getElementById("form-content-container");
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+    const formContainer = document.getElementById('form-content-container');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     if (!formContainer || !selectUrl || !patientId) {
         return;
@@ -58,11 +57,11 @@ document.addEventListener("patient:selected", async (event) => {
 
     try {
         const response = await fetch(selectUrl, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "X-CSRF-TOKEN": csrfToken,
-                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest',
             },
             body: `patient_id=${encodeURIComponent(patientId)}`,
         });
@@ -71,30 +70,27 @@ document.addEventListener("patient:selected", async (event) => {
 
         const htmlText = await response.text();
         const parser = new DOMParser();
-        const newHtml = parser.parseFromString(htmlText, "text/html");
-        const newContent = newHtml.getElementById("form-content-container");
+        const newHtml = parser.parseFromString(htmlText, 'text/html');
+        const newContent = newHtml.getElementById('form-content-container');
 
         if (newContent) {
             formContainer.innerHTML = newContent.innerHTML;
             // Re-initialize the form logic for the new content
             initializeDischargePlanningForm();
             // Re-initialize the dropdown
-            if (typeof window.initSearchableDropdown === "function") {
+            if (typeof window.initSearchableDropdown === 'function') {
                 window.initSearchableDropdown();
             }
         } else {
             throw new Error("Could not find '#form-content-container' in response.");
         }
     } catch (error) {
-        console.error("Patient loading failed:", error);
+        console.error('Patient loading failed:', error);
         window.location.reload();
     }
 });
-
 
 // Initial setup on page load
 document.addEventListener('DOMContentLoaded', () => {
     initializeDischargePlanningForm();
 });
-
-

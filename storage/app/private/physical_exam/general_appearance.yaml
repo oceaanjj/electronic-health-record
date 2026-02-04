@@ -1,227 +1,173 @@
 general_appearance:
-  - keywords: ["frail", "acutely ill", "chronically ill"]
-    alert: "Patient appears frail or acutely/chronically ill. This general impression should guide the urgency and focus of the physical exam."
-    severity: "warning"
-  - keywords: ["lethargic", "obtunded", "stuporous", "comatose"]
-    alert: "Altered level of consciousness detected. This is a critical finding requiring immediate neurological assessment and escalation. See Glasgow Coma Scale."
-    severity: "critical"
-  - keywords: ["clutching chest", "labored breathing", "wheezing"]
-    alert: "Patient shows clear signs of cardiac or respiratory distress. Prioritize ABCs (Airway, Breathing, Circulation) and conduct an immediate focused cardiopulmonary assessment."
-    severity: "critical"
-  - keywords: ["wincing", "sweating", "protecting painful area", "fidgety"]
-    alert: "Patient exhibiting obvious signs of pain or anxiety. Assess pain using an appropriate scale and address comfort."
-    severity: "warning"
-  - keywords:
-      ["flat affect", "sad affect", "poor eye contact", "psychomotor slowing"]
-    alert: "Patient displays a flat or sad affect, which can be a sign of depression. Consider screening for depression."
-    severity: "info"
-  - keywords: ["fruity odor", "acetone breath"]
-    alert: "Fruity or acetone odor on breath is a classic sign of diabetic ketoacidosis. Check blood glucose and ketones immediately."
-    severity: "critical"
-  - keywords: ["short stature", "loss of height"]
-    alert: "Short stature or documented height loss could indicate underlying conditions like Turner's syndrome or osteoporosis, respectively."
-    severity: "info"
-  - keywords: ["barrel chest", "increased AP diameter"]
-    alert: "Barrel chest with an increased AP diameter is a classic sign of COPD. Correlate with respiratory exam findings."
-    severity: "warning"
-  - keywords: ["leans forward", "arms braced", "tripod position"]
-    alert: "Patient is leaning forward with arms braced (tripod position), a sign of severe respiratory distress often seen in COPD."
-    severity: "critical"
-  # Category: Level of Consciousness & Interactiveness (PAT: Appearance)
-  - keywords:
-      [
-        "alert",
-        "active",
-        "playful",
-        "interactive",
-        "smiling",
-        "cooing",
-        "babbles",
-      ]
-    alert: "Patient appears alert, active, and developmentally appropriate. This is a reassuring finding."
-    severity: "info"
-  - keywords:
-      ["sleepy but arousable", "drowsy but awakens", "returns to sleep quickly"]
-    alert: "Patient is sleepy but easily arousable. Monitor for changes in level of consciousness."
-    severity: "info"
-  - keywords:
-      ["irritable", "fussy", "difficult to soothe", "not acting like themself"]
-    alert: "Patient is irritable and difficult to console. This can be an early sign of significant illness, pain, or neurological issue. Assess for pain and other signs of distress."
-    severity: "warning"
-  - keywords:
-      [
-        "inconsolable",
-        "crying continuously",
-        "cannot be comforted",
-        "high-pitched cry",
-      ]
-    alert: "Patient is inconsolable or has a high-pitched cry. This is a critical finding suggesting severe pain, neurological irritation (e.g., meningitis), or hypoxia."
-    severity: "critical"
-  - keywords:
-      [
-        "lethargic",
-        "listless",
-        "drowsy",
-        "difficult to arouse",
-        "poor interaction",
-      ]
-    alert: "Altered Level of Consciousness (Lethargy): Patient is difficult to arouse and shows little interest in the environment. This is a critical sign of serious illness, hypoxia, or CNS depression."
-    severity: "critical"
-  - keywords:
-      ["obtunded", "responds only to painful stimuli", "responds to pain"]
-    alert: "Altered Level of Consciousness (Obtunded/Stuporous): Patient responds only to painful stimuli. This indicates a severe depression of consciousness and is a neurological emergency."
-    severity: "critical"
-  - keywords: ["unresponsive", "unarousable", "comatose", "no response to pain"]
-    alert: "Altered Level of Consciousness (Unresponsive): Patient is unresponsive to all stimuli. Immediate life-saving interventions (ABCs) are required."
-    severity: "critical"
-  - keywords:
-      [
-        "confused",
-        "disoriented",
-        "not recognizing caregiver",
-        "glassy-eyed stare",
-      ]
-    alert: "Patient appears confused, disoriented, or has a vacant stare. This suggests altered mental status due to hypoxia, metabolic disturbance, or CNS pathology."
-    severity: "critical"
-  - keywords: ["post-ictal", "postictal"]
-    alert: "Patient appears to be in a post-ictal state. Monitor airway, breathing, and neurological recovery. Assess for cause of seizure."
-    severity: "warning"
-  - keywords: ["parent concerned", "caregiver worried", "just not right"]
-    alert: "Parent/Caregiver Concern: The caregiver expresses significant concern. This is a validated indicator for potential deterioration and warrants heightened clinical vigilance."
-    severity: "warning"
+    - keywords: ['frail', 'acutely ill', 'chronically ill']
+      alert: 'Patient appears frail or acutely/chronically ill. This general impression should guide the urgency and focus of the physical exam.'
+      severity: 'warning'
+    - keywords: ['lethargic', 'obtunded', 'stuporous', 'comatose']
+      alert: 'Altered level of consciousness detected. This is a critical finding requiring immediate neurological assessment and escalation. See Glasgow Coma Scale.'
+      severity: 'critical'
+    - keywords: ['clutching chest', 'labored breathing', 'wheezing']
+      alert: 'Patient shows clear signs of cardiac or respiratory distress. Prioritize ABCs (Airway, Breathing, Circulation) and conduct an immediate focused cardiopulmonary assessment.'
+      severity: 'critical'
+    - keywords: ['wincing', 'sweating', 'protecting painful area', 'fidgety']
+      alert: 'Patient exhibiting obvious signs of pain or anxiety. Assess pain using an appropriate scale and address comfort.'
+      severity: 'warning'
+    - keywords: ['flat affect', 'sad affect', 'poor eye contact', 'psychomotor slowing']
+      alert: 'Patient displays a flat or sad affect, which can be a sign of depression. Consider screening for depression.'
+      severity: 'info'
+    - keywords: ['fruity odor', 'acetone breath']
+      alert: 'Fruity or acetone odor on breath is a classic sign of diabetic ketoacidosis. Check blood glucose and ketones immediately.'
+      severity: 'critical'
+    - keywords: ['short stature', 'loss of height']
+      alert: "Short stature or documented height loss could indicate underlying conditions like Turner's syndrome or osteoporosis, respectively."
+      severity: 'info'
+    - keywords: ['barrel chest', 'increased AP diameter']
+      alert: 'Barrel chest with an increased AP diameter is a classic sign of COPD. Correlate with respiratory exam findings.'
+      severity: 'warning'
+    - keywords: ['leans forward', 'arms braced', 'tripod position']
+      alert: 'Patient is leaning forward with arms braced (tripod position), a sign of severe respiratory distress often seen in COPD.'
+      severity: 'critical'
+    # Category: Level of Consciousness & Interactiveness (PAT: Appearance)
+    - keywords: ['alert', 'active', 'playful', 'interactive', 'smiling', 'cooing', 'babbles']
+      alert: 'Patient appears alert, active, and developmentally appropriate. This is a reassuring finding.'
+      severity: 'info'
+    - keywords: ['sleepy but arousable', 'drowsy but awakens', 'returns to sleep quickly']
+      alert: 'Patient is sleepy but easily arousable. Monitor for changes in level of consciousness.'
+      severity: 'info'
+    - keywords: ['irritable', 'fussy', 'difficult to soothe', 'not acting like themself']
+      alert: 'Patient is irritable and difficult to console. This can be an early sign of significant illness, pain, or neurological issue. Assess for pain and other signs of distress.'
+      severity: 'warning'
+    - keywords: ['inconsolable', 'crying continuously', 'cannot be comforted', 'high-pitched cry']
+      alert: 'Patient is inconsolable or has a high-pitched cry. This is a critical finding suggesting severe pain, neurological irritation (e.g., meningitis), or hypoxia.'
+      severity: 'critical'
+    - keywords: ['lethargic', 'listless', 'drowsy', 'difficult to arouse', 'poor interaction']
+      alert: 'Altered Level of Consciousness (Lethargy): Patient is difficult to arouse and shows little interest in the environment. This is a critical sign of serious illness, hypoxia, or CNS depression.'
+      severity: 'critical'
+    - keywords: ['obtunded', 'responds only to painful stimuli', 'responds to pain']
+      alert: 'Altered Level of Consciousness (Obtunded/Stuporous): Patient responds only to painful stimuli. This indicates a severe depression of consciousness and is a neurological emergency.'
+      severity: 'critical'
+    - keywords: ['unresponsive', 'unarousable', 'comatose', 'no response to pain']
+      alert: 'Altered Level of Consciousness (Unresponsive): Patient is unresponsive to all stimuli. Immediate life-saving interventions (ABCs) are required.'
+      severity: 'critical'
+    - keywords: ['confused', 'disoriented', 'not recognizing caregiver', 'glassy-eyed stare']
+      alert: 'Patient appears confused, disoriented, or has a vacant stare. This suggests altered mental status due to hypoxia, metabolic disturbance, or CNS pathology.'
+      severity: 'critical'
+    - keywords: ['post-ictal', 'postictal']
+      alert: 'Patient appears to be in a post-ictal state. Monitor airway, breathing, and neurological recovery. Assess for cause of seizure.'
+      severity: 'warning'
+    - keywords: ['parent concerned', 'caregiver worried', 'just not right']
+      alert: 'Parent/Caregiver Concern: The caregiver expresses significant concern. This is a validated indicator for potential deterioration and warrants heightened clinical vigilance.'
+      severity: 'warning'
 
-  # Category: Muscle Tone & Body Position (PAT: Appearance)
-  - keywords:
-      ["good muscle tone", "moving all extremities", "resists examination"]
-    alert: "Patient exhibits normal, strong muscle tone for age. This is a reassuring sign of adequate CNS function and oxygenation."
-    severity: "info"
-  - keywords: ["floppy", "limp", "poor muscle tone", "rag doll", "hypotonic"]
-    alert: "Abnormal Tone (Hypotonia): Patient appears limp or floppy. This is a critical indicator of CNS depression, hypoxia, or severe systemic illness."
-    severity: "critical"
-  - keywords: ["rigid", "stiff", "hypertonic", "opisthotonus", "arched back"]
-    alert: "Abnormal Tone (Hypertonia): Patient exhibits rigid muscle tone or abnormal posturing (e.g., opisthotonus). This suggests severe neurological irritation or injury."
-    severity: "critical"
-  - keywords: ["tripod position", "tripoding", "leaning forward", "arms braced"]
-    alert: "Tripod Position: Patient is leaning forward and bracing with arms to maximize air entry. This is a sign of severe respiratory distress."
-    severity: "critical"
-  - keywords: ["sniffing position", "head tilted back"]
-    alert: "Sniffing Position: Patient is tilting head up and back to align the airway. This is a sign of significant upper airway obstruction (e.g., epiglottitis, severe croup)."
-    severity: "critical"
-  - keywords: ["guarding", "protecting painful area", "refuses to move a limb"]
-    alert: "Patient is guarding or refusing to move a body part. Assess for localized pain, injury, or infection (e.g., fracture, septic arthritis)."
-    severity: "warning"
+    # Category: Muscle Tone & Body Position (PAT: Appearance)
+    - keywords: ['good muscle tone', 'moving all extremities', 'resists examination']
+      alert: 'Patient exhibits normal, strong muscle tone for age. This is a reassuring sign of adequate CNS function and oxygenation.'
+      severity: 'info'
+    - keywords: ['floppy', 'limp', 'poor muscle tone', 'rag doll', 'hypotonic']
+      alert: 'Abnormal Tone (Hypotonia): Patient appears limp or floppy. This is a critical indicator of CNS depression, hypoxia, or severe systemic illness.'
+      severity: 'critical'
+    - keywords: ['rigid', 'stiff', 'hypertonic', 'opisthotonus', 'arched back']
+      alert: 'Abnormal Tone (Hypertonia): Patient exhibits rigid muscle tone or abnormal posturing (e.g., opisthotonus). This suggests severe neurological irritation or injury.'
+      severity: 'critical'
+    - keywords: ['tripod position', 'tripoding', 'leaning forward', 'arms braced']
+      alert: 'Tripod Position: Patient is leaning forward and bracing with arms to maximize air entry. This is a sign of severe respiratory distress.'
+      severity: 'critical'
+    - keywords: ['sniffing position', 'head tilted back']
+      alert: 'Sniffing Position: Patient is tilting head up and back to align the airway. This is a sign of significant upper airway obstruction (e.g., epiglottitis, severe croup).'
+      severity: 'critical'
+    - keywords: ['guarding', 'protecting painful area', 'refuses to move a limb']
+      alert: 'Patient is guarding or refusing to move a body part. Assess for localized pain, injury, or infection (e.g., fracture, septic arthritis).'
+      severity: 'warning'
 
-  # Category: Work of Breathing (Observable from a distance)
-  - keywords:
-      ["labored breathing", "working hard to breathe", "respiratory distress"]
-    alert: "Patient shows clear signs of respiratory distress. Prioritize ABCs (Airway, Breathing, Circulation) and conduct an immediate focused cardiopulmonary assessment."
-    severity: "critical"
-  - keywords: ["nasal flaring"]
-    alert: "Increased Work of Breathing: Nasal flaring detected. This is a sign of respiratory distress, indicating an attempt to decrease airway resistance."
-    severity: "warning"
-  - keywords: ["head bobbing"]
-    alert: "Increased Work of Breathing: Head bobbing with respirations detected. This indicates use of accessory neck muscles and is a sign of severe respiratory distress, especially in infants."
-    severity: "critical"
-  - keywords:
-      ["retractions", "subcostal retractions", "intercostal retractions"]
-    alert: "Increased Work of Breathing: Retractions are present. This indicates increased respiratory effort and respiratory distress. Severity increases from subcostal to intercostal to supraclavicular."
-    severity: "warning"
-  - keywords:
-      [
-        "supraclavicular retractions",
-        "suprasternal retractions",
-        "tracheal tug",
-      ]
-    alert: "Severe Retractions: Supraclavicular or suprasternal retractions indicate use of accessory muscles and severe respiratory distress."
-    severity: "critical"
-  - keywords: ["seesaw breathing", "paradoxical breathing"]
-    alert: "Impending Respiratory Failure: Seesaw or paradoxical chest/abdominal movements indicate diaphragmatic fatigue. This is an ominous sign."
-    severity: "critical"
-  - keywords: ["gasping", "agonal breathing"]
-    alert: "Ineffective Breathing: Gasping respirations detected. This is an agonal breathing pattern and signifies impending or current cardiopulmonary arrest."
-    severity: "critical"
+    # Category: Work of Breathing (Observable from a distance)
+    - keywords: ['labored breathing', 'working hard to breathe', 'respiratory distress']
+      alert: 'Patient shows clear signs of respiratory distress. Prioritize ABCs (Airway, Breathing, Circulation) and conduct an immediate focused cardiopulmonary assessment.'
+      severity: 'critical'
+    - keywords: ['nasal flaring']
+      alert: 'Increased Work of Breathing: Nasal flaring detected. This is a sign of respiratory distress, indicating an attempt to decrease airway resistance.'
+      severity: 'warning'
+    - keywords: ['head bobbing']
+      alert: 'Increased Work of Breathing: Head bobbing with respirations detected. This indicates use of accessory neck muscles and is a sign of severe respiratory distress, especially in infants.'
+      severity: 'critical'
+    - keywords: ['retractions', 'subcostal retractions', 'intercostal retractions']
+      alert: 'Increased Work of Breathing: Retractions are present. This indicates increased respiratory effort and respiratory distress. Severity increases from subcostal to intercostal to supraclavicular.'
+      severity: 'warning'
+    - keywords: ['supraclavicular retractions', 'suprasternal retractions', 'tracheal tug']
+      alert: 'Severe Retractions: Supraclavicular or suprasternal retractions indicate use of accessory muscles and severe respiratory distress.'
+      severity: 'critical'
+    - keywords: ['seesaw breathing', 'paradoxical breathing']
+      alert: 'Impending Respiratory Failure: Seesaw or paradoxical chest/abdominal movements indicate diaphragmatic fatigue. This is an ominous sign.'
+      severity: 'critical'
+    - keywords: ['gasping', 'agonal breathing']
+      alert: 'Ineffective Breathing: Gasping respirations detected. This is an agonal breathing pattern and signifies impending or current cardiopulmonary arrest.'
+      severity: 'critical'
 
-  # Category: Circulation to Skin (Observable from a distance)
-  - keywords: ["pink", "well-perfused", "warm"]
-    alert: "Patient's skin color is normal and appears well-perfused. This is a reassuring sign of adequate circulation."
-    severity: "info"
-  - keywords: ["pale", "pallor", "ashen"]
-    alert: "Abnormal Circulation (Pallor): Patient appears pale. Pallor can be an early sign of shock due to peripheral vasoconstriction or anemia. Assess perfusion status immediately."
-    severity: "warning"
-  - keywords: ["mottled", "mottling", "lacy pattern on skin"]
-    alert: "Abnormal Circulation (Mottling): Mottled skin detected. This indicates poor perfusion and vasoconstriction, and is a sign of shock."
-    severity: "critical"
-  - keywords:
-      [
-        "cyanotic",
-        "cyanosis",
-        "blue lips",
-        "blue nail beds",
-        "central cyanosis",
-      ]
-    alert: "Abnormal Circulation (Cyanosis): Central cyanosis detected. This is a late and critical sign of severe hypoxemia and/or circulatory failure. Requires immediate oxygenation and intervention."
-    severity: "critical"
-  - keywords: ["flushed", "bright red cheeks"]
-    alert: "Patient appears flushed. This can be a sign of fever, sepsis (vasodilation), or carbon monoxide poisoning (cherry-red skin)."
-    severity: "warning"
-  - keywords: ["jaundiced", "jaundice", "yellow skin", "icteric sclera"]
-    alert: "Jaundice detected. In a neonate, requires immediate evaluation of bilirubin. In an older child, indicates potential liver dysfunction or hemolysis."
-    severity: "warning"
+    # Category: Circulation to Skin (Observable from a distance)
+    - keywords: ['pink', 'well-perfused', 'warm']
+      alert: "Patient's skin color is normal and appears well-perfused. This is a reassuring sign of adequate circulation."
+      severity: 'info'
+    - keywords: ['pale', 'pallor', 'ashen']
+      alert: 'Abnormal Circulation (Pallor): Patient appears pale. Pallor can be an early sign of shock due to peripheral vasoconstriction or anemia. Assess perfusion status immediately.'
+      severity: 'warning'
+    - keywords: ['mottled', 'mottling', 'lacy pattern on skin']
+      alert: 'Abnormal Circulation (Mottling): Mottled skin detected. This indicates poor perfusion and vasoconstriction, and is a sign of shock.'
+      severity: 'critical'
+    - keywords: ['cyanotic', 'cyanosis', 'blue lips', 'blue nail beds', 'central cyanosis']
+      alert: 'Abnormal Circulation (Cyanosis): Central cyanosis detected. This is a late and critical sign of severe hypoxemia and/or circulatory failure. Requires immediate oxygenation and intervention.'
+      severity: 'critical'
+    - keywords: ['flushed', 'bright red cheeks']
+      alert: 'Patient appears flushed. This can be a sign of fever, sepsis (vasodilation), or carbon monoxide poisoning (cherry-red skin).'
+      severity: 'warning'
+    - keywords: ['jaundiced', 'jaundice', 'yellow skin', 'icteric sclera']
+      alert: 'Jaundice detected. In a neonate, requires immediate evaluation of bilirubin. In an older child, indicates potential liver dysfunction or hemolysis.'
+      severity: 'warning'
 
-  # Category: Hydration Status & Nutrition
-  - keywords: ["well-hydrated", "moist mucous membranes"]
-    alert: "Patient appears well-hydrated. This is a reassuring finding."
-    severity: "info"
-  - keywords: ["dry lips", "dry mucous membranes", "tacky mouth"]
-    alert: "Signs of Dehydration: Mucous membranes are dry or tacky. A reliable sign of dehydration. Assess fluid intake and output."
-    severity: "warning"
-  - keywords: ["sunken eyes", "no tears when crying", "absent tears"]
-    alert: "Significant Dehydration: Sunken eyes and/or absence of tears when crying indicate at least moderate dehydration (5-10% volume loss)."
-    severity: "critical"
-  - keywords: ["sunken fontanelle", "depressed fontanelle"]
-    alert: "Severe Dehydration: Sunken anterior fontanelle in an infant is a critical sign of moderate to severe dehydration."
-    severity: "critical"
-  - keywords: ["well-nourished", "well-developed"]
-    alert: "Patient appears well-nourished and appropriately developed for age."
-    severity: "info"
-  - keywords: ["thin", "underweight", "emaciated", "wasting"]
-    alert: "Patient appears underweight or emaciated. This could indicate chronic illness, malnutrition, or failure to thrive. A nutritional assessment is warranted."
-    severity: "warning"
-  - keywords: ["cachectic", "chronically ill appearance"]
-    alert: "Patient appears cachectic or chronically ill. This suggests a long-standing, significant underlying disease process."
-    severity: "warning"
-  - keywords: ["obese", "overweight"]
-    alert: "Patient appears overweight or obese. This is an important consideration for overall health and may be relevant to the presenting complaint."
-    severity: "info"
+    # Category: Hydration Status & Nutrition
+    - keywords: ['well-hydrated', 'moist mucous membranes']
+      alert: 'Patient appears well-hydrated. This is a reassuring finding.'
+      severity: 'info'
+    - keywords: ['dry lips', 'dry mucous membranes', 'tacky mouth']
+      alert: 'Signs of Dehydration: Mucous membranes are dry or tacky. A reliable sign of dehydration. Assess fluid intake and output.'
+      severity: 'warning'
+    - keywords: ['sunken eyes', 'no tears when crying', 'absent tears']
+      alert: 'Significant Dehydration: Sunken eyes and/or absence of tears when crying indicate at least moderate dehydration (5-10% volume loss).'
+      severity: 'critical'
+    - keywords: ['sunken fontanelle', 'depressed fontanelle']
+      alert: 'Severe Dehydration: Sunken anterior fontanelle in an infant is a critical sign of moderate to severe dehydration.'
+      severity: 'critical'
+    - keywords: ['well-nourished', 'well-developed']
+      alert: 'Patient appears well-nourished and appropriately developed for age.'
+      severity: 'info'
+    - keywords: ['thin', 'underweight', 'emaciated', 'wasting']
+      alert: 'Patient appears underweight or emaciated. This could indicate chronic illness, malnutrition, or failure to thrive. A nutritional assessment is warranted.'
+      severity: 'warning'
+    - keywords: ['cachectic', 'chronically ill appearance']
+      alert: 'Patient appears cachectic or chronically ill. This suggests a long-standing, significant underlying disease process.'
+      severity: 'warning'
+    - keywords: ['obese', 'overweight']
+      alert: 'Patient appears overweight or obese. This is an important consideration for overall health and may be relevant to the presenting complaint.'
+      severity: 'info'
 
-  # Category: Odor & Hygiene
-  - keywords: ["fruity odor", "acetone breath"]
-    alert: "Fruity or acetone odor on breath is a classic sign of diabetic ketoacidosis (DKA). Check blood glucose and ketones immediately."
-    severity: "critical"
-  - keywords: ["fecal odor on breath", "feculent breath"]
-    alert: "Fecal odor on breath is a critical finding that may suggest a bowel obstruction."
-    severity: "critical"
-  - keywords: ["well-groomed", "clean", "good hygiene"]
-    alert: "Patient is clean and well-groomed, suggesting adequate caregiver support and function."
-    severity: "info"
-  - keywords: ["poor hygiene", "disheveled", "malodorous"]
-    alert: "Patient appears disheveled or has poor hygiene. This may be a sign of neglect, social dysfunction, or severe depression/illness affecting self-care."
-    severity: "info"
+    # Category: Odor & Hygiene
+    - keywords: ['fruity odor', 'acetone breath']
+      alert: 'Fruity or acetone odor on breath is a classic sign of diabetic ketoacidosis (DKA). Check blood glucose and ketones immediately.'
+      severity: 'critical'
+    - keywords: ['fecal odor on breath', 'feculent breath']
+      alert: 'Fecal odor on breath is a critical finding that may suggest a bowel obstruction.'
+      severity: 'critical'
+    - keywords: ['well-groomed', 'clean', 'good hygiene']
+      alert: 'Patient is clean and well-groomed, suggesting adequate caregiver support and function.'
+      severity: 'info'
+    - keywords: ['poor hygiene', 'disheveled', 'malodorous']
+      alert: 'Patient appears disheveled or has poor hygiene. This may be a sign of neglect, social dysfunction, or severe depression/illness affecting self-care.'
+      severity: 'info'
 
-  # Category: Dysmorphic or Other Specific Features
-  - keywords:
-      [
-        "dysmorphic features",
-        "unusual facies",
-        "low-set ears",
-        "epicanthal folds",
-      ]
-    alert: "Dysmorphic features noted. These may be indicative of an underlying genetic syndrome. A detailed physical exam and consideration for genetic consultation may be warranted."
-    severity: "info"
-  - keywords:
-      ["bruising", "multiple bruises", "bruises in various stages of healing"]
-    alert: "Multiple bruises noted, especially in various stages of healing or in unusual locations (e.g., torso, back). This is a potential indicator of non-accidental trauma or a bleeding disorder."
-    severity: "warning"
-  - keywords: ["petechiae", "purpura", "non-blanching rash"]
-    alert: "Non-Blanching Rash: Petechiae or purpura detected. This is a critical finding that could indicate meningococcemia or other coagulopathy. Requires immediate evaluation for sepsis."
-    severity: "critical"
+    # Category: Dysmorphic or Other Specific Features
+    - keywords: ['dysmorphic features', 'unusual facies', 'low-set ears', 'epicanthal folds']
+      alert: 'Dysmorphic features noted. These may be indicative of an underlying genetic syndrome. A detailed physical exam and consideration for genetic consultation may be warranted.'
+      severity: 'info'
+    - keywords: ['bruising', 'multiple bruises', 'bruises in various stages of healing']
+      alert: 'Multiple bruises noted, especially in various stages of healing or in unusual locations (e.g., torso, back). This is a potential indicator of non-accidental trauma or a bleeding disorder.'
+      severity: 'warning'
+    - keywords: ['petechiae', 'purpura', 'non-blanching rash']
+      alert: 'Non-Blanching Rash: Petechiae or purpura detected. This is a critical finding that could indicate meningococcemia or other coagulopathy. Requires immediate evaluation for sepsis.'
+      severity: 'critical'

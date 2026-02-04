@@ -3,11 +3,10 @@
 <div class="section">
     <h2 class="section-title">Lab Values</h2>
 
-    @if($labValues->isEmpty())
+    @if ($labValues->isEmpty())
         <p class="no-data">No Lab Values data available.</p>
     @else
-
-        @foreach($labValues as $item)
+        @foreach ($labValues as $item)
             <table>
                 <thead>
                     <tr>
@@ -18,7 +17,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     {{-- White Blood Cell (WBC) --}}
                     <tr>
                         <td>WBC (×10⁹/L)</td>
@@ -133,7 +131,6 @@
                 </tbody>
             </table>
 
-
             <!-- ADPIE Table -->
 
             <h2 class="section-title-adpie">ADPIE</h2>
@@ -169,10 +166,9 @@
                 </tbody>
             </table>
 
-            @if(!$loop->last)
-                <hr>
+            @if (! $loop->last)
+                <hr />
             @endif
-
         @endforeach
     @endif
 </div>

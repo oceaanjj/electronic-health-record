@@ -1,10 +1,10 @@
 if (!window.patientSelectedListenerAttached) {
     window.patientSelectedListenerAttached = true;
 
-    document.addEventListener("patient:selected", async (event) => {
+    document.addEventListener('patient:selected', async (event) => {
         const { patientId, selectUrl } = event.detail;
-        const formContainer = document.getElementById("form-content-container");
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+        const formContainer = document.getElementById('form-content-container');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
         if (!formContainer || !selectUrl || !patientId) return;
 
@@ -14,17 +14,17 @@ if (!window.patientSelectedListenerAttached) {
             <div class="cute-spinner"></div>
             <span class="loading-text">One moment please...</span>
         `;
-        
+
         formContainer.classList.add('is-loading');
         formContainer.appendChild(cuteLoader);
 
         try {
             const response = await fetch(selectUrl, {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "X-CSRF-TOKEN": csrfToken,
-                    "X-Requested-With": "XMLHttpRequest",
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
                 },
                 body: `patient_id=${encodeURIComponent(patientId)}`,
             });
@@ -33,11 +33,10 @@ if (!window.patientSelectedListenerAttached) {
 
             const htmlText = await response.text();
             const parser = new DOMParser();
-            const newDoc = parser.parseFromString(htmlText, "text/html");
-            const newContentHTML = newDoc.getElementById("form-content-container")?.innerHTML;
+            const newDoc = parser.parseFromString(htmlText, 'text/html');
+            const newContentHTML = newDoc.getElementById('form-content-container')?.innerHTML;
 
-            if (!newContentHTML) throw new Error("Content container missing in response");
-
+            if (!newContentHTML) throw new Error('Content container missing in response');
 
             const vitalsForm = newDoc.querySelector('#vitals-form');
             let timePoints = [];
@@ -53,36 +52,37 @@ if (!window.patientSelectedListenerAttached) {
                 if (fetchUrl && pId && dAt) {
                     try {
                         const vRes = await fetch(fetchUrl, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/x-www-form-urlencoded", "X-CSRF-TOKEN": csrfToken, "Accept": "application/json" },
-                            body: `patient_id=${encodeURIComponent(pId)}&date=${encodeURIComponent(dAt)}&day_no=${encodeURIComponent(dNo)}`
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRF-TOKEN': csrfToken,
+                                Accept: 'application/json',
+                            },
+                            body: `patient_id=${encodeURIComponent(pId)}&date=${encodeURIComponent(dAt)}&day_no=${encodeURIComponent(dNo)}`,
                         });
                         if (vRes.ok) vitalsData = await vRes.json();
-                    } catch (e) { console.warn("Vitals pre-fetch failed", e); }
+                    } catch (e) {
+                        console.warn('Vitals pre-fetch failed', e);
+                    }
                 }
             }
 
             formContainer.style.opacity = '0.3';
 
-
             setTimeout(() => {
-   
                 cuteLoader.remove();
                 formContainer.classList.remove('is-loading');
                 formContainer.innerHTML = newContentHTML;
                 window.cdssFormReloaded = true;
 
-  
                 requestAnimationFrame(() => {
                     formContainer.style.opacity = '1';
-                    
-           
+
                     initializeUI(timePoints, vitalsData, selectUrl);
                 });
-            }, 150); 
-
+            }, 150);
         } catch (error) {
-            console.error("Patient loading failed:", error);
+            console.error('Patient loading failed:', error);
             cuteLoader.remove();
             formContainer.classList.remove('is-loading');
             formContainer.style.opacity = '1';
@@ -90,9 +90,8 @@ if (!window.patientSelectedListenerAttached) {
     });
 }
 
-
 function initializeUI(timePoints, vitalsData, selectUrl) {
-    const formContainer = document.getElementById("form-content-container");
+    const formContainer = document.getElementById('form-content-container');
 
     if (window.initializeVitalSignsCharts && timePoints.length > 0) {
         window.initializeVitalSignsCharts(timePoints, vitalsData, { animate: true });
@@ -101,15 +100,17 @@ function initializeUI(timePoints, vitalsData, selectUrl) {
     if (window.initializeChartScrolling) window.initializeChartScrolling();
     if (window.initializeSearchableDropdown) window.initializeSearchableDropdown();
     if (window.initializeVitalSignsDateSync) window.initializeVitalSignsDateSync();
-    
+
     if (window.initializeDateDayLoader) {
-        const headerDropdown = document.querySelector(".searchable-dropdown");
+        const headerDropdown = document.querySelector('.searchable-dropdown');
         const url = headerDropdown ? headerDropdown.dataset.selectUrl : selectUrl;
         window.initializeDateDayLoader(url);
     }
 
-    document.dispatchEvent(new CustomEvent("cdss:form-reloaded", {
-        bubbles: true,
-        detail: { formContainer: formContainer }
-    }));
+    document.dispatchEvent(
+        new CustomEvent('cdss:form-reloaded', {
+            bubbles: true,
+            detail: { formContainer: formContainer },
+        }),
+    );
 }

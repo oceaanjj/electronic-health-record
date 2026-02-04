@@ -1,7 +1,7 @@
 window.initializeIntakeAndOutputDateSync = function () {
-    const dateSelector = document.getElementById("date_selector");
-    const dayNoSelector = document.getElementById("day_no_selector");
-    const dropdownContainer = document.querySelector(".searchable-dropdown");
+    const dateSelector = document.getElementById('date_selector');
+    const dayNoSelector = document.getElementById('day_no_selector');
+    const dropdownContainer = document.querySelector('.searchable-dropdown');
 
     if (!dateSelector || !dayNoSelector || !dropdownContainer) {
         return;
@@ -13,9 +13,7 @@ window.initializeIntakeAndOutputDateSync = function () {
     }
     const admissionDate = new Date(admissionDateStr);
     // to account for timezone differences
-    admissionDate.setMinutes(
-        admissionDate.getMinutes() + admissionDate.getTimezoneOffset()
-    );
+    admissionDate.setMinutes(admissionDate.getMinutes() + admissionDate.getTimezoneOffset());
 
     function updateDate() {
         const dayNo = parseInt(dayNoSelector.value, 10);
@@ -24,7 +22,7 @@ window.initializeIntakeAndOutputDateSync = function () {
         }
 
         const newDate = new Date(admissionDate.getTime());
-        newDate.setDate(newDate.getDate() + dayNo -1);
+        newDate.setDate(newDate.getDate() + dayNo - 1);
 
         const year = newDate.getFullYear();
         const month = String(newDate.getMonth() + 1).padStart(2, '0');
@@ -47,6 +45,6 @@ window.initializeIntakeAndOutputDateSync = function () {
         dayNoSelector.value = diffDays;
     }
 
-    dayNoSelector.addEventListener("change", updateDate);
-    dateSelector.addEventListener("change", updateDayNo);
+    dayNoSelector.addEventListener('change', updateDate);
+    dateSelector.addEventListener('change', updateDayNo);
 };

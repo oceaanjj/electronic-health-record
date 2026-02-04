@@ -6,9 +6,7 @@ window.vitalCharts = {
     spo2Chart: null,
 };
 
-
 window.modalChartInstance = null;
-
 
 window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = {}) {
     const { animate = true } = options;
@@ -20,13 +18,12 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
         }
     });
 
-
     const lineColors = {
-        temperature: '#d32f2f', 
-        hr: '#1976d2', 
+        temperature: '#d32f2f',
+        hr: '#1976d2',
         rr: '#388e3c',
-        bp: '#7b1fa2', 
-        spo2: '#f57c00', 
+        bp: '#7b1fa2',
+        spo2: '#f57c00',
     };
 
     const vitals = {
@@ -49,7 +46,6 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
     const formattedLabels = timePoints.map(formatTimeLabel);
 
     Object.entries(vitals).forEach(([key, vital]) => {
-        
         const canvas = document.getElementById(vital.elementId);
         if (!canvas) return;
 
@@ -59,7 +55,6 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
             return val === null || val === undefined || val === '' ? null : parseFloat(val);
         });
 
-    
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -102,8 +97,8 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
                         beginAtZero: false,
                         grid: { color: 'rgba(0,0,0,0.03)' },
                         ticks: { font: { size: 9 } },
-                        beginAtZero: false, 
-                        grace: '10%'
+                        beginAtZero: false,
+                        grace: '10%',
                     },
                 },
             },
@@ -116,7 +111,6 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
 
         window.vitalCharts[vital.chartKey] = chart;
 
-        
         const inputs = document.querySelectorAll(`input[data-field-name="${vital.field}"]`);
         inputs.forEach((input) => {
             const newInput = input.cloneNode(true);
@@ -134,7 +128,6 @@ window.initializeVitalSignsCharts = function (timePoints, vitalsData, options = 
     });
 };
 
-
 function openChartModal(chartId, title) {
     // 1. Start closing the sidebar immediately
     window.closeNav();
@@ -151,7 +144,7 @@ function openChartModal(chartId, title) {
 
         // Prepare Modal Content
         modalTitle.innerText = title;
-        
+
         // Apply the reveal animation class
         modalContent.classList.remove('modal-reveal');
         void modalContent.offsetWidth; // Trigger reflow to restart animation
@@ -163,7 +156,7 @@ function openChartModal(chartId, title) {
         // 3. Initialize/Clone the Chart
         if (modalChartInstance) modalChartInstance.destroy();
         const originalChart = Chart.getChart(originalCanvas);
-        
+
         if (originalChart) {
             modalChartInstance = new Chart(modalCanvas, {
                 type: originalChart.config.type,
@@ -174,9 +167,9 @@ function openChartModal(chartId, title) {
                     responsive: true,
                     animation: {
                         duration: 800, // Smoothly draw the lines after reveal
-                        easing: 'easeOutQuart'
-                    }
-                }
+                        easing: 'easeOutQuart',
+                    },
+                },
             });
         }
     }, 300); // This 300ms matches the sidebar slide duration
@@ -196,69 +189,65 @@ function closeChartModal() {
     }
 }
 
-
 // This function should be linked to your Hamburger Menu button
-window.handleSidebarToggle = function() {
+window.handleSidebarToggle = function () {
     const modal = document.getElementById('chart-modal');
-    
+
     // If a chart is open, close it first with the animation
     if (modal && modal.style.display !== 'none') {
         closeChartModal();
-        
+
         // Delay the sidebar opening slightly so the modal is almost gone
         setTimeout(() => {
             window.openNav();
-        }, 150); 
+        }, 150);
     } else {
         // If no modal is open, just open the sidebar normally
         window.openNav();
     }
 };
 
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const chartCards = [
         { id: 'tempChart', title: 'Temperature Trend' },
         { id: 'hrChart', title: 'Heart Rate Trend' },
         { id: 'rrChart', title: 'Respiratory Rate Trend' },
         { id: 'bpChart', title: 'Blood Pressure Trend' },
-        { id: 'spo2Chart', title: 'SpO2 Trend' }
+        { id: 'spo2Chart', title: 'SpO2 Trend' },
     ];
 
     // Optimized click handler using Event Delegation
-document.addEventListener('click', function(e) {
-    // Check if the clicked element (or its parent) is a chart canvas
-    const canvas = e.target.closest('canvas');
-    if (canvas && (canvas.id.endsWith('Chart') && canvas.id !== 'modalChartCanvas')) {
-        const chartId = canvas.id;
-        
-        // Map IDs to Titles
-        const titles = {
-            'tempChart': 'Temperature Trend',
-            'hrChart': 'Heart Rate Trend',
-            'rrChart': 'Respiratory Rate Trend',
-            'bpChart': 'Blood Pressure Trend',
-            'spo2Chart': 'SpO2 Trend'
-        };
+    document.addEventListener('click', function (e) {
+        // Check if the clicked element (or its parent) is a chart canvas
+        const canvas = e.target.closest('canvas');
+        if (canvas && canvas.id.endsWith('Chart') && canvas.id !== 'modalChartCanvas') {
+            const chartId = canvas.id;
 
-        openChartModal(chartId, titles[chartId] || 'Vital Trend');
-    }
-});
-    
+            // Map IDs to Titles
+            const titles = {
+                tempChart: 'Temperature Trend',
+                hrChart: 'Heart Rate Trend',
+                rrChart: 'Respiratory Rate Trend',
+                bpChart: 'Blood Pressure Trend',
+                spo2Chart: 'SpO2 Trend',
+            };
+
+            openChartModal(chartId, titles[chartId] || 'Vital Trend');
+        }
+    });
+
     // Close modal on background click
-    document.getElementById('chart-modal').addEventListener('click', function(e) {
+    document.getElementById('chart-modal').addEventListener('click', function (e) {
         if (e.target === this) closeChartModal();
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 1. Target the (X) Close Button
     // Ensure your HTML has <button id="closeModalBtn">...</button> or change the ID here
     const closeBtn = document.querySelector('.close-modal-btn') || document.getElementById('close-chart-modal');
     if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
+        closeBtn.addEventListener('click', function () {
             closeChartModal();
         });
     }
@@ -266,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. Close on Background Click
     const modalWrapper = document.getElementById('chart-modal');
     if (modalWrapper) {
-        modalWrapper.addEventListener('click', function(e) {
+        modalWrapper.addEventListener('click', function (e) {
             // This checks if you clicked the dark area, NOT the white box
             if (e.target === modalWrapper) {
                 closeChartModal();
@@ -275,34 +264,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 1. Detect when ANY modal starts to open
     $('.modal').on('show.bs.modal', function () {
         closeNav(); // This calls your existing sidebar close function
     });
 
     // 2. Ensure your closeNav function is defined like this:
-    window.closeNav = function() {
-        const sidebar = document.getElementById("mySidenav");
+    window.closeNav = function () {
+        const sidebar = document.getElementById('mySidenav');
         if (sidebar) {
             // Add the class that slides it left (off-screen)
-            sidebar.classList.add("-translate-x-full");
+            sidebar.classList.add('-translate-x-full');
             // Remove the class that keeps it on-screen
-            sidebar.classList.remove("translate-x-0");
+            sidebar.classList.remove('translate-x-0');
         }
-    }
+    };
 });
 
-
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const sidebar = document.getElementById('mySidenav');
-    
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
+
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
             if (mutation.attributeName === 'class') {
                 const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
-                
+
                 // If the sidebar is opening...
                 if (isSidebarOpen) {
                     const modal = document.getElementById('chart-modal');
@@ -310,13 +297,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     if (modal && modal.style.display !== 'none') {
                         // 1. Instantly hide the modal to prevent the "error" look
-                        modal.style.opacity = '0'; 
-                        
+                        modal.style.opacity = '0';
+
                         // 2. Cleanup the data/chart
                         closeChartModal();
-                        
+
                         // 3. Reset opacity for the next time it's used
-                        setTimeout(() => { modal.style.opacity = '1'; }, 300);
+                        setTimeout(() => {
+                            modal.style.opacity = '1';
+                        }, 300);
                     }
                 }
             }

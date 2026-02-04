@@ -2,11 +2,15 @@
 @section('title', 'Patient Medical History')
 @section('content')
     <div id="form-content-container">
-
-
-        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient" selectRoute=""
-            inputPlaceholder="-Selected Patient-" inputName="patient_id" inputValue="{{ session('selected_patient_id') }}"
-            :disabled="true" />
+        <x-searchable-patient-dropdown
+            :patients="$patients"
+            :selectedPatient="$selectedPatient"
+            selectRoute=""
+            inputPlaceholder="-Selected Patient-"
+            inputName="patient_id"
+            inputValue="{{ session('selected_patient_id') }}"
+            :disabled="true"
+        />
 
         {{-- FORM for data submission (submits with POST) --}}
         <form action="{{ route('developmental.store') }}" method="POST">
@@ -34,7 +38,8 @@
                         <tr>
                             <td class="rounded-br-lg">
                                 <textarea class="notepad-lines h-[100px]" name="gross_motor" placeholder="Type here...">
-    {{ $developmentalHistory->gross_motor ?? '' }}</textarea>
+    {{ $developmentalHistory->gross_motor ?? '' }}</textarea
+                                >
                             </td>
                         </tr>
                     </table>
@@ -51,7 +56,8 @@
                         <tr>
                             <td class="rounded-br-lg">
                                 <textarea class="notepad-lines h-[100px]" name="fine_motor" placeholder="Type here...">
-    {{ $developmentalHistory->fine_motor ?? '' }}</textarea>
+    {{ $developmentalHistory->fine_motor ?? '' }}</textarea
+                                >
                             </td>
                         </tr>
                     </table>
@@ -68,7 +74,8 @@
                         <tr>
                             <td class="rounded-br-lg">
                                 <textarea class="notepad-lines h-[100px]" name="language" placeholder="Type here...">
-    {{ $developmentalHistory->language ?? '' }}</textarea>
+    {{ $developmentalHistory->language ?? '' }}</textarea
+                                >
                             </td>
                         </tr>
                     </table>
@@ -85,7 +92,8 @@
                         <tr>
                             <td class="rounded-br-lg">
                                 <textarea class="notepad-lines h-[100px]" name="cognitive" placeholder="Type here...">
-    {{ $developmentalHistory->cognitive ?? '' }}</textarea>
+    {{ $developmentalHistory->cognitive ?? '' }}</textarea
+                                >
                             </td>
                         </tr>
                     </table>
@@ -102,7 +110,8 @@
                         <tr>
                             <td class="rounded-br-lg">
                                 <textarea class="notepad-lines h-[100px]" name="social" placeholder="Type here...">
-    {{ $developmentalHistory->social ?? '' }}</textarea>
+    {{ $developmentalHistory->social ?? '' }}</textarea
+                                >
                             </td>
                         </tr>
                     </table>

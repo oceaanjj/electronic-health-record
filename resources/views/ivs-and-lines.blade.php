@@ -4,9 +4,31 @@
 
     <div id="form-content-container">
 
-        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-            selectRoute="{{ route('ivs-and-lines.select') }}" inputPlaceholder="-Select or type to search-"
-            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
+        {{-- IVs AND LINES PATIENT SELECTION (Synced with Vital Signs UI) --}}
+        <div class="mx-auto w-full pt-10 px-4">
+            <div class="flex flex-wrap items-center gap-x-10 gap-y-4 ml-20">
+                
+                {{-- PATIENT SECTION --}}
+                <div class="flex items-center gap-4">
+                    <label class="font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
+                        PATIENT NAME :
+                    </label>
+                    
+                    {{-- Fixed 350px width ensures the UI doesn't "jump" when switching pages --}}
+                    <div class="w-[350px]">
+                        <x-searchable-patient-dropdown 
+                            :patients="$patients" 
+                            :selectedPatient="$selectedPatient"
+                            selectRoute="{{ route('ivs-and-lines.select') }}" 
+                            inputPlaceholder="Search or type Patient Name..."
+                            inputName="patient_id" 
+                            inputValue="{{ session('selected_patient_id') }}" 
+                        />
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         {{-- MAIN FORM --}}
         <form action="{{ route('ivs-and-lines.store') }}" method="POST" class="cdss-form" data-analyze-url="">
@@ -15,7 +37,7 @@
                 value="{{ $selectedPatient->patient_id ?? session('selected_patient_id') }}">
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
 
-                <div class="w-[85%] mx-auto flex justify-center items-start gap-1 mt-6">
+                <div class="w-[85%] mx-auto flex justify-center items-start gap-1 mt-10">
 
 
                     <div class="w-full rounded-[15px] overflow-hidden">

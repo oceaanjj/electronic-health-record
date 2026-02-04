@@ -19,67 +19,80 @@
     </style>
 
     <div id="form-content-container">
-    {{-- 1. THE ALERT/ERROR (Stays at the top) --}}
-    @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
-        <div class="mt-3 w-full px-5">
-            <div class="relative flex items-center justify-between py-2 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
-                <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-[#dcb44e]">info</span>
-                    <span class="text-sm font-semibold text-[#dcb44e]">
-                        Clinical Decision Support System is now available.
-                    </span>
+
+        <div class="mx-auto mt-1 w-full">
+        {{-- 1. THE ALERT/ERROR (Stays at the top) --}}
+        @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
+            <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
+                <div
+                    id="cdss-alert-content"
+                    class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md"
+                >
+                    <div class="flex items-center gap-3">
+                        {{-- Pulsing Info Icon --}}
+                        <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
+                        <span class="text-sm font-semibold text-[#dcb44e]">
+                            Clinical Decision Support System is now available.
+                        </span>
+                    </div>
+
+                    {{-- Smooth-Exit Close Button --}}
+                    <button
+                        type="button"
+                        onclick="closeCdssAlert()"
+                        class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90"
+                    >
+                        <span
+                            class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90"
+                        >
+                            close
+                        </span>
+                    </button>
                 </div>
-                <button type="button" onclick="this.closest('.relative').remove()" class="text-amber-700 hover:text-amber-950">
-                    <span class="material-symbols-outlined text-[20px]">close</span>
-                </button>
             </div>
-        </div>
-    @endif
-
-<div class="mx-auto my-4 w-[90%]">
-    <div class="flex flex-col gap-4">
-        
-        {{-- LINE 1: PATIENT SELECTION --}}
-        <div class="flex items-center gap-4">
-            <label class="w-[140px] font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
-                PATIENT NAME :
-            </label>
-            
-            <div class="flex-grow max-w-3xl">
-                <x-searchable-patient-dropdown 
-                    :patients="$patients" 
-                    :selectedPatient="$selectedPatient"
-                    :selectRoute="route('vital-signs.select')" 
-                    :inputValue="$selectedPatient?->patient_id ?? ''" 
-                />
             </div>
-        </div>
+        @endif
 
-        {{-- LINE 2: REUSABLE DATE & DAY SELECTOR --}}
-        @if($selectedPatient)
-            <x-date-day-selector 
-                class="mt-2"
-                :currentDate="$currentDate"
-                :currentDayNo="$currentDayNo"
-                :totalDays="$totalDaysSinceAdmission ?? 30"
-            />
+        <div class="mx-auto w-full pt-10">
+            {{-- Increased width to accommodate one line --}}
+            <div class="ml-20 flex flex-wrap items-center gap-x-10 gap-y-4">
+                {{-- 1. PATIENT SECTION --}}
+                <div class="flex items-center gap-4">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+                    <div class="w-[350px]">
+                        {{-- Fixed width so Date/Day don't jump around --}}
+                        <x-searchable-patient-dropdown
+                            :patients="$patients"
+                            :selectedPatient="$selectedPatient"
+                            :selectRoute="route('vital-signs.select')"
+                            :inputValue="$selectedPatient?->patient_id ?? ''"
+                        />
+                    </div>
+                </div>
 
-            {{-- CDSS ALERT MESSAGE --}}
-            @if (!isset($vitalsData) || $vitalsData->count() == 0)
-                <div class="text-xs text-gray-500 italic flex items-center gap-2 mt-2">
+                {{-- 2. DATE & DAY SECTION (Only shows if patient is selected) --}}
+                @if ($selectedPatient)
+                    <x-date-day-selector
+                        :currentDate="$currentDate"
+                        :currentDayNo="$currentDayNo"
+                        :totalDays="$totalDaysSinceAdmission ?? 30"
+                    />
+                @endif
+            </div>
+
+            {{-- CDSS ALERT MESSAGE (Keep this on its own line below the inputs) --}}
+            @if ($selectedPatient && (! isset($vitalsData) || $vitalsData->count() == 0))
+                <div class="mt-4 ml-20 flex items-center gap-2 text-xs text-gray-500 italic">
                     <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available (No data recorded for this date).
                 </div>
             @endif
-        @endif
-
-    </div>
-</div>
+        </div>
 
         {{-- Hidden form for synchronization of Date/Day No --}}
         <form id="patient-select-form" action="{{ route('vital-signs.select') }}" method="POST" class="hidden">
             @csrf
-            <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+            <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}" />
         </form>
         {{-- END OF HEADER --}}
 

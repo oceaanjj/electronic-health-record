@@ -281,15 +281,27 @@
         data-patient-id="{{ $selectedPatient->patient_id ?? '' }}"
         data-delete-all-url-template="{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}"
     >
-        {{-- Use your existing searchable dropdown --}}
-        <x-searchable-patient-dropdown
-            :patients="$patients"
-            :selectedPatient="$selectedPatient"
-            selectRoute="{{ route('diagnostics.select') }}"
-            inputPlaceholder="-Select or type to search-"
-            inputName="patient_id"
-            inputValue="{{ session('selected_patient_id') }}"
-        />
+        {{-- DIAGNOSTICS PATIENT SELECTION (Synced with Vital Signs UI - No CDSS) --}}
+        <div class="mx-auto w-full px-4 pt-10">
+            <div class="ml-20 flex flex-wrap items-center gap-x-10 gap-y-4">
+                {{-- PATIENT SECTION --}}
+                <div class="flex items-center gap-4">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+
+                    {{-- Fixed width to match Vital Signs perfectly --}}
+                    <div class="w-[350px]">
+                        <x-searchable-patient-dropdown
+                            :patients="$patients"
+                            :selectedPatient="$selectedPatient"
+                            selectRoute="{{ route('diagnostics.select') }}"
+                            inputPlaceholder="Search or type Patient Name..."
+                            inputName="patient_id"
+                            inputValue="{{ session('selected_patient_id') }}"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @if ($selectedPatient)
             <h2 style="color: white; margin-top: 1rem; font-weight: 300">
@@ -412,7 +424,11 @@
 
                 {{-- Use the global button classes --}}
                 <div style="margin-top: 2rem; text-align: center">
-                    <button type="submit" class="button-default text-center" {{ ! $selectedPatient ? 'disabled' : '' }}>
+                    <button
+                        type="submit"
+                        class="button-default text-center"
+                        {{ ! $selectedPatient ? 'disabled' : '' }}
+                    >
                         SUBMIT
                     </button>
                 </div>

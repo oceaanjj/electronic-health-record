@@ -193,7 +193,7 @@
 
                 <div class="w-[80%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
 
-                    <!-- cdss btn m -->
+                    <!-- cdss button -->
                     @if (isset($physicalExam))
                         <a href="{{ route('nursing-diagnosis.start', ['component' => 'physical-exam', 'id' => $physicalExam->id]) }}"
                             class="button-default cdss-btn text-center">

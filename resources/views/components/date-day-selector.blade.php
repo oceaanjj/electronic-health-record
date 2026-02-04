@@ -1,18 +1,52 @@
-<div class="date-day-selector-container" data-select-url="{{ route('adl.select') }}" style="display: flex; align-items: center; justify-content: flex-start; gap: 20px;">
-    {{-- DATE INPUT --}}
-    <label for="date_selector" style=" white-space: nowrap;">DATE :</label>
-    <input class="date" type="date" id="date_selector" name="date"
-        value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-        @if (!$selectedPatient) disabled @endif>
+@props([
+    'currentDate' => null,
+    'currentDayNo' => 1,
+    'totalDays' => 30,
+    'disabled' => false,
+    'formId' => 'patient-select-form'
+])
+
+<div {{ $attributes->merge(['class' => 'flex items-center gap-10']) }}>
+    {{-- DATE PICKER --}}
+    <div class="flex items-center gap-3">
+        <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DATE :</label>
+        <input 
+            type="date" 
+            id="date_selector" 
+            name="date"
+            form="{{ $formId }}"
+            value="{{ $currentDate ?? now()->format('Y-m-d') }}"
+            @disabled($disabled)
+            class="w-[180px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 shadow-sm transition-all
+                   bg-white outline-none focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-0
+                   disabled:opacity-50 disabled:bg-gray-100 disabled:cursor-not-allowed"
+        >
+    </div>
 
     {{-- DAY NO SELECTOR --}}
-    <label for="day_no_selector" style="white-space: nowrap;">DAY NO :</label>
-    <select id="day_no_selector" name="day_no" @if (!$selectedPatient) disabled @endif>
-        <option value="">-- Day --</option>
-        @for ($i = 1; $i <= 30; $i++)
-            <option value="{{ $i }}" @if(($currentDayNo ?? 1) == $i) selected @endif>
-                {{ $i }}
-            </option>
-        @endfor
-    </select>
+    <div class="flex items-center gap-3">
+        <label for="day_no_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
+        <div class="relative">
+            <select 
+                id="day_no_selector" 
+                name="day_no"
+                form="{{ $formId }}"
+                @disabled($disabled)
+                class="w-[100px] text-[15px] font-creato-bold px-4 py-2 rounded-full border border-gray-300 shadow-sm transition-all
+                       bg-white outline-none focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-0
+                       appearance-none pr-8 disabled:opacity-50 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            >
+                @for ($i = 1; $i <= $totalDays; $i++)
+                    <option value="{{ $i }}" @selected($currentDayNo == $i)>{{ $i }}</option>
+                @endfor
+            </select>
+            
+            {{-- Custom Arrow --}}
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
 </div>

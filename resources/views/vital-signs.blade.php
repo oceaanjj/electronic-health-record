@@ -19,73 +19,62 @@
     </style>
 
     <div id="form-content-container">
-        {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS data exists) --}}
-        @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
-            <div class="mt-3 w-full px-2">
-                <div class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
-                    <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-[#dcb44e]">info</span>
-                        <span class="text-sm font-semibold text-[#dcb44e]">
-                            Clinical Decision Support System is now available.
-                        </span>
-                    </div>
-                    <button type="button" 
-                            onclick="this.closest('.relative').remove()" 
-                            class="flex items-center justify-center text-amber-700 hover:text-amber-950 hover:bg-amber-200/50 rounded-full p-1 transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">close</span>
-                    </button>
+    {{-- 1. THE ALERT/ERROR (Stays at the top) --}}
+    @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
+        <div class="mt-3 w-full px-5">
+            <div class="relative flex items-center justify-between py-2 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#dcb44e]">info</span>
+                    <span class="text-sm font-semibold text-[#dcb44e]">
+                        Clinical Decision Support System is now available.
+                    </span>
                 </div>
+                <button type="button" onclick="this.closest('.relative').remove()" class="text-amber-700 hover:text-amber-950">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
             </div>
-        @endif
+        </div>
+    @endif
 
-        {{-- 2. THE PATIENT SELECTION ROW (Using the reusable component) --}}
-        <div class="header mx-auto my-10 flex w-[90%] flex-col gap-6">
-            <div class="flex flex-wrap items-center gap-6">
+<div class="mx-auto my-4 w-[90%]">
+    <div class="flex flex-col gap-4">
+        
+        {{-- LINE 1: PATIENT SELECTION --}}
+        <div class="flex items-center gap-4">
+            <label class="w-[140px] font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
+                PATIENT NAME :
+            </label>
+            
+            <div class="flex-grow max-w-3xl">
                 <x-searchable-patient-dropdown 
                     :patients="$patients" 
                     :selectedPatient="$selectedPatient"
-                    selectRoute="{{ route('vital-signs.select') }}" 
-                    inputPlaceholder="Select or type Patient Name"
-                    inputName="patient_id" 
-                    inputValue="{{ $selectedPatient->patient_id ?? '' }}" 
+                    :selectRoute="route('vital-signs.select')" 
+                    :inputValue="$selectedPatient?->patient_id ?? ''" 
                 />
-
-                {{-- DATE & DAY NO (Only visible if patient selected) --}}
-                @if($selectedPatient)
-                <div class="flex items-center gap-4">
-                    <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DATE :</label>
-                    <input
-                        type="date"
-                        id="date_selector"
-                        form="patient-select-form"
-                        name="date"
-                        value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-                        class="font-creato-bold rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
-                    />
-
-                    <label for="day_no" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
-                    <select
-                        id="day_no_selector"
-                        form="patient-select-form"
-                        name="day_no"
-                        class="font-creato-bold w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2"
-                    >
-                        @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
-                            <option value="{{ $i }}" @if($currentDayNo == $i) selected @endif>{{ $i }}</option>
-                        @endfor
-                    </select>
-                </div>
-                @endif
             </div>
+        </div>
 
-            {{-- 3. THE "NOT AVAILABLE" MESSAGE --}}
-            @if ($selectedPatient && (!isset($vitalsData) || $vitalsData->count() == 0))
-                <div class="text-xs text-gray-500 italic flex items-center gap-2 px-2">
-                    <span class="material-symbols-outlined text-[14px]">pending_actions</span>
+        {{-- LINE 2: REUSABLE DATE & DAY SELECTOR --}}
+        @if($selectedPatient)
+            <x-date-day-selector 
+                class="mt-2"
+                :currentDate="$currentDate"
+                :currentDayNo="$currentDayNo"
+                :totalDays="$totalDaysSinceAdmission ?? 30"
+            />
+
+            {{-- CDSS ALERT MESSAGE --}}
+            @if (!isset($vitalsData) || $vitalsData->count() == 0)
+                <div class="text-xs text-gray-500 italic flex items-center gap-2 mt-2">
+                    <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available (No data recorded for this date).
                 </div>
             @endif
-        </div>
+        @endif
+
+    </div>
+</div>
 
         {{-- Hidden form for synchronization of Date/Day No --}}
         <form id="patient-select-form" action="{{ route('vital-signs.select') }}" method="POST" class="hidden">

@@ -34,6 +34,7 @@ export default defineConfig({
                 'resources/js/search.js',
                 'resources/js/searchable-dropdown.js',
                 'resources/js/patient-search.js',
+                'resources/js/close-cdss-alert.js',
             ],
 
             refresh: true,

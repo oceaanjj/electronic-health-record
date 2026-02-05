@@ -1,4 +1,4 @@
-function closeCdssAlert() {
+window.closeCdssAlert = function() {
     const wrapper = document.getElementById('cdss-alert-wrapper');
     const content = document.getElementById('cdss-alert-content');
 

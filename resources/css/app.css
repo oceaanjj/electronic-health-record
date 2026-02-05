@@ -107,13 +107,15 @@
 }
 /* Class for smooth exit */
 .alert-exit {
-    opacity: 0 !important;
-    transform: translateY(-10px) scale(0.95) !important;
-    max-height: 0 !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
 }
 /* End of cdss alert animation */
 

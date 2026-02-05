@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+    <div class="max-w-[1382px] mx-auto px-4 sm:px-20 lg:px-40 my-10">
 
         {{-- Action Buttons & Success Messages --}}
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-4">

@@ -1,5 +1,5 @@
 <div id="mySidenav"
-    class="fixed top-0 left-0 h-full w-full md:w-[260px] shadow-md bg-ehr z-40 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col pt-20 md:pt-[120px]">
+    class="fixed top-0 left-0 h-full w-full md:w-[260px] shadow-md z-40 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col pt-20 md:pt-[120px] bg-white">
 
 
     <button id="arrowBtn" onclick="closeNav()" class="group absolute top-1/2 -right-4 transform -translate-y-1/2 

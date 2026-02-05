@@ -72,10 +72,7 @@
 
 <body class="bg-white overflow-x-hidden">
 
-    {{-- Hamburger menu for mobile --}}
-    <button id="mobileMenuButton" class="absolute top-4 left-4 z-50 p-2 focus:outline-none focus:ring md:hidden" onclick="openNav()">
-        <span class="material-symbols-outlined text-ehr text-3xl">menu</span>
-    </button>
+
 
     {{-- Sidebar --}}
     @include('components.sidebar')
@@ -145,9 +142,11 @@
             if (arrow && window.innerWidth >= 768) { // Only show arrow on md and up
                 arrow.classList.replace("-right-24", "-right-10");
             }
-            if (mobileMenuButton) { // Hide mobile menu button when sidebar opens
-                mobileMenuButton.classList.add("hidden");
-            }
+            // The mobileMenuButton should NOT be hidden when the sidebar opens,
+            // as it is used to close the sidebar on mobile.
+            // if (mobileMenuButton) {
+            //     mobileMenuButton.classList.add("hidden");
+            // }
         }
 
         function closeNav() {

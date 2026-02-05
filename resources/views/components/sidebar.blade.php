@@ -1,5 +1,5 @@
 <div id="mySidenav"
-    class="fixed top-0 left-0 h-full w-full md:w-[260px] shadow-md bg-ehr z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
+    class="fixed top-0 left-0 h-full w-full md:w-[260px] shadow-md bg-white z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
 
 
     <button id="arrowBtn" onclick="closeNav()" class="group absolute top-1/2 -right-4 transform -translate-y-1/2 
@@ -14,7 +14,8 @@
 
     </button>
 
-    <button id="closeMobileNavBtn" onclick="closeNav()" class="absolute top-4 right-4 p-2 focus:outline-none focus:ring md:hidden">
+    <button id="closeMobileNavBtn" onclick="closeNav()"
+        class="absolute top-4 right-4 p-2 focus:outline-none focus:ring md:hidden">
         <span class="material-symbols-outlined text-white text-3xl">close</span>
     </button>
 

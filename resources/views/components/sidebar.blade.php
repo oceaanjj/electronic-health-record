@@ -1,16 +1,21 @@
 <div id="mySidenav"
-    class="fixed top-0 left-0 h-full w-[260px] shadow-md bg-ehr z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
+    class="fixed top-0 left-0 h-full w-full md:w-[260px] shadow-md bg-ehr z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
 
 
     <button id="arrowBtn" onclick="closeNav()" class="group absolute top-1/2 -right-4 transform -translate-y-1/2 
         bg-white text-dark-green border border-gray-300 rounded-oval
         w-8 h-15 flex items-center justify-center 
         shadow-xl hover:bg-dark-green hover:scale-105 
-        transition-all duration-300 ease-in-out">
+        transition-all duration-300 ease-in-out
+        hidden md:flex"> <!-- Hidden on small screens, flex on md and up -->
 
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
 
 
+    </button>
+
+    <button id="closeMobileNavBtn" onclick="closeNav()" class="absolute top-4 right-4 p-2 focus:outline-none focus:ring md:hidden">
+        <span class="material-symbols-outlined text-white text-3xl">close</span>
     </button>
 
 

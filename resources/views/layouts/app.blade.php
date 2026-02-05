@@ -21,8 +21,11 @@
         'opsz' 20
         }
 
-        .sidebar-open #main {
-            margin-left: 260px;
+        /* Adjust main content margin only for medium and larger screens when sidebar is open */
+        @media (min-width: 768px) { /* md breakpoint */
+            .sidebar-open #main {
+                margin-left: 260px;
+            }
         }
 
         .sidebar-transition {
@@ -44,9 +47,6 @@
         .page-transition {
             animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
-
-
-
     </style>
 
     <script>
@@ -55,7 +55,13 @@
             const doc = document.documentElement;
 
             if (isOpen) {
-                doc.classList.add("sidebar-open");
+                // For small screens, always close sidebar initially
+                if (window.innerWidth < 768) { // md breakpoint
+                    doc.classList.remove("sidebar-open");
+                    localStorage.setItem("sidebarOpen", "false");
+                } else {
+                    doc.classList.add("sidebar-open");
+                }
             } else {
                 doc.classList.remove("sidebar-open");
             }
@@ -65,6 +71,11 @@
 </head>
 
 <body class="bg-white overflow-x-hidden">
+
+    {{-- Hamburger menu for mobile --}}
+    <button id="mobileMenuButton" class="absolute top-4 left-4 z-50 p-2 focus:outline-none focus:ring md:hidden" onclick="openNav()">
+        <span class="material-symbols-outlined text-ehr text-3xl">menu</span>
+    </button>
 
     {{-- Sidebar --}}
     @include('components.sidebar')
@@ -125,36 +136,40 @@
         function openNav() {
             const sidebar = document.getElementById("mySidenav");
             const arrow = document.getElementById("arrowBtn");
+            const mobileMenuButton = document.getElementById("mobileMenuButton"); // Get mobile menu button
 
             if (sidebar) sidebar.classList.remove("-translate-x-full");
-
             document.documentElement.classList.add("sidebar-open");
-
-            if (arrow) {
-                arrow.classList.replace("-right-24", "-right-10");
-                arrow.classList.remove("hidden");
-            }
-
             localStorage.setItem("sidebarOpen", "true");
+
+            if (arrow && window.innerWidth >= 768) { // Only show arrow on md and up
+                arrow.classList.replace("-right-24", "-right-10");
+            }
+            if (mobileMenuButton) { // Hide mobile menu button when sidebar opens
+                mobileMenuButton.classList.add("hidden");
+            }
         }
 
         function closeNav() {
             const sidebar = document.getElementById("mySidenav");
             const arrow = document.getElementById("arrowBtn");
+            const mobileMenuButton = document.getElementById("mobileMenuButton"); // Get mobile menu button
 
             if (sidebar) sidebar.classList.add("-translate-x-full");
-
             document.documentElement.classList.remove("sidebar-open");
-
-            if (arrow) arrow.classList.replace("-right-10", "-right-24");
-
             localStorage.setItem("sidebarOpen", "false");
+
+            if (arrow && window.innerWidth >= 768) { // Only hide arrow on md and up
+                arrow.classList.replace("-right-10", "-right-24");
+            }
+            if (mobileMenuButton) { // Show mobile menu button when sidebar closes
+                mobileMenuButton.classList.remove("hidden");
+            }
 
             setTimeout(() => {
                 if (arrow) arrow.classList.add("hidden");
             }, 200);
         }
-
     </script>
 
     @stack('scripts')

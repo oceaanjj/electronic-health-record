@@ -355,7 +355,7 @@
                     </div>
                 </div>
 
-                <div class="mx-auto mt-5 mb-20 flex w-[66%] justify-end space-x-4">
+                <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end space-x-4">
                     @if (isset($vitalsData) && $vitalsData->count() > 0)
                         <button
                             type="submit"
@@ -527,29 +527,27 @@
         const vitalRanges = {
             temperature: {
                 ranges: [
-                    { min: 36.3, max: 37.5, color: 'var(--color-beige)' },        // Normal (Adjusted max to 37.5)
-                    { min: 37.51, max: Infinity, color: 'var(--color-dark-red)' },     // Fever
-                    { min: 0, max: 36.29, color: 'var(--color-dark-red)' }       // Hypothermia
+                    { min: 36.3, max: 37, color: 'var(--color-beige)' },       
+                    { min: 37.01, max: Infinity, color: 'var(--color-dark-red)' },     
+
                 ]
             },
             hr: {
                 ranges: [
-                    { min: 60, max: 100, color: 'var(--color-beige)' },          // Normal
-                    { min: 100.01, max: 300, color: 'var(--color-dark-red)' },   // Tachycardia
-                    { min: 0, max: 59.99, color: 'var(--color-dark-red)' }       // Bradycardia
+                    { min: 70, max: 110, color: 'var(--color-beige)' },        
+                    { min: 110.01, max: 300, color: 'var(--color-dark-red)' },   
                 ]
             },
             rr: {
                 ranges: [
-                    { min: 12, max: 20, color: 'var(--color-beige)' },           // Normal
-                    { min: 20.01, max: 100, color: 'var(--color-dark-red)' },    // High
-                    { min: 0, max: 11.99, color: 'var(--color-dark-red)' }       // Low
+                    { min: 16, max: 22, color: 'var(--color-beige)' },           
+                    { min: 22.01, max: 100, color: 'var(--color-dark-red)' },        
                 ]
             },
             spo2: {
                 ranges: [
                     { min: 95, max: 100, color: 'var(--color-beige)' },          // Normal
-                    { min: 0, max: 94.99, color: 'var(--color-dark-red)' }       // Hypoxia
+                    { min: 100.01, max: 94.99, color: 'var(--color-dark-red)' }       // Hypoxia
                 ]
             },
             bp: {

@@ -255,7 +255,7 @@
                     </div>
                 </center>
 
-                <div class="mx-auto mt-5 mb-20 flex w-[80%] justify-end space-x-4">
+                <div class="mx-auto mt-5 mb-20 flex w-[98%] justify-end space-x-4">
                     <!-- cdss btn m -->
                     @if (isset($physicalExam))
                         <a

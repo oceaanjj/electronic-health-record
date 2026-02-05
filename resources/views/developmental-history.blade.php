@@ -2,15 +2,21 @@
 @section('title', 'Patient Medical History')
 @section('content')
     <div id="form-content-container">
-        <x-searchable-patient-dropdown
-            :patients="$patients"
-            :selectedPatient="$selectedPatient"
-            selectRoute=""
-            inputPlaceholder="-Selected Patient-"
-            inputName="patient_id"
-            inputValue="{{ session('selected_patient_id') }}"
-            :disabled="true"
-        />
+    <div class="flex items-center gap-4 ml-20 m-10">
+    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+    
+            <div class="w-[350px]">
+                <x-searchable-patient-dropdown
+                    :patients="$patients"
+                    :selectedPatient="$selectedPatient"
+                    selectRoute="" {{-- Empty because we don't want it to redirect --}}
+                    inputPlaceholder="-Selected Patient-"
+                    inputName="patient_id"
+                    inputValue="{{ session('selected_patient_id') }}"
+                    :disabled="true" {{-- Locks the input --}}
+                />
+            </div>
+        </div>
 
         {{-- FORM for data submission (submits with POST) --}}
         <form action="{{ route('developmental.store') }}" method="POST">
@@ -21,12 +27,12 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <p class="main-header mb-1 w-[72%] rounded-[15px]">DEVELOPMENTAL HISTORY</p>
+                    <p class="main-header mb-1 w-[90%] rounded-[15px]">DEVELOPMENTAL HISTORY</p>
                 </center>
 
                 <center>
                     {{-- DEVELOPMENTAL HISTORY --}}
-                    <table class="bg-beige mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
                         {{-- GROSS MOTOR --}}
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">GROSS MOTOR</th>
@@ -45,7 +51,7 @@
                     </table>
 
                     {{-- FINE MOTOR --}}
-                    <table class="bg-beige mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">FINE MOTOR</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
@@ -63,7 +69,7 @@
                     </table>
 
                     {{-- LANGUAGE --}}
-                    <table class="bg-beige mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">LANGUAGE</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
@@ -81,7 +87,7 @@
                     </table>
 
                     {{-- COGNITIVE --}}
-                    <table class="bg-beige mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">COGNITIVE</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
@@ -99,7 +105,7 @@
                     </table>
 
                     {{-- SOCIAL --}}
-                    <table class="bg-beige mb-1.5 w-[72%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">SOCIAL</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
@@ -117,7 +123,7 @@
                     </table>
                 </center>
 
-                <div class="mx-auto mt-5 mb-30 flex w-[72%] justify-end space-x-4">
+                <div class="mx-auto mt-5 mb-30 flex w-[90%] justify-end space-x-4">
                     {{-- paayos ako ng routing here, dapat babalik sa medical history --}}
                     <a href="{{ route('medical-history') }}">
                         <button type="button" class="button-default">BACK</button>

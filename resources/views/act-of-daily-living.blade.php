@@ -167,7 +167,7 @@
                     </div>
                 </div>
 
-                <div class="mx-auto mt-5 mb-20 flex w-[80%] justify-end space-x-4">
+                <div class="mx-auto mt-5 mb-20 flex w-[85%] justify-end space-x-4">
                     @if (isset($adlData))
                         <a
                             href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"

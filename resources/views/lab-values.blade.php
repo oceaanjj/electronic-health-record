@@ -153,7 +153,7 @@
                     </div>
 
                     {{-- BUTTONS --}}
-                    <div class="w-[80%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                    <div class="w-[84%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                         @if (isset($labValue))
                             <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
                                 class="button-default cdss-btn text-center">

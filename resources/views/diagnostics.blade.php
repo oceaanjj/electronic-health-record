@@ -669,7 +669,7 @@
                 </div>
 
                 {{-- Using your original button class --}}
-                <div style="margin-top: 2rem; text-align: center">
+                <div class="w-[98%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                     <button
                         type="submit"
                         class="button-default text-center"

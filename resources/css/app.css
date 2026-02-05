@@ -649,6 +649,23 @@
         font-size: 13px;
     }
 
+    
+    /* Add to your <style> section */
+    .vital-input:-webkit-autofill,
+    .vital-input:-webkit-autofill:hover,
+    .vital-input:-webkit-autofill:focus,
+    .vital-input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px var(--color-beige) inset !important;
+        -webkit-text-fill-color: #000 !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* For other browsers */
+    .vital-input:autofill {
+        background-color: var(--color-beige) !important;
+    }
+
+
     /* ===== ito yung alert box ===== */
     .alert-box {
         @apply w-full rounded-[15px] font-semibold text-white transition-all duration-300;

@@ -253,6 +253,7 @@
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="temperature"
                                                 data-time="{{ $time }}"
+                                                autocomplete="off"
                                             />
                                         </td>
 
@@ -266,6 +267,7 @@
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="hr"
                                                 data-time="{{ $time }}"
+                                                autocomplete="off"
                                             />
                                         </td>
 
@@ -279,6 +281,7 @@
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="rr"
                                                 data-time="{{ $time }}"
+                                                autocomplete="off"
                                             />
                                         </td>
 
@@ -292,6 +295,7 @@
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="bp"
                                                 data-time="{{ $time }}"
+                                                autocomplete="off"
                                             />
                                         </td>
 
@@ -305,6 +309,7 @@
                                                 class="cdss-input vital-input h-[60px]"
                                                 data-field-name="spo2"
                                                 data-time="{{ $time }}"
+                                                autocomplete="off"
                                             />
                                         </td>
                                     </tr>
@@ -399,120 +404,225 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const vitalsData = @json($vitalsData);
+    const vitalsData = @json($vitalsData);
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const timePoints = @json($times);
+    document.addEventListener('DOMContentLoaded', function () {
+        const timePoints = @json($times);
 
-            if (window.initializeVitalSignsCharts) {
-                window.initializeVitalSignsCharts(timePoints, vitalsData);
+        if (window.initializeVitalSignsCharts) {
+            window.initializeVitalSignsCharts(timePoints, vitalsData);
+        }
+
+        if (window.initializeChartScrolling) {
+            window.initializeChartScrolling();
+        }
+
+        if (window.initSearchableDropdown) {
+            window.initSearchableDropdown();
+        }
+    });
+
+    // 1. GLOBAL CLOSE FUNCTION
+    window.closeChartModal = function () {
+        const modal = document.getElementById('chart-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+
+        // Cleanup Chart instance to prevent errors when re-opening
+        if (window.modalChartInstance) {
+            window.modalChartInstance.destroy();
+            window.modalChartInstance = null;
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalWrapper = document.getElementById('chart-modal');
+
+        if (modalWrapper) {
+            modalWrapper.addEventListener('click', function (event) {
+                // If the user clicks the dark background (the wrapper) and NOT the white box
+                if (event.target === modalWrapper) {
+                    closeChartModal();
+                }
+            });
+        }
+
+        const sidebar = document.getElementById('mySidenav');
+        if (sidebar) {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
+                        if (isSidebarOpen) closeChartModal();
+                    }
+                });
+            });
+            observer.observe(sidebar, { attributes: true });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentStep = 0;
+        const totalSteps = 3;
+
+        function updateCarousel() {
+            const track = document.getElementById('chart-track');
+            const upBtn = document.getElementById('chart-up');
+            const downBtn = document.getElementById('chart-down');
+            const cards = track ? track.querySelectorAll(':scope > div') : [];
+
+            if (!track || !upBtn || !downBtn || !cards.length) return;
+
+            const cardHeight = cards[0].offsetHeight;
+            const moveDistance = cardHeight;
+            let translateY = 0;
+
+            upBtn.classList.remove('btn-hidden');
+            downBtn.classList.remove('btn-hidden');
+
+            if (currentStep === 0) {
+                translateY = 0;
+                upBtn.classList.add('btn-hidden');
+            } else if (currentStep === 1) {
+                translateY = moveDistance * 1.3;
+            } else if (currentStep === 2) {
+                translateY = moveDistance * 2.3;
+            } else if (currentStep === 3) {
+                translateY = moveDistance * 3.3;
+                downBtn.classList.add('btn-hidden');
             }
 
-            if (window.initializeChartScrolling) {
-                window.initializeChartScrolling();
+            track.style.transform = `translateY(-${translateY}px)`;
+        }
+
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('#chart-down')) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateCarousel();
+                }
             }
 
-            if (window.initSearchableDropdown) {
-                window.initSearchableDropdown();
+            if (e.target.closest('#chart-up')) {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateCarousel();
+                }
             }
         });
 
-        // 1. GLOBAL CLOSE FUNCTION
-        window.closeChartModal = function () {
-            const modal = document.getElementById('chart-modal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
+        updateCarousel();
 
-            // Cleanup Chart instance to prevent errors when re-opening
-            if (window.modalChartInstance) {
-                window.modalChartInstance.destroy();
-                window.modalChartInstance = null;
+        window.resetChartCarousel = function () {
+            currentStep = 0;
+            updateCarousel();
+        };
+    });
+
+    // ============================================
+    // VITAL SIGNS COLOR CODING (FIXED FOR DECIMALS)
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function () {
+        const vitalRanges = {
+            temperature: {
+                ranges: [
+                    { min: 36.3, max: 37.5, color: 'var(--color-beige)' },        // Normal (Adjusted max to 37.5)
+                    { min: 37.51, max: Infinity, color: 'var(--color-dark-red)' },     // Fever
+                    { min: 0, max: 36.29, color: 'var(--color-dark-red)' }       // Hypothermia
+                ]
+            },
+            hr: {
+                ranges: [
+                    { min: 60, max: 100, color: 'var(--color-beige)' },          // Normal
+                    { min: 100.01, max: 300, color: 'var(--color-dark-red)' },   // Tachycardia
+                    { min: 0, max: 59.99, color: 'var(--color-dark-red)' }       // Bradycardia
+                ]
+            },
+            rr: {
+                ranges: [
+                    { min: 12, max: 20, color: 'var(--color-beige)' },           // Normal
+                    { min: 20.01, max: 100, color: 'var(--color-dark-red)' },    // High
+                    { min: 0, max: 11.99, color: 'var(--color-dark-red)' }       // Low
+                ]
+            },
+            spo2: {
+                ranges: [
+                    { min: 95, max: 100, color: 'var(--color-beige)' },          // Normal
+                    { min: 0, max: 94.99, color: 'var(--color-dark-red)' }       // Hypoxia
+                ]
+            },
+            bp: {
+                normal: 'var(--color-beige)',
+                abnormal: 'var(--color-dark-red)'
             }
         };
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const modalWrapper = document.getElementById('chart-modal');
+        function getColorForValue(fieldName, value) {
+            if (!fieldName || value === "" || value === null) return 'var(--color-beige)';
 
-            if (modalWrapper) {
-                modalWrapper.addEventListener('click', function (event) {
-                    // If the user clicks the dark background (the wrapper) and NOT the white box
-                    if (event.target === modalWrapper) {
-                        closeChartModal();
-                    }
-                });
+            // BP Logic: systolic/diastolic
+            if (fieldName === 'bp') {
+                const parts = value.split('/');
+                if (parts.length !== 2) return 'var(--color-beige)';
+                
+                const systolic = parseFloat(parts[0]);
+                const diastolic = parseFloat(parts[1]);
+                
+                if (isNaN(systolic) || isNaN(diastolic)) return 'var(--color-beige)';
+                if (systolic > 140 || diastolic > 90 || systolic < 90 || diastolic < 60) {
+                    return vitalRanges.bp.abnormal;
+                }
+                return vitalRanges.bp.normal;
             }
 
-            const sidebar = document.getElementById('mySidenav');
-            if (sidebar) {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.attributeName === 'class') {
-                            const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
-                            if (isSidebarOpen) closeChartModal();
-                        }
-                    });
-                });
-                observer.observe(sidebar, { attributes: true });
+            // Numeric Logic: Handles decimals correctly
+            const numValue = parseFloat(value);
+            if (isNaN(numValue)) return 'var(--color-beige)';
+
+            const vitalRange = vitalRanges[fieldName];
+            if (!vitalRange || !vitalRange.ranges) return 'var(--color-beige)';
+
+            for (let range of vitalRange.ranges) {
+                if (numValue >= range.min && numValue <= range.max) {
+                    return range.color;
+                }
             }
-        });
+            return 'var(--color-beige)';
+        }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            let currentStep = 0;
-            const totalSteps = 3;
+        function colorizeInput(input) {
+            const fieldName = input.dataset.fieldName;
+            const value = input.value.trim();
+            
+            // If user just typed a decimal point at the end, don't re-color yet
+            if (value.endsWith('.')) return;
 
-            function updateCarousel() {
-                const track = document.getElementById('chart-track');
-                const upBtn = document.getElementById('chart-up');
-                const downBtn = document.getElementById('chart-down');
-                const cards = track ? track.querySelectorAll(':scope > div') : [];
-
-                if (!track || !upBtn || !downBtn || !cards.length) return;
-
-                const cardHeight = cards[0].offsetHeight;
-                const moveDistance = cardHeight;
-                let translateY = 0;
-
-                upBtn.classList.remove('btn-hidden');
-                downBtn.classList.remove('btn-hidden');
-
-                if (currentStep === 0) {
-                    translateY = 0;
-                    upBtn.classList.add('btn-hidden');
-                } else if (currentStep === 1) {
-                    translateY = moveDistance * 1.3;
-                } else if (currentStep === 2) {
-                    translateY = moveDistance * 2.3;
-                } else if (currentStep === 3) {
-                    translateY = moveDistance * 3.3;
-                    downBtn.classList.add('btn-hidden');
-                }
-
-                track.style.transform = `translateY(-${translateY}px)`;
+            const color = getColorForValue(fieldName, value);
+            input.style.backgroundColor = color;
+            
+            if (color === 'var(--color-dark-red)') {
+                input.style.color = '#FFFFFF'; 
+            } else {
+                input.style.color = '#000000';
             }
+        }
 
-            document.addEventListener('click', function (e) {
-                if (e.target.closest('#chart-down')) {
-                    if (currentStep < totalSteps) {
-                        currentStep++;
-                        updateCarousel();
-                    }
-                }
-
-                if (e.target.closest('#chart-up')) {
-                    if (currentStep > 0) {
-                        currentStep--;
-                        updateCarousel();
-                    }
-                }
+        const vitalInputs = document.querySelectorAll('.vital-input');
+        vitalInputs.forEach(input => {
+            colorizeInput(input);
+            
+            // Use 'blur' or 'change' for final check, 'input' for real-time
+            input.addEventListener('input', function() {
+                colorizeInput(this);
             });
-
-            updateCarousel();
-
-            window.resetChartCarousel = function () {
-                currentStep = 0;
-                updateCarousel();
-            };
+            
+            input.addEventListener('blur', function() {
+                colorizeInput(this);
+            });
         });
-    </script>
+    });
+</script>
+
+    
 @endpush

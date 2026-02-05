@@ -53,7 +53,7 @@
                                 <td class="p-2 bg-beige text-center">
                                     <input type="text" name="iv_fluid" placeholder="iv fluid"
                                         value="{{ $ivsAndLineRecord->iv_fluid ?? '' }}"
-                                        class="w-full h-[45px] text-center focus:outline-none cdss-input"
+                                        class="w-full h-[100px] text-center focus:outline-none cdss-input"
                                         data-field-name="iv_fluid">
                                     @error('iv_fluid')
                                         <span class="text-red-500 text-xs">{{ $message }}</span>

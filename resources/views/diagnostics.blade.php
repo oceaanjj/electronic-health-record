@@ -535,28 +535,27 @@
         data-delete-all-url-template="{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}"
     >
         {{-- DIAGNOSTICS PATIENT SELECTION --}}
-        <div class="mx-auto w-full px-4 pt-10">
-    <div class="ml-20 flex flex-wrap items-center gap-x-10 gap-y-4">
-        
-        {{-- 1. PATIENT SECTION --}}
-        <div class="flex items-center gap-4">
-            <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+        <div class="mx-auto w-full px-4">
+        <div class="ml-5 flex flex-wrap items-center gap-x-10 gap-y-4">
+            
+            {{-- 1. PATIENT SECTION --}}
+            <div class="flex items-center gap-4">
+                <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
-            <div class="w-[350px]">
-                {{-- Fixed width so Date/Day don't jump around --}}
-                <x-searchable-patient-dropdown
-                    :patients="$patients"
-                    :selectedPatient="$selectedPatient"
-                    :selectRoute="route('diagnostics.select')"
-                    :inputValue="$selectedPatient?->patient_id ?? ''"
-                    inputPlaceholder="Search or type Patient Name..."
-                    inputName="patient_id"
-                />
+                <div class="w-[350px]">
+                    <x-searchable-patient-dropdown
+                        :patients="$patients"
+                        :selectedPatient="$selectedPatient"
+                        :selectRoute="route('diagnostics.select')"
+                        :inputValue="$selectedPatient?->patient_id ?? ''"
+                        inputPlaceholder="Search or type Patient Name..."
+                        inputName="patient_id"
+                    />
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 
 
         <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">

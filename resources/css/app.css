@@ -232,7 +232,6 @@
     position: relative;
     margin: 0 auto; /* Centers the graph horizontally */
 
-    /* MANIPULATE SIZE HERE */
     height: 450px; /* Change this to make the graph taller or shorter */
     width: 100%; /* Keep at 100% to fill the modal width */
     max-width: 900px; /* Manipulation: Shrink this to make the graph narrower */
@@ -379,71 +378,71 @@
     }
 
     /* for login */
-    .password-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 15px;
-    }
-
-    .password-wrapper input {
-        width: 100%;
-        padding-right: 2.5rem; /* space for eye */
-    }
-
-    .toggle-password {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        color: #666;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .toggle-password:hover {
-        color: #000;
-    }
-
-    /* Error message design */
-    .error-box {
-        background: #ffe6e6;
-        color: #b91c1c;
-        border: 1px solid #fca5a5;
-        border-radius: 6px;
-        padding: 8px 12px;
-        margin-bottom: 10px;
-        font-size: 0.9rem;
-        animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .toggle-password,
-    .toggle-password i {
-        height: 20px;
-        margin-right: 8px;
-        margin-bottom: 8px;
-    }
-
-    .eye-icon {
-        height: 20px;
-        margin-right: 8px;
-        margin-bottom: 8px;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-4px);
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 2.5rem; 
         }
-    }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover {
+            color: #000;
+        }
+
+        /* Error message design */
+        .error-box {
+            background: #ffe6e6;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .toggle-password,
+        .toggle-password i {
+            height: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .eye-icon {
+            height: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     /* end for login */
 
     .vital-section {

@@ -521,105 +521,121 @@
     });
 
     // ============================================
-    // VITAL SIGNS COLOR CODING (FIXED FOR DECIMALS)
-    // ============================================
-    document.addEventListener('DOMContentLoaded', function () {
-        const vitalRanges = {
-            temperature: {
-                ranges: [
-                    { min: 36.3, max: 37, color: 'var(--color-beige)' },       
-                    { min: 37.01, max: Infinity, color: 'var(--color-dark-red)' },     
+// VITAL SIGNS COLOR CODING - GLOBALLY ACCESSIBLE
+// ============================================
+(function() {
+    const vitalRanges = {
+        temperature: {
+            ranges: [
+                { min: 36.3, max: 37, color: 'var(--color-beige)' },       
+                { min: 37.01, max: Infinity, color: 'var(--color-dark-red)' },     
+            ]
+        },
+        hr: {
+            ranges: [
+                { min: 70, max: 110, color: 'var(--color-beige)' },        
+                { min: 110.01, max: Infinity, color: 'var(--color-dark-red)' },   
+            ]
+        },
+        rr: {
+            ranges: [
+                { min: 16, max: 22, color: 'var(--color-beige)' },           
+                { min: 22.01, max: Infinity, color: 'var(--color-dark-red)' },        
+            ]
+        },
+        spo2: {
+            ranges: [
+                { min: 95, max: 100, color: 'var(--color-beige)' },
+                { min: 0, max: 94.99, color: 'var(--color-dark-red)' }  // Fixed: low oxygen
+            ]
+        },
+        bp: {
+            normal: 'var(--color-beige)',
+            abnormal: 'var(--color-dark-red)'
+        }
+    };
 
-                ]
-            },
-            hr: {
-                ranges: [
-                    { min: 70, max: 110, color: 'var(--color-beige)' },        
-                    { min: 110.01, max: 300, color: 'var(--color-dark-red)' },   
-                ]
-            },
-            rr: {
-                ranges: [
-                    { min: 16, max: 22, color: 'var(--color-beige)' },           
-                    { min: 22.01, max: 100, color: 'var(--color-dark-red)' },        
-                ]
-            },
-            spo2: {
-                ranges: [
-                    { min: 95, max: 100, color: 'var(--color-beige)' },          // Normal
-                    { min: 100.01, max: 94.99, color: 'var(--color-dark-red)' }       // Hypoxia
-                ]
-            },
-            bp: {
-                normal: 'var(--color-beige)',
-                abnormal: 'var(--color-dark-red)'
+    function getColorForValue(fieldName, value) {
+        if (!fieldName || value === "" || value === null) return 'var(--color-beige)';
+
+        // BP Logic: systolic/diastolic
+        if (fieldName === 'bp') {
+            const parts = value.split('/');
+            if (parts.length !== 2) return 'var(--color-beige)';
+            
+            const systolic = parseFloat(parts[0]);
+            const diastolic = parseFloat(parts[1]);
+            
+            if (isNaN(systolic) || isNaN(diastolic)) return 'var(--color-beige)';
+            if (systolic > 140 || diastolic > 90 || systolic < 90 || diastolic < 60) {
+                return vitalRanges.bp.abnormal;
             }
-        };
-
-        function getColorForValue(fieldName, value) {
-            if (!fieldName || value === "" || value === null) return 'var(--color-beige)';
-
-            // BP Logic: systolic/diastolic
-            if (fieldName === 'bp') {
-                const parts = value.split('/');
-                if (parts.length !== 2) return 'var(--color-beige)';
-                
-                const systolic = parseFloat(parts[0]);
-                const diastolic = parseFloat(parts[1]);
-                
-                if (isNaN(systolic) || isNaN(diastolic)) return 'var(--color-beige)';
-                if (systolic > 140 || diastolic > 90 || systolic < 90 || diastolic < 60) {
-                    return vitalRanges.bp.abnormal;
-                }
-                return vitalRanges.bp.normal;
-            }
-
-            // Numeric Logic: Handles decimals correctly
-            const numValue = parseFloat(value);
-            if (isNaN(numValue)) return 'var(--color-beige)';
-
-            const vitalRange = vitalRanges[fieldName];
-            if (!vitalRange || !vitalRange.ranges) return 'var(--color-beige)';
-
-            for (let range of vitalRange.ranges) {
-                if (numValue >= range.min && numValue <= range.max) {
-                    return range.color;
-                }
-            }
-            return 'var(--color-beige)';
+            return vitalRanges.bp.normal;
         }
 
-        function colorizeInput(input) {
-            const fieldName = input.dataset.fieldName;
-            const value = input.value.trim();
-            
-            // If user just typed a decimal point at the end, don't re-color yet
-            if (value.endsWith('.')) return;
+        // Numeric Logic: Handles decimals correctly
+        const numValue = parseFloat(value);
+        if (isNaN(numValue)) return 'var(--color-beige)';
 
-            const color = getColorForValue(fieldName, value);
-            input.style.backgroundColor = color;
-            
-            if (color === 'var(--color-dark-red)') {
-                input.style.color = '#FFFFFF'; 
-            } else {
-                input.style.color = '#000000';
+        const vitalRange = vitalRanges[fieldName];
+        if (!vitalRange || !vitalRange.ranges) return 'var(--color-beige)';
+
+        for (let range of vitalRange.ranges) {
+            if (numValue >= range.min && numValue <= range.max) {
+                return range.color;
             }
         }
+        return 'var(--color-beige)';
+    }
 
+    function colorizeInput(input) {
+        const fieldName = input.dataset.fieldName;
+        const value = input.value.trim();
+        
+        // If user just typed a decimal point at the end, don't re-color yet
+        if (value.endsWith('.')) return;
+
+        const color = getColorForValue(fieldName, value);
+        input.style.backgroundColor = color;
+        
+        if (color === 'var(--color-dark-red)') {
+            input.style.color = '#FFFFFF'; 
+        } else {
+            input.style.color = '#000000';
+        }
+    }
+
+    // ✅ MAKE THIS GLOBALLY ACCESSIBLE
+    window.colorizeAllVitals = function() {
         const vitalInputs = document.querySelectorAll('.vital-input');
+        
         vitalInputs.forEach(input => {
+            // Initial colorization
             colorizeInput(input);
             
-            // Use 'blur' or 'change' for final check, 'input' for real-time
-            input.addEventListener('input', function() {
-                colorizeInput(this);
-            });
+            // Remove existing listeners to prevent duplicates
+            input.removeEventListener('input', handleInput);
+            input.removeEventListener('blur', handleBlur);
             
-            input.addEventListener('blur', function() {
-                colorizeInput(this);
-            });
+            // Add fresh listeners
+            input.addEventListener('input', handleInput);
+            input.addEventListener('blur', handleBlur);
         });
+    };
+
+    function handleInput(e) {
+        colorizeInput(e.target);
+    }
+
+    function handleBlur(e) {
+        colorizeInput(e.target);
+    }
+
+    // Run on initial page load
+    document.addEventListener('DOMContentLoaded', function() {
+        window.colorizeAllVitals();
     });
+})();
 </script>
 
     

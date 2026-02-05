@@ -128,6 +128,10 @@ function initializeUI(timePoints, vitalsData, selectUrl) {
         if (url) window.initializeDateDayLoader(url);
     }
 
+    if (window.colorizeAllVitals) {
+        window.colorizeAllVitals();
+    }
+
     document.dispatchEvent(
         new CustomEvent('cdss:form-reloaded', {
             bubbles: true,

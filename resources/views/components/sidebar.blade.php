@@ -9,7 +9,7 @@
         transition-all duration-300 ease-in-out">
 
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
-       
+
 
     </button>
 
@@ -87,8 +87,8 @@
                          {{ request()->routeIs('io.show')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover hover:font-bold' }}">
-               <span class="material-symbols-outlined">pill</span>
-               <span>Intake and Output</span>
+                <span class="material-symbols-outlined">pill</span>
+                <span>Intake and Output</span>
             </a>
         </li>
 
@@ -162,7 +162,7 @@
                          {{ request()->routeIs('medication-reconciliation')
     ? 'bg-dark-green text-white font-bold'
     : 'hover:bg-hover' }}">
-               <span class="material-symbols-outlined">admin_meds</span>
+                <span class="material-symbols-outlined">admin_meds</span>
                 <span
                     class="{{ request()->routeIs('medication-reconciliation') ? 'text-white font-bold' : 'group-hover:font-bold' }}">Medication
                     Reconciliation</span>
@@ -188,62 +188,62 @@
 
         <li>
             <center>
-                <hr class="w-full mt-[120px] border-dark-green border-t-1">
+                <hr class="w-full mt-[110px] border-dark-green border-t-1">
             </center>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
 
-            <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[20px]
+            <a href="#" id="logout-btn" class="group flex items-center gap-3 pl-5 pb-2 pt-2 mt-[5px]
                         hover:bg-hover transition-all duration-200 rounded-l-[10px] rounded-r-[10px] hover:font-bold">
-                    <span class="material-symbols-outlined">logout</span>
+                <span class="material-symbols-outlined">logout</span>
 
                 <span>LOG OUT</span>
             </a>
         </li>
 
         @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const logoutBtn = document.getElementById('logout-btn');
-                const logoutForm = document.getElementById('logout-form');
-                
-                if (logoutBtn && logoutForm) {
-                    logoutBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        
-                        if (typeof showConfirm === 'function') {
-                            showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel')
-                                .then((result) => {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const logoutBtn = document.getElementById('logout-btn');
+                    const logoutForm = document.getElementById('logout-form');
+
+                    if (logoutBtn && logoutForm) {
+                        logoutBtn.addEventListener('click', function (e) {
+                            e.preventDefault();
+
+                            if (typeof showConfirm === 'function') {
+                                showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel')
+                                    .then((result) => {
+                                        if (result.isConfirmed) {
+                                            logoutForm.submit();
+                                        }
+                                    });
+                            } else if (typeof Swal === 'function') {
+                                Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: 'Do you really want to logout?',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Yes',
+                                    cancelButtonText: 'Cancel',
+                                    confirmButtonColor: '#2A1C0F',
+                                    cancelButtonColor: '#6c757d'
+                                }).then((result) => {
                                     if (result.isConfirmed) {
                                         logoutForm.submit();
                                     }
                                 });
-                        } else if (typeof Swal === 'function') {
-                            Swal.fire({
-                                title: 'Are you sure?',
-                                text: 'Do you really want to logout?',
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonText: 'Yes',
-                                cancelButtonText: 'Cancel',
-                                confirmButtonColor: '#2A1C0F',
-                                cancelButtonColor: '#6c757d'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
+                            } else {
+                                if (confirm('Are you sure you want to logout?')) {
                                     logoutForm.submit();
                                 }
-                            });
-                        } else {
-                            if (confirm('Are you sure you want to logout?')) {
-                                logoutForm.submit();
                             }
-                        }
-                    });
-                }
-            });
-        </script>
+                        });
+                    }
+                });
+            </script>
         @endpush
 
 

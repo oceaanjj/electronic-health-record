@@ -5,7 +5,8 @@
     <div id="form-content-container">
         <!-- patient searchable-dropdown -->
         <center> {{-- To center the lg:w-[85%] block --}}
-            <div class="w-full flex justify-start items-start gap-2 pt-10 lg:w-[85%]"> {{-- Match form width and left align
+            <div class=" md:px-10 w-full flex justify-start items-start gap-2 pt-10 lg:w-[85%]"> {{-- Match form width and
+                left align
                 content --}}
                 <div class="mb-10 w-full mobile-dropdown-container"> {{-- Original flex layout for items --}}
                     {{-- PATIENT SECTION --}}
@@ -32,7 +33,7 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <div class="w-full flex justify-center items-start gap-2 mt-2 lg:w-[85%]">
+                    <div class="  md:px-10  w-full flex justify-center items-start gap-2 mt-2 lg:w-[85%]">
                         <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
                             <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
 
@@ -92,7 +93,7 @@
                 </center>
 
                 <center>
-                    <div class="w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
+                    <div class=" md:px-10 w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
                         <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
                             <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
 
@@ -150,7 +151,7 @@
                 </center>
 
                 <center>
-                    <div class="w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
+                    <div class=" md:px-10 w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
                         <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
                             <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
 
@@ -211,7 +212,7 @@
                 </center>
 
                 <center>
-                    <div class="w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
+                    <div class=" md:px-10 w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
                         <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
                             <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
                                 {{-- VACCINATION --}}
@@ -264,7 +265,7 @@
                         </div>
                     </div>
 
-                    <div class="w-full flex justify-center items-start gap-1 lg:w-[85%]">
+                    <div class="w-full flex justify-center items-start gap-1 lg:w-[85%] md:px-10">
                         <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
                             <div class="w-full flex justify-end mt-5 mb-30 mobile-next-button-align">
                                 <a href="{{ route('developmental-history') }}">

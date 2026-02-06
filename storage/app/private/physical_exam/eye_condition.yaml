@@ -1,183 +1,155 @@
 eye_condition:
-  # Category: Vision & Visual Fields
-  - keywords: ["sudden visual loss", "sudden vision loss", "acute vision loss"]
-    alert: "Sudden visual loss is a medical emergency. May indicate retinal detachment, vitreous hemorrhage, or central retinal artery occlusion. Requires immediate ophthalmology consultation."
-    severity: "critical"
-  - keywords:
-      [
-        "blurry vision",
-        "blurred vision",
-        "trouble focusing",
-        "difficulty seeing far",
-        "myopia",
-      ]
-    alert: "Patient reports blurry vision. This is often a sign of a refractive error (like myopia or astigmatism) but can also indicate more serious conditions. A formal vision screening is warranted."
-    severity: "info"
-  - keywords:
-      [
-        "difficulty reading",
-        "holds objects close",
-        "trouble seeing near",
-        "hyperopia",
-      ]
-    alert: "Patient reports difficulty with near vision or holds objects close to see them. This may indicate hyperopia (farsightedness) or presbyopia. A formal vision screening is warranted."
-    severity: "info"
-  - keywords:
-      [
-        "hemianopsia",
-        "quadrantanopsia",
-        "field cut",
-        "loss of peripheral vision",
-        "tunnel vision",
-      ]
-    alert: "Visual field defect detected. This suggests a lesion in the optic pathway (e.g., stroke or tumor). Requires urgent neurology and ophthalmology evaluation."
-    severity: "critical"
-  - keywords: ["flashing lights", "photopsia", "seeing flashes"]
-    alert: "Patient reports seeing flashing lights. This can be a symptom of retinal detachment or vitreous detachment. Requires prompt ophthalmology consultation."
-    severity: "critical"
-  - keywords: ["floaters", "seeing spots", "cobwebs in vision"]
-    alert: "Patient reports new or increased floaters. While often benign, a sudden increase can be a sign of vitreous or retinal detachment. Ophthalmology evaluation is recommended."
-    severity: "warning"
-  - keywords: ["double vision", "diplopia"]
-    alert: "New onset of double vision (diplopia) is a concerning finding. May indicate a cranial nerve palsy (III, IV, VI), brainstem lesion, or other neurologic disorder. Requires urgent evaluation."
-    severity: "critical"
+    # Category: Vision & Visual Fields
+    - keywords: ['sudden visual loss', 'sudden vision loss', 'acute vision loss']
+      alert: 'Sudden visual loss is a medical emergency. May indicate retinal detachment, vitreous hemorrhage, or central retinal artery occlusion. Requires immediate ophthalmology consultation.'
+      severity: 'critical'
+    - keywords: ['blurry vision', 'blurred vision', 'trouble focusing', 'difficulty seeing far', 'myopia']
+      alert: 'Patient reports blurry vision. This is often a sign of a refractive error (like myopia or astigmatism) but can also indicate more serious conditions. A formal vision screening is warranted.'
+      severity: 'info'
+    - keywords: ['difficulty reading', 'holds objects close', 'trouble seeing near', 'hyperopia']
+      alert: 'Patient reports difficulty with near vision or holds objects close to see them. This may indicate hyperopia (farsightedness) or presbyopia. A formal vision screening is warranted.'
+      severity: 'info'
+    - keywords: ['hemianopsia', 'quadrantanopsia', 'field cut', 'loss of peripheral vision', 'tunnel vision']
+      alert: 'Visual field defect detected. This suggests a lesion in the optic pathway (e.g., stroke or tumor). Requires urgent neurology and ophthalmology evaluation.'
+      severity: 'critical'
+    - keywords: ['flashing lights', 'photopsia', 'seeing flashes']
+      alert: 'Patient reports seeing flashing lights. This can be a symptom of retinal detachment or vitreous detachment. Requires prompt ophthalmology consultation.'
+      severity: 'critical'
+    - keywords: ['floaters', 'seeing spots', 'cobwebs in vision']
+      alert: 'Patient reports new or increased floaters. While often benign, a sudden increase can be a sign of vitreous or retinal detachment. Ophthalmology evaluation is recommended.'
+      severity: 'warning'
+    - keywords: ['double vision', 'diplopia']
+      alert: 'New onset of double vision (diplopia) is a concerning finding. May indicate a cranial nerve palsy (III, IV, VI), brainstem lesion, or other neurologic disorder. Requires urgent evaluation.'
+      severity: 'critical'
 
-  # Category: Eyelids, Orbits, & Lacrimal System
-  - keywords: ["exophthalmos", "proptosis", "bulging eyes", "stare"]
-    alert: "Exophthalmos (protruding eyeballs) is a key feature of Graves' ophthalmopathy (hyperthyroidism). Check thyroid function tests and assess for lid lag."
-    severity: "warning"
-  - keywords: ["ptosis", "droopy eyelid", "drooping eyelid"]
-    alert: "Ptosis (drooping upper eyelid) can be congenital or acquired. It may indicate a muscle or nerve disorder, such as myasthenia gravis or a CN III palsy. If new, this is a significant neurologic sign."
-    severity: "warning"
-  - keywords: ["lid retraction", "scleral show"]
-    alert: "Lid retraction, creating a 'stare' appearance with visible sclera above the iris, is a sign of hyperthyroidism. Correlate with other systemic signs."
-    severity: "warning"
-  - keywords: ["ectropion", "eyelid turned out"]
-    alert: "Ectropion (outward turning of the lower lid margin) can lead to excessive tearing and dry eyes. Assess for corneal irritation."
-    severity: "info"
-  - keywords: ["entropion", "eyelid turned in"]
-    alert: "Entropion (inward turning of the lid margin) causes eyelashes to rub against the cornea, leading to irritation and potential abrasion. Requires evaluation."
-    severity: "warning"
-  - keywords: ["sty", "hordeolum", "pimple on eyelid"]
-    alert: "A sty (hordeolum) is a painful, pimple-like infection of a hair follicle on the eyelid margin. Warm compresses are the primary treatment."
-    severity: "info"
-  - keywords: ["chalazion", "eyelid bump", "painless eyelid lump"]
-    alert: "A chalazion is a beady, typically painless nodule within the eyelid caused by a blocked meibomian gland. Differentiate from a sty."
-    severity: "info"
-  - keywords: ["xanthelasma", "yellow plaque on eyelid"]
-    alert: "Xanthelasma are yellowish plaques on the eyelids, commonly associated with lipid disorders. Consider checking a lipid panel."
-    severity: "info"
-  - keywords:
-      ["swollen eyelids", "puffy eyelids", "blepharitis", "periorbital edema"]
-    alert: "Swollen eyelids can result from allergies, infection (blepharitis), or systemic conditions like nephrotic syndrome or hypothyroidism. Assess for associated signs."
-    severity: "warning"
-  - keywords: ["excessive tearing", "epiphora", "watery eyes"]
-    alert: "Excessive tearing can be due to irritation, allergies, or a blocked tear duct (nasolacrimal duct obstruction), which is common in infants. Assess for associated redness or discharge."
-    severity: "info"
-  - keywords:
-      [
-        "dacryocystitis",
-        "swelling near tear duct",
-        "inflammation of lacrimal sac",
-      ]
-    alert: "Inflammation of the lacrimal sac (dacryocystitis) presents as a painful, swollen, red area at the inner corner of the eye. This indicates an infection."
-    severity: "warning"
+    # Category: Eyelids, Orbits, & Lacrimal System
+    - keywords: ['exophthalmos', 'proptosis', 'bulging eyes', 'stare']
+      alert: "Exophthalmos (protruding eyeballs) is a key feature of Graves' ophthalmopathy (hyperthyroidism). Check thyroid function tests and assess for lid lag."
+      severity: 'warning'
+    - keywords: ['ptosis', 'droopy eyelid', 'drooping eyelid']
+      alert: 'Ptosis (drooping upper eyelid) can be congenital or acquired. It may indicate a muscle or nerve disorder, such as myasthenia gravis or a CN III palsy. If new, this is a significant neurologic sign.'
+      severity: 'warning'
+    - keywords: ['lid retraction', 'scleral show']
+      alert: "Lid retraction, creating a 'stare' appearance with visible sclera above the iris, is a sign of hyperthyroidism. Correlate with other systemic signs."
+      severity: 'warning'
+    - keywords: ['ectropion', 'eyelid turned out']
+      alert: 'Ectropion (outward turning of the lower lid margin) can lead to excessive tearing and dry eyes. Assess for corneal irritation.'
+      severity: 'info'
+    - keywords: ['entropion', 'eyelid turned in']
+      alert: 'Entropion (inward turning of the lid margin) causes eyelashes to rub against the cornea, leading to irritation and potential abrasion. Requires evaluation.'
+      severity: 'warning'
+    - keywords: ['sty', 'hordeolum', 'pimple on eyelid']
+      alert: 'A sty (hordeolum) is a painful, pimple-like infection of a hair follicle on the eyelid margin. Warm compresses are the primary treatment.'
+      severity: 'info'
+    - keywords: ['chalazion', 'eyelid bump', 'painless eyelid lump']
+      alert: 'A chalazion is a beady, typically painless nodule within the eyelid caused by a blocked meibomian gland. Differentiate from a sty.'
+      severity: 'info'
+    - keywords: ['xanthelasma', 'yellow plaque on eyelid']
+      alert: 'Xanthelasma are yellowish plaques on the eyelids, commonly associated with lipid disorders. Consider checking a lipid panel.'
+      severity: 'info'
+    - keywords: ['swollen eyelids', 'puffy eyelids', 'blepharitis', 'periorbital edema']
+      alert: 'Swollen eyelids can result from allergies, infection (blepharitis), or systemic conditions like nephrotic syndrome or hypothyroidism. Assess for associated signs.'
+      severity: 'warning'
+    - keywords: ['excessive tearing', 'epiphora', 'watery eyes']
+      alert: 'Excessive tearing can be due to irritation, allergies, or a blocked tear duct (nasolacrimal duct obstruction), which is common in infants. Assess for associated redness or discharge.'
+      severity: 'info'
+    - keywords: ['dacryocystitis', 'swelling near tear duct', 'inflammation of lacrimal sac']
+      alert: 'Inflammation of the lacrimal sac (dacryocystitis) presents as a painful, swollen, red area at the inner corner of the eye. This indicates an infection.'
+      severity: 'warning'
 
-  # Category: Conjunctiva & Sclera
-  - keywords: ["conjunctivitis", "pink eye", "red eye", "injected conjunctiva"]
-    alert: "Conjunctival injection (redness) is a sign of conjunctivitis. Assess for discharge (watery for viral/allergic, purulent for bacterial), itching, and exposure history."
-    severity: "warning"
-  - keywords: ["icteric sclera", "yellow eyes", "scleral icterus"]
-    alert: "Yellowing of the sclera (jaundice) indicates high bilirubin levels (hyperbilirubinemia). Assess for liver disease or hemolysis."
-    severity: "warning"
-  - keywords: ["subconjunctival hemorrhage", "blood spot on eye"]
-    alert: "A subconjunctival hemorrhage is a broken blood vessel that creates a sharp-bordered red patch on the sclera. While alarming in appearance, it is usually harmless and resolves spontaneously."
-    severity: "info"
-  - keywords: ["pinguecula"]
-    alert: "A pinguecula is a harmless yellowish nodule in the bulbar conjunctiva, typically on the nasal side, associated with aging and sun exposure."
-    severity: "info"
-  - keywords: ["episcleritis"]
-    alert: "Episcleritis is a localized inflammation of the episcleral vessels, causing a patch of redness. It is usually benign but can be associated with systemic inflammatory conditions."
-    severity: "warning"
+    # Category: Conjunctiva & Sclera
+    - keywords: ['conjunctivitis', 'pink eye', 'red eye', 'injected conjunctiva']
+      alert: 'Conjunctival injection (redness) is a sign of conjunctivitis. Assess for discharge (watery for viral/allergic, purulent for bacterial), itching, and exposure history.'
+      severity: 'warning'
+    - keywords: ['icteric sclera', 'yellow eyes', 'scleral icterus']
+      alert: 'Yellowing of the sclera (jaundice) indicates high bilirubin levels (hyperbilirubinemia). Assess for liver disease or hemolysis.'
+      severity: 'warning'
+    - keywords: ['subconjunctival hemorrhage', 'blood spot on eye']
+      alert: 'A subconjunctival hemorrhage is a broken blood vessel that creates a sharp-bordered red patch on the sclera. While alarming in appearance, it is usually harmless and resolves spontaneously.'
+      severity: 'info'
+    - keywords: ['pinguecula']
+      alert: 'A pinguecula is a harmless yellowish nodule in the bulbar conjunctiva, typically on the nasal side, associated with aging and sun exposure.'
+      severity: 'info'
+    - keywords: ['episcleritis']
+      alert: 'Episcleritis is a localized inflammation of the episcleral vessels, causing a patch of redness. It is usually benign but can be associated with systemic inflammatory conditions.'
+      severity: 'warning'
 
-  # Category: Pupils
-  - keywords: ["anisocoria", "unequal pupils"]
-    alert: "Anisocoria (unequal pupil size) can be benign (physiologic) but if new, it may indicate a serious neurologic condition. Assess light reactions and extraocular movements immediately."
-    severity: "warning"
-  - keywords: ["fixed dilated pupil", "blown pupil", "unilateral mydriasis"]
-    alert: "A unilaterally fixed and dilated pupil ('blown pupil') is a critical sign of uncal herniation compressing the oculomotor nerve (CN III). This is a neurosurgical emergency."
-    severity: "critical"
-  - keywords: ["miosis", "pinpoint pupils", "constricted pupils"]
-    alert: "Pinpoint pupils suggest narcotic (opiate) use or a pontine hemorrhage. Assess level of consciousness and respiratory status."
-    severity: "critical"
-  - keywords: ["mydriasis", "dilated pupils"]
-    alert: "Bilaterally fixed and dilated pupils can be caused by severe anoxia (e.g., after cardiac arrest), certain drug effects (anticholinergics), or brainstem damage."
-    severity: "critical"
-  - keywords: ["irregular pupil", "abnormal pupil shape"]
-    alert: "An irregularly shaped pupil can be a result of previous trauma, surgery, or inflammation (iritis). A 'keyhole' defect may be a coloboma."
-    severity: "info"
-  - keywords: ["leukocoria", "white pupil", "white reflex", "cat's eye reflex"]
-    alert: "Leukocoria (a white pupillary reflex instead of the normal red reflex) is a critical finding in a child. It can be a sign of retinoblastoma, congenital cataract, or other serious pathology. Requires immediate ophthalmology referral."
-    severity: "critical"
+    # Category: Pupils
+    - keywords: ['anisocoria', 'unequal pupils']
+      alert: 'Anisocoria (unequal pupil size) can be benign (physiologic) but if new, it may indicate a serious neurologic condition. Assess light reactions and extraocular movements immediately.'
+      severity: 'warning'
+    - keywords: ['fixed dilated pupil', 'blown pupil', 'unilateral mydriasis']
+      alert: "A unilaterally fixed and dilated pupil ('blown pupil') is a critical sign of uncal herniation compressing the oculomotor nerve (CN III). This is a neurosurgical emergency."
+      severity: 'critical'
+    - keywords: ['miosis', 'pinpoint pupils', 'constricted pupils']
+      alert: 'Pinpoint pupils suggest narcotic (opiate) use or a pontine hemorrhage. Assess level of consciousness and respiratory status.'
+      severity: 'critical'
+    - keywords: ['mydriasis', 'dilated pupils']
+      alert: 'Bilaterally fixed and dilated pupils can be caused by severe anoxia (e.g., after cardiac arrest), certain drug effects (anticholinergics), or brainstem damage.'
+      severity: 'critical'
+    - keywords: ['irregular pupil', 'abnormal pupil shape']
+      alert: "An irregularly shaped pupil can be a result of previous trauma, surgery, or inflammation (iritis). A 'keyhole' defect may be a coloboma."
+      severity: 'info'
+    - keywords: ['leukocoria', 'white pupil', 'white reflex', "cat's eye reflex"]
+      alert: 'Leukocoria (a white pupillary reflex instead of the normal red reflex) is a critical finding in a child. It can be a sign of retinoblastoma, congenital cataract, or other serious pathology. Requires immediate ophthalmology referral.'
+      severity: 'critical'
 
-  # Category: Extraocular Movements & Alignment
-  - keywords: ["strabismus", "misaligned eyes", "crossed eyes", "wandering eye"]
-    alert: "Strabismus (misalignment of the eyes) is common in young children but persistence after 4-6 months of age is abnormal. It can lead to amblyopia (lazy eye) if not corrected. Requires pediatric ophthalmology evaluation."
-    severity: "warning"
-  - keywords: ["esotropia", "eyes turn in"]
-    alert: "Esotropia (inward turning of the eyes) is a form of strabismus. Assess with corneal light reflex and cover-uncover test."
-    severity: "warning"
-  - keywords: ["exotropia", "eyes turn out"]
-    alert: "Exotropia (outward turning of the eyes) is a form of strabismus. Assess with corneal light reflex and cover-uncover test."
-    severity: "warning"
-  - keywords: ["nystagmus", "jiggly eyes", "dancing eyes"]
-    alert: "Nystagmus (involuntary rhythmic eye movements) can be benign but may also indicate a vestibular, cerebellar, or brainstem lesion. Document direction and type of movement."
-    severity: "warning"
-  - keywords: ["lid lag"]
-    alert: "Lid lag, where the upper eyelid lags behind the globe on downward gaze, is a specific sign of hyperthyroidism."
-    severity: "warning"
+    # Category: Extraocular Movements & Alignment
+    - keywords: ['strabismus', 'misaligned eyes', 'crossed eyes', 'wandering eye']
+      alert: 'Strabismus (misalignment of the eyes) is common in young children but persistence after 4-6 months of age is abnormal. It can lead to amblyopia (lazy eye) if not corrected. Requires pediatric ophthalmology evaluation.'
+      severity: 'warning'
+    - keywords: ['esotropia', 'eyes turn in']
+      alert: 'Esotropia (inward turning of the eyes) is a form of strabismus. Assess with corneal light reflex and cover-uncover test.'
+      severity: 'warning'
+    - keywords: ['exotropia', 'eyes turn out']
+      alert: 'Exotropia (outward turning of the eyes) is a form of strabismus. Assess with corneal light reflex and cover-uncover test.'
+      severity: 'warning'
+    - keywords: ['nystagmus', 'jiggly eyes', 'dancing eyes']
+      alert: 'Nystagmus (involuntary rhythmic eye movements) can be benign but may also indicate a vestibular, cerebellar, or brainstem lesion. Document direction and type of movement.'
+      severity: 'warning'
+    - keywords: ['lid lag']
+      alert: 'Lid lag, where the upper eyelid lags behind the globe on downward gaze, is a specific sign of hyperthyroidism.'
+      severity: 'warning'
 
-  # Category: Cornea, Lens, & Anterior Structures
-  - keywords: ["cataract", "lens opacity", "cloudy lens"]
-    alert: "A cataract is an opacity of the lens. In a child (congenital cataract), it can obstruct vision and prevent normal visual development, leading to amblyopia. Requires urgent evaluation."
-    severity: "critical"
-  - keywords: ["corneal abrasion", "scratched cornea", "foreign body sensation"]
-    alert: "Corneal abrasion causes severe pain, tearing, and light sensitivity. Fluorescein staining will reveal the defect. Assess for foreign body."
-    severity: "warning"
-  - keywords: ["corneal opacity", "cloudy cornea"]
-    alert: "A cloudy cornea in an infant is a sign of congenital glaucoma, a critical condition that can lead to blindness if not treated promptly."
-    severity: "critical"
-  - keywords: ["arcus senilis"]
-    alert: "Arcus senilis is a benign whitish ring around the limbus of the cornea, common in older adults but can be seen in younger patients with hyperlipoproteinemia."
-    severity: "info"
+    # Category: Cornea, Lens, & Anterior Structures
+    - keywords: ['cataract', 'lens opacity', 'cloudy lens']
+      alert: 'A cataract is an opacity of the lens. In a child (congenital cataract), it can obstruct vision and prevent normal visual development, leading to amblyopia. Requires urgent evaluation.'
+      severity: 'critical'
+    - keywords: ['corneal abrasion', 'scratched cornea', 'foreign body sensation']
+      alert: 'Corneal abrasion causes severe pain, tearing, and light sensitivity. Fluorescein staining will reveal the defect. Assess for foreign body.'
+      severity: 'warning'
+    - keywords: ['corneal opacity', 'cloudy cornea']
+      alert: 'A cloudy cornea in an infant is a sign of congenital glaucoma, a critical condition that can lead to blindness if not treated promptly.'
+      severity: 'critical'
+    - keywords: ['arcus senilis']
+      alert: 'Arcus senilis is a benign whitish ring around the limbus of the cornea, common in older adults but can be seen in younger patients with hyperlipoproteinemia.'
+      severity: 'info'
 
-  # Category: Fundoscopic Exam (Optic Disc & Retina)
-  - keywords: ["papilledema", "swollen optic disc", "blurred disc margins"]
-    alert: "Papilledema (swollen optic disc due to venous stasis) is a critical sign of increased intracranial pressure. Loss of venous pulsations is an early sign. Requires urgent neurological evaluation."
-    severity: "critical"
-  - keywords:
-      ["increased cup-to-disc ratio", "glaucomatous cupping", "large optic cup"]
-    alert: "An increased cup-to-disc ratio (>0.5) suggests glaucomatous cupping from chronic high intraocular pressure. This can lead to irreversible vision loss. Refer to ophthalmology."
-    severity: "warning"
-  - keywords: ["optic atrophy", "pale optic disc"]
-    alert: "Optic atrophy (a white disc with absent tiny disc vessels) indicates death of optic nerve fibers. This results in vision loss and requires neurologic and ophthalmologic investigation."
-    severity: "warning"
-  - keywords: ["AV nicking", "arteriovenous nicking"]
-    alert: "AV nicking on fundoscopic exam, where a retinal vein appears to be indented by an overlying artery, is a sign of chronic hypertensive retinopathy."
-    severity: "warning"
-  - keywords: ["copper wiring", "silver wiring"]
-    alert: "Changes in the arterial light reflex ('copper' or 'silver' wiring) are signs of hypertensive retinopathy, indicating thickening of the arterial wall."
-    severity: "warning"
-  - keywords:
-      ["retinal hemorrhages", "dot and blot hemorrhages", "flame hemorrhages"]
-    alert: "Retinal hemorrhages are a sign of retinopathy, commonly from diabetes or hypertension. In an infant, they are a critical sign of non-accidental trauma (shaken baby syndrome)."
-    severity: "critical"
-  - keywords: ["cotton wool spots", "soft exudates"]
-    alert: "Cotton wool spots are fluffy white patches on the retina caused by microinfarctions. They are seen in diabetic and hypertensive retinopathy."
-    severity: "warning"
-  - keywords: ["hard exudates"]
-    alert: "Hard exudates are bright, well-defined yellowish deposits on the retina, representing lipid residues. They are a feature of diabetic retinopathy."
-    severity: "warning"
-  - keywords: ["microaneurysms"]
-    alert: "Microaneurysms (tiny red dots) are a hallmark of nonproliferative diabetic retinopathy."
-    severity: "warning"
+    # Category: Fundoscopic Exam (Optic Disc & Retina)
+    - keywords: ['papilledema', 'swollen optic disc', 'blurred disc margins']
+      alert: 'Papilledema (swollen optic disc due to venous stasis) is a critical sign of increased intracranial pressure. Loss of venous pulsations is an early sign. Requires urgent neurological evaluation.'
+      severity: 'critical'
+    - keywords: ['increased cup-to-disc ratio', 'glaucomatous cupping', 'large optic cup']
+      alert: 'An increased cup-to-disc ratio (>0.5) suggests glaucomatous cupping from chronic high intraocular pressure. This can lead to irreversible vision loss. Refer to ophthalmology.'
+      severity: 'warning'
+    - keywords: ['optic atrophy', 'pale optic disc']
+      alert: 'Optic atrophy (a white disc with absent tiny disc vessels) indicates death of optic nerve fibers. This results in vision loss and requires neurologic and ophthalmologic investigation.'
+      severity: 'warning'
+    - keywords: ['AV nicking', 'arteriovenous nicking']
+      alert: 'AV nicking on fundoscopic exam, where a retinal vein appears to be indented by an overlying artery, is a sign of chronic hypertensive retinopathy.'
+      severity: 'warning'
+    - keywords: ['copper wiring', 'silver wiring']
+      alert: "Changes in the arterial light reflex ('copper' or 'silver' wiring) are signs of hypertensive retinopathy, indicating thickening of the arterial wall."
+      severity: 'warning'
+    - keywords: ['retinal hemorrhages', 'dot and blot hemorrhages', 'flame hemorrhages']
+      alert: 'Retinal hemorrhages are a sign of retinopathy, commonly from diabetes or hypertension. In an infant, they are a critical sign of non-accidental trauma (shaken baby syndrome).'
+      severity: 'critical'
+    - keywords: ['cotton wool spots', 'soft exudates']
+      alert: 'Cotton wool spots are fluffy white patches on the retina caused by microinfarctions. They are seen in diabetic and hypertensive retinopathy.'
+      severity: 'warning'
+    - keywords: ['hard exudates']
+      alert: 'Hard exudates are bright, well-defined yellowish deposits on the retina, representing lipid residues. They are a feature of diabetic retinopathy.'
+      severity: 'warning'
+    - keywords: ['microaneurysms']
+      alert: 'Microaneurysms (tiny red dots) are a hallmark of nonproliferative diabetic retinopathy.'
+      severity: 'warning'

@@ -5,41 +5,68 @@
     <div id="form-content-container">
 
         {{-- 1. STRUCTURED HEADER (Layout & CDSS Banner) --}}
-        <div class="mx-auto mt-6 w-[80%] space-y-4">
+        <div class="mx-auto mt-1 w-full">
 
-            {{-- CDSS ALERT BANNER --}}
+            {{-- CDSS ALERT BANNER (Synced with Physical Exam UI/UX) --}}
             @if (session('selected_patient_id') && isset($labValue))
-                <div
-                    class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md">
-                    <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-[#dcb44e]">info</span>
-                        <span class="text-sm font-semibold text-[#dcb44e]">
-                            Clinical Decision Support System is now available for this date.
-                        </span>
+                <div id="cdss-alert-wrapper" class="w-full px-5 overflow-hidden transition-all duration-500">
+                    {{-- Content matches Physical Exam's mt-3, py-3, and px-5 exactly --}}
+                    <div id="cdss-alert-content" 
+                        class="relative flex items-center justify-between mt-3 py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md 
+                                animate-alert-in">
+                        
+                        <div class="flex items-center gap-3">
+                            {{-- Pulsing Info Icon --}}
+                            <span class="material-symbols-outlined text-[#dcb44e] animate-pulse">info</span>
+                            <span class="text-sm font-semibold text-[#dcb44e]">
+                                Clinical Decision Support System is now available for this date.
+                            </span>
+                        </div>
+
+                        {{-- Standardized Close Button with Rotation --}}
+                        <button type="button" onclick="closeCdssAlert()"
+                            class="group flex items-center justify-center text-amber-700 hover:bg-amber-200/50 rounded-full p-1 transition-all duration-300 active:scale-90">
+                            <span class="material-symbols-outlined text-[20px] group-hover:rotate-90 transition-transform duration-300">
+                                close
+                            </span>
+                        </button>
                     </div>
-                    <button type="button" onclick="this.closest('.relative').remove()" class="text-amber-700">
-                        <span class="material-symbols-outlined text-[20px]">close</span>
-                    </button>
                 </div>
             @endif
 
-            {{-- PATIENT SELECTION ROW --}}
-            <div class="flex flex-col gap-4">
-                <div class="flex items-center gap-6">
-
-                    <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                        selectRoute="{{ route('lab-values.select') }}" inputPlaceholder="-Select or type to search-"
-                        inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
-                </div>
-
-                {{-- NOT AVAILABLE FOOTER --}}
-                @if (session('selected_patient_id') && !isset($labValue))
-                    <div class="text-xs text-gray-500 italic flex items-center gap-2 px-2">
-                        <span class="material-symbols-outlined text-[14px]">pending_actions</span>
-                        Clinical Decision Support System is not yet available (No lab records found).
-                    </div>
-                @endif
+            {{-- LAB VALUES PATIENT SELECTION (Synced with Vital Signs UI) --}}
+<div class="mx-auto w-full pt-10 px-4">
+    <div class="flex flex-wrap items-center gap-x-10 gap-y-4 ml-20">
+        
+        {{-- PATIENT SECTION --}}
+        <div class="flex items-center gap-4">
+            <label class="font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
+                PATIENT NAME :
+            </label>
+            
+            {{-- Fixed width to match Vital Signs perfectly --}}
+            <div class="w-[350px]">
+                <x-searchable-patient-dropdown 
+                    :patients="$patients" 
+                    :selectedPatient="$selectedPatient"
+                    selectRoute="{{ route('lab-values.select') }}" 
+                    inputPlaceholder="Search or type Patient Name..."
+                    inputName="patient_id" 
+                    inputValue="{{ session('selected_patient_id') }}" 
+                />
             </div>
+        </div>
+
+    </div>
+
+    {{-- NOT AVAILABLE FOOTER (Aligned with ml-20) --}}
+    @if (session('selected_patient_id') && !isset($labValue))
+        <div class="text-xs text-gray-500 italic flex items-center gap-2 mt-4 ml-20">
+            <span class="material-symbols-outlined text-[16px]">pending_actions</span>
+            Clinical Decision Support System is not yet available (No lab records found).
+        </div>
+    @endif
+</div>
 
             <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
                 data-analyze-url="{{ route('lab-values.run-cdss-field') }}"
@@ -50,7 +77,7 @@
                 <fieldset @if (!session('selected_patient_id')) disabled @endif>
 
                     {{-- MAIN CONTENT - SAME STRUCTURE AS VITAL SIGNS --}}
-                    <div class="w-[85%] mx-auto flex justify-center items-start gap-1 mt-6">
+                    <div class="w-[90%] mx-auto flex justify-center items-start gap-1 mt-10">
 
                         {{-- LEFT SIDE: LAB VALUES TABLE --}}
                         <div class="w-[68%] rounded-[15px] overflow-hidden">
@@ -126,7 +153,7 @@
                     </div>
 
                     {{-- BUTTONS --}}
-                    <div class="w-[80%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                    <div class="w-[84%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
                         @if (isset($labValue))
                             <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
                                 class="button-default cdss-btn text-center">

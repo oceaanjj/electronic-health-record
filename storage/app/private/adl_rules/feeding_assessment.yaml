@@ -1,740 +1,740 @@
 feeding_assessment:
-  # --- CRITICAL - Life-Threatening Events (F-CRIT-001 to F-CRIT-150) ---
+    # --- CRITICAL - Life-Threatening Events (F-CRIT-001 to F-CRIT-150) ---
 
-  # Acute Airway / Aspiration & Respiratory Compromise
-  - rule_id: F-CRIT-001
-    keywords:
-      [
-        "complete choking",
-        "choking",
-        "turning blue",
-        "severe cyanosis during feed",
-        "gagging and blue",
-        "cannot breathe at all",
-        "obstructing airway",
-        "respiratory arrest",
-        "asphyxia",
-      ]
-    alert: "CRITICAL: Acute airway obstruction/choking. Initiate emergency response (Heimlich/BLS) and notify provider STAT."
-    severity: "critical"
-  - rule_id: F-CRIT-002
-    keywords:
-      [
-        "loud audible aspiration",
-        "SaO2 drop below 85% during feed",
-        "severe desaturation during feed",
-        "stridor after sip",
-        "recurrent aspiration pneumonia",
-        "pulmonary edema",
-        "hypoxemia",
-      ]
-    alert: "CRITICAL: Aspiration strongly suspected/confirmed. Stop feed immediately, suction, maintain NPO, and notify provider/SLP urgently."
-    severity: "critical"
-  - rule_id: F-CRIT-003
-    keywords:
-      [
-        "apneic episodes during oral feeding frequent",
-        "cessation of breathing while taking liquids",
-        "brief apnea after swallow common",
-        "respiratory pauses",
-        "bradycardia after feeding",
-        "apnea",
-      ]
-    alert: "CRITICAL: Apnea/respiratory cessation during feeding. Maintain NPO and initiate Cardiopulmonary monitoring immediately."
-    severity: "critical"
-  - rule_id: F-CRIT-004
-    keywords:
-      [
-        "unresponsive while eating",
-        "sudden loss of consciousness during feed",
-        "acute altered mental status during meal",
-        "immediate collapse while feeding",
-        "cardiac arrest",
-        "syncope",
-      ]
-    alert: "CRITICAL: Sudden neurological/cardiac event during feeding. Initiate emergency protocol and call for immediate medical team response."
-    severity: "critical"
-  - rule_id: F-CRIT-005
-    keywords:
-      [
-        "SaO2 drops 10% with purees large drop",
-        "oxygen saturation severe drop with food sudden",
-        "O2 sat less than 90% during meal alarming",
-        "trach compromise",
-        "cyanosis",
-      ]
-    alert: "CRITICAL: Significant desaturation during oral intake. Stop P.O. immediately, notify SLP/provider for urgent evaluation."
-    severity: "critical"
+    # Acute Airway / Aspiration & Respiratory Compromise
+    - rule_id: F-CRIT-001
+      keywords:
+          [
+              'complete choking',
+              'choking',
+              'turning blue',
+              'severe cyanosis during feed',
+              'gagging and blue',
+              'cannot breathe at all',
+              'obstructing airway',
+              'respiratory arrest',
+              'asphyxia',
+          ]
+      alert: 'CRITICAL: Acute airway obstruction/choking. Initiate emergency response (Heimlich/BLS) and notify provider STAT.'
+      severity: 'critical'
+    - rule_id: F-CRIT-002
+      keywords:
+          [
+              'loud audible aspiration',
+              'SaO2 drop below 85% during feed',
+              'severe desaturation during feed',
+              'stridor after sip',
+              'recurrent aspiration pneumonia',
+              'pulmonary edema',
+              'hypoxemia',
+          ]
+      alert: 'CRITICAL: Aspiration strongly suspected/confirmed. Stop feed immediately, suction, maintain NPO, and notify provider/SLP urgently.'
+      severity: 'critical'
+    - rule_id: F-CRIT-003
+      keywords:
+          [
+              'apneic episodes during oral feeding frequent',
+              'cessation of breathing while taking liquids',
+              'brief apnea after swallow common',
+              'respiratory pauses',
+              'bradycardia after feeding',
+              'apnea',
+          ]
+      alert: 'CRITICAL: Apnea/respiratory cessation during feeding. Maintain NPO and initiate Cardiopulmonary monitoring immediately.'
+      severity: 'critical'
+    - rule_id: F-CRIT-004
+      keywords:
+          [
+              'unresponsive while eating',
+              'sudden loss of consciousness during feed',
+              'acute altered mental status during meal',
+              'immediate collapse while feeding',
+              'cardiac arrest',
+              'syncope',
+          ]
+      alert: 'CRITICAL: Sudden neurological/cardiac event during feeding. Initiate emergency protocol and call for immediate medical team response.'
+      severity: 'critical'
+    - rule_id: F-CRIT-005
+      keywords:
+          [
+              'SaO2 drops 10% with purees large drop',
+              'oxygen saturation severe drop with food sudden',
+              'O2 sat less than 90% during meal alarming',
+              'trach compromise',
+              'cyanosis',
+          ]
+      alert: 'CRITICAL: Significant desaturation during oral intake. Stop P.O. immediately, notify SLP/provider for urgent evaluation.'
+      severity: 'critical'
 
-  # Gastrointestinal / Acute Emergencies
-  - rule_id: F-CRIT-006
-    keywords:
-      [
-        "frank blood in emesis",
-        "vomiting bright red blood",
-        "hematemesis large volume",
-        "blood streaks in gastric residual dark",
-        "significant upper GI bleed",
-        "hemorrhage",
-      ]
-    alert: "CRITICAL: Gastrointestinal hemorrhage suspected. Hold all feeds (NPO), monitor vital signs closely, and notify GI/surgical team immediately."
-    severity: "critical"
-  - rule_id: F-CRIT-007
-    keywords:
-      [
-        "projectile vomiting bile green",
-        "bilious emesis in large volume",
-        "sudden projectile vomiting",
-        "severe abdominal rigidity board-like",
-        "rebound tenderness post-feed sharp",
-        "peritonitis",
-      ]
-    alert: "CRITICAL: Suspected GI emergency (e.g., obstruction, perforation). Hold all feeds (NPO), prepare for imaging, and notify surgical team."
-    severity: "critical"
-  - rule_id: F-CRIT-008
-    keywords:
-      [
-        "massive gastric distention acute",
-        "abdomen rock hard and tender",
-        "signs of volvulus post-feed surgical",
-        "bowel obstruction high suspicion",
-        "acute abdomen",
-        "volvulus",
-      ]
-    alert: "CRITICAL: Acute severe abdominal distention/obstruction. Hold feeds, obtain imaging, and prepare for surgical consult."
-    severity: "critical"
-  - rule_id: F-CRIT-009
-    keywords:
-      [
-        "severe bloody diarrhea tube feed",
-        "lower GI bleed active",
-        "melena large volume post-feed",
-        "hematochezia",
-        "GI bleed",
-      ]
-    alert: "CRITICAL: Severe lower GI bleeding. Hold feeds, monitor Hgb/vitals, and notify GI/provider urgently."
-    severity: "critical"
-  - rule_id: F-CRIT-010
-    keywords:
-      [
-        "intractable vomiting constant",
-        "vomit following every single feed repeated",
-        "large volume vomiting after small meal high risk",
-        "hyperemesis",
-        "unrelenting emesis",
-      ]
-    alert: "CRITICAL: Intractable vomiting. Risk of aspiration and dehydration is high. Hold feeds, maintain NPO, and notify provider."
-    severity: "critical"
+    # Gastrointestinal / Acute Emergencies
+    - rule_id: F-CRIT-006
+      keywords:
+          [
+              'frank blood in emesis',
+              'vomiting bright red blood',
+              'hematemesis large volume',
+              'blood streaks in gastric residual dark',
+              'significant upper GI bleed',
+              'hemorrhage',
+          ]
+      alert: 'CRITICAL: Gastrointestinal hemorrhage suspected. Hold all feeds (NPO), monitor vital signs closely, and notify GI/surgical team immediately.'
+      severity: 'critical'
+    - rule_id: F-CRIT-007
+      keywords:
+          [
+              'projectile vomiting bile green',
+              'bilious emesis in large volume',
+              'sudden projectile vomiting',
+              'severe abdominal rigidity board-like',
+              'rebound tenderness post-feed sharp',
+              'peritonitis',
+          ]
+      alert: 'CRITICAL: Suspected GI emergency (e.g., obstruction, perforation). Hold all feeds (NPO), prepare for imaging, and notify surgical team.'
+      severity: 'critical'
+    - rule_id: F-CRIT-008
+      keywords:
+          [
+              'massive gastric distention acute',
+              'abdomen rock hard and tender',
+              'signs of volvulus post-feed surgical',
+              'bowel obstruction high suspicion',
+              'acute abdomen',
+              'volvulus',
+          ]
+      alert: 'CRITICAL: Acute severe abdominal distention/obstruction. Hold feeds, obtain imaging, and prepare for surgical consult.'
+      severity: 'critical'
+    - rule_id: F-CRIT-009
+      keywords:
+          [
+              'severe bloody diarrhea tube feed',
+              'lower GI bleed active',
+              'melena large volume post-feed',
+              'hematochezia',
+              'GI bleed',
+          ]
+      alert: 'CRITICAL: Severe lower GI bleeding. Hold feeds, monitor Hgb/vitals, and notify GI/provider urgently.'
+      severity: 'critical'
+    - rule_id: F-CRIT-010
+      keywords:
+          [
+              'intractable vomiting constant',
+              'vomit following every single feed repeated',
+              'large volume vomiting after small meal high risk',
+              'hyperemesis',
+              'unrelenting emesis',
+          ]
+      alert: 'CRITICAL: Intractable vomiting. Risk of aspiration and dehydration is high. Hold feeds, maintain NPO, and notify provider.'
+      severity: 'critical'
 
-  # Tube & Site Emergencies
-  - rule_id: F-CRIT-011
-    keywords:
-      [
-        "tube completely pulled out",
-        "dislodged g-tube needs urgent replacement",
-        "jejunostomy tube is out full",
-        "tube fully expelled large leak",
-        "decannulation",
-      ]
-    alert: "CRITICAL: Feeding tube dislodged. Cover site with dressing, notify provider for urgent replacement. Do not reinsert J-tube without imaging."
-    severity: "critical"
-  - rule_id: F-CRIT-012
-    keywords:
-      [
-        "gastric tube perforation suspected",
-        "acute abdominal pain after tube flush sudden",
-        "air under diaphragm after tube check imaging",
-        "internal bleeding",
-        "perforation",
-      ]
-    alert: "CRITICAL: Suspected gastric tube perforation. Stop all tube use immediately and notify surgical/radiology team for emergent assessment."
-    severity: "critical"
-  - rule_id: F-CRIT-013
-    keywords:
-      [
-        "skin around tube site is necrotic black",
-        "black tissue around gastrostomy site dead",
-        "signs of severe tissue ischemia near tube cold",
-        "tissue loss at stoma site",
-        "necrosis",
-      ]
-    alert: "CRITICAL: Necrosis at tube site. Emergency surgical/wound consult required."
-    severity: "critical"
-  - rule_id: F-CRIT-014
-    keywords:
-      [
-        "suspected septic shock tube site",
-        "fever chills tube site infection",
-        "hypotension and tachycardia at feed time",
-        "systemic infection risk",
-        "sepsis",
-      ]
-    alert: "CRITICAL: Suspected Sepsis secondary to tube infection. Immediate medical stabilization, blood cultures, and IV antibiotics."
-    severity: "critical"
-  - rule_id: F-CRIT-015
-    keywords:
-      [
-        "tube feeding into lungs confirmed",
-        "respiratory distress after feed start wet breath",
-        "coughing immediately after tube feed initiation",
-        "misplacement confirmed",
-        "pulmonary intubation",
-      ]
-    alert: "CRITICAL: Suspected pulmonary tube misplacement. Stop feed immediately and confirm placement via imaging."
-    severity: "critical"
+    # Tube & Site Emergencies
+    - rule_id: F-CRIT-011
+      keywords:
+          [
+              'tube completely pulled out',
+              'dislodged g-tube needs urgent replacement',
+              'jejunostomy tube is out full',
+              'tube fully expelled large leak',
+              'decannulation',
+          ]
+      alert: 'CRITICAL: Feeding tube dislodged. Cover site with dressing, notify provider for urgent replacement. Do not reinsert J-tube without imaging.'
+      severity: 'critical'
+    - rule_id: F-CRIT-012
+      keywords:
+          [
+              'gastric tube perforation suspected',
+              'acute abdominal pain after tube flush sudden',
+              'air under diaphragm after tube check imaging',
+              'internal bleeding',
+              'perforation',
+          ]
+      alert: 'CRITICAL: Suspected gastric tube perforation. Stop all tube use immediately and notify surgical/radiology team for emergent assessment.'
+      severity: 'critical'
+    - rule_id: F-CRIT-013
+      keywords:
+          [
+              'skin around tube site is necrotic black',
+              'black tissue around gastrostomy site dead',
+              'signs of severe tissue ischemia near tube cold',
+              'tissue loss at stoma site',
+              'necrosis',
+          ]
+      alert: 'CRITICAL: Necrosis at tube site. Emergency surgical/wound consult required.'
+      severity: 'critical'
+    - rule_id: F-CRIT-014
+      keywords:
+          [
+              'suspected septic shock tube site',
+              'fever chills tube site infection',
+              'hypotension and tachycardia at feed time',
+              'systemic infection risk',
+              'sepsis',
+          ]
+      alert: 'CRITICAL: Suspected Sepsis secondary to tube infection. Immediate medical stabilization, blood cultures, and IV antibiotics.'
+      severity: 'critical'
+    - rule_id: F-CRIT-015
+      keywords:
+          [
+              'tube feeding into lungs confirmed',
+              'respiratory distress after feed start wet breath',
+              'coughing immediately after tube feed initiation',
+              'misplacement confirmed',
+              'pulmonary intubation',
+          ]
+      alert: 'CRITICAL: Suspected pulmonary tube misplacement. Stop feed immediately and confirm placement via imaging.'
+      severity: 'critical'
 
-  # Nutritional / Metabolic / Behavioral Extremes
-  - rule_id: F-CRIT-016
-    keywords:
-      [
-        "rapid severe weight loss 10% in month",
-        "unintentional weight loss major 15%",
-        "BMI below 3rd percentile urgent need",
-        "acute failure to thrive severe",
-        "cachexia",
-      ]
-    alert: "CRITICAL: Acute Severe Malnutrition. Initiate aggressive nutritional support and metabolic stabilization plan immediately."
-    severity: "critical"
-  - rule_id: F-CRIT-017
-    keywords:
-      [
-        "hypoglycemia and lethargy after feed severe",
-        "blood sugar below 50 post-feed crashing",
-        "unresponsive due to low blood glucose emergency",
-        "metabolic crash",
-        "hypoglycemia",
-      ]
-    alert: "CRITICAL: Acute hypoglycemia. Follow hypoglycemia protocol immediately and notify medical team."
-    severity: "critical"
-  - rule_id: F-CRIT-018
-    keywords:
-      [
-        "refeeding syndrome symptoms acute",
-        "sudden hypophosphatemia after feed start low",
-        "severe electrolyte imbalance during feed titration dangerous",
-        "hypokalemia",
-        "refeeding",
-      ]
-    alert: "CRITICAL: High risk of Refeeding Syndrome. Stop current feed rate, notify medical team for lab draw and electrolyte replacement protocol."
-    severity: "critical"
-  - rule_id: F-CRIT-019
-    keywords:
-      [
-        "complete refusal to swallow zero intake",
-        "holds food in mouth for 5 minutes motionless",
-        "cannot initiate swallow motor failure",
-        "absolute feeding refusal 72 hours",
-        "aphagia",
-      ]
-    alert: "CRITICAL: Complete refusal of intake for 72+ hours. Risk of dehydration/malnutrition is extreme. Notify provider."
-    severity: "critical"
-  - rule_id: F-CRIT-020
-    keywords:
-      [
-        "feeding refusal violent aggressive",
-        "hitting staff when food is presented",
-        "extreme distress during mealtime severe",
-        "self-injurious behavior while feeding",
-        "aggression",
-      ]
-    alert: "CRITICAL: Acute behavioral crisis impacting safety. Stop meal, ensure safety, and call behavioral health STAT."
-    severity: "critical"
-  # ... (F-CRIT-021 to F-CRIT-150: 130 more unique CRITICAL rules covering specific shock states, acute organ failure related to feeding, severe GI/Tube complications, and extreme ED/Malnutrition flags)
-  - rule_id: F-CRIT-150
-    keywords:
-      [
-        "signs of severe hypovolemia dehydration",
-        "acute hemodynamic collapse feeding",
-        "severe hypotension during mealtime",
-        "tachycardia and dizziness acute",
-        "poor skin turgor",
-        "hypovolemia",
-      ]
-    alert: "CRITICAL: Acute Circulatory/Volume Collapse. Stop all activity, elevate legs, administer fluid bolus as ordered, and notify provider STAT."
-    severity: "critical"
+    # Nutritional / Metabolic / Behavioral Extremes
+    - rule_id: F-CRIT-016
+      keywords:
+          [
+              'rapid severe weight loss 10% in month',
+              'unintentional weight loss major 15%',
+              'BMI below 3rd percentile urgent need',
+              'acute failure to thrive severe',
+              'cachexia',
+          ]
+      alert: 'CRITICAL: Acute Severe Malnutrition. Initiate aggressive nutritional support and metabolic stabilization plan immediately.'
+      severity: 'critical'
+    - rule_id: F-CRIT-017
+      keywords:
+          [
+              'hypoglycemia and lethargy after feed severe',
+              'blood sugar below 50 post-feed crashing',
+              'unresponsive due to low blood glucose emergency',
+              'metabolic crash',
+              'hypoglycemia',
+          ]
+      alert: 'CRITICAL: Acute hypoglycemia. Follow hypoglycemia protocol immediately and notify medical team.'
+      severity: 'critical'
+    - rule_id: F-CRIT-018
+      keywords:
+          [
+              'refeeding syndrome symptoms acute',
+              'sudden hypophosphatemia after feed start low',
+              'severe electrolyte imbalance during feed titration dangerous',
+              'hypokalemia',
+              'refeeding',
+          ]
+      alert: 'CRITICAL: High risk of Refeeding Syndrome. Stop current feed rate, notify medical team for lab draw and electrolyte replacement protocol.'
+      severity: 'critical'
+    - rule_id: F-CRIT-019
+      keywords:
+          [
+              'complete refusal to swallow zero intake',
+              'holds food in mouth for 5 minutes motionless',
+              'cannot initiate swallow motor failure',
+              'absolute feeding refusal 72 hours',
+              'aphagia',
+          ]
+      alert: 'CRITICAL: Complete refusal of intake for 72+ hours. Risk of dehydration/malnutrition is extreme. Notify provider.'
+      severity: 'critical'
+    - rule_id: F-CRIT-020
+      keywords:
+          [
+              'feeding refusal violent aggressive',
+              'hitting staff when food is presented',
+              'extreme distress during mealtime severe',
+              'self-injurious behavior while feeding',
+              'aggression',
+          ]
+      alert: 'CRITICAL: Acute behavioral crisis impacting safety. Stop meal, ensure safety, and call behavioral health STAT.'
+      severity: 'critical'
+    # ... (F-CRIT-021 to F-CRIT-150: 130 more unique CRITICAL rules covering specific shock states, acute organ failure related to feeding, severe GI/Tube complications, and extreme ED/Malnutrition flags)
+    - rule_id: F-CRIT-150
+      keywords:
+          [
+              'signs of severe hypovolemia dehydration',
+              'acute hemodynamic collapse feeding',
+              'severe hypotension during mealtime',
+              'tachycardia and dizziness acute',
+              'poor skin turgor',
+              'hypovolemia',
+          ]
+      alert: 'CRITICAL: Acute Circulatory/Volume Collapse. Stop all activity, elevate legs, administer fluid bolus as ordered, and notify provider STAT.'
+      severity: 'critical'
 
-  # --- WARNING - High-Risk Clinical Findings (F-WARN-151 to F-WARN-650) ---
+    # --- WARNING - High-Risk Clinical Findings (F-WARN-151 to F-WARN-650) ---
 
-  # Swallowing / Oral Motor Dysfunction (500 rules)
-  - rule_id: F-WARN-151
-    keywords:
-      [
-        "wet gurgly voice after swallow",
-        "hoarse vocal quality after liquids",
-        "coughing on thin liquids consistently",
-        "voice change post meal persistent",
-        "penetration",
-        "dysphonia",
-      ]
-    alert: "WARNING: High suspicion of penetration/aspiration. Reinforce thickened liquids and notify SLP for instrumental swallow study."
-    severity: "warning"
-  - rule_id: F-WARN-152
-    keywords:
-      [
-        "multiple repeated swallows for 1 bite 4+",
-        "requires 4-5 swallows per spoonful effortful",
-        "significantly delayed swallow reflex bolus",
-        "pharyngeal phase delay observed",
-        "stasis",
-        "pharyngeal",
-      ]
-    alert: "WARNING: Evidence of significant pharyngeal delay. Implement maximum pacing and swallow techniques. SLP follow-up required."
-    severity: "warning"
-  - rule_id: F-WARN-153
-    keywords:
-      [
-        "food pocketing in left cheek consistently large",
-        "anterior spillage of bolus constant drooling",
-        "poor lip closure leading to drooling during meal heavy",
-        "excessive oral residue after swallow significant",
-        "residue",
-        "pocketing",
-      ]
-    alert: "WARNING: Oral residue/pocketing risk. Monitor closely for infection and aspiration. SLP consult for oral hygiene and bolus control strategies."
-    severity: "warning"
-  - rule_id: F-WARN-154
-    keywords:
-      [
-        "meal duration consistently exceeds 45 minutes tiring",
-        "takes over an hour to eat a small meal exhaustive",
-        "fatigue halfway through feeding session noticeable",
-        "needs rest breaks every 5 minutes",
-        "inefficiency",
-        "endurance",
-      ]
-    alert: "WARNING: Significant mealtime inefficiency/fatigue. Risk of inadequate intake. Explore energy conservation strategies and nutritional supplementation."
-    severity: "warning"
-  - rule_id: F-WARN-155
-    keywords:
-      [
-        "difficulty managing own saliva excessive",
-        "excessive drooling not related to teething heavy",
-        "constant need for suctioning oral secretions frequent",
-        "poor secretion management oral",
-        "sialorrhea",
-        "drooling",
-      ]
-    alert: "WARNING: Poor secretion management. High risk for aspiration of oral secretions. Consider anti-sialogogues and SLP consultation."
-    severity: "warning"
-  - rule_id: F-WARN-156
-    keywords:
-      [
-        "nasal regurgitation during swallow frequent",
-        "food comes out nose every time",
-        "liquid backs up through nasal cavity",
-        "consistent pharyngeal leak out nose",
-        "velopharyngeal",
-        "regurgitation",
-      ]
-    alert: "WARNING: Nasal regurgitation risk. Consider palatal function deficit or poor pharyngeal seal. SLP consult and careful positioning needed."
-    severity: "warning"
-  - rule_id: F-WARN-157
-    keywords:
-      [
-        "difficulty chewing tough solids",
-        "cannot manage chewy meats well",
-        "only tolerates minced and moist textures",
-        "oral phase difficulty chewing meat",
-        "mastication",
-        "chewing",
-      ]
-    alert: "WARNING: Chewing dysfunction. Limit tough solids and reinforce current modified diet level. SLP/OT follow-up."
-    severity: "warning"
-  - rule_id: F-WARN-158
-    keywords:
-      [
-        "coughing on solids persistent",
-        "gagging on minced food frequent",
-        "choking only on mixed consistencies",
-        "difficulty transitioning textures solid",
-        "mixed consistencies",
-        "heterogeneous",
-      ]
-    alert: "WARNING: Texture inconsistency issue. Only use prescribed texture level. SLP reassessment for diet upgrade needed."
-    severity: "warning"
-  - rule_id: F-WARN-159
-    keywords:
-      [
-        "poor pharyngeal clearance frequent residue",
-        "vallecular residue consistently seen on imaging",
-        "pyramidial residue post swallow significant",
-        "food sticking sensation reported",
-        "valleculae",
-        "epiglottis",
-      ]
-    alert: "WARNING: Significant post-swallow residue observed. Risk of silent aspiration. Maintain NPO status until SLP reassessment."
-    severity: "warning"
-  - rule_id: F-WARN-160
-    keywords:
-      [
-        "requires head tilt to swallow safely mandatory",
-        "needs chin tuck for every bite strict adherence",
-        "feeding assistance requires constant cueing high level",
-        "requires physical assist for pacing every meal hand-over",
-        "compensation",
-        "pacing",
-      ]
-    alert: "WARNING: Requires high level of modified assistance and adherence to safety techniques. Ensure all staff trained in compensatory strategies."
-    severity: "warning"
+    # Swallowing / Oral Motor Dysfunction (500 rules)
+    - rule_id: F-WARN-151
+      keywords:
+          [
+              'wet gurgly voice after swallow',
+              'hoarse vocal quality after liquids',
+              'coughing on thin liquids consistently',
+              'voice change post meal persistent',
+              'penetration',
+              'dysphonia',
+          ]
+      alert: 'WARNING: High suspicion of penetration/aspiration. Reinforce thickened liquids and notify SLP for instrumental swallow study.'
+      severity: 'warning'
+    - rule_id: F-WARN-152
+      keywords:
+          [
+              'multiple repeated swallows for 1 bite 4+',
+              'requires 4-5 swallows per spoonful effortful',
+              'significantly delayed swallow reflex bolus',
+              'pharyngeal phase delay observed',
+              'stasis',
+              'pharyngeal',
+          ]
+      alert: 'WARNING: Evidence of significant pharyngeal delay. Implement maximum pacing and swallow techniques. SLP follow-up required.'
+      severity: 'warning'
+    - rule_id: F-WARN-153
+      keywords:
+          [
+              'food pocketing in left cheek consistently large',
+              'anterior spillage of bolus constant drooling',
+              'poor lip closure leading to drooling during meal heavy',
+              'excessive oral residue after swallow significant',
+              'residue',
+              'pocketing',
+          ]
+      alert: 'WARNING: Oral residue/pocketing risk. Monitor closely for infection and aspiration. SLP consult for oral hygiene and bolus control strategies.'
+      severity: 'warning'
+    - rule_id: F-WARN-154
+      keywords:
+          [
+              'meal duration consistently exceeds 45 minutes tiring',
+              'takes over an hour to eat a small meal exhaustive',
+              'fatigue halfway through feeding session noticeable',
+              'needs rest breaks every 5 minutes',
+              'inefficiency',
+              'endurance',
+          ]
+      alert: 'WARNING: Significant mealtime inefficiency/fatigue. Risk of inadequate intake. Explore energy conservation strategies and nutritional supplementation.'
+      severity: 'warning'
+    - rule_id: F-WARN-155
+      keywords:
+          [
+              'difficulty managing own saliva excessive',
+              'excessive drooling not related to teething heavy',
+              'constant need for suctioning oral secretions frequent',
+              'poor secretion management oral',
+              'sialorrhea',
+              'drooling',
+          ]
+      alert: 'WARNING: Poor secretion management. High risk for aspiration of oral secretions. Consider anti-sialogogues and SLP consultation.'
+      severity: 'warning'
+    - rule_id: F-WARN-156
+      keywords:
+          [
+              'nasal regurgitation during swallow frequent',
+              'food comes out nose every time',
+              'liquid backs up through nasal cavity',
+              'consistent pharyngeal leak out nose',
+              'velopharyngeal',
+              'regurgitation',
+          ]
+      alert: 'WARNING: Nasal regurgitation risk. Consider palatal function deficit or poor pharyngeal seal. SLP consult and careful positioning needed.'
+      severity: 'warning'
+    - rule_id: F-WARN-157
+      keywords:
+          [
+              'difficulty chewing tough solids',
+              'cannot manage chewy meats well',
+              'only tolerates minced and moist textures',
+              'oral phase difficulty chewing meat',
+              'mastication',
+              'chewing',
+          ]
+      alert: 'WARNING: Chewing dysfunction. Limit tough solids and reinforce current modified diet level. SLP/OT follow-up.'
+      severity: 'warning'
+    - rule_id: F-WARN-158
+      keywords:
+          [
+              'coughing on solids persistent',
+              'gagging on minced food frequent',
+              'choking only on mixed consistencies',
+              'difficulty transitioning textures solid',
+              'mixed consistencies',
+              'heterogeneous',
+          ]
+      alert: 'WARNING: Texture inconsistency issue. Only use prescribed texture level. SLP reassessment for diet upgrade needed.'
+      severity: 'warning'
+    - rule_id: F-WARN-159
+      keywords:
+          [
+              'poor pharyngeal clearance frequent residue',
+              'vallecular residue consistently seen on imaging',
+              'pyramidial residue post swallow significant',
+              'food sticking sensation reported',
+              'valleculae',
+              'epiglottis',
+          ]
+      alert: 'WARNING: Significant post-swallow residue observed. Risk of silent aspiration. Maintain NPO status until SLP reassessment.'
+      severity: 'warning'
+    - rule_id: F-WARN-160
+      keywords:
+          [
+              'requires head tilt to swallow safely mandatory',
+              'needs chin tuck for every bite strict adherence',
+              'feeding assistance requires constant cueing high level',
+              'requires physical assist for pacing every meal hand-over',
+              'compensation',
+              'pacing',
+          ]
+      alert: 'WARNING: Requires high level of modified assistance and adherence to safety techniques. Ensure all staff trained in compensatory strategies.'
+      severity: 'warning'
 
-  # Enteral Feeding Intolerance / Volume Issues
-  - rule_id: F-WARN-161
-    keywords:
-      [
-        "high gastric residual volume increasing trend",
-        "residuals greater than 250 mL last two checks",
-        "residual volume exceeds 50% of hourly rate frequent",
-        "vomiting high residual volume",
-        "hyperresidual",
-        "residual",
-      ]
-    alert: "WARNING: Feed intolerance indicated by high residuals. Hold feed, check tube placement, and notify provider/dietician for rate adjustment."
-    severity: "warning"
-  - rule_id: F-WARN-162
-    keywords:
-      [
-        "vomiting 3 or more times in 24 hours tube feed",
-        "frequent small-volume emesis with tube feeds consistent",
-        "non-projectile vomiting after continuous feed recurrent",
-        "hyperemesis",
-        "emesis",
-      ]
-    alert: "WARNING: Persistent vomiting. Assess for reflux, position, and rate. Notify provider if persistent despite interventions."
-    severity: "warning"
-  - rule_id: F-WARN-163
-    keywords:
-      [
-        "severe diarrhea 4 or more times a day liquid",
-        "watery stools with every feed explosive",
-        "cramping and liquid stools after bolus significant",
-        "osmolarity",
-        "diarrhea",
-      ]
-    alert: "WARNING: Severe feeding-related diarrhea. Assess formula type, contamination risk, and rate. Notify provider/dietician."
-    severity: "warning"
-  - rule_id: F-WARN-164
-    keywords:
-      [
-        "abdominal distention severe post-feed tight",
-        "tight, firm abdomen after bolus rigid",
-        "complaints of severe bloating after tube feed pain",
-        "ileus",
-        "distention",
-      ]
-    alert: "WARNING: Severe abdominal distention. May indicate ileus or constipation. Hold feed, check for bowel sounds, and notify provider."
-    severity: "warning"
-  - rule_id: F-WARN-165
-    keywords:
-      [
-        "clogged g-tube not clearing with flushes enzyme failure",
-        "tube lumen fully occluded no passage",
-        "cannot aspirate or push flush through PEG tube blocked",
-        "occlusion",
-        "patency",
-      ]
-    alert: "WARNING: Tube occlusion. Use approved declogging protocol (e.g., enzyme solution). If persistent, notify provider for tube replacement plan."
-    severity: "warning"
-  - rule_id: F-WARN-166
-    keywords:
-      [
-        "leaking around G-tube balloon site frequently constant",
-        "peristomal leakage requiring frequent dressing change 4 times daily",
-        "site size too big for current tube large gap",
-        "stomal leak",
-        "leakage",
-      ]
-    alert: "WARNING: Persistent peristomal leakage. Risk for skin breakdown. Notify provider for tube size adjustment/replacement and skin protection protocol."
-    severity: "warning"
-  - rule_id: F-WARN-167
-    keywords:
-      [
-        "feeding tube misplaced accidentally",
-        "tube position change suspected by nurse",
-        "NG tube migrated upward sign of",
-        "tube tip moved confirmed X-ray needed",
-        "migration",
-        "displacement",
-      ]
-    alert: "WARNING: Suspected tube displacement. Stop all use, confirm placement (X-ray or pH check), and notify provider."
-    severity: "warning"
+    # Enteral Feeding Intolerance / Volume Issues
+    - rule_id: F-WARN-161
+      keywords:
+          [
+              'high gastric residual volume increasing trend',
+              'residuals greater than 250 mL last two checks',
+              'residual volume exceeds 50% of hourly rate frequent',
+              'vomiting high residual volume',
+              'hyperresidual',
+              'residual',
+          ]
+      alert: 'WARNING: Feed intolerance indicated by high residuals. Hold feed, check tube placement, and notify provider/dietician for rate adjustment.'
+      severity: 'warning'
+    - rule_id: F-WARN-162
+      keywords:
+          [
+              'vomiting 3 or more times in 24 hours tube feed',
+              'frequent small-volume emesis with tube feeds consistent',
+              'non-projectile vomiting after continuous feed recurrent',
+              'hyperemesis',
+              'emesis',
+          ]
+      alert: 'WARNING: Persistent vomiting. Assess for reflux, position, and rate. Notify provider if persistent despite interventions.'
+      severity: 'warning'
+    - rule_id: F-WARN-163
+      keywords:
+          [
+              'severe diarrhea 4 or more times a day liquid',
+              'watery stools with every feed explosive',
+              'cramping and liquid stools after bolus significant',
+              'osmolarity',
+              'diarrhea',
+          ]
+      alert: 'WARNING: Severe feeding-related diarrhea. Assess formula type, contamination risk, and rate. Notify provider/dietician.'
+      severity: 'warning'
+    - rule_id: F-WARN-164
+      keywords:
+          [
+              'abdominal distention severe post-feed tight',
+              'tight, firm abdomen after bolus rigid',
+              'complaints of severe bloating after tube feed pain',
+              'ileus',
+              'distention',
+          ]
+      alert: 'WARNING: Severe abdominal distention. May indicate ileus or constipation. Hold feed, check for bowel sounds, and notify provider.'
+      severity: 'warning'
+    - rule_id: F-WARN-165
+      keywords:
+          [
+              'clogged g-tube not clearing with flushes enzyme failure',
+              'tube lumen fully occluded no passage',
+              'cannot aspirate or push flush through PEG tube blocked',
+              'occlusion',
+              'patency',
+          ]
+      alert: 'WARNING: Tube occlusion. Use approved declogging protocol (e.g., enzyme solution). If persistent, notify provider for tube replacement plan.'
+      severity: 'warning'
+    - rule_id: F-WARN-166
+      keywords:
+          [
+              'leaking around G-tube balloon site frequently constant',
+              'peristomal leakage requiring frequent dressing change 4 times daily',
+              'site size too big for current tube large gap',
+              'stomal leak',
+              'leakage',
+          ]
+      alert: 'WARNING: Persistent peristomal leakage. Risk for skin breakdown. Notify provider for tube size adjustment/replacement and skin protection protocol.'
+      severity: 'warning'
+    - rule_id: F-WARN-167
+      keywords:
+          [
+              'feeding tube misplaced accidentally',
+              'tube position change suspected by nurse',
+              'NG tube migrated upward sign of',
+              'tube tip moved confirmed X-ray needed',
+              'migration',
+              'displacement',
+          ]
+      alert: 'WARNING: Suspected tube displacement. Stop all use, confirm placement (X-ray or pH check), and notify provider.'
+      severity: 'warning'
 
-  # Nutritional / Growth Concerns
-  - rule_id: F-WARN-168
-    keywords:
-      [
-        "BMI falling across two percentile lines steep decline",
-        "failure to gain weight as expected for age persistent",
-        "weight plateau three months old",
-        "stunting",
-        "growth faltering",
-      ]
-    alert: "WARNING: Clinically significant growth faltering/stunting. Urgent dietician consult and provider evaluation required."
-    severity: "warning"
-  - rule_id: F-WARN-169
-    keywords:
-      [
-        "signs of dehydration severe sunken eyes",
-        "dry mucous membranes despite fluid goal tacky",
-        "low urine output 3 consecutive shifts concerning",
-        "poor skin turgor",
-        "dehydration",
-      ]
-    alert: "WARNING: Clinical dehydration suspected. Increase fluid intake via safest route and notify provider for IV access consideration."
-    severity: "warning"
-  - rule_id: F-WARN-170
-    keywords:
-      [
-        "albumin below 3.0 chronic low",
-        "prealbumin critically low severe lab",
-        "low total protein on labs poor nutritional status",
-        "malnutrition",
-        "hypoalbuminemia",
-      ]
-    alert: "WARNING: Lab evidence of malnutrition. Urgent dietician and provider intervention required to adjust nutritional support."
-    severity: "warning"
-  - rule_id: F-WARN-171
-    keywords:
-      [
-        "oral intake consistently meeting less than 50% target",
-        "requires more than 50% supplementation via tube feeds",
-        "high caloric need not met by current intake",
-        "insufficient intake",
-        "oligophagia",
-      ]
-    alert: "WARNING: Chronic nutritional deficit due to poor intake. Reassess feeding plan with Dietician and consider escalation of nutritional support."
-    severity: "warning"
+    # Nutritional / Growth Concerns
+    - rule_id: F-WARN-168
+      keywords:
+          [
+              'BMI falling across two percentile lines steep decline',
+              'failure to gain weight as expected for age persistent',
+              'weight plateau three months old',
+              'stunting',
+              'growth faltering',
+          ]
+      alert: 'WARNING: Clinically significant growth faltering/stunting. Urgent dietician consult and provider evaluation required.'
+      severity: 'warning'
+    - rule_id: F-WARN-169
+      keywords:
+          [
+              'signs of dehydration severe sunken eyes',
+              'dry mucous membranes despite fluid goal tacky',
+              'low urine output 3 consecutive shifts concerning',
+              'poor skin turgor',
+              'dehydration',
+          ]
+      alert: 'WARNING: Clinical dehydration suspected. Increase fluid intake via safest route and notify provider for IV access consideration.'
+      severity: 'warning'
+    - rule_id: F-WARN-170
+      keywords:
+          [
+              'albumin below 3.0 chronic low',
+              'prealbumin critically low severe lab',
+              'low total protein on labs poor nutritional status',
+              'malnutrition',
+              'hypoalbuminemia',
+          ]
+      alert: 'WARNING: Lab evidence of malnutrition. Urgent dietician and provider intervention required to adjust nutritional support.'
+      severity: 'warning'
+    - rule_id: F-WARN-171
+      keywords:
+          [
+              'oral intake consistently meeting less than 50% target',
+              'requires more than 50% supplementation via tube feeds',
+              'high caloric need not met by current intake',
+              'insufficient intake',
+              'oligophagia',
+          ]
+      alert: 'WARNING: Chronic nutritional deficit due to poor intake. Reassess feeding plan with Dietician and consider escalation of nutritional support.'
+      severity: 'warning'
 
-  # Behavioral / Psychosocial (High Risk)
-  - rule_id: F-WARN-172
-    keywords:
-      [
-        "teenager restricting intake aggressively extreme",
-        "frequent secretive purging behavior repeated",
-        "refuses to eat in front of others anxiety",
-        "preoccupation with body weight and food calories obsessive",
-        "anorexia",
-        "bulimia",
-      ]
-    alert: "CRITICAL: High risk for severe eating disorder (ARFID/Anorexia). Requires urgent referral to mental health and nutritional support team."
-    severity: "critical"
-  - rule_id: F-WARN-173
-    keywords:
-      [
-        "refusing all food textures beyond purees at age 3 limited repertoire",
-        "food selectivity interfering with social settings major issue",
-        "significant food aversion to entire food groups severe reaction",
-        "aversive",
-        "ARFID",
-      ]
-    alert: "WARNING: Severe food selectivity impacting growth/social function. Requires feeding therapy assessment and behavioral intervention."
-    severity: "warning"
-  - rule_id: F-WARN-174
-    keywords:
-      [
-        "crying with spoon presentation persistent",
-        "refuses all spoon-fed purees",
-        "shuts mouth tightly against spoon",
-        "aversive response to spoon large reaction",
-        "hypersensitivity",
-        "oral aversion",
-      ]
-    alert: "WARNING: Significant feeding aversion (infantile anorexia). Requires sensitive, low-pressure approach and behavioral/SLP intervention."
-    severity: "warning"
+    # Behavioral / Psychosocial (High Risk)
+    - rule_id: F-WARN-172
+      keywords:
+          [
+              'teenager restricting intake aggressively extreme',
+              'frequent secretive purging behavior repeated',
+              'refuses to eat in front of others anxiety',
+              'preoccupation with body weight and food calories obsessive',
+              'anorexia',
+              'bulimia',
+          ]
+      alert: 'CRITICAL: High risk for severe eating disorder (ARFID/Anorexia). Requires urgent referral to mental health and nutritional support team.'
+      severity: 'critical'
+    - rule_id: F-WARN-173
+      keywords:
+          [
+              'refusing all food textures beyond purees at age 3 limited repertoire',
+              'food selectivity interfering with social settings major issue',
+              'significant food aversion to entire food groups severe reaction',
+              'aversive',
+              'ARFID',
+          ]
+      alert: 'WARNING: Severe food selectivity impacting growth/social function. Requires feeding therapy assessment and behavioral intervention.'
+      severity: 'warning'
+    - rule_id: F-WARN-174
+      keywords:
+          [
+              'crying with spoon presentation persistent',
+              'refuses all spoon-fed purees',
+              'shuts mouth tightly against spoon',
+              'aversive response to spoon large reaction',
+              'hypersensitivity',
+              'oral aversion',
+          ]
+      alert: 'WARNING: Significant feeding aversion (infantile anorexia). Requires sensitive, low-pressure approach and behavioral/SLP intervention.'
+      severity: 'warning'
 
-  # ... (476 more unique WARNING rules F-WARN-175 to F-WARN-650, covering specific oral hygiene deficits, positioning hazards, specific behavioral refusal patterns, and less acute tube/site issues)
-  - rule_id: F-WARN-650
-    keywords:
-      [
-        "food refusal for three consecutive meals",
-        "intake drops below 60% two days",
-        "less than two thirds of food eaten consistently",
-        "needs supplementary feed due to poor intake",
-        "oligophagia",
-        "appetite loss",
-      ]
-    alert: "WARNING: Inconsistent or moderately low intake over 48 hours. Aggressively encourage next meal and supplement as needed. Notify provider if trend continues."
-    severity: "warning"
+    # ... (476 more unique WARNING rules F-WARN-175 to F-WARN-650, covering specific oral hygiene deficits, positioning hazards, specific behavioral refusal patterns, and less acute tube/site issues)
+    - rule_id: F-WARN-650
+      keywords:
+          [
+              'food refusal for three consecutive meals',
+              'intake drops below 60% two days',
+              'less than two thirds of food eaten consistently',
+              'needs supplementary feed due to poor intake',
+              'oligophagia',
+              'appetite loss',
+          ]
+      alert: 'WARNING: Inconsistent or moderately low intake over 48 hours. Aggressively encourage next meal and supplement as needed. Notify provider if trend continues.'
+      severity: 'warning'
 
-  # --- INFO - Monitoring / Mild Behavioral Issues (F-INFO-651 to F-INFO-1499) ---
+    # --- INFO - Monitoring / Mild Behavioral Issues (F-INFO-651 to F-INFO-1499) ---
 
-  # Behavioral / Developmental Monitoring (849 rules)
-  - rule_id: F-INFO-651
-    keywords:
-      [
-        "picky eater at most meals mild",
-        "food selectivity mild but consistent small group",
-        "grazing throughout the entire day unscheduled",
-        "food refusal only for vegetables green foods",
-        "selectivity",
-        "picky",
-      ]
-    alert: "INFO: Common behavioral feeding issues. Reinforce consistent mealtime structure and low-pressure environment. Monitor growth."
-    severity: "info"
-  - rule_id: F-INFO-652
-    keywords:
-      [
-        "refuses only new foods hesitation",
-        "requires food chaining approach slow progression",
-        "takes a long time to accept new texture gradual",
-        "neophobia in feeding mild resistance",
-        "neophobia",
-        "new foods",
-      ]
-    alert: "INFO: Behavioral resistance to new foods (Neophobia). Continue slow introduction of new foods via accepted feeding therapy techniques."
-    severity: "info"
-  - rule_id: F-INFO-653
-    keywords:
-      [
-        "distracted easily during mealtimes mild",
-        "wants TV on while eating habit",
-        "requires quiet environment to focus on eating need for calm",
-        "distraction",
-        "environment",
-      ]
-    alert: "INFO: Environmental distraction noted. Advise minimizing sensory input (TV/iPad) during meals to promote focus."
-    severity: "info"
-  - rule_id: F-INFO-654
-    keywords:
-      [
-        "cries when spoon is first presented brief",
-        "mild aversion to specific food utensil plastic",
-        "only tolerates eating with hands messy eater",
-        "utensil aversion",
-        "sensory",
-      ]
-    alert: "INFO: Mild sensory/aversive component noted. Continue desensitization with accepted tools. Monitor for escalation."
-    severity: "info"
-  - rule_id: F-INFO-655
-    keywords:
-      [
-        "wants to self-feed but is messy developmentally appropriate",
-        "requires setup but eats independently high autonomy",
-        "needs food plate secured to table suction plate",
-        "uses adaptive utensils effectively independence",
-        "self-feed",
-        "independence",
-      ]
-    alert: "INFO: High independence level noted but requires compensatory assistance. Encourage continued self-feeding for motor skill development."
-    severity: "info"
-  - rule_id: F-INFO-656
-    keywords:
-      [
-        "poor utensil coordination requiring setup fine motor",
-        "needs physical help cutting meat minimal assist",
-        "requires adaptive spoon for self-feeding rocker knife",
-        "needs help with opening containers packaging",
-        "dexterity",
-        "motor skill",
-      ]
-    alert: "INFO: Fine motor limitations noted. Ensure adaptive equipment is available and utilized to promote independence."
-    severity: "info"
-  - rule_id: F-INFO-657
-    keywords:
-      [
-        "only ate 75% of lunch today slight deficit",
-        "intake below target for one meal only minor",
-        "ate less than usual at breakfast single episode",
-        "minor deficit",
-        "suboptimal",
-      ]
-    alert: "INFO: Single episode of suboptimal intake. Offer supplement or extra fluid to compensate. Monitor subsequent meals closely."
-    severity: "info"
+    # Behavioral / Developmental Monitoring (849 rules)
+    - rule_id: F-INFO-651
+      keywords:
+          [
+              'picky eater at most meals mild',
+              'food selectivity mild but consistent small group',
+              'grazing throughout the entire day unscheduled',
+              'food refusal only for vegetables green foods',
+              'selectivity',
+              'picky',
+          ]
+      alert: 'INFO: Common behavioral feeding issues. Reinforce consistent mealtime structure and low-pressure environment. Monitor growth.'
+      severity: 'info'
+    - rule_id: F-INFO-652
+      keywords:
+          [
+              'refuses only new foods hesitation',
+              'requires food chaining approach slow progression',
+              'takes a long time to accept new texture gradual',
+              'neophobia in feeding mild resistance',
+              'neophobia',
+              'new foods',
+          ]
+      alert: 'INFO: Behavioral resistance to new foods (Neophobia). Continue slow introduction of new foods via accepted feeding therapy techniques.'
+      severity: 'info'
+    - rule_id: F-INFO-653
+      keywords:
+          [
+              'distracted easily during mealtimes mild',
+              'wants TV on while eating habit',
+              'requires quiet environment to focus on eating need for calm',
+              'distraction',
+              'environment',
+          ]
+      alert: 'INFO: Environmental distraction noted. Advise minimizing sensory input (TV/iPad) during meals to promote focus.'
+      severity: 'info'
+    - rule_id: F-INFO-654
+      keywords:
+          [
+              'cries when spoon is first presented brief',
+              'mild aversion to specific food utensil plastic',
+              'only tolerates eating with hands messy eater',
+              'utensil aversion',
+              'sensory',
+          ]
+      alert: 'INFO: Mild sensory/aversive component noted. Continue desensitization with accepted tools. Monitor for escalation.'
+      severity: 'info'
+    - rule_id: F-INFO-655
+      keywords:
+          [
+              'wants to self-feed but is messy developmentally appropriate',
+              'requires setup but eats independently high autonomy',
+              'needs food plate secured to table suction plate',
+              'uses adaptive utensils effectively independence',
+              'self-feed',
+              'independence',
+          ]
+      alert: 'INFO: High independence level noted but requires compensatory assistance. Encourage continued self-feeding for motor skill development.'
+      severity: 'info'
+    - rule_id: F-INFO-656
+      keywords:
+          [
+              'poor utensil coordination requiring setup fine motor',
+              'needs physical help cutting meat minimal assist',
+              'requires adaptive spoon for self-feeding rocker knife',
+              'needs help with opening containers packaging',
+              'dexterity',
+              'motor skill',
+          ]
+      alert: 'INFO: Fine motor limitations noted. Ensure adaptive equipment is available and utilized to promote independence.'
+      severity: 'info'
+    - rule_id: F-INFO-657
+      keywords:
+          [
+              'only ate 75% of lunch today slight deficit',
+              'intake below target for one meal only minor',
+              'ate less than usual at breakfast single episode',
+              'minor deficit',
+              'suboptimal',
+          ]
+      alert: 'INFO: Single episode of suboptimal intake. Offer supplement or extra fluid to compensate. Monitor subsequent meals closely.'
+      severity: 'info'
 
-  # Mild GI / Site Maintenance
-  - rule_id: F-INFO-658
-    keywords:
-      [
-        "mild abdominal discomfort post-feed gas",
-        "reports minor gas/flatulence after meal odor",
-        "burping frequently during feed noisy",
-        "slight bloating after bolus feed minor",
-        "flatulence",
-        "gas",
-      ]
-    alert: "INFO: Mild GI discomfort. Encourage patient movement and assess positioning during feed. Consider slow bolus rate."
-    severity: "info"
-  - rule_id: F-INFO-659
-    keywords:
-      [
-        "constipation 3 days with hard stools mild",
-        "straining to pass stool related to diet fiber",
-        "requires Miralax every other day routine use",
-        "constipation",
-        "straining",
-      ]
-    alert: "INFO: Constipation due to intake/formula. Increase water flushes/fiber intake as tolerated. Notify provider if no BM by day 4."
-    severity: "info"
-  - rule_id: F-INFO-660
-    keywords:
-      [
-        "g-tube site mild erythema",
-        "small area of redness near gastrostomy site",
-        "mild irritation at PEG tube insertion",
-        "erythema",
-        "redness",
-      ]
-    alert: "INFO: Mild tube site redness/irritation. Clean thoroughly and apply barrier cream. Escalate if worsening."
-    severity: "info"
-  - rule_id: F-INFO-661
-    keywords:
-      [
-        "granulation tissue at tube site",
-        "hypergranulation around G-tube",
-        "small amount of clear leakage around gastrostomy",
-        "granulation",
-        "hypergranulation",
-      ]
-    alert: "INFO: Granulation tissue or minor leakage noted. Consult wound care for site management (e.g., silver nitrate/steroid cream)."
-    severity: "info"
-  - rule_id: F-INFO-662
-    keywords:
-      [
-        "feeding tube requires small pressure to flush",
-        "slight resistance during flush procedure",
-        "needs more effort to draw residual",
-        "resistance",
-        "flush",
-      ]
-    alert: "INFO: Minor tube patency issue. Flush aggressively with water before and after feeds/meds. Monitor for full occlusion."
-    severity: "info"
-  - rule_id: F-INFO-663
-    keywords:
-      [
-        "NG tube nares irritation minor",
-        "skin breakdown on nares mild",
-        "small scab near nasal tube insertion",
-        "nares",
-        "irritation",
-      ]
-    alert: "INFO: Mild NG/NJ tube nares irritation. Clean and reposition tube holder. Apply gentle skin protectant."
-    severity: "info"
+    # Mild GI / Site Maintenance
+    - rule_id: F-INFO-658
+      keywords:
+          [
+              'mild abdominal discomfort post-feed gas',
+              'reports minor gas/flatulence after meal odor',
+              'burping frequently during feed noisy',
+              'slight bloating after bolus feed minor',
+              'flatulence',
+              'gas',
+          ]
+      alert: 'INFO: Mild GI discomfort. Encourage patient movement and assess positioning during feed. Consider slow bolus rate.'
+      severity: 'info'
+    - rule_id: F-INFO-659
+      keywords:
+          [
+              'constipation 3 days with hard stools mild',
+              'straining to pass stool related to diet fiber',
+              'requires Miralax every other day routine use',
+              'constipation',
+              'straining',
+          ]
+      alert: 'INFO: Constipation due to intake/formula. Increase water flushes/fiber intake as tolerated. Notify provider if no BM by day 4.'
+      severity: 'info'
+    - rule_id: F-INFO-660
+      keywords:
+          [
+              'g-tube site mild erythema',
+              'small area of redness near gastrostomy site',
+              'mild irritation at PEG tube insertion',
+              'erythema',
+              'redness',
+          ]
+      alert: 'INFO: Mild tube site redness/irritation. Clean thoroughly and apply barrier cream. Escalate if worsening.'
+      severity: 'info'
+    - rule_id: F-INFO-661
+      keywords:
+          [
+              'granulation tissue at tube site',
+              'hypergranulation around G-tube',
+              'small amount of clear leakage around gastrostomy',
+              'granulation',
+              'hypergranulation',
+          ]
+      alert: 'INFO: Granulation tissue or minor leakage noted. Consult wound care for site management (e.g., silver nitrate/steroid cream).'
+      severity: 'info'
+    - rule_id: F-INFO-662
+      keywords:
+          [
+              'feeding tube requires small pressure to flush',
+              'slight resistance during flush procedure',
+              'needs more effort to draw residual',
+              'resistance',
+              'flush',
+          ]
+      alert: 'INFO: Minor tube patency issue. Flush aggressively with water before and after feeds/meds. Monitor for full occlusion.'
+      severity: 'info'
+    - rule_id: F-INFO-663
+      keywords:
+          [
+              'NG tube nares irritation minor',
+              'skin breakdown on nares mild',
+              'small scab near nasal tube insertion',
+              'nares',
+              'irritation',
+          ]
+      alert: 'INFO: Mild NG/NJ tube nares irritation. Clean and reposition tube holder. Apply gentle skin protectant.'
+      severity: 'info'
 
-  # ... (F-INFO-664 to F-INFO-1499: 836 more unique INFO rules covering specific texture preferences, utensil needs, oral care gaps, medication timing issues, mild reflux, and minor developmental flags.)
-  - rule_id: F-INFO-1499
-    keywords:
-      [
-        "patient complains about taste of formula",
-        "child asks for different flavor of food",
-        "expresses dislike for current diet texture",
-        "flavor",
-        "palatability",
-      ]
-    alert: "INFO: Patient preference/compliance issue noted. Consult dietician/SLP to explore palatability and alternative nutritional options."
-    severity: "info"
+    # ... (F-INFO-664 to F-INFO-1499: 836 more unique INFO rules covering specific texture preferences, utensil needs, oral care gaps, medication timing issues, mild reflux, and minor developmental flags.)
+    - rule_id: F-INFO-1499
+      keywords:
+          [
+              'patient complains about taste of formula',
+              'child asks for different flavor of food',
+              'expresses dislike for current diet texture',
+              'flavor',
+              'palatability',
+          ]
+      alert: 'INFO: Patient preference/compliance issue noted. Consult dietician/SLP to explore palatability and alternative nutritional options.'
+      severity: 'info'
 
-  # --- Negation-Safe "Normal" Rule (F-NONE-1500) ---
-  - rule_id: F-NONE-1500
-    keywords:
-      - "normal feeding"
-      - "no concerns"
-      - "eats well"
-      - "good appetite"
-      - "tolerating feeds without issue"
-      - "no aspiration signs"
-      - "denies pain with eating"
-      - "intake goal met"
-      - "tube feeding running smoothly"
-      - "site is clean dry intact"
-      - "normal"
-    alert: "Normal Findings / No Clinical Alert Detected"
-    severity: "none"
+    # --- Negation-Safe "Normal" Rule (F-NONE-1500) ---
+    - rule_id: F-NONE-1500
+      keywords:
+          - 'normal feeding'
+          - 'no concerns'
+          - 'eats well'
+          - 'good appetite'
+          - 'tolerating feeds without issue'
+          - 'no aspiration signs'
+          - 'denies pain with eating'
+          - 'intake goal met'
+          - 'tube feeding running smoothly'
+          - 'site is clean dry intact'
+          - 'normal'
+      alert: 'Normal Findings / No Clinical Alert Detected'
+      severity: 'none'

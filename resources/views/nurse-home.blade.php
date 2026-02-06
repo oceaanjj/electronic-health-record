@@ -43,7 +43,7 @@
             <div class="mx-auto mt-4 w-[90%] border-t-2 border-green-700"></div>
         </div>
 
-        <div class="mx-auto grid max-w-[1200px] grid-cols-5 gap-6">
+        <div class="mx-auto grid max-w-[1200px] grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             @php
                 $cards = [
                     ['route' => 'patients.create', 'icon' => 'account_box', 'title' => 'REGISTER', 'desc' => 'This is where new patients are registered into the system.'],

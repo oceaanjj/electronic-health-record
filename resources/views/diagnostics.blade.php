@@ -6,81 +6,21 @@
     <style>
         /* --- GLOBAL & UTILITIES --- */
         :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1e40af;
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
             --danger-color: #ef4444;
-            --danger-hover: #b91c1c;
-            --gray-100: #f9fafb;
-            --gray-200: #f3f4f6;
-            --gray-300: #e5e7eb;
-            --gray-400: #d1d5db;
-            --gray-500: #9ca3af;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-        }
-
-        .container {
-            padding: 1.5rem;
+            --danger-hover: #dc2626;
+            --success-color: #10b981;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
         }
 
         #form-content-container {
             margin: 2rem auto;
-            max-width: 1200px;
-        }
-
-        /* --- BUTTONS (Material Style) --- */
-        .btn {
-            display: inline-block;
-            padding: 10px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            text-align: center;
-            text-decoration: none;
-            transition:
-                background-color 0.3s ease,
-                box-shadow 0.3s ease,
-                transform 0.1s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: #fff;
-        }
-
-        .btn-danger:hover {
-            background-color: var(--danger-hover);
-        }
-
-        .btn[disabled] {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background-color: var(--gray-400);
-            color: var(--gray-500);
-            box-shadow: none;
-            transform: none;
+            max-width: 90%;
+            width: 90%;
+            position: relative;
         }
 
         /* --- GRID --- */
@@ -88,76 +28,221 @@
             margin-top: 2rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            /* Responsive grid */
             gap: 2rem;
         }
 
-        /* --- CARD PANEL (Material Style) --- */
+        /* --- GLASSMORPHISM CARD PANEL --- */
         .diagnostic-panel {
-            background: #ffffff;
-            border-radius: 16px;
-            /* Material 3 style */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 8px 32px 0 rgba(0, 0, 0, 0.08),
+                0 2px 8px 0 rgba(0, 0, 0, 0.04),
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -1px 1px 0 rgba(0, 0, 0, 0.02);
             overflow: hidden;
-            transition: box-shadow 0.3s ease;
+            transition: 
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            position: relative;
+        }
+
+        /* Subtle shine effect on hover */
+        .diagnostic-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            transition: left 0.6s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .diagnostic-panel:hover::before {
+            left: 150%;
         }
 
         .diagnostic-panel:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 
+                0 16px 48px 0 rgba(0, 0, 0, 0.12),
+                0 4px 16px 0 rgba(0, 0, 0, 0.08),
+                inset 0 2px 2px 0 rgba(255, 255, 255, 0.7),
+                inset 0 -1px 1px 0 rgba(0, 0, 0, 0.03);
         }
 
-        /* --- HEADER AREA --- */
+        /* --- HEADER AREA (Glassmorphism) --- */
         .panel-header {
-            background: var(--gray-100);
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--gray-300);
-            background-color: rgba(4, 127, 0, 1);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(249, 250, 251, 0.2) 100%
+            );
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1.5rem 1.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle gradient accent bar with gray tones */
+        .panel-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                rgba(156, 163, 175, 0.3) 0%,
+                rgba(209, 213, 219, 0.5) 50%,
+                rgba(156, 163, 175, 0.3) 100%
+            );
+        }
+
+        /* Add subtle light reflection at top */
+        .panel-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                transparent 100%
+            );
+            pointer-events: none;
         }
 
         .panel-header h2 {
-            color: var(--gray-800);
+            color: #1f2937;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             margin: 0;
-            color: white;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            text-shadow: 
+                0 1px 2px rgba(255, 255, 255, 0.9),
+                0 2px 4px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1;
         }
 
-        /* --- UPLOAD AREA (The 'panel-body') --- */
+        /* --- UPLOAD AREA (Enhanced Glassmorphism) --- */
         .panel-upload-area {
             position: relative;
-            padding: 1.5rem;
-            border: 2px dashed var(--gray-400);
-            border-radius: 12px;
+            padding: 2rem;
+            border: 2px dashed rgba(156, 163, 175, 0.35);
+            border-radius: 18px;
             margin: 1.5rem;
             cursor: pointer;
-            background: #fff;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(249, 250, 251, 0.15) 100%
+            );
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             transition:
-                background-color 0.2s ease,
-                border-color 0.2s ease;
+                all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            /* Pushes prompt to top, accepted-types to bottom */
             flex-grow: 1;
-            /* Makes the upload area fill the card */
             min-height: 280px;
+            overflow: hidden;
+        }
+
+        /* Glossy border effect */
+        .panel-upload-area::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            padding: 2px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.4),
+                rgba(209, 213, 219, 0.3),
+                rgba(255, 255, 255, 0.4)
+            );
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        /* Inner glow effect */
+        .panel-upload-area::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
 
         .panel-upload-area:hover {
-            background-color: var(--gray-100);
-            border-color: var(--primary-color);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(249, 250, 251, 0.25) 100%
+            );
+            border-color: rgba(156, 163, 175, 0.5);
+            transform: scale(1.005);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.06),
+                inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
 
-        /* Drag-over state */
+        .panel-upload-area:hover::before,
+        .panel-upload-area:hover::after {
+            opacity: 1;
+        }
+
+        /* Drag-over state with gray tones */
         .panel-upload-area.drag-over {
-            background-color: #e0eaff;
-            border-color: var(--primary-color);
+            background: linear-gradient(
+                135deg,
+                rgba(243, 244, 246, 0.4) 0%,
+                rgba(229, 231, 235, 0.3) 100%
+            );
+            border-color: rgba(156, 163, 175, 0.7);
             border-style: solid;
+            box-shadow: 
+                inset 0 0 30px rgba(156, 163, 175, 0.15),
+                0 0 20px rgba(156, 163, 175, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+            transform: scale(1.01);
         }
 
-        /* New wrapper for the main content (prompt/previews) */
+        /* Upload content wrapper */
         .upload-content-wrapper {
             display: flex;
             flex-direction: column;
@@ -165,15 +250,13 @@
             align-items: center;
             width: 100%;
             flex-grow: 1;
-            /* Allows this to center vertically */
         }
 
         /* Prompt for uploading */
         .upload-prompt {
             text-align: center;
-            color: var(--gray-500);
+            color: #6b7280;
             pointer-events: none;
-            /* Allows clicks to pass through to the label */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -181,28 +264,54 @@
         }
 
         .upload-icon {
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             margin: 0 auto 1rem;
-            color: var(--gray-400);
+            color: #9ca3af;
+            stroke-width: 1.5;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         .upload-prompt p {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             margin: 0;
+            color: #4b5563;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .upload-prompt strong {
+            color: #4b5563;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .upload-prompt strong::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(107, 114, 128, 0.5),
+                transparent
+            );
         }
 
         /* "Accepted types" text at the bottom */
         .upload-accepted-types {
             display: block;
             text-align: center;
-            font-size: 0.85rem;
-            color: var(--gray-500);
+            font-size: 0.8rem;
+            color: #6b7280;
             width: 100%;
             padding-top: 1rem;
-            /* Space from content above */
             pointer-events: none;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
         /* --- PREVIEW GRID --- */
@@ -224,54 +333,198 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid var(--gray-300);
+            border-radius: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.12),
+                0 2px 8px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+            transition: 
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .preview-item img:hover {
+            transform: scale(1.08) translateY(-4px);
+            box-shadow: 
+                0 12px 24px rgba(0, 0, 0, 0.18),
+                0 6px 12px rgba(0, 0, 0, 0.12),
+                inset 0 2px 2px rgba(255, 255, 255, 0.5),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.08);
         }
 
         .delete-btn {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--danger-color);
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
-            border: 2px solid white;
+            border: 2px solid rgba(255, 255, 255, 0.8);
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            font-size: 14px;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
             font-weight: bold;
-            line-height: 22px;
+            line-height: 24px;
             text-align: center;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 
+                0 4px 10px rgba(239, 68, 68, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: 
+                all 0.2s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .delete-btn:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 
+                0 6px 15px rgba(239, 68, 68, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         /* --- UPLOADED FILES TITLE --- */
         .uploaded-title {
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
-            color: var(--gray-800);
+            color: #374151;
             font-weight: 600;
-            border-bottom: 2px solid var(--gray-200);
+            border-bottom: 2px solid rgba(156, 163, 175, 0.3);
             padding-bottom: 8px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             width: 100%;
             text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
-        /* --- FOOTER BUTTON AREA --- */
+        /* --- FOOTER BUTTON AREA (Enhanced Glassmorphism) --- */
         .panel-footer {
-            background: var(--gray-100);
-            padding: 1rem 1.5rem;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.25) 0%,
+                rgba(249, 250, 251, 0.2) 100%
+            );
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1.25rem 1.75rem;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            border-top: 1px solid var(--gray-300);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        /* Top highlight */
+        .panel-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.6),
+                transparent
+            );
+        }
+
+        .clear-btn {
+            background: linear-gradient(
+                135deg, 
+                rgba(239, 68, 68, 0.85), 
+                rgba(220, 38, 38, 0.85)
+            );
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 9px 22px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 
+                all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 4px 12px rgba(239, 68, 68, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .clear-btn:hover {
+            background: linear-gradient(
+                135deg, 
+                rgba(220, 38, 38, 0.95), 
+                rgba(185, 28, 28, 0.95)
+            );
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 20px rgba(239, 68, 68, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .clear-btn:active {
+            transform: translateY(0);
+            box-shadow: 
+                0 2px 8px rgba(239, 68, 68, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .clear-btn[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(209, 213, 219, 0.5);
+            box-shadow: none;
+            transform: none;
         }
 
         /* --- FILE INPUT HIDDEN --- */
         .file-input {
             display: none;
+        }
+
+        /* --- PATIENT HEADER (Glassmorphism) --- */
+        .patient-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 8px 32px 0 rgba(31, 38, 135, 0.15),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .patient-header h2 {
+            color: #4b5563;
+            font-weight: 400;
+            font-size: 1rem;
+            margin: 0;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .patient-header strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .diagnostic-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 
@@ -281,25 +534,29 @@
         data-patient-id="{{ $selectedPatient->patient_id ?? '' }}"
         data-delete-all-url-template="{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}"
     >
-        {{-- Use your existing searchable dropdown --}}
-        <x-searchable-patient-dropdown
-            :patients="$patients"
-            :selectedPatient="$selectedPatient"
-            selectRoute="{{ route('diagnostics.select') }}"
-            inputPlaceholder="-Select or type to search-"
-            inputName="patient_id"
-            inputValue="{{ session('selected_patient_id') }}"
-        />
+        {{-- DIAGNOSTICS PATIENT SELECTION --}}
+        <div class="mx-auto w-full px-4">
+        <div class="ml-5 flex flex-wrap items-center gap-x-10 gap-y-4">
+            
+            {{-- 1. PATIENT SECTION --}}
+            <div class="flex items-center gap-4">
+                <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
-        @if ($selectedPatient)
-            <h2 style="color: white; margin-top: 1rem; font-weight: 300">
-                Diagnostics for:
-                <strong style="font-weight: 600">
-                    {{ $selectedPatient->first_name }}
-                    {{ $selectedPatient->middle_name ? $selectedPatient->middle_name . ' ' : '' }}{{ $selectedPatient->last_name }}
-                </strong>
-            </h2>
-        @endif
+                <div class="w-[350px]">
+                    <x-searchable-patient-dropdown
+                        :patients="$patients"
+                        :selectedPatient="$selectedPatient"
+                        :selectRoute="route('diagnostics.select')"
+                        :inputValue="$selectedPatient?->patient_id ?? ''"
+                        inputPlaceholder="Search or type Patient Name..."
+                        inputName="patient_id"
+                    />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
         <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -356,7 +613,7 @@
                                     <div class="preview-grid" id="preview-{{ $key }}"></div>
 
                                     @if ($selectedPatient && isset($images[$key]) && count($images[$key]))
-                                        <h4 class="uploaded-title">Uploaded Files:</h4>
+                                        <h4 class="uploaded-title">Uploaded Files</h4>
                                         <div class="preview-grid" id="uploaded-files-{{ $key }}">
                                             @foreach ($images[$key] as $image)
                                                 <div class="preview-item">
@@ -399,7 +656,7 @@
 
                                 <button
                                     type="button"
-                                    class="cursor-pointer rounded-full bg-red-500 px-3 py-1 text-white hover:bg-red-700"
+                                    class="clear-btn"
                                     onclick="handleClearButtonClick('{{ $key }}')"
                                     {{ ! $selectedPatient ? 'disabled' : '' }}
                                 >
@@ -410,9 +667,13 @@
                     @endforeach
                 </div>
 
-                {{-- Use the global button classes --}}
-                <div style="margin-top: 2rem; text-align: center">
-                    <button type="submit" class="button-default text-center" {{ ! $selectedPatient ? 'disabled' : '' }}>
+                {{-- Using your original button class --}}
+                <div class="w-[98%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                    <button
+                        type="submit"
+                        class="button-default text-center"
+                        {{ ! $selectedPatient ? 'disabled' : '' }}
+                    >
                         SUBMIT
                     </button>
                 </div>

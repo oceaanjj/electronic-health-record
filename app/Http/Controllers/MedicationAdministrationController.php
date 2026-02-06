@@ -59,6 +59,16 @@ class MedicationAdministrationController extends Controller
             'time.*' => 'nullable|string', // Time is now part of the unique key
         ]);
 
+        $allMedicationData = $request->only(['medication', 'dose', 'route', 'frequency', 'comments']);
+        $isAllEmpty = collect($allMedicationData)->every(function ($fieldData) {
+            // A field is considered empty if it's null or all its values are empty strings
+            return is_null($fieldData) || empty(array_filter($fieldData));
+        });
+
+        if ($isAllEmpty) {
+            return back()->with('error', 'Cannot submit an empty form. Please enter at least one medication record.');
+        }
+
         try {
             $patient = Patient::where('patient_id', $request->patient_id)->first();
 

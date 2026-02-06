@@ -2,103 +2,202 @@
 @section('title', 'Step 1: Nursing Diagnosis')
 @section('content')
     <style>
-        /* Progress Stepper - Matching Your Theme */
+        /* ============================================
+           ANIMATED PROGRESS STEPPER WITH GLASSMORPHISM
+           ============================================ */
         .progress-stepper {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 2rem;
             position: relative;
-            margin-bottom: 2rem;
-            padding: 0 2rem;
+            margin: 0 auto 3rem;
+            max-width: 800px;
+            padding: 0;
         }
+
+        /* Background track (the full line) */
+        .progress-track {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(196, 184, 150, 0.3);
+            border-radius: 2px;
+            z-index: 0;
+        }
+
+        /* Active progress line (animated fill) */
+        .progress-fill {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2d554b 0%, #3a6d60 100%);
+            border-radius: 2px;
+            z-index: 1;
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(45, 85, 75, 0.4);
+        }
+
+        /* Step 1 active = 25% width */
+        .progress-fill.step-1 { width: 0%; }
+        .progress-fill.step-2 { width: 33.33%; }
+        .progress-fill.step-3 { width: 66.66%; }
+        .progress-fill.step-4 { width: 100%; }
 
         .step-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
+            z-index: 2;
             flex: 1;
-            max-width: 150px;
         }
 
+        /* Glassmorphism Step Circle */
         .step-circle {
-            width: 50px;
-            height: 50px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: #e8e4d9;
-            border: 3px solid #c4b896;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: #8b7355;
+            font-weight: 700;
             font-size: 18px;
-            transition: all 0.3s ease;
-            z-index: 2;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            background: rgba(232, 228, 217, 0.8);
+            border: 2px solid rgba(196, 184, 150, 0.6);
+            color: #8b7355;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation-fill-mode: both;
         }
 
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Stagger animation delays */
+        .step-item:nth-child(1) .step-circle { animation-delay: 0.1s; }
+        .step-item:nth-child(2) .step-circle { animation-delay: 0.2s; }
+        .step-item:nth-child(3) .step-circle { animation-delay: 0.3s; }
+        .step-item:nth-child(4) .step-circle { animation-delay: 0.4s; }
+
+        /* Active step - glassmorphism with green */
         .step-item.active .step-circle {
-            background: var(--color-dark-green);
-            border-color: var(--color-dark-green);
+            background: linear-gradient(135deg, rgba(45, 85, 75, 0.95) 0%, rgba(58, 109, 96, 0.95) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
-            box-shadow: 0 4px 15px rgba(45, 85, 75, 0.4);
+            box-shadow: 0 8px 24px rgba(45, 85, 75, 0.35),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
             transform: scale(1.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
+        /* Completed step - glassmorphism with green check */
         .step-item.completed .step-circle {
-            background: #4ade80;
-            border-color: #22c55e;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.9) 0%, rgba(34, 197, 94, 0.95) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .step-item.completed .step-circle::before {
+            content: "✓";
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Hide number when completed */
+        .step-item.completed .step-circle {
+            font-size: 0;
         }
 
         .step-label {
-            margin-top: 8px;
+            margin-top: 12px;
             font-size: 11px;
             color: #8b7355;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-item:nth-child(1) .step-label { animation-delay: 0.2s; }
+        .step-item:nth-child(2) .step-label { animation-delay: 0.3s; }
+        .step-item:nth-child(3) .step-label { animation-delay: 0.4s; }
+        .step-item:nth-child(4) .step-label { animation-delay: 0.5s; }
 
         .step-item.active .step-label {
             color: var(--color-dark-green);
             font-size: 12px;
         }
 
-        /* Connecting Lines */
-        .step-connector {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            width: calc(100% - 50px);
-            height: 3px;
-            background: #c4b896;
-            z-index: 1;
+        .step-item.completed .step-label {
+            color: #22c55e;
         }
 
-        .step-item.completed .step-connector {
-            background: #4ade80;
-        }
-
-        .step-item:last-child .step-connector {
-            display: none;
-        }
-
-        /* RECOMMENDATION BANNER (NEW!) */
+        /* GLASSMORPHISM BANNERS */
         .recommendation-banner {
             padding: 0.875rem 1.25rem;
-            border-radius: 10px;
+            border-radius: 16px;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            position: relative;
+            overflow: hidden;
             animation: slideDown 0.4s ease-out;
+        }
+
+        .recommendation-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .recommendation-banner:hover::before {
+            left: 100%;
         }
 
         @keyframes slideDown {
@@ -113,23 +212,89 @@
         }
 
         .recommendation-banner:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px) scale(1.01);
         }
 
         .recommendation-banner.alert-green {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            border: 2px solid #065f46;
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.85) 0%, rgba(4, 120, 87, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(5, 150, 105, 0.25),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                        0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendation-banner.alert-green:hover {
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.9) 0%, rgba(4, 120, 87, 0.95) 100%);
+            box-shadow: 0 12px 40px rgba(5, 150, 105, 0.35),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                        0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .recommendation-banner.alert-orange {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            border: 2px solid #b45309;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.85) 0%, rgba(217, 119, 6, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                        0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendation-banner.alert-orange:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.95) 100%);
+            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.35),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                        0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .recommendation-banner.alert-red {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            border: 2px solid #b91c1c;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.85) 0%, rgba(220, 38, 38, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.25),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                        0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendation-banner.alert-red:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.95) 100%);
+            box-shadow: 0 12px 40px rgba(239, 68, 68, 0.4),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                        0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .recommendation-banner.alert-info {
+            background: linear-gradient(135deg, rgba(156, 163, 175, 0.75) 0%, rgba(107, 114, 128, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(107, 114, 128, 0.2),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.25),
+                        0 4px 16px rgba(0, 0, 0, 0.08);
+            cursor: default;
+        }
+
+        .recommendation-banner.alert-info:hover {
+            transform: none;
+            box-shadow: 0 8px 32px rgba(107, 114, 128, 0.2),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.25),
+                        0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .recommendation-banner.alert-info::before {
+            display: none;
+        }
+
+        @keyframes subtle-pulse {
+            0%, 100% {
+                box-shadow: 0 8px 32px rgba(239, 68, 68, 0.25),
+                            inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                            0 4px 16px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                box-shadow: 0 12px 48px rgba(239, 68, 68, 0.5),
+                            0 0 30px rgba(239, 68, 68, 0.4),
+                            inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        .recommendation-banner.alert-red {
+            animation: slideDown 0.4s ease-out, subtle-pulse 2s ease-in-out infinite;
         }
 
         .banner-content {
@@ -145,9 +310,13 @@
             justify-content: center;
             width: 36px;
             height: 36px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             border-radius: 50%;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.4);
         }
 
         .banner-icon .material-symbols-outlined {
@@ -166,12 +335,14 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 0.125rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .banner-subtitle {
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
             line-height: 1.3;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
         }
 
         .banner-action {
@@ -179,51 +350,36 @@
             align-items: center;
             gap: 0.375rem;
             padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
+            border-radius: 8px;
             color: white;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
         .banner-action:hover {
             background: rgba(255, 255, 255, 0.35);
             transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
         }
 
         .banner-action .material-symbols-outlined {
             font-size: 1rem;
         }
 
-        /* Pulse animation for critical/warning */
-        @keyframes subtle-pulse {
-            0%, 100% {
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            }
-            50% {
-                box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
-            }
-        }
-
-        .recommendation-banner.alert-red {
-            animation: slideDown 0.4s ease-out, subtle-pulse 2s ease-in-out infinite;
-        }
-
-        .recommendation-banner.alert-orange {
-            animation: slideDown 0.4s ease-out;
-        }
-
-        /* Hide banner state */
         .recommendation-banner.hidden {
             display: none;
         }
 
-        /* Enhanced Textarea */
         .diagnosis-textarea {
             min-height: 450px;
             transition: all 0.3s ease;
@@ -233,7 +389,6 @@
             box-shadow: 0 0 0 3px rgba(45, 85, 75, 0.1);
         }
 
-        /* Character Counter Styling */
         .char-counter {
             position: absolute;
             bottom: 12px;
@@ -257,13 +412,6 @@
             border-color: #f87171;
         }
 
-        /* Loading State for Banner */
-        .banner-loading {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
         .banner-loading-spinner {
             width: 20px;
             height: 20px;
@@ -282,20 +430,22 @@
     {{-- Progress Stepper --}}
     <div class="mx-auto w-[85%] pt-8 pb-4">
         <div class="progress-stepper">
+            {{-- Background track --}}
+            <div class="progress-track"></div>
+            {{-- Animated progress fill --}}
+            <div class="progress-fill step-1"></div>
+            
             <div class="step-item active">
                 <div class="step-circle">1</div>
                 <div class="step-label">Diagnosis</div>
-                <div class="step-connector"></div>
             </div>
             <div class="step-item">
                 <div class="step-circle">2</div>
                 <div class="step-label">Planning</div>
-                <div class="step-connector"></div>
             </div>
             <div class="step-item">
                 <div class="step-circle">3</div>
                 <div class="step-label">Implementation</div>
-                <div class="step-connector"></div>
             </div>
             <div class="step-item">
                 <div class="step-circle">4</div>
@@ -334,7 +484,7 @@
 
         <fieldset>
             <div class="mx-auto mt-2 w-[70%]">
-                {{-- RECOMMENDATION BANNER (NEW!) --}}
+                {{-- RECOMMENDATION BANNERS --}}
                 @if ($component === 'physical-exam')
                     @php
                         $alert = session('physical-exam-alerts')['diagnosis'] ?? null;
@@ -355,10 +505,28 @@
                             $levelText = 'Warning';
                         }
 
-                        // Extract short preview from message (first 60 chars)
-                        $preview = $message ? Str::limit(strip_tags($message), 60) : 'Start typing to get recommendations...';
+                        $preview = $message ? Str::limit(strip_tags($message), 60) : '';
                     @endphp
 
+                    {{-- No Recommendation State --}}
+                    <div
+                        id="no-recommendation-banner"
+                        class="recommendation-banner alert-info {{ $message ? 'hidden' : '' }}"
+                    >
+                        <div class="banner-content">
+                            <div class="banner-icon">
+                                <span class="material-symbols-outlined">edit_note</span>
+                            </div>
+                            <div class="banner-text">
+                                <div class="banner-title">No Recommendations Yet</div>
+                                <div class="banner-subtitle">
+                                    Type more details in the diagnosis field to receive AI-powered clinical recommendations
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Active Recommendation Banner --}}
                     <div
                         id="recommendation-banner"
                         class="recommendation-banner {{ $colorClass }} {{ $message ? '' : 'hidden' }}"
@@ -383,7 +551,7 @@
                     </div>
                 @endif
 
-                {{-- Diagnosis Input (Now Full Width!) --}}
+                {{-- Diagnosis Input --}}
                 <div class="w-full overflow-hidden rounded-[15px] shadow-md">
                     <div class="main-header flex items-center justify-between rounded-t-lg px-6 py-3 text-white">
                         <span class="font-bold">DIAGNOSIS</span>
@@ -446,16 +614,14 @@
             const textarea = document.getElementById('diagnosis');
             const charCount = document.getElementById('char-count');
             const charCounter = document.getElementById('char-counter');
-            const banner = document.getElementById('recommendation-banner');
+            const recommendationBanner = document.getElementById('recommendation-banner');
+            const noRecommendationBanner = document.getElementById('no-recommendation-banner');
             
-            // Character counter with color warnings
+            // Character counter
             function updateCharCount() {
                 const count = textarea.value.length;
                 charCount.textContent = count;
-                
-                // Remove existing classes
                 charCounter.classList.remove('warning', 'danger');
-                
                 if (count > 1800) {
                     charCounter.classList.add('danger');
                 } else if (count > 1500) {
@@ -464,9 +630,9 @@
             }
             
             textarea.addEventListener('input', updateCharCount);
-            updateCharCount(); // Initial count
+            updateCharCount();
             
-            // Auto-save draft to localStorage
+            // Auto-save draft
             let saveTimeout;
             textarea.addEventListener('input', function() {
                 clearTimeout(saveTimeout);
@@ -478,7 +644,7 @@
                 }, 1500);
             });
             
-            // Load draft on page load
+            // Load draft
             const patientId = '{{ $patient->patient_id ?? "" }}';
             if (patientId) {
                 const draft = localStorage.getItem(`diagnosis_draft_${patientId}`);
@@ -488,33 +654,31 @@
                 }
             }
             
-            // Clear draft on successful submit
+            // Clear draft on submit
             document.querySelector('form').addEventListener('submit', function() {
                 if (patientId) {
                     localStorage.removeItem(`diagnosis_draft_${patientId}`);
                 }
             });
 
-            // Keyboard shortcut to expand recommendations (Ctrl/Cmd + R)
+            // Keyboard shortcut (Ctrl/Cmd + R)
             document.addEventListener('keydown', function(e) {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
-                    if (banner && !banner.classList.contains('hidden')) {
+                    if (recommendationBanner && !recommendationBanner.classList.contains('hidden')) {
                         e.preventDefault();
-                        openRecommendationModal(banner);
+                        openRecommendationModal(recommendationBanner);
                     }
                 }
             });
         });
 
-        // Open recommendation modal from banner
+        // Modal function
         window.openRecommendationModal = function(bannerElement) {
-            // Try to get data from dataset first (set by JavaScript during live typing)
             let fullMessage = bannerElement.dataset.fullMessage;
             let levelText = bannerElement.dataset.levelText;
             let levelIcon = bannerElement.dataset.levelIcon;
             let levelIconColor = bannerElement.dataset.levelIconColor;
             
-            // Fallback to reading from DOM elements (for initial page load)
             if (!fullMessage) {
                 const subtitleElement = bannerElement.querySelector('.banner-subtitle');
                 fullMessage = subtitleElement?.dataset.fullMessage;
@@ -525,7 +689,6 @@
                 levelText = titleElement?.textContent || 'Recommendation';
             }
             
-            // Determine level icon if not already set
             if (!levelIcon || !levelIconColor) {
                 if (levelText.toLowerCase().includes('critical')) {
                     levelIcon = 'error';
@@ -540,7 +703,7 @@
             }
             
             if (!fullMessage) {
-                console.error('No message available to display in modal');
+                console.error('No message available');
                 return;
             }
             
@@ -550,7 +713,7 @@
             const modal = document.createElement('div');
             modal.className = 'alert-modal fade-in';
             modal.innerHTML = `
-                <button class="close-btn" aria-label="Close">&times;</button>
+                <button class="close-btn" aria-label="Close">×</button>
                 
                 <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
                     <div style="width: 48px; height: 48px; border-radius: 50%; background: ${levelIconColor}15; display: flex; align-items: center; justify-content: center;">
@@ -570,7 +733,7 @@
                     <span style="font-size: 0.75rem; color: #6b7280;">
                         💡 Press <kbd style="padding: 2px 6px; background: #f3f4f6; border-radius: 4px; font-family: monospace;">ESC</kbd> to close
                     </span>
-                    <button class="close-action-btn" style="padding: 0.5rem 1rem; background: var(--color-dark-green); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                    <button class="close-action-btn" style="padding: 0.625rem 1.5rem; background: var(--color-dark-green); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 0.875rem; box-shadow: 0 2px 8px rgba(45, 85, 75, 0.2);">
                         Got it
                     </button>
                 </div>
@@ -591,25 +754,30 @@
             modal.querySelector('.close-btn').addEventListener('click', close);
             modal.querySelector('.close-action-btn').addEventListener('click', close);
             
-            // ESC key to close
             const escHandler = (e) => {
                 if (e.key === 'Escape') close();
             };
             document.addEventListener('keydown', escHandler);
 
-            // Focus the close button
             const closeBtn = modal.querySelector('.close-btn');
             if (closeBtn) closeBtn.focus();
 
-            // Hover effect for action button
             const actionBtn = modal.querySelector('.close-action-btn');
             actionBtn.addEventListener('mouseenter', () => {
-                actionBtn.style.transform = 'scale(1.05)';
-                actionBtn.style.boxShadow = '0 4px 12px rgba(45, 85, 75, 0.3)';
+                actionBtn.style.transform = 'translateY(-2px)';
+                actionBtn.style.boxShadow = '0 4px 16px rgba(45, 85, 75, 0.35)';
+                actionBtn.style.filter = 'brightness(1.1)';
             });
             actionBtn.addEventListener('mouseleave', () => {
-                actionBtn.style.transform = 'scale(1)';
-                actionBtn.style.boxShadow = 'none';
+                actionBtn.style.transform = 'translateY(0)';
+                actionBtn.style.boxShadow = '0 2px 8px rgba(45, 85, 75, 0.2)';
+                actionBtn.style.filter = 'brightness(1)';
+            });
+            actionBtn.addEventListener('mousedown', () => {
+                actionBtn.style.transform = 'translateY(0) scale(0.95)';
+            });
+            actionBtn.addEventListener('mouseup', () => {
+                actionBtn.style.transform = 'translateY(-2px) scale(1)';
             });
         };
     </script>

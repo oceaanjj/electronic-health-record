@@ -7,9 +7,12 @@
 const TYPING_DELAY_MS = 800; // Delay after typing stops before analysis
 let debounceTimer;
 
-// Find banner element for alerts
-function findBannerForInput(input) {
-    return document.getElementById('recommendation-banner');
+// Find banner elements for alerts
+function findBannersForInput(input) {
+    return {
+        recommendation: document.getElementById('recommendation-banner'),
+        noRecommendation: document.getElementById('no-recommendation-banner')
+    };
 }
 
 // =======================================================
@@ -39,19 +42,20 @@ window.initializeAdpieCdssForForm = function (form) {
             const fieldName = e.target.dataset.fieldName;
             const fieldNameFormatted = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
             const finding = e.target.value.trim();
-            const banner = findBannerForInput(e.target);
+            const banners = findBannersForInput(e.target);
 
-            if (banner && finding === '') {
-                hideBanner(banner); // Hide banner if field is cleared
+            // If field is cleared, show "no recommendation" banner
+            if (finding === '') {
+                showNoRecommendationBanner(banners);
                 return;
             }
 
             debounceTimer = setTimeout(() => {
-                if (fieldName && finding !== '' && banner) {
+                if (fieldName && finding !== '') {
                     console.log(`[ADPIE] Input → Field: ${fieldNameFormatted} | Value: ${finding}`);
 
-                    showBannerLoading(banner); // Show loading state
-                    analyzeField(fieldName, finding, patientId, component, banner, analyzeUrl, csrfToken);
+                    showBannerLoading(banners); // Show loading state
+                    analyzeField(fieldName, finding, patientId, component, banners, analyzeUrl, csrfToken);
                 }
             }, TYPING_DELAY_MS);
         };
@@ -62,8 +66,8 @@ window.initializeAdpieCdssForForm = function (form) {
 };
 
 // Analyze ONE field via API (for live typing)
-async function analyzeField(fieldName, finding, patientId, component, banner, url, token) {
-    if (!banner) return;
+async function analyzeField(fieldName, finding, patientId, component, banners, url, token) {
+    if (!banners.recommendation) return;
     console.log(`[ADPIE] Sending single analysis for: ${fieldName}`);
 
     try {
@@ -84,10 +88,10 @@ async function analyzeField(fieldName, finding, patientId, component, banner, ur
 
         const alertData = await response.json();
         console.log(`[ADPIE] Single response received for: ${fieldName}`, alertData);
-        displayBannerAlert(banner, alertData); // Display in banner
+        displayBannerAlert(banners, alertData); // Display in banner
     } catch (error) {
         console.error('[ADPIE] Single analysis failed:', error);
-        displayBannerAlert(banner, {
+        displayBannerAlert(banners, {
             message: 'Error analyzing field. Please try again.',
             level: 'CRITICAL',
         });
@@ -99,8 +103,8 @@ async function analyzeField(fieldName, finding, patientId, component, banner, ur
 // =======================================================
 
 // Display alert in banner
-function displayBannerAlert(banner, alertData) {
-    if (!banner) return;
+function displayBannerAlert(banners, alertData) {
+    if (!banners.recommendation) return;
 
     console.log(`[ADPIE] Displaying banner → Level: ${alertData.level} | Message: ${alertData.message}`);
 
@@ -118,13 +122,15 @@ function displayBannerAlert(banner, alertData) {
         levelText = 'Warning';
     }
 
-    // Check if no recommendations
+    // Check if no recommendations - show "no recommendation" banner instead
     if (
         !alertData.message ||
         alertData.message.toLowerCase().includes('no findings') ||
-        alertData.message.toLowerCase().includes('no recommendations')
+        alertData.message.toLowerCase().includes('no recommendations') ||
+        alertData.message.toLowerCase().includes('type more') ||
+        alertData.message.trim() === ''
     ) {
-        hideBanner(banner);
+        showNoRecommendationBanner(banners);
         return;
     }
 
@@ -132,7 +138,13 @@ function displayBannerAlert(banner, alertData) {
     const preview = stripHtml(alertData.message).substring(0, 60) + '...';
     const fullMessage = alertData.message;
 
-    // Update banner content
+    // Hide "no recommendation" banner
+    if (banners.noRecommendation) {
+        banners.noRecommendation.classList.add('hidden');
+    }
+
+    // Show and update recommendation banner
+    const banner = banners.recommendation;
     banner.className = `recommendation-banner ${colorClass}`;
     banner.classList.remove('hidden');
     
@@ -173,17 +185,32 @@ function getLevelIconColor(level) {
     return '#059669';
 }
 
-// Hide banner
-function hideBanner(banner) {
-    if (!banner) return;
-    console.log('[ADPIE] Hiding banner (No recommendations)');
-    banner.classList.add('hidden');
+// Show "no recommendation" banner and hide recommendation banner
+function showNoRecommendationBanner(banners) {
+    console.log('[ADPIE] Showing "No Recommendations Yet" banner');
+    
+    // Hide recommendation banner
+    if (banners.recommendation) {
+        banners.recommendation.classList.add('hidden');
+    }
+    
+    // Show no recommendation banner
+    if (banners.noRecommendation) {
+        banners.noRecommendation.classList.remove('hidden');
+    }
 }
 
 // Show loading state in banner
-function showBannerLoading(banner) {
+function showBannerLoading(banners) {
+    const banner = banners.recommendation;
     if (!banner) return;
+    
     console.log('[ADPIE] Analyzing... showing banner loader');
+    
+    // Hide "no recommendation" banner during loading
+    if (banners.noRecommendation) {
+        banners.noRecommendation.classList.add('hidden');
+    }
     
     banner.className = 'recommendation-banner alert-green';
     banner.classList.remove('hidden');
@@ -295,26 +322,45 @@ function escapeHtml(text) {
             position: absolute; 
             top: 15px; 
             right: 20px;
-            font-size: 2rem; 
-            font-weight: bold; 
-            color: #888;
-            background: none; 
-            border: none; 
+            font-size: 24px;
+            font-weight: 300; 
+            color: #9ca3af;
+            background: transparent; 
+            border: none !important;
+            outline: none !important;
             cursor: pointer; 
             line-height: 1;
             transition: all 0.2s ease;
             z-index: 10;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            border-radius: 8px;
+            padding: 0;
+            box-shadow: none !important;
         }
         
         .alert-modal .close-btn:hover { 
-            color: #333; 
-            background: #f3f4f6;
+            color: #1f2937; 
+            background: #f3f4f6 !important;
+            transform: scale(1.1);
+            border: none !important;
+            outline: none !important;
+        }
+
+        .alert-modal .close-btn:active {
+            transform: scale(0.95);
+            background: #e5e7eb !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+        .alert-modal .close-btn:focus {
+            outline: none !important;
+            border: none !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
         }
 
         .modal-content-scroll {

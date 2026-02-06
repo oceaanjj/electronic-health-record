@@ -202,7 +202,8 @@
                 <span class="material-symbols-outlined">logout</span>
                 <span>LOG OUT</span>
             </a>
-        </li>
+        </div>
+    </div>
 
         @push('scripts')
             <script>

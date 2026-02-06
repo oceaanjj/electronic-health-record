@@ -21,6 +21,19 @@
                     closeNav();
                 }
             }
+
+            // Listen for changes in local storage or documentElement class to keep isNavOpen in sync
+            window.addEventListener('storage', () => {
+                isNavOpen = localStorage.getItem("sidebarOpen") === "true";
+            });
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        isNavOpen = document.documentElement.classList.contains('sidebar-open');
+                    }
+                });
+            });
+            observer.observe(document.documentElement, { attributes: true });
         </script>
 
         @php

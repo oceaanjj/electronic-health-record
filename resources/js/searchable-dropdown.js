@@ -149,7 +149,7 @@ const initSearchableDropdown = () => {
     });
 
     // ---------------------------------------------------------
-    //  DISABLE FUNCTION
+    //  DISABLE FORM FUNCTION
     // ---------------------------------------------------------
     const disableForm = (isDisabled) => {
         const formContentContainer = document.getElementById('form-content-container');

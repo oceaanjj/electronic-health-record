@@ -4,6 +4,9 @@
 
 @section('content')
     <div class="mx-auto my-10 w-[72%]">
+
+    <div class="max-w-[1382px] mx-auto px-4 sm:px-20 lg:px-40 my-10">
+
         {{-- Action Buttons & Success Messages --}}
         <div class="mb-4 flex items-center justify-between">
             <h2 class="font-creato-black text-dark-green text-3xl font-black">PATIENT LIST</h2>

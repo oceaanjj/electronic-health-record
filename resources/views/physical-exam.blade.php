@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Physical Exam')
 @section('content')
-    <div id="form-content-container">
+    <div id="form-content-container" class="mx-auto max-w-full">
         {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS is available) --}}
         @if ($selectedPatient && isset($physicalExam) && $physicalExam)
             <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
@@ -34,13 +34,13 @@
 
         {{-- 2. THE PATIENT SELECTION ROW (Synced with Vital Signs UI) --}}
         <div class="mx-auto w-full pt-10">
-            <div class="mb-5 ml-23 flex flex-wrap items-center gap-x-10 gap-y-4">
+            <div class="mb-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:ml-23">
                 {{-- LINE 1: PATIENT SELECTION --}}
                 <div class="flex items-center gap-4">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
                     {{-- Fixed width of 350px to match Vital Signs perfectly --}}
-                    <div class="w-[350px]">
+                    <div class="w-full md:w-[350px]">
                         <x-searchable-patient-dropdown
                             :patients="$patients"
                             :selectedPatient="$selectedPatient"
@@ -57,7 +57,7 @@
 
             {{-- 3. THE "NOT AVAILABLE" MESSAGE (Synced margin and style) --}}
             @if ($selectedPatient && (! isset($physicalExam) || ! $physicalExam))
-                <div class="ml-23 flex items-center gap-2 text-xs text-gray-500 italic">
+                <div class="mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-23">
                     <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available.
                 </div>
@@ -67,7 +67,7 @@
         <form
             action="{{ route('physical-exam.store') }}"
             method="POST"
-            class="cdss-form relative mx-auto w-[85%]"
+            class="cdss-form relative mx-auto w-full max-w-screen-2xl md:w-[85%]"
             data-analyze-url="{{ route('physical-exam.analyze-field') }}"
             data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}"
             data-alert-height-class="h-[90px]"
@@ -84,22 +84,22 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <div class="mt-10 flex w-[100%] items-start justify-center gap-0">
-                        <div class="mr-1 w-full overflow-hidden rounded-[15px]">
-                            <table class="w-full border-separate border-spacing-0">
-                                <tr>
+                    <div class="mt-10 flex w-full max-w-full flex-col items-center justify-center gap-5 md:w-[98%] md:flex-row md:items-start md:gap-0">
+                        <div class="w-full overflow-hidden rounded-[15px] md:mr-1 md:w-3/5 mobile-table-container">
+                            <table class="w-full border-separate border-spacing-0 responsive-table">
+                                <tr class="responsive-table-header-row">
                                     <th class="main-header w-[30%] rounded-tl-lg py-2 text-white">SYSTEM</th>
                                     <th class="main-header w-[55%] rounded-tr-lg py-2 text-white">FINDINGS</th>
                                 </tr>
 
                                 {{-- GENERAL APPEARANCE --}}
-                                <tr>
-                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">
+                                <tr class="responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2 responsive-table-data-label">
                                         GENERAL
                                         <br />
                                         APPEARANCE
                                     </th>
-                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                    <td class="bg-beige border-line-brown/50 border-b-2 responsive-table-data" data-label="GENERAL APPEARANCE">
                                         <textarea
                                             name="general_appearance"
                                             class="notepad-lines cdss-input h-[90px] w-full border-none"
@@ -112,9 +112,9 @@
                                 </tr>
 
                                 {{-- SKIN --}}
-                                <tr>
-                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">SKIN</th>
-                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                <tr class="responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2 responsive-table-data-label">SKIN</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2 responsive-table-data" data-label="SKIN">
                                         <textarea
                                             name="skin_condition"
                                             class="notepad-lines cdss-input h-[90px] w-full border-none"
@@ -127,9 +127,9 @@
                                 </tr>
 
                                 {{-- EYES --}}
-                                <tr>
-                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">EYES</th>
-                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                <tr class="responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2 responsive-table-data-label">EYES</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2 responsive-table-data" data-label="EYES">
                                         <textarea
                                             name="eye_condition"
                                             class="notepad-lines cdss-input h-[90px] w-full border-none"
@@ -142,9 +142,9 @@
                                 </tr>
 
                                 {{-- ORAL CAVITY --}}
-                                <tr>
-                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">ORAL CAVITY</th>
-                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                <tr class="responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2 responsive-table-data-label">ORAL CAVITY</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2 responsive-table-data" data-label="ORAL CAVITY">
                                         <textarea
                                             name="oral_condition"
                                             class="notepad-lines cdss-input h-[90px] w-full border-none"
@@ -157,11 +157,11 @@
                                 </tr>
 
                                 {{-- CARDIOVASCULAR --}}
-                                <tr>
-                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">
+                                <tr class="responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2 responsive-table-data-label">
                                         CARDIOVASCULAR
                                     </th>
-                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                    <td class="bg-beige border-line-brown/50 border-b-2 responsive-table-data" data-label="CARDIOVASCULAR">
                                         <textarea
                                             name="cardiovascular"
                                             class="notepad-lines cdss-input h-[90px] w-full border-none"
@@ -174,9 +174,9 @@
                                 </tr>
 
                                 {{-- ABDOMEN --}}
-                                <tr>
-                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">ABDOMEN</th>
-                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                <tr class="responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2 responsive-table-data-label">ABDOMEN</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2 responsive-table-data" data-label="ABDOMEN">
                                         <textarea
                                             name="abdomen_condition"
                                             class="notepad-lines cdss-input h-[90px] w-full border-none"
@@ -189,9 +189,9 @@
                                 </tr>
 
                                 {{-- EXTREMITIES --}}
-                                <tr>
-                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">EXTREMITIES</th>
-                                    <td class="bg-beige border-line-brown border-b-2">
+                                <tr class="responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2 responsive-table-data-label">EXTREMITIES</th>
+                                    <td class="bg-beige border-line-brown border-b-2 responsive-table-data" data-label="EXTREMITIES">
                                         <textarea
                                             name="extremities"
                                             class="notepad-lines cdss-input h-[90px] w-full border-none"
@@ -204,9 +204,9 @@
                                 </tr>
 
                                 {{-- NEUROLOGICAL --}}
-                                <tr class="border-line-brown border-2">
-                                    <th class="bg-yellow-light text-brown rounded-bl-lg">NEUROLOGICAL</th>
-                                    <td class="bg-beige">
+                                <tr class="border-line-brown border-2 responsive-table-data-row">
+                                    <th class="bg-yellow-light text-brown rounded-bl-lg responsive-table-data-label">NEUROLOGICAL</th>
+                                    <td class="bg-beige responsive-table-data" data-label="NEUROLOGICAL">
                                         <textarea
                                             name="neurological"
                                             class="notepad-lines cdss-input"
@@ -221,7 +221,7 @@
                         </div>
 
                         {{-- ALERTS TABLE --}}
-                        <div class="w-[50%] overflow-hidden rounded-[15px]">
+                        <div class="w-full overflow-hidden rounded-[15px] md:ml-1 md:w-2/5 mobile-table-container">
                             <div class="main-header mb-1 rounded-[15px] py-2 text-center">ALERTS</div>
                             <table class="w-full border-collapse">
                                 @php
@@ -281,3 +281,82 @@
         'resources/js/close-cdss-alert.js',
     ])
 @endpush
+
+<style>
+    @media screen and (max-width: 640px) {
+
+        .mobile-table-container {
+            display: block !important;
+            width: 90% !important;
+            margin: 0 auto 1.5em auto !important;
+            align-self: center !important;
+            max-width: none;
+            box-sizing: border-box;
+        }
+
+        /* 2. Responsive Table Structure */
+        .responsive-table {
+            display: block;
+            width: 100%;
+        }
+
+        /* Hide the old desktop header */
+        .responsive-table .responsive-table-header-row {
+            display: none;
+        }
+
+        /* Card-style row */
+        .responsive-table .responsive-table-data-row {
+            display: block;
+            border: 1px solid #c18b04;
+            border-radius: 15px;
+            margin-bottom: 1.5em;
+            overflow: hidden;
+            background-color: #F5F5DC;
+        }
+
+        /* 3. FLEXBOX LAYOUT FOR ROWS (Label + Input) */
+        .responsive-table .responsive-table-data {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            border-bottom: 1px solid rgba(193, 139, 4, 0.2);
+        }
+
+        .responsive-table .responsive-table-data:last-child {
+            border-bottom: 0;
+        }
+
+        /* Labels (35%) */
+        .responsive-table .responsive-table-data::before {
+            content: attr(data-label);
+            position: static;
+            width: 30%;
+            flex-shrink: 0;
+            padding-right: 10px;
+            font-weight: bold;
+            color: #6B4226;
+            text-transform: uppercase;
+            font-size: 11px;
+            text-align: left;
+            padding-top: 0;
+        }
+
+        /* Inputs (65%) */
+        .responsive-table .responsive-table-data textarea,
+        .responsive-table .responsive-table-data input {
+            width: 180px !important;
+            padding: 2px;
+            display: block;
+            margin-left: 20px;
+        }
+
+        /* Hide the actual th element in data rows */
+        .responsive-table .responsive-table-data-row th.responsive-table-data-label {
+            display: none;
+        }
+    }
+</style>
+

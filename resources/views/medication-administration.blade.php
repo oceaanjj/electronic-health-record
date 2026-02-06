@@ -234,14 +234,8 @@
                             </table>
                         </div>
 
-                        <div class="mx-auto mt-5 mb-20 flex w-[70%] justify-end space-x-4">
-                            <button
-                                class="button-default cdss-btn pointer-events-none opacity-50"
-                                type="submit"
-                                id="submit_button"
-                            >
-                                SUBMIT
-                            </button>
+                        <div class="mx-auto mt-5 mb-20 flex w-[85%] justify-end space-x-4">
+                            <button class="button-default" type="submit" id="submit_button">SUBMIT</button>
                         </div>
                     </center>
                 </div>

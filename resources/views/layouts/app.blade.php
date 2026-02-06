@@ -26,9 +26,12 @@
                     'opsz' 20;
             }
 
+        /* Adjust main content margin only for medium and larger screens when sidebar is open */
+        @media (min-width: 768px) { /* md breakpoint */
             .sidebar-open #main {
                 margin-left: 260px;
             }
+        }
 
             .sidebar-transition {
                 transition: margin-left 0.3s ease-in-out;
@@ -45,28 +48,38 @@
                 }
             }
 
-            .page-transition {
-                animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            }
-        </style>
+        .page-transition {
+            animation: pageEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+    </style>
 
         <script>
             (function () {
                 const isOpen = localStorage.getItem('sidebarOpen') === 'true';
                 const doc = document.documentElement;
 
-                if (isOpen) {
-                    doc.classList.add('sidebar-open');
+            if (isOpen) {
+                // For small screens, always close sidebar initially
+                if (window.innerWidth < 768) { // md breakpoint
+                    doc.classList.remove("sidebar-open");
+                    localStorage.setItem("sidebarOpen", "false");
                 } else {
-                    doc.classList.remove('sidebar-open');
+                    doc.classList.add("sidebar-open");
                 }
-            })();
-        </script>
-    </head>
+            } else {
+                doc.classList.remove("sidebar-open");
+            }
+        })();
+    </script>
 
-    <body class="overflow-x-hidden bg-white">
-        {{-- Sidebar --}}
-        @include('components.sidebar')
+</head>
+
+<body class="bg-white overflow-x-hidden">
+
+
+
+    {{-- Sidebar --}}
+    @include('components.sidebar')
 
         <script>
             const isOpen = localStorage.getItem('sidebarOpen') === 'true';
@@ -115,78 +128,44 @@
 
         <script>
         function openNav() {
-            const sidebar = document.getElementById('mySidenav');
-            const arrow = document.getElementById('arrowBtn');
+            const sidebar = document.getElementById("mySidenav");
+            const arrow = document.getElementById("arrowBtn");
+            const mobileMenuButton = document.getElementById("mobileMenuButton"); // Get mobile menu button
 
-            if (sidebar) sidebar.classList.remove('-translate-x-full');
-            document.documentElement.classList.add('sidebar-open');
+            if (sidebar) sidebar.classList.remove("-translate-x-full");
+            document.documentElement.classList.add("sidebar-open");
+            localStorage.setItem("sidebarOpen", "true");
 
-            if (arrow) {
-                // Remove hidden immediately so it shows up as the sidebar slides out
-                arrow.classList.remove('hidden');
+            if (arrow && window.innerWidth >= 768) { // Only show arrow on md and up
+                arrow.classList.replace("-right-24", "-right-10");
             }
-
-            localStorage.setItem('sidebarOpen', 'true');
+            // The mobileMenuButton should NOT be hidden when the sidebar opens,
+            // as it is used to close the sidebar on mobile.
+            // if (mobileMenuButton) {
+            //     mobileMenuButton.classList.add("hidden");
+            // }
         }
 
         function closeNav() {
-            const sidebar = document.getElementById('mySidenav');
-            const arrow = document.getElementById('arrowBtn');
+            const sidebar = document.getElementById("mySidenav");
+            const arrow = document.getElementById("arrowBtn");
+            const mobileMenuButton = document.getElementById("mobileMenuButton"); // Get mobile menu button
 
-            if (sidebar) sidebar.classList.add('-translate-x-full');
-            document.documentElement.classList.remove('sidebar-open');
+            if (sidebar) sidebar.classList.add("-translate-x-full");
+            document.documentElement.classList.remove("sidebar-open");
+            localStorage.setItem("sidebarOpen", "false");
 
-            localStorage.setItem('sidebarOpen', 'false');
+            if (arrow && window.innerWidth >= 768) { // Only hide arrow on md and up
+                arrow.classList.replace("-right-10", "-right-24");
+            }
+            if (mobileMenuButton) { // Show mobile menu button when sidebar closes
+                mobileMenuButton.classList.remove("hidden");
+            }
 
-            // Hide the arrow after the sidebar finishes sliding so it doesn't "peek"
             setTimeout(() => {
                 if (arrow) arrow.classList.add('hidden');
             }, 300); // 300ms matches your transition-duration
         }
-
-        // --- SCROLL PERSISTENCE LOGIC ---
-        (function () {
-            const observer = new MutationObserver((mutations, obs) => {
-                const sidebar = document.getElementById('sidebarScroll');
-                if (sidebar) {
-                    const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
-                    if (scrollPos) {
-                        sidebar.scrollTop = scrollPos;
-                    }
-                    // Check if it should be open on refresh
-                    if (localStorage.getItem('sidebarOpen') === 'true') {
-                        openNav();
-                    }
-                    obs.disconnect();
-                }
-            });
-            observer.observe(document.documentElement, { childList: true, subtree: true });
-        })();
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const sidebar = document.getElementById('sidebarScroll');
-            sidebar.addEventListener('click', (e) => {
-                if (e.target.closest('a')) {
-                    sessionStorage.setItem('sidebar-scroll-pos', sidebar.scrollTop);
-                }
-            });
-
-            // Logout Confirmation
-            const logoutBtn = document.getElementById('logout-btn');
-            const logoutForm = document.getElementById('logout-form');
-            if (logoutBtn && logoutForm) {
-                logoutBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if (typeof showConfirm === 'function') {
-                        showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then((result) => {
-                            if (result.isConfirmed) logoutForm.submit();
-                        });
-                    } else if (confirm('Are you sure you want to logout?')) {
-                        logoutForm.submit();
-                    }
-                });
-            }
-        });
     </script>
 
         @stack('scripts')

@@ -3,9 +3,31 @@
 @section('content')
 
     <div id="form-content-container">
-        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-            selectRoute="{{ route('medreconciliation.select') }}" inputPlaceholder="-Select or type to search-"
-            inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
+        {{-- MEDICATION RECONCILIATION PATIENT SELECTION (Synced with Vital Signs UI) --}}
+    <div class="mx-auto w-full pt-10 px-4">
+        <div class="flex flex-wrap items-center gap-x-10 gap-y-4 ml-20">
+            
+            {{-- PATIENT SECTION --}}
+            <div class="flex items-center gap-4">
+                <label class="font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
+                    PATIENT NAME :
+                </label>
+                
+                {{-- Fixed 350px width ensures the UI doesn't "jump" when switching pages --}}
+                <div class="w-[350px]">
+                    <x-searchable-patient-dropdown 
+                        :patients="$patients" 
+                        :selectedPatient="$selectedPatient"
+                        selectRoute="{{ route('medreconciliation.select') }}" 
+                        inputPlaceholder="Search or type Patient Name..."
+                        inputName="patient_id" 
+                        inputValue="{{ session('selected_patient_id') }}" 
+                    />
+                </div>
+            </div>
+
+        </div>
+    </div>
 
         <form action="{{ route('medreconciliation.store') }}" method="POST">
             @csrf
@@ -14,6 +36,7 @@
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
 
                 {{-- ..... Patient's Current Medication --}}
+                <div class="mx-auto flex w-[100%] items-start justify-center gap-1 mt-10"></div>
                 <center>
                     <table class="mb-2 w-[85%] border-collapse border-spacing-0 rounded-[15px] overflow-hidden">
                         <tr>
@@ -151,6 +174,7 @@
                         </tr>
                     </table>
                 </center>
+            </div>
 
                 {{-- SUBMIT BUTTON --}}
                 <div class="w-[85%] mx-auto flex justify-end mt-5 mb-30">

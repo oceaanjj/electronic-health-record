@@ -1,5 +1,4 @@
-
-(function() {
+(function () {
     function initializeIntakeOutputDataLoader() {
         const patientSelectForm = document.getElementById('patient-select-form');
         if (!patientSelectForm) {
@@ -12,14 +11,15 @@
         const ioForm = document.getElementById('io-form');
 
         if (!dayNoSelector || !patientIdHiddenInput || !ioForm) {
-            console.error('Intake/Output Data Loader: Missing one or more required elements (date, day, patient_id hidden input, or io-form).');
+            console.error(
+                'Intake/Output Data Loader: Missing one or more required elements (date, day, patient_id hidden input, or io-form).',
+            );
             return;
         }
 
-        const dropdownContainer = document.querySelector(".searchable-dropdown");
+        const dropdownContainer = document.querySelector('.searchable-dropdown');
         const analyzeUrl = dropdownContainer ? dropdownContainer.dataset.selectUrl : null;
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
         if (!analyzeUrl || !csrfToken) {
             console.error('Intake/Output Data Loader: Form missing action URL or CSRF token not found.');
@@ -43,12 +43,12 @@
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest' // Laravel specific header for AJAX
+                        'X-Requested-With': 'XMLHttpRequest', // Laravel specific header for AJAX
                     },
                     body: JSON.stringify({
                         patient_id: patientId,
-                        day_no: dayNo
-                    })
+                        day_no: dayNo,
+                    }),
                 });
 
                 if (!response.ok) {
@@ -74,7 +74,6 @@
                 // Dispatch a custom event to notify other scripts (e.g., CDSS) that data has been loaded
                 const event = new CustomEvent('io:data-loaded', { detail: { ioData: data.ioData } });
                 document.dispatchEvent(event);
-
             } catch (error) {
                 console.error('Error fetching intake and output data:', error);
                 // Optionally, clear fields or show an error message

@@ -1,14 +1,14 @@
 intervention:
-  - keywords: ["monitor"]
-    alert: "Specify frequency of monitoring (e.g., 'Monitor vital signs q4h')."
-    severity: "INFO"
-  - keywords: ["assess"]
-    alert: "Be specific: 'Assess lung sounds' instead of 'Assess patient'."
-    severity: "INFO"
-  - keywords: ["educate"]
-    alert: "Include 'teach-back' method to confirm understanding."
-    severity: "INFO"
-  # Rules based on: general_appearance.yaml
-  - keywords: ["chronically ill"]
-    alert: "Notify provider of 'acutely ill' appearance. Place patient in a room visible to the nursing station. Initiate continuous monitoring (pulse oximetry, cardiorespiratory) as per protocol."
-    severity: "warning"
+    - keywords: ['monitor']
+      alert: "Specify frequency of monitoring (e.g., 'Monitor vital signs q4h')."
+      severity: 'INFO'
+    - keywords: ['assess']
+      alert: "Be specific: 'Assess lung sounds' instead of 'Assess patient'."
+      severity: 'INFO'
+    - keywords: ['educate']
+      alert: "Include 'teach-back' method to confirm understanding."
+      severity: 'INFO'
+    # Rules based on: general_appearance.yaml
+    - keywords: ['chronically ill']
+      alert: "Notify provider of 'acutely ill' appearance. Place patient in a room visible to the nursing station. Initiate continuous monitoring (pulse oximetry, cardiorespiratory) as per protocol."
+      severity: 'warning'

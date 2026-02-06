@@ -1,26 +1,25 @@
-<header class="fixed top-0 right-0 left-0 z-50 flex h-20 md:h-[120px] items-center justify-between bg-white shadow-md px-4 md:px-20">
+<header
+    class="fixed top-0 right-0 left-0 z-100 flex h-[80px] items-center justify-between bg-white px-4 shadow-md sm:px-10 md:h-[120px] lg:px-20"
+>
     <div class="flex items-center space-x-2 md:space-x-10">
-        {{-- Hamburger menu for mobile --}}
-        <button id="mobileMenuButton" class="p-2 focus:outline-none focus:ring md:hidden" onclick="toggleNav()">
-            <span class="material-symbols-outlined text-ehr text-3xl">menu</span>
-        </button>
-
-        {{-- Toggle button for desktop/tablet --}}
-        <button onclick="toggleNav()" class="hidden md:block">
-            <span class="material-symbols-outlined text-dark-green cursor-pointer" style="font-size: 25px">dehaze</span>
+        <button
+            onclick="toggleNav()"
+            class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-all duration-200 hover:bg-gray-100 md:h-12 md:w-12"
+        >
+            <span class="material-symbols-outlined text-dark-green" style="font-size: 22px; md:font-size: 25px">
+                dehaze
+            </span>
         </button>
 
         <script>
-            let isNavOpen = localStorage.getItem("sidebarOpen") === "true"; // Initialize from local storage
-
+            let isNavOpen = false;
             function toggleNav() {
-                if (isNavOpen) {
-                    closeNav();
-                } else {
-                    openNav();
-                }
-
                 isNavOpen = !isNavOpen;
+                if (isNavOpen) {
+                    openNav();
+                } else {
+                    closeNav();
+                }
             }
 
             // Listen for changes in local storage or documentElement class to keep isNavOpen in sync
@@ -39,43 +38,52 @@
 
         @php
             $user = Auth::user();
-
             if (! $user) {
                 $homeRoute = 'login';
                 $userName = 'Guest';
             } else {
                 $userName = $user->username;
-                switch ($user->role) {
-                    case 'Admin':
-                        $homeRoute = 'admin-home';
-                        break;
-                    case 'Nurse':
-                        $homeRoute = 'nurse-home';
-                        break;
-                    case 'Doctor':
-                        $homeRoute = 'doctor-home';
-                        break;
-                    default:
-                        $homeRoute = 'login';
-                }
+                $homeRoute = match ($user->role) {
+                    'Admin' => 'admin-home',
+                    'Nurse' => 'nurse-home',
+                    'Doctor' => 'doctor-home',
+                    default => 'login',
+                };
             }
         @endphp
 
-        <a href="{{ route($homeRoute) }}" class="flex items-center gap-2 md:gap-10">
-            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-10 md:h-20" />
+        <a href="{{ route($homeRoute) }}" class="flex items-center gap-2 md:gap-6 lg:gap-10">
+            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-10 w-auto sm:h-14 md:h-20" />
+
             <div class="flex flex-col leading-tight">
-                <span class="font-trajan-bold text-lg md:text-[30px] font-black text-black">ELECTRONIC HEALTH RECORD</span>
-                <span class="font-creato-black text-xs md:text-[20px] font-bold text-yellow">Bachelor of Science in Nursing</span>
+                <span
+                    class="font-trajan-bold text-[14px] font-black whitespace-nowrap text-black sm:text-[18px] sm:whitespace-normal md:text-[24px] lg:text-[30px]"
+                >
+                    ELECTRONIC HEALTH RECORD
+                </span>
+                <span
+                    class="font-creato-black text-yellow text-[10px] font-bold sm:text-[14px] md:text-[18px] lg:text-[20px]"
+                >
+                    Bachelor of Science in Nursing
+                </span>
             </div>
         </a>
     </div>
 
-    <div class="flex flex-col items-end leading-tight text-right">
-        <span class="font-[minion] italic text-[#2D6A4F] text-base md:text-[28px]">
-            Hello, <span class="font-[minion] italic text-[#2D6A4F] text-base md:text-[28px] font-bold">{{ $userName }}</span>
+    <div class="ml-2 flex shrink-0 flex-col items-end leading-tight">
+        <span class="font-[minion] text-[12px] text-[#2D6A4F] italic sm:text-[18px] md:text-[24px] lg:text-[28px]">
+            Hello,
+            <span class="font-bold">{{ $userName }}</span>
         </span>
-        <span class="font-alte text-[#B2B2B2] text-xs md:text-[16px] font-bold hidden sm:block"> <!-- Hidden on extra small, shown on sm and up -->
-            {{ now()->format('l, F j') }}
-        </span>
+
+        <div class="font-alte text-[10px] font-bold text-[#B2B2B2] sm:text-[12px] md:text-[14px] lg:text-[16px]">
+            <span class="md:hidden">
+                {{ now()->format('D, M j') }}
+            </span>
+
+            <span class="hidden md:block">
+                {{ now()->format('l, F j') }}
+            </span>
+        </div>
     </div>
 </header>

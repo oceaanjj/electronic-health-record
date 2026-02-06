@@ -1,166 +1,228 @@
 @extends('layouts.app')
 @section('title', 'Physical Exam')
 @section('content')
-
     <div id="form-content-container">
-
         {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS is available) --}}
         @if ($selectedPatient && isset($physicalExam) && $physicalExam)
-            <div class="mt-3w-full px-2">
+            <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
                 <div
-                    class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
+                    id="cdss-alert-content"
+                    class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md"
+                >
                     <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-[#dcb44e]">info</span>
+                        <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
                         <span class="text-sm font-semibold text-[#dcb44e]">
                             Clinical Decision Support System is now available.
                         </span>
                     </div>
-                    <button type="button" onclick="this.closest('.relative').remove()"
-                        class="flex items-center justify-center text-amber-700 hover:text-amber-950 hover:bg-amber-200/50 rounded-full p-1 transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">close</span>
+
+                    {{-- Close Button --}}
+                    <button
+                        type="button"
+                        onclick="closeCdssAlert()"
+                        class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90"
+                    >
+                        <span
+                            class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90"
+                        >
+                            close
+                        </span>
                     </button>
                 </div>
             </div>
         @endif
 
-        {{-- 2. THE PATIENT SELECTION ROW --}}
-        <div class="flex flex-col gap-2 mb-6">
-            <div class="flex flex-wrap items-center gap-4">
-                <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                    selectRoute="{{ route('physical-exam.select') }}" inputPlaceholder="-Select or type to search-"
-                    inputName="patient_id" inputValue="{{ session('selected_patient_id') }}" />
+        {{-- 2. THE PATIENT SELECTION ROW (Synced with Vital Signs UI) --}}
+        <div class="mx-auto w-full pt-10">
+            <div class="mb-5 ml-23 flex flex-wrap items-center gap-x-10 gap-y-4">
+                {{-- LINE 1: PATIENT SELECTION --}}
+                <div class="flex items-center gap-4">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+
+                    {{-- Fixed width of 350px to match Vital Signs perfectly --}}
+                    <div class="w-[350px]">
+                        <x-searchable-patient-dropdown
+                            :patients="$patients"
+                            :selectedPatient="$selectedPatient"
+                            selectRoute="{{ route('physical-exam.select') }}"
+                            inputPlaceholder="Search or type Patient Name..."
+                            inputName="patient_id"
+                            inputValue="{{ session('selected_patient_id') }}"
+                        />
+                    </div>
+                </div>
+
+                {{-- Add other one-line elements here in the future if needed --}}
             </div>
-        </div>
 
-
-
-        <form action="{{ route('physical-exam.store') }}" method="POST" class="cdss-form relative w-[85%] mx-auto"
-            data-analyze-url="{{ route('physical-exam.analyze-field') }}"
-            data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}" data-alert-height-class="h-[90px]">
-
-
-            {{-- 3. THE "NOT AVAILABLE" MESSAGE (Stays at the bottom of the dropdown) --}}
-            @if ($selectedPatient && (!isset($physicalExam) || !$physicalExam))
-                <div class="text-xs text-gray-500 italic flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[14px]">pending_actions</span>
+            {{-- 3. THE "NOT AVAILABLE" MESSAGE (Synced margin and style) --}}
+            @if ($selectedPatient && (! isset($physicalExam) || ! $physicalExam))
+                <div class="ml-23 flex items-center gap-2 text-xs text-gray-500 italic">
+                    <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available.
                 </div>
             @endif
+        </div>
 
+        <form
+            action="{{ route('physical-exam.store') }}"
+            method="POST"
+            class="cdss-form relative mx-auto w-[85%]"
+            data-analyze-url="{{ route('physical-exam.analyze-field') }}"
+            data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}"
+            data-alert-height-class="h-[90px]"
+        >
             @csrf
 
             {{-- HIDDEN INPUT FOR JS TO CHECK --}}
-            <input type="hidden" name="patient_id" id="patient_id_hidden" value="{{ session('selected_patient_id') }}">
+            <input
+                type="hidden"
+                name="patient_id"
+                id="patient_id_hidden"
+                value="{{ session('selected_patient_id') }}"
+            />
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <div class="w-[100%] flex justify-center items-start gap-0 mt-2">
-
-                        <div class="w-full rounded-[15px] overflow-hidden mr-1">
-
+                    <div class="mt-10 flex w-[100%] items-start justify-center gap-0">
+                        <div class="mr-1 w-full overflow-hidden rounded-[15px]">
                             <table class="w-full border-separate border-spacing-0">
                                 <tr>
-                                    <th class="w-[30%] main-header py-2 text-white rounded-tl-lg">SYSTEM</th>
-                                    <th class="w-[55%] main-header py-2 text-white rounded-tr-lg">FINDINGS</th>
+                                    <th class="main-header w-[30%] rounded-tl-lg py-2 text-white">SYSTEM</th>
+                                    <th class="main-header w-[55%] rounded-tr-lg py-2 text-white">FINDINGS</th>
                                 </tr>
 
                                 {{-- GENERAL APPEARANCE --}}
                                 <tr>
-                                    <th class="bg-yellow-light text-brown border-b-2 border-line-brown">
-                                        GENERAL<br>APPEARANCE
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">
+                                        GENERAL
+                                        <br />
+                                        APPEARANCE
                                     </th>
-                                    <td class="bg-beige border-b-2 border-line-brown/50">
-                                        <textarea name="general_appearance"
-                                            class="notepad-lines cdss-input w-full h-[90px] border-none"
+                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                        <textarea
+                                            name="general_appearance"
+                                            class="notepad-lines cdss-input h-[90px] w-full border-none"
                                             data-field-name="general_appearance"
-                                            placeholder="Type here..">{{ old('general_appearance', $physicalExam->general_appearance ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('general_appearance', $physicalExam->general_appearance ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
 
                                 {{-- SKIN --}}
                                 <tr>
-                                    <th class="bg-yellow-light text-brown border-b-2 border-line-brown">SKIN</th>
-                                    <td class="bg-beige border-b-2 border-line-brown/50">
-                                        <textarea name="skin_condition"
-                                            class="notepad-lines cdss-input w-full h-[90px] border-none"
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">SKIN</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                        <textarea
+                                            name="skin_condition"
+                                            class="notepad-lines cdss-input h-[90px] w-full border-none"
                                             data-field-name="skin_condition"
-                                            placeholder="Type here..">{{ old('skin_condition', $physicalExam->skin_condition ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('skin_condition', $physicalExam->skin_condition ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
 
                                 {{-- EYES --}}
                                 <tr>
-                                    <th class="bg-yellow-light text-brown border-b-2 border-line-brown">EYES</th>
-                                    <td class="bg-beige border-b-2 border-line-brown/50">
-                                        <textarea name="eye_condition"
-                                            class="notepad-lines cdss-input w-full h-[90px] border-none"
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">EYES</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                        <textarea
+                                            name="eye_condition"
+                                            class="notepad-lines cdss-input h-[90px] w-full border-none"
                                             data-field-name="eye_condition"
-                                            placeholder="Type here..">{{ old('eye_condition', $physicalExam->eye_condition ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('eye_condition', $physicalExam->eye_condition ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
 
                                 {{-- ORAL CAVITY --}}
                                 <tr>
-                                    <th class="bg-yellow-light text-brown border-b-2 border-line-brown">ORAL CAVITY</th>
-                                    <td class="bg-beige border-b-2 border-line-brown/50">
-                                        <textarea name="oral_condition"
-                                            class="notepad-lines cdss-input w-full h-[90px] border-none"
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">ORAL CAVITY</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                        <textarea
+                                            name="oral_condition"
+                                            class="notepad-lines cdss-input h-[90px] w-full border-none"
                                             data-field-name="oral_condition"
-                                            placeholder="Type here..">{{ old('oral_condition', $physicalExam->oral_condition ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('oral_condition', $physicalExam->oral_condition ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
 
                                 {{-- CARDIOVASCULAR --}}
                                 <tr>
-                                    <th class="bg-yellow-light text-brown border-b-2 border-line-brown">CARDIOVASCULAR</th>
-                                    <td class="bg-beige border-b-2 border-line-brown/50">
-                                        <textarea name="cardiovascular"
-                                            class="notepad-lines cdss-input w-full h-[90px] border-none"
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">
+                                        CARDIOVASCULAR
+                                    </th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                        <textarea
+                                            name="cardiovascular"
+                                            class="notepad-lines cdss-input h-[90px] w-full border-none"
                                             data-field-name="cardiovascular"
-                                            placeholder="Type here..">{{ old('cardiovascular', $physicalExam->cardiovascular ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('cardiovascular', $physicalExam->cardiovascular ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
 
                                 {{-- ABDOMEN --}}
                                 <tr>
-                                    <th class="bg-yellow-light text-brown border-b-2 border-line-brown">ABDOMEN</th>
-                                    <td class="bg-beige border-b-2 border-line-brown/50">
-                                        <textarea name="abdomen_condition"
-                                            class="notepad-lines cdss-input w-full h-[90px] border-none"
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">ABDOMEN</th>
+                                    <td class="bg-beige border-line-brown/50 border-b-2">
+                                        <textarea
+                                            name="abdomen_condition"
+                                            class="notepad-lines cdss-input h-[90px] w-full border-none"
                                             data-field-name="abdomen_condition"
-                                            placeholder="Type here..">{{ old('abdomen_condition', $physicalExam->abdomen_condition ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('abdomen_condition', $physicalExam->abdomen_condition ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
 
                                 {{-- EXTREMITIES --}}
                                 <tr>
-                                    <th class="bg-yellow-light text-brown border-b-2 border-line-brown">EXTREMITIES</th>
-                                    <td class="bg-beige border-b-2 border-line-brown">
-                                        <textarea name="extremities"
-                                            class="notepad-lines cdss-input w-full h-[90px] border-none"
+                                    <th class="bg-yellow-light text-brown border-line-brown border-b-2">EXTREMITIES</th>
+                                    <td class="bg-beige border-line-brown border-b-2">
+                                        <textarea
+                                            name="extremities"
+                                            class="notepad-lines cdss-input h-[90px] w-full border-none"
                                             data-field-name="extremities"
-                                            placeholder="Type here..">{{ old('extremities', $physicalExam->extremities ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('extremities', $physicalExam->extremities ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
 
-
                                 {{-- NEUROLOGICAL --}}
-                                <tr class="border-2 border-line-brown">
+                                <tr class="border-line-brown border-2">
                                     <th class="bg-yellow-light text-brown rounded-bl-lg">NEUROLOGICAL</th>
                                     <td class="bg-beige">
-                                        <textarea name="neurological" class="notepad-lines cdss-input"
+                                        <textarea
+                                            name="neurological"
+                                            class="notepad-lines cdss-input"
                                             data-field-name="neurological"
-                                            placeholder="Type here..">{{ old('neurological', $physicalExam->neurological ?? '') }}</textarea>
+                                            placeholder="Type here.."
+                                        >
+{{ old('neurological', $physicalExam->neurological ?? '') }}</textarea
+                                        >
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
-                        {{-- ALERTS TABLE--}}
-                        <div class="w-[50%] rounded-[15px] overflow-hidden">
-                            <div class="main-header py-2 mb-1 text-center rounded-[15px]">
-                                ALERTS
-                            </div>
+                        {{-- ALERTS TABLE --}}
+                        <div class="w-[50%] overflow-hidden rounded-[15px]">
+                            <div class="main-header mb-1 rounded-[15px] py-2 text-center">ALERTS</div>
                             <table class="w-full border-collapse">
                                 @php
                                     $fields = [
@@ -178,10 +240,12 @@
                                 @foreach ($fields as $fieldKey => $label)
                                     <tr>
                                         <td class="align-middle">
-                                            <div class="alert-box my-0.5 py-4 px-3 flex justify-center items-center w-full h-[92px]"
-                                                data-alert-for="{{ $fieldKey }}">
+                                            <div
+                                                class="alert-box my-0.5 flex h-[92px] w-full items-center justify-center px-3 py-4"
+                                                data-alert-for="{{ $fieldKey }}"
+                                            >
                                                 {{-- Dynamic alert content will load here --}}
-                                                <span class="opacity-70 text-white font-semibold">NO ALERTS</span>
+                                                <span class="font-semibold text-white opacity-70">NO ALERTS</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -191,12 +255,13 @@
                     </div>
                 </center>
 
-                <div class="w-[80%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-
-                    <!-- cdss button -->
+                <div class="mx-auto mt-5 mb-20 flex w-[98%] justify-end space-x-4">
+                    <!-- cdss btn m -->
                     @if (isset($physicalExam))
-                        <a href="{{ route('nursing-diagnosis.start', ['component' => 'physical-exam', 'id' => $physicalExam->id]) }}"
-                            class="button-default cdss-btn text-center">
+                        <a
+                            href="{{ route('nursing-diagnosis.start', ['component' => 'physical-exam', 'id' => $physicalExam->id]) }}"
+                            class="button-default cdss-btn text-center"
+                        >
                             CDSS
                         </a>
                     @endif
@@ -206,13 +271,13 @@
             </fieldset>
         </form>
     </div>
-
 @endsection
 
 @push('scripts')
     @vite([
         'resources/js/alert.js',
         'resources/js/patient-loader.js',
-        'resources/js/searchable-dropdown.js'
+        'resources/js/searchable-dropdown.js',
+        'resources/js/close-cdss-alert.js',
     ])
 @endpush

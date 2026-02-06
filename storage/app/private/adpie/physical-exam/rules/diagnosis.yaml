@@ -1,49 +1,49 @@
 diagnosis:
-  - keywords: ["pain"]
-    alert: "Recommend pain assessment (e.g., PQRST, 0-10 scale)."
-    severity: "INFO"
-  - keywords: ["risk for"]
-    alert: "Ensure preventative interventions are planned. (e.g., risk for falls, risk for aspiration)"
-    severity: "WARNING"
-  - keywords: ["impaired", "skin"]
-    alert: "Recommend Braden Scale assessment for skin integrity."
-    severity: "WARNING"
-  - keywords: ["fluid volume"]
-    alert: "Monitor Intake & Output (I&O) closely. Check daily weights."
-    severity: "INFO"
-  - keywords: ["ineffective", "airway"]
-    alert: "Assess breath sounds (auscultate), check O2 saturation, and encourage cough/deep breathing."
-    severity: "CRITICAL"
-  - keywords: ["impaired", "gas exchange"]
-    alert: "Monitor respiratory rate, O2 saturation, and work of breathing. Check ABG results if available."
-    severity: "CRITICAL"
-  - keywords: ["infection"] # Catches both "risk for infection" and "infection"
-    alert: "Monitor for signs of infection: check temperature, WBC count, and assess any wounds/sites."
-    severity: "WARNING"
-  - keywords: ["risk for", "falls"]
-    alert: "Implement high fall risk precautions. Assess environment for hazards. Use Morse Fall Scale."
-    severity: "WARNING"
-  - keywords: ["imbalanced", "nutrition"]
-    alert: "Monitor food intake (calorie count). Assess for swallowing difficulties. Consider nutritional consult."
-    severity: "INFO"
-  - keywords: ["impaired", "mobility"]
-    alert: "Assess Range of Motion (ROM) and need for assistive devices. Consider Physical Therapy consult. Implement turn schedule if bedbound."
-    severity: "INFO"
-  - keywords: ["tissue", "perfusion"] # Catches "ineffective peripheral/cardiac/etc. tissue perfusion"
-    alert: "Assess peripheral pulses, capillary refill, skin color, and temperature. Monitor blood pressure."
-    severity: "CRITICAL"
-  - keywords: ["acute", "confusion"]
-    alert: "Assess for new-onset confusion (e.g., CAM score). Check for underlying causes (UTI, hypoxia, meds). Re-orient patient."
-    severity: "WARNING"
-  - keywords: ["constipation"]
-    alert: "Assess last bowel movement and bowel sounds. Encourage fluid intake and ambulation. Consider laxative/stool softener."
-    severity: "INFO"
-  - keywords: ["anxiety"]
-    alert: "Assess level of anxiety. Use therapeutic communication. Provide a calm environment and simple instructions."
-    severity: "INFO"
-  - keywords: ["impaired", "swallowing"]
-    alert: "Conduct swallowing assessment. Implement aspiration precautions (e.g., NPO, thickened liquids). Consider Speech Therapy consult."
-    severity: "CRITICAL"
-  - keywords: ["risk for", "pressure ulcer"]
-    alert: "Implement pressure ulcer prevention protocol. Use Braden Scale for risk assessment. Reposition q2h if bedbound."
-    severity: "WARNING"
+    - keywords: ['pain']
+      alert: 'Recommend pain assessment (e.g., PQRST, 0-10 scale).'
+      severity: 'INFO'
+    - keywords: ['risk for']
+      alert: 'Ensure preventative interventions are planned. (e.g., risk for falls, risk for aspiration)'
+      severity: 'WARNING'
+    - keywords: ['impaired', 'skin']
+      alert: 'Recommend Braden Scale assessment for skin integrity.'
+      severity: 'WARNING'
+    - keywords: ['fluid volume']
+      alert: 'Monitor Intake & Output (I&O) closely. Check daily weights.'
+      severity: 'INFO'
+    - keywords: ['ineffective', 'airway']
+      alert: 'Assess breath sounds (auscultate), check O2 saturation, and encourage cough/deep breathing.'
+      severity: 'CRITICAL'
+    - keywords: ['impaired', 'gas exchange']
+      alert: 'Monitor respiratory rate, O2 saturation, and work of breathing. Check ABG results if available.'
+      severity: 'CRITICAL'
+    - keywords: ['infection'] # Catches both "risk for infection" and "infection"
+      alert: 'Monitor for signs of infection: check temperature, WBC count, and assess any wounds/sites.'
+      severity: 'WARNING'
+    - keywords: ['risk for', 'falls']
+      alert: 'Implement high fall risk precautions. Assess environment for hazards. Use Morse Fall Scale.'
+      severity: 'WARNING'
+    - keywords: ['imbalanced', 'nutrition']
+      alert: 'Monitor food intake (calorie count). Assess for swallowing difficulties. Consider nutritional consult.'
+      severity: 'INFO'
+    - keywords: ['impaired', 'mobility']
+      alert: 'Assess Range of Motion (ROM) and need for assistive devices. Consider Physical Therapy consult. Implement turn schedule if bedbound.'
+      severity: 'INFO'
+    - keywords: ['tissue', 'perfusion'] # Catches "ineffective peripheral/cardiac/etc. tissue perfusion"
+      alert: 'Assess peripheral pulses, capillary refill, skin color, and temperature. Monitor blood pressure.'
+      severity: 'CRITICAL'
+    - keywords: ['acute', 'confusion']
+      alert: 'Assess for new-onset confusion (e.g., CAM score). Check for underlying causes (UTI, hypoxia, meds). Re-orient patient.'
+      severity: 'WARNING'
+    - keywords: ['constipation']
+      alert: 'Assess last bowel movement and bowel sounds. Encourage fluid intake and ambulation. Consider laxative/stool softener.'
+      severity: 'INFO'
+    - keywords: ['anxiety']
+      alert: 'Assess level of anxiety. Use therapeutic communication. Provide a calm environment and simple instructions.'
+      severity: 'INFO'
+    - keywords: ['impaired', 'swallowing']
+      alert: 'Conduct swallowing assessment. Implement aspiration precautions (e.g., NPO, thickened liquids). Consider Speech Therapy consult.'
+      severity: 'CRITICAL'
+    - keywords: ['risk for', 'pressure ulcer']
+      alert: 'Implement pressure ulcer prevention protocol. Use Braden Scale for risk assessment. Reposition q2h if bedbound.'
+      severity: 'WARNING'

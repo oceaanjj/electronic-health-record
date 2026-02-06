@@ -19,55 +19,71 @@
     </style>
 
     <div id="form-content-container">
-        {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS data exists) --}}
+
+        <div class="mx-auto mt-1 w-full">
+        {{-- 1. THE ALERT/ERROR (Stays at the top) --}}
         @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
-            <div class="mt-3 w-full px-2">
+            <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
                 <div
-                    class="relative flex items-center justify-between py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md transition-all duration-300">
+                    id="cdss-alert-content"
+                    class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md"
+                >
                     <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-[#dcb44e]">info</span>
+                        {{-- Pulsing Info Icon --}}
+                        <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
                         <span class="text-sm font-semibold text-[#dcb44e]">
                             Clinical Decision Support System is now available.
                         </span>
                     </div>
-                    <button type="button" onclick="this.closest('.relative').remove()"
-                        class="flex items-center justify-center text-amber-700 hover:text-amber-950 hover:bg-amber-200/50 rounded-full p-1 transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">close</span>
+
+                    {{-- Smooth-Exit Close Button --}}
+                    <button
+                        type="button"
+                        onclick="closeCdssAlert()"
+                        class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90"
+                    >
+                        <span
+                            class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90"
+                        >
+                            close
+                        </span>
                     </button>
                 </div>
             </div>
+            </div>
         @endif
 
-        {{-- 2. THE PATIENT SELECTION ROW (Using the reusable component) --}}
-        <div class="header mx-auto my-10 flex w-[90%] flex-col gap-6">
-            <div class="flex flex-wrap items-center gap-6">
-                <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                    selectRoute="{{ route('vital-signs.select') }}" inputPlaceholder="Select or type Patient Name"
-                    inputName="patient_id" inputValue="{{ $selectedPatient->patient_id ?? '' }}" />
-
-                {{-- DATE & DAY NO (Only visible if patient selected) --}}
-                @if($selectedPatient)
-                    <div class="flex items-center gap-4">
-                        <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DATE :</label>
-                        <input type="date" id="date_selector" form="patient-select-form" name="date"
-                            value="{{ $currentDate ?? now()->format('Y-m-d') }}"
-                            class="font-creato-bold rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2" />
-
-                        <label for="day_no" class="font-alte text-dark-green font-bold whitespace-nowrap">DAY NO :</label>
-                        <select id="day_no_selector" form="patient-select-form" name="day_no"
-                            class="font-creato-bold w-[120px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm outline-none focus:border-blue-500 focus:ring-2">
-                            @for ($i = 1; $i <= $totalDaysSinceAdmission; $i++)
-                                <option value="{{ $i }}" @if($currentDayNo == $i) selected @endif>{{ $i }}</option>
-                            @endfor
-                        </select>
+        <div class="mx-auto w-full pt-10">
+            {{-- Increased width to accommodate one line --}}
+            <div class="ml-20 flex flex-wrap items-center gap-x-10 gap-y-4">
+                {{-- 1. PATIENT SECTION --}}
+                <div class="flex items-center gap-4">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+                    <div class="w-[350px]">
+                        {{-- Fixed width so Date/Day don't jump around --}}
+                        <x-searchable-patient-dropdown
+                            :patients="$patients"
+                            :selectedPatient="$selectedPatient"
+                            :selectRoute="route('vital-signs.select')"
+                            :inputValue="$selectedPatient?->patient_id ?? ''"
+                        />
                     </div>
+                </div>
+
+                {{-- 2. DATE & DAY SECTION (Only shows if patient is selected) --}}
+                @if ($selectedPatient)
+                    <x-date-day-selector
+                        :currentDate="$currentDate"
+                        :currentDayNo="$currentDayNo"
+                        :totalDays="$totalDaysSinceAdmission ?? 30"
+                    />
                 @endif
             </div>
 
-            {{-- 3. THE "NOT AVAILABLE" MESSAGE --}}
-            @if ($selectedPatient && (!isset($vitalsData) || $vitalsData->count() == 0))
-                <div class="text-xs text-gray-500 italic flex items-center gap-2 px-2">
-                    <span class="material-symbols-outlined text-[14px]">pending_actions</span>
+            {{-- CDSS ALERT MESSAGE (Keep this on its own line below the inputs) --}}
+            @if ($selectedPatient && (! isset($vitalsData) || $vitalsData->count() == 0))
+                <div class="mt-4 ml-20 flex items-center gap-2 text-xs text-gray-500 italic">
+                    <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available (No data recorded for this date).
                 </div>
             @endif
@@ -76,7 +92,7 @@
         {{-- Hidden form for synchronization of Date/Day No --}}
         <form id="patient-select-form" action="{{ route('vital-signs.select') }}" method="POST" class="hidden">
             @csrf
-            <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}">
+            <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}" />
         </form>
         {{-- END OF HEADER --}}
 
@@ -94,7 +110,7 @@
                     value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
                 <input type="hidden" id="hidden_day_no_for_vitals_form" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="mx-auto mt-6 flex w-[90%] items-start justify-between gap-1">
+                <div class="mx-auto mt-15 flex w-[90%] items-start justify-between gap-1">
                     <div class="relative mr-3 w-[30%]">
                         <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
 
@@ -195,40 +211,55 @@
                                         <td class="bg-beige {{ $borderClass }}">
                                             <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
                                                 value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                                class="cdss-input vital-input h-[60px]" data-field-name="temperature"
-                                                data-time="{{ $time }}" />
+                                                class="cdss-input vital-input h-[60px]"
+                                                data-field-name="temperature"
+                                                data-time="{{ $time }}"
+                                                autocomplete="off"
+                                            />
                                         </td>
 
                                         {{-- HR --}}
                                         <td class="bg-beige {{ $borderClass }}">
                                             <input type="text" name="hr_{{ $time }}" placeholder="bpm"
                                                 value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                                class="cdss-input vital-input h-[60px]" data-field-name="hr"
-                                                data-time="{{ $time }}" />
+                                                class="cdss-input vital-input h-[60px]"
+                                                data-field-name="hr"
+                                                data-time="{{ $time }}"
+                                                autocomplete="off"
+                                            />
                                         </td>
 
                                         {{-- RR --}}
                                         <td class="bg-beige {{ $borderClass }}">
                                             <input type="text" name="rr_{{ $time }}" placeholder="bpm"
                                                 value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                                class="cdss-input vital-input h-[60px]" data-field-name="rr"
-                                                data-time="{{ $time }}" />
+                                                class="cdss-input vital-input h-[60px]"
+                                                data-field-name="rr"
+                                                data-time="{{ $time }}"
+                                                autocomplete="off"
+                                            />
                                         </td>
 
                                         {{-- BP --}}
                                         <td class="bg-beige {{ $borderClass }}">
                                             <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
                                                 value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                                class="cdss-input vital-input h-[60px]" data-field-name="bp"
-                                                data-time="{{ $time }}" />
+                                                class="cdss-input vital-input h-[60px]"
+                                                data-field-name="bp"
+                                                data-time="{{ $time }}"
+                                                autocomplete="off"
+                                            />
                                         </td>
 
                                         {{-- SpO₂ --}}
                                         <td class="bg-beige {{ $borderClass }}">
                                             <input type="text" name="spo2_{{ $time }}" placeholder="%"
                                                 value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                                class="cdss-input vital-input h-[60px]" data-field-name="spo2"
-                                                data-time="{{ $time }}" />
+                                                class="cdss-input vital-input h-[60px]"
+                                                data-field-name="spo2"
+                                                data-time="{{ $time }}"
+                                                autocomplete="off"
+                                            />
                                         </td>
                                     </tr>
                                 @endforeach
@@ -271,7 +302,7 @@
                     </div>
                 </div>
 
-                <div class="mx-auto mt-5 mb-20 flex w-[66%] justify-end space-x-4">
+                <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end space-x-4">
                     @if (isset($vitalsData) && $vitalsData->count() > 0)
                         <button type="submit" formaction="{{ route('vital-signs.cdss') }}"
                             class="button-default cdss-btn text-center">
@@ -314,120 +345,239 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const vitalsData = @json($vitalsData);
+    const vitalsData = @json($vitalsData);
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const timePoints = @json($times);
+    document.addEventListener('DOMContentLoaded', function () {
+        const timePoints = @json($times);
 
-            if (window.initializeVitalSignsCharts) {
-                window.initializeVitalSignsCharts(timePoints, vitalsData);
-            }
+        if (window.initializeVitalSignsCharts) {
+            window.initializeVitalSignsCharts(timePoints, vitalsData);
+        }
 
-            if (window.initializeChartScrolling) {
-                window.initializeChartScrolling();
-            }
+        if (window.initializeChartScrolling) {
+            window.initializeChartScrolling();
+        }
 
-            if (window.initSearchableDropdown) {
-                window.initSearchableDropdown();
-            }
-        });
+        if (window.initSearchableDropdown) {
+            window.initSearchableDropdown();
+        }
+    });
 
-        // 1. GLOBAL CLOSE FUNCTION
-        window.closeChartModal = function () {
-            const modal = document.getElementById('chart-modal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
+    // 1. GLOBAL CLOSE FUNCTION
+    window.closeChartModal = function () {
+        const modal = document.getElementById('chart-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
 
-            // Cleanup Chart instance to prevent errors when re-opening
-            if (window.modalChartInstance) {
-                window.modalChartInstance.destroy();
-                window.modalChartInstance = null;
-            }
-        };
+        // Cleanup Chart instance to prevent errors when re-opening
+        if (window.modalChartInstance) {
+            window.modalChartInstance.destroy();
+            window.modalChartInstance = null;
+        }
+    };
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const modalWrapper = document.getElementById('chart-modal');
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalWrapper = document.getElementById('chart-modal');
 
-            if (modalWrapper) {
-                modalWrapper.addEventListener('click', function (event) {
-                    // If the user clicks the dark background (the wrapper) and NOT the white box
-                    if (event.target === modalWrapper) {
-                        closeChartModal();
-                    }
-                });
-            }
-
-            const sidebar = document.getElementById('mySidenav');
-            if (sidebar) {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.attributeName === 'class') {
-                            const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
-                            if (isSidebarOpen) closeChartModal();
-                        }
-                    });
-                });
-                observer.observe(sidebar, { attributes: true });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            let currentStep = 0;
-            const totalSteps = 3;
-
-            function updateCarousel() {
-                const track = document.getElementById('chart-track');
-                const upBtn = document.getElementById('chart-up');
-                const downBtn = document.getElementById('chart-down');
-                const cards = track ? track.querySelectorAll(':scope > div') : [];
-
-                if (!track || !upBtn || !downBtn || !cards.length) return;
-
-                const cardHeight = cards[0].offsetHeight;
-                const moveDistance = cardHeight;
-                let translateY = 0;
-
-                upBtn.classList.remove('btn-hidden');
-                downBtn.classList.remove('btn-hidden');
-
-                if (currentStep === 0) {
-                    translateY = 0;
-                    upBtn.classList.add('btn-hidden');
-                } else if (currentStep === 1) {
-                    translateY = moveDistance * 1.3;
-                } else if (currentStep === 2) {
-                    translateY = moveDistance * 2.3;
-                } else if (currentStep === 3) {
-                    translateY = moveDistance * 3.3;
-                    downBtn.classList.add('btn-hidden');
-                }
-
-                track.style.transform = `translateY(-${translateY}px)`;
-            }
-
-            document.addEventListener('click', function (e) {
-                if (e.target.closest('#chart-down')) {
-                    if (currentStep < totalSteps) {
-                        currentStep++;
-                        updateCarousel();
-                    }
-                }
-
-                if (e.target.closest('#chart-up')) {
-                    if (currentStep > 0) {
-                        currentStep--;
-                        updateCarousel();
-                    }
+        if (modalWrapper) {
+            modalWrapper.addEventListener('click', function (event) {
+                // If the user clicks the dark background (the wrapper) and NOT the white box
+                if (event.target === modalWrapper) {
+                    closeChartModal();
                 }
             });
+        }
 
-            updateCarousel();
+        const sidebar = document.getElementById('mySidenav');
+        if (sidebar) {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
+                        if (isSidebarOpen) closeChartModal();
+                    }
+                });
+            });
+            observer.observe(sidebar, { attributes: true });
+        }
+    });
 
-            window.resetChartCarousel = function () {
-                currentStep = 0;
-                updateCarousel();
-            };
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentStep = 0;
+        const totalSteps = 3;
+
+        function updateCarousel() {
+            const track = document.getElementById('chart-track');
+            const upBtn = document.getElementById('chart-up');
+            const downBtn = document.getElementById('chart-down');
+            const cards = track ? track.querySelectorAll(':scope > div') : [];
+
+            if (!track || !upBtn || !downBtn || !cards.length) return;
+
+            const cardHeight = cards[0].offsetHeight;
+            const moveDistance = cardHeight;
+            let translateY = 0;
+
+            upBtn.classList.remove('btn-hidden');
+            downBtn.classList.remove('btn-hidden');
+
+            if (currentStep === 0) {
+                translateY = 0;
+                upBtn.classList.add('btn-hidden');
+            } else if (currentStep === 1) {
+                translateY = moveDistance * 1.3;
+            } else if (currentStep === 2) {
+                translateY = moveDistance * 2.3;
+            } else if (currentStep === 3) {
+                translateY = moveDistance * 3.3;
+                downBtn.classList.add('btn-hidden');
+            }
+
+            track.style.transform = `translateY(-${translateY}px)`;
+        }
+
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('#chart-down')) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateCarousel();
+                }
+            }
+
+            if (e.target.closest('#chart-up')) {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateCarousel();
+                }
+            }
         });
-    </script>
+
+        updateCarousel();
+
+        window.resetChartCarousel = function () {
+            currentStep = 0;
+            updateCarousel();
+        };
+    });
+
+    // ============================================
+// VITAL SIGNS COLOR CODING - GLOBALLY ACCESSIBLE
+// ============================================
+(function() {
+    const vitalRanges = {
+        temperature: {
+            ranges: [
+                { min: 36.3, max: 37, color: 'var(--color-beige)' },       
+                { min: 37.01, max: Infinity, color: 'var(--color-dark-red)' },     
+            ]
+        },
+        hr: {
+            ranges: [
+                { min: 70, max: 110, color: 'var(--color-beige)' },        
+                { min: 110.01, max: Infinity, color: 'var(--color-dark-red)' },   
+            ]
+        },
+        rr: {
+            ranges: [
+                { min: 16, max: 22, color: 'var(--color-beige)' },           
+                { min: 22.01, max: Infinity, color: 'var(--color-dark-red)' },        
+            ]
+        },
+        spo2: {
+            ranges: [
+                { min: 95, max: 100, color: 'var(--color-beige)' },
+                { min: 0, max: 94.99, color: 'var(--color-dark-red)' }  // Fixed: low oxygen
+            ]
+        },
+        bp: {
+            normal: 'var(--color-beige)',
+            abnormal: 'var(--color-dark-red)'
+        }
+    };
+
+    function getColorForValue(fieldName, value) {
+        if (!fieldName || value === "" || value === null) return 'var(--color-beige)';
+
+        // BP Logic: systolic/diastolic
+        if (fieldName === 'bp') {
+            const parts = value.split('/');
+            if (parts.length !== 2) return 'var(--color-beige)';
+            
+            const systolic = parseFloat(parts[0]);
+            const diastolic = parseFloat(parts[1]);
+            
+            if (isNaN(systolic) || isNaN(diastolic)) return 'var(--color-beige)';
+            if (systolic > 140 || diastolic > 90 || systolic < 90 || diastolic < 60) {
+                return vitalRanges.bp.abnormal;
+            }
+            return vitalRanges.bp.normal;
+        }
+
+        // Numeric Logic: Handles decimals correctly
+        const numValue = parseFloat(value);
+        if (isNaN(numValue)) return 'var(--color-beige)';
+
+        const vitalRange = vitalRanges[fieldName];
+        if (!vitalRange || !vitalRange.ranges) return 'var(--color-beige)';
+
+        for (let range of vitalRange.ranges) {
+            if (numValue >= range.min && numValue <= range.max) {
+                return range.color;
+            }
+        }
+        return 'var(--color-beige)';
+    }
+
+    function colorizeInput(input) {
+        const fieldName = input.dataset.fieldName;
+        const value = input.value.trim();
+        
+        // If user just typed a decimal point at the end, don't re-color yet
+        if (value.endsWith('.')) return;
+
+        const color = getColorForValue(fieldName, value);
+        input.style.backgroundColor = color;
+        
+        if (color === 'var(--color-dark-red)') {
+            input.style.color = '#FFFFFF'; 
+        } else {
+            input.style.color = '#000000';
+        }
+    }
+
+    // ✅ MAKE THIS GLOBALLY ACCESSIBLE
+    window.colorizeAllVitals = function() {
+        const vitalInputs = document.querySelectorAll('.vital-input');
+        
+        vitalInputs.forEach(input => {
+            // Initial colorization
+            colorizeInput(input);
+            
+            // Remove existing listeners to prevent duplicates
+            input.removeEventListener('input', handleInput);
+            input.removeEventListener('blur', handleBlur);
+            
+            // Add fresh listeners
+            input.addEventListener('input', handleInput);
+            input.addEventListener('blur', handleBlur);
+        });
+    };
+
+    function handleInput(e) {
+        colorizeInput(e.target);
+    }
+
+    function handleBlur(e) {
+        colorizeInput(e.target);
+    }
+
+    // Run on initial page load
+    document.addEventListener('DOMContentLoaded', function() {
+        window.colorizeAllVitals();
+    });
+})();
+</script>
+
+    
 @endpush

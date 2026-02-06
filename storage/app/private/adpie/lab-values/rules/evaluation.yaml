@@ -1,361 +1,361 @@
 evaluation:
-  - keywords: ["Risk for Infection"]
-    alert: "Evaluate for signs and symptoms of infection. Review WBC count trends. Goal met if patient remains afebrile and WBC count is trending towards normal."
-    severity: "INFO"
-  - keywords: ["Activity Intolerance"]
-    alert: "Evaluate patient's subjective report of fatigue. Compare activity tolerance with baseline. Goal met if patient reports increased energy and can perform ADLs with less assistance."
-    severity: "INFO"
-  - keywords: ["Risk for Bleeding"]
-    alert: "Evaluate for any signs of bleeding. Review platelet count. Goal met if no bleeding episodes are observed and platelet count is stable or increasing."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate skin color, temperature, and capillary refill. Review hemoglobin and hematocrit levels. Goal met if patient's skin is warm and dry, and H&H levels are stable or improving."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate patient's weight and dietary intake. Review RBC, Hgb, and Hct levels. Goal met if patient is consuming adequate nutrition and lab values are trending towards normal."
-    severity: "INFO"
-  - keywords: ["Risk for Deficient Fluid Volume"]
-    alert: "Evaluate fluid intake and output. Monitor for signs of dehydration. Goal met if patient maintains adequate hydration and urine output is within normal limits."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate for neurological symptoms. Monitor sodium levels. Goal met if patient shows no signs of confusion or seizures and sodium levels are stable."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Dysrhythmia"]
-    alert: "Evaluate cardiac rhythm. Monitor potassium levels. Goal met if patient has normal sinus rhythm and potassium levels are within normal range."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate muscle strength and reflexes. Monitor potassium levels. Goal met if patient reports no weakness and potassium levels are stable."
-    severity: "WARNING"
-  - keywords: ["Risk for Constipation"]
-    alert: "Evaluate bowel habits. Monitor calcium levels. Goal met if patient has regular bowel movements and calcium levels are within normal range."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate for tetany signs. Monitor calcium levels. Goal met if patient has no muscle spasms and calcium levels are stable."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate respiratory status. Monitor magnesium levels. Goal met if patient has normal respiratory rate and magnesium levels are within normal range."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate neuromuscular function. Monitor magnesium levels. Goal met if patient has no tremors and magnesium levels are stable."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate for hypocalcemia. Monitor phosphate levels. Goal met if patient has no signs of tetany and phosphate levels are stable."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate energy levels. Monitor phosphate levels. Goal met if patient reports improved energy and phosphate levels are within normal range."
-    severity: "WARNING"
-  - keywords: ["Risk for Decreased Cardiac Output"]
-    alert: "Evaluate cardiac function. Monitor creatinine levels. Goal met if patient has stable vital signs and creatinine levels are trending down."
-    severity: "CRITICAL"
-  - keywords: ["Impaired Renal Function"]
-    alert: "Evaluate urine output. Monitor BUN levels. Goal met if patient has adequate urine output and BUN levels are stable."
-    severity: "CRITICAL"
-  - keywords: ["Chronic Kidney Disease"]
-    alert: "Evaluate renal function. Monitor GFR. Goal met if GFR is stable or improving and patient shows no signs of uremia."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Impaired Skin Integrity"]
-    alert: "Evaluate skin condition. Monitor for proteinuria. Goal met if skin remains intact and protein levels are controlled."
-    severity: "WARNING"
-  - keywords: ["Risk for Infection"]
-    alert: "Evaluate urinary symptoms. Monitor for hematuria. Goal met if no signs of UTI and urine is clear."
-    severity: "WARNING"
-  - keywords: ["Impaired Liver Function"]
-    alert: "Evaluate liver enzymes. Monitor ALT levels. Goal met if ALT levels are trending down and patient shows no jaundice."
-    severity: "CRITICAL"
-  - keywords: ["Impaired Liver Function"]
-    alert: "Evaluate liver function. Monitor AST levels. Goal met if AST levels are stable and liver tests are improving."
-    severity: "CRITICAL"
-  - keywords: ["Impaired Liver Function"]
-    alert: "Evaluate bone health. Monitor ALP levels. Goal met if ALP levels are within normal range and no bone pain."
-    severity: "WARNING"
-  - keywords: ["Jaundice"]
-    alert: "Evaluate skin and sclera color. Monitor bilirubin levels. Goal met if jaundice resolves and bilirubin levels decrease."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition: Less Than Body Requirements"]
-    alert: "Evaluate nutritional status. Monitor albumin levels. Goal met if albumin levels increase and patient gains weight."
-    severity: "WARNING"
-  - keywords: ["Risk for Unstable Blood Glucose Level"]
-    alert: "Evaluate blood sugar control. Monitor glucose levels. Goal met if glucose levels are stable and patient reports no hypo/hyperglycemia symptoms."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate mental status. Monitor glucose levels. Goal met if patient is alert and glucose levels are within normal range."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Ineffective Health Maintenance"]
-    alert: "Evaluate cardiovascular risk. Monitor cholesterol levels. Goal met if cholesterol levels decrease with lifestyle changes."
-    severity: "WARNING"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate lipid profile. Monitor LDL levels. Goal met if LDL levels are controlled and no signs of atherosclerosis."
-    severity: "WARNING"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate protective factors. Monitor HDL levels. Goal met if HDL levels increase with exercise."
-    severity: "WARNING"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate triglyceride levels. Monitor triglycerides. Goal met if triglycerides decrease and cardiovascular risk is reduced."
-    severity: "WARNING"
-  - keywords: ["Hypothyroidism"]
-    alert: "Evaluate thyroid function. Monitor TSH levels. Goal met if TSH levels normalize and symptoms of hypothyroidism resolve."
-    severity: "WARNING"
-  - keywords: ["Hyperthyroidism"]
-    alert: "Evaluate thyroid activity. Monitor TSH levels. Goal met if TSH levels stabilize and hyperthyroidism symptoms subside."
-    severity: "WARNING"
-  - keywords: ["Hyperthyroidism"]
-    alert: "Evaluate thyroid hormones. Monitor T4 levels. Goal met if T4 levels are within normal range and patient feels better."
-    severity: "WARNING"
-  - keywords: ["Hypothyroidism"]
-    alert: "Evaluate thyroid status. Monitor T4 levels. Goal met if T4 levels increase and hypothyroidism symptoms improve."
-    severity: "WARNING"
-  - keywords: ["Risk for Bleeding"]
-    alert: "Evaluate coagulation. Monitor PT levels. Goal met if PT normalizes and no bleeding occurs."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Bleeding"]
-    alert: "Evaluate anticoagulation. Monitor INR levels. Goal met if INR is therapeutic and no bleeding episodes."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Bleeding"]
-    alert: "Evaluate clotting factors. Monitor PTT levels. Goal met if PTT is within normal range and coagulation is stable."
-    severity: "CRITICAL"
-  - keywords: ["Impaired Gas Exchange"]
-    alert: "Evaluate respiratory status. Monitor pH levels. Goal met if pH normalizes and patient breathes comfortably."
-    severity: "CRITICAL"
-  - keywords: ["Impaired Gas Exchange"]
-    alert: "Evaluate acid-base balance. Monitor pH levels. Goal met if pH stabilizes and alkalosis resolves."
-    severity: "CRITICAL"
-  - keywords: ["Impaired Gas Exchange"]
-    alert: "Evaluate ventilation. Monitor CO2 levels. Goal met if CO2 levels decrease and respiratory rate normalizes."
-    severity: "CRITICAL"
-  - keywords: ["Impaired Gas Exchange"]
-    alert: "Evaluate respiratory function. Monitor CO2 levels. Goal met if CO2 levels increase appropriately and no hypocapnia symptoms."
-    severity: "WARNING"
-  - keywords: ["Impaired Gas Exchange"]
-    alert: "Evaluate oxygenation. Monitor O2 levels. Goal met if oxygen saturation improves and hypoxemia resolves."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate oxygen therapy. Monitor O2 levels. Goal met if oxygen levels are not excessive and patient is stable."
-    severity: "WARNING"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate blood viscosity. Monitor hemoglobin levels. Goal met if hemoglobin decreases and perfusion improves."
-    severity: "WARNING"
-  - keywords: ["Activity Intolerance"]
-    alert: "Evaluate oxygen capacity. Monitor hemoglobin levels. Goal met if hemoglobin increases and fatigue decreases."
-    severity: "WARNING"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate blood thickness. Monitor hematocrit levels. Goal met if hematocrit decreases and viscosity normalizes."
-    severity: "WARNING"
-  - keywords: ["Activity Intolerance"]
-    alert: "Evaluate oxygen transport. Monitor hematocrit levels. Goal met if hematocrit increases and energy levels improve."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate cell size. Monitor MCV levels. Goal met if MCV normalizes and nutritional deficiencies are addressed."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate red cell size. Monitor MCV levels. Goal met if MCV increases and microcytosis resolves."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate hemoglobin content. Monitor MCH levels. Goal met if MCH normalizes and anemia improves."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate red cell hemoglobin. Monitor MCH levels. Goal met if MCH increases and hypochromia resolves."
-    severity: "WARNING"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate red cell shape. Monitor MCHC levels. Goal met if MCHC normalizes and spherocytosis is managed."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate iron status. Monitor MCHC levels. Goal met if MCHC increases and iron deficiency is corrected."
-    severity: "WARNING"
-  - keywords: ["Inflammation"]
-    alert: "Evaluate inflammatory response. Monitor ESR levels. Goal met if ESR decreases and inflammation subsides."
-    severity: "WARNING"
-  - keywords: ["Inflammation"]
-    alert: "Evaluate acute phase response. Monitor CRP levels. Goal met if CRP levels normalize and infection resolves."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate iron stores. Monitor ferritin levels. Goal met if ferritin decreases and iron overload is prevented."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate iron deficiency. Monitor ferritin levels. Goal met if ferritin increases and anemia improves."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate iron levels. Monitor iron levels. Goal met if iron decreases and toxicity is avoided."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate iron absorption. Monitor iron levels. Goal met if iron increases and deficiency resolves."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate iron binding. Monitor TIBC levels. Goal met if TIBC normalizes and iron status improves."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate iron saturation. Monitor TIBC levels. Goal met if TIBC decreases and overload is managed."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate B12 levels. Monitor vitamin B12 levels. Goal met if B12 decreases and toxicity is prevented."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate B12 deficiency. Monitor vitamin B12 levels. Goal met if B12 increases and neurological symptoms resolve."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate folate levels. Monitor folate levels. Goal met if folate decreases and toxicity is avoided."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate folate deficiency. Monitor folate levels. Goal met if folate increases and anemia improves."
-    severity: "WARNING"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate cardiovascular risk. Monitor homocysteine levels. Goal met if homocysteine decreases and thrombosis risk reduces."
-    severity: "WARNING"
-  - keywords: ["Risk for Bleeding"]
-    alert: "Evaluate clotting factors. Monitor homocysteine levels. Goal met if homocysteine increases appropriately and bleeding is controlled."
-    severity: "WARNING"
-  - keywords: ["Acute Coronary Syndrome"]
-    alert: "Evaluate cardiac markers. Monitor troponin levels. Goal met if troponin normalizes and cardiac function improves."
-    severity: "CRITICAL"
-  - keywords: ["Myocardial Infarction"]
-    alert: "Evaluate heart damage. Monitor CK-MB levels. Goal met if CK-MB decreases and MI is resolved."
-    severity: "CRITICAL"
-  - keywords: ["Heart Failure"]
-    alert: "Evaluate cardiac status. Monitor BNP levels. Goal met if BNP decreases and heart failure symptoms improve."
-    severity: "CRITICAL"
-  - keywords: ["Deep Vein Thrombosis"]
-    alert: "Evaluate clotting. Monitor D-dimer levels. Goal met if D-dimer normalizes and DVT is treated."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate coagulation. Monitor fibrinogen levels. Goal met if fibrinogen decreases and perfusion improves."
-    severity: "WARNING"
-  - keywords: ["Risk for Bleeding"]
-    alert: "Evaluate clotting. Monitor fibrinogen levels. Goal met if fibrinogen increases and bleeding stops."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Ineffective Tissue Perfusion"]
-    alert: "Evaluate hemophilia. Monitor factor VIII levels. Goal met if factor VIII increases and clotting normalizes."
-    severity: "WARNING"
-  - keywords: ["Risk for Bleeding"]
-    alert: "Evaluate bleeding disorder. Monitor factor VIII levels. Goal met if factor VIII increases and bleeding is controlled."
-    severity: "CRITICAL"
-  - keywords: ["Hepatic Encephalopathy"]
-    alert: "Evaluate liver function. Monitor ammonia levels. Goal met if ammonia decreases and encephalopathy resolves."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate ammonia metabolism. Monitor ammonia levels. Goal met if ammonia increases appropriately and no toxicity."
-    severity: "WARNING"
-  - keywords: ["Lactic Acidosis"]
-    alert: "Evaluate metabolic acidosis. Monitor lactate levels. Goal met if lactate decreases and acidosis resolves."
-    severity: "CRITICAL"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate lactate production. Monitor lactate levels. Goal met if lactate increases appropriately and no deficiency."
-    severity: "WARNING"
-  - keywords: ["Gout"]
-    alert: "Evaluate joint pain. Monitor uric acid levels. Goal met if uric acid decreases and gout attacks reduce."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate uric acid metabolism. Monitor uric acid levels. Goal met if uric acid increases and no hypouricemia symptoms."
-    severity: "WARNING"
-  - keywords: ["Prostate Cancer"]
-    alert: "Evaluate prostate health. Monitor PSA levels. Goal met if PSA decreases and cancer is managed."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate PSA levels. Monitor PSA levels. Goal met if PSA increases appropriately and no issues."
-    severity: "WARNING"
-  - keywords: ["Cancer"]
-    alert: "Evaluate tumor markers. Monitor CEA levels. Goal met if CEA decreases and cancer treatment is effective."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate CEA levels. Monitor CEA levels. Goal met if CEA increases appropriately and no abnormalities."
-    severity: "WARNING"
-  - keywords: ["Ovarian Cancer"]
-    alert: "Evaluate ovarian health. Monitor CA-125 levels. Goal met if CA-125 decreases and cancer is treated."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate CA-125 levels. Monitor CA-125 levels. Goal met if CA-125 increases appropriately and no issues."
-    severity: "WARNING"
-  - keywords: ["Liver Cancer"]
-    alert: "Evaluate liver tumors. Monitor AFP levels. Goal met if AFP decreases and cancer resolves."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate AFP levels. Monitor AFP levels. Goal met if AFP increases appropriately and no abnormalities."
-    severity: "WARNING"
-  - keywords: ["Pregnancy or Cancer"]
-    alert: "Evaluate pregnancy or malignancy. Monitor hCG levels. Goal met if hCG normalizes and condition is managed."
-    severity: "WARNING"
-  - keywords: ["Risk for Injury"]
-    alert: "Evaluate hCG levels. Monitor hCG levels. Goal met if hCG increases appropriately and no issues."
-    severity: "WARNING"
-  - keywords: ["Hyperparathyroidism"]
-    alert: "Evaluate parathyroid function. Monitor PTH levels. Goal met if PTH decreases and hyperparathyroidism is treated."
-    severity: "WARNING"
-  - keywords: ["Hypoparathyroidism"]
-    alert: "Evaluate calcium regulation. Monitor PTH levels. Goal met if PTH increases and hypoparathyroidism resolves."
-    severity: "WARNING"
-  - keywords: ["Hypervitaminosis D"]
-    alert: "Evaluate vitamin D levels. Monitor vitamin D levels. Goal met if vitamin D decreases and toxicity is avoided."
-    severity: "WARNING"
-  - keywords: ["Imbalanced Nutrition"]
-    alert: "Evaluate vitamin D deficiency. Monitor vitamin D levels. Goal met if vitamin D increases and deficiency symptoms resolve."
-    severity: "WARNING"
-  - keywords: ["Cushing's Syndrome"]
-    alert: "Evaluate adrenal function. Monitor cortisol levels. Goal met if cortisol decreases and Cushing's symptoms improve."
-    severity: "WARNING"
-  - keywords: ["Addison's Disease"]
-    alert: "Evaluate adrenal insufficiency. Monitor cortisol levels. Goal met if cortisol increases and Addison's is managed."
-    severity: "CRITICAL"
-  - keywords: ["Cushing's Disease"]
-    alert: "Evaluate pituitary function. Monitor ACTH levels. Goal met if ACTH decreases and Cushing's disease is treated."
-    severity: "WARNING"
-  - keywords: ["Hypopituitarism"]
-    alert: "Evaluate pituitary hormones. Monitor ACTH levels. Goal met if ACTH increases and hypopituitarism resolves."
-    severity: "WARNING"
-  - keywords: ["Acromegaly"]
-    alert: "Evaluate growth hormone. Monitor GH levels. Goal met if GH decreases and acromegaly symptoms improve."
-    severity: "WARNING"
-  - keywords: ["Growth Hormone Deficiency"]
-    alert: "Evaluate GH production. Monitor GH levels. Goal met if GH increases and deficiency is corrected."
-    severity: "WARNING"
-  - keywords: ["Hyperprolactinemia"]
-    alert: "Evaluate prolactin levels. Monitor prolactin levels. Goal met if prolactin decreases and symptoms resolve."
-    severity: "WARNING"
-  - keywords: ["Hypoprolactinemia"]
-    alert: "Evaluate prolactin production. Monitor prolactin levels. Goal met if prolactin increases appropriately."
-    severity: "WARNING"
-  - keywords: ["Polycystic Ovary Syndrome"]
-    alert: "Evaluate hormonal balance. Monitor testosterone levels. Goal met if testosterone decreases and PCOS is managed."
-    severity: "WARNING"
-  - keywords: ["Hypogonadism"]
-    alert: "Evaluate testosterone production. Monitor testosterone levels. Goal met if testosterone increases and hypogonadism resolves."
-    severity: "WARNING"
-  - keywords: ["Risk for Thromboembolism"]
-    alert: "Evaluate estrogen levels. Monitor estradiol levels. Goal met if estradiol decreases and thrombosis risk reduces."
-    severity: "WARNING"
-  - keywords: ["Menopause"]
-    alert: "Evaluate hormonal status. Monitor estradiol levels. Goal met if estradiol stabilizes and menopausal symptoms are managed."
-    severity: "WARNING"
-  - keywords: ["Polycystic Ovary Syndrome"]
-    alert: "Evaluate LH/FSH ratio. Monitor LH levels. Goal met if LH decreases and PCOS is treated."
-    severity: "WARNING"
-  - keywords: ["Hypogonadotropic Hypogonadism"]
-    alert: "Evaluate gonadotropin levels. Monitor LH levels. Goal met if LH increases and hypogonadism resolves."
-    severity: "WARNING"
-  - keywords: ["Menopause"]
-    alert: "Evaluate ovarian function. Monitor FSH levels. Goal met if FSH stabilizes and menopause is managed."
-    severity: "WARNING"
-  - keywords: ["Hypopituitarism"]
-    alert: "Evaluate pituitary function. Monitor FSH levels. Goal met if FSH increases and hypopituitarism is corrected."
-    severity: "WARNING"
-  - keywords: ["Insulin Resistance"]
-    alert: "Evaluate glucose metabolism. Monitor insulin levels. Goal met if insulin decreases and resistance improves."
-    severity: "WARNING"
-  - keywords: ["Diabetes Mellitus"]
-    alert: "Evaluate insulin production. Monitor insulin levels. Goal met if insulin increases and diabetes is controlled."
-    severity: "CRITICAL"
-  - keywords: ["Insulin Resistance"]
-    alert: "Evaluate beta cell function. Monitor C-peptide levels. Goal met if C-peptide decreases and resistance is managed."
-    severity: "WARNING"
-  - keywords: ["Type 1 Diabetes"]
-    alert: "Evaluate insulin secretion. Monitor C-peptide levels. Goal met if C-peptide increases and diabetes is treated."
-    severity: "CRITICAL"
-  - keywords: ["Poor Glycemic Control"]
-    alert: "Evaluate long-term glucose. Monitor HbA1c levels. Goal met if HbA1c decreases and glycemic control improves."
-    severity: "WARNING"
-  - keywords: ["Risk for Hypoglycemia"]
-    alert: "Evaluate glucose stability. Monitor HbA1c levels. Goal met if HbA1c increases appropriately and hypoglycemia is avoided."
-    severity: "WARNING"
-  - keywords: ["Poor Glycemic Control"]
-    alert: "Evaluate short-term glucose. Monitor fructosamine levels. Goal met if fructosamine decreases and control improves."
-    severity: "WARNING"
-  - keywords: ["Risk for Hypoglycemia"]
-    alert: "Evaluate glucose levels. Monitor fructosamine levels. Goal met if fructosamine increases appropriately and no hypo."
-    severity: "WARNING"
+    - keywords: ['Risk for Infection']
+      alert: 'Evaluate for signs and symptoms of infection. Review WBC count trends. Goal met if patient remains afebrile and WBC count is trending towards normal.'
+      severity: 'INFO'
+    - keywords: ['Activity Intolerance']
+      alert: "Evaluate patient's subjective report of fatigue. Compare activity tolerance with baseline. Goal met if patient reports increased energy and can perform ADLs with less assistance."
+      severity: 'INFO'
+    - keywords: ['Risk for Bleeding']
+      alert: 'Evaluate for any signs of bleeding. Review platelet count. Goal met if no bleeding episodes are observed and platelet count is stable or increasing.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: "Evaluate skin color, temperature, and capillary refill. Review hemoglobin and hematocrit levels. Goal met if patient's skin is warm and dry, and H&H levels are stable or improving."
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: "Evaluate patient's weight and dietary intake. Review RBC, Hgb, and Hct levels. Goal met if patient is consuming adequate nutrition and lab values are trending towards normal."
+      severity: 'INFO'
+    - keywords: ['Risk for Deficient Fluid Volume']
+      alert: 'Evaluate fluid intake and output. Monitor for signs of dehydration. Goal met if patient maintains adequate hydration and urine output is within normal limits.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate for neurological symptoms. Monitor sodium levels. Goal met if patient shows no signs of confusion or seizures and sodium levels are stable.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Dysrhythmia']
+      alert: 'Evaluate cardiac rhythm. Monitor potassium levels. Goal met if patient has normal sinus rhythm and potassium levels are within normal range.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate muscle strength and reflexes. Monitor potassium levels. Goal met if patient reports no weakness and potassium levels are stable.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Constipation']
+      alert: 'Evaluate bowel habits. Monitor calcium levels. Goal met if patient has regular bowel movements and calcium levels are within normal range.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate for tetany signs. Monitor calcium levels. Goal met if patient has no muscle spasms and calcium levels are stable.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate respiratory status. Monitor magnesium levels. Goal met if patient has normal respiratory rate and magnesium levels are within normal range.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate neuromuscular function. Monitor magnesium levels. Goal met if patient has no tremors and magnesium levels are stable.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate for hypocalcemia. Monitor phosphate levels. Goal met if patient has no signs of tetany and phosphate levels are stable.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate energy levels. Monitor phosphate levels. Goal met if patient reports improved energy and phosphate levels are within normal range.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Decreased Cardiac Output']
+      alert: 'Evaluate cardiac function. Monitor creatinine levels. Goal met if patient has stable vital signs and creatinine levels are trending down.'
+      severity: 'CRITICAL'
+    - keywords: ['Impaired Renal Function']
+      alert: 'Evaluate urine output. Monitor BUN levels. Goal met if patient has adequate urine output and BUN levels are stable.'
+      severity: 'CRITICAL'
+    - keywords: ['Chronic Kidney Disease']
+      alert: 'Evaluate renal function. Monitor GFR. Goal met if GFR is stable or improving and patient shows no signs of uremia.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Impaired Skin Integrity']
+      alert: 'Evaluate skin condition. Monitor for proteinuria. Goal met if skin remains intact and protein levels are controlled.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Infection']
+      alert: 'Evaluate urinary symptoms. Monitor for hematuria. Goal met if no signs of UTI and urine is clear.'
+      severity: 'WARNING'
+    - keywords: ['Impaired Liver Function']
+      alert: 'Evaluate liver enzymes. Monitor ALT levels. Goal met if ALT levels are trending down and patient shows no jaundice.'
+      severity: 'CRITICAL'
+    - keywords: ['Impaired Liver Function']
+      alert: 'Evaluate liver function. Monitor AST levels. Goal met if AST levels are stable and liver tests are improving.'
+      severity: 'CRITICAL'
+    - keywords: ['Impaired Liver Function']
+      alert: 'Evaluate bone health. Monitor ALP levels. Goal met if ALP levels are within normal range and no bone pain.'
+      severity: 'WARNING'
+    - keywords: ['Jaundice']
+      alert: 'Evaluate skin and sclera color. Monitor bilirubin levels. Goal met if jaundice resolves and bilirubin levels decrease.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition: Less Than Body Requirements']
+      alert: 'Evaluate nutritional status. Monitor albumin levels. Goal met if albumin levels increase and patient gains weight.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Unstable Blood Glucose Level']
+      alert: 'Evaluate blood sugar control. Monitor glucose levels. Goal met if glucose levels are stable and patient reports no hypo/hyperglycemia symptoms.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate mental status. Monitor glucose levels. Goal met if patient is alert and glucose levels are within normal range.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Ineffective Health Maintenance']
+      alert: 'Evaluate cardiovascular risk. Monitor cholesterol levels. Goal met if cholesterol levels decrease with lifestyle changes.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate lipid profile. Monitor LDL levels. Goal met if LDL levels are controlled and no signs of atherosclerosis.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate protective factors. Monitor HDL levels. Goal met if HDL levels increase with exercise.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate triglyceride levels. Monitor triglycerides. Goal met if triglycerides decrease and cardiovascular risk is reduced.'
+      severity: 'WARNING'
+    - keywords: ['Hypothyroidism']
+      alert: 'Evaluate thyroid function. Monitor TSH levels. Goal met if TSH levels normalize and symptoms of hypothyroidism resolve.'
+      severity: 'WARNING'
+    - keywords: ['Hyperthyroidism']
+      alert: 'Evaluate thyroid activity. Monitor TSH levels. Goal met if TSH levels stabilize and hyperthyroidism symptoms subside.'
+      severity: 'WARNING'
+    - keywords: ['Hyperthyroidism']
+      alert: 'Evaluate thyroid hormones. Monitor T4 levels. Goal met if T4 levels are within normal range and patient feels better.'
+      severity: 'WARNING'
+    - keywords: ['Hypothyroidism']
+      alert: 'Evaluate thyroid status. Monitor T4 levels. Goal met if T4 levels increase and hypothyroidism symptoms improve.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Bleeding']
+      alert: 'Evaluate coagulation. Monitor PT levels. Goal met if PT normalizes and no bleeding occurs.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Bleeding']
+      alert: 'Evaluate anticoagulation. Monitor INR levels. Goal met if INR is therapeutic and no bleeding episodes.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Bleeding']
+      alert: 'Evaluate clotting factors. Monitor PTT levels. Goal met if PTT is within normal range and coagulation is stable.'
+      severity: 'CRITICAL'
+    - keywords: ['Impaired Gas Exchange']
+      alert: 'Evaluate respiratory status. Monitor pH levels. Goal met if pH normalizes and patient breathes comfortably.'
+      severity: 'CRITICAL'
+    - keywords: ['Impaired Gas Exchange']
+      alert: 'Evaluate acid-base balance. Monitor pH levels. Goal met if pH stabilizes and alkalosis resolves.'
+      severity: 'CRITICAL'
+    - keywords: ['Impaired Gas Exchange']
+      alert: 'Evaluate ventilation. Monitor CO2 levels. Goal met if CO2 levels decrease and respiratory rate normalizes.'
+      severity: 'CRITICAL'
+    - keywords: ['Impaired Gas Exchange']
+      alert: 'Evaluate respiratory function. Monitor CO2 levels. Goal met if CO2 levels increase appropriately and no hypocapnia symptoms.'
+      severity: 'WARNING'
+    - keywords: ['Impaired Gas Exchange']
+      alert: 'Evaluate oxygenation. Monitor O2 levels. Goal met if oxygen saturation improves and hypoxemia resolves.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate oxygen therapy. Monitor O2 levels. Goal met if oxygen levels are not excessive and patient is stable.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate blood viscosity. Monitor hemoglobin levels. Goal met if hemoglobin decreases and perfusion improves.'
+      severity: 'WARNING'
+    - keywords: ['Activity Intolerance']
+      alert: 'Evaluate oxygen capacity. Monitor hemoglobin levels. Goal met if hemoglobin increases and fatigue decreases.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate blood thickness. Monitor hematocrit levels. Goal met if hematocrit decreases and viscosity normalizes.'
+      severity: 'WARNING'
+    - keywords: ['Activity Intolerance']
+      alert: 'Evaluate oxygen transport. Monitor hematocrit levels. Goal met if hematocrit increases and energy levels improve.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate cell size. Monitor MCV levels. Goal met if MCV normalizes and nutritional deficiencies are addressed.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate red cell size. Monitor MCV levels. Goal met if MCV increases and microcytosis resolves.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate hemoglobin content. Monitor MCH levels. Goal met if MCH normalizes and anemia improves.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate red cell hemoglobin. Monitor MCH levels. Goal met if MCH increases and hypochromia resolves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate red cell shape. Monitor MCHC levels. Goal met if MCHC normalizes and spherocytosis is managed.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate iron status. Monitor MCHC levels. Goal met if MCHC increases and iron deficiency is corrected.'
+      severity: 'WARNING'
+    - keywords: ['Inflammation']
+      alert: 'Evaluate inflammatory response. Monitor ESR levels. Goal met if ESR decreases and inflammation subsides.'
+      severity: 'WARNING'
+    - keywords: ['Inflammation']
+      alert: 'Evaluate acute phase response. Monitor CRP levels. Goal met if CRP levels normalize and infection resolves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate iron stores. Monitor ferritin levels. Goal met if ferritin decreases and iron overload is prevented.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate iron deficiency. Monitor ferritin levels. Goal met if ferritin increases and anemia improves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate iron levels. Monitor iron levels. Goal met if iron decreases and toxicity is avoided.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate iron absorption. Monitor iron levels. Goal met if iron increases and deficiency resolves.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate iron binding. Monitor TIBC levels. Goal met if TIBC normalizes and iron status improves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate iron saturation. Monitor TIBC levels. Goal met if TIBC decreases and overload is managed.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate B12 levels. Monitor vitamin B12 levels. Goal met if B12 decreases and toxicity is prevented.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate B12 deficiency. Monitor vitamin B12 levels. Goal met if B12 increases and neurological symptoms resolve.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate folate levels. Monitor folate levels. Goal met if folate decreases and toxicity is avoided.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate folate deficiency. Monitor folate levels. Goal met if folate increases and anemia improves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate cardiovascular risk. Monitor homocysteine levels. Goal met if homocysteine decreases and thrombosis risk reduces.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Bleeding']
+      alert: 'Evaluate clotting factors. Monitor homocysteine levels. Goal met if homocysteine increases appropriately and bleeding is controlled.'
+      severity: 'WARNING'
+    - keywords: ['Acute Coronary Syndrome']
+      alert: 'Evaluate cardiac markers. Monitor troponin levels. Goal met if troponin normalizes and cardiac function improves.'
+      severity: 'CRITICAL'
+    - keywords: ['Myocardial Infarction']
+      alert: 'Evaluate heart damage. Monitor CK-MB levels. Goal met if CK-MB decreases and MI is resolved.'
+      severity: 'CRITICAL'
+    - keywords: ['Heart Failure']
+      alert: 'Evaluate cardiac status. Monitor BNP levels. Goal met if BNP decreases and heart failure symptoms improve.'
+      severity: 'CRITICAL'
+    - keywords: ['Deep Vein Thrombosis']
+      alert: 'Evaluate clotting. Monitor D-dimer levels. Goal met if D-dimer normalizes and DVT is treated.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate coagulation. Monitor fibrinogen levels. Goal met if fibrinogen decreases and perfusion improves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Bleeding']
+      alert: 'Evaluate clotting. Monitor fibrinogen levels. Goal met if fibrinogen increases and bleeding stops.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Ineffective Tissue Perfusion']
+      alert: 'Evaluate hemophilia. Monitor factor VIII levels. Goal met if factor VIII increases and clotting normalizes.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Bleeding']
+      alert: 'Evaluate bleeding disorder. Monitor factor VIII levels. Goal met if factor VIII increases and bleeding is controlled.'
+      severity: 'CRITICAL'
+    - keywords: ['Hepatic Encephalopathy']
+      alert: 'Evaluate liver function. Monitor ammonia levels. Goal met if ammonia decreases and encephalopathy resolves.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate ammonia metabolism. Monitor ammonia levels. Goal met if ammonia increases appropriately and no toxicity.'
+      severity: 'WARNING'
+    - keywords: ['Lactic Acidosis']
+      alert: 'Evaluate metabolic acidosis. Monitor lactate levels. Goal met if lactate decreases and acidosis resolves.'
+      severity: 'CRITICAL'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate lactate production. Monitor lactate levels. Goal met if lactate increases appropriately and no deficiency.'
+      severity: 'WARNING'
+    - keywords: ['Gout']
+      alert: 'Evaluate joint pain. Monitor uric acid levels. Goal met if uric acid decreases and gout attacks reduce.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate uric acid metabolism. Monitor uric acid levels. Goal met if uric acid increases and no hypouricemia symptoms.'
+      severity: 'WARNING'
+    - keywords: ['Prostate Cancer']
+      alert: 'Evaluate prostate health. Monitor PSA levels. Goal met if PSA decreases and cancer is managed.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate PSA levels. Monitor PSA levels. Goal met if PSA increases appropriately and no issues.'
+      severity: 'WARNING'
+    - keywords: ['Cancer']
+      alert: 'Evaluate tumor markers. Monitor CEA levels. Goal met if CEA decreases and cancer treatment is effective.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate CEA levels. Monitor CEA levels. Goal met if CEA increases appropriately and no abnormalities.'
+      severity: 'WARNING'
+    - keywords: ['Ovarian Cancer']
+      alert: 'Evaluate ovarian health. Monitor CA-125 levels. Goal met if CA-125 decreases and cancer is treated.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate CA-125 levels. Monitor CA-125 levels. Goal met if CA-125 increases appropriately and no issues.'
+      severity: 'WARNING'
+    - keywords: ['Liver Cancer']
+      alert: 'Evaluate liver tumors. Monitor AFP levels. Goal met if AFP decreases and cancer resolves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate AFP levels. Monitor AFP levels. Goal met if AFP increases appropriately and no abnormalities.'
+      severity: 'WARNING'
+    - keywords: ['Pregnancy or Cancer']
+      alert: 'Evaluate pregnancy or malignancy. Monitor hCG levels. Goal met if hCG normalizes and condition is managed.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Injury']
+      alert: 'Evaluate hCG levels. Monitor hCG levels. Goal met if hCG increases appropriately and no issues.'
+      severity: 'WARNING'
+    - keywords: ['Hyperparathyroidism']
+      alert: 'Evaluate parathyroid function. Monitor PTH levels. Goal met if PTH decreases and hyperparathyroidism is treated.'
+      severity: 'WARNING'
+    - keywords: ['Hypoparathyroidism']
+      alert: 'Evaluate calcium regulation. Monitor PTH levels. Goal met if PTH increases and hypoparathyroidism resolves.'
+      severity: 'WARNING'
+    - keywords: ['Hypervitaminosis D']
+      alert: 'Evaluate vitamin D levels. Monitor vitamin D levels. Goal met if vitamin D decreases and toxicity is avoided.'
+      severity: 'WARNING'
+    - keywords: ['Imbalanced Nutrition']
+      alert: 'Evaluate vitamin D deficiency. Monitor vitamin D levels. Goal met if vitamin D increases and deficiency symptoms resolve.'
+      severity: 'WARNING'
+    - keywords: ["Cushing's Syndrome"]
+      alert: "Evaluate adrenal function. Monitor cortisol levels. Goal met if cortisol decreases and Cushing's symptoms improve."
+      severity: 'WARNING'
+    - keywords: ["Addison's Disease"]
+      alert: "Evaluate adrenal insufficiency. Monitor cortisol levels. Goal met if cortisol increases and Addison's is managed."
+      severity: 'CRITICAL'
+    - keywords: ["Cushing's Disease"]
+      alert: "Evaluate pituitary function. Monitor ACTH levels. Goal met if ACTH decreases and Cushing's disease is treated."
+      severity: 'WARNING'
+    - keywords: ['Hypopituitarism']
+      alert: 'Evaluate pituitary hormones. Monitor ACTH levels. Goal met if ACTH increases and hypopituitarism resolves.'
+      severity: 'WARNING'
+    - keywords: ['Acromegaly']
+      alert: 'Evaluate growth hormone. Monitor GH levels. Goal met if GH decreases and acromegaly symptoms improve.'
+      severity: 'WARNING'
+    - keywords: ['Growth Hormone Deficiency']
+      alert: 'Evaluate GH production. Monitor GH levels. Goal met if GH increases and deficiency is corrected.'
+      severity: 'WARNING'
+    - keywords: ['Hyperprolactinemia']
+      alert: 'Evaluate prolactin levels. Monitor prolactin levels. Goal met if prolactin decreases and symptoms resolve.'
+      severity: 'WARNING'
+    - keywords: ['Hypoprolactinemia']
+      alert: 'Evaluate prolactin production. Monitor prolactin levels. Goal met if prolactin increases appropriately.'
+      severity: 'WARNING'
+    - keywords: ['Polycystic Ovary Syndrome']
+      alert: 'Evaluate hormonal balance. Monitor testosterone levels. Goal met if testosterone decreases and PCOS is managed.'
+      severity: 'WARNING'
+    - keywords: ['Hypogonadism']
+      alert: 'Evaluate testosterone production. Monitor testosterone levels. Goal met if testosterone increases and hypogonadism resolves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Thromboembolism']
+      alert: 'Evaluate estrogen levels. Monitor estradiol levels. Goal met if estradiol decreases and thrombosis risk reduces.'
+      severity: 'WARNING'
+    - keywords: ['Menopause']
+      alert: 'Evaluate hormonal status. Monitor estradiol levels. Goal met if estradiol stabilizes and menopausal symptoms are managed.'
+      severity: 'WARNING'
+    - keywords: ['Polycystic Ovary Syndrome']
+      alert: 'Evaluate LH/FSH ratio. Monitor LH levels. Goal met if LH decreases and PCOS is treated.'
+      severity: 'WARNING'
+    - keywords: ['Hypogonadotropic Hypogonadism']
+      alert: 'Evaluate gonadotropin levels. Monitor LH levels. Goal met if LH increases and hypogonadism resolves.'
+      severity: 'WARNING'
+    - keywords: ['Menopause']
+      alert: 'Evaluate ovarian function. Monitor FSH levels. Goal met if FSH stabilizes and menopause is managed.'
+      severity: 'WARNING'
+    - keywords: ['Hypopituitarism']
+      alert: 'Evaluate pituitary function. Monitor FSH levels. Goal met if FSH increases and hypopituitarism is corrected.'
+      severity: 'WARNING'
+    - keywords: ['Insulin Resistance']
+      alert: 'Evaluate glucose metabolism. Monitor insulin levels. Goal met if insulin decreases and resistance improves.'
+      severity: 'WARNING'
+    - keywords: ['Diabetes Mellitus']
+      alert: 'Evaluate insulin production. Monitor insulin levels. Goal met if insulin increases and diabetes is controlled.'
+      severity: 'CRITICAL'
+    - keywords: ['Insulin Resistance']
+      alert: 'Evaluate beta cell function. Monitor C-peptide levels. Goal met if C-peptide decreases and resistance is managed.'
+      severity: 'WARNING'
+    - keywords: ['Type 1 Diabetes']
+      alert: 'Evaluate insulin secretion. Monitor C-peptide levels. Goal met if C-peptide increases and diabetes is treated.'
+      severity: 'CRITICAL'
+    - keywords: ['Poor Glycemic Control']
+      alert: 'Evaluate long-term glucose. Monitor HbA1c levels. Goal met if HbA1c decreases and glycemic control improves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Hypoglycemia']
+      alert: 'Evaluate glucose stability. Monitor HbA1c levels. Goal met if HbA1c increases appropriately and hypoglycemia is avoided.'
+      severity: 'WARNING'
+    - keywords: ['Poor Glycemic Control']
+      alert: 'Evaluate short-term glucose. Monitor fructosamine levels. Goal met if fructosamine decreases and control improves.'
+      severity: 'WARNING'
+    - keywords: ['Risk for Hypoglycemia']
+      alert: 'Evaluate glucose levels. Monitor fructosamine levels. Goal met if fructosamine increases appropriately and no hypo.'
+      severity: 'WARNING'

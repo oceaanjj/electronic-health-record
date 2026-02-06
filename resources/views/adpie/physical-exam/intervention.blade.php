@@ -456,7 +456,7 @@
             </div>
             <div class="step-item {{ $currentStep >= 3 ? ($currentStep == 3 ? 'active' : 'completed') : '' }}">
                 <div class="step-circle">3</div>
-                <div class="step-label">Implementation</div>
+                <div class="step-label">Intervention</div>
             </div>
             <div class="step-item {{ $currentStep >= 4 ? ($currentStep == 4 ? 'active' : 'completed') : '' }}">
                 <div class="step-circle">4</div>

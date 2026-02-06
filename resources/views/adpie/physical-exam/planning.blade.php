@@ -124,7 +124,7 @@
             content: "check";
             font-family: 'Material Symbols Outlined';
             position: absolute;
-            font-size: 15px;
+            font-size: 22px;
             font-weight: bold;
         }
 

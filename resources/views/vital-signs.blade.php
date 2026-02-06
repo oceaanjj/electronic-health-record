@@ -18,9 +18,9 @@
         }
     </style>
 
-    <div id="form-content-container">
+    <div id="form-content-container" class="mx-auto max-w-full">
 
-        <div class="mx-auto mt-1 w-full">
+        <div class="mx-auto mt-1 w-full max-w-full">
         {{-- 1. THE ALERT/ERROR (Stays at the top) --}}
         @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
             <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
@@ -55,11 +55,11 @@
 
         <div class="mx-auto w-full pt-10">
             {{-- Increased width to accommodate one line --}}
-            <div class="ml-20 flex flex-wrap items-center gap-x-10 gap-y-4">
+            <div class="mb-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:ml-20">
                 {{-- 1. PATIENT SECTION --}}
                 <div class="flex items-center gap-4">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
-                    <div class="w-[350px]">
+                    <div class="w-full md:w-[350px]">
                         {{-- Fixed width so Date/Day don't jump around --}}
                         <x-searchable-patient-dropdown
                             :patients="$patients"
@@ -82,7 +82,7 @@
 
             {{-- CDSS ALERT MESSAGE (Keep this on its own line below the inputs) --}}
             @if ($selectedPatient && (! isset($vitalsData) || $vitalsData->count() == 0))
-                <div class="mt-4 ml-20 flex items-center gap-2 text-xs text-gray-500 italic">
+                <div class="mt-4 mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-20">
                     <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available (No data recorded for this date).
                 </div>
@@ -110,8 +110,8 @@
                     value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
                 <input type="hidden" id="hidden_day_no_for_vitals_form" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="mx-auto mt-15 flex w-[90%] items-start justify-between gap-1">
-                    <div class="relative mr-3 w-[30%]">
+                <div class="mx-auto mt-5 flex w-full max-w-screen-2xl flex-col items-center justify-center gap-5 md:mt-15 md:w-[98%] md:flex-row md:items-start md:gap-4">
+                    <div class="w-full md:w-2/5">
                         <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
 
                         <div id="fade-top"
@@ -184,7 +184,7 @@
                             <span class="material-symbols-outlined text-[32px]">arrow_drop_down</span>
                         </button>
                     </div>
-                    <div class="w-[68%] overflow-hidden rounded-[15px]">
+                    <div class="w-full overflow-hidden rounded-[15px] md:w-2/5">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
                                 <th class="main-header w-[15%] rounded-tl-lg">TIME</th>
@@ -267,7 +267,8 @@
                         </table>
                     </div>
 
-                    <div class="w-[25%] rounded-[15px]">
+                    {{-- ALERTS COLUMN --}}
+                    <div class="w-full rounded-[15px] md:w-1/5">
                         <div class="main-header rounded-[15px]">ALERTS</div>
 
                         <table class="w-full border-collapse">
@@ -302,7 +303,10 @@
                     </div>
                 </div>
 
-                <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end space-x-4">
+
+
+
+                <div class="mx-auto mt-5 mb-20 flex w-full justify-center space-x-4 md:w-[90%] md:justify-end">
                     @if (isset($vitalsData) && $vitalsData->count() > 0)
                         <button type="submit" formaction="{{ route('vital-signs.cdss') }}"
                             class="button-default cdss-btn text-center">
@@ -313,6 +317,7 @@
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
             </form>
+
         </fieldset>
 
         <div id="chart-modal">

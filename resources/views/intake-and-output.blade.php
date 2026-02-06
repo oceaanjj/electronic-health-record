@@ -4,9 +4,9 @@
 
 @section('content')
     {{-- FORM OVERLAY (ALERT) --}}
-    <div id="form-content-container">
+    <div id="form-content-container" class="mx-auto max-w-full">
         {{-- 1. STRUCTURED HEADER (Layout & CDSS Banner) --}}
-        <div class="mx-auto mt-1 w-full">
+        <div class="mx-auto mt-1 w-full max-w-full">
             {{-- CDSS ALERT BANNER --}}
             @isset($selectedPatient)
                 @if ($ioData)
@@ -44,13 +44,13 @@
 
             <div class="mx-auto w-full pt-10">
                 {{-- px-4 matches standard padding for high-res screens --}}
-                <div class="ml-25 flex flex-wrap items-center gap-x-10 gap-y-4">
+                <div class="mb-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:ml-25">
                     {{-- 1. PATIENT SECTION --}}
                     <div class="flex items-center gap-4">
                         <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                             PATIENT NAME :
                         </label>
-                        <div class="w-[350px]">
+                        <div class="w-full md:w-[350px]">
                             {{-- Matches Vital Signs width --}}
                             <x-searchable-patient-dropdown
                                 :patients="$patients"
@@ -101,7 +101,7 @@
                 {{-- ALERT MESSAGE (Aligned with ml-20) --}}
                 @isset($selectedPatient)
                     @if (! $ioData || $ioData->count() == 0)
-                        <div class="mt-4 ml-24 flex items-center gap-2 text-xs text-gray-500 italic">
+                        <div class="mt-4 mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-24">
                             <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                             Clinical Decision Support System is not yet available (No data for this day).
                         </div>
@@ -128,18 +128,18 @@
                 />
                 <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="mx-auto mt-10 flex w-[90%] items-start justify-center gap-1">
-                    <div class="w-[68%] overflow-hidden rounded-[15px]">
-                        <table class="w-full table-fixed border-collapse border-spacing-y-0">
-                            <tr>
+                <div class="mx-auto mt-5 flex w-full max-w-screen-2xl flex-col items-center justify-center gap-5 md:mt-10 md:w-[98%] md:flex-row md:items-start md:gap-4">
+                    <div class="w-full overflow-hidden rounded-[15px] md:w-3/4 mobile-table-container">
+                        <table class="w-full table-fixed border-collapse border-spacing-y-0 responsive-table">
+                            <tr class="responsive-table-header-row">
                                 <th class="main-header w-[33%] rounded-tl-lg py-2 text-center">ORAL INTAKE (mL)</th>
                                 <th class="main-header w-[33%] py-2 text-center">IV FLUIDS (mL)</th>
                                 <th class="main-header w-[33%] rounded-tr-lg py-2 text-center">URINE OUTPUT (mL)</th>
                             </tr>
 
-                            <tr class="bg-beige text-brown">
+                            <tr class="bg-beige text-brown responsive-table-data-row">
                                 {{-- ORAL INTAKE --}}
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle responsive-table-data" data-label="ORAL INTAKE (mL)">
                                     <input
                                         type="text"
                                         name="oral_intake"
@@ -156,7 +156,7 @@
                                 </td>
 
                                 {{-- IV FLUIDS --}}
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle responsive-table-data" data-label="IV FLUIDS (mL)">
                                     <input
                                         type="text"
                                         name="iv_fluids_volume"
@@ -173,7 +173,7 @@
                                 </td>
 
                                 {{-- URINE OUTPUT --}}
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle responsive-table-data" data-label="URINE OUTPUT (mL)">
                                     <input
                                         type="text"
                                         name="urine_output"
@@ -192,7 +192,7 @@
                         </table>
                     </div>
 
-                    <div class="w-[25%] overflow-hidden rounded-[15px]">
+                    <div class="w-full overflow-hidden rounded-[15px] md:w-1/4 mobile-table-container">
                         <div class="main-header mb-1 rounded-[15px] py-2 text-center">ALERTS</div>
 
                         <table class="w-full border-collapse">
@@ -209,7 +209,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="mx-auto mt-5 mb-30 flex w-[83%] justify-end space-x-4">
+                <div class="mx-auto mt-5 mb-30 flex w-full justify-center space-x-4 md:w-[83%] md:justify-end">
                     {{-- <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button> --}}
                     @if ($ioData)
                         <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default cdss-btn">
@@ -256,3 +256,77 @@
         </script>
         -->
 @endpush
+
+<style>
+    @media screen and (max-width: 640px) {
+
+        .mobile-table-container {
+            display: block !important;
+            width: 90% !important;
+            margin: 0 auto 1.5em auto !important;
+            align-self: center !important;
+            max-width: none;
+            box-sizing: border-box;
+        }
+
+        /* 2. Responsive Table Structure */
+        .responsive-table {
+            display: block;
+            width: 100%;
+        }
+
+        /* Hide the old desktop header */
+        .responsive-table .responsive-table-header-row {
+            display: none;
+        }
+
+        /* Card-style row */
+        .responsive-table .responsive-table-data-row {
+            display: block;
+            border: 1px solid #c18b04;
+            border-radius: 15px;
+            margin-bottom: 1.5em;
+            overflow: hidden;
+            background-color: #F5F5DC;
+        }
+
+        /* 3. FLEXBOX LAYOUT FOR ROWS (Label + Input) */
+        .responsive-table .responsive-table-data {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            border-bottom: 1px solid rgba(193, 139, 4, 0.2);
+        }
+
+        .responsive-table .responsive-table-data:last-child {
+            border-bottom: 0;
+        }
+
+        /* Labels (35%) */
+        .responsive-table .responsive-table-data::before {
+            content: attr(data-label);
+            position: static;
+            width: 30%;
+            flex-shrink: 0;
+            padding-right: 10px;
+            font-weight: bold;
+            color: #6B4226;
+            text-transform: uppercase;
+            font-size: 11px;
+            text-align: left;
+            padding-top: 0;
+        }
+
+        /* Inputs (65%) */
+        .responsive-table .responsive-table-data textarea,
+        .responsive-table .responsive-table-data input {
+            width: 180px !important;
+            padding: 2px;
+            display: block;
+            margin-left: 20px;
+        }
+    }
+</style>
+

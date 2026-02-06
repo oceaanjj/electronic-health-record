@@ -22,7 +22,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: rgba(196, 184, 150, 0.3);
+            background: rgba(196, 184, 150, 0.25);
             border-radius: 2px;
             z-index: 0;
         }
@@ -33,19 +33,19 @@
             top: 25px;
             left: 0;
             height: 4px;
-            background: linear-gradient(90deg, #2d554b 0%, #3a6d60 100%);
+            background: linear-gradient(90deg, #2d554b 0%, #3a6d60 50%, #4a9d7f 100%);
             border-radius: 2px;
             z-index: 1;
             width: 0%;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 10px rgba(45, 85, 75, 0.4);
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 12px rgba(45, 85, 75, 0.5);
         }
 
-        /* Step 1 active = 25% width */
-        .progress-fill.step-1 { width: 0%; }
-        .progress-fill.step-2 { width: 33.33%; }
-        .progress-fill.step-3 { width: 66.66%; }
-        .progress-fill.step-4 { width: 100%; }
+        /* FIXED: Proper progress percentages for 4 steps */
+        .progress-fill.step-1 { width: 0%; }          /* At step 1, no progress yet */
+        .progress-fill.step-2 { width: 33.33%; }      /* 1/3 of the way (between step 1 and 2) */
+        .progress-fill.step-3 { width: 66.66%; }      /* 2/3 of the way (between step 2 and 3) */
+        .progress-fill.step-4 { width: 100%; }        /* Complete (reached step 4) */
 
         .step-item {
             display: flex;
@@ -68,9 +68,9 @@
             font-size: 18px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            background: rgba(232, 228, 217, 0.8);
-            border: 2px solid rgba(196, 184, 150, 0.6);
-            color: #8b7355;
+            background: rgba(240, 237, 230, 0.9);
+            border: 2px solid rgba(196, 184, 150, 0.5);
+            color: #9ca3af;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -95,33 +95,35 @@
         .step-item:nth-child(3) .step-circle { animation-delay: 0.3s; }
         .step-item:nth-child(4) .step-circle { animation-delay: 0.4s; }
 
-        /* Active step - glassmorphism with green */
+        /* Active step - enhanced glassmorphism with vibrant green */
         .step-item.active .step-circle {
-            background: linear-gradient(135deg, rgba(45, 85, 75, 0.95) 0%, rgba(58, 109, 96, 0.95) 100%);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             color: white;
-            box-shadow: 0 8px 24px rgba(45, 85, 75, 0.35),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4),
+                        0 0 20px rgba(16, 185, 129, 0.2),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.3);
             transform: scale(1.15);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
 
-        /* Completed step - glassmorphism with green check */
+        /* Completed step - check mark with emerald gradient */
         .step-item.completed .step-circle {
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.9) 0%, rgba(34, 197, 94, 0.95) 100%);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.95) 0%, rgba(16, 185, 129, 0.95) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             color: white;
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
 
         .step-item.completed .step-circle::before {
-            content: "✓";
+            content: "check";
+            font-family: 'Material Symbols Outlined';
             position: absolute;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
         }
 
@@ -133,7 +135,7 @@
         .step-label {
             margin-top: 12px;
             font-size: 11px;
-            color: #8b7355;
+            color: #9ca3af;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -160,15 +162,16 @@
         .step-item:nth-child(4) .step-label { animation-delay: 0.5s; }
 
         .step-item.active .step-label {
-            color: var(--color-dark-green);
+            color: #059669;
             font-size: 12px;
+            font-weight: 800;
         }
 
         .step-item.completed .step-label {
-            color: #22c55e;
+            color: #10b981;
         }
 
-        /* GLASSMORPHISM BANNERS */
+        /* GLASSMORPHISM BANNERS - Enhanced Colors */
         .recommendation-banner {
             padding: 0.875rem 1.25rem;
             border-radius: 16px;
@@ -215,55 +218,59 @@
             transform: translateY(-2px) scale(1.01);
         }
 
+        /* Enhanced Green - Success/Safe */
         .recommendation-banner.alert-green {
-            background: linear-gradient(135deg, rgba(5, 150, 105, 0.85) 0%, rgba(4, 120, 87, 0.9) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(5, 150, 105, 0.25),
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3),
                         inset 0 1px 1px rgba(255, 255, 255, 0.3),
                         0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         .recommendation-banner.alert-green:hover {
-            background: linear-gradient(135deg, rgba(5, 150, 105, 0.9) 0%, rgba(4, 120, 87, 0.95) 100%);
-            box-shadow: 0 12px 40px rgba(5, 150, 105, 0.35),
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 1) 100%);
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.4),
                         inset 0 1px 1px rgba(255, 255, 255, 0.4),
                         0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
+        /* Enhanced Amber - Warning */
         .recommendation-banner.alert-orange {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.85) 0%, rgba(217, 119, 6, 0.9) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25),
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.9) 0%, rgba(245, 158, 11, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 32px rgba(251, 146, 60, 0.3),
                         inset 0 1px 1px rgba(255, 255, 255, 0.3),
                         0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         .recommendation-banner.alert-orange:hover {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.95) 100%);
-            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.35),
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.95) 0%, rgba(245, 158, 11, 1) 100%);
+            box-shadow: 0 12px 40px rgba(251, 146, 60, 0.4),
                         inset 0 1px 1px rgba(255, 255, 255, 0.4),
                         0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
+        /* Enhanced Red - Critical */
         .recommendation-banner.alert-red {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.85) 0%, rgba(220, 38, 38, 0.9) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.25),
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.9) 0%, rgba(239, 68, 68, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3),
                         inset 0 1px 1px rgba(255, 255, 255, 0.3),
                         0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         .recommendation-banner.alert-red:hover {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.95) 100%);
-            box-shadow: 0 12px 40px rgba(239, 68, 68, 0.4),
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.95) 0%, rgba(239, 68, 68, 1) 100%);
+            box-shadow: 0 12px 40px rgba(239, 68, 68, 0.45),
                         inset 0 1px 1px rgba(255, 255, 255, 0.4),
                         0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
+        /* Enhanced Slate - Info */
         .recommendation-banner.alert-info {
-            background: linear-gradient(135deg, rgba(156, 163, 175, 0.75) 0%, rgba(107, 114, 128, 0.8) 100%);
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.8) 0%, rgba(100, 116, 139, 0.85) 100%);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(107, 114, 128, 0.2),
+            box-shadow: 0 8px 32px rgba(100, 116, 139, 0.2),
                         inset 0 1px 1px rgba(255, 255, 255, 0.25),
                         0 4px 16px rgba(0, 0, 0, 0.08);
             cursor: default;
@@ -271,7 +278,7 @@
 
         .recommendation-banner.alert-info:hover {
             transform: none;
-            box-shadow: 0 8px 32px rgba(107, 114, 128, 0.2),
+            box-shadow: 0 8px 32px rgba(100, 116, 139, 0.2),
                         inset 0 1px 1px rgba(255, 255, 255, 0.25),
                         0 4px 16px rgba(0, 0, 0, 0.08);
         }
@@ -282,13 +289,13 @@
 
         @keyframes subtle-pulse {
             0%, 100% {
-                box-shadow: 0 8px 32px rgba(239, 68, 68, 0.25),
+                box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3),
                             inset 0 1px 1px rgba(255, 255, 255, 0.3),
                             0 4px 16px rgba(0, 0, 0, 0.1);
             }
             50% {
-                box-shadow: 0 12px 48px rgba(239, 68, 68, 0.5),
-                            0 0 30px rgba(239, 68, 68, 0.4),
+                box-shadow: 0 12px 48px rgba(239, 68, 68, 0.55),
+                            0 0 35px rgba(239, 68, 68, 0.45),
                             inset 0 1px 1px rgba(255, 255, 255, 0.4);
             }
         }
@@ -386,7 +393,7 @@
         }
 
         .diagnosis-textarea:focus {
-            box-shadow: 0 0 0 3px rgba(45, 85, 75, 0.1);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
         }
 
         .char-counter {
@@ -428,26 +435,39 @@
     </style>
 
     {{-- Progress Stepper --}}
+    @php
+        // Determine current step based on route or pass it as a variable
+        $currentStep = 1; // Default to step 1 (Diagnosis page)
+        
+        // You can modify this logic based on your routing:
+        // if (request()->routeIs('nursing-diagnosis.planning')) $currentStep = 2;
+        // if (request()->routeIs('nursing-diagnosis.implementation')) $currentStep = 3;
+        // if (request()->routeIs('nursing-diagnosis.evaluation')) $currentStep = 4;
+        
+        // Or if you pass it as a variable from the controller:
+        // $currentStep = $step ?? 1;
+    @endphp
+    
     <div class="mx-auto w-[85%] pt-8 pb-4">
         <div class="progress-stepper">
             {{-- Background track --}}
             <div class="progress-track"></div>
-            {{-- Animated progress fill --}}
-            <div class="progress-fill step-1"></div>
+            {{-- Animated progress fill - dynamically set step class --}}
+            <div class="progress-fill step-{{ $currentStep }}"></div>
             
-            <div class="step-item active">
+            <div class="step-item {{ $currentStep >= 1 ? ($currentStep == 1 ? 'active' : 'completed') : '' }}">
                 <div class="step-circle">1</div>
                 <div class="step-label">Diagnosis</div>
             </div>
-            <div class="step-item">
+            <div class="step-item {{ $currentStep >= 2 ? ($currentStep == 2 ? 'active' : 'completed') : '' }}">
                 <div class="step-circle">2</div>
                 <div class="step-label">Planning</div>
             </div>
-            <div class="step-item">
+            <div class="step-item {{ $currentStep >= 3 ? ($currentStep == 3 ? 'active' : 'completed') : '' }}">
                 <div class="step-circle">3</div>
                 <div class="step-label">Implementation</div>
             </div>
-            <div class="step-item">
+            <div class="step-item {{ $currentStep >= 4 ? ($currentStep == 4 ? 'active' : 'completed') : '' }}">
                 <div class="step-circle">4</div>
                 <div class="step-label">Evaluation</div>
             </div>
@@ -493,7 +513,7 @@
                         
                         $colorClass = 'alert-green';
                         $levelIcon = 'info';
-                        $levelText = 'Information';
+                        $levelText = 'Clinical Decision Support';
                         
                         if ($level === 'CRITICAL') {
                             $colorClass = 'alert-red';
@@ -520,7 +540,7 @@
                             <div class="banner-text">
                                 <div class="banner-title">No Recommendations Yet</div>
                                 <div class="banner-subtitle">
-                                    Type more details in the diagnosis field to receive AI-powered clinical recommendations
+                                    Type more details in the diagnosis field to receive clinical recommendations
                                 </div>
                             </div>
                         </div>
@@ -610,6 +630,52 @@
     @vite(['resources/js/adpie-alert.js'])
     
     <script>
+        // Helper function to format message content consistently
+        function formatMessageContent(message) {
+            if (!message) return '';
+            
+            // If message already contains HTML list tags, return as is
+            if (message.includes('<ul>') || message.includes('<ol>') || message.includes('<li>')) {
+                return message;
+            }
+            
+            // Clean the message and split into sentences
+            // Handle various separators: newlines, periods, or numbered lists
+            let sentences = [];
+            
+            // Check if it looks like a numbered/bulleted list (has multiple lines starting with numbers or bullets)
+            const lines = message.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            
+            if (lines.length > 1) {
+                // It's a multi-line format, treat each line as a separate item
+                sentences = lines.map(line => {
+                    // Remove leading numbers, bullets, or dashes
+                    return line.replace(/^[\d\-\*\•]+[\.\):\s]*/, '').trim();
+                }).filter(s => s.length > 0);
+            } else {
+                // Single paragraph - split by periods
+                sentences = message
+                    .split(/\.\s+/)
+                    .map(s => s.trim())
+                    .filter(s => s.length > 0);
+            }
+            
+            // If we have multiple sentences, format as bullet list
+            if (sentences.length > 1) {
+                const listItems = sentences.map(sentence => {
+                    // Add period back if it doesn't end with punctuation
+                    const formatted = sentence.match(/[.!?]$/) ? sentence : sentence + '.';
+                    return `<li style="margin-bottom: 0.5rem; line-height: 1.6;">${formatted}</li>`;
+                }).join('');
+                
+                return `<ul style="margin: 0; padding-left: 1.5rem; list-style-type: disc;">${listItems}</ul>`;
+            }
+            
+            // Single sentence - return as paragraph
+            const formatted = message.match(/[.!?]$/) ? message : message + '.';
+            return `<p style="margin: 0; line-height: 1.6;">${formatted}</p>`;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const textarea = document.getElementById('diagnosis');
             const charCount = document.getElementById('char-count');
@@ -698,7 +764,7 @@
                     levelIconColor = '#f59e0b';
                 } else {
                     levelIcon = 'info';
-                    levelIconColor = '#059669';
+                    levelIconColor = '#10b981';
                 }
             }
             
@@ -706,6 +772,9 @@
                 console.error('No message available');
                 return;
             }
+            
+            // Format the message content consistently
+            const formattedMessage = formatMessageContent(fullMessage);
             
             const overlay = document.createElement('div');
             overlay.className = 'alert-modal-overlay fade-in';
@@ -721,19 +790,19 @@
                     </div>
                     <div>
                         <h2 style="margin: 0; font-size: 1.5rem;">${levelText}</h2>
-                        <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #6b7280;">Clinical Decision Support</p>
+                        <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #6b7280;">Recommendation</p>
                     </div>
                 </div>
                 
                 <div class="modal-content-scroll" style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem; margin-top: 1.5rem;">
-                    ${fullMessage}
+                    ${formattedMessage}
                 </div>
                 
                 <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.75rem; color: #6b7280;">
                         💡 Press <kbd style="padding: 2px 6px; background: #f3f4f6; border-radius: 4px; font-family: monospace;">ESC</kbd> to close
                     </span>
-                    <button class="close-action-btn" style="padding: 0.625rem 1.5rem; background: var(--color-dark-green); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 0.875rem; box-shadow: 0 2px 8px rgba(45, 85, 75, 0.2);">
+                    <button class="close-action-btn" style="padding: 0.625rem 1.5rem; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 0.875rem; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);">
                         Got it
                     </button>
                 </div>
@@ -765,12 +834,12 @@
             const actionBtn = modal.querySelector('.close-action-btn');
             actionBtn.addEventListener('mouseenter', () => {
                 actionBtn.style.transform = 'translateY(-2px)';
-                actionBtn.style.boxShadow = '0 4px 16px rgba(45, 85, 75, 0.35)';
+                actionBtn.style.boxShadow = '0 4px 16px rgba(16, 185, 129, 0.4)';
                 actionBtn.style.filter = 'brightness(1.1)';
             });
             actionBtn.addEventListener('mouseleave', () => {
                 actionBtn.style.transform = 'translateY(0)';
-                actionBtn.style.boxShadow = '0 2px 8px rgba(45, 85, 75, 0.2)';
+                actionBtn.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.25)';
                 actionBtn.style.filter = 'brightness(1)';
             });
             actionBtn.addEventListener('mousedown', () => {

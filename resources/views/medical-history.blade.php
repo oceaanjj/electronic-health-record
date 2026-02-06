@@ -13,7 +13,7 @@
                         <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
                         {{-- Fixed 350px width matches your global clinical dashboard standard --}}
-                        <div class="w-full sm:w-[10px]">
+                        <div class="w-full sm:w-[350px]">
                             <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
                                 selectRoute="{{ route('medical-history.select') }}"
                                 inputPlaceholder="Search or type Patient Name..." inputName="patient_id"

@@ -6,7 +6,7 @@
     'formId' => 'patient-select-form',
 ])
 
-<div {{ $attributes->merge(['class' => 'flex items-center gap-10']) }}>
+<div {{ $attributes->merge(['class' => 'flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-10']) }}>
     {{-- DATE PICKER --}}
     <div class="flex items-center gap-3">
         <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">DATE :</label>

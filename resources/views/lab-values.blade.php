@@ -36,16 +36,16 @@
 
             {{-- LAB VALUES PATIENT SELECTION (Synced with Vital Signs UI) --}}
 <div class="mx-auto w-full pt-10 px-4">
-    <div class="flex flex-wrap items-center gap-x-10 gap-y-4 ml-20">
+    <div class="flex flex-wrap items-start gap-x-10 gap-y-4">
         
         {{-- PATIENT SECTION --}}
-        <div class="flex items-center gap-4">
+        <div class="w-full flex flex-col md:flex-row items-start md:items-center gap-4">
             <label class="font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
                 PATIENT NAME :
             </label>
             
             {{-- Fixed width to match Vital Signs perfectly --}}
-            <div class="w-[350px]">
+            <div class="w-full md:w-[350px]">
                 <x-searchable-patient-dropdown 
                     :patients="$patients" 
                     :selectedPatient="$selectedPatient"
@@ -61,7 +61,7 @@
 
     {{-- NOT AVAILABLE FOOTER (Aligned with ml-20) --}}
     @if (session('selected_patient_id') && !isset($labValue))
-        <div class="text-xs text-gray-500 italic flex items-center gap-2 mt-4 ml-20">
+        <div class="text-xs text-gray-500 italic flex items-center gap-2 mt-4 px-4 lg:ml-20">
             <span class="material-symbols-outlined text-[16px]">pending_actions</span>
             Clinical Decision Support System is not yet available (No lab records found).
         </div>
@@ -77,15 +77,15 @@
                 <fieldset @if (!session('selected_patient_id')) disabled @endif>
 
                     {{-- MAIN CONTENT - SAME STRUCTURE AS VITAL SIGNS --}}
-                    <div class="w-[90%] mx-auto flex justify-center items-start gap-1 mt-10">
+                    <div class="w-full md:w-[90%] mx-auto flex flex-col md:flex-row justify-center items-center md:items-start gap-y-4 md:gap-1 mt-10 px-4">
 
                         {{-- LEFT SIDE: LAB VALUES TABLE --}}
-                        <div class="w-[68%] rounded-[15px] overflow-hidden">
+                        <div class="w-full md:w-[68%] rounded-[15px] overflow-hidden overflow-x-auto">
                             <table class="w-full table-fixed border-collapse border-spacing-y-0">
                                 <tr>
-                                    <th class="w-[30%] main-header rounded-tl-[15px]">LAB TEST</th>
-                                    <th class="w-[30%] main-header">RESULT</th>
-                                    <th class="w-[50%] main-header rounded-tr-[15px]">
+                                    <th class="min-w-[150px] main-header rounded-tl-[15px]">LAB TEST</th>
+                                    <th class="min-w-[100px] main-header">RESULT</th>
+                                    <th class="min-w-[150px] main-header rounded-tr-[15px]">
                                         NORMAL RANGE
                                     </th>
                                 </tr>
@@ -132,7 +132,7 @@
                         </div>
 
                         {{-- ALERTS TABLE--}}
-                        <div class="w-[25%] rounded-[15px] overflow-hidden">
+                        <div class="w-full md:w-[25%] rounded-[15px] overflow-hidden">
                             <div class="main-header rounded-[15px]">
                                 ALERTS
                             </div>
@@ -153,7 +153,7 @@
                     </div>
 
                     {{-- BUTTONS --}}
-                    <div class="w-[84%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                    <div class="w-full mx-auto flex justify-center mt-5 mb-20 space-x-4 px-4 md:w-[84%] md:justify-end">
                         @if (isset($labValue))
                             <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
                                 class="button-default cdss-btn text-center">

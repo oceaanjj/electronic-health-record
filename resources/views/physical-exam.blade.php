@@ -27,14 +27,14 @@
         @endif
 
         {{-- 2. THE PATIENT SELECTION ROW (Synced with Vital Signs UI) --}}
-        <div class="mx-auto w-full pt-10">
-            <div class="mb-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:ml-23">
+        <div class=" mx-auto w-full pt-10 justify-start ">
+            <div class="mb-5 flex flex-wrap items-center justify-start gap-x-10 gap-y-4 md:ml-33">
                 {{-- LINE 1: PATIENT SELECTION --}}
                 <div class="flex items-center gap-4">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
                     {{-- Fixed width of 350px to match Vital Signs perfectly --}}
-                    <div class="w-full md:w-[350px]">
+                    <div class="w-full md:w-[350px] ">
                         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
                             selectRoute="{{ route('physical-exam.select') }}"
                             inputPlaceholder="Search or type Patient Name..." inputName="patient_id"
@@ -47,7 +47,7 @@
 
             {{-- 3. THE "NOT AVAILABLE" MESSAGE (Synced margin and style) --}}
             @if ($selectedPatient && (!isset($physicalExam) || !$physicalExam))
-                <div class="mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-23">
+                <div class="mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-33">
                     <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available.
                 </div>
@@ -100,7 +100,7 @@
                                         <td class="bg-beige @if (!$loop->last) border-line-brown/50 border-b-2 @endif responsive-table-data"
                                             data-label="{{ $label }}">
                                             <textarea name="{{ $fieldKey }}"
-                                                class="notepad-lines cdss-input h-[90px] w-full border-none"
+                                                class="notepad-lines cdss-input h-[95px] w-full border-none"
                                                 data-field-name="{{ $fieldKey }}"
                                                 placeholder="Type here..">{{ old($fieldKey, $physicalExam->$fieldKey ?? '') }}</textarea>
 

@@ -3,17 +3,16 @@
 @section('content')
     <style>
         #chart-viewport {
-            height: 530px;
             overflow: hidden;
             position: relative;
         }
 
         #chart-track {
-            padding-top: 50px;
-            padding-bottom: 40px;
+            padding-top: 20px; /* Reduced padding for mobile */
+            padding-bottom: 20px; /* Reduced padding for mobile */
         }
 
-        #chart-track>div {
+        #chart-track > div {
             margin: 10px 0;
         }
     </style>
@@ -55,7 +54,7 @@
 
         <div class="mx-auto w-full pt-10">
             {{-- Increased width to accommodate one line --}}
-            <div class="mb-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:ml-20">
+            <div class="mb-5 flex flex-wrap items-center justify-start gap-x-10 gap-y-4 px-4 md:ml-0 lg:ml-33">
                 {{-- 1. PATIENT SECTION --}}
                 <div class="flex items-center gap-4">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
@@ -82,7 +81,7 @@
 
             {{-- CDSS ALERT MESSAGE (Keep this on its own line below the inputs) --}}
             @if ($selectedPatient && (! isset($vitalsData) || $vitalsData->count() == 0))
-                <div class="mt-4 mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-20">
+                <div class="mt-4 mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-68">
                     <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                     Clinical Decision Support System is not yet available (No data recorded for this date).
                 </div>
@@ -110,7 +109,9 @@
                     value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
                 <input type="hidden" id="hidden_day_no_for_vitals_form" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="mx-auto mt-5 flex w-full max-w-screen-2xl flex-col items-center justify-center gap-5 md:mt-15 md:w-[98%] md:flex-row md:items-start md:gap-4">
+                <div
+                    class="mx-auto mt-5 flex w-full max-w-screen-2xl flex-col items-center justify-center gap-5 px-4 md:mt-8 md:w-[98%] md:flex-row lg:items-start md:gap-4"
+                >
                     <div class="w-full md:w-2/5">
                         <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
 
@@ -119,7 +120,7 @@
                         </div>
 
                         <!-- VIEWPORT (SHOWS 3 CHARTS) -->
-                        <div id="chart-viewport" class="relative h-[530px] overflow-hidden rounded-[25px]">
+                        <div id="chart-viewport" class="relative h-auto md:max-h-[530px] overflow-y-auto rounded-[25px]">
                             <div id="chart-track" class="transition-transform duration-700 ease-out">
                                 <!-- ✅ REUSABLE CHART CARD -->
                                 <div
@@ -184,15 +185,18 @@
                             <span class="material-symbols-outlined text-[32px]">arrow_drop_down</span>
                         </button>
                     </div>
-                    <div class="w-full overflow-hidden rounded-[15px] md:w-2/5">
+                    <div class="w-full overflow-hidden rounded-[15px] md:w-2/5 overflow-x-auto">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="main-header w-[15%] rounded-tl-lg">TIME</th>
-                                <th class="main-header w-[18%]">TEMPERATURE</th>
-                                <th class="main-header w-[10%]">HR</th>
-                                <th class="main-header w-[10%]">RR</th>
-                                <th class="main-header w-[10%]">BP</th>
-                                <th class="main-header w-[10%]">SpO₂</th>
+                                <th class="main-header min-w-[100px] rounded-tl-lg">TIME</th>
+                                <th class="main-header min-w-[120px]">
+                                    <span class="sm:hidden">TEMP</span>
+                                    <span class="hidden sm:inline">TEMPERATURE</span>
+                                </th>
+                                <th class="main-header min-w-[80px]">HR</th>
+                                <th class="main-header min-w-[80px]">RR</th>
+                                <th class="main-header min-w-[100px]">BP</th>
+                                <th class="main-header min-w-[80px]">SpO₂</th>
 
                                 @foreach ($times as $index => $time)
                                         @php
@@ -201,9 +205,9 @@
                                             $borderClass = $isLast ? '' : 'border-line-brown/70 border-b-2';
                                         @endphp
 
-                                    <tr class="{{ $borderClass }}">
+                                    <tr class="{{ $borderClass }} responsive-table-data-row">
                                         {{-- TIME COLUMN --}}
-                                        <th class="bg-yellow-light text-brown {{ $borderClass }} py-2 text-center font-semibold">
+                                        <th class="bg-yellow-light text-brown {{ $borderClass }} py-2 text-center font-semibold responsive-table-data" data-label="TIME">
                                             {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
                                         </th>
 
@@ -291,7 +295,7 @@
 
                                 <tr>
                                     <td class="align-middle" data-alert-for-time="{{ $time }}">
-                                        <div class="alert-box flex h-[53px] w-full items-center justify-center"
+                                        <div class="alert-box flex h-[62px] w-full items-center justify-center"
                                             data-alert-for-time="{{ $time }}">
                                             {{-- Dynamic alert content will load here --}}
                                             <span class="font-semibold text-white opacity-70">NO ALERTS</span>

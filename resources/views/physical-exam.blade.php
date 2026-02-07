@@ -109,6 +109,8 @@
                                                 data-alert-for="{{ $fieldKey }}">
                                                 <span class="font-semibold text-white opacity-70">NO ALERTS</span>
                                             </div>
+
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -204,89 +206,339 @@
 
     }
 
+
+
     @media screen and (max-width: 640px) {
+
+
+
         .alert-box-mobile {
+
+
+
             display: flex !important;
+
+
+
         }
 
+
+
+
+
+
+
         .mobile-table-container:last-of-type {
+
+
+
             display: none !important;
+
+
+
         }
+
+
+
+
+
+
+
+
 
 
 
         .mobile-table-container {
+
+
+
             display: block !important;
+
+
+
             width: 100% !important;
+
+
+
             margin: 0 auto 1.5em auto !important;
+
+
+
             align-self: center !important;
+
+
+
             max-width: none;
+
+
+
             box-sizing: border-box;
+
+
+
         }
+
+
+
+
+
+
 
         .responsive-table {
+
+
+
             display: block;
+
+
+
             width: 100%;
+
+
+
         }
+
+
+
+
+
+
 
         .responsive-table .responsive-table-header-row {
+
+
+
             display: none;
+
+
+
         }
+
+
+
+
+
+
 
         .responsive-table .responsive-table-data-row {
+
+
+
             display: block;
+
+
+
             margin: 10px;
+
+
+
             width: 380px;
+
+
+
             margin-left: 15px !important;
+
+
+
             box-sizing: border-box;
+
+
+
             border: 1px solid #c18b04;
+
+
+
             border-radius: 15px;
+
+
+
             margin-bottom: 1.5em;
+
+
+
             overflow: hidden;
+
+
+
             background-color: #F5F5DC;
+
+
+
         }
+
+
+
+
+
+
 
         .responsive-table .responsive-table-data {
+
+
+
             display: flex;
+
+
+
             flex-direction: column;
+
+
+
             align-items: flex-start;
+
+
+
             padding: 15px;
+
+
+
             width: 100%;
+
+
+
             box-sizing: border-box;
+
+
+
             border-bottom: 1px solid rgba(193, 139, 4, 0.2);
+
+
+
         }
+
+
+
+
+
+
 
         .responsive-table .responsive-table-data:last-child {
+
+
+
             border-bottom: 0;
+
+
+
         }
+
+
+
+
+
+
 
         .responsive-table .responsive-table-data::before {
+
+
+
             content: attr(data-label);
+
+
+
             position: static;
+
+
+
             width: 100%;
+
+
+
             padding-right: 0;
+
+
+
             font-weight: bold;
+
+
+
             color: #6B4226;
+
+
+
             text-transform: uppercase;
+
+
+
             font-size: 11px;
+
+
+
             text-align: left;
+
+
+
             padding-top: 0;
+
+
+
             margin-bottom: 5px;
+
+
+
         }
+
+
+
+
+
+
 
         .responsive-table .responsive-table-data textarea,
+
+
+
         .responsive-table .responsive-table-data input {
+
+
+
             width: 100% !important;
+
+
+
             padding: 2px;
+
+
+
             display: block;
+
+
+
             margin-left: 0;
+
+
+
             margin-top: 0;
+
+
+
             margin-bottom: 5px;
+
+
+
         }
 
+
+
+
+
+
+
         .responsive-table .responsive-table-data-row th.responsive-table-data-label {
+
+
+
             display: none;
+
+
+
         }
+
+
+
+
+
+
 
     }
 </style>

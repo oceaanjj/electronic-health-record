@@ -4,16 +4,12 @@
 
     <div id="form-content-container">
         <!-- patient searchable-dropdown -->
-        <center> {{-- To center the lg:w-[85%] block --}}
-            <div class=" md:px-10 w-full flex justify-start items-start gap-2 pt-10 lg:w-[85%]"> {{-- Match form width and
-                left align
-                content --}}
-                <div class="mb-10 w-full mobile-dropdown-container"> {{-- Original flex layout for items --}}
+        <center>
+            <div class=" md:px-12 w-full flex justify-start items-start gap-2 pt-10 lg:w-[85%]">
+                <div class="mb-10 w-full mobile-dropdown-container">
                     {{-- PATIENT SECTION --}}
                     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
                         <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
-
-                        {{-- Fixed 350px width matches your global clinical dashboard standard --}}
                         <div class="w-full sm:w-[350px]">
                             <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
                                 selectRoute="{{ route('medical-history.select') }}"

@@ -97,25 +97,45 @@
                                 {{-- Row 1 (10:00 AM) --}}
                                 <tr class="border-line-brown/70 h-[100px] border-b-2">
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="medication[]" placeholder="Medication"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
-                                        <input type="hidden" name="time[]" value="10:00:00">
+                                        <input
+                                            type="text"
+                                            name="medication[]"
+                                            placeholder="Medication"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                        <input type="hidden" name="time[]" value="10:00:00" />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="dose[]" placeholder="Dose"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="dose[]"
+                                            placeholder="Dose"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="route[]" placeholder="Route"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="route[]"
+                                            placeholder="Route"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="frequency[]" placeholder="Frequency"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="frequency[]"
+                                            placeholder="Frequency"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="comments[]" placeholder="Comments"
-                                            class="w-full h-[45px] focus:outline-none text-center medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="comments[]"
+                                            placeholder="Comments"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <th class="bg-yellow-light text-brown font-semibold">10:00 AM</th>
                                 </tr>
@@ -123,59 +143,105 @@
                                 {{-- Row 2 (2:00 PM) --}}
                                 <tr class="border-line-brown/70 h-[100px] border-b-2">
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="medication[]" placeholder="Medication"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
-                                        <input type="hidden" name="time[]" value="14:00:00">
+                                        <input
+                                            type="text"
+                                            name="medication[]"
+                                            placeholder="Medication"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                        <input type="hidden" name="time[]" value="14:00:00" />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="dose[]" placeholder="Dose"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="dose[]"
+                                            placeholder="Dose"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="route[]" placeholder="Route"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="route[]"
+                                            placeholder="Route"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="frequency[]" placeholder="Frequency"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="frequency[]"
+                                            placeholder="Frequency"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="comments[]" placeholder="Comments"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="comments[]"
+                                            placeholder="Comments"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <th class="bg-yellow-light text-brown font-semibold">2:00 PM</th>
                                 </tr>
 
                                 {{-- Row 3 (6:00 PM) --}}
                                 <tr>
-                                    <td class="bg-beige text-center h-[100px]">
-                                        <input type="text" name="medication[]" placeholder="Medication"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
-                                        <input type="hidden" name="time[]" value="18:00:00">
+                                    <td class="bg-beige h-[100px] text-center">
+                                        <input
+                                            type="text"
+                                            name="medication[]"
+                                            placeholder="Medication"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                        <input type="hidden" name="time[]" value="18:00:00" />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="dose[]" placeholder="Dose"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="dose[]"
+                                            placeholder="Dose"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="route[]" placeholder="Route"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="route[]"
+                                            placeholder="Route"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="frequency[]" placeholder="Frequency"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="frequency[]"
+                                            placeholder="Frequency"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <td class="bg-beige text-center">
-                                        <input type="text" name="comments[]" placeholder="Comments"
-                                            class="w-full h-[45px] text-center focus:outline-none medication-input cdss-input">
+                                        <input
+                                            type="text"
+                                            name="comments[]"
+                                            placeholder="Comments"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
                                     </td>
                                     <th class="text-brown bg-yellow-light font-semibold">6:00 PM</th>
                                 </tr>
                             </table>
                         </div>
 
-                        <div class="w-[70%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
-                            <button class="button-default cdss-btn opacity-50 pointer-events-none" type="submit" id="submit_button">SUBMIT</button>
+                        <div class="mx-auto mt-5 mb-20 flex w-[70%] justify-end space-x-4">
+                            <button
+                                class="button-default cdss-btn pointer-events-none opacity-50"
+                                type="submit"
+                                id="submit_button"
+                            >
+                                SUBMIT
+                            </button>
                         </div>
                     </center>
                 </div>
@@ -189,13 +255,10 @@
 @endpush
 
 @push('scripts')
-    @vite(
-        [
-            'resources/js/date-day-loader.js',
-            'resources/js/searchable-dropdown.js',
-            'resources/js/medication-administration-loader.js',
-            'resources/js/medication-form-validation.js',
-        ]
-    )
-
+    @vite([
+        'resources/js/date-day-loader.js',
+        'resources/js/searchable-dropdown.js',
+        'resources/js/medication-administration-loader.js',
+        'resources/js/medication-form-validation.js',
+    ])
 @endpush

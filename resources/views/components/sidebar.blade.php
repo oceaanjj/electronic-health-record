@@ -10,7 +10,10 @@
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
     </button>
 
-    <ul id="sidebarScroll" class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px] h-[calc(100vh-140px)] overflow-y-auto">
+    <ul
+        id="sidebarScroll"
+        class="text-dark-green font-creato-black mt-[140px] h-[calc(100vh-140px)] overflow-y-auto pr-[10px] pl-[10px] text-[13px]"
+    >
         <li>
             <a
                 href="{{ route('nurse-home') }}"
@@ -206,78 +209,80 @@
 
         @push('scripts')
             <script>
-            // We use a MutationObserver to catch the element the millisecond it's added to the DOM
-            // This is usually faster than DOMContentLoaded and reduces the flicker
-            (function() {
-                const observer = new MutationObserver((mutations, obs) => {
-                    const sidebar = document.getElementById('sidebarScroll');
-                    if (sidebar) {
-                        const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
-                        if (scrollPos) {
-                            sidebar.scrollTop = scrollPos;
-                        }
-                        obs.disconnect(); // Stop looking once we found it
-                    }
-                });
-
-                observer.observe(document.documentElement, {
-                    childList: true,
-                    subtree: true
-                });
-            })();
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const sidebar = document.getElementById('mySidenav');
-                const sidebarScroll = document.getElementById('sidebarScroll');
-                const arrowBtn = document.getElementById('arrowBtn');
-                
-                // Function to update arrow visibility based on sidebar state
-                function updateArrowVisibility() {
-                    if (sidebar.classList.contains('-translate-x-full')) {
-                        // Sidebar is closed
-                        arrowBtn.classList.add('opacity-0', 'pointer-events-none');
-                    } else {
-                        // Sidebar is open
-                        arrowBtn.classList.remove('opacity-0', 'pointer-events-none');
-                    }
-                }
-                
-                // Initialize arrow visibility on page load
-                updateArrowVisibility();
-                
-                // Update arrow visibility whenever sidebar state changes
-                // This handles cases where the sidebar is toggled
-                const sidebarObserver = new MutationObserver(updateArrowVisibility);
-                sidebarObserver.observe(sidebar, { 
-                    attributes: true, 
-                    attributeFilter: ['class'] 
-                });
-                
-                // Save position on any click within the sidebar
-                sidebarScroll.addEventListener('click', (e) => {
-                    if (e.target.closest('a')) {
-                        sessionStorage.setItem('sidebar-scroll-pos', sidebarScroll.scrollTop);
-                    }
-                });
-
-                // Original Logout Logic
-                const logoutBtn = document.getElementById('logout-btn');
-                const logoutForm = document.getElementById('logout-form');
-
-                if (logoutBtn && logoutForm) {
-                    logoutBtn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        if (typeof showConfirm === 'function') {
-                            showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then((result) => {
-                                if (result.isConfirmed) logoutForm.submit();
-                            });
-                        } else {
-                            if (confirm('Are you sure you want to logout?')) logoutForm.submit();
+                // We use a MutationObserver to catch the element the millisecond it's added to the DOM
+                // This is usually faster than DOMContentLoaded and reduces the flicker
+                (function () {
+                    const observer = new MutationObserver((mutations, obs) => {
+                        const sidebar = document.getElementById('sidebarScroll');
+                        if (sidebar) {
+                            const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
+                            if (scrollPos) {
+                                sidebar.scrollTop = scrollPos;
+                            }
+                            obs.disconnect(); // Stop looking once we found it
                         }
                     });
-                }
-            });
-        </script>
+
+                    observer.observe(document.documentElement, {
+                        childList: true,
+                        subtree: true,
+                    });
+                })();
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const sidebar = document.getElementById('mySidenav');
+                    const sidebarScroll = document.getElementById('sidebarScroll');
+                    const arrowBtn = document.getElementById('arrowBtn');
+
+                    // Function to update arrow visibility based on sidebar state
+                    function updateArrowVisibility() {
+                        if (sidebar.classList.contains('-translate-x-full')) {
+                            // Sidebar is closed
+                            arrowBtn.classList.add('opacity-0', 'pointer-events-none');
+                        } else {
+                            // Sidebar is open
+                            arrowBtn.classList.remove('opacity-0', 'pointer-events-none');
+                        }
+                    }
+
+                    // Initialize arrow visibility on page load
+                    updateArrowVisibility();
+
+                    // Update arrow visibility whenever sidebar state changes
+                    // This handles cases where the sidebar is toggled
+                    const sidebarObserver = new MutationObserver(updateArrowVisibility);
+                    sidebarObserver.observe(sidebar, {
+                        attributes: true,
+                        attributeFilter: ['class'],
+                    });
+
+                    // Save position on any click within the sidebar
+                    sidebarScroll.addEventListener('click', (e) => {
+                        if (e.target.closest('a')) {
+                            sessionStorage.setItem('sidebar-scroll-pos', sidebarScroll.scrollTop);
+                        }
+                    });
+
+                    // Original Logout Logic
+                    const logoutBtn = document.getElementById('logout-btn');
+                    const logoutForm = document.getElementById('logout-form');
+
+                    if (logoutBtn && logoutForm) {
+                        logoutBtn.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            if (typeof showConfirm === 'function') {
+                                showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then(
+                                    (result) => {
+                                        if (result.isConfirmed) logoutForm.submit();
+                                    },
+                                );
+                            } else {
+                                if (confirm('Are you sure you want to logout?')) logoutForm.submit();
+                            }
+                        });
+                    }
+                });
+            </script>
         @endpush
     </ul>
 </div>

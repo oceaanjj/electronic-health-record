@@ -2,34 +2,29 @@
 @section('title', 'Patient Activities of Daily Living')
 @section('content')
     <div id="form-content-container">
+        
         {{-- 1. NEW STRUCTURED HEADER (Layout Fix) --}}
         <div class="mx-auto mt-1 w-full">
+            
             {{-- CDSS ALERT BANNER --}}
             @if ($selectedPatient && isset($adlData))
-                {{-- Wrapper matches Physical Exam sizing and transition behavior --}}
                 <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
-                    {{-- Content matches Physical Exam's mt-3, py-3, and px-5 exactly --}}
                     <div
                         id="cdss-alert-content"
                         class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md"
                     >
                         <div class="flex items-center gap-3">
-                            {{-- Pulsing Info Icon --}}
                             <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
                             <span class="text-sm font-semibold text-[#dcb44e]">
                                 Clinical Decision Support System is now available for this date.
                             </span>
                         </div>
-
-                        {{-- Standardized Close Button with Rotation --}}
                         <button
                             type="button"
                             onclick="closeCdssAlert()"
                             class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90"
                         >
-                            <span
-                                class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90"
-                            >
+                            <span class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90">
                                 close
                             </span>
                         </button>
@@ -37,15 +32,20 @@
                 </div>
             @endif
 
-            <div class="mx-auto w-full px-4 pt-10">
-                <div class="ml-20 flex flex-wrap items-center gap-x-10 gap-y-4">
+            {{-- 
+                FIXED CONTAINER ALIGNMENT 
+                1. Removed 'ml-33' and 'lg:ml-20'.
+                2. Added 'md:w-[90%]' to match the table container below.
+            --}}
+            <div class="mx-auto w-full md:w-[90%] px-4 pt-10">
+                <div class="flex flex-wrap items-center gap-x-10 gap-y-4">
+                    
                     {{-- 1. PATIENT SECTION --}}
                     <div class="flex items-center gap-4">
                         <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                             PATIENT NAME :
                         </label>
-                        <div class="w-[320px]">
-                            {{-- Standardized width --}}
+                        <div class="w-full md:w-[320px]">
                             <x-searchable-patient-dropdown
                                 :patients="$patients"
                                 :selectedPatient="$selectedPatient"
@@ -55,7 +55,8 @@
                         </div>
                     </div>
 
-                    {{-- 2. DATE & DAY SECTION (Synced with Vital Signs UI) --}}
+                    {{-- 2. DATE & DAY SECTION --}}
+                    {{-- Removed 'lg:ml-20' so it flows naturally next to patient name --}}
                     @if ($selectedPatient)
                         <x-date-day-selector
                             :currentDate="$currentDate"
@@ -67,8 +68,9 @@
                 </div>
 
                 {{-- 3. NOT AVAILABLE FOOTER --}}
+                {{-- Removed margins, aligned with parent container --}}
                 @if ($selectedPatient && ! isset($adlData))
-                    <div class="mt-4 ml-20 flex items-center gap-2 text-xs text-gray-500 italic">
+                    <div class="mt-4 flex items-center gap-2 text-xs text-gray-500 italic">
                         <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                         Clinical Decision Support System is not yet available (No records for this date).
                     </div>
@@ -92,13 +94,18 @@
                 <input type="hidden" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
                 <input type="hidden" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="mx-auto mt-6 flex w-[90%] items-start justify-center gap-1">
+                {{-- 
+                    FORM TABLE CONTAINER
+                    Matches the width of the header container above (md:w-[90%])
+                --}}
+                <div class="mx-auto mt-6 flex flex-col md:flex-row w-full md:w-[90%] items-center md:items-start justify-center gap-y-4 md:gap-1 px-4">
+                    
                     {{-- LEFT SIDE TABLE (INPUTS) --}}
-                    <div class="w-[70%] overflow-hidden rounded-[15px]">
+                    <div class="w-full md:w-[70%] overflow-hidden rounded-[15px] overflow-x-auto">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0">
                             <tr>
-                                <th class="main-header w-[30%] rounded-tl-lg py-2 text-center">CATEGORY</th>
-                                <th class="main-header w-[60%] rounded-tr-lg">ASSESSMENT</th>
+                                <th class="main-header min-w-[120px] rounded-tl-lg py-2 text-center">CATEGORY</th>
+                                <th class="main-header min-w-[200px] rounded-tr-lg">ASSESSMENT</th>
                             </tr>
 
                             @foreach ([
@@ -119,11 +126,9 @@
                                         <textarea
                                             name="{{ $field }}"
                                             placeholder="Type here..."
-                                            class="notepad-lines cdss-input h-[95px] w-full"
+                                            class="notepad-lines cdss-input h-[90px] w-full"
                                             data-field-name="{{ $field }}"
-                                        >
-{{ old($field, $adlData->$field ?? '') }}</textarea
-                                        >
+                                        >{{ old($field, $adlData->$field ?? '') }}</textarea>
                                     </td>
                                 </tr>
                             @endforeach
@@ -131,7 +136,7 @@
                     </div>
 
                     {{-- ALERTS TABLE --}}
-                    <div class="w-[25%] rounded-[15px]">
+                    <div class="w-full md:w-[25%] rounded-[15px] overflow-x-auto">
                         <div class="main-header rounded-[15px] text-center">ALERTS</div>
                         <table class="w-full border-collapse">
                             @foreach ([
@@ -167,7 +172,8 @@
                     </div>
                 </div>
 
-                <div class="mx-auto mt-5 mb-20 flex w-[85%] justify-end space-x-4">
+                {{-- BUTTONS --}}
+                <div class="mx-auto mt-5 mb-20 flex w-full justify-center space-x-4 px-4 md:w-[85%] md:justify-end">
                     @if (isset($adlData))
                         <a
                             href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"

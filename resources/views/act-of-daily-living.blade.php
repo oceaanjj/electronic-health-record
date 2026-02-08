@@ -37,7 +37,7 @@
                 1. Removed 'ml-33' and 'lg:ml-20'.
                 2. Added 'md:w-[90%]' to match the table container below.
             --}}
-            <div class="mx-auto w-full md:w-[90%] px-4 pt-10">
+            <div class="mobile-dropdown-container mx-auto w-full md:w-[90%] px-4 pt-10">
                 <div class="flex flex-wrap items-center gap-x-10 gap-y-4">
                     
                     {{-- 1. PATIENT SECTION --}}
@@ -69,10 +69,10 @@
 
                 {{-- 3. NOT AVAILABLE FOOTER --}}
                 {{-- Removed margins, aligned with parent container --}}
-                @if ($selectedPatient && ! isset($adlData))
-                    <div class="mt-4 flex items-center gap-2 text-xs text-gray-500 italic">
+                @if ($selectedPatient && (!isset($adlData) || !$adlData))
+                    <div class="w-full flex items-center justify-start gap-2 text-xs italic text-gray-500 mt-4">
                         <span class="material-symbols-outlined text-[16px]">pending_actions</span>
-                        Clinical Decision Support System is not yet available (No records for this date).
+                        Clinical Decision Support System is not yet available.
                     </div>
                 @endif
             </div>
@@ -101,13 +101,11 @@
                 <div class="mx-auto mt-6 flex flex-col md:flex-row w-full md:w-[90%] items-center md:items-start justify-center gap-y-4 md:gap-1 px-4">
                     
                     {{-- LEFT SIDE TABLE (INPUTS) --}}
-                    <div class="w-full md:w-[70%] overflow-hidden rounded-[15px] overflow-x-auto">
-                        <table class="w-full table-fixed border-collapse border-spacing-y-0">
-                            <tr>
-                                <th class="main-header min-w-[120px] rounded-tl-lg py-2 text-center">CATEGORY</th>
-                                <th class="main-header min-w-[200px] rounded-tr-lg">ASSESSMENT</th>
-                            </tr>
-
+                    <div class="mobile-table-container w-full md:w-[70%] overflow-hidden rounded-[15px] overflow-x-auto">
+                        <table class="responsive-table w-full table-fixed border-collapse border-spacing-y-0">
+                            <tr class="responsive-table-header-row">
+                                <th class="main-header w-[30%] rounded-tl-lg py-2 text-white">CATEGORY</th>
+                                <th class="main-header w-[55%] rounded-tr-lg py-2 text-white">FINDINGS</th>
                             @foreach ([
                                     'mobility_assessment' => 'MOBILITY',
                                     'hygiene_assessment' => 'HYGIENE',
@@ -118,25 +116,30 @@
                                     'pain_level_assessment' => 'PAIN LEVEL'
                                 ]
                                 as $field => $label)
-                                <tr class="border-line-brown/50 border-b-2">
-                                    <th class="bg-yellow-light text-brown py-2 text-center font-semibold">
+                                <tr class="responsive-table-data-row border-line-brown border-b-2">
+                                    <th
+                                        class="bg-yellow-light text-brown @if ($loop->last) rounded-bl-lg @endif responsive-table-data-label">
                                         {{ $label }}
                                     </th>
-                                    <td class="bg-beige">
-                                        <textarea
-                                            name="{{ $field }}"
-                                            placeholder="Type here..."
-                                            class="notepad-lines cdss-input h-[90px] w-full"
-                                            data-field-name="{{ $field }}"
-                                        >{{ old($field, $adlData->$field ?? '') }}</textarea>
-                                    </td>
-                                </tr>
+                                        <td class="bg-beige @if (!$loop->last) border-line-brown/50 border-b-2 @endif responsive-table-data"
+                                            data-label="{{ $label }}">
+                                            <textarea name="{{ $field }}"
+                                                class="notepad-lines cdss-input h-[100px] w-full border-none"
+                                                data-field-name="{{ $field }}"
+                                                placeholder="Type here..">{{ old($field, $adlData->$field ?? '') }}</textarea>
+
+                                            <div class="alert-box-mobile my-0.5 flex w-full items-center justify-center px-3 py-4"
+                                                data-alert-for="{{ $field }}">
+                                                <span class="font-semibold text-white opacity-70">NO ALERTS</span>
+                                            </div>
+                                        </td>
+                                    </tr>
                             @endforeach
                         </table>
                     </div>
 
                     {{-- ALERTS TABLE --}}
-                    <div class="w-full md:w-[25%] rounded-[15px] overflow-x-auto">
+                    <div class="mobile-table-container w-full md:w-[25%] rounded-[15px] overflow-x-auto">
                         <div class="main-header rounded-[15px] text-center">ALERTS</div>
                         <table class="w-full border-collapse">
                             @foreach ([
@@ -173,7 +176,7 @@
                 </div>
 
                 {{-- BUTTONS --}}
-                <div class="mx-auto mt-5 mb-20 flex w-full justify-center space-x-4 px-4 md:w-[85%] md:justify-end">
+                <div class="mx-auto mt-5 mb-20 flex w-full justify-end space-x-4 responsive-btns md:w-[85%]">
                     @if (isset($adlData))
                         <a
                             href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
@@ -206,3 +209,132 @@
         });
     </script>
 @endpush
+
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* =========================
+   MOBILE ALERT
+========================= */
+    .alert-box-mobile {
+        display: none;
+        border-radius: 0 0 15px 15px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 40px;
+        padding-bottom: 0px;
+    }
+
+    /* =========================
+   MOBILE (PHONES)
+   <= 640px
+========================= */
+    @media screen and (max-width: 640px) {
+
+        body {
+            margin-top: -40px !important;
+        }
+
+        /* Adjusted dropdown container to be responsive */
+        .mobile-dropdown-container {
+            display: flex !important;
+            flex-wrap: wrap;
+            width: 90% !important;
+            margin: 0 auto 15px auto !important;
+            box-sizing: border-box;
+        }
+
+        /* Show mobile alerts */
+        .alert-box-mobile {
+            display: flex !important;
+            padding: 0px !important;
+        }
+
+        /* Hide right alerts table */
+        .mobile-table-container:last-of-type {
+            display: none !important;
+        }
+
+        /* Force table container width */
+        .mobile-table-container {
+            width: 90% !important;
+            margin: 0 auto !important;
+        }
+
+        /* BREAK TABLE LAYOUT */
+        .responsive-table,
+        .responsive-table tbody,
+        .responsive-table-data-row,
+        .responsive-table-data-label,
+        .responsive-table-data {
+            display: block;
+            width: 100%;
+        }
+
+        /* Remove desktop header row */
+        .responsive-table-header-row {
+            display: none;
+        }
+
+        /* Card container */
+        .responsive-table-data-row {
+            margin: 0 auto 1.5rem auto;
+            border-radius: 15px;
+            background-color: #F5F5DC;
+            overflow: hidden;
+            width: 100%;
+            border: 1px solid #c18b04;
+
+        }
+
+        /* SYSTEM header (th) */
+        .responsive-table-data-label {
+            justify-content: left;
+            padding: 10px 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #6B4226;
+            background: linear-gradient(180deg, #ffd966, #f4b400);
+            font-family: var(--font-creato-bold);
+        }
+
+        /* FINDINGS cell (td) */
+        .responsive-table-data {
+            padding: 14px;
+            border-bottom: none;
+        }
+
+        /* TEXTAREA */
+        .responsive-table-data textarea {
+            width: 100% !important;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+
+        /* Buttons aligned right like desktop */
+        .responsive-btns {
+            width: 90% !important;
+            margin: 1.5rem auto 2.5rem auto;
+            display: flex;
+            justify-content: flex-end !important;
+            gap: 0.75rem;
+        }
+
+        .responsive-btns .button-default,
+        .responsive-btns .cdss-btn {
+            min-width: 100px;
+            text-align: center;
+        }
+    }
+</style>

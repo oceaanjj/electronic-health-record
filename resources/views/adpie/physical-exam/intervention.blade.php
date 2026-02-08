@@ -1,19 +1,18 @@
 @extends('layouts.app')
 @section('title', 'Step 3: Intervention')
 @section('content')
-
     {{-- Progress Stepper --}}
     @php
         $currentStep = $step ?? 3;
     @endphp
-    
+
     <div class="mx-auto w-[85%] pt-8 pb-4">
         <div class="progress-stepper">
             {{-- Background track --}}
             <div class="progress-track"></div>
             {{-- Animated progress fill - dynamically set step class --}}
             <div class="progress-fill step-{{ $currentStep }}"></div>
-            
+
             <div class="step-item {{ $currentStep >= 1 ? ($currentStep == 1 ? 'active' : 'completed') : '' }}">
                 <div class="step-circle">1</div>
                 <div class="step-label">Diagnosis</div>
@@ -69,11 +68,11 @@
                         $alert = session('physical-exam-alerts')['intervention'] ?? null;
                         $level = $alert->level ?? 'INFO';
                         $message = $alert->message ?? null;
-                        
+
                         $colorClass = 'alert-green';
                         $levelIcon = 'info';
                         $levelText = 'Clinical Decision Support';
-                        
+
                         if ($level === 'CRITICAL') {
                             $colorClass = 'alert-red';
                             $levelIcon = 'error';
@@ -118,7 +117,10 @@
                             </div>
                             <div class="banner-text">
                                 <div class="banner-title">{{ $levelText }}</div>
-                                <div class="banner-subtitle" data-full-message="{!! htmlspecialchars($message ?? '') !!}">
+                                <div
+                                    class="banner-subtitle"
+                                    data-full-message="{!! htmlspecialchars($message ?? '') !!}"
+                                >
                                     {{ $preview }}
                                 </div>
                             </div>
@@ -136,10 +138,10 @@
                         <span class="font-bold">INTERVENTION</span>
                         <span class="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
                             STEP 3 of 4
-                        </span> 
+                        </span>
                     </div>
-                    
-                    <div class="relative bg-beige">
+
+                    <div class="bg-beige relative">
                         <textarea
                             id="intervention"
                             name="intervention"
@@ -148,15 +150,20 @@
                             style="border-top: none"
                             placeholder="Enter interventions (e.g., assess, monitor, administer, educate)..."
                             maxlength="2000"
-                        >{{ old('intervention', $diagnosis->intervention ?? '') }}</textarea>
+                        >
+{{ old('intervention', $diagnosis->intervention ?? '') }}</textarea
+                        >
 
                         <div class="char-counter" id="char-counter">
-                            <span id="char-count">0</span> / 2000
+                            <span id="char-count">0</span>
+                            / 2000
                         </div>
                     </div>
 
                     @error('intervention')
-                        <div class="mx-4 mb-3 flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-200">
+                        <div
+                            class="mx-4 mb-3 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600"
+                        >
                             <span class="material-symbols-outlined text-red-500">error</span>
                             {{ $message }}
                         </div>
@@ -167,8 +174,8 @@
             {{-- Action Buttons --}}
             <div class="mx-auto mt-8 mb-12 flex w-[70%] items-center justify-between">
                 <div class="flex flex-col items-start">
-                    <a 
-                        href="{{ route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}" 
+                    <a
+                        href="{{ route('nursing-diagnosis.showPlanning', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id]) }}"
                         class="button-default text-center"
                     >
                         GO BACK
@@ -176,9 +183,7 @@
                 </div>
 
                 <div class="flex flex-row items-center justify-end space-x-3">
-                    <button type="submit" name="action" value="save_and_exit" class="button-default">
-                        SUBMIT
-                    </button>
+                    <button type="submit" name="action" value="save_and_exit" class="button-default">SUBMIT</button>
                     <button type="submit" name="action" value="save_and_proceed" class="button-default">
                         EVALUATION
                     </button>
@@ -190,56 +195,63 @@
 
 @push('scripts')
     @vite(['resources/js/adpie-alert.js'])
-    
+
     <script>
         // Helper function to format message content consistently
         function formatMessageContent(message) {
             if (!message) return '';
-            
+
             // If message already contains HTML list tags, return as is
             if (message.includes('<ul>') || message.includes('<ol>') || message.includes('<li>')) {
                 return message;
             }
-            
+
             // Clean the message and split into sentences
             let sentences = [];
-            
+
             // Check if it looks like a numbered/bulleted list
-            const lines = message.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-            
+            const lines = message
+                .split('\n')
+                .map((line) => line.trim())
+                .filter((line) => line.length > 0);
+
             if (lines.length > 1) {
                 // Multi-line format, treat each line as a separate item
-                sentences = lines.map(line => {
-                    return line.replace(/^[\d\-\*\•]+[\.\):\s]*/, '').trim();
-                }).filter(s => s.length > 0);
+                sentences = lines
+                    .map((line) => {
+                        return line.replace(/^[\d\-\*\•]+[\.\):\s]*/, '').trim();
+                    })
+                    .filter((s) => s.length > 0);
             } else {
                 // Single paragraph - split by periods
                 sentences = message
                     .split(/\.\s+/)
-                    .map(s => s.trim())
-                    .filter(s => s.length > 0);
+                    .map((s) => s.trim())
+                    .filter((s) => s.length > 0);
             }
-            
+
             // If we have multiple sentences, format as bullet list
             if (sentences.length > 1) {
-                const listItems = sentences.map(sentence => {
-                    const formatted = sentence.match(/[.!?]$/) ? sentence : sentence + '.';
-                    return `<li style="margin-bottom: 0.5rem; line-height: 1.6;">${formatted}</li>`;
-                }).join('');
-                
+                const listItems = sentences
+                    .map((sentence) => {
+                        const formatted = sentence.match(/[.!?]$/) ? sentence : sentence + '.';
+                        return `<li style="margin-bottom: 0.5rem; line-height: 1.6;">${formatted}</li>`;
+                    })
+                    .join('');
+
                 return `<ul style="margin: 0; padding-left: 1.5rem; list-style-type: disc;">${listItems}</ul>`;
             }
-            
+
             // Single sentence - return as paragraph
             const formatted = message.match(/[.!?]$/) ? message : message + '.';
             return `<p style="margin: 0; line-height: 1.6;">${formatted}</p>`;
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const textarea = document.getElementById('intervention');
             const charCount = document.getElementById('char-count');
             const charCounter = document.getElementById('char-counter');
-            
+
             // Character counter
             function updateCharCount() {
                 const count = textarea.value.length;
@@ -251,24 +263,24 @@
                     charCounter.classList.add('warning');
                 }
             }
-            
+
             textarea.addEventListener('input', updateCharCount);
             updateCharCount();
-            
+
             // Auto-save draft
             let saveTimeout;
-            textarea.addEventListener('input', function() {
+            textarea.addEventListener('input', function () {
                 clearTimeout(saveTimeout);
-                saveTimeout = setTimeout(function() {
-                    const patientId = '{{ $patient->patient_id ?? "" }}';
+                saveTimeout = setTimeout(function () {
+                    const patientId = '{{ $patient->patient_id ?? '' }}';
                     if (patientId) {
                         localStorage.setItem(`intervention_draft_${patientId}`, textarea.value);
                     }
                 }, 1500);
             });
-            
+
             // Load draft
-            const patientId = '{{ $patient->patient_id ?? "" }}';
+            const patientId = '{{ $patient->patient_id ?? '' }}';
             if (patientId) {
                 const draft = localStorage.getItem(`intervention_draft_${patientId}`);
                 if (draft && !textarea.value) {
@@ -276,16 +288,16 @@
                     updateCharCount();
                 }
             }
-            
+
             // Clear draft on submit
-            document.querySelector('form').addEventListener('submit', function() {
+            document.querySelector('form').addEventListener('submit', function () {
                 if (patientId) {
                     localStorage.removeItem(`intervention_draft_${patientId}`);
                 }
             });
 
             // Keyboard shortcut (Ctrl/Cmd + R)
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 const recommendationBanner = document.getElementById('recommendation-banner');
                 if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
                     if (recommendationBanner && !recommendationBanner.classList.contains('hidden')) {
@@ -297,22 +309,22 @@
         });
 
         // Modal function
-        window.openRecommendationModal = function(bannerElement) {
+        window.openRecommendationModal = function (bannerElement) {
             let fullMessage = bannerElement.dataset.fullMessage;
             let levelText = bannerElement.dataset.levelText;
             let levelIcon = bannerElement.dataset.levelIcon;
             let levelIconColor = bannerElement.dataset.levelIconColor;
-            
+
             if (!fullMessage) {
                 const subtitleElement = bannerElement.querySelector('.banner-subtitle');
                 fullMessage = subtitleElement?.dataset.fullMessage;
             }
-            
+
             if (!levelText) {
                 const titleElement = bannerElement.querySelector('.banner-title');
                 levelText = titleElement?.textContent || 'Recommendation';
             }
-            
+
             if (!levelIcon || !levelIconColor) {
                 if (levelText.toLowerCase().includes('critical')) {
                     levelIcon = 'error';
@@ -325,14 +337,14 @@
                     levelIconColor = '#10b981';
                 }
             }
-            
+
             if (!fullMessage) {
                 console.error('No message available');
                 return;
             }
-            
+
             const formattedMessage = formatMessageContent(fullMessage);
-            
+
             const overlay = document.createElement('div');
             overlay.className = 'alert-modal-overlay fade-in';
 
@@ -340,7 +352,7 @@
             modal.className = 'alert-modal fade-in';
             modal.innerHTML = `
                 <button class="close-btn" aria-label="Close">×</button>
-                
+
                 <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
                     <div style="width: 48px; height: 48px; border-radius: 50%; background: ${levelIconColor}15; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined" style="color: ${levelIconColor}; font-size: 1.75rem;">${levelIcon}</span>
@@ -350,11 +362,11 @@
                         <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #6b7280;">Recommendation</p>
                     </div>
                 </div>
-                
+
                 <div class="modal-content-scroll" style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem; margin-top: 1.5rem;">
                     ${formattedMessage}
                 </div>
-                
+
                 <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.75rem; color: #6b7280;">
                         💡 Press <kbd style="padding: 2px 6px; background: #f3f4f6; border-radius: 4px; font-family: monospace;">ESC</kbd> to close
@@ -376,10 +388,10 @@
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) close();
             });
-            
+
             modal.querySelector('.close-btn').addEventListener('click', close);
             modal.querySelector('.close-action-btn').addEventListener('click', close);
-            
+
             const escHandler = (e) => {
                 if (e.key === 'Escape') close();
             };

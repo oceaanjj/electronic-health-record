@@ -231,6 +231,7 @@
         'resources/js/intake-output-cdss.js',
         'resources/js/searchable-dropdown.js',
         'resources/js/intake-output-data-loader.js',
+        'resources/js/close-cdss-alert.js',
     ])
 
     {{-- Define the specific initializers for this page --}}

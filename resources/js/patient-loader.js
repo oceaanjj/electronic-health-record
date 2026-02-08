@@ -39,7 +39,7 @@ if (!window.patientSelectedListenerAttached) {
             const htmlText = await response.text();
             const parser = new DOMParser();
             const newDoc = parser.parseFromString(htmlText, 'text/html');
-            
+
             // FIX: Guard against undefined/null content
             const newContainer = newDoc.getElementById('form-content-container');
             const newContentHTML = newContainer ? newContainer.innerHTML : null;
@@ -50,8 +50,9 @@ if (!window.patientSelectedListenerAttached) {
 
             // Extract Vitals Data
             const vitalsForm = newDoc.querySelector('#vitals-form');
-            let timePoints = [], vitalsData = {};
-            
+            let timePoints = [],
+                vitalsData = {};
+
             if (vitalsForm) {
                 try {
                     timePoints = JSON.parse(vitalsForm.dataset.times || '[]');
@@ -81,33 +82,32 @@ if (!window.patientSelectedListenerAttached) {
             formContainer.style.opacity = '0';
 
             setTimeout(() => {
-
                 cuteLoader.style.transition = 'opacity 0.3s ease';
                 cuteLoader.style.opacity = '0';
 
                 setTimeout(() => {
-                cuteLoader.remove();
-        document.body.classList.remove('is-loading');
-        
-        formContainer.innerHTML = newContentHTML;
-        
-        requestAnimationFrame(() => {
-            // 3. Fade the new content back in slowly
-            formContainer.style.opacity = '1';
-            
-            // 4. Sequence the UI initialization
-                    initializeUI(timePoints, vitalsData, selectUrl);
-                });
-            }, 300); // Wait for loader to fade out
-        }, 100);
-                } catch (error) {
-                    console.error('Patient loading failed:', error);
-                    if (cuteLoader) cuteLoader.remove();
+                    cuteLoader.remove();
                     document.body.classList.remove('is-loading');
-                    formContainer.style.opacity = '1';
-                }
-            });
+
+                    formContainer.innerHTML = newContentHTML;
+
+                    requestAnimationFrame(() => {
+                        // 3. Fade the new content back in slowly
+                        formContainer.style.opacity = '1';
+
+                        // 4. Sequence the UI initialization
+                        initializeUI(timePoints, vitalsData, selectUrl);
+                    });
+                }, 300); // Wait for loader to fade out
+            }, 100);
+        } catch (error) {
+            console.error('Patient loading failed:', error);
+            if (cuteLoader) cuteLoader.remove();
+            document.body.classList.remove('is-loading');
+            formContainer.style.opacity = '1';
         }
+    });
+}
 
 function initializeUI(timePoints, vitalsData, selectUrl) {
     const formContainer = document.getElementById('form-content-container');

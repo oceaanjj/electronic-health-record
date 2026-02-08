@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Electronic Health Record</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <link rel="preload" as="image" href="img/ehr-logo.png">
-        <link rel="preload" as="image" href="img/loading.png">
+        <link rel="preload" as="image" href="img/ehr-logo.png" />
+        <link rel="preload" as="image" href="img/loading.png" />
 
         {{-- **google icons library nyhahhahaha** --}}
         <link
@@ -127,7 +127,7 @@
         </div>
 
         <script>
-        function openNav() {
+            function openNav() {
             const sidebar = document.getElementById("mySidenav");
             const arrow = document.getElementById("arrowBtn");
             const mobileMenuButton = document.getElementById("mobileMenuButton"); // Get mobile menu button
@@ -166,7 +166,53 @@
                 if (arrow) arrow.classList.add('hidden');
             }, 300); // 300ms matches your transition-duration
         }
-    </script>
+
+            // --- SCROLL PERSISTENCE LOGIC ---
+            (function () {
+                const observer = new MutationObserver((mutations, obs) => {
+                    const sidebar = document.getElementById('sidebarScroll');
+                    if (sidebar) {
+                        const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
+                        if (scrollPos) {
+                            sidebar.scrollTop = scrollPos;
+                        }
+                        // Check if it should be open on refresh
+                        if (localStorage.getItem('sidebarOpen') === 'true') {
+                            openNav();
+                        }
+                        obs.disconnect();
+                    }
+                });
+                observer.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const sidebar = document.getElementById('sidebarScroll');
+                sidebar.addEventListener('click', (e) => {
+                    if (e.target.closest('a')) {
+                        sessionStorage.setItem('sidebar-scroll-pos', sidebar.scrollTop);
+                    }
+                });
+
+                // Logout Confirmation
+                const logoutBtn = document.getElementById('logout-btn');
+                const logoutForm = document.getElementById('logout-form');
+                if (logoutBtn && logoutForm) {
+                    logoutBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        if (typeof showConfirm === 'function') {
+                            showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then(
+                                (result) => {
+                                    if (result.isConfirmed) logoutForm.submit();
+                                },
+                            );
+                        } else if (confirm('Are you sure you want to logout?')) {
+                            logoutForm.submit();
+                        }
+                    });
+                }
+            });
+        </script>
 
         @stack('scripts')
     </body>

@@ -2,27 +2,26 @@
 @section('title', 'Patient Medical History')
 @section('content')
     <div id="form-content-container">
-    <div class="flex items-center gap-4 ml-20 m-10">
-    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
-    
+        <div class="m-10 ml-20 flex items-center gap-4">
+            <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+
             <div class="w-[350px]">
                 <x-searchable-patient-dropdown
                     :patients="$patients"
                     :selectedPatient="$selectedPatient"
-                    selectRoute="" {{-- Empty because we don't want it to redirect --}}
+                    selectRoute=""
+                    {{-- Empty because we don't want it to redirect --}}
                     inputPlaceholder="-Selected Patient-"
                     inputName="patient_id"
                     inputValue="{{ session('selected_patient_id') }}"
-                    :disabled="true" {{-- Locks the input --}}
+                    :disabled="true"
+                    {{-- Locks the input --}}
                 />
             </div>
         </div>
-
         {{-- FORM for data submission (submits with POST) --}}
         <form action="{{ route('developmental.store') }}" method="POST">
-            @csrf
-
-            {{-- Hidden input to send the selected patient's ID with the POST request --}}
+            @csrf {{-- Hidden input to send the selected patient's ID with the POST request --}}
             <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}" />
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>

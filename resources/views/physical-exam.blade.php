@@ -107,7 +107,7 @@
                                         <td class="bg-beige @if (!$loop->last) border-line-brown/50 border-b-2 @endif responsive-table-data"
                                             data-label="{{ $label }}">
                                             <textarea name="{{ $fieldKey }}"
-                                                class="notepad-lines cdss-input h-[90px] w-full border-none"
+                                                class="notepad-lines cdss-input h-[95px] w-full border-none"
                                                 data-field-name="{{ $fieldKey }}"
                                                 placeholder="Type here..">{{ old($fieldKey, $physicalExam->$fieldKey ?? '') }}</textarea>
 
@@ -128,7 +128,7 @@
                                 @foreach ($fields as $fieldKey => $label)
                                     <tr>
                                         <td class="align-middle">
-                                            <div class="alert-box my-0.5 flex h-[86px] w-full items-center justify-center px-3 py-4"
+                                            <div class="alert-box my-0.5 flex h-[91px] w-full items-center justify-center px-3 py-4"
                                                 data-alert-for="{{ $fieldKey }}">
                                                 <span class="font-semibold text-white opacity-70">NO ALERTS</span>
                                             </div>
@@ -161,8 +161,7 @@
             'resources/js/alert.js',
             'resources/js/patient-loader.js',
             'resources/js/searchable-dropdown.js',
-            'resources/js/close-cdss-alert.js',
-        ])
+        'resources/js/close-cdss-alert.js', ])
     @endpush
 
     <style>

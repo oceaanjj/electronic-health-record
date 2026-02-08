@@ -5,7 +5,7 @@
 @section('content')
 
     <!-- searchable dropdown -->
-    <div class="mx-auto w-full px-4 py-10 sm:w-[90%] md:w-[72%]">
+    <div class="mx-auto w-full px-4 py-10 sm:w-[95%] md:w-[95%]">
 
         <div class="mx-auto mt-4 max-w-[1382px] px-4 sm:px-6 md:px-6 lg:px-40">
 

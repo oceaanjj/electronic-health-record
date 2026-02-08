@@ -60,7 +60,7 @@
             <a
                 href="{{ route('physical-exam.index') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('physical-exam.index')
+                    request()->routeIs('physical-exam.*') || request()->is('adpie/physical-exam/*')
                         ? 'bg-dark-green font-bold text-white'
                         : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
@@ -74,7 +74,7 @@
             <a
                 href="{{ route('vital-signs.show') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('vital-signs.show')
+                    request()->routeIs('vital-signs.*') || request()->is('adpie/vital-signs/*')
                         ? 'bg-dark-green font-bold text-white'
                         : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
@@ -88,7 +88,7 @@
             <a
                 href="{{ route('io.show') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('io.show')
+                    request()->routeIs('io.*') || request()->is('adpie/intake-and-output/*')
                         ? 'bg-dark-green font-bold text-white'
                         : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
@@ -102,7 +102,7 @@
             <a
                 href="{{ route('adl.show') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('adl.show')
+                    request()->routeIs('adl.show') || request()->is('adpie/adl/*')
                         ? 'bg-dark-green font-bold text-white'
                         : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
@@ -118,7 +118,7 @@
             <a
                 href="{{ route('lab-values.index') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('lab-values.index')
+                    request()->routeIs('lab-values.*') || request()->is('adpie/lab-values/*')
                         ? 'bg-dark-green font-bold text-white'
                         : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"

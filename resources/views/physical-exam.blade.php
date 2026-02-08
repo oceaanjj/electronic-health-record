@@ -97,8 +97,7 @@
                                 @endphp
 
                                 @foreach ($fields as $fieldKey => $label)
-                                    <tr
-                                        class="responsive-table-data-row @if ($loop->last) border-line-brown border-2 @else border-line-brown border-b-2 @endif">
+                                    <tr class="responsive-table-data-row border-line-brown border-b-2">
                                         <th
                                             class="bg-yellow-light text-brown @if ($loop->last) rounded-bl-lg @endif responsive-table-data-label">
                                             {{ $label }}
@@ -161,7 +160,8 @@
             'resources/js/alert.js',
             'resources/js/patient-loader.js',
             'resources/js/searchable-dropdown.js',
-        'resources/js/close-cdss-alert.js', ])
+            'resources/js/close-cdss-alert.js',
+        ])
     @endpush
 
     <style>
@@ -257,7 +257,6 @@
                 text-transform: uppercase;
                 font-size: 12px;
                 color: #6B4226;
-                border-bottom: 1px solid #c18b04;
                 background: linear-gradient(180deg, #ffd966, #f4b400);
                 font-family: var(--font-creato-bold);
             }
@@ -278,11 +277,9 @@
             /* Buttons aligned right like desktop */
             .responsive-btns {
                 width: 90% !important;
-                /* Match mobile container width */
                 margin: 1.5rem auto 2.5rem auto;
                 display: flex;
-                justify-content: center !important;
-                /* Centered on mobile */
+                justify-content: flex-end !important;
                 gap: 0.75rem;
             }
 

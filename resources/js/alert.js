@@ -221,11 +221,12 @@ window.triggerInitialCdssAnalysis = async function (form) {
         const fieldName = input.dataset.fieldName;
         const finding = input.value.trim();
         const time = input.dataset.time;
-        const alertCell = findAlertCellForInput(input);
+        const alertCells = findAlertCellForInput(input); // Get all cells
 
-        if (!alertCell) return;
+        if (alertCells.length === 0) return; // If no alert cells, skip
+
         if (finding === '') {
-            showDefaultNoAlerts(alertCell);
+            alertCells.forEach(cell => showDefaultNoAlerts(cell)); // Show default for all cells
             return;
         }
 
@@ -233,7 +234,8 @@ window.triggerInitialCdssAnalysis = async function (form) {
         if (!analysisGroups.has(key)) {
             analysisGroups.set(
                 key,
-                time ? { time, alertCell, fields: {} } : { time: null, alertCell, fieldName, finding },
+                // Store fieldName and time to re-find alertCells later
+                time ? { time, fieldName, fields: {} } : { time: null, fieldName, finding },
             );
         }
         if (time) analysisGroups.get(key).fields[fieldName] = finding;
@@ -247,8 +249,12 @@ window.triggerInitialCdssAnalysis = async function (form) {
     }
 
     groups.forEach((group) => {
-        showAlertLoading(group.alertCell);
-        group.alertCell.dataset.startTime = performance.now();
+        // Re-find all alert cells for this group to show loading
+        const alertCells = findAlertCellForInput({ dataset: { fieldName: group.fieldName, time: group.time } });
+        alertCells.forEach(cell => {
+            showAlertLoading(cell);
+            cell.dataset.startTime = performance.now();
+        });
     });
 
     const batchPayload = groups.map((group) => {
@@ -332,6 +338,7 @@ function displayAlert(alertCell, alertData, duration = null) {
     if (!alertData.alert || alertData.alert.toLowerCase().includes('no findings')) {
         hasNoAlerts = true;
         alertContent = `<span class="text-white text-center uppercase font-semibold opacity-80">NO FINDINGS</span>`;
+       
     } else {
         if (alertData.alert.includes(';')) {
             const items = alertData.alert.split('; ').filter((a) => a.trim() !== '');
@@ -362,6 +369,9 @@ function displayAlert(alertCell, alertData, duration = null) {
 function showDefaultNoAlerts(alertCell) {
     if (!alertCell) return;
     const heightClass = getAlertHeightClass(alertCell);
+    if (!alertCell.classList.contains('alert-box-mobile')) {
+        alertCell.classList.add('is-empty-alert'); // Only add class for default no alerts if not mobile
+    }
     alertCell.innerHTML = `
       <div class="alert-box has-no-alert alert-green ${heightClass}" style="margin:2.8px;">
         <span class="alert-message text-white text-center font-semibold uppercase opacity-80">NO ALERTS</span>
@@ -374,6 +384,7 @@ function showDefaultNoAlerts(alertCell) {
 function showAlertLoading(alertCell) {
     if (!alertCell) return;
     const heightClass = getAlertHeightClass(alertCell);
+    alertCell.classList.remove('is-empty-alert'); // Remove class when showing loading
     alertCell.innerHTML = `
       <div class="alert-box alert-green ${heightClass} flex justify-center items-center" style="margin:2px;">
         <div class="flex items-center gap-2 text-white font-semibold">

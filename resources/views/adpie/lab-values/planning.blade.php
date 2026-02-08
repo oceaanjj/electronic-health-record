@@ -298,7 +298,7 @@
                     localStorage.removeItem(`[FIELD]_draft_${component}_${patientId}`);
                 }
             });
-            
+
             // Keyboard shortcut (Ctrl/Cmd + R)
             document.addEventListener('keydown', function (e) {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'r') {

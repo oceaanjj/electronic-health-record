@@ -110,7 +110,12 @@
     z-index: 0;
 }
 
-/* Active progress line (animated fill) */
+@keyframes growProgress {
+    from {
+        width: 0%;
+    }
+}
+
 .progress-fill {
     position: absolute;
     top: 25px;
@@ -119,14 +124,14 @@
     background: linear-gradient(90deg, #2d554b 0%, #3a6d60 50%, #4a9d7f 100%);
     border-radius: 2px;
     z-index: 1;
-    width: 0%;
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    /* transition: width 1s ...;  <-- REMOVE THIS */
+    animation: growProgress 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     box-shadow: 0 0 12px rgba(45, 85, 75, 0.5);
 }
 
 /* FIXED: Proper progress percentages for 4 steps */
 .progress-fill.step-1 {
-    width: 0%;
+    width: 18%;
 } /* At step 1, no progress yet */
 .progress-fill.step-2 {
     width: 45.33%;
@@ -165,7 +170,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); */
     animation-fill-mode: both;
 }
 
@@ -180,33 +185,39 @@
     }
 }
 
-/* Stagger animation delays */
-.step-item:nth-child(1) .step-circle {
-    animation-delay: 0.1s;
-}
-.step-item:nth-child(2) .step-circle {
-    animation-delay: 0.2s;
-}
+/* Update your Step Circle and Label delays */
+
+/* Step Circles */
 .step-item:nth-child(3) .step-circle {
-    animation-delay: 0.3s;
+    animation-delay: 0.1s;
+    animation-name: scaleIn;
 }
 .step-item:nth-child(4) .step-circle {
+    animation-delay: 0.2s;
+    animation-name: scaleIn;
+}
+.step-item:nth-child(5) .step-circle {
+    animation-delay: 0.3s;
+    animation-name: scaleIn;
+}
+.step-item:nth-child(6) .step-circle {
     animation-delay: 0.4s;
+    animation-name: scaleIn;
 }
 
-/* Keep the same delays for labels as circles */
-.step-item:nth-child(1) .step-label {
-    animation-delay: 0.1s;
-} /* Was 0.2s */
-.step-item:nth-child(2) .step-label {
-    animation-delay: 0.2s;
-} /* Was 0.3s */
+/* Step Labels */
 .step-item:nth-child(3) .step-label {
-    animation-delay: 0.3s;
-} /* Was 0.4s */
+    animation-delay: 0.2s;
+}
 .step-item:nth-child(4) .step-label {
+    animation-delay: 0.3s;
+}
+.step-item:nth-child(5) .step-label {
     animation-delay: 0.4s;
-} /* Was 0.5s */
+}
+.step-item:nth-child(6) .step-label {
+    animation-delay: 0.5s;
+}
 
 /* Active step - enhanced glassmorphism with vibrant green */
 .step-item.active .step-circle {
@@ -255,7 +266,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     text-align: center;
-    transition: all 0.3s ease;
+    /* transition: all 0.3s ease; */
     opacity: 0;
     animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }

@@ -247,6 +247,8 @@
                 background-color: #F5F5DC;
                 overflow: hidden;
                 width: 100%;
+                border: 1px solid #c18b04;
+
             }
 
             /* SYSTEM header (th) */

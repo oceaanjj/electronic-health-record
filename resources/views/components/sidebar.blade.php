@@ -1,13 +1,13 @@
 <div id="mySidenav"
     class="bg-ehr bg-white fixed top-0 left-0 z-40 h-full w-[260px] -translate-x-full transform shadow-md transition-transform duration-300 ease-in-out flex flex-col">
-    
+
     <button id="arrowBtn" onclick="closeNav()"
         class="group text-dark-green rounded-oval hover:bg-dark-green absolute top-1/2 -right-4 flex h-15 w-8 -translate-y-1/2 transform items-center justify-center border border-gray-300 bg-white shadow-xl transition-all duration-300 ease-in-out hover:scale-105">
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
     </button>
 
     <ul id="sidebarScroll"
-        class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px] flex-1 overflow-y-auto">
+        class="text-dark-green font-creato-black mt-[100px] sm:mt-[140px] lg:mt-[140px] pr-[10px] pl-[10px] text-[13px] flex-1 overflow-y-auto">
         <li>
             <a href="{{ route('nurse-home') }}"
                 class="group hover:bg-dark-green {{

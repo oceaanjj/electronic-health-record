@@ -122,7 +122,7 @@
 
                         {{-- ALERTS TABLE --}}
                         <div class="w-full overflow-hidden rounded-[15px] md:ml-1 md:w-2/5 mobile-table-container">
-                            <div class="main-header mb-1 rounded-[15px] py-2 text-center">ALERTS</div>
+                            <div class="main-header mb-1 rounded-[15px] py-2">ALERTS</div>
                             <table class="w-full border-collapse">
                                 @foreach ($fields as $fieldKey => $label)
                                     <tr>
@@ -253,11 +253,12 @@
 
             /* SYSTEM header (th) */
             .responsive-table-data-label {
+                text-align: left;
                 justify-content: left;
                 padding: 10px 14px;
                 font-weight: bold;
                 text-transform: uppercase;
-                font-size: 12px;
+                font-size: 13px;
                 color: #6B4226;
                 background: linear-gradient(180deg, #ffd966, #f4b400);
                 font-family: var(--font-creato-bold);

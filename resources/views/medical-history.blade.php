@@ -3,23 +3,20 @@
 @section('content')
 
     <div id="form-content-container">
-        <!-- patient searchable-dropdown -->
-        <center>
-            <div class=" md:px-12 w-full flex justify-start items-start gap-2 pt-10 lg:w-[85%]">
-                <div class="mb-10 w-full mobile-dropdown-container">
-                    {{-- PATIENT SECTION --}}
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                        <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
-                        <div class="w-full sm:w-[350px]">
-                            <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                                selectRoute="{{ route('medical-history.select') }}"
-                                inputPlaceholder="Search or type Patient Name..." inputName="patient_id"
-                                inputValue="{{ session('selected_patient_id') }}" />
-                        </div>
+        <div class="mx-auto w-full pt-10 px-4 md:px-0 md:w-[85%]">
+            <div class="mb-8 w-full">
+                {{-- PATIENT SECTION --}}
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 ">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+                    <div class="w-full sm:w-[350px] mt-2">
+                        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
+                            selectRoute="{{ route('medical-history.select') }}"
+                            inputPlaceholder="Search or type Patient Name..." inputName="patient_id"
+                            inputValue="{{ session('selected_patient_id') }}" />
                     </div>
                 </div>
             </div>
-        </center>
+        </div>
 
 
         <form action="{{ route('medical.store') }}" method="POST" class="relative">
@@ -28,341 +25,472 @@
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}" id="patient_id_hidden">
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
-                <center>
-                    <div class="  md:px-10  w-full flex justify-center items-start gap-2 mt-2 lg:w-[85%]">
-                        <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
-                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
 
-                                {{-- PRESENT ILLNESS --}}
-                                <tr>
-                                    <th colspan="6" class="main-header text-white rounded-t-lg">PRESENT ILLNESS</th>
-                                </tr>
+                {{-- TABLE 1: PRESENT ILLNESS --}}
+                <div class="flex w-full justify-center px-4 md:px-0">
+                    <table
+                        class="mb-8 w-full border-collapse border-spacing-0 overflow-hidden rounded-[15px] md:w-[85%] md:table-fixed">
 
-                                <tr class="responsive-table-header-row">
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME
-                                    </th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        DESCRIPTION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        MEDICATION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE
-                                    </th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE
-                                        EFFECT</th>
-                                    <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
-                                </tr>
+                        {{-- HEADERS --}}
+                        <thead class="block md:table-header-group">
+                            {{-- Main Header --}}
+                            <tr class="block md:table-row">
+                                <th colspan="6" class="main-header block w-full rounded-t-lg md:table-cell text-white">
+                                    PRESENT ILLNESS
+                                </th>
+                            </tr>
+                            {{-- Sub Headers (Hidden on Mobile) --}}
+                            <tr class="hidden md:table-row">
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-line-brown">COMMENT</th>
+                            </tr>
+                        </thead>
 
-                                <tr class="bg-beige responsive-table-data-row">
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data" data-label="NAME">
-                                        <textarea class="notepad-lines h-[200px]" name="present_condition_name"
+                        {{-- BODY --}}
+                        <tbody class="block md:table-row-group">
+                            <tr
+                                class="block overflow-hidden rounded-b-lg border border-line-brown/50 bg-beige shadow-sm md:table-row md:border-none md:rounded-none md:shadow-none">
+
+                                {{-- COL 1: NAME --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        NAME
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="present_condition_name"
                                             placeholder="Type here...">{{ $presentIllness->condition_name ?? '' }}</textarea>
-                                    </td>
+                                    </div>
+                                </td>
 
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="DESCRIPTION">
-                                        <textarea class="notepad-lines h-[200px]" name="present_description"
+                                {{-- COL 2: DESCRIPTION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DESCRIPTION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="present_description"
                                             placeholder="Type here...">{{ $presentIllness->description ?? '' }}</textarea>
-                                    </td>
+                                    </div>
+                                </td>
 
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="MEDICATION">
-                                        <textarea class="notepad-lines h-[200px]" name="present_medication"
+                                {{-- COL 3: MEDICATION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        MEDICATION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="present_medication"
                                             placeholder="Type here...">{{ $presentIllness->medication ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data" data-label="DOSAGE">
-                                        <textarea class="notepad-lines h-[200px]" name="present_dosage"
+                                    </div>
+                                </td>
+
+                                {{-- COL 4: DOSAGE --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DOSAGE
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="present_dosage"
                                             placeholder="Type here...">{{ $presentIllness->dosage ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="SIDE EFFECT">
-                                        <textarea class="notepad-lines h-[200px]" name="present_side_effect"
+                                    </div>
+                                </td>
+
+                                {{-- COL 5: SIDE EFFECT --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        SIDE EFFECT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="present_side_effect"
                                             placeholder="Type here...">{{ $presentIllness->side_effect ?? '' }}</textarea>
-                                    </td>
-                                    <td class="responsive-table-data" data-label="COMMENT">
-                                        <textarea class="notepad-lines h-[200px]" name="present_comment"
+                                    </div>
+                                </td>
+
+                                {{-- COL 6: COMMENT --}}
+                                <td class="block md:table-cell md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        COMMENT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="present_comment"
                                             placeholder="Type here...">{{ $presentIllness->comment ?? '' }}</textarea>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </center>
+                                    </div>
+                                </td>
 
-                <center>
-                    <div class=" md:px-10 w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
-                        <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
-                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                                {{-- PAST MEDICAL / SURGICAL --}}
-                                <tr>
-                                    <th colspan="6" class="main-header text-white rounded-t-lg">PAST MEDICAL / SURGICAL</th>
-                                </tr>
-                                <tr class="responsive-table-header-row">
+                {{-- TABLE 2: PAST MEDICAL / SURGICAL --}}
+                <div class="flex w-full justify-center px-4 md:px-0">
+                    <table
+                        class="mb-8 w-full border-collapse border-spacing-0 overflow-hidden rounded-[15px] md:w-[85%] md:table-fixed">
 
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME
-                                    </th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        DESCRIPTION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        MEDICATION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE
-                                    </th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE
-                                        EFFECT</th>
-                                    <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
-                                </tr>
+                        <thead class="block md:table-header-group">
+                            <tr class="block md:table-row">
+                                <th colspan="6" class="main-header block w-full rounded-t-lg md:table-cell text-white">
+                                    PAST MEDICAL / SURGICAL
+                                </th>
+                            </tr>
+                            <tr class="hidden md:table-row">
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-line-brown">COMMENT</th>
+                            </tr>
+                        </thead>
 
-                                <tr class="bg-beige responsive-table-data-row">
-                                    <td class="border-r-2 border-line-brown/40 responsive-table-data" data-label="NAME">
-                                        <textarea class="notepad-lines h-[200px]" name="past_condition_name"
+                        <tbody class="block md:table-row-group">
+                            <tr
+                                class="block overflow-hidden rounded-b-lg border border-line-brown/50 bg-beige shadow-sm md:table-row md:border-none md:rounded-none md:shadow-none">
+
+                                {{-- COL 1: NAME --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/40 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        NAME
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="past_condition_name"
                                             placeholder="Type here...">{{ $pastMedicalSurgical->condition_name ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="DESCRIPTION">
-                                        <textarea class="notepad-lines h-[200px]" name="past_description"
+                                    </div>
+                                </td>
+
+                                {{-- COL 2: DESCRIPTION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DESCRIPTION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="past_description"
                                             placeholder="Type here...">{{ $pastMedicalSurgical->description ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="MEDICATION">
-                                        <textarea class="notepad-lines h-[200px]" name="past_medication"
+                                    </div>
+                                </td>
+
+                                {{-- COL 3: MEDICATION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        MEDICATION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="past_medication"
                                             placeholder="Type here...">{{ $pastMedicalSurgical->medication ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data" data-label="DOSAGE">
-                                        <textarea class="notepad-lines h-[200px]" name="past_dosage"
+                                    </div>
+                                </td>
+
+                                {{-- COL 4: DOSAGE --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DOSAGE
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="past_dosage"
                                             placeholder="Type here...">{{ $pastMedicalSurgical->dosage ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="SIDE EFFECT">
-                                        <textarea class="notepad-lines h-[200px]" name="past_side_effect"
+                                    </div>
+                                </td>
+
+                                {{-- COL 5: SIDE EFFECT --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        SIDE EFFECT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="past_side_effect"
                                             placeholder="Type here...">{{ $pastMedicalSurgical->side_effect ?? '' }}</textarea>
-                                    </td>
-                                    <td class="responsive-table-data" data-label="COMMENT">
-                                        <textarea class="notepad-lines h-[200px]" name="past_comment"
+                                    </div>
+                                </td>
+
+                                {{-- COL 6: COMMENT --}}
+                                <td class="block md:table-cell md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        COMMENT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="past_comment"
                                             placeholder="Type here...">{{ $pastMedicalSurgical->comment ?? '' }}</textarea>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </center>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <center>
-                    <div class=" md:px-10 w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
-                        <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
-                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
+                {{-- TABLE 3: KNOWN CONDITION OR ALLERGIES --}}
+                <div class="flex w-full justify-center px-4 md:px-0">
+                    <table
+                        class="mb-8 w-full border-collapse border-spacing-0 overflow-hidden rounded-[15px] md:w-[85%] md:table-fixed">
 
-                                {{-- KNOWN CONDITION OR ALLERGIES --}}
+                        <thead class="block md:table-header-group">
+                            <tr class="block md:table-row">
+                                <th colspan="6" class="main-header block w-full rounded-t-lg md:table-cell text-white">
+                                    KNOWN CONDITION OR ALLERGIES
+                                </th>
+                            </tr>
+                            <tr class="hidden md:table-row">
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE EFFECT
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-line-brown">COMMENT</th>
+                            </tr>
+                        </thead>
 
-                                <tr>
-                                    <th colspan="6" class="main-header text-white rounded-t-lg">KNOWN CONDITION OR ALLERGIES
-                                    </th>
-                                </tr>
+                        <tbody class="block md:table-row-group">
+                            <tr
+                                class="block overflow-hidden rounded-b-lg border border-line-brown/50 bg-beige shadow-sm md:table-row md:border-none md:rounded-none md:shadow-none">
 
-                                <tr class="responsive-table-header-row">
-
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME
-                                    </th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        DESCRIPTION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        MEDICATION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE
-                                    </th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">SIDE
-                                        EFFECT</th>
-                                    <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
-                                </tr>
-
-                                <tr class="bg-beige responsive-table-data-row">
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data" data-label="NAME">
-                                        <textarea class="notepad-lines h-[200px]" name="allergy_condition_name"
+                                {{-- COL 1: NAME --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        NAME
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="allergy_condition_name"
                                             placeholder="Type here...">{{ $allergy->condition_name ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="DESCRIPTION">
-                                        <textarea class="notepad-lines h-[200px]" name="allergy_description"
+                                    </div>
+                                </td>
+
+                                {{-- COL 2: DESCRIPTION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DESCRIPTION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="allergy_description"
                                             placeholder="Type here...">{{ $allergy->description ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="MEDICATION">
-                                        <textarea class="notepad-lines h-[200px]" name="allergy_medication"
+                                    </div>
+                                </td>
+
+                                {{-- COL 3: MEDICATION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        MEDICATION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="allergy_medication"
                                             placeholder="Type here...">{{ $allergy->medication ?? '' }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data" data-label="DOSAGE">
-                                        <textarea class="notepad-lines h-[200px]" name="allergy_dosage"
+                                    </div>
+                                </td>
+
+                                {{-- COL 4: DOSAGE --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DOSAGE
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="allergy_dosage"
                                             placeholder="Type here...">{{ old('allergy_dosage', $allergy->dosage ?? '') }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="SIDE EFFECT">
-                                        <textarea class="notepad-lines h-[200px]" name="allergy_side_effect"
+                                    </div>
+                                </td>
+
+                                {{-- COL 5: SIDE EFFECT --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        SIDE EFFECT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="allergy_side_effect"
                                             placeholder="Type here...">{{ old('allergy_side_effect', $allergy->side_effect ?? '') }}</textarea>
-                                    </td>
-                                    <td class="responsive-table-data" data-label="COMMENT">
-                                        <textarea class="notepad-lines h-[200px]" name="allergy_comment"
+                                    </div>
+                                </td>
+
+                                {{-- COL 6: COMMENT --}}
+                                <td class="block md:table-cell md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        COMMENT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="allergy_comment"
                                             placeholder="Type here...">{{ old('allergy_comment', $allergy->comment ?? '') }}</textarea>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </center>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <center>
-                    <div class=" md:px-10 w-full mx-auto flex justify-center items-start gap-1 lg:w-[85%]">
-                        <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
-                            <table class="w-full table-fixed mb-2 border-collapse border-spacing-y-0 responsive-table">
-                                {{-- VACCINATION --}}
-                                <tr>
-                                    <th colspan="6" class="main-header text-white rounded-t-lg">VACCINATION</th>
-                                </tr>
-                                <tr class="responsive-table-header-row">
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME
-                                    </th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        DESCRIPTION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">
-                                        MEDICATION</th>
-                                    <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE
-                                    </th>
-                                    <th class="bg-yellow-light text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
-                                    <th class="bg-yellow-light text-brown text-[13px]  border-line-brown">COMMENT</th>
-                                </tr>
+                {{-- TABLE 4: VACCINATION --}}
+                <div class="flex w-full justify-center px-4 md:px-0">
+                    <table
+                        class="mb-2 w-full border-collapse border-spacing-0 overflow-hidden rounded-[15px] md:w-[85%] md:table-fixed">
 
-                                <tr class="bg-beige responsive-table-data-row">
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data" data-label="NAME">
-                                        <textarea class="notepad-lines h-[200px]" name="vaccine_name"
+                        <thead class="block md:table-header-group">
+                            <tr class="block md:table-row">
+                                <th colspan="6" class="main-header block w-full rounded-t-lg md:table-cell text-white">
+                                    VACCINATION
+                                </th>
+                            </tr>
+                            <tr class="hidden md:table-row">
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">NAME</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DESCRIPTION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">MEDICATION
+                                </th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-r-2 border-line-brown">DOSAGE</th>
+                                <th class="bg-yellow-light text-[13px] border-r-2 border-line-brown">SIDE EFFECT</th>
+                                <th class="bg-yellow-light text-brown text-[13px] border-line-brown">COMMENT</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="block md:table-row-group">
+                            <tr
+                                class="block overflow-hidden rounded-b-lg border border-line-brown/50 bg-beige shadow-sm md:table-row md:border-none md:rounded-none md:shadow-none">
+
+                                {{-- COL 1: NAME --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        NAME
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="vaccine_name"
                                             placeholder="Type here...">{{ old('vaccine_name', $vaccination->condition_name ?? '') }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="DESCRIPTION">
-                                        <textarea class="notepad-lines h-[200px]" name="vaccine_description"
+                                    </div>
+                                </td>
+
+                                {{-- COL 2: DESCRIPTION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DESCRIPTION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="vaccine_description"
                                             placeholder="Type here...">{{ old('vaccine_description', $vaccination->description ?? '') }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="MEDICATION">
-                                        <textarea class="notepad-lines h-[200px]" name="vaccine_medication"
+                                    </div>
+                                </td>
+
+                                {{-- COL 3: MEDICATION --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        MEDICATION
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="vaccine_medication"
                                             placeholder="Type here...">{{ old('vaccine_medication', $vaccination->medication ?? '') }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data" data-label="DOSAGE">
-                                        <textarea class="notepad-lines h-[200px]" name="vaccine_dosage"
+                                    </div>
+                                </td>
+
+                                {{-- COL 4: DOSAGE --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        DOSAGE
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="vaccine_dosage"
                                             placeholder="Type here...">{{ old('vaccine_dosage', $vaccination->dosage ?? '') }}</textarea>
-                                    </td>
-                                    <td class="border-r-2 border-line-brown/50 responsive-table-data"
-                                        data-label="SIDE EFFECT">
-                                        <textarea class="notepad-lines h-[200px]" name="vaccine_side_effect"
+                                    </div>
+                                </td>
+
+                                {{-- COL 5: SIDE EFFECT --}}
+                                <td
+                                    class="block border-b border-line-brown/50 md:table-cell md:border-b-0 md:border-r-2 md:border-line-brown/50 md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        SIDE EFFECT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]"
+                                            name="vaccine_side_effect"
                                             placeholder="Type here...">{{ old('vaccine_side_effect', $vaccination->side_effect ?? '') }}</textarea>
-                                    </td>
-                                    <td class="responsive-table-data" data-label="COMMENT">
-                                        <textarea class="notepad-lines h-[200px]" name="vaccine_comment"
+                                    </div>
+                                </td>
+
+                                {{-- COL 6: COMMENT --}}
+                                <td class="block md:table-cell md:p-0">
+                                    <div
+                                        class="w-full border-b border-line-brown bg-yellow-light p-2 text-[13px] font-bold text-brown md:hidden">
+                                        COMMENT
+                                    </div>
+                                    <div class="p-2 md:p-0">
+                                        <textarea class="notepad-lines h-[120px] w-full md:h-[200px]" name="vaccine_comment"
                                             placeholder="Type here...">{{ old('vaccine_comment', $vaccination->comment ?? '') }}</textarea>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                    <div class="w-full flex justify-center items-start gap-1 lg:w-[85%] md:px-10">
-                        <div class="w-full rounded-[15px] overflow-hidden mobile-table-container">
-                            <div class="w-full flex justify-end mt-5 mb-30 mobile-next-button-align">
-                                <a href="{{ route('developmental-history') }}">
-                                    <button class="button-default">NEXT</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mx-auto mt-5 mb-30 flex w-[85%] justify-end ">
+                    <a href="{{ route('developmental-history') }}">
+                        <button class="button-default">NEXT</button>
+                    </a>
+                </div>
 
-                </center>
             </fieldset>
         </form>
     </div>
 
 @endsection
-
-<style>
-    @media screen and (max-width: 640px) {
-
-        .mobile-table-container {
-            display: block !important;
-            width: 90% !important;
-            margin: 0 0 1.5em auto !important;
-            align-self: center !important;
-            max-width: none;
-            box-sizing: border-box;
-        }
-
-        /* 2. Responsive Table Structure */
-        .responsive-table {
-            display: block;
-            width: 100%;
-        }
-
-        /* Hide the old desktop header */
-        .responsive-table .responsive-table-header-row {
-            display: none;
-        }
-
-        /* Card-style row */
-        .responsive-table .responsive-table-data-row {
-            display: block;
-            border: 1px solid #c18b04;
-            border-radius: 15px;
-            margin-bottom: 1.5em;
-            overflow: hidden;
-            background-color: #F5F5DC;
-        }
-
-        /* 3. FLEXBOX LAYOUT FOR ROWS (Label + Input) */
-        .responsive-table .responsive-table-data {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            width: 100%;
-            box-sizing: border-box;
-            border-bottom: 1px solid rgba(193, 139, 4, 0.2);
-        }
-
-        .responsive-table .responsive-table-data:last-child {
-            border-bottom: 0;
-        }
-
-        /* Labels (35%) */
-        .responsive-table .responsive-table-data::before {
-            content: attr(data-label);
-            position: static;
-            width: 30%;
-            flex-shrink: 0;
-            padding-right: 10px;
-            font-weight: bold;
-            color: #6B4226;
-            text-transform: uppercase;
-            font-size: 11px;
-            text-align: left;
-            padding-top: 0;
-        }
-
-        /* Inputs (65%) */
-        .responsive-table .responsive-table-data textarea,
-        .responsive-table .responsive-table-data input {
-            width: 180px !important;
-            padding: 2px;
-            display: block;
-            margin-left: 20px;
-        }
-
-        .mobile-dropdown-container {
-            display: block !important;
-            width: 77% !important;
-            /* Corrected to 90% */
-            margin: 0 auto 15px auto !important;
-            box-sizing: border-box;
-        }
-
-        .mobile-next-button-align {
-            padding-right: 50px !important;
-            padding-top: -30px;
-        }
-    }
-</style>
 
 @push('scripts')
     @vite([

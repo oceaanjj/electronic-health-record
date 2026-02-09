@@ -12,6 +12,7 @@
             name="diagnosis"
             class="notepad-lines font-typewriter cdss-input diagnosis-textarea w-full rounded-b-lg shadow-sm adpie-textarea"
             placeholder="Enter nursing diagnosis here..."
+            data-field-name="diagnosis"
             maxlength="2000"
         >{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
 

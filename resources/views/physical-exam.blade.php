@@ -1,6 +1,62 @@
 @extends('layouts.app')
 @section('title', 'Physical Exam')
 @section('content')
+
+<style>
+/* Circular Icon Base */
+.alert-icon-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: #e5e7eb; /* Gray for empty */
+    color: #9ca3af;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Yellow state when Findings exist */
+.alert-icon-btn.is-active {
+    background-color: #fbbf24; /* Yellow-400 */
+    border: 2px solid #f59e0b; /* Yellow-500 */
+    color: #ffffff;
+    animation: pulse-yellow 2s infinite;
+}
+
+/* Gray state for No Alerts */
+.alert-icon-btn.is-no-alert {
+    background-color: #10b981; /* Green (or stay gray) */
+    color: white;
+    cursor: default;
+}
+
+.alert-icon-btn:hover:not(.is-empty) {
+    transform: scale(1.1);
+}
+
+@keyframes pulse-yellow {
+    0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+}
+
+/* Spinner adjustment */
+.loading-spinner-small {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+</style>
+
     <div id="form-content-container">
         {{-- 1. THE ALERT/ERROR FIRST (Only shows if CDSS is available) --}}
         @if ($selectedPatient && isset($physicalExam) && $physicalExam)
@@ -221,8 +277,8 @@
                         </div>
 
                         {{-- ALERTS TABLE --}}
-                        <div class="w-[50%] overflow-hidden rounded-[15px]">
-                            <div class="main-header mb-1 rounded-[15px] py-2 text-center">ALERTS</div>
+                        <div class="w-[10%] overflow-hidden rounded-[15px]">
+                            <div class="mb-1 rounded-[15px] py-2 text-center"></div>
                             <table class="w-full border-collapse">
                                 @php
                                     $fields = [
@@ -239,13 +295,16 @@
 
                                 @foreach ($fields as $fieldKey => $label)
                                     <tr>
-                                        <td class="align-middle">
-                                            <div
-                                                class="alert-box my-0.5 flex h-[92px] w-full items-center justify-center px-3 py-4"
+                                        <td class="align-middle text-left">
+                                            {{-- Wrapper for the icon --}}
+                                            <div 
+                                                class="alert-container flex items-center justify-left ml-3 h-[97px]" 
                                                 data-alert-for="{{ $fieldKey }}"
                                             >
-                                                {{-- Dynamic alert content will load here --}}
-                                                <span class="font-semibold text-white opacity-70">NO ALERTS</span>
+                                                {{-- Default state: Grey/Disabled icon --}}
+                                                <div class="alert-icon-btn is-empty">
+                                                    <span class="material-symbols-outlined">notifications</span>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

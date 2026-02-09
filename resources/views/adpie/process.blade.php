@@ -56,7 +56,6 @@
         <div class="progress-stepper">
             <div class="progress-track"></div>
             <div id="js-progress-fill" class="progress-fill step-1"></div>
-
             <div class="flex justify-between w-full z-10 relative">
                 @foreach(['Diagnosis', 'Planning', 'Intervention', 'Evaluation'] as $index => $label)
                     <div class="step-item {{ $index === 0 ? 'active' : '' }}" id="stepper-{{ $index + 1 }}">
@@ -70,13 +69,19 @@
 
     <div class="header mx-auto mt-6 flex w-[70%] items-center gap-4">
         <label class="font-alte text-dark-green font-bold whitespace-nowrap">PATIENT NAME :</label>
-        <div class="relative w-[400px]">
-            <input type="text" value="{{ trim($patient->name ?? '') }}" readonly class="font-creato-bold w-full rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none" />
-        </div>
+        <input type="text" value="{{ trim($patient->name ?? '') }}" readonly class="font-creato-bold w-[400px] rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px]" />
     </div>
 </div>
 
-<form id="master-adpie-form" action="{{ route('nursing-diagnosis.storeEvaluation', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id ?? 0]) }}" method="POST" class="cdss-form mt-4">
+<form 
+    id="master-adpie-form"
+    action="{{ route('nursing-diagnosis.storeEvaluation', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id ?? 0]) }}"
+    method="POST"
+    data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
+    data-patient-id="{{ $patient->patient_id }}"
+    data-component="{{ $component }}"
+    class="cdss-form mt-4">
+
     @csrf
     <div class="adpie-slider-container z-9999">
         <div id="slider-wrapper" class="adpie-slider-wrapper">

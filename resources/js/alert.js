@@ -297,68 +297,43 @@ function getAlertHeightClass(alertCell) {
 }
 
 // Display alert result
+// 1. Display alert result (Yellow if found, Green if none)
 function displayAlert(alertCell, alertData, duration = null) {
     if (!alertCell) return;
-    const heightClass = getAlertHeightClass(alertCell);
-    let colorClass = 'alert-green';
-    if (alertData.severity === 'CRITICAL') colorClass = 'alert-red';
-    else if (alertData.severity === 'WARNING') colorClass = 'alert-orange';
-
-    let alertContent = '';
-    let hasNoAlerts = false;
-    let isClickable = false;
-
-    if (!alertData.alert || alertData.alert.toLowerCase().includes('no findings')) {
-        hasNoAlerts = true;
-        alertContent = `<span class="text-white text-center uppercase font-semibold opacity-80">NO FINDINGS</span>`;
-    } else {
-        if (alertData.alert.includes(';')) {
-            const items = alertData.alert.split('; ').filter((a) => a.trim() !== '');
-            alertContent = `<ul class="list-disc list-inside text-left">${items
-                .map((a) => `<li>${a}</li>`)
-                .join('')}</ul>`;
-        } else {
-            alertContent = `<span>${alertData.alert}</span>`;
-        }
-        isClickable = true;
-    }
+    
+    let isFindings = alertData.alert && !alertData.alert.toLowerCase().includes('no findings');
+    let colorClass = isFindings ? 'is-active' : 'is-no-alert';
+    let icon = isFindings ? 'add_alert' : 'notifications_off';
 
     alertCell.innerHTML = `
-      <div class="alert-box fade-in ${heightClass} ${colorClass} ${
-          hasNoAlerts ? 'has-no-alert' : ''
-      }" style="margin:2px;">
-        <div class="alert-message p-1">${alertContent}</div>
+      <div class="alert-icon-btn fade-in ${colorClass}" title="${isFindings ? 'Click to view findings' : 'No findings'}">
+        <span class="material-symbols-outlined">${icon}</span>
       </div>
     `;
 
-    if (isClickable) {
-        alertCell.querySelector('.alert-box')?.addEventListener('click', () => openAlertModal(alertData));
+    if (isFindings) {
+        alertCell.querySelector('.alert-icon-btn').addEventListener('click', () => openAlertModal(alertData));
     }
     delete alertCell.dataset.startTime;
 }
 
-// Show "No Alerts" state
+// 2. Show "No Alerts" state (Empty/Gray)
 function showDefaultNoAlerts(alertCell) {
     if (!alertCell) return;
-    const heightClass = getAlertHeightClass(alertCell);
     alertCell.innerHTML = `
-      <div class="alert-box has-no-alert alert-green ${heightClass}" style="margin:2.8px;">
-        <span class="alert-message text-white text-center font-semibold uppercase opacity-80">NO ALERTS</span>
+      <div class="alert-icon-btn is-empty">
+        <span class="material-symbols-outlined">notifications</span>
       </div>
     `;
     alertCell.onclick = null;
 }
 
-// Show loading spinner
+// 3. Show loading spinner inside the circle
 function showAlertLoading(alertCell) {
     if (!alertCell) return;
-    const heightClass = getAlertHeightClass(alertCell);
     alertCell.innerHTML = `
-      <div class="alert-box alert-green ${heightClass} flex justify-center items-center" style="margin:2px;">
-        <div class="flex items-center gap-2 text-white font-semibold">
-          <div class="loading-spinner"></div>
-          <span>Analyzing...</span>
-        </div>
+      <div class="alert-icon-btn is-active bg-blue-400">
+        <div class="loading-spinner-small"></div>
       </div>
     `;
     alertCell.onclick = null;

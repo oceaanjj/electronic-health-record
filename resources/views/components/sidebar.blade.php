@@ -1,12 +1,13 @@
 <div id="mySidenav"
-    class="bg-ehr bg-white fixed top-0 left-0 z-40 h-full w-[260px] -translate-x-full transform shadow-md transition-transform duration-300 ease-in-out">
+    class="bg-ehr bg-white fixed top-0 left-0 z-40 h-full w-[260px] -translate-x-full transform shadow-md transition-transform duration-300 ease-in-out flex flex-col">
+    
     <button id="arrowBtn" onclick="closeNav()"
         class="group text-dark-green rounded-oval hover:bg-dark-green absolute top-1/2 -right-4 flex h-15 w-8 -translate-y-1/2 transform items-center justify-center border border-gray-300 bg-white shadow-xl transition-all duration-300 ease-in-out hover:scale-105">
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
     </button>
 
     <ul id="sidebarScroll"
-        class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px] h-[calc(100vh-140px)] overflow-y-auto">
+        class="text-dark-green font-creato-black mt-[140px] pr-[10px] pl-[10px] text-[13px] flex-1 overflow-y-auto">
         <li>
             <a href="{{ route('nurse-home') }}"
                 class="group hover:bg-dark-green {{
@@ -154,22 +155,24 @@
                 </span>
             </a>
         </li>
+    </ul>
 
-        <li>
-            <center>
-                <hr class="border-dark-green mt-[120px] w-full border-t-1" />
-            </center>
+    <div class="text-dark-green font-creato-black text-[13px] pr-[10px] pl-[10px] pb-5">
+        <center>
+            <hr class="border-dark-green w-full border-t-1" />
+        </center>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
-                @csrf
-            </form>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+            @csrf
+        </form>
 
-            <a href="#" id="logout-btn"
-                class="group hover:bg-hover mt-[20px] flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200 hover:font-bold">
-                <span class="material-symbols-outlined">logout</span>
-                <span>LOG OUT</span>
-            </a>
-</div>
+        <a href="#" id="logout-btn"
+            class="group hover:bg-hover mt-[20px] flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200 hover:font-bold">
+            <span class="material-symbols-outlined">logout</span>
+            <span>LOG OUT</span>
+        </a>
+    </div>
+
 </div>
 
 @push('scripts')
@@ -247,5 +250,3 @@
         });
     </script>
 @endpush
-</ul>
-</div>

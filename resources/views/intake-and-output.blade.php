@@ -10,20 +10,16 @@
             {{-- CDSS ALERT BANNER --}}
             @isset($selectedPatient)
                 @if ($ioData)
-                    {{-- Exact copy of Physical Exam's wrapper size and padding --}}
                     <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
-                        {{-- Exact copy of Physical Exam's mt-3, py-3, and px-5 sizing --}}
                         <div id="cdss-alert-content"
                             class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md">
                             <div class="flex items-center gap-3">
-                                {{-- Pulsing Info Icon matching Physical Exam --}}
                                 <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
                                 <span class="text-sm font-semibold text-[#dcb44e]">
                                     Clinical Decision Support System is now available for this date.
                                 </span>
                             </div>
 
-                            {{-- Close Button matching Physical Exam's size and interaction --}}
                             <button type="button" onclick="closeCdssAlert()"
                                 class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90">
                                 <span
@@ -37,15 +33,16 @@
             @endisset
 
             <div class="mx-auto w-full pt-10">
-                {{-- px-4 matches standard padding for high-res screens --}}
-                <div class="mb-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:ml-25">
+                {{-- UPDATED: Removed justify-center/items-center, added items-start for mobile left alignment --}}
+                <div class="mobile-dropdown-container mb-5 flex flex-wrap items-start justify-start gap-x-10 gap-y-4 md:ml-25 md:items-center">
+                    
                     {{-- 1. PATIENT SECTION --}}
-                    <div class="flex items-center gap-4">
+                    {{-- UPDATED: Changed justify-center to justify-start --}}
+                    <div class="flex items-center gap-4 w-full sm:w-auto justify-start sm:justify-start">
                         <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                             PATIENT NAME :
                         </label>
                         <div class="w-full md:w-[350px]">
-                            {{-- Matches Vital Signs width --}}
                             <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
                                 :selectRoute="route('io.select')" :inputValue="$selectedPatient?->name ?? ''" />
                         </div>
@@ -53,7 +50,8 @@
 
                     {{-- 2. DAY NO SECTION --}}
                     @isset($selectedPatient)
-                        <div class="flex items-center gap-3">
+                        {{-- UPDATED: Changed justify-center to justify-start to align with Patient Name --}}
+                        <div class="flex items-center gap-3 w-full sm:w-auto justify-start sm:justify-start">
                             <label for="day_no_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">
                                 DAY NO :
                             </label>
@@ -66,7 +64,6 @@
                                         </option>
                                     @endfor
                                 </select>
-                                {{-- Standardized Arrow UI --}}
                                 <div
                                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,10 +76,11 @@
                     @endisset
                 </div>
 
-                {{-- ALERT MESSAGE (Aligned with ml-20) --}}
+                {{-- ALERT MESSAGE --}}
                 @isset($selectedPatient)
                     @if (!$ioData || $ioData->count() == 0)
-                        <div class="mt-4 mx-auto flex items-center gap-2 text-xs italic text-gray-500 md:ml-24">
+                        {{-- UPDATED: Added w-[90%] to match container width, changed justify-center to justify-start --}}
+                        <div class="mt-4 mx-auto w-[90%] md:w-auto flex items-center justify-start gap-2 text-xs italic text-gray-500 md:ml-24">
                             <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                             Clinical Decision Support System is not yet available (No data for this day).
                         </div>
@@ -102,6 +100,8 @@
 
                 <div
                     class="mx-auto mt-5 flex w-full max-w-screen-2xl flex-col items-center justify-center gap-5 md:mt-10 md:w-[98%] md:flex-row md:items-start md:gap-4">
+                    
+                    {{-- MAIN DATA TABLE --}}
                     <div class="w-full overflow-hidden rounded-[15px] md:w-3/4 mobile-table-container">
                         <table class="w-full table-fixed border-collapse border-spacing-y-0 responsive-table">
                             <tr class="responsive-table-header-row">
@@ -119,7 +119,7 @@
                                                     .replace(/[^0-9.]/g, '')
                                                     .replace(/(\..*?)\..*/g, '$1')
                                             "
-                                        class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
+                                        class="bg-transparent text-brown cdss-input vital-input h-[100px] w-[80%] border-none text-center font-semibold placeholder-brown/50 focus:border-transparent focus:outline-none focus:ring-0"
                                         data-field-name="oral_intake" />
                                 </td>
 
@@ -131,7 +131,7 @@
                                                     .replace(/[^0-9.]/g, '')
                                                     .replace(/(\..*?)\..*/g, '$1')
                                             "
-                                        class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
+                                        class="bg-transparent text-brown cdss-input vital-input h-[100px] w-[80%] border-none text-center font-semibold placeholder-brown/50 focus:border-transparent focus:outline-none focus:ring-0"
                                         data-field-name="iv_fluids_volume" />
                                 </td>
 
@@ -143,13 +143,14 @@
                                                     .replace(/[^0-9.]/g, '')
                                                     .replace(/(\..*?)\..*/g, '$1')
                                             "
-                                        class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
+                                        class="bg-transparent text-brown cdss-input vital-input h-[100px] w-[80%] border-none text-center font-semibold placeholder-brown/50 focus:border-transparent focus:outline-none focus:ring-0"
                                         data-field-name="urine_output" />
                                 </td>
                             </tr>
                         </table>
                     </div>
 
+                    {{-- ALERTS TABLE --}}
                     <div class="w-full overflow-hidden rounded-[15px] md:w-1/4 mobile-table-container">
                         <div class="main-header mb-1 rounded-[15px] py-2 text-center">ALERTS</div>
 
@@ -165,8 +166,9 @@
                         </table>
                     </div>
                 </div>
-                <div class="mx-auto mt-5 mb-30 flex w-full justify-center space-x-4 md:w-[83%] md:justify-end">
-                    {{-- <button type="button" class="button-default w-[300px]">CALCULATE FLUID BALANCE</button> --}}
+
+                {{-- BUTTONS --}}
+                <div class="mx-auto mt-5 mb-30 flex w-full justify-center space-x-4 responsive-btns md:w-[83%] md:justify-end">
                     @if ($ioData)
                         <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default cdss-btn">
                             CDSS
@@ -189,100 +191,131 @@
         'resources/js/intake-output-data-loader.js',
         'resources/js/close-cdss-alert.js',
     ])
-
-    {{-- Define the specific initializers for this page --}}
-    <!--
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    window.pageInitializers = [
-                        window.initializeSearchableDropdown,
-                        window.initializeDateDayLoader,
-
-                        // Assuming intakeOutputCdss has an init method or is directly callable
-                        () => {
-                            if (typeof window.intakeOutputCdss === 'function') {
-                                window.intakeOutputCdss();
-                            } else if (
-                                typeof window.intakeOutputCdss?.init === 'function'
-                            ) {
-                                window.intakeOutputCdss.init();
-                            }
-                        }
-                    ];
-                });
-            </script>
-            -->
 @endpush
 
 <style>
+    /* Global Styles */
+    html, body {
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* =========================
+       MOBILE (PHONES) <= 640px
+       Matched to Physical Exam Design
+    ========================= */
     @media screen and (max-width: 640px) {
 
+        /* General Layout Adjustments */
+        body {
+            margin-top: -40px !important;
+        }
+
+        .mobile-dropdown-container {
+            display: flex !important;
+            flex-direction: column;
+            width: 90% !important;
+            margin: 0 auto 15px auto !important;
+        }
+
+        /* Container for Table cards */
         .mobile-table-container {
             display: block !important;
             width: 90% !important;
-            margin: 0 auto 1.5em auto !important;
-            align-self: center !important;
+            margin: 0 auto 1.5rem auto !important;
             max-width: none;
             box-sizing: border-box;
         }
 
-        /* 2. Responsive Table Structure */
-        .responsive-table {
+        /* 1. Reset Table Structure */
+        .responsive-table,
+        .responsive-table tbody,
+        .responsive-table-header-row,
+        .responsive-table-data-row,
+        .responsive-table-data {
             display: block;
             width: 100%;
         }
 
-        /* Hide the old desktop header */
+        /* Hide Desktop Headers/Structure */
         .responsive-table .responsive-table-header-row {
             display: none;
         }
 
-        /* Card-style row */
-        .responsive-table .responsive-table-data-row {
-            display: block;
-            border: 1px solid #c18b04;
-            border-radius: 15px;
-            margin-bottom: 1.5em;
-            overflow: hidden;
-            background-color: #F5F5DC;
+        /* Remove the row border from desktop and make it transparent */
+        .responsive-table-data-row {
+            background-color: transparent !important; 
+            border: none !important;
+            margin: 0;
+            padding: 0;
         }
 
-        /* 3. FLEXBOX LAYOUT FOR ROWS (Label + Input) */
+        /* 2. TRANSFORM CELLS INTO CARDS */
         .responsive-table .responsive-table-data {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            width: 100%;
-            box-sizing: border-box;
-            border-bottom: 1px solid rgba(193, 139, 4, 0.2);
+            position: relative;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            background-color: #ffffff; 
+            border: 1px solid #c18b04; /* Gold/Brown Border */
+            overflow: hidden;
+            padding: 0; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .responsive-table .responsive-table-data:last-child {
-            border-bottom: 0;
-        }
-
-        /* Labels (35%) */
+        /* 3. PSEUDO HEADER (The Gradient Bar) */
         .responsive-table .responsive-table-data::before {
             content: attr(data-label);
-            position: static;
-            width: 30%;
-            flex-shrink: 0;
-            padding-right: 10px;
+            display: block;
+            width: 100%;
+            background: linear-gradient(180deg, #ffd966, #f4b400); 
+            color: #6B4226; 
+            font-family: var(--font-creato-bold, sans-serif);
             font-weight: bold;
-            color: #6B4226;
+            font-size: 13px;
             text-transform: uppercase;
-            font-size: 11px;
+            padding: 10px 14px;
+            box-sizing: border-box;
             text-align: left;
-            padding-top: 0;
         }
 
-        /* Inputs (65%) */
-        .responsive-table .responsive-table-data textarea,
-        .responsive-table .responsive-table-data input {
-            width: 180px !important;
-            padding: 2px;
-            display: block;
-            margin-left: 20px;
+        /* 4. INPUT FIELD STYLING */
+        .responsive-table-data input {
+            width: 100% !important;
+            box-sizing: border-box;
+            margin: 15px 0; 
+            height: 80px !important; 
+            border-radius: 10px;
+            /* border: 1px solid #ddd; */
+            background-color: #ffffff !important; 
+        }
+        
+        /* Wrapper inside TD to add padding around input */
+        .responsive-table-data input {
+             width: calc(100% - 30px) !important; 
+             margin: 15px auto !important;
+             display: block;
+        }
+
+        /* 5. ALERT BOXES (Mobile) */
+        .alert-box {
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* 6. BUTTONS */
+        .responsive-btns {
+            width: 90% !important;
+            margin: 1.5rem auto 2.5rem auto;
+            display: flex;
+            justify-content: flex-end !important;
+            gap: 0.75rem;
+        }
+
+        .responsive-btns .button-default,
+        .responsive-btns .cdss-btn {
+            min-width: 100px;
+            text-align: center;
         }
     }
 </style>

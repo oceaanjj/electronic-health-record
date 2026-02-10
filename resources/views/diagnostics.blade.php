@@ -536,26 +536,26 @@
     >
         {{-- DIAGNOSTICS PATIENT SELECTION --}}
         <div class="mx-auto w-full px-4">
-        <div class="ml-5 flex flex-wrap items-center gap-x-10 gap-y-4">
-            
-            {{-- 1. PATIENT SECTION --}}
-            <div class="flex items-center gap-4">
-                <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+            <div class="flex flex-wrap items-center gap-x-10 gap-y-4">
+                
+                {{-- 1. PATIENT SECTION --}}
+                <div class="flex items-center gap-4">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
-                <div class="w-[350px]">
-                    <x-searchable-patient-dropdown
-                        :patients="$patients"
-                        :selectedPatient="$selectedPatient"
-                        :selectRoute="route('diagnostics.select')"
-                        :inputValue="$selectedPatient?->patient_id ?? ''"
-                        inputPlaceholder="Search or type Patient Name..."
-                        inputName="patient_id"
-                    />
+                    <div class="w-full md:w-[350px]">
+                        <x-searchable-patient-dropdown
+                            :patients="$patients"
+                            :selectedPatient="$selectedPatient"
+                            :selectRoute="route('diagnostics.select')"
+                            :inputValue="$selectedPatient?->patient_id ?? ''"
+                            inputPlaceholder="Search or type Patient Name..."
+                            inputName="patient_id"
+                        />
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
 
 
         <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
@@ -668,7 +668,7 @@
                 </div>
 
                 {{-- Using your original button class --}}
-                <div class="w-[98%] mx-auto flex justify-end mt-5 mb-20 space-x-4">
+                <div class="w-full mx-auto flex justify-center mt-5 mb-20 space-x-4 px-4 md:w-[98%] md:justify-end">
                     <button
                         type="submit"
                         class="button-default text-center"

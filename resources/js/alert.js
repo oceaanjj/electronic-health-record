@@ -11,9 +11,9 @@ let debounceTimer;
 function findAlertCellForInput(input) {
     const fieldName = input.dataset.fieldName;
     const time = input.dataset.time;
-    if (time) return document.querySelector(`[data-alert-for-time="${time}"]`);
-    if (fieldName) return document.querySelector(`[data-alert-for="${fieldName}"]`);
-    return null;
+    if (time) return document.querySelectorAll(`[data-alert-for-time="${time}"]`);
+    if (fieldName) return document.querySelectorAll(`[data-alert-for="${fieldName}"]`);
+    return []; // Return an empty array if no match
 }
 
 // =======================================================
@@ -80,23 +80,41 @@ window.initializeCdssForForm = function (form) {
             const fieldName = e.target.dataset.fieldName;
             const finding = e.target.value.trim();
             const time = e.target.dataset.time;
-            const alertCell = findAlertCellForInput(e.target);
+            const alertCells = findAlertCellForInput(e.target); // Renamed variable
 
-            if (alertCell && finding === '') {
-                showDefaultNoAlerts(alertCell);
-                delete alertCell.dataset.startTime;
+            if (alertCells.length > 0 && finding === '') { // Handle multiple cells
+                alertCells.forEach(cell => {
+                    showDefaultNoAlerts(cell);
+                    delete cell.dataset.startTime;
+                });
                 return;
             }
 
             debounceTimer = setTimeout(() => {
-                if ((fieldName || time) && alertCell) {
+                if ((fieldName || time) && alertCells.length > 0) { // Ensure there are cells
                     console.log(`Input → Field: ${fieldName} | Value: ${finding}`);
 
-                    if (alertCell) {
-                        showAlertLoading(alertCell);
-                        alertCell.dataset.startTime = performance.now();
-                    }
-                    analyzeField(fieldName, finding, time, alertCell, analyzeUrl, csrfToken);
+                    // Show loading for all relevant cells
+                    alertCells.forEach(cell => {
+                        showAlertLoading(cell);
+                        cell.dataset.startTime = performance.now();
+                    });
+
+                    // Call analyzeField once, but then update all cells
+                    analyzeField(fieldName, finding, time, alertCells[0], analyzeUrl, csrfToken) // Pass first cell for context
+                        .then(alertData => {
+                            alertCells.forEach(cell => {
+                                const endTime = performance.now();
+                                const startTime = parseFloat(cell.dataset.startTime || endTime);
+                                const duration = (endTime - startTime).toFixed(2);
+                                displayAlert(cell, alertData, duration);
+                            });
+                        })
+                        .catch(errorData => { // ErrorData is an object now
+                            alertCells.forEach(cell => {
+                                displayAlert(cell, errorData, 0);
+                            });
+                        });
                 }
             }, TYPING_DELAY_MS);
         };
@@ -138,20 +156,13 @@ async function analyzeField(fieldName, finding, time, alertCell, url, token, vit
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         const alertData = await response.json();
-        const endTime = performance.now();
-        const startTime = parseFloat(alertCell.dataset.startTime || endTime);
-        const duration = (endTime - startTime).toFixed(2);
-
-        console.log(`[CDSS] Single response received in ${duration} ms`);
-
-        // Display alert immediately (no 300ms delay)
-        displayAlert(alertCell, alertData, duration);
+        return alertData; // Return alert data
     } catch (error) {
         console.error('[CDSS] Single analysis failed:', error);
-        displayAlert(alertCell, {
+        throw { // Throw an object for consistent error handling
             alert: 'Error analyzing...',
             severity: 'CRITICAL',
-        });
+        };
     }
 }
 
@@ -175,18 +186,25 @@ window.triggerInitialCdssAnalysis = async function (form) {
             const inputs = form.querySelectorAll('.cdss-input');
             inputs.forEach((input) => {
                 const finding = input.value.trim();
-                const alertCell = findAlertCellForInput(input);
-                if (finding !== '' && alertCell) {
+                const alertCells = findAlertCellForInput(input); // Get all cells
+                if (finding !== '' && alertCells.length > 0) {
+                    alertCells.forEach(cell => showAlertLoading(cell)); // Show loading on all
                     analyzeField(
                         input.dataset.fieldName,
                         finding,
                         input.dataset.time,
-                        alertCell,
+                        alertCells[0], // Pass first cell for context, analyzeField doesn't use it much for vitals override though
                         analyzeUrl,
                         csrfToken,
-                    );
-                } else if (alertCell) {
-                    showDefaultNoAlerts(alertCell);
+                    )
+                        .then(alertData => {
+                            alertCells.forEach(cell => displayAlert(cell, alertData));
+                        })
+                        .catch(errorData => {
+                            alertCells.forEach(cell => displayAlert(cell, errorData));
+                        });
+                } else if (alertCells.length > 0) { // If no finding, show default for all
+                    alertCells.forEach(cell => showDefaultNoAlerts(cell));
                 }
             });
         }
@@ -203,11 +221,12 @@ window.triggerInitialCdssAnalysis = async function (form) {
         const fieldName = input.dataset.fieldName;
         const finding = input.value.trim();
         const time = input.dataset.time;
-        const alertCell = findAlertCellForInput(input);
+        const alertCells = findAlertCellForInput(input); // Get all cells
 
-        if (!alertCell) return;
+        if (alertCells.length === 0) return; // If no alert cells, skip
+
         if (finding === '') {
-            showDefaultNoAlerts(alertCell);
+            alertCells.forEach(cell => showDefaultNoAlerts(cell)); // Show default for all cells
             return;
         }
 
@@ -215,7 +234,8 @@ window.triggerInitialCdssAnalysis = async function (form) {
         if (!analysisGroups.has(key)) {
             analysisGroups.set(
                 key,
-                time ? { time, alertCell, fields: {} } : { time: null, alertCell, fieldName, finding },
+                // Store fieldName and time to re-find alertCells later
+                time ? { time, fieldName, fields: {} } : { time: null, fieldName, finding },
             );
         }
         if (time) analysisGroups.get(key).fields[fieldName] = finding;
@@ -229,8 +249,12 @@ window.triggerInitialCdssAnalysis = async function (form) {
     }
 
     groups.forEach((group) => {
-        showAlertLoading(group.alertCell);
-        group.alertCell.dataset.startTime = performance.now();
+        // Re-find all alert cells for this group to show loading
+        const alertCells = findAlertCellForInput({ dataset: { fieldName: group.fieldName, time: group.time } });
+        alertCells.forEach(cell => {
+            showAlertLoading(cell);
+            cell.dataset.startTime = performance.now();
+        });
     });
 
     const batchPayload = groups.map((group) => {
@@ -267,20 +291,23 @@ window.triggerInitialCdssAnalysis = async function (form) {
         // 4. DISPLAY ALL RESULTS
         batchResults.forEach((alertData, index) => {
             const group = groups[index];
-            const alertCell = group.alertCell;
-            const endTime = performance.now();
-            const startTime = parseFloat(alertCell.dataset.startTime || endTime);
-            const duration = (endTime - startTime).toFixed(2);
-
-            // Display alert immediately
-            displayAlert(alertCell, alertData, duration);
+            const alertCells = findAlertCellForInput({ dataset: { fieldName: group.fieldName, time: group.time } }); // Re-find all cells for this group
+            alertCells.forEach(cell => { // Loop through each cell
+                const endTime = performance.now();
+                const startTime = parseFloat(cell.dataset.startTime || endTime); // Use cell's startTime if set
+                const duration = (endTime - startTime).toFixed(2);
+                displayAlert(cell, alertData, duration);
+            });
         });
     } catch (error) {
         console.error('[CDSS] Batch analysis failed:', error);
         groups.forEach((group) => {
-            displayAlert(group.alertCell, {
-                alert: 'Batch Error',
-                severity: 'CRITICAL',
+            const alertCells = findAlertCellForInput({ dataset: { fieldName: group.fieldName, time: group.time } }); // Re-find all cells for error
+            alertCells.forEach(cell => {
+                displayAlert(cell, {
+                    alert: 'Batch Error',
+                    severity: 'CRITICAL',
+                }, 0);
             });
         });
     }
@@ -311,6 +338,7 @@ function displayAlert(alertCell, alertData, duration = null) {
     if (!alertData.alert || alertData.alert.toLowerCase().includes('no findings')) {
         hasNoAlerts = true;
         alertContent = `<span class="text-white text-center uppercase font-semibold opacity-80">NO FINDINGS</span>`;
+       
     } else {
         if (alertData.alert.includes(';')) {
             const items = alertData.alert.split('; ').filter((a) => a.trim() !== '');
@@ -341,6 +369,9 @@ function displayAlert(alertCell, alertData, duration = null) {
 function showDefaultNoAlerts(alertCell) {
     if (!alertCell) return;
     const heightClass = getAlertHeightClass(alertCell);
+    if (!alertCell.classList.contains('alert-box-mobile')) {
+        alertCell.classList.add('is-empty-alert'); // Only add class for default no alerts if not mobile
+    }
     alertCell.innerHTML = `
       <div class="alert-box has-no-alert alert-green ${heightClass}" style="margin:2.8px;">
         <span class="alert-message text-white text-center font-semibold uppercase opacity-80">NO ALERTS</span>
@@ -353,6 +384,7 @@ function showDefaultNoAlerts(alertCell) {
 function showAlertLoading(alertCell) {
     if (!alertCell) return;
     const heightClass = getAlertHeightClass(alertCell);
+    alertCell.classList.remove('is-empty-alert'); // Remove class when showing loading
     alertCell.innerHTML = `
       <div class="alert-box alert-green ${heightClass} flex justify-center items-center" style="margin:2px;">
         <div class="flex items-center gap-2 text-white font-semibold">

@@ -1054,3 +1054,11 @@
 .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
     background-color: var(--color-dark-red) !important;
 }
+
+
+/* for mobile responsive layout bg margin top  */
+@media (max-width: 600px) { 
+    body {
+        margin-top: -40px; 
+    }
+}

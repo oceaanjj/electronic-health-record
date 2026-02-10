@@ -199,6 +199,7 @@
         'resources/js/searchable-dropdown.js',
         'resources/js/alert.js',
         'resources/js/date-day-sync.js',
+          'resources/js/close-cdss-alert.js',
     ])
 
     <script>

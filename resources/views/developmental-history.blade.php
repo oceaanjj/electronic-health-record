@@ -26,12 +26,12 @@
 
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
-                    <p class="main-header mb-1 w-[90%] rounded-[15px]">DEVELOPMENTAL HISTORY</p>
+                    <p class="main-header mb-1 w-[80%] rounded-[15px]">DEVELOPMENTAL HISTORY</p>
                 </center>
 
                 <center>
                     {{-- DEVELOPMENTAL HISTORY --}}
-                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[80%] border-separate border-spacing-0">
                         {{-- GROSS MOTOR --}}
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">GROSS MOTOR</th>
@@ -50,7 +50,7 @@
                     </table>
 
                     {{-- FINE MOTOR --}}
-                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[80%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">FINE MOTOR</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
@@ -68,7 +68,7 @@
                     </table>
 
                     {{-- LANGUAGE --}}
-                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[80%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">LANGUAGE</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
@@ -86,7 +86,7 @@
                     </table>
 
                     {{-- COGNITIVE --}}
-                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[80%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">COGNITIVE</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
@@ -104,7 +104,7 @@
                     </table>
 
                     {{-- SOCIAL --}}
-                    <table class="bg-beige mb-1.5 w-[90%] border-separate border-spacing-0">
+                    <table class="bg-beige mb-1.5 w-[80%] border-separate border-spacing-0">
                         <tr>
                             <th rowspan="2" class="main-header w-[200px] rounded-l-lg">SOCIAL</th>
                             <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">

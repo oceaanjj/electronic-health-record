@@ -139,3 +139,65 @@ function initializeUI(timePoints, vitalsData, selectUrl) {
         }),
     );
 }
+
+// Reusable page loading function
+window.showPageLoader = function() {
+    const cuteLoader = document.createElement('div');
+    cuteLoader.className = 'cute-loader-wrapper';
+    cuteLoader.innerHTML = `
+        <div class="loader-card">
+            <div class="logo-container">
+                <img src="/img/loading.png" alt="Logo" class="shining-logo">
+            </div>
+            <span class="loading-text">One moment please...</span>
+        </div>
+    `;
+    
+    document.body.classList.add('is-loading');
+    document.body.appendChild(cuteLoader);
+    return cuteLoader;
+};
+
+window.hidePageLoader = function(loader) {
+    return new Promise((resolve) => {
+        loader.style.transition = 'opacity 0.3s ease';
+        loader.style.opacity = '0';
+        
+        setTimeout(() => {
+            loader.remove();
+            document.body.classList.remove('is-loading');
+            resolve();
+        }, 300);
+    });
+};
+
+// Intercept sidebar navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarLinks = document.querySelectorAll('#mySidenav a[href]:not(#logout-btn)');
+    
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Skip if it's the current page
+            if (this.classList.contains('bg-dark-green')) {
+                return;
+            }
+            
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            
+            // Show loader
+            const loader = window.showPageLoader();
+            
+            // Save scroll position
+            const sidebarScroll = document.getElementById('sidebarScroll');
+            if (sidebarScroll) {
+                sessionStorage.setItem('sidebar-scroll-pos', sidebarScroll.scrollTop);
+            }
+            
+            // Navigate after a short delay (for smooth animation)
+            setTimeout(() => {
+                window.location.href = href;
+            }, 100);
+        });
+    });
+});

@@ -218,142 +218,116 @@
                             <span class="material-symbols-outlined text-[32px]">arrow_drop_down</span>
                         </button>
                     </div>
-                    <div class="w-[68%] overflow-hidden rounded-[15px]">
-                        <table class="w-full table-fixed border-collapse border-spacing-y-0">
-                            <tr>
-                                <th class="main-header w-[15%] rounded-tl-lg">TIME</th>
-                                <th class="main-header w-[18%]">TEMPERATURE</th>
-                                <th class="main-header w-[10%]">HR</th>
-                                <th class="main-header w-[10%]">RR</th>
-                                <th class="main-header w-[10%]">BP</th>
-                                <th class="main-header w-[10%]">SpO₂</th>
+                    {{-- COMBINED VITAL SIGNS TABLE WITH ALERTS --}}
+<div class="w-full overflow-hidden rounded-[15px]">
+    <table class="w-full table-fixed border-collapse border-spacing-y-0">
+        <tr>
+            <th class="w-[12%] main-header rounded-tl-[15px]">TIME</th>
+            <th class="w-[15%] main-header">TEMPERATURE</th>
+            <th class="w-[10%] main-header">HR</th>
+            <th class="w-[10%] main-header">RR</th>
+            <th class="w-[10%] main-header">BP</th>
+            <th class="w-[15%] main-header rounded-tr-[15px]">SpO₂</th>
+            <th class="w-[28%] text-center py-2"></th>
+        </tr>
 
-                                @foreach ($times as $index => $time)
-                                    @php
-                                        $vitalsRecord = $vitalsData->get($time);
-                                        $isLast = $index === count($times) - 1;
-                                        $borderClass = $isLast ? '' : 'border-line-brown/70 border-b-2';
-                                    @endphp
+        @foreach ($times as $index => $time)
+            @php
+                $vitalsRecord = $vitalsData->get($time);
+                $isLast = $index === count($times) - 1;
+            @endphp
 
-                                    <tr class="{{ $borderClass }}">
-                                        {{-- TIME COLUMN --}}
-                                        <th
-                                            class="bg-yellow-light text-brown {{ $borderClass }} py-2 text-center font-semibold"
-                                        >
-                                            {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
-                                        </th>
+            <tr>
+                {{-- TIME COLUMN --}}
+                <td class="p-2 font-semibold bg-yellow-light text-brown text-center">
+                    {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
+                </td>
 
-                                        {{-- TEMPERATURE --}}
-                                        <td class="bg-beige {{ $borderClass }}">
-                                            <input
-                                                type="text"
-                                                name="temperature_{{ $time }}"
-                                                placeholder="temperature"
-                                                value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                                class="cdss-input vital-input h-[60px]"
-                                                data-field-name="temperature"
-                                                data-time="{{ $time }}"
-                                                autocomplete="off"
-                                            />
-                                        </td>
+                {{-- TEMPERATURE --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="temperature_{{ $time }}"
+                        placeholder="temperature"
+                        value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="temperature"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- HR --}}
-                                        <td class="bg-beige {{ $borderClass }}">
-                                            <input
-                                                type="text"
-                                                name="hr_{{ $time }}"
-                                                placeholder="bpm"
-                                                value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                                class="cdss-input vital-input h-[60px]"
-                                                data-field-name="hr"
-                                                data-time="{{ $time }}"
-                                                autocomplete="off"
-                                            />
-                                        </td>
+                {{-- HR --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="hr_{{ $time }}"
+                        placeholder="bpm"
+                        value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="hr"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- RR --}}
-                                        <td class="bg-beige {{ $borderClass }}">
-                                            <input
-                                                type="text"
-                                                name="rr_{{ $time }}"
-                                                placeholder="bpm"
-                                                value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                                class="cdss-input vital-input h-[60px]"
-                                                data-field-name="rr"
-                                                data-time="{{ $time }}"
-                                                autocomplete="off"
-                                            />
-                                        </td>
+                {{-- RR --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="rr_{{ $time }}"
+                        placeholder="bpm"
+                        value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="rr"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- BP --}}
-                                        <td class="bg-beige {{ $borderClass }}">
-                                            <input
-                                                type="text"
-                                                name="bp_{{ $time }}"
-                                                placeholder="mmHg"
-                                                value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                                class="cdss-input vital-input h-[60px]"
-                                                data-field-name="bp"
-                                                data-time="{{ $time }}"
-                                                autocomplete="off"
-                                            />
-                                        </td>
+                {{-- BP --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="bp_{{ $time }}"
+                        placeholder="mmHg"
+                        value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="bp"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- SpO₂ --}}
-                                        <td class="bg-beige {{ $borderClass }}">
-                                            <input
-                                                type="text"
-                                                name="spo2_{{ $time }}"
-                                                placeholder="%"
-                                                value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                                class="cdss-input vital-input h-[60px]"
-                                                data-field-name="spo2"
-                                                data-time="{{ $time }}"
-                                                autocomplete="off"
-                                            />
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tr>
-                        </table>
+                {{-- SpO₂ --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="spo2_{{ $time }}"
+                        placeholder="%"
+                        value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="spo2"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
+
+                {{-- ALERTS COLUMN --}}
+                <td class="p-2 text-center align-middle border-0">
+                    <div class="h-[60px] flex justify-center items-center text-center px-2"
+                        data-alert-for-time="{{ $time }}">
+                        <div class="alert-icon-btn is-empty">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </div>
                     </div>
+                </td>
+            </tr>
+        @endforeach
+    </table>
+</div>
+</div>
 
-                    <div class="w-[25%] rounded-[15px]">
-                        <div class="main-header rounded-[15px]">ALERTS</div>
-
-                        <table class="w-full border-collapse">
-                            @foreach ($times as $time)
-                                @php
-                                    $vitalsRecord = $vitalsData->get($time);
-                                    $severity = optional($vitalsRecord)->news_severity ?? 'NONE';
-                                    $color =
-                                        $severity === 'CRITICAL'
-                                            ? 'text-red-600'
-                                            : ($severity === 'WARNING'
-                                                ? 'text-orange-500'
-                                                : ($severity === 'INFO'
-                                                    ? 'text-blue-500'
-                                                    : ($severity === 'NONE'
-                                                        ? 'text-white'
-                                                        : 'text-black')));
-                                    $alerts = $vitalsRecord ? explode('; ', $vitalsRecord->alerts) : [];
-                                @endphp
-
-                                <tr>
-                                    <td class="align-middle" data-alert-for-time="{{ $time }}">
-                                        <div
-                                            class="alert-box flex h-[53px] w-full items-center justify-center"
-                                            data-alert-for-time="{{ $time }}"
-                                        >
-                                            {{-- Dynamic alert content will load here --}}
-                                            <span class="font-semibold text-white opacity-70">NO ALERTS</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
 
                 <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end space-x-4">
                     @if (isset($vitalsData) && $vitalsData->count() > 0)

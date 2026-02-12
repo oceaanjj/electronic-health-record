@@ -3,9 +3,9 @@
 @section('title', 'Physical Exam')
 
 @section('content')
-    <div id="form-content-container" class="mx-auto max-w-full">
 
-        {{-- ALERT/ERROR --}}
+    <div id="form-content-container">
+        {{-- CDSS ALERT BANNER --}}
         @if ($selectedPatient && isset($physicalExam) && $physicalExam)
             <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
                 <div id="cdss-alert-content"
@@ -17,9 +17,11 @@
                         </span>
                     </div>
 
-                    {{-- Close Button --}}
-                    <button type="button" onclick="closeCdssAlert()"
-                        class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90">
+                    <button
+                        type="button"
+                        onclick="closeCdssAlert()"
+                        class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90"
+                    >
                         <span
                             class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90">
                             close
@@ -29,267 +31,299 @@
             </div>
         @endif
 
-        {{-- PATIENT SELECTION ROW --}}
-        <div class="mx-auto w-full pt-10">
-            <div class="mobile-dropdown-container mb-10 flex flex-col items-start gap-2 mx-auto md:w-[85%]">
+        {{-- HEADER SECTION --}}
+        <div class="m-10 ml-20 flex items-center gap-4">
+            <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
-                {{-- LINE 1: PATIENT SELECTION --}}
-                <div class="flex flex-wrap items-center justify-start gap-4 w-full">
-                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
-
-                    {{-- Fixed width of 350px --}}
-                    <div class="w-full sm:w-[350px]">
-                        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                            selectRoute="{{ route('physical-exam.select') }}"
-                            inputPlaceholder="Search or type Patient Name..." inputName="patient_id"
-                            inputValue="{{ session('selected_patient_id') }}" />
-                    </div>
-                </div>
-
-                {{-- LINE 2: "NOT AVAILABLE" MESSAGE --}}
-                @if ($selectedPatient && (!isset($physicalExam) || !$physicalExam))
-                    {{-- Also changed to 'justify-start' to match the label alignment --}}
-                    <div class="w-full flex items-center justify-start gap-2 text-xs italic text-gray-500 mt-4">
-                        <span class="material-symbols-outlined text-[16px]">pending_actions</span>
-                        Clinical Decision Support System is not yet available.
-                    </div>
-                @endif
+            <div class="w-[350px]">
+                <x-searchable-patient-dropdown
+                    :patients="$patients"
+                    :selectedPatient="$selectedPatient"
+                    selectRoute="{{ route('physical-exam.select') }}"
+                    inputPlaceholder="Search or type Patient Name..."
+                    inputName="patient_id"
+                    inputValue="{{ session('selected_patient_id') }}"
+                />
             </div>
-
-
-            <form action="{{ route('physical-exam.store') }}" ... <form action="{{ route('physical-exam.store') }}"
-                method="POST" class="cdss-form relative w-full"
-                data-analyze-url="{{ route('physical-exam.analyze-field') }}"
-                data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}" data-alert-height-class="h-[90px]">
-                @csrf
-
-                <input type="hidden" name="patient_id" id="patient_id_hidden"
-                    value="{{ session('selected_patient_id') }}" />
-
-                <fieldset @if (!session('selected_patient_id')) disabled @endif class="w-full">
-
-                    {{--
-                    MAIN CONTENT CONTAINER
-                    Matches the md:w-[85%] of the search bar above
-                    --}}
-                    <div
-                        class="mx-auto mt-2 flex w-full flex-col items-start justify-center gap-5 md:w-[85%] md:flex-row md:items-start md:gap-0">
-
-                        {{-- FINDINGS TABLE --}}
-                        <div class="w-full overflow-hidden rounded-[15px] md:mr-1 md:w-3/5 mobile-table-container">
-                            <table class="w-full border-separate border-spacing-0 responsive-table">
-                                <tr class="responsive-table-header-row">
-                                    <th class="main-header w-[30%] rounded-tl-lg py-2 text-white">SYSTEM</th>
-                                    <th class="main-header w-[55%] rounded-tr-lg py-2 text-white">FINDINGS</th>
-                                </tr>
-
-                                @php
-                                    $fields = [
-                                        'general_appearance' => 'GENERAL APPEARANCE',
-                                        'skin_condition' => 'SKIN',
-                                        'eye_condition' => 'EYES',
-                                        'oral_condition' => 'ORAL CAVITY',
-                                        'cardiovascular' => 'CARDIOVASCULAR',
-                                        'abdomen_condition' => 'ABDOMEN',
-                                        'extremities' => 'EXTREMITIES',
-                                        'neurological' => 'NEUROLOGICAL',
-                                    ];
-                                @endphp
-
-                                @foreach ($fields as $fieldKey => $label)
-                                    <tr class="responsive-table-data-row border-line-brown border-b-2">
-                                        <th
-                                            class="bg-yellow-light text-brown @if ($loop->last) rounded-bl-lg @endif responsive-table-data-label">
-                                            {{ $label }}
-                                        </th>
-
-                                        <td class="bg-beige @if (!$loop->last) border-line-brown/50 border-b-2 @endif responsive-table-data"
-                                            data-label="{{ $label }}">
-                                            <textarea name="{{ $fieldKey }}"
-                                                class="notepad-lines cdss-input h-[95px] w-full border-none"
-                                                data-field-name="{{ $fieldKey }}"
-                                                placeholder="Type here..">{{ old($fieldKey, $physicalExam->$fieldKey ?? '') }}</textarea>
-
-                                            <div class="alert-box-mobile my-0.5 flex w-full items-center justify-center px-3 py-4"
-                                                data-alert-for="{{ $fieldKey }}">
-                                                <span class="font-semibold text-white opacity-70">NO ALERTS</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                        </div>
-
-                        {{-- ALERTS TABLE --}}
-                        <div class="w-full overflow-hidden rounded-[15px] md:ml-1 md:w-2/5 mobile-table-container">
-                            <div class="main-header mb-1 rounded-[15px] py-2">ALERTS</div>
-                            <table class="w-full border-collapse">
-                                @foreach ($fields as $fieldKey => $label)
-                                    <tr>
-                                        <td class="align-middle">
-                                            <div class="alert-box my-0.5 flex h-[91px] w-full items-center justify-center px-3 py-4"
-                                                data-alert-for="{{ $fieldKey }}">
-                                                <span class="font-semibold text-white opacity-70">NO ALERTS</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                        </div>
-
-                    </div>
-
-                    {{-- BUTTONS CONTAINER --}}
-                    <div class="mx-auto mt-5 mb-20 flex w-full justify-end space-x-4 responsive-btns md:w-[85%]">
-                        @if (isset($physicalExam))
-                            <a href="{{ route('nursing-diagnosis.start', ['component' => 'physical-exam', 'id' => $physicalExam->id]) }}"
-                                class="button-default cdss-btn text-center">
-                                CDSS
-                            </a>
-                        @endif
-                        <button type="submit" class="button-default">SUBMIT</button>
-                    </div>
-
-                </fieldset>
-            </form>
         </div>
+
+        {{-- NOT AVAILABLE MESSAGE --}}
+        @if ($selectedPatient && (!isset($physicalExam) || !$physicalExam))
+            <div class="mt-4 ml-20 flex items-center gap-2 text-xs text-gray-500 italic">
+                <span class="material-symbols-outlined text-[16px]">pending_actions</span>
+                Clinical Decision Support System is not yet available.
+            </div>
+        @endif
+
+        {{-- FORM --}}
+        <form
+            action="{{ route('physical-exam.store') }}"
+            method="POST"
+            class="cdss-form"
+            data-analyze-url="{{ route('physical-exam.analyze-field') }}"
+            data-batch-analyze-url="{{ route('physical-exam.analyze-batch') }}"
+            data-alert-height-class="h-[90px]"
+        >
+            @csrf
+            <input
+                type="hidden"
+                name="patient_id"
+                id="patient_id_hidden"
+                value="{{ session('selected_patient_id') }}"
+            />
+
+            <fieldset @if (!session('selected_patient_id')) disabled @endif>
+                <center>
+                    {{-- Title only spans the table width, not the alerts --}}
+                    <div class="flex w-[80%] items-center gap-1 mt-2">
+                        <div class="flex-1">
+                            <p class="main-header mb-1 rounded-[15px]">PHYSICAL EXAMINATION</p>
+                        </div>
+                        <div class="w-[60px]"></div>
+                    </div>
+                </center>
+
+                <center>
+                    {{-- GENERAL APPEARANCE --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg text-wrap p-2">GENERAL APPEARANCE</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="general_appearance"
+                                        placeholder="Type here..."
+                                        data-field-name="general_appearance"
+                                    >{{ old('general_appearance', $physicalExam->general_appearance ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="general_appearance">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- SKIN --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg">SKIN</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="skin_condition"
+                                        placeholder="Type here..."
+                                        data-field-name="skin_condition"
+                                    >{{ old('skin_condition', $physicalExam->skin_condition ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="skin_condition">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- EYES --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg">EYES</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="eye_condition"
+                                        placeholder="Type here..."
+                                        data-field-name="eye_condition"
+                                    >{{ old('eye_condition', $physicalExam->eye_condition ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="eye_condition">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- ORAL CAVITY --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg">ORAL CAVITY</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="oral_condition"
+                                        placeholder="Type here..."
+                                        data-field-name="oral_condition"
+                                    >{{ old('oral_condition', $physicalExam->oral_condition ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="oral_condition">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- CARDIOVASCULAR --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg">CARDIOVASCULAR</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="cardiovascular"
+                                        placeholder="Type here..."
+                                        data-field-name="cardiovascular"
+                                    >{{ old('cardiovascular', $physicalExam->cardiovascular ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="cardiovascular">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- ABDOMEN --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg">ABDOMEN</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="abdomen_condition"
+                                        placeholder="Type here..."
+                                        data-field-name="abdomen_condition"
+                                    >{{ old('abdomen_condition', $physicalExam->abdomen_condition ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="abdomen_condition">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- EXTREMITIES --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg">EXTREMITIES</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="extremities"
+                                        placeholder="Type here..."
+                                        data-field-name="extremities"
+                                    >{{ old('extremities', $physicalExam->extremities ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="extremities">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- NEUROLOGICAL --}}
+                    <div class="mb-1.5 flex w-[80%] items-center gap-1">
+                        <table class="bg-beige flex-1 border-separate border-spacing-0">
+                            <tr>
+                                <th rowspan="2" class="main-header w-[200px] rounded-l-lg">NEUROLOGICAL</th>
+                                <th class="bg-yellow-light text-brown border-line-brown rounded-tr-lg text-[13px]">
+                                    FINDINGS
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="rounded-br-lg">
+                                    <textarea
+                                        class="notepad-lines cdss-input h-[100px]"
+                                        name="neurological"
+                                        placeholder="Type here..."
+                                        data-field-name="neurological"
+                                    >{{ old('neurological', $physicalExam->neurological ?? '') }}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="flex h-[100px] w-[70px] pl-5 items-center justify-center" data-alert-for="neurological">
+                            <div class="alert-icon-btn is-empty">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                {{-- BUTTONS - Fixed to be on one line --}}
+                <div class="mx-auto mt-5 mb-30 flex w-[80%] flex-row justify-end gap-4">
+                    @if (isset($physicalExam))
+                        <a
+                            href="{{ route('nursing-diagnosis.process', ['component' => 'physical-exam', 'id' => $physicalExam->id]) }}"
+                            class="button-default cdss-btn inline-block text-center"
+                        >
+                            CDSS
+                        </a>
+                    @endif
+
+                    <button type="submit" class="button-default">SUBMIT</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 @endsection
 
-    @push('scripts')
-        @vite([
-            'resources/js/alert.js',
-            'resources/js/patient-loader.js',
-            'resources/js/searchable-dropdown.js',
-            'resources/js/close-cdss-alert.js',
-        ])
-    @endpush
-
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        /* =========================
-       MOBILE ALERT
-    ========================= */
-        .alert-box-mobile {
-            display: none;
-            border-radius: 0 0 15px 15px;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 40px;
-            padding-bottom: 0px;
-        }
-
-        /* =========================
-       MOBILE (PHONES)
-       <= 640px
-    ========================= */
-        @media screen and (max-width: 640px) {
-
-            body {
-                margin-top: -40px !important;
-            }
-
-            /* Adjusted dropdown container to be responsive */
-            .mobile-dropdown-container {
-                display: flex !important;
-                flex-wrap: wrap;
-                width: 90% !important;
-                margin: 0 auto 15px auto !important;
-                box-sizing: border-box;
-            }
-
-            /* Show mobile alerts */
-            .alert-box-mobile {
-                display: flex !important;
-                padding: 0px !important;
-            }
-
-            /* Hide right alerts table */
-            .mobile-table-container:last-of-type {
-                display: none !important;
-            }
-
-            /* Force table container width */
-            .mobile-table-container {
-                width: 90% !important;
-                margin: 0 auto !important;
-            }
-
-            /* BREAK TABLE LAYOUT */
-            .responsive-table,
-            .responsive-table tbody,
-            .responsive-table-data-row,
-            .responsive-table-data-label,
-            .responsive-table-data {
-                display: block;
-                width: 100%;
-            }
-
-            /* Remove desktop header row */
-            .responsive-table-header-row {
-                display: none;
-            }
-
-            /* Card container */
-            .responsive-table-data-row {
-                margin: 0 auto 1.5rem auto;
-                border-radius: 15px;
-                background-color: #F5F5DC;
-                overflow: hidden;
-                width: 100%;
-                border: 1px solid #c18b04;
-
-            }
-
-            /* SYSTEM header (th) */
-            .responsive-table-data-label {
-                text-align: left;
-                justify-content: left;
-                padding: 10px 14px;
-                font-weight: bold;
-                text-transform: uppercase;
-                font-size: 13px;
-                color: #6B4226;
-                background: linear-gradient(180deg, #ffd966, #f4b400);
-                font-family: var(--font-creato-bold);
-            }
-
-            /* FINDINGS cell (td) */
-            .responsive-table-data {
-                padding: 14px;
-                border-bottom: none;
-            }
-
-            /* TEXTAREA */
-            .responsive-table-data textarea {
-                width: 100% !important;
-                min-height: 80px;
-                box-sizing: border-box;
-            }
-
-            /* Buttons aligned right like desktop */
-            .responsive-btns {
-                width: 90% !important;
-                margin: 1.5rem auto 2.5rem auto;
-                display: flex;
-                justify-content: flex-end !important;
-                gap: 0.75rem;
-            }
-
-            .responsive-btns .button-default,
-            .responsive-btns .cdss-btn {
-                min-width: 100px;
-                text-align: center;
-            }
-        }
-    </style>
+@push('scripts')
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/patient-loader.js',
+        'resources/js/searchable-dropdown.js',
+        'resources/js/close-cdss-alert.js',
+    ])
+@endpush

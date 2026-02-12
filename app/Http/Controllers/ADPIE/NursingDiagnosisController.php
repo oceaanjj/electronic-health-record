@@ -137,6 +137,34 @@ class NursingDiagnosisController extends Controller
         
         return $viewData;
     }
+    
+    public function showProcess(string $component, $id)
+        {
+            // Fetch the diagnosis record using the helper we created
+            $diagnosis = NursingDiagnosis::where($this->getComponentIdField($component), $id)->first();
+
+            // Get the component service (PhysicalExamComponent, etc.)
+            $service = $this->getComponentService($component);
+            
+            // Get the base data (Patient info, etc.)
+            $viewData = $service->startDiagnosis($component, $id)->getData();
+
+            return view('adpie.process', array_merge($viewData, [
+                'component' => $component,
+                'recordId' => $id,
+                'diagnosis' => $diagnosis, 
+            ]));
+        }
+
+private function getComponentIdField($component) {
+    return [
+        'physical-exam' => 'physical_exam_id',
+        'intake-and-output' => 'intake_and_output_id',
+        'lab-values' => 'lab_values_id',
+        'adl' => 'adl_id',
+        'vital-signs' => 'vital_signs_id',
+    ][$component] ?? 'physical_exam_id';
+}
 
     //==================================================================
     // WIZARD "STORE" METHODS

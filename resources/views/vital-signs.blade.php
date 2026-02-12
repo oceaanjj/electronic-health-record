@@ -153,133 +153,116 @@
                             <span class="material-symbols-outlined text-[32px]">arrow_drop_down</span>
                         </button>
                     </div>
+                    {{-- COMBINED VITAL SIGNS TABLE WITH ALERTS --}}
+<div class="w-full overflow-hidden rounded-[15px]">
+    <table class="w-full table-fixed border-collapse border-spacing-y-0">
+        <tr>
+            <th class="w-[12%] main-header rounded-tl-[15px]">TIME</th>
+            <th class="w-[15%] main-header">TEMPERATURE</th>
+            <th class="w-[10%] main-header">HR</th>
+            <th class="w-[10%] main-header">RR</th>
+            <th class="w-[10%] main-header">BP</th>
+            <th class="w-[15%] main-header rounded-tr-[15px]">SpO₂</th>
+            <th class="w-[28%] text-center py-2"></th>
+        </tr>
 
-                    {{-- 2. DATA TABLE COLUMN (48% on Desktop) --}}
-                    <div class="w-full rounded-[15px] md:w-[48%]">
-                        <table class="w-full table-fixed border-collapse border-spacing-y-0">
-                            {{-- HEADERS (Hidden on Mobile) --}}
-                            <thead class="hidden md:table-header-group">
-                                <tr>
-                                    <th class="main-header min-w-[90px] w-[15%] rounded-tl-lg">TIME</th>
-                                    <th class="main-header min-w-[110px] w-[18%]">TEMPERATURE</th>
-                                    <th class="main-header min-w-[70px] w-[10%]">HR</th>
-                                    <th class="main-header min-w-[70px] w-[10%]">RR</th>
-                                    <th class="main-header min-w-[90px] w-[10%]">BP</th>
-                                    <th class="main-header min-w-[70px] w-[10%]">SpO₂</th>
-                                </tr>
-                            </thead>
+        @foreach ($times as $index => $time)
+            @php
+                $vitalsRecord = $vitalsData->get($time);
+                $isLast = $index === count($times) - 1;
+            @endphp
 
-                            <tbody class="block w-full md:table-row-group">
-                                @foreach ($times as $index => $time)
-                                    @php
-                                        $vitalsRecord = $vitalsData->get($time);
-                                        $isLast = $index === count($times) - 1;
-                                        $borderClass = $isLast ? '' : 'border-line-brown/70 border-b-2';
-                                        $formattedTime = \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A');
-                                    @endphp
+            <tr>
+                {{-- TIME COLUMN --}}
+                <td class="p-2 font-semibold bg-yellow-light text-brown text-center">
+                    {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
+                </td>
 
-                                    {{-- CARD ROW (Mobile: Flex Column, Desktop: Table Row) --}}
-                                    <tr class="flex flex-col md:table-row border border-line-brown/70 md:border-b-2 md:border-t-0 md:border-x-0 mb-6 md:mb-0 rounded-lg md:rounded-none overflow-hidden shadow-sm md:shadow-none bg-beige {{ $isLast ? '' : 'md:border-b-2' }}">
-                                        
-                                        {{-- TIME COLUMN --}}
-                                        <th class="order-first md:order-none block md:table-cell bg-yellow-light text-brown md:{{ $borderClass }} p-0 md:py-2 text-center font-semibold border-b border-line-brown md:border-b-0">
-                                            {{-- Mobile Header --}}
-                                            <div class="md:hidden w-full main-header text-[14px] font-bold p-3 text-center">
-                                                TIME: {{ $formattedTime }}
-                                            </div>
-                                            {{-- Desktop Content --}}
-                                            <span class="hidden md:block">{{ $formattedTime }}</span>
-                                        </th>
+                {{-- TEMPERATURE --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="temperature_{{ $time }}"
+                        placeholder="temperature"
+                        value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="temperature"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- TEMPERATURE --}}
-                                        <td class="block md:table-cell bg-beige md:{{ $borderClass }} p-0 border-b border-gray-300/50 md:border-none">
-                                            <div class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">TEMPERATURE</div>
-                                            <div class="p-2 md:p-0">
-                                                <input type="text" name="temperature_{{ $time }}" placeholder="temp"
-                                                    value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                                    class="cdss-input vital-input h-[50px] md:h-[60px] w-full" data-field-name="temperature"
-                                                    data-time="{{ $time }}" />
-                                            </div>
-                                        </td>
+                {{-- HR --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="hr_{{ $time }}"
+                        placeholder="bpm"
+                        value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="hr"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- HR --}}
-                                        <td class="block md:table-cell bg-beige md:{{ $borderClass }} p-0 border-b border-gray-300/50 md:border-none">
-                                            <div class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">HR</div>
-                                            <div class="p-2 md:p-0">
-                                                <input type="text" name="hr_{{ $time }}" placeholder="bpm"
-                                                    value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                                    class="cdss-input vital-input h-[50px] md:h-[60px] w-full" data-field-name="hr"
-                                                    data-time="{{ $time }}" />
-                                            </div>
-                                        </td>
+                {{-- RR --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="rr_{{ $time }}"
+                        placeholder="bpm"
+                        value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="rr"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- RR --}}
-                                        <td class="block md:table-cell bg-beige md:{{ $borderClass }} p-0 border-b border-gray-300/50 md:border-none">
-                                            <div class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">RR</div>
-                                            <div class="p-2 md:p-0">
-                                                <input type="text" name="rr_{{ $time }}" placeholder="bpm"
-                                                    value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                                    class="cdss-input vital-input h-[50px] md:h-[60px] w-full" data-field-name="rr"
-                                                    data-time="{{ $time }}" />
-                                            </div>
-                                        </td>
+                {{-- BP --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="bp_{{ $time }}"
+                        placeholder="mmHg"
+                        value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="bp"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- BP --}}
-                                        <td class="block md:table-cell bg-beige md:{{ $borderClass }} p-0 border-b border-gray-300/50 md:border-none">
-                                            <div class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">BP</div>
-                                            <div class="p-2 md:p-0">
-                                                <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
-                                                    value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                                    class="cdss-input vital-input h-[50px] md:h-[60px] w-full" data-field-name="bp"
-                                                    data-time="{{ $time }}" />
-                                            </div>
-                                        </td>
+                {{-- SpO₂ --}}
+                <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
+                    <input
+                        type="text"
+                        name="spo2_{{ $time }}"
+                        placeholder="%"
+                        value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
+                        class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center"
+                        data-field-name="spo2"
+                        data-time="{{ $time }}"
+                        autocomplete="off"
+                    />
+                </td>
 
-                                        {{-- SpO₂ --}}
-                                        <td class="block md:table-cell bg-beige md:{{ $borderClass }} p-0 md:border-none">
-                                            <div class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">SpO₂</div>
-                                            <div class="p-2 md:p-0">
-                                                <input type="text" name="spo2_{{ $time }}" placeholder="%"
-                                                    value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                                    class="cdss-input vital-input h-[50px] md:h-[60px] w-full" data-field-name="spo2"
-                                                    data-time="{{ $time }}" />
-                                            </div>
-                                        </td>
-
-                                        {{-- ALERT CELL (VISIBLE ON MOBILE ONLY) --}}
-                                        <td class="block md:hidden bg-beige p-2 border-t border-gray-300/50" data-alert-for-time="{{ $time }}">
-                                            <div class="alert-box flex h-[50px] w-full items-center justify-center rounded-lg"
-                                                data-alert-for-time="{{ $time }}">
-                                                <span class="font-semibold text-white opacity-70">NO ALERTS</span>
-                                            </div>
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                {{-- ALERTS COLUMN --}}
+                <td class="p-2 text-center align-middle border-0">
+                    <div class="h-[60px] flex justify-center items-center text-center px-2"
+                        data-alert-for-time="{{ $time }}">
+                        <div class="alert-icon-btn is-empty">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </div>
                     </div>
+                </td>
+            </tr>
+        @endforeach
+    </table>
+</div>
+</div>
 
-                    {{-- 3. ALERTS COLUMN (VISIBLE ON DESKTOP ONLY, 18% width) --}}
-                    <div class="hidden md:block w-full rounded-[15px] md:w-[18%]">
-                        <div class="main-header rounded-[15px] mb-4 md:mb-0">ALERTS</div>
-
-                        <table class="w-full border-collapse">
-                            <tbody class="block md:table-row-group">
-                                @foreach ($times as $time)
-                                    <tr class="flex flex-col md:table-row mb-6 md:mb-0">
-                                        <td class="align-middle block md:table-cell" data-alert-for-time="{{ $time }}">
-                                            <div class="alert-box flex h-[50px] md:h-[62px] w-full items-center justify-center rounded-lg md:rounded-none"
-                                                data-alert-for-time="{{ $time }}">
-                                                <span class="font-semibold text-white opacity-70">NO ALERTS</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
                 {{-- BUTTONS --}}
                 <div class="mx-auto mt-5 mb-20 flex w-full justify-center space-x-4 md:w-[95%] md:justify-end">

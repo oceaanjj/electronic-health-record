@@ -84,7 +84,7 @@
                             class="relative mb-6 flex w-[90%] flex-col items-center overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige md:mb-1.5 md:w-[80%] md:flex-row md:items-center md:gap-1 md:overflow-visible md:rounded-none md:border-none md:bg-transparent">
 
                             {{-- Mobile Label Header (System Name) --}}
-                            <div class="main-header w-full p-2 pr-12 text-left text-[11px] font-bold md:hidden">
+                            <div class="main-header w-full text-left pl-3 p-2 text-[13px] md:hidden">
                                 {{ $label }}
                             </div>
 
@@ -98,7 +98,7 @@
                                             {{ $label }}
                                         </th>
                                         <th
-                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[10px] font-bold md:table-cell md:rounded-tr-lg md:text-[13px]">
+                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[12px] font-bold md:table-cell md:rounded-tr-lg md:text-[13px]">
                                             FINDINGS
                                         </th>
                                     </tr>

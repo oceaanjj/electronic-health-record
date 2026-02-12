@@ -112,7 +112,7 @@
                                         </th>
                                         {{-- Assessment Header: --}}
                                         <th
-                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[12px] font-bold md:table-cell md:rounded-tr-lg md:p-1 md:text-[13px]">
+                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[12px] font-bold md:table-cell md:rounded-tr-lg md:text-[13px]">
                                             ASSESSMENT
                                         </th>
                                     </tr>

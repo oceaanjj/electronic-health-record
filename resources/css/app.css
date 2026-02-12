@@ -171,7 +171,7 @@ ALERTS IN EVERY COMPONENT
 
 
 /* MOBILE VIEW ONLY (Phone Screens) */
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
     .alert-icon-btn {
         /* Changes the outer circle size */
         width: 32px !important;

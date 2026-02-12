@@ -299,32 +299,30 @@ function getAlertHeightClass(alertCell) {
 
 // Display alert result
 function displayAlert(alertCell, alertData) {
-    if (!alertCell) return;
+   if (!alertCell) return;
     stopDotAnimation();
     
     let isFindings = alertData.alert && !alertData.alert.toLowerCase().includes('no findings');
     
     if (isFindings) {
-        // ALERT FOUND: High visibility Yellow Icon
         alertCell.innerHTML = `
             <div class="alert-wrapper">
                 <div class="alert-icon-btn is-active fade-in">
                     <span class="material-symbols-outlined">add_alert</span>
                 </div>
-                <div class="alert-bubble show-pop">
+                <div class="alert-bubble show-pop hidden md:block">
                     <span class="font-bold" style="color: #f59e0b;">Alert available!</span>
                 </div>
             </div>
         `;
         alertCell.querySelector('.alert-icon-btn').addEventListener('click', () => openAlertModal(alertData));
     } else {
-        // NO FINDINGS: Gray Icon
         alertCell.innerHTML = `
             <div class="alert-wrapper">
                 <div class="alert-icon-btn">
                     <span class="material-symbols-outlined">notifications</span>
                 </div>
-                <div class="alert-bubble show-pop">
+                <div class="alert-bubble show-pop hidden md:block">
                     <span class="text-gray-400">No alerts.</span>
                 </div>
             </div>
@@ -370,7 +368,7 @@ function showAlertLoading(alertCell) {
             <div class="alert-icon-btn" style="background: rgba(59, 130, 246, 0.1);">
                 <div class="glass-spinner"></div>
             </div>
-            <div class="alert-bubble show-pop">
+            <div class="alert-bubble show-pop hidden md:block">
                 <span class="text-blue-500 font-medium" id="loading-text">Analyzing</span>
             </div>
         </div>

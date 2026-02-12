@@ -8,7 +8,7 @@
             <div id="cdss-alert-wrapper" class="w-full px-5 overflow-hidden transition-all duration-500">
                 <div id="cdss-alert-content" 
                     class="relative flex items-center justify-between mt-3 py-3 px-5 border border-amber-400/50 rounded-lg shadow-sm bg-amber-100/70 backdrop-blur-md animate-alert-in">
-                    
+
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-[#dcb44e] animate-pulse">info</span>
                         <span class="text-sm font-semibold text-[#dcb44e]">
@@ -31,7 +31,7 @@
             <label class="font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
                 PATIENT NAME :
             </label>
-            
+
             <div class="w-[350px]">
                 <x-searchable-patient-dropdown 
                     :patients="$patients" 
@@ -139,7 +139,7 @@
                         <div class="w-[60px] flex flex-col">
                             {{-- Empty header space to align with table header --}}
                             <div class="h-[42px]"></div>
-                            
+
                             @foreach ($labTests as $label => $name)
                                 <div class="flex h-[56px] w-[70px] pl-5 items-center justify-center" data-alert-for="{{ $name }}_result">
                                     <div class="alert-icon-btn is-empty">

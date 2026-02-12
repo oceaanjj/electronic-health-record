@@ -6,10 +6,8 @@
         <span class="material-symbols-outlined hidden group-hover:block group-hover:text-white">arrow_left</span>
     </button>
 
-    <ul
-        id="sidebarScroll"
-        class="text-dark-green font-creato-black mt-[140px] h-[calc(100vh-140px)] overflow-y-auto pr-[10px] pl-[10px] text-[13px]"
-    >
+    <ul id="sidebarScroll"
+        class="text-dark-green font-creato-black mt-[140px] h-[calc(100vh-140px)] overflow-y-auto pr-[10px] pl-[10px] text-[13px]">
         <li>
             <a href="{{ route('nurse-home') }}"
                 class="group hover:bg-dark-green {{
@@ -49,11 +47,10 @@
         <li>
             <a href="{{ route('physical-exam.index') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('physical-exam.*') || request()->is('adpie/physical-exam/*')
-                        ? 'bg-dark-green font-bold text-white'
-                        : 'hover:bg-hover hover:font-bold'
-                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
-            >
+    request()->routeIs('physical-exam.*') || request()->is('adpie/physical-exam/*')
+    ? 'bg-dark-green font-bold text-white'
+    : 'hover:bg-hover hover:font-bold'
+                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
                 <span class="material-symbols-outlined">physical_therapy</span>
                 <span>Physical Exam</span>
             </a>
@@ -62,11 +59,10 @@
         <li>
             <a href="{{ route('vital-signs.show') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('vital-signs.*') || request()->is('adpie/vital-signs/*')
-                        ? 'bg-dark-green font-bold text-white'
-                        : 'hover:bg-hover hover:font-bold'
-                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
-            >
+    request()->routeIs('vital-signs.*') || request()->is('adpie/vital-signs/*')
+    ? 'bg-dark-green font-bold text-white'
+    : 'hover:bg-hover hover:font-bold'
+                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
                 <span class="material-symbols-outlined">ecg_heart</span>
                 <span>Vital Signs</span>
             </a>
@@ -75,11 +71,10 @@
         <li>
             <a href="{{ route('io.show') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('io.*') || request()->is('adpie/intake-and-output/*')
-                        ? 'bg-dark-green font-bold text-white'
-                        : 'hover:bg-hover hover:font-bold'
-                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
-            >
+    request()->routeIs('io.*') || request()->is('adpie/intake-and-output/*')
+    ? 'bg-dark-green font-bold text-white'
+    : 'hover:bg-hover hover:font-bold'
+                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
                 <span class="material-symbols-outlined">pill</span>
                 <span>Intake and Output</span>
             </a>
@@ -88,11 +83,10 @@
         <li>
             <a href="{{ route('adl.show') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('adl.show') || request()->is('adpie/adl/*')
-                        ? 'bg-dark-green font-bold text-white'
-                        : 'hover:bg-hover hover:font-bold'
-                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
-            >
+    request()->routeIs('adl.show') || request()->is('adpie/adl/*')
+    ? 'bg-dark-green font-bold text-white'
+    : 'hover:bg-hover hover:font-bold'
+                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
                 <span class="material-symbols-outlined">toys_and_games</span>
                 <span class="{{ request()->routeIs('adl.show') ? 'font-bold text-white' : 'group-hover:font-bold' }}">
                     Activities of Daily Living
@@ -103,11 +97,10 @@
         <li>
             <a href="{{ route('lab-values.index') }}"
                 class="group hover:bg-dark-green {{
-                    request()->routeIs('lab-values.*') || request()->is('adpie/lab-values/*')
-                        ? 'bg-dark-green font-bold text-white'
-                        : 'hover:bg-hover hover:font-bold'
-                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200"
-            >
+    request()->routeIs('lab-values.*') || request()->is('adpie/lab-values/*')
+    ? 'bg-dark-green font-bold text-white'
+    : 'hover:bg-hover hover:font-bold'
+                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
                 <span class="material-symbols-outlined">experiment</span>
                 <span>Lab Values</span>
             </a>
@@ -182,82 +175,82 @@
 
 </div>
 
-        @push('scripts')
-            <script>
-                // We use a MutationObserver to catch the element the millisecond it's added to the DOM
-                // This is usually faster than DOMContentLoaded and reduces the flicker
-                (function () {
-                    const observer = new MutationObserver((mutations, obs) => {
-                        const sidebar = document.getElementById('sidebarScroll');
-                        if (sidebar) {
-                            const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
-                            if (scrollPos) {
-                                sidebar.scrollTop = scrollPos;
-                            }
-                            obs.disconnect(); // Stop looking once we found it
-                        }
-                    });
-
-                    observer.observe(document.documentElement, {
-                        childList: true,
-                        subtree: true,
-                    });
-                })();
-
-                document.addEventListener('DOMContentLoaded', function () {
-                    const sidebar = document.getElementById('mySidenav');
-                    const sidebarScroll = document.getElementById('sidebarScroll');
-                    const arrowBtn = document.getElementById('arrowBtn');
-
-                    // Function to update arrow visibility based on sidebar state
-                    function updateArrowVisibility() {
-                        if (sidebar.classList.contains('-translate-x-full')) {
-                            // Sidebar is closed
-                            arrowBtn.classList.add('opacity-0', 'pointer-events-none');
-                        } else {
-                            // Sidebar is open
-                            arrowBtn.classList.remove('opacity-0', 'pointer-events-none');
-                        }
+@push('scripts')
+    <script>
+        // We use a MutationObserver to catch the element the millisecond it's added to the DOM
+        // This is usually faster than DOMContentLoaded and reduces the flicker
+        (function () {
+            const observer = new MutationObserver((mutations, obs) => {
+                const sidebar = document.getElementById('sidebarScroll');
+                if (sidebar) {
+                    const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
+                    if (scrollPos) {
+                        sidebar.scrollTop = scrollPos;
                     }
+                    obs.disconnect(); // Stop looking once we found it
+                }
+            });
 
-                    // Initialize arrow visibility on page load
-                    updateArrowVisibility();
+            observer.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+            });
+        })();
 
-                    // Update arrow visibility whenever sidebar state changes
-                    // This handles cases where the sidebar is toggled
-                    const sidebarObserver = new MutationObserver(updateArrowVisibility);
-                    sidebarObserver.observe(sidebar, {
-                        attributes: true,
-                        attributeFilter: ['class'],
-                    });
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('mySidenav');
+            const sidebarScroll = document.getElementById('sidebarScroll');
+            const arrowBtn = document.getElementById('arrowBtn');
 
-                    // Save position on any click within the sidebar
-                    sidebarScroll.addEventListener('click', (e) => {
-                        if (e.target.closest('a')) {
-                            sessionStorage.setItem('sidebar-scroll-pos', sidebarScroll.scrollTop);
-                        }
-                    });
+            // Function to update arrow visibility based on sidebar state
+            function updateArrowVisibility() {
+                if (sidebar.classList.contains('-translate-x-full')) {
+                    // Sidebar is closed
+                    arrowBtn.classList.add('opacity-0', 'pointer-events-none');
+                } else {
+                    // Sidebar is open
+                    arrowBtn.classList.remove('opacity-0', 'pointer-events-none');
+                }
+            }
 
-                    // Original Logout Logic
-                    const logoutBtn = document.getElementById('logout-btn');
-                    const logoutForm = document.getElementById('logout-form');
+            // Initialize arrow visibility on page load
+            updateArrowVisibility();
 
-                    if (logoutBtn && logoutForm) {
-                        logoutBtn.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            if (typeof showConfirm === 'function') {
-                                showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then(
-                                    (result) => {
-                                        if (result.isConfirmed) logoutForm.submit();
-                                    },
-                                );
-                            } else {
-                                if (confirm('Are you sure you want to logout?')) logoutForm.submit();
-                            }
-                        });
+            // Update arrow visibility whenever sidebar state changes
+            // This handles cases where the sidebar is toggled
+            const sidebarObserver = new MutationObserver(updateArrowVisibility);
+            sidebarObserver.observe(sidebar, {
+                attributes: true,
+                attributeFilter: ['class'],
+            });
+
+            // Save position on any click within the sidebar
+            sidebarScroll.addEventListener('click', (e) => {
+                if (e.target.closest('a')) {
+                    sessionStorage.setItem('sidebar-scroll-pos', sidebarScroll.scrollTop);
+                }
+            });
+
+            // Original Logout Logic
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutForm = document.getElementById('logout-form');
+
+            if (logoutBtn && logoutForm) {
+                logoutBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (typeof showConfirm === 'function') {
+                        showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then(
+                            (result) => {
+                                if (result.isConfirmed) logoutForm.submit();
+                            },
+                        );
+                    } else {
+                        if (confirm('Are you sure you want to logout?')) logoutForm.submit();
                     }
                 });
-            </script>
-        @endpush
-    </ul>
+            }
+        });
+    </script>
+@endpush
+</ul>
 </div>

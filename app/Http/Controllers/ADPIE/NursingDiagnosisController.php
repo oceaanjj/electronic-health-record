@@ -88,22 +88,54 @@ class NursingDiagnosisController extends Controller
 
     public function startDiagnosis(string $component, $id)
     {
-        return $this->getComponentService($component)->startDiagnosis($component, $id);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->startDiagnosis($component, $id);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 1);
+        }
+        
+        return $viewData;
     }
 
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showPlanning($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showPlanning($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 2);
+        }
+        
+        return $viewData;
     }
 
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showIntervention($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showIntervention($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 3);
+        }
+        
+        return $viewData;
     }
 
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showEvaluation($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showEvaluation($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 4);
+        }
+        
+        return $viewData;
     }
 
     //==================================================================

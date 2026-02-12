@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Electronic Health Record</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <link rel="preload" as="image" href="img/ehr-logo.png">
-        <link rel="preload" as="image" href="img/loading.png">
+        <link rel="preload" as="image" href="img/ehr-logo.png" />
+        <link rel="preload" as="image" href="img/loading.png" />
 
         {{-- **google icons library nyhahhahaha** --}}
         <link
@@ -127,46 +127,87 @@
         </div>
 
         <script>
-        function openNav() {
-            const sidebar = document.getElementById("mySidenav");
-            const arrow = document.getElementById("arrowBtn");
+            function openNav() {
+                const sidebar = document.getElementById('mySidenav');
+                const arrow = document.getElementById('arrowBtn');
             const mobileMenuButton = document.getElementById("mobileMenuButton"); // Get mobile menu button
 
-            if (sidebar) sidebar.classList.remove("-translate-x-full");
-            document.documentElement.classList.add("sidebar-open");
-            localStorage.setItem("sidebarOpen", "true");
+                if (sidebar) sidebar.classList.remove("-translate-x-full");
+                document.documentElement.classList.add("sidebar-open");
+                localStorage.setItem("sidebarOpen", "true");
 
-            if (arrow && window.innerWidth >= 768) { // Only show arrow on md and up
-                arrow.classList.replace("-right-24", "-right-10");
-            }
-            // The mobileMenuButton should NOT be hidden when the sidebar opens,
+                if (arrow && window.innerWidth >= 768) { // Only show arrow on md and up
+                    arrow.classList.replace("-right-24", "-right-10");
+                }
+                // The mobileMenuButton should NOT be hidden when the sidebar opens,
             // as it is used to close the sidebar on mobile.
             // if (mobileMenuButton) {
             //     mobileMenuButton.classList.add("hidden");
             // }
-        }
+            }
 
-        function closeNav() {
-            const sidebar = document.getElementById("mySidenav");
-            const arrow = document.getElementById("arrowBtn");
+            function closeNav() {
+                const sidebar = document.getElementById("mySidenav");
+                const arrow = document.getElementById("arrowBtn");
             const mobileMenuButton = document.getElementById("mobileMenuButton"); // Get mobile menu button
 
-            if (sidebar) sidebar.classList.add("-translate-x-full");
-            document.documentElement.classList.remove("sidebar-open");
-            localStorage.setItem("sidebarOpen", "false");
+                if (sidebar) sidebar.classList.add('-translate-x-full');
+                document.documentElement.classList.remove('sidebar-open');
 
-            if (arrow && window.innerWidth >= 768) { // Only hide arrow on md and up
-                arrow.classList.replace("-right-10", "-right-24");
-            }
-            if (mobileMenuButton) { // Show mobile menu button when sidebar closes
-                mobileMenuButton.classList.remove("hidden");
+                localStorage.setItem('sidebarOpen', 'false');
+
+                // Hide the arrow after the sidebar finishes sliding so it doesn't "peek"
+                setTimeout(() => {
+                    if (arrow) arrow.classList.add('hidden');
+                }, 300); // 300ms matches your transition-duration
             }
 
-            setTimeout(() => {
-                if (arrow) arrow.classList.add('hidden');
-            }, 300); // 300ms matches your transition-duration
-        }
-    </script>
+            // --- SCROLL PERSISTENCE LOGIC ---
+            (function () {
+                const observer = new MutationObserver((mutations, obs) => {
+                    const sidebar = document.getElementById('sidebarScroll');
+                    if (sidebar) {
+                        const scrollPos = sessionStorage.getItem('sidebar-scroll-pos');
+                        if (scrollPos) {
+                            sidebar.scrollTop = scrollPos;
+                        }
+                        // Check if it should be open on refresh
+                        if (localStorage.getItem('sidebarOpen') === 'true') {
+                            openNav();
+                        }
+                        obs.disconnect();
+                    }
+                });
+                observer.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const sidebar = document.getElementById('sidebarScroll');
+                sidebar.addEventListener('click', (e) => {
+                    if (e.target.closest('a')) {
+                        sessionStorage.setItem('sidebar-scroll-pos', sidebar.scrollTop);
+                    }
+                });
+
+                // Logout Confirmation
+                const logoutBtn = document.getElementById('logout-btn');
+                const logoutForm = document.getElementById('logout-form');
+                if (logoutBtn && logoutForm) {
+                    logoutBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        if (typeof showConfirm === 'function') {
+                            showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then(
+                                (result) => {
+                                    if (result.isConfirmed) logoutForm.submit();
+                                },
+                            );
+                        } else if (confirm('Are you sure you want to logout?')) {
+                            logoutForm.submit();
+                        }
+                    });
+                }
+            });
+        </script>
 
         @stack('scripts')
     </body>

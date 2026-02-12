@@ -58,236 +58,168 @@
             </div>
 
             <fieldset @if(!$selectedPatient) disabled @endif>
-                <div class="mx-auto mt-10 flex w-full md:w-[100%] items-start justify-center gap-1 px-4 md:px-0">
-                    <center class="w-full">
-                        <div class="w-full md:w-[85%] overflow-hidden rounded-[15px]">
+                {{-- MAIN CONTAINER --}}
+                <div class="mx-auto mt-10 flex w-[100%] items-start justify-center gap-1">
+                    <center>
+                        <div class="w-[85%] overflow-hidden rounded-[15px]">
+                            <table class="w-full table-fixed border-collapse border-spacing-y-0">
+                                <tr>
+                                    <th class="main-header w-[20%] rounded-tl-[15px]">MEDICATION</th>
+                                    <th class="main-header w-[15%]">DOSE</th>
+                                    <th class="main-header w-[15%]">ROUTE</th>
+                                    <th class="main-header w-[15%]">FREQUENCY</th>
+                                    <th class="main-header w-[20%]">COMMENTS</th>
+                                    <th class="main-header w-[15%] rounded-tr-[15px]">TIME</th>
+                                </tr>
 
-                            <table class="w-full md:table-fixed border-collapse border-spacing-y-0">
-                                <thead class="hidden md:table-header-group">
-                                    <tr>
-                                        <th class="main-header w-[20%] rounded-tl-[15px]">MEDICATION</th>
-                                        <th class="main-header w-[15%]">DOSE</th>
-                                        <th class="main-header w-[15%]">ROUTE</th>
-                                        <th class="main-header w-[15%]">FREQUENCY</th>
-                                        <th class="main-header w-[20%]">COMMENTS</th>
-                                        <th class="main-header w-[15%] rounded-tr-[15px]">TIME</th>
-                                    </tr>
-                                </thead>
+                                {{-- Row 1 (10:00 AM) --}}
+                                <tr class="border-line-brown/70 h-[100px] border-b-2">
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="medication[]"
+                                            placeholder="Medication"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                        <input type="hidden" name="time[]" value="10:00:00" />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="dose[]"
+                                            placeholder="Dose"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="route[]"
+                                            placeholder="Route"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="frequency[]"
+                                            placeholder="Frequency"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="comments[]"
+                                            placeholder="Comments"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <th class="bg-yellow-light text-brown font-semibold">10:00 AM</th>
+                                </tr>
 
-                                <tbody class="block md:table-row-group">
+                                {{-- Row 2 (2:00 PM) --}}
+                                <tr class="border-line-brown/70 h-[100px] border-b-2">
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="medication[]"
+                                            placeholder="Medication"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                        <input type="hidden" name="time[]" value="14:00:00" />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="dose[]"
+                                            placeholder="Dose"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="route[]"
+                                            placeholder="Route"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="frequency[]"
+                                            placeholder="Frequency"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="comments[]"
+                                            placeholder="Comments"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <th class="bg-yellow-light text-brown font-semibold">2:00 PM</th>
+                                </tr>
 
-                                    {{-- ROW 1 (10:00 AM) --}}
-                                    <tr
-                                        class="md:h-[100px] flex flex-col md:table-row border border-line-brown/70 md:border-b-2 md:border-t-0 md:border-x-0 mb-6 md:mb-0 rounded-lg md:rounded-none overflow-hidden shadow-sm md:shadow-none bg-beige">
-
-                                        {{-- MEDICATION --}}
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                MEDICATION</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="medication[]" placeholder="Medication" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-
-                                        {{-- DOSE --}}
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                DOSE</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="dose[]" placeholder="Dose" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-
-                                        {{-- ROUTE --}}
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                ROUTE</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="route[]" placeholder="Route" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-
-                                        {{-- FREQUENCY --}}
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                FREQUENCY</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="frequency[]" placeholder="Frequency" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-
-                                        {{-- COMMENTS --}}
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                COMMENTS</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="comments[]" placeholder="Comments" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-
-                                        {{-- TIME --}}
-                                        {{-- 'order-first' puts it at the top on Mobile. 'main-header' applies dark green on
-                                        mobile only. --}}
-                                        <td
-                                            class="order-first md:order-none block md:table-cell bg-yellow-light text-brown font-semibold p-0 border-b border-line-brown md:border-b-0">
-                                            {{-- Mobile Header with main-header class --}}
-                                            <div class="md:hidden w-full main-header text-[14px] font-bold p-3 text-center">
-                                                TIME: 10:00 AM
-                                            </div>
-                                            {{-- Desktop Content --}}
-                                            <span class="hidden md:block py-4 text-center">10:00 AM</span>
-                                            <input type="hidden" name="time[]" value="10:00:00" />
-                                        </td>
-                                    </tr>
-
-                                    {{-- ROW 2 (2:00 PM) --}}
-                                    <tr
-                                        class="md:h-[100px] flex flex-col md:table-row border border-line-brown/70 md:border-b-2 md:border-t-0 md:border-x-0 mb-6 md:mb-0 rounded-lg md:rounded-none overflow-hidden shadow-sm md:shadow-none bg-beige">
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                MEDICATION</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="medication[]" placeholder="Medication" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                DOSE</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="dose[]" placeholder="Dose" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                ROUTE</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="route[]" placeholder="Route" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                FREQUENCY</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="frequency[]" placeholder="Frequency" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                COMMENTS</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="comments[]" placeholder="Comments" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        {{-- TIME --}}
-                                        <td
-                                            class="order-first md:order-none block md:table-cell bg-yellow-light text-brown font-semibold p-0 border-b border-line-brown md:border-b-0">
-                                            <div class="md:hidden w-full main-header text-[14px] font-bold p-3 text-center">
-                                                TIME: 2:00 PM
-                                            </div>
-                                            <span class="hidden md:block py-4 text-center">2:00 PM</span>
-                                            <input type="hidden" name="time[]" value="14:00:00" />
-                                        </td>
-                                    </tr>
-
-                                    {{-- ROW 3 (6:00 PM) --}}
-                                    <tr
-                                        class="md:h-[100px] flex flex-col md:table-row border border-line-brown/70 md:border-b-2 md:border-t-0 md:border-x-0 mb-6 md:mb-0 rounded-lg md:rounded-none overflow-hidden shadow-sm md:shadow-none bg-beige">
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                MEDICATION</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="medication[]" placeholder="Medication" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                DOSE</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="dose[]" placeholder="Dose" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                ROUTE</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="route[]" placeholder="Route" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                FREQUENCY</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="frequency[]" placeholder="Frequency" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="block md:table-cell bg-beige text-center p-0 border-b md:border-b-0 border-gray-300/50">
-                                            <div
-                                                class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
-                                                COMMENTS</div>
-                                            <div class="p-2 md:p-0">
-                                                <textarea name="comments[]" placeholder="Comments" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
-                                            </div>
-                                        </td>
-                                        {{-- TIME --}}
-                                        <td
-                                            class="order-first md:order-none block md:table-cell bg-yellow-light text-brown font-semibold p-0 border-b border-line-brown md:border-b-0">
-                                            <div class="md:hidden w-full main-header text-[14px] font-bold p-3 text-center">
-                                                TIME: 6:00 PM
-                                            </div>
-                                            <span class="hidden md:block py-4 text-center">6:00 PM</span>
-                                            <input type="hidden" name="time[]" value="18:00:00" />
-                                        </td>
-                                    </tr>
-
-                                </tbody>
+                                {{-- Row 3 (6:00 PM) --}}
+                                <tr>
+                                    <td class="bg-beige h-[100px] text-center">
+                                        <input
+                                            type="text"
+                                            name="medication[]"
+                                            placeholder="Medication"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                        <input type="hidden" name="time[]" value="18:00:00" />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="dose[]"
+                                            placeholder="Dose"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="route[]"
+                                            placeholder="Route"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="frequency[]"
+                                            placeholder="Frequency"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <td class="bg-beige text-center">
+                                        <input
+                                            type="text"
+                                            name="comments[]"
+                                            placeholder="Comments"
+                                            class="medication-input cdss-input h-[45px] w-full text-center focus:outline-none"
+                                        />
+                                    </td>
+                                    <th class="text-brown bg-yellow-light font-semibold">6:00 PM</th>
+                                </tr>
                             </table>
                         </div>
-                        <div class="w-[85%] mx-auto flex justify-end md:mx-0 -mr-0 md:justify-end mt-5 mb-20 space-x-4">
-                            <button class="button-default " type="submit" id="submit_button">SUBMIT</button>
+
+                        <div class="mx-auto mt-5 mb-20 flex w-[70%] justify-end space-x-4">
+                            <button
+                                class="button-default cdss-btn pointer-events-none opacity-50"
+                                type="submit"
+                                id="submit_button"
+                            >
+                                SUBMIT
+                            </button>
                         </div>
                     </center>
                 </div>
@@ -305,5 +237,6 @@
         'resources/js/date-day-loader.js',
         'resources/js/searchable-dropdown.js',
         'resources/js/medication-administration-loader.js',
+        'resources/js/medication-form-validation.js',
     ])
 @endpush

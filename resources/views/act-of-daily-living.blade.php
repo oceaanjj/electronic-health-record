@@ -7,7 +7,7 @@
         @if ($selectedPatient && isset($adlData))
             <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
                 <div id="cdss-alert-content"
-                    class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md">
+                    class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-lg">
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
                         <span class="text-sm font-semibold text-[#dcb44e]">
@@ -27,7 +27,7 @@
         @endif
 
         {{-- HEADER SECTION --}}
-        <div class="mx-auto mt-10 mb-5 w-[90%] md:w-[80%]">
+        <div class="mx-auto mt-10 mb-5 w-[90%] lg:w-[80%]">
             <div class="flex flex-wrap items-center justify-start gap-x-10 gap-y-4">
 
                 {{-- PATIENT NAME --}}
@@ -35,7 +35,7 @@
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                         PATIENT NAME :
                     </label>
-                    <div class="w-full md:w-[350px]">
+                    <div class="w-full lg:w-[350px]">
                         <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
                             :selectRoute="route('adl.select')" :inputValue="$selectedPatient?->name ?? ''" />
                     </div>
@@ -43,7 +43,7 @@
 
                 {{-- DATE & DAY SELECTOR --}}
                 @if ($selectedPatient)
-                    <div class="w-full md:w-auto">
+                    <div class="w-full lg:w-auto">
                         <x-date-day-selector :currentDate="$currentDate" :currentDayNo="$currentDayNo"
                             :totalDays="$totalDaysSinceAdmission ?? 30" formId="adl-form" />
                     </div>
@@ -70,11 +70,11 @@
 
             <fieldset @if (!$selectedPatient) disabled @endif>
                 <center>
-                    <div class="mt-2 flex w-[90%] items-center gap-1 md:w-[80%]">
+                    <div class="mt-2 flex w-[90%] items-center gap-1 lg:w-[80%]">
                         <div class="flex-1 text-left">
-                            <p class="main-header mb-3 rounded-[15px] md:mb-1">ACTIVITIES OF DAILY LIVING</p>
+                            <p class="main-header mb-3 rounded-[15px] lg:mb-1">ACTIVITIES OF DAILY LIVING</p>
                         </div>
-                        <div class="hidden md:block md:w-[60px]"></div>
+                        <div class="hidden lg:block lg:w-[60px]"></div>
                     </div>
                 </center>
 
@@ -94,33 +94,33 @@
                     @foreach ($adlFields as $key => $label)
                         {{-- Row Wrapper: Card styling for mobile, original flex for desktop --}}
                         <div
-                            class="relative mb-6 flex w-[90%] flex-col items-center overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige md:mb-1.5 md:w-[80%] md:flex-row md:items-center md:gap-1 md:overflow-visible md:rounded-none md:border-none md:bg-transparent">
+                            class="relative mb-6 flex w-[90%] flex-col items-center overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige lg:mb-1.5 lg:w-[80%] lg:flex-row lg:items-center lg:gap-1 lg:overflow-visible lg:rounded-none lg:border-none lg:bg-transparent">
 
                             {{-- Mobile Card Label --}}
-                            <div class="main-header w-full pl-3 p-4 pr-12 text-left text-[15px] md:hidden">
+                            <div class="main-header w-full pl-3 p-4 pr-12 text-left text-[15px] lg:hidden">
                                 {{ $label }}
                             </div>
 
                             {{-- Main Table Section --}}
-                            <table class="w-full flex-1 border-separate border-spacing-0 md:bg-beige md:table md:border-none">
-                                <tbody class="block md:table-row-group">
-                                    <tr class="block md:table-row">
+                            <table class="w-full flex-1 border-separate border-spacing-0 lg:bg-beige lg:table lg:border-none">
+                                <tbody class="block lg:table-row-group">
+                                    <tr class="block lg:table-row">
                                         {{-- System Header (Desktop side-header) --}}
                                         <th rowspan="2"
-                                            class="main-header hidden w-full p-2 text-wrap md:table-cell md:w-[200px] md:rounded-l-lg">
+                                            class="main-header hidden w-full p-2 text-wrap lg:table-cell lg:w-[200px] lg:rounded-l-lg">
                                             {{ $label }}
                                         </th>
                                         {{-- Assessment Header: --}}
                                         <th
-                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[12px] font-bold md:table-cell md:rounded-tr-lg md:p-1 md:text-[13px]">
+                                            class="bg-yellow-light text-brown border-line-brown block p-1 lg:p-0 text-[12px] font-bold lg:table-cell lg:rounded-tr-lg lg:p-1 lg:text-[13px]">
                                             ASSESSMENT
                                         </th>
                                     </tr>
 
-                                    <tr class="block md:table-row">
-                                        <td class="block md:table-cell md:rounded-br-lg">
+                                    <tr class="block lg:table-row">
+                                        <td class="block lg:table-cell lg:rounded-br-lg">
                                             <textarea
-                                                class="notepad-lines cdss-input h-[120px] w-full border-none bg-transparent p-4 pr-16 md:h-[100px] md:p-4 md:pr-4"
+                                                class="notepad-lines cdss-input h-[120px] w-full border-none bg-transparent p-4 pr-16 lg:h-[100px] lg:p-4 lg:pr-4"
                                                 name="{{ $key }}" placeholder="Type here..."
                                                 data-field-name="{{ $key }}">{{ old($key, $adlData->$key ?? '') }}</textarea>
                                         </td>
@@ -129,7 +129,7 @@
                             </table>
 
                             {{-- ALERT CONTAINER (Pinned to top-right on mobile) --}}
-                            <div class="absolute right-4 top-2.5 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5"
+                            <div class="absolute right-4 top-2.5 z-10 flex items-center justify-center lg:static lg:h-[100px] lg:w-[70px] lg:pl-5"
                                 data-alert-for="{{ $key }}">
                                 <div class="alert-icon-btn is-empty">
                                     <span class="material-symbols-outlined">notifications</span>
@@ -140,7 +140,7 @@
                 </center>
 
                 {{-- BUTTONS --}}
-                <div class="mx-auto mt-5 mb-20 flex w-[90%] flex-row justify-end gap-4 md:mb-30 md:w-[80%]">
+                <div class="mx-auto mt-5 mb-20 flex w-[90%] flex-row justify-end gap-4 lg:mb-30 lg:w-[80%]">
                     @if (isset($adlData))
                         <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
                             class="button-default cdss-btn inline-block text-center">

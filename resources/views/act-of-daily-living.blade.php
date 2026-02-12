@@ -31,7 +31,7 @@
             <div class="flex flex-wrap items-center justify-start gap-x-10 gap-y-4">
 
                 {{-- PATIENT NAME --}}
-                <div class="flex items-center gap-4 -mb-1">
+                <div class="flex items-center gap-4">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                         PATIENT NAME :
                     </label>
@@ -112,7 +112,7 @@
                                         </th>
                                         {{-- Assessment Header: --}}
                                         <th
-                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[12px] font-bold md:table-cell md:rounded-tr-lg md:text-[13px]">
+                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[12px] font-bold md:table-cell md:rounded-tr-lg md:p-1 md:text-[13px]">
                                             ASSESSMENT
                                         </th>
                                     </tr>

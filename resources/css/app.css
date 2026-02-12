@@ -1696,7 +1696,7 @@ body.is-loading > *:not(.cute-loader-wrapper):not(header):not(.main-header) {
 
 
 /* for mobile responsive layout bg margin top  */
-@media (max-width: 600px) { 
+@media (max-width: 760px) { 
     body {
         margin-top: -40px; 
     }

@@ -305,5 +305,6 @@
         'resources/js/date-day-loader.js',
         'resources/js/searchable-dropdown.js',
         'resources/js/medication-administration-loader.js',
+        'resources/js/medication-form-validation.js',
     ])
 @endpush

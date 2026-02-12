@@ -38,13 +38,13 @@
             -webkit-backdrop-filter: blur(30px) saturate(200%);
             border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 
+            box-shadow:
                 0 8px 32px 0 rgba(0, 0, 0, 0.08),
                 0 2px 8px 0 rgba(0, 0, 0, 0.04),
                 inset 0 1px 1px 0 rgba(255, 255, 255, 0.6),
                 inset 0 -1px 1px 0 rgba(0, 0, 0, 0.02);
             overflow: hidden;
-            transition: 
+            transition:
                 transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -61,12 +61,7 @@
             left: -100%;
             width: 50%;
             height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.4),
-                transparent
-            );
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transition: left 0.6s ease;
             z-index: 1;
             pointer-events: none;
@@ -79,7 +74,7 @@
         .diagnostic-panel:hover {
             transform: translateY(-8px) scale(1.01);
             border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 
+            box-shadow:
                 0 16px 48px 0 rgba(0, 0, 0, 0.12),
                 0 4px 16px 0 rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px 0 rgba(255, 255, 255, 0.7),
@@ -88,11 +83,7 @@
 
         /* --- HEADER AREA (Glassmorphism) --- */
         .panel-header {
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.3) 0%,
-                rgba(249, 250, 251, 0.2) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(249, 250, 251, 0.2) 100%);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             padding: 1.5rem 1.75rem;
@@ -125,11 +116,7 @@
             left: 0;
             right: 0;
             height: 50%;
-            background: linear-gradient(
-                180deg,
-                rgba(255, 255, 255, 0.15) 0%,
-                transparent 100%
-            );
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
             pointer-events: none;
         }
 
@@ -141,7 +128,7 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
             font-size: 1rem;
-            text-shadow: 
+            text-shadow:
                 0 1px 2px rgba(255, 255, 255, 0.9),
                 0 2px 4px rgba(0, 0, 0, 0.05);
             position: relative;
@@ -156,15 +143,10 @@
             border-radius: 18px;
             margin: 1.5rem;
             cursor: pointer;
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.2) 0%,
-                rgba(249, 250, 251, 0.15) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(249, 250, 251, 0.15) 100%);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            transition:
-                all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -186,8 +168,8 @@
                 rgba(209, 213, 219, 0.3),
                 rgba(255, 255, 255, 0.4)
             );
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
                 linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -209,14 +191,10 @@
         }
 
         .panel-upload-area:hover {
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.3) 0%,
-                rgba(249, 250, 251, 0.25) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(249, 250, 251, 0.25) 100%);
             border-color: rgba(156, 163, 175, 0.5);
             transform: scale(1.005);
-            box-shadow: 
+            box-shadow:
                 0 4px 16px rgba(0, 0, 0, 0.06),
                 inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
@@ -228,14 +206,10 @@
 
         /* Drag-over state with gray tones */
         .panel-upload-area.drag-over {
-            background: linear-gradient(
-                135deg,
-                rgba(243, 244, 246, 0.4) 0%,
-                rgba(229, 231, 235, 0.3) 100%
-            );
+            background: linear-gradient(135deg, rgba(243, 244, 246, 0.4) 0%, rgba(229, 231, 235, 0.3) 100%);
             border-color: rgba(156, 163, 175, 0.7);
             border-style: solid;
-            box-shadow: 
+            box-shadow:
                 inset 0 0 30px rgba(156, 163, 175, 0.15),
                 0 0 20px rgba(156, 163, 175, 0.2),
                 inset 0 2px 4px rgba(255, 255, 255, 0.5);
@@ -293,12 +267,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(107, 114, 128, 0.5),
-                transparent
-            );
+            background: linear-gradient(90deg, transparent, rgba(107, 114, 128, 0.5), transparent);
         }
 
         /* "Accepted types" text at the bottom */
@@ -335,12 +304,12 @@
             object-fit: cover;
             border-radius: 14px;
             border: 2px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 
+            box-shadow:
                 0 4px 16px rgba(0, 0, 0, 0.12),
                 0 2px 8px rgba(0, 0, 0, 0.08),
                 inset 0 1px 1px rgba(255, 255, 255, 0.4),
                 inset 0 -1px 1px rgba(0, 0, 0, 0.05);
-            transition: 
+            transition:
                 transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(5px);
@@ -349,7 +318,7 @@
 
         .preview-item img:hover {
             transform: scale(1.08) translateY(-4px);
-            box-shadow: 
+            box-shadow:
                 0 12px 24px rgba(0, 0, 0, 0.18),
                 0 6px 12px rgba(0, 0, 0, 0.12),
                 inset 0 2px 2px rgba(255, 255, 255, 0.5),
@@ -371,18 +340,17 @@
             line-height: 24px;
             text-align: center;
             cursor: pointer;
-            box-shadow: 
+            box-shadow:
                 0 4px 10px rgba(239, 68, 68, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transition: 
-                all 0.2s ease;
+            transition: all 0.2s ease;
             backdrop-filter: blur(5px);
         }
 
         .delete-btn:hover {
             background: linear-gradient(135deg, #dc2626, #b91c1c);
             transform: scale(1.15) rotate(90deg);
-            box-shadow: 
+            box-shadow:
                 0 6px 15px rgba(239, 68, 68, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
@@ -405,11 +373,7 @@
 
         /* --- FOOTER BUTTON AREA (Enhanced Glassmorphism) --- */
         .panel-footer {
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(249, 250, 251, 0.2) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(249, 250, 251, 0.2) 100%);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             padding: 1.25rem 1.75rem;
@@ -428,20 +392,11 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.6),
-                transparent
-            );
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
         }
 
         .clear-btn {
-            background: linear-gradient(
-                135deg, 
-                rgba(239, 68, 68, 0.85), 
-                rgba(220, 38, 38, 0.85)
-            );
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.85), rgba(220, 38, 38, 0.85));
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             color: white;
@@ -451,9 +406,8 @@
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 
-                all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow:
                 0 4px 12px rgba(239, 68, 68, 0.25),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.1);
@@ -461,13 +415,9 @@
         }
 
         .clear-btn:hover {
-            background: linear-gradient(
-                135deg, 
-                rgba(220, 38, 38, 0.95), 
-                rgba(185, 28, 28, 0.95)
-            );
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.95), rgba(185, 28, 28, 0.95));
             transform: translateY(-2px);
-            box-shadow: 
+            box-shadow:
                 0 6px 20px rgba(239, 68, 68, 0.35),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -475,7 +425,7 @@
 
         .clear-btn:active {
             transform: translateY(0);
-            box-shadow: 
+            box-shadow:
                 0 2px 8px rgba(239, 68, 68, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
@@ -502,7 +452,7 @@
             border-radius: 16px;
             margin-bottom: 1rem;
             border: 1px solid var(--glass-border);
-            box-shadow: 
+            box-shadow:
                 0 8px 32px 0 rgba(31, 38, 135, 0.15),
                 inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
         }
@@ -536,13 +486,12 @@
     >
         {{-- DIAGNOSTICS PATIENT SELECTION --}}
         <div class="mx-auto w-full px-4">
-            <div class="flex flex-wrap items-center gap-x-10 gap-y-4">
-                
+            <div class="ml-5 flex flex-wrap items-center gap-x-10 gap-y-4">
                 {{-- 1. PATIENT SECTION --}}
                 <div class="flex items-center gap-4">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
-                    <div class="w-full md:w-[350px]">
+                    <div class="w-[350px]">
                         <x-searchable-patient-dropdown
                             :patients="$patients"
                             :selectedPatient="$selectedPatient"
@@ -553,10 +502,8 @@
                         />
                     </div>
                 </div>
-
             </div>
         </div>
-
 
         <form action="{{ route('diagnostics.submit') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -668,7 +615,7 @@
                 </div>
 
                 {{-- Using your original button class --}}
-                <div class="w-full mx-auto flex justify-center mt-5 mb-20 space-x-4 px-4 md:w-[98%] md:justify-end">
+                <div class="mx-auto mt-5 mb-20 flex w-[98%] justify-end space-x-4">
                     <button
                         type="submit"
                         class="button-default text-center"

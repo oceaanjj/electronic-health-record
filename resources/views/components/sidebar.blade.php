@@ -7,7 +7,7 @@
     </button>
 
     <ul id="sidebarScroll"
-        class="text-dark-green font-creato-black mt-[100px] sm:mt-[140px] lg:mt-[140px] pr-[10px] pl-[10px] text-[13px] flex-1 overflow-y-auto">
+        class="text-dark-green font-creato-black mt-[140px] h-[calc(100vh-140px)] overflow-y-auto pr-[10px] pl-[10px] text-[13px]">
         <li>
             <a href="{{ route('nurse-home') }}"
                 class="group hover:bg-dark-green {{
@@ -47,7 +47,7 @@
         <li>
             <a href="{{ route('physical-exam.index') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('physical-exam.index')
+    request()->routeIs('physical-exam.*') || request()->is('adpie/physical-exam/*')
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -59,7 +59,7 @@
         <li>
             <a href="{{ route('vital-signs.show') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('vital-signs.show')
+    request()->routeIs('vital-signs.*') || request()->is('adpie/vital-signs/*')
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -71,7 +71,7 @@
         <li>
             <a href="{{ route('io.show') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('io.show')
+    request()->routeIs('io.*') || request()->is('adpie/intake-and-output/*')
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -83,7 +83,7 @@
         <li>
             <a href="{{ route('adl.show') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('adl.show')
+    request()->routeIs('adl.show') || request()->is('adpie/adl/*')
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -97,7 +97,7 @@
         <li>
             <a href="{{ route('lab-values.index') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('lab-values.index')
+    request()->routeIs('lab-values.*') || request()->is('adpie/lab-values/*')
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -193,7 +193,7 @@
 
             observer.observe(document.documentElement, {
                 childList: true,
-                subtree: true
+                subtree: true,
             });
         })();
 
@@ -221,7 +221,7 @@
             const sidebarObserver = new MutationObserver(updateArrowVisibility);
             sidebarObserver.observe(sidebar, {
                 attributes: true,
-                attributeFilter: ['class']
+                attributeFilter: ['class'],
             });
 
             // Save position on any click within the sidebar
@@ -239,9 +239,11 @@
                 logoutBtn.addEventListener('click', function (e) {
                     e.preventDefault();
                     if (typeof showConfirm === 'function') {
-                        showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then((result) => {
-                            if (result.isConfirmed) logoutForm.submit();
-                        });
+                        showConfirm('Do you really want to logout?', 'Are you sure?', 'Yes', 'Cancel').then(
+                            (result) => {
+                                if (result.isConfirmed) logoutForm.submit();
+                            },
+                        );
                     } else {
                         if (confirm('Are you sure you want to logout?')) logoutForm.submit();
                     }
@@ -250,3 +252,5 @@
         });
     </script>
 @endpush
+</ul>
+</div>

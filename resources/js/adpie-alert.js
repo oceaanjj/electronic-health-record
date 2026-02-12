@@ -11,8 +11,60 @@ let debounceTimer;
 function findBannersForInput(input) {
     return {
         recommendation: document.getElementById('recommendation-banner'),
-        noRecommendation: document.getElementById('no-recommendation-banner')
+        noRecommendation: document.getElementById('no-recommendation-banner'),
     };
+}
+
+// Helper function to format message content consistently
+function formatMessageForBanner(message) {
+    if (!message) return '';
+
+    // If message already contains HTML list tags, return as is
+    if (message.includes('<ul>') || message.includes('<ol>') || message.includes('<li>')) {
+        return message;
+    }
+
+    // Clean the message and split into sentences
+    let sentences = [];
+
+    // Check if it looks like a numbered/bulleted list (has multiple lines)
+    const lines = message
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0);
+
+    if (lines.length > 1) {
+        // It's a multi-line format, treat each line as a separate item
+        sentences = lines
+            .map((line) => {
+                // Remove leading numbers, bullets, or dashes
+                return line.replace(/^[\d\-\*\•]+[\.\):\s]*/, '').trim();
+            })
+            .filter((s) => s.length > 0);
+    } else {
+        // Single paragraph - split by periods
+        sentences = message
+            .split(/\.\s+/)
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0);
+    }
+
+    // If we have multiple sentences, format as bullet list
+    if (sentences.length > 1) {
+        const listItems = sentences
+            .map((sentence) => {
+                // Add period back if it doesn't end with punctuation
+                const formatted = sentence.match(/[.!?]$/) ? sentence : sentence + '.';
+                return `<li style="margin-bottom: 0.5rem; line-height: 1.6;">${formatted}</li>`;
+            })
+            .join('');
+
+        return `<ul style="margin: 0; padding-left: 1.5rem; list-style-type: disc;">${listItems}</ul>`;
+    }
+
+    // Single sentence - return as paragraph
+    const formatted = message.match(/[.!?]$/) ? message : message + '.';
+    return `<p style="margin: 0; line-height: 1.6;">${formatted}</p>`;
 }
 
 // =======================================================
@@ -110,8 +162,8 @@ function displayBannerAlert(banners, alertData) {
 
     let colorClass = 'alert-green';
     let levelIcon = 'info';
-    let levelText = 'Information';
-    
+    let levelText = 'Clinical Decision Support';
+
     if (alertData.level === 'CRITICAL') {
         colorClass = 'alert-red';
         levelIcon = 'error';
@@ -134,9 +186,11 @@ function displayBannerAlert(banners, alertData) {
         return;
     }
 
-    // Create short preview (first 60 chars)
-    const preview = stripHtml(alertData.message).substring(0, 60) + '...';
-    const fullMessage = alertData.message;
+    // Format the message consistently
+    const formattedMessage = formatMessageForBanner(alertData.message);
+
+    // Create short preview (strip HTML and limit to 60 chars)
+    const preview = stripHtml(formattedMessage).substring(0, 60) + '...';
 
     // Hide "no recommendation" banner
     if (banners.noRecommendation) {
@@ -147,7 +201,7 @@ function displayBannerAlert(banners, alertData) {
     const banner = banners.recommendation;
     banner.className = `recommendation-banner ${colorClass}`;
     banner.classList.remove('hidden');
-    
+
     banner.innerHTML = `
         <div class="banner-content">
             <div class="banner-icon">
@@ -166,14 +220,14 @@ function displayBannerAlert(banners, alertData) {
         </div>
     `;
 
-    // Store the full message and level text directly on the banner element for the modal
-    banner.dataset.fullMessage = fullMessage;
+    // Store the formatted message and level text directly on the banner element for the modal
+    banner.dataset.fullMessage = formattedMessage;
     banner.dataset.levelText = levelText;
     banner.dataset.levelIcon = levelIcon;
     banner.dataset.levelIconColor = getLevelIconColor(alertData.level);
 
     // Re-attach click handler
-    banner.onclick = function() {
+    banner.onclick = function () {
         window.openRecommendationModal(this);
     };
 }
@@ -188,12 +242,12 @@ function getLevelIconColor(level) {
 // Show "no recommendation" banner and hide recommendation banner
 function showNoRecommendationBanner(banners) {
     console.log('[ADPIE] Showing "No Recommendations Yet" banner');
-    
+
     // Hide recommendation banner
     if (banners.recommendation) {
         banners.recommendation.classList.add('hidden');
     }
-    
+
     // Show no recommendation banner
     if (banners.noRecommendation) {
         banners.noRecommendation.classList.remove('hidden');
@@ -204,17 +258,17 @@ function showNoRecommendationBanner(banners) {
 function showBannerLoading(banners) {
     const banner = banners.recommendation;
     if (!banner) return;
-    
+
     console.log('[ADPIE] Analyzing... showing banner loader');
-    
+
     // Hide "no recommendation" banner during loading
     if (banners.noRecommendation) {
         banners.noRecommendation.classList.add('hidden');
     }
-    
+
     banner.className = 'recommendation-banner alert-green';
     banner.classList.remove('hidden');
-    
+
     banner.innerHTML = `
         <div class="banner-content">
             <div class="banner-icon">
@@ -229,7 +283,7 @@ function showBannerLoading(banners) {
             <div class="banner-loading-spinner" style="width: 16px; height: 16px;"></div>
         </div>
     `;
-    
+
     banner.onclick = null;
 }
 

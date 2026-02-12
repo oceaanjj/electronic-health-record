@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('title', 'Physical Exam')
+
 @section('content')
 
     <div id="form-content-container" class="w-full overflow-x-hidden">
@@ -26,8 +28,8 @@
             </div>
         @endif
 
-        {{-- HEADER SECTION --}}
-        <div class="m-5 flex flex-col items-start gap-4 md:m-10 md:ml-20 md:flex-row md:items-center">
+        {{-- HEADER SECTION - Aligned to the left side of the table --}}
+        <div class="mx-auto mt-10 mb-5 flex w-[90%] flex-col items-start gap-4 md:w-[80%] md:flex-row md:items-center">
             <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
             <div class="w-full px-2 md:w-[350px] md:px-0">
@@ -37,9 +39,9 @@
             </div>
         </div>
 
-        {{-- NOT AVAILABLE MESSAGE --}}
+        {{-- NOT AVAILABLE MESSAGE - Aligned to the left side of the table --}}
         @if ($selectedPatient && (!isset($physicalExam) || !$physicalExam))
-            <div class="mt-4 flex items-center gap-2 px-5 text-xs text-gray-500 italic md:ml-20 md:px-0">
+            <div class="mx-auto mt-2 mb-4 flex w-[90%] items-center gap-2 text-xs text-gray-500 italic md:w-[80%]">
                 <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                 Clinical Decision Support System is not yet available.
             </div>
@@ -55,7 +57,7 @@
             <fieldset @if (!session('selected_patient_id')) disabled @endif>
                 <center>
                     <div class="mt-2 flex w-[90%] items-center gap-1 md:w-[80%]">
-                        <div class="flex-1">
+                        <div class="flex-1 text-left">
                             <p class="main-header mb-3 md:mb-1 rounded-[15px]">PHYSICAL EXAMINATION</p>
                         </div>
                         <div class="hidden md:block md:w-[60px]"></div>
@@ -112,12 +114,8 @@
                                 </tbody>
                             </table>
 
-                            {{--
-                            ALERT CONTAINER
-                            Mobile: Absolute upper-right of the whole card.
-                            Desktop: Static block on the right (original styling).
-                            --}}
-                            <div class="absolute right-2 top-15 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5"
+
+                            <div class="absolute right-2 top-17 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5 md:top-0 md:right-0"
                                 data-alert-for="{{ $key }}">
                                 <div class="alert-icon-btn is-empty">
                                     <span class="material-symbols-outlined">notifications</span>

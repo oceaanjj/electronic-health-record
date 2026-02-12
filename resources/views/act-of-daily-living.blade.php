@@ -30,7 +30,7 @@
         <div
             class="mx-auto mt-10 mb-5 flex w-[90%] flex-col items-start gap-x-10 gap-y-4 md:w-[80%] md:flex-row md:items-center">
             {{-- PATIENT NAME --}}
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 -mb-1">
                 <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                     PATIENT NAME :
                 </label>

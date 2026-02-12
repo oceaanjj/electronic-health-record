@@ -27,35 +27,37 @@
         @endif
 
         {{-- HEADER SECTION --}}
-        <div
-            class="mx-auto mt-10 mb-5 flex w-[90%] flex-col items-start gap-x-10 gap-y-4 md:w-[80%] md:flex-row md:items-center">
-            {{-- PATIENT NAME --}}
-            <div class="flex items-center gap-4 -mb-1">
-                <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
-                    PATIENT NAME :
-                </label>
-                <div class="w-full px-2 md:w-[350px] md:px-0">
-                    <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                        :selectRoute="route('adl.select')" :inputValue="$selectedPatient?->name ?? ''" />
+        <div class="mx-auto mt-10 mb-5 w-[90%] md:w-[80%]">
+            <div class="flex flex-wrap items-center justify-start gap-x-10 gap-y-4">
+
+                {{-- PATIENT NAME --}}
+                <div class="flex items-center gap-4 -mb-1">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
+                        PATIENT NAME :
+                    </label>
+                    <div class="w-full md:w-[350px]">
+                        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
+                            :selectRoute="route('adl.select')" :inputValue="$selectedPatient?->name ?? ''" />
+                    </div>
                 </div>
+
+                {{-- DATE & DAY SELECTOR --}}
+                @if ($selectedPatient)
+                    <div class="w-full md:w-auto">
+                        <x-date-day-selector :currentDate="$currentDate" :currentDayNo="$currentDayNo"
+                            :totalDays="$totalDaysSinceAdmission ?? 30" formId="adl-form" />
+                    </div>
+                @endif
             </div>
 
-            {{-- DATE & DAY SELECTOR --}}
-            @if ($selectedPatient)
-                <div class="w-full md:w-auto">
-                    <x-date-day-selector :currentDate="$currentDate" :currentDayNo="$currentDayNo"
-                        :totalDays="$totalDaysSinceAdmission ?? 30" formId="adl-form" />
+            {{-- NOT AVAILABLE FOOTER --}}
+            @if ($selectedPatient && !isset($adlData))
+                <div class="mt-4 flex items-center gap-2 text-xs italic text-gray-500">
+                    <span class="material-symbols-outlined text-[16px]">pending_actions</span>
+                    Clinical Decision Support System is not yet available (No records for this date).
                 </div>
             @endif
         </div>
-
-        {{-- NOT AVAILABLE FOOTER - Aligned --}}
-        @if ($selectedPatient && !isset($adlData))
-            <div class="mx-auto mt-2 mb-4 flex w-[90%] items-center gap-2 text-xs text-gray-500 italic md:w-[80%]">
-                <span class="material-symbols-outlined text-[16px]">pending_actions</span>
-                Clinical Decision Support System is not yet available (No records for this date).
-            </div>
-        @endif
 
         {{-- FORM --}}
         <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"

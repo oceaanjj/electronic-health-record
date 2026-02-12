@@ -56,9 +56,8 @@
                 <center>
                     <div class="mt-2 flex w-[90%] items-center gap-1 md:w-[80%]">
                         <div class="flex-1">
-                            <p class="main-header mb-1 rounded-[15px]">PHYSICAL EXAMINATION</p>
+                            <p class="main-header mb-3 md:mb-1 rounded-[15px]">PHYSICAL EXAMINATION</p>
                         </div>
-                        {{-- Keep this spacer for original desktop alignment --}}
                         <div class="hidden md:block md:w-[60px]"></div>
                     </div>
                 </center>
@@ -78,39 +77,47 @@
                     @endphp
 
                     @foreach ($fields as $key => $label)
-                        {{-- Row Wrapper: Card border on mobile, None on Desktop --}}
+                        {{-- Row Wrapper: Card styling for mobile, original flex for desktop --}}
                         <div
-                            class="mb-6 flex w-[90%] flex-col items-center overflow-hidden rounded-[15px] border border-[#c18b04] md:mb-1.5 md:w-[80%] md:flex-row md:items-center md:gap-1 md:overflow-visible md:rounded-none md:border-none">
+                            class="relative mb-6 flex w-[90%] flex-col items-center overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige md:mb-1.5 md:w-[80%] md:flex-row md:items-center md:gap-1 md:overflow-visible md:rounded-none md:border-none md:bg-transparent">
+
+                            {{-- Mobile Label Header (System Name) --}}
+                            <div class="main-header w-full p-2 pr-12 text-left text-[11px] font-bold md:hidden">
+                                {{ $label }}
+                            </div>
 
                             {{-- Main Table Section --}}
-                            <table class="bg-beige w-full flex-1 border-separate border-spacing-0 md:table md:border-none">
+                            <table class="w-full flex-1 border-separate border-spacing-0 md:bg-beige md:table md:border-none">
                                 <tbody class="block md:table-row-group">
-                                    {{-- SYSTEM HEADER --}}
                                     <tr class="block md:table-row">
+                                        {{-- System Header --}}
                                         <th rowspan="2"
-                                            class="main-header block w-full p-2 text-wrap md:table-cell md:w-[200px] md:rounded-l-lg">
+                                            class="main-header hidden w-full p-2 text-wrap md:table-cell md:w-[200px] md:rounded-l-lg">
                                             {{ $label }}
                                         </th>
-                                        {{-- FINDINGS HEADER: Stacks on mobile, table cell on desktop --}}
                                         <th
-                                            class="bg-yellow-light text-brown border-line-brown block p-1 text-[11px] font-bold md:table-cell md:rounded-tr-lg md:text-[13px]">
+                                            class="bg-yellow-light text-brown border-line-brown block p-1 md:p-0 text-[10px] font-bold md:table-cell md:rounded-tr-lg md:text-[13px]">
                                             FINDINGS
                                         </th>
                                     </tr>
 
                                     <tr class="block md:table-row">
                                         <td class="block md:table-cell md:rounded-br-lg">
-                                            {{-- Height is 80px on mobile, 100px on desktop --}}
-                                            <textarea class="notepad-lines cdss-input h-[80px] w-full md:h-[100px]"
-                                                name="{{ $key }}" placeholder="Type here..."
+                                            <textarea
+                                                class="notepad-lines cdss-input h-[120px] w-full border-none bg-transparent p-4 pr-18 md:h-[100px] md:p-4 md:pr-4"
+                                                name="{{ $key }}" placeholder="Type findings here..."
                                                 data-field-name="{{ $key }}">{{ old($key, $physicalExam->$key ?? '') }}</textarea>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            {{-- SINGLE ALERT CONTAINER: Works for both Desktop and Mobile Card --}}
-                            <div class="flex h-auto w-full items-center justify-center bg-black/5 py-2 md:h-[100px] md:w-[70px] md:bg-transparent md:py-0 md:pl-5 pl-6"
+                            {{--
+                            ALERT CONTAINER
+                            Mobile: Absolute upper-right of the whole card.
+                            Desktop: Static block on the right (original styling).
+                            --}}
+                            <div class="absolute right-2 top-15 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5"
                                 data-alert-for="{{ $key }}">
                                 <div class="alert-icon-btn is-empty">
                                     <span class="material-symbols-outlined">notifications</span>

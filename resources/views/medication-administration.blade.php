@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Patient Vital Signs')
+@section('title', 'Patient Medication Administration')
 @section('content')
     <div id="form-content-container">
         <form id="medication-administration-form" method="POST" action="{{ route('medication-administration.store') }}"

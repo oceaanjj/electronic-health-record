@@ -11,7 +11,7 @@
         .alert-icon-btn.is-empty { color: #cbd5e1 !important; opacity: 0.6; transition: all 0.3s ease; }
 
         /* =========================
-           MOBILE (PHONES) <= 768px
+            MOBILE (PHONES) <= 768px
         ========================= */
         @media screen and (max-width: 768px) {
             body { margin-top: -40px !important; }
@@ -48,7 +48,8 @@
                 display: block; width: 100%;
             }
 
-            .responsive-table-header-row { display: none; }
+            /* Sinisigurado na hidden ang header row sa mobile */
+            .responsive-table-header-row { display: none !important; }
 
             .responsive-table-data {
                 border-bottom: 1px solid #c18b04;
@@ -82,7 +83,6 @@
                 outline: none;
             }
 
-            /* Unified Bell sa Mobile */
             .unified-bell-container {
                 position: absolute;
                 right: 15px;
@@ -108,7 +108,7 @@
                         <div id="cdss-alert-content" class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md">
                             <div class="flex items-center gap-3">
                                 <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
-                                <span class="text-sm font-semibold text-[#dcb44e]">Clinical Decision Support System is now available for this date.</span>
+                                <span class="text-sm font-semibold text-[#dcb44e]">Clinical Decision Support System is now available.</span>
                             </div>
                             <button type="button" onclick="closeCdssAlert()" class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90">
                                 <span class="material-symbols-outlined text-[20px]">close</span>
@@ -140,16 +140,16 @@
 
                 <div class="mt-5 flex w-full max-w-screen-2xl flex-col items-center gap-5 md:mt-10 md:ml-24 md:flex-row md:items-center md:justify-start md:gap-0">
                     
-                    <div class="relative w-full md:w-auto mobile-card-wrapper bg-white md:bg-transparent md:border-none md:rounded-none flex flex-col md:flex-row md:items-center">
+                    <div class="relative w-full md:w-[85%] mobile-card-wrapper bg-white md:bg-transparent md:border-none md:rounded-none flex flex-col md:flex-row md:items-center">
                         
                         <div class="md:hidden mobile-green-header">
                             <span>INTAKE AND OUTPUT</span>
                             <div class="w-[40px]"></div> 
                         </div>
 
-                        {{-- TABLE SECTION (Original 75% width set via md:w-3/4 on wrapper or table) --}}
-                        <div class="w-full md:w-[850px] overflow-hidden rounded-[15px] md:rounded-[15px] md:border-none">
+                        <div class="w-full overflow-hidden rounded-[15px] md:rounded-[15px] md:border-none">
                             <table class="w-full table-fixed border-collapse border-spacing-y-0 responsive-table">
+                                {{-- ITO ANG TINANGGAL SA MOBILE (md:table-row para visible lang sa desktop) --}}
                                 <tr class="responsive-table-header-row hidden md:table-row">
                                     <th class="main-header w-[33%] rounded-tl-lg py-2 text-center">ORAL INTAKE (mL)</th>
                                     <th class="main-header w-[33%] py-2 text-center">IV FLUIDS (mL)</th>
@@ -176,7 +176,6 @@
                             </table>
                         </div>
 
-                        {{-- ALERTS BELL --}}
                         <div class="unified-bell-container flex items-center justify-center md:static md:pl-8" data-alert-for-time="io">
                             <div class="alert-icon-btn is-empty">
                                 <span class="material-symbols-outlined text-[40px] md:text-[45px] text-white md:text-[#cbd5e1]">notifications</span>
@@ -186,7 +185,7 @@
                     </div>
                 </div>
 
-                <div class="mx-auto mt-5 mb-30 flex w-full justify-center space-x-4 responsive-btns md:ml-24 md:w-[75%] md:justify-end">
+                <div class="mx-auto mt-5 mb-30 flex w-full justify-center space-x-4 responsive-btns md:ml-24 md:w-[85%] md:justify-end">
                     @if ($ioData)
                         <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default cdss-btn">CDSS</button>
                     @endif
@@ -196,7 +195,7 @@
         </fieldset>
     </div>
 @endsection
-    
+
 @push('scripts')
     @vite(['resources/js/alert.js', 'resources/js/searchable-dropdown.js', 'resources/js/close-cdss-alert.js'])
 @endpush

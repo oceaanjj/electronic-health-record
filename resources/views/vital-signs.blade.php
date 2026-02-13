@@ -193,8 +193,9 @@
                                                     class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
                                                     data-field-name="spo2" data-time="{{ $time }}" autocomplete="off" />
                                             </td>
+                                            {{-- DESKTOP ALERT BELL (The Master) --}}
                                             <td class="p-2 text-center align-middle bg-white">
-                                                <div class="h-[60px] flex justify-center items-center" data-alert-for-time="{{ $time }}">
+                                                <div class="h-[60px] flex justify-center items-center desktop-alert-container" data-alert-for-time="{{ $time }}">
                                                     <div class="alert-icon-btn is-empty">
                                                         <span class="material-symbols-outlined">notifications</span>
                                                     </div>
@@ -206,31 +207,45 @@
                             </table>
                         </div>
 
-                        {{-- MOBILE VIEW: Cards --}}
+                        {{-- MOBILE VIEW: ADL Style Cards --}}
                         <div class="space-y-4 md:hidden">
                             @foreach ($times as $time)
-                                @php 
-                                    $vitalsRecord = $vitalsData->get($time); 
+                                @php
+                                    $vitalsRecord = $vitalsData->get($time);
                                     $formattedTime = \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A');
                                 @endphp
-                                <div class="relative mb-6 flex w-full flex-col rounded-[20px] border border-dark-green bg-beige overflow-hidden shadow-lg">
-                                    <div class="main-header w-full bg-dark-green p-2 flex justify-between items-center">
-                                        <span class="font-alte font-bold text-white text-lg uppercase">TIME: {{ $formattedTime }}</span>
-                                        <div data-alert-for-time="{{ $time }}">
-                                            <div class="alert-icon-btn is-empty">
-                                                <span class="material-symbols-outlined text-white text-[28px]">notifications</span>
-                                            </div>
+
+                                <div class="relative mb-6 flex w-full flex-col overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige">
+                                    <div class="main-header w-full pl-3 p-4 pr-12 text-left text-[15px]">
+                                        TIME: {{ $formattedTime }}
+                                    </div>
+
+                                    {{-- MOBILE ALERT BELL (The Clone) --}}
+                                    {{-- Note: Added a special class 'mobile-alert-clone' for the JS sync --}}
+                                    <div class="absolute right-4 top-2.5 z-10 flex items-center justify-center mobile-alert-clone"
+                                        data-alert-for-time="{{ $time }}"
+                                        data-time="{{ $time }}">
+                                        <div class="alert-icon-btn is-empty">
+                                            <span class="material-symbols-outlined">notifications</span>
                                         </div>
                                     </div>
-                                    @foreach(['temperature' => 'temperature', 'hr' => 'bpm', 'rr' => 'bpm', 'bp' => 'mmHg', 'spo2' => '%'] as $field => $unit)
-                                        <div class="bg-yellow-light text-brown font-bold text-center py-1.5 text-xs uppercase tracking-widest">
-                                            ASSESSMENT: {{ strtoupper($field) }}
-                                        </div>
-                                        <input type="text" name="{{ $field }}_{{ $time }}" placeholder="{{ $unit }}"
-                                            value="{{ old($field . '_' . $time, optional($vitalsRecord)->$field) }}"
-                                            class="cdss-input vital-input w-full p-4 bg-beige text-center focus:outline-none h-[60px]"
-                                            data-field-name="{{ $field }}" data-time="{{ $time }}" autocomplete="off" />
-                                    @endforeach
+
+                                    <div class="p-2">
+                                        @foreach (['temperature' => 'temperature', 'hr' => 'bpm', 'rr' => 'bpm', 'bp' => 'mmHg', 'spo2' => '%'] as $field => $unit)
+                                            <div class="mb-2 w-full">
+                                                <div class="bg-yellow-light text-brown font-bold text-center py-1 text-xs uppercase tracking-widest rounded-t-md border-b border-brown/20">
+                                                    {{ strtoupper($field) }}
+                                                </div>
+                                                <input type="text"
+                                                    name="{{ $field }}_{{ $time }}"
+                                                    placeholder="{{ $unit }}"
+                                                    value="{{ old($field . '_' . $time, optional($vitalsRecord)->$field) }}"
+                                                    class="cdss-input vital-input w-full p-3 bg-beige text-center focus:outline-none h-[50px] border-b border-[#c18b04]/30"
+                                                    data-field-name="{{ $field }}"
+                                                    data-time="{{ $time }}" autocomplete="off" />
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -273,6 +288,67 @@
             if (window.initializeVitalSignsCharts) window.initializeVitalSignsCharts(timePoints, vitalsData);
             if (window.initializeChartScrolling) window.initializeChartScrolling();
             if (window.initSearchableDropdown) window.initSearchableDropdown();
+
+            // -----------------------------------------------------
+            // NEW: SYNC DESKTOP ALERTS TO MOBILE ALERTS
+            // -----------------------------------------------------
+            // Ang script na ito ang magpapagana sa alert bell ng mobile view.
+            // Kinokopya nito ang status ng Desktop Table bells papunta sa Mobile Cards.
+            // -----------------------------------------------------
+            
+            function syncAlerts() {
+                // Kunin lahat ng Desktop Alert Containers (sa loob ng table)
+                const desktopAlerts = document.querySelectorAll('.desktop-alert-container');
+
+                desktopAlerts.forEach(desktopAlert => {
+                    const time = desktopAlert.getAttribute('data-alert-for-time');
+                    if(!time) return;
+
+                    // Gumawa ng Observer para bantayan ang pagbabago sa Desktop Bell
+                    const observer = new MutationObserver((mutations) => {
+                        // Hanapin ang katumbas na Mobile Bell
+                        const mobileAlert = document.querySelector(`.mobile-alert-clone[data-alert-for-time="${time}"]`);
+                        
+                        if (mobileAlert) {
+                            // Kopyahin ang inner content (yung icon) at class mula sa desktop papuntang mobile
+                            // Kuhanin ang button sa loob
+                            const desktopBtn = desktopAlert.querySelector('.alert-icon-btn');
+                            const mobileBtn = mobileAlert.querySelector('.alert-icon-btn');
+
+                            if(desktopBtn && mobileBtn) {
+                                mobileBtn.className = desktopBtn.className; // Copy classes like 'is-empty', 'bg-red-500' etc
+                                mobileBtn.innerHTML = desktopBtn.innerHTML; // Copy the icon
+                            }
+                        }
+                    });
+
+                    // Simulan ang pagbabantay sa Desktop element
+                    observer.observe(desktopAlert, { 
+                        attributes: true, 
+                        childList: true, 
+                        subtree: true,
+                        characterData: true
+                    });
+                });
+            }
+
+            // Patakbuhin ang Sync Logic
+            syncAlerts();
+
+            // Handle Mobile Click: Pag pinindot ang mobile bell, pindutin din ang desktop bell
+            document.addEventListener('click', function(e) {
+                const mobileClone = e.target.closest('.mobile-alert-clone');
+                if (mobileClone) {
+                    const time = mobileClone.getAttribute('data-alert-for-time');
+                    const desktopOriginal = document.querySelector(`.desktop-alert-container[data-alert-for-time="${time}"] .alert-icon-btn`);
+                    if (desktopOriginal) {
+                        desktopOriginal.click(); // Trigger the original event
+                    }
+                }
+            });
+            // -----------------------------------------------------
+            // END NEW SYNC SCRIPT
+            // -----------------------------------------------------
         });
 
         window.closeChartModal = function () {

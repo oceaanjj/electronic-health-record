@@ -150,7 +150,11 @@
                         {{-- TABLE SECTION (Original 75% width set via md:w-3/4 on wrapper or table) --}}
                         <div class="w-full md:w-[850px] overflow-hidden rounded-[15px] md:rounded-[15px] md:border-none">
                             <table class="w-full table-fixed border-collapse border-spacing-y-0 responsive-table">
-
+                                <tr class="responsive-table-header-row hidden md:table-row">
+                                    <th class="main-header w-[33%] rounded-tl-lg py-2 text-center">ORAL INTAKE (mL)</th>
+                                    <th class="main-header w-[33%] py-2 text-center">IV FLUIDS (mL)</th>
+                                    <th class="main-header w-[33%] rounded-tr-lg py-2 text-center">URINE OUTPUT (mL)</th>
+                                </tr>
 
                                 <tr class="bg-beige text-brown responsive-table-data-row">
                                     <td class="text-center align-middle responsive-table-data" data-label="ORAL INTAKE">

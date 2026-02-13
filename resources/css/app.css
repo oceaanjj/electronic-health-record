@@ -169,6 +169,31 @@ ALERTS IN EVERY COMPONENT
     animation: spin 1s linear infinite;
 }
 
+
+/* MOBILE VIEW ONLY (Phone Screens) */
+@media (max-width: 1023px) {
+    .alert-icon-btn {
+        /* Changes the outer circle size */
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+    .alert-icon-btn .material-symbols-outlined {
+        /* Shrinks the bell icon inside */
+        font-size: 18px !important;
+    }
+
+    .alert-bubble {
+        /* Positions the pop-up text closer to the smaller button */
+        left: 42px !important;
+        font-size: 11px !important;
+        padding: 6px 12px !important;
+    }
+    
+}
+
 /* 
 
 END OF ALERTS IN EVERY COMPONENT
@@ -1671,7 +1696,7 @@ body.is-loading > *:not(.cute-loader-wrapper):not(header):not(.main-header) {
 
 
 /* for mobile responsive layout bg margin top  */
-@media (max-width: 600px) { 
+@media (max-width: 760px) { 
     body {
         margin-top: -40px; 
     }

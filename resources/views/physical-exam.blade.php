@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Physical Exam')
-
 @section('content')
 
     <div id="form-content-container" class="w-full overflow-x-hidden">
@@ -79,12 +77,11 @@
                     @endphp
 
                     @foreach ($fields as $key => $label)
-                        {{-- Row Wrapper: Card styling for mobile, original flex for desktop --}}
                         <div
                             class="relative mb-6 flex w-[90%] flex-col items-center overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige md:mb-1.5 md:w-[80%] md:flex-row md:items-center md:gap-1 md:overflow-visible md:rounded-none md:border-none md:bg-transparent">
 
-                            {{-- Mobile Label Header (System Name) --}}
-                            <div class="main-header w-full text-left pl-3 p-2 text-[13px] md:hidden">
+                            {{-- Mobile Card Label --}}
+                            <div class="main-header w-full pl-3 p-4 pr-12 text-left text-[15px] md:hidden">
                                 {{ $label }}
                             </div>
 
@@ -114,8 +111,8 @@
                                 </tbody>
                             </table>
 
-
-                            <div class="absolute right-2 top-17 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5 md:top-0 md:right-0"
+                            {{-- ALERT CONTAINER --}}
+                            <div class="absolute right-4 top-2.5 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5"
                                 data-alert-for="{{ $key }}">
                                 <div class="alert-icon-btn is-empty">
                                     <span class="material-symbols-outlined">notifications</span>

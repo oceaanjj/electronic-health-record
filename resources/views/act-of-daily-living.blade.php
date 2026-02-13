@@ -26,36 +26,38 @@
             </div>
         @endif
 
-        {{-- HEADER SECTION - Aligned to the left of the table form --}}
-        <div
-            class="mx-auto mt-10 mb-5 flex w-[90%] flex-col items-start gap-x-10 gap-y-4 md:w-[80%] md:flex-row md:items-center">
-            {{-- PATIENT NAME --}}
-            <div class="flex items-center gap-4">
-                <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
-                    PATIENT NAME :
-                </label>
-                <div class="w-full px-2 md:w-[350px] md:px-0">
-                    <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                        :selectRoute="route('adl.select')" :inputValue="$selectedPatient?->name ?? ''" />
+        {{-- HEADER SECTION --}}
+        <div class="mx-auto mt-10 mb-5 w-[90%] md:w-[80%]">
+            <div class="flex flex-wrap items-center justify-start gap-x-10 gap-y-4">
+
+                {{-- PATIENT NAME --}}
+                <div class="flex items-center gap-4 -mb-1">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
+                        PATIENT NAME :
+                    </label>
+                    <div class="w-full md:w-[350px]">
+                        <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
+                            :selectRoute="route('adl.select')" :inputValue="$selectedPatient?->name ?? ''" />
+                    </div>
                 </div>
+
+                {{-- DATE & DAY SELECTOR --}}
+                @if ($selectedPatient)
+                    <div class="w-full md:w-auto">
+                        <x-date-day-selector :currentDate="$currentDate" :currentDayNo="$currentDayNo"
+                            :totalDays="$totalDaysSinceAdmission ?? 30" formId="adl-form" />
+                    </div>
+                @endif
             </div>
 
-            {{-- DATE & DAY SELECTOR --}}
-            @if ($selectedPatient)
-                <div class="w-full md:w-auto">
-                    <x-date-day-selector :currentDate="$currentDate" :currentDayNo="$currentDayNo"
-                        :totalDays="$totalDaysSinceAdmission ?? 30" formId="adl-form" />
+            {{-- NOT AVAILABLE FOOTER --}}
+            @if ($selectedPatient && !isset($adlData))
+                <div class="mt-4 flex items-center gap-2 text-xs italic text-gray-500">
+                    <span class="material-symbols-outlined text-[16px]">pending_actions</span>
+                    Clinical Decision Support System is not yet available (No records for this date).
                 </div>
             @endif
         </div>
-
-        {{-- NOT AVAILABLE FOOTER - Aligned --}}
-        @if ($selectedPatient && !isset($adlData))
-            <div class="mx-auto mt-2 mb-4 flex w-[90%] items-center gap-2 text-xs text-gray-500 italic md:w-[80%]">
-                <span class="material-symbols-outlined text-[16px]">pending_actions</span>
-                Clinical Decision Support System is not yet available (No records for this date).
-            </div>
-        @endif
 
         {{-- FORM --}}
         <form id="adl-form" method="POST" action="{{ route('adl.store') }}" class="cdss-form"
@@ -95,7 +97,7 @@
                             class="relative mb-6 flex w-[90%] flex-col items-center overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige md:mb-1.5 md:w-[80%] md:flex-row md:items-center md:gap-1 md:overflow-visible md:rounded-none md:border-none md:bg-transparent">
 
                             {{-- Mobile Card Label --}}
-                            <div class="main-header w-full pl-3 p-2 pr-12 text-left text-[13px] md:hidden">
+                            <div class="main-header w-full pl-3 p-4 pr-12 text-left text-[15px] md:hidden">
                                 {{ $label }}
                             </div>
 
@@ -127,7 +129,7 @@
                             </table>
 
                             {{-- ALERT CONTAINER (Pinned to top-right on mobile) --}}
-                            <div class="absolute right-2 top-17 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5"
+                            <div class="absolute right-4 top-2.5 z-10 flex items-center justify-center md:static md:h-[100px] md:w-[70px] md:pl-5"
                                 data-alert-for="{{ $key }}">
                                 <div class="alert-icon-btn is-empty">
                                     <span class="material-symbols-outlined">notifications</span>

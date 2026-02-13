@@ -13,76 +13,84 @@
             padding-bottom: 40px;
         }
 
-        #chart-track>div {
+        #chart-track > div {
             margin: 10px 0;
         }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        /* Support for the reference colors */
+        .bg-dark-green { background-color: #006400; }
+        .bg-yellow-light { background-color: #fef08a; }
+        .bg-beige { background-color: #f5f5dc; }
+
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Carousel visibility helper */
+        .btn-hidden { display: none !important; }
+        
+        :root {
+            --color-beige: #f5f5dc;
+            --color-dark-red: #8b0000;
         }
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+
+        /* Placeholder styling to match image */
+        .vital-input::placeholder {
+            color: #d1d5db; /* Light gray to match the image watermark style */
+            font-weight: bold;
         }
     </style>
 
     <div id="form-content-container" class="mx-auto max-w-full overflow-x-hidden">
 
-        {{-- CDSS ALERT BANNER --}}
-        @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
-            <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
-                <div id="cdss-alert-content"
-                    class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md">
-                    <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
-                        <span class="text-sm font-semibold text-[#dcb44e]">
-                            Clinical Decision Support System is now available.
-                        </span>
+        <div class="mx-auto mt-1 w-full">
+            {{-- 1. THE ALERT/ERROR --}}
+            @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
+                <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
+                    <div id="cdss-alert-content" class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined animate-pulse text-[#dcb44e]">info</span>
+                            <span class="text-sm font-semibold text-[#dcb44e]">Clinical Decision Support System is now available.</span>
+                        </div>
+                        <button type="button" onclick="closeCdssAlert()" class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90">
+                            <span class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90">close</span>
+                        </button>
                     </div>
-                    <button type="button" onclick="closeCdssAlert()"
-                        class="group flex items-center justify-center rounded-full p-1 text-amber-700 transition-all duration-300 hover:bg-amber-200/50 active:scale-90">
-                        <span class="material-symbols-outlined text-[20px] transition-transform duration-300 group-hover:rotate-90">
-                            close
-                        </span>
-                    </button>
-                </div>
-            </div>
-        @endif
-
-        {{-- HEADER SECTION --}}
-        <div class="mx-auto mt-10 mb-5 flex w-[90%] flex-col items-start gap-4 md:w-[98%] md:flex-row md:items-center lg:ml-10">
-            <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
-
-            <div class="w-full px-2 md:w-[350px] md:px-0">
-                <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient"
-                    :selectRoute="route('vital-signs.select')" :inputValue="$selectedPatient?->patient_id ?? ''" />
-            </div>
-
-            @if ($selectedPatient)
-                <div class="w-full md:w-auto">
-                    <x-date-day-selector :currentDate="$currentDate" :currentDayNo="$currentDayNo"
-                        :totalDays="$totalDaysSinceAdmission ?? 30" />
                 </div>
             @endif
+
+            <div class="mx-auto w-full px-4 pt-10">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center gap-y-4 lg:gap-x-10 lg:ml-20">
+                    {{-- PATIENT SECTION --}}
+                    <div class="flex items-center md:pl-12 gap-4 w-full md:w-auto justify-start">
+                        <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+                        <div class="w-full md:w-[350px]">
+                            <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient" :selectRoute="route('vital-signs.select')" :inputValue="$selectedPatient?->patient_id ?? ''" />
+                        </div>
+                    </div>
+
+                    {{-- DATE & DAY SECTION --}}
+                    @if ($selectedPatient)
+                        <div class="flex items-center gap-4 md:pl-12 lg:pl-0">
+                            <x-date-day-selector :currentDate="$currentDate" :currentDayNo="$currentDayNo" :totalDays="$totalDaysSinceAdmission ?? 30" />
+                        </div>
+                    @endif
+                </div>
+
+                @if ($selectedPatient && (!isset($vitalsData) || $vitalsData->count() == 0))
+                    <div class="mt-4 px-4 lg:ml-32 flex items-center gap-2 text-xs italic text-gray-500">
+                        <span class="material-symbols-outlined text-[16px]">pending_actions</span>
+                        Clinical Decision Support System is not yet available (No data recorded for this date).
+                    </div>
+                @endif
+            </div>
         </div>
 
-        {{-- NOT AVAILABLE MESSAGE --}}
-        @if ($selectedPatient && (!isset($vitalsData) || $vitalsData->count() == 0))
-            <div class="mx-auto mt-2 mb-4 flex w-[90%] items-center gap-2 text-xs text-gray-500 italic md:w-[98%] lg:ml-10">
-                <span class="material-symbols-outlined text-[16px]">pending_actions</span>
-                Clinical Decision Support System is not yet available (No data recorded for this date).
-            </div>
-        @endif
-
-        {{-- Hidden form for synchronization of Date/Day No --}}
         <form id="patient-select-form" action="{{ route('vital-signs.select') }}" method="POST" class="hidden">
             @csrf
             <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}" />
         </form>
 
-        {{-- MAIN FORM --}}
         <fieldset @if (!session('selected_patient_id')) disabled @endif>
             <form id="vitals-form" class="cdss-form" method="POST" action="{{ route('vital-signs.store') }}"
                 data-analyze-url="{{ route('vital-signs.check') }}"
@@ -91,215 +99,182 @@
                 @csrf
 
                 <input type="hidden" name="patient_id" value="{{ $selectedPatient->patient_id ?? '' }}" />
-                <input type="hidden" id="hidden_date_for_vitals_form" name="date"
-                    value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
+                <input type="hidden" id="hidden_date_for_vitals_form" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
                 <input type="hidden" id="hidden_day_no_for_vitals_form" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="mx-auto mt-5 flex w-full max-w-screen-2xl flex-col items-center justify-center gap-5 px-4 md:mt-8 md:w-[98%] md:flex-row lg:items-start md:gap-4">
+                <div class="mx-auto mt-5 flex w-full max-w-screen-2xl flex-col gap-6 md:gap-4 px-4 md:mt-15 md:w-[95%] md:flex-row md:items-start md:justify-between md:px-0">
                     
                     {{-- 1. CHARTS COLUMN --}}
-                    <div class="w-full md:w-2/5">
-                        <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
-                        <div id="fade-top" class="pointer-events-none absolute top-0 left-0 z-20 hidden h-10 w-full rounded-t-[20px] bg-gradient-to-b from-white/90 to-transparent"></div>
-
-                        <div id="chart-viewport" class="relative h-auto md:max-h-[530px] overflow-y-auto rounded-[25px] no-scrollbar">
+                    <div class="relative w-full md:w-[30%]">
+                        <div id="chart-viewport" class="relative overflow-hidden rounded-[25px]">
                             <div id="chart-track" class="transition-transform duration-700 ease-out">
-                                @foreach(['tempChart' => 'TEMPERATURE', 'hrChart' => 'HEART RATE', 'rrChart' => 'RESPIRATORY RATE', 'bpChart' => 'BLOOD PRESSURE', 'spo2Chart' => 'SpO₂'] as $id => $title)
-                                <div class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl mb-4">
-                                    <h2 class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80">{{ $title }} CHART</h2>
-                                    <canvas id="{{ $id }}"></canvas>
+                                <div class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl">
+                                    <h2 class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80">TEMPERATURE CHART</h2>
+                                    <canvas id="tempChart"></canvas>
                                 </div>
-                                @endforeach
+                                <div class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl">
+                                    <h2 class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80">HEART RATE CHART</h2>
+                                    <canvas id="hrChart"></canvas>
+                                </div>
+                                <div class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl">
+                                    <h2 class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80">RESPIRATORY RATE CHART</h2>
+                                    <canvas id="rrChart"></canvas>
+                                </div>
+                                <div class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl">
+                                    <h2 class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80">BLOOD PRESSURE CHART</h2>
+                                    <canvas id="bpChart"></canvas>
+                                </div>
+                                <div class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl">
+                                    <h2 class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80">SpO₂ CHART</h2>
+                                    <canvas id="spo2Chart"></canvas>
+                                </div>
                             </div>
-                            <div id="fade-bottom" class="pointer-events-none absolute bottom-0 left-0 z-20 hidden h-10 w-full rounded-b-[20px] bg-gradient-to-t from-white/90 to-transparent"></div>
                         </div>
 
-                        <div class="relative w-full h-0">
-                            <button id="chart-up" type="button" class="btn-hidden absolute -top-[550px] left-1/2 z-30 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-[#e2e8f0] bg-gradient-to-b from-white to-[#f1f5f9] text-[#64748b] shadow-md hover:bg-white hover:text-[#334155]">
-                                <span class="material-symbols-outlined text-[32px]">arrow_drop_up</span>
-                            </button>
-                            <button id="chart-down" type="button" class="absolute -bottom-8 left-1/2 z-30 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-[#e2e8f0] bg-gradient-to-b from-white to-[#f1f5f9] text-[#64748b] shadow-md hover:bg-white hover:text-[#334155]">
-                                <span class="material-symbols-outlined text-[32px]">arrow_drop_down</span>
-                            </button>
-                        </div>
+                        <button id="chart-up" type="button" class="btn-hidden absolute -top-8 left-1/2 z-30 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-[#e2e8f0] bg-gradient-to-b from-white to-[#f1f5f9] text-[#64748b] shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-all duration-200 hover:bg-white hover:text-[#334155] hover:shadow-md">
+                            <span class="material-symbols-outlined text-[32px]">arrow_drop_up</span>
+                        </button>
+                        <button id="chart-down" type="button" class="absolute -bottom-8 left-1/2 z-30 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-[#e2e8f0] bg-gradient-to-b from-white to-[#f1f5f9] text-[#64748b] shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-all duration-200 hover:bg-white hover:text-[#334155] hover:shadow-md">
+                            <span class="material-symbols-outlined text-[32px]">arrow_drop_down</span>
+                        </button>
                     </div>
 
-                    {{-- 2. VITAL SIGNS INPUTS COLUMN --}}
-                    <div class="w-full md:w-3/5">
+                    {{-- 2. DATA AREA --}}
+                    <div class="w-full md:w-[68%]">
                         
-                        {{-- A. WEB VIEW: Original Table (Hidden on Mobile) --}}
-                        <div id="desktop-view" class="hidden md:block w-full overflow-hidden rounded-[15px]">
+                        {{-- DESKTOP VIEW: Integrated Table --}}
+                        <div class="hidden md:block w-full overflow-hidden rounded-[15px]">
                             <table class="w-full table-fixed border-collapse border-spacing-y-0">
-                                <tr>
-                                    <th class="w-[12%] main-header rounded-tl-[15px]">TIME</th>
-                                    <th class="w-[15%] main-header">TEMPERATURE</th>
-                                    <th class="w-[10%] main-header">HR</th>
-                                    <th class="w-[10%] main-header">RR</th>
-                                    <th class="w-[10%] main-header">BP</th>
-                                    <th class="w-[15%] main-header rounded-tr-[15px]">SpO₂</th>
-                                    <th class="w-[28%] text-center py-2"></th>
-                                </tr>
-                                @foreach ($times as $time)
-                                    @php $vitalsRecord = $vitalsData->get($time); @endphp
+                                <thead>
                                     <tr>
-                                        <td class="p-2 font-semibold bg-yellow-light text-brown text-center">{{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</td>
-                                        <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
-                                            <input type="text" name="temperature_{{ $time }}" placeholder="°C" value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}" class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" data-field-name="temperature" data-time="{{ $time }}" autocomplete="off">
-                                        </td>
-                                        <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
-                                            <input type="text" name="hr_{{ $time }}" placeholder="bpm" value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}" class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" data-field-name="hr" data-time="{{ $time }}" autocomplete="off">
-                                        </td>
-                                        <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
-                                            <input type="text" name="rr_{{ $time }}" placeholder="bpm" value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}" class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" data-field-name="rr" data-time="{{ $time }}" autocomplete="off">
-                                        </td>
-                                        <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
-                                            <input type="text" name="bp_{{ $time }}" placeholder="mmHg" value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}" class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" data-field-name="bp" data-time="{{ $time }}" autocomplete="off">
-                                        </td>
-                                        <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
-                                            <input type="text" name="spo2_{{ $time }}" placeholder="%" value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}" class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" data-field-name="spo2" data-time="{{ $time }}" autocomplete="off">
-                                        </td>
-                                        <td class="p-2 text-center align-middle border-0">
-                                            <div class="h-[60px] flex justify-center items-center text-center px-2" data-alert-for-time="{{ $time }}">
-                                                <div class="alert-icon-btn is-empty"><span class="material-symbols-outlined">notifications</span></div>
-                                            </div>
-                                        </td>
+                                        <th class="w-[12%] main-header rounded-tl-[15px]">TIME</th>
+                                        <th class="w-[15%] main-header">TEMPERATURE</th>
+                                        <th class="w-[10%] main-header">HR</th>
+                                        <th class="w-[10%] main-header">RR</th>
+                                        <th class="w-[10%] main-header">BP</th>
+                                        <th class="w-[15%] main-header rounded-tr-[15px]">SpO₂</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @foreach ($times as $index => $time)
+                                        @php $vitalsRecord = $vitalsData->get($time); @endphp
+                                        <tr>
+                                            <td class="p-2 font-semibold bg-yellow-light text-brown text-center border-b-2 border-line-brown/70">
+                                                {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
+                                            </td>
+                                            {{-- Data Cells with Placeholders exactly like image --}}
+                                            <td class="p-2 bg-beige text-center border-b-2 border-line-brown/70">
+                                                <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
+                                                    value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
+                                                    class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
+                                                    data-field-name="temperature" data-time="{{ $time }}" autocomplete="off" />
+                                            </td>
+                                            <td class="p-2 bg-beige text-center border-b-2 border-line-brown/70">
+                                                <input type="text" name="hr_{{ $time }}" placeholder="bpm"
+                                                    value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
+                                                    class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
+                                                    data-field-name="hr" data-time="{{ $time }}" autocomplete="off" />
+                                            </td>
+                                            <td class="p-2 bg-beige text-center border-b-2 border-line-brown/70">
+                                                <input type="text" name="rr_{{ $time }}" placeholder="bpm"
+                                                    value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
+                                                    class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
+                                                    data-field-name="rr" data-time="{{ $time }}" autocomplete="off" />
+                                            </td>
+                                            <td class="p-2 bg-beige text-center border-b-2 border-line-brown/70">
+                                                <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
+                                                    value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
+                                                    class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
+                                                    data-field-name="bp" data-time="{{ $time }}" autocomplete="off" />
+                                            </td>
+                                            <td class="p-2 bg-beige text-center border-b-2 border-line-brown/70">
+                                                <input type="text" name="spo2_{{ $time }}" placeholder="%"
+                                                    value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
+                                                    class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
+                                                    data-field-name="spo2" data-time="{{ $time }}" autocomplete="off" />
+                                            </td>
+                                            <td class="p-2 text-center align-middle bg-white">
+                                                <div class="h-[60px] flex justify-center items-center" data-alert-for-time="{{ $time }}">
+                                                    <div class="alert-icon-btn is-empty">
+                                                        <span class="material-symbols-outlined">notifications</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
 
-                        {{-- B. MOBILE VIEW: Card Style (Exactly matching Physical Exam) --}}
-                        <div id="mobile-view" class="block md:hidden w-full space-y-4">
+                        {{-- MOBILE VIEW: Cards --}}
+                        <div class="space-y-4 md:hidden">
                             @foreach ($times as $time)
-                                @php $vitalsRecord = $vitalsData->get($time); @endphp
-                                
-                                {{-- Card Container: Beige with Brown/Gold Border --}}
-                                <div class="relative overflow-hidden rounded-[15px] border border-[#c18b04] bg-beige shadow-sm">
-                                    
-                                    {{-- Card Header: Uses 'main-header' class like Physical Exam --}}
-                                    <div class="main-header w-full flex justify-between items-center pl-4 pr-2 py-2 text-[13px]">
-                                        <span class="font-bold">TIME: {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}</span>
+                                @php 
+                                    $vitalsRecord = $vitalsData->get($time); 
+                                    $formattedTime = \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A');
+                                @endphp
+                                <div class="relative mb-6 flex w-full flex-col rounded-[20px] border border-dark-green bg-beige overflow-hidden shadow-lg">
+                                    <div class="main-header w-full bg-dark-green p-2 flex justify-between items-center">
+                                        <span class="font-alte font-bold text-white text-lg uppercase">TIME: {{ $formattedTime }}</span>
                                         <div data-alert-for-time="{{ $time }}">
-                                            <div class="alert-icon-btn is-empty scale-90">
-                                                <span class="material-symbols-outlined">notifications</span>
+                                            <div class="alert-icon-btn is-empty">
+                                                <span class="material-symbols-outlined text-white text-[28px]">notifications</span>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    {{-- Card Body: Beige background (from container) with inputs --}}
-                                    <div class="grid grid-cols-2 gap-x-4 gap-y-3 p-4">
-                                        {{-- Temp --}}
-                                        <div class="flex flex-col">
-                                            <label class="text-[11px] font-bold text-brown uppercase mb-1">Temperature</label>
-                                            <input type="text" name="temperature_{{ $time }}" placeholder="°C" value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}" class="cdss-input vital-input w-full border-b border-[#c18b04]/50 bg-transparent p-1 text-sm focus:outline-none text-center" data-field-name="temperature" data-time="{{ $time }}" autocomplete="off">
+                                    @foreach(['temperature' => 'temperature', 'hr' => 'bpm', 'rr' => 'bpm', 'bp' => 'mmHg', 'spo2' => '%'] as $field => $unit)
+                                        <div class="bg-yellow-light text-brown font-bold text-center py-1.5 text-xs uppercase tracking-widest">
+                                            ASSESSMENT: {{ strtoupper($field) }}
                                         </div>
-                                        {{-- HR --}}
-                                        <div class="flex flex-col">
-                                            <label class="text-[11px] font-bold text-brown uppercase mb-1">Heart Rate</label>
-                                            <input type="text" name="hr_{{ $time }}" placeholder="bpm" value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}" class="cdss-input vital-input w-full border-b border-[#c18b04]/50 bg-transparent p-1 text-sm focus:outline-none text-center" data-field-name="hr" data-time="{{ $time }}" autocomplete="off">
-                                        </div>
-                                        {{-- RR --}}
-                                        <div class="flex flex-col">
-                                            <label class="text-[11px] font-bold text-brown uppercase mb-1">Resp Rate</label>
-                                            <input type="text" name="rr_{{ $time }}" placeholder="bpm" value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}" class="cdss-input vital-input w-full border-b border-[#c18b04]/50 bg-transparent p-1 text-sm focus:outline-none text-center" data-field-name="rr" data-time="{{ $time }}" autocomplete="off">
-                                        </div>
-                                        {{-- BP --}}
-                                        <div class="flex flex-col">
-                                            <label class="text-[11px] font-bold text-brown uppercase mb-1">Blood Pressure</label>
-                                            <input type="text" name="bp_{{ $time }}" placeholder="mmHg" value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}" class="cdss-input vital-input w-full border-b border-[#c18b04]/50 bg-transparent p-1 text-sm focus:outline-none text-center" data-field-name="bp" data-time="{{ $time }}" autocomplete="off">
-                                        </div>
-                                        {{-- SpO2 (Full Width) --}}
-                                        <div class="flex flex-col col-span-2">
-                                            <label class="text-[11px] font-bold text-brown uppercase mb-1 text-center">SpO₂</label>
-                                            <input type="text" name="spo2_{{ $time }}" placeholder="%" value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}" class="cdss-input vital-input w-full border-b border-[#c18b04]/50 bg-transparent p-1 text-sm focus:outline-none text-center" data-field-name="spo2" data-time="{{ $time }}" autocomplete="off">
-                                        </div>
-                                    </div>
+                                        <input type="text" name="{{ $field }}_{{ $time }}" placeholder="{{ $unit }}"
+                                            value="{{ old($field . '_' . $time, optional($vitalsRecord)->$field) }}"
+                                            class="cdss-input vital-input w-full p-4 bg-beige text-center focus:outline-none h-[60px]"
+                                            data-field-name="{{ $field }}" data-time="{{ $time }}" autocomplete="off" />
+                                    @endforeach
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
 
-                {{-- BUTTONS --}}
-                <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end space-x-4 md:w-[98%]">
+                <div class="mx-auto mt-5 mb-20 flex w-full justify-center space-x-4 md:w-[95%] md:justify-end">
                     @if (isset($vitalsData) && $vitalsData->count() > 0)
-                        <button type="submit" formaction="{{ route('vital-signs.cdss') }}"
-                            class="button-default cdss-btn text-center">
-                            CDSS
-                        </button>
+                        <button type="submit" formaction="{{ route('vital-signs.cdss') }}" class="button-default text-center">CDSS</button>
                     @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
             </form>
         </fieldset>
 
-        {{-- CHART MODAL (Unchanged) --}}
+        {{-- CHART MODAL --}}
         <div id="chart-modal">
             <div class="modal-container">
                 <div class="mb-4 flex items-center justify-between">
                     <h3 id="modal-chart-title" class="text-dark-green text-lg font-bold uppercase"></h3>
-                    <button type="button" onclick="closeChartModal()"
-                        class="cursor-pointer rounded-full p-2 transition-colors hover:bg-gray-100">
+                    <button type="button" onclick="closeChartModal()" class="cursor-pointer rounded-full p-2 transition-colors hover:bg-gray-100">
                         <span class="material-symbols-outlined text-3xl text-gray-500">close</span>
                     </button>
                 </div>
-                <div class="relative h-[400px]">
-                    <canvas id="modalChartCanvas"></canvas>
-                </div>
+                <div class="relative h-[400px]"><canvas id="modalChartCanvas"></canvas></div>
             </div>
         </div>
     </div>
 @endsection
 
 @push('scripts')
-    @vite([
-        'resources/js/patient-loader.js',
-        'resources/js/alert.js',
-        'resources/js/init.searchable-dropdown.js',
-        'resources/js/date-day-sync.js',
-        'resources/js/searchable-dropdown.js',
-        'resources/js/vital-signs-charts.js',
-    ])
+    @vite(['resources/js/patient-loader.js', 'resources/js/alert.js', 'resources/js/init.searchable-dropdown.js', 'resources/js/date-day-sync.js', 'resources/js/searchable-dropdown.js', 'resources/js/vital-signs-charts.js', 'resources/js/close-cdss-alert.js'])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         const vitalsData = @json($vitalsData);
 
         document.addEventListener('DOMContentLoaded', function () {
-            // ... existing chart logic ...
             const timePoints = @json($times);
-            if (window.initializeVitalSignsCharts) {
-                window.initializeVitalSignsCharts(timePoints, vitalsData);
-            }
-            if (window.initializeChartScrolling) {
-                window.initializeChartScrolling();
-            }
-            if (window.initSearchableDropdown) {
-                window.initSearchableDropdown();
-            }
-
-            // --- DATA SYNC SCRIPT (Crucial for Mobile/Desktop toggle) ---
-            // This prevents duplicate input submission issues
-            const form = document.getElementById('vitals-form');
-            if(form) {
-                form.addEventListener('submit', function() {
-                    const isMobile = window.innerWidth < 768; // Tailwind 'md' breakpoint
-                    const desktopView = document.getElementById('desktop-view');
-                    const mobileView = document.getElementById('mobile-view');
-                    
-                    // Disable inputs in the hidden view so they are not submitted
-                    if(isMobile) {
-                        const desktopInputs = desktopView.querySelectorAll('input');
-                        desktopInputs.forEach(input => input.disabled = true);
-                    } else {
-                        const mobileInputs = mobileView.querySelectorAll('input');
-                        mobileInputs.forEach(input => input.disabled = true);
-                    }
-                });
-            }
+            if (window.initializeVitalSignsCharts) window.initializeVitalSignsCharts(timePoints, vitalsData);
+            if (window.initializeChartScrolling) window.initializeChartScrolling();
+            if (window.initSearchableDropdown) window.initSearchableDropdown();
         });
 
-        // ... existing closeChartModal and Carousel logic ...
         window.closeChartModal = function () {
             const modal = document.getElementById('chart-modal');
             if (modal) modal.style.display = 'none';
@@ -309,79 +284,75 @@
             }
         };
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const modalWrapper = document.getElementById('chart-modal');
-            if (modalWrapper) {
-                modalWrapper.addEventListener('click', function (event) {
-                    if (event.target === modalWrapper) {
-                        closeChartModal();
-                    }
-                });
-            }
-
-            const sidebar = document.getElementById('mySidenav');
-            if (sidebar) {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.attributeName === 'class') {
-                            const isSidebarOpen = !sidebar.classList.contains('-translate-x-full');
-                            if (isSidebarOpen) closeChartModal();
-                        }
-                    });
-                });
-                observer.observe(sidebar, { attributes: true });
-            }
-        });
-
+        // Chart Carousel Logic
         document.addEventListener('DOMContentLoaded', function () {
             let currentStep = 0;
-            const totalSteps = 3;
+            const totalSteps = 4;
 
             function updateCarousel() {
                 const track = document.getElementById('chart-track');
                 const upBtn = document.getElementById('chart-up');
                 const downBtn = document.getElementById('chart-down');
                 const cards = track ? track.querySelectorAll(':scope > div') : [];
-
                 if (!track || !upBtn || !downBtn || !cards.length) return;
 
-                const cardHeight = cards[0].offsetHeight + 16; // Height + margin
-                const moveDistance = cardHeight;
-                let translateY = 0;
-
+                const cardHeight = cards[0].offsetHeight + 10;
                 upBtn.classList.remove('btn-hidden');
                 downBtn.classList.remove('btn-hidden');
 
-                if (currentStep === 0) {
-                    translateY = 0;
-                    upBtn.classList.add('btn-hidden');
-                } else {
-                    translateY = moveDistance * currentStep;
-                }
-                
-                if (currentStep >= totalSteps) {
-                    downBtn.classList.add('btn-hidden');
-                }
+                if (currentStep === 0) upBtn.classList.add('btn-hidden');
+                if (currentStep >= totalSteps) downBtn.classList.add('btn-hidden');
 
-                track.style.transform = `translateY(-${translateY}px)`;
+                track.style.transform = `translateY(-${currentStep * cardHeight}px)`;
             }
 
             document.addEventListener('click', function (e) {
-                if (e.target.closest('#chart-down')) {
-                    if (currentStep < totalSteps) {
-                        currentStep++;
-                        updateCarousel();
-                    }
-                }
-                if (e.target.closest('#chart-up')) {
-                    if (currentStep > 0) {
-                        currentStep--;
-                        updateCarousel();
-                    }
-                }
+                if (e.target.closest('#chart-down') && currentStep < totalSteps) { currentStep++; updateCarousel(); }
+                if (e.target.closest('#chart-up') && currentStep > 0) { currentStep--; updateCarousel(); }
             });
 
             updateCarousel();
         });
+
+        // Color Coding Logic
+        (function() {
+            const vitalRanges = {
+                temperature: { ranges: [{ min: 36.3, max: 37, color: 'var(--color-beige)' }, { min: 37.01, max: Infinity, color: 'var(--color-dark-red)' }] },
+                hr: { ranges: [{ min: 70, max: 110, color: 'var(--color-beige)' }, { min: 110.01, max: Infinity, color: 'var(--color-dark-red)' }] },
+                rr: { ranges: [{ min: 16, max: 22, color: 'var(--color-beige)' }, { min: 22.01, max: Infinity, color: 'var(--color-dark-red)' }] },
+                spo2: { ranges: [{ min: 95, max: 100, color: 'var(--color-beige)' }, { min: 0, max: 94.99, color: 'var(--color-dark-red)' }] },
+                bp: { normal: 'var(--color-beige)', abnormal: 'var(--color-dark-red)' }
+            };
+
+            function getColorForValue(fieldName, value) {
+                if (!fieldName || value === "" || value === null) return 'var(--color-beige)';
+                if (fieldName === 'bp') {
+                    const parts = value.split('/');
+                    if (parts.length !== 2) return 'var(--color-beige)';
+                    const s = parseFloat(parts[0]), d = parseFloat(parts[1]);
+                    return (s > 140 || d > 90 || s < 90 || d < 60) ? vitalRanges.bp.abnormal : vitalRanges.bp.normal;
+                }
+                const num = parseFloat(value);
+                if (isNaN(num)) return 'var(--color-beige)';
+                const range = vitalRanges[fieldName].ranges;
+                for (let r of range) { if (num >= r.min && num <= r.max) return r.color; }
+                return 'var(--color-beige)';
+            }
+
+            function colorizeInput(input) {
+                const color = getColorForValue(input.dataset.fieldName, input.value.trim());
+                input.style.backgroundColor = color;
+                input.style.color = (color === 'var(--color-dark-red)') ? '#FFFFFF' : '#000000';
+            }
+
+            window.colorizeAllVitals = function() {
+                document.querySelectorAll('.vital-input').forEach(input => {
+                    colorizeInput(input);
+                    input.addEventListener('input', e => colorizeInput(e.target));
+                });
+            };
+
+            document.addEventListener('DOMContentLoaded', window.colorizeAllVitals);
+        })();
     </script>
 @endpush

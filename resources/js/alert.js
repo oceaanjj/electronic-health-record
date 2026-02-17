@@ -73,6 +73,7 @@ function updateCdssButtonState(form) {
 
 // Initialize CDSS listeners for a form
 window.initializeCdssForForm = function (form) {
+    updateCdssButtonState(form);
     const analyzeUrl = form.dataset.analyzeUrl;
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 

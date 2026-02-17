@@ -241,7 +241,7 @@
 
                 <div class="mx-auto mt-5 mb-20 flex w-full justify-center space-x-4 md:w-[95%] md:justify-end">
                     @if (isset($vitalsData) && $vitalsData->count() > 0)
-                        <button type="submit" formaction="{{ route('vital-signs.cdss') }}" class="button-default text-center">CDSS</button>
+                        <button type="submit" formaction="{{ route('vital-signs.cdss') }}" class="button-default text-center cdss-btn">CDSS</button>
                     @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>

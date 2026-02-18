@@ -44,13 +44,15 @@
             </a>
         </li>
 
+
+
+        <!-- ----------- components that has cdss --------------- -->
         <li>
-            <a href="{{ route('physical-exam.index') }}"
-                class="group hover:bg-dark-green {{
-    request()->routeIs('physical-exam.index')
+            <a href="{{ route('physical-exam.index') }}" class="group hover:bg-dark-green {{
+    (request()->routeIs('physical-exam.index') || (request()->routeIs('nursing-diagnosis.process') && request()->route('component') == 'physical-exam'))
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
-                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
+        }} flex items-center gap-3 rounded-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
                 <span class="material-symbols-outlined">physical_therapy</span>
                 <span>Physical Exam</span>
             </a>
@@ -59,7 +61,7 @@
         <li>
             <a href="{{ route('vital-signs.show') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('vital-signs.show')
+    (request()->routeIs('vital-signs.show') || (request()->routeIs('nursing-diagnosis.process') && request()->route('component') == 'vital-signs'))
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -71,7 +73,7 @@
         <li>
             <a href="{{ route('io.show') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('io.show')
+    (request()->routeIs('io.show') || (request()->routeIs('nursing-diagnosis.process') && request()->route('component') == 'intake-and-output'))
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -83,7 +85,7 @@
         <li>
             <a href="{{ route('adl.show') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('adl.show')
+    (request()->routeIs('adl.show') || (request()->routeIs('nursing-diagnosis.process') && request()->route('component') == 'adl'))
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -97,7 +99,7 @@
         <li>
             <a href="{{ route('lab-values.index') }}"
                 class="group hover:bg-dark-green {{
-    request()->routeIs('lab-values.index')
+    (request()->routeIs('lab-values.index') || (request()->routeIs('nursing-diagnosis.process') && request()->route('component') == 'lab-values'))
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
                 }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
@@ -105,6 +107,9 @@
                 <span>Lab Values</span>
             </a>
         </li>
+        <!-- ----------- components that has cdss --------------- -->
+
+
 
         <li>
             <a href="{{ route('diagnostics.index') }}"

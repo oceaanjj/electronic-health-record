@@ -8,8 +8,6 @@
             class="cdss-form relative">
             @csrf
 
-            {{-- 1. HEADER SECTION: Now matched to table width (80%) and aligned to the left side of the table footprint
-            --}}
             <div class="mx-auto w-[92%] md:w-[80%] pt-10">
                 <div class="flex flex-col lg:flex-row items-start mb-7 lg:items-center gap-y-4 lg:gap-x-10">
 
@@ -273,10 +271,6 @@
         </form>
     </div>
 @endsection
-
-@push('styles')
-    @vite(['resources/css/medication-administration.css'])
-@endpush
 
 @push('scripts')
     @vite([

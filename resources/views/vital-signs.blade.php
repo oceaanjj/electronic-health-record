@@ -35,7 +35,6 @@
 
         @media (min-width: 768px) {
             .web-button-alignment {
-                margin-right: 14%; 
             }
         }
     </style>

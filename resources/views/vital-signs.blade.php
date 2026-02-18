@@ -40,17 +40,24 @@
         }
 
         .vital-input {
-    background-color: #f5f5dc; /* Beige */
-    text-align: center;
-    color: #000000 !important; /* Laging Black ang text */
-    font-weight: 500;
+            background-color: #f5f5dc; 
+            text-align: center;
+            color: #000000 !important; 
+            font-weight: 500;
+        }
+
+        /* WEB VIEW BUTTON ALIGNMENT FIX */
+        @media (min-width: 768px) {
+            .web-button-alignment {
+                /* Inadjust ito para tumapat sa ilalim ng SpO2 (bago ang Alert column) */
+                margin-right: 14%; 
+            }
         }
     </style>
 
     <div id="form-content-container" class="mx-auto max-w-full overflow-x-hidden">
 
         <div class="mx-auto mt-1 w-full">
-            {{-- 1. THE ALERT/ERROR --}}
             @if ($selectedPatient && isset($vitalsData) && $vitalsData->count() > 0)
                 <div id="cdss-alert-wrapper" class="w-full overflow-hidden px-5 transition-all duration-500">
                     <div id="cdss-alert-content" class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md">
@@ -209,7 +216,7 @@
                             </table>
                         </div>
 
-                        {{-- MOBILE VIEW --}}
+                        {{-- MOBILE VIEW (NO CHANGES) --}}
                         <div class="space-y-4 md:hidden">
                             @foreach ($times as $time)
                                 @php 
@@ -244,12 +251,14 @@
                     </div>
                 </div>
 
-                {{-- ALIGNED TO RIGHT SIDE OF TABLE --}}
-                <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end gap-4">
-                    @if (isset($vitalsData) && $vitalsData->count() > 0)
-                        <button type="submit" formaction="{{ route('vital-signs.cdss') }}" class="button-default px-10">CDSS</button>
-                    @endif
-                    <button type="submit" class="button-default px-10">SUBMIT</button>
+                {{-- WEB VIEW BUTTONS ALIGNED TO SPO2 COLUMN --}}
+                <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end">
+                    <div class="flex gap-4 web-button-alignment">
+                        @if (isset($vitalsData) && $vitalsData->count() > 0)
+                            <button type="submit" formaction="{{ route('vital-signs.cdss') }}" class="button-default">CDSS</button>
+                        @endif
+                        <button type="submit" class="button-default">SUBMIT</button>
+                    </div>
                 </div>
             </form>
         </fieldset>

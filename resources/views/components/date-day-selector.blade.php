@@ -35,7 +35,7 @@
                 name="day_no"
                 form="{{ $formId }}"
                 disabled
-                class="pointer-events-none font-creato-bold w-[150px] appearance-none rounded-full border border-gray-300 bg-gray-100 px-4 py-2 pr-8 text-[15px] shadow-sm opacity-80 outline-none"
+                class="pointer-events-none font-creato-bold w-[125px] appearance-none rounded-full border border-gray-300 bg-gray-100 px-4 py-2 pr-8 text-[15px] shadow-sm opacity-80 outline-none"
             >
                 @for ($i = 1; $i <= $totalDays; $i++)
                     <option value="{{ $i }}" @selected($currentDayNo == $i)>{{ $i }}</option>

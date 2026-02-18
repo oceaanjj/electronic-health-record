@@ -13,8 +13,8 @@
         }
 
         /* =========================
-                                                                                        MOBILE (PHONES) <= 768px
-                                                                                       ========================= */
+                                                                                            MOBILE (PHONES) <= 768px
+                                                                                           ========================= */
         @media screen and (max-width: 768px) {
             body {
                 margin-top: -40px !important;

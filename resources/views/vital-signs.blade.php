@@ -241,9 +241,7 @@
 
                 <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end">
                     <div class="flex gap-4 web-button-alignment">
-                        @if (isset($vitalsData) && $vitalsData->count() > 0)
-                            <button type="submit" formaction="{{ route('vital-signs.cdss') }}" class="button-default">CDSS</button>
-                        @endif
+                        <button type="submit" formaction="{{ route('vital-signs.cdss') }}" class="button-default cdss-btn">CDSS</button>
                         <button type="submit" class="button-default">SUBMIT</button>
                     </div>
                 </div>

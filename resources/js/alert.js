@@ -7,6 +7,20 @@ const TYPING_DELAY_MS = 500; // Delay after typing stops before analysis in ms
 
 let debounceTimer;
 
+let analysisInterval; // For the moving dots
+
+function startDotAnimation(element) {
+    let dots = 0;
+    analysisInterval = setInterval(() => {
+        dots = (dots + 1) % 4;
+        element.textContent = "Analyzing" + ".".repeat(dots);
+    }, 400);
+}
+
+function stopDotAnimation() {
+    clearInterval(analysisInterval);
+}
+
 // Find alert cell for a given input
 function findAlertCellForInput(input) {
     const fieldName = input.dataset.fieldName;
@@ -59,49 +73,37 @@ function updateCdssButtonState(form) {
 
 // Initialize CDSS listeners for a form
 window.initializeCdssForForm = function (form) {
+    updateCdssButtonState(form);
     const analyzeUrl = form.dataset.analyzeUrl;
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    if (!analyzeUrl || !csrfToken) {
-        console.error('Missing "data-analyze-url" or CSRF token.', form);
-        return;
-    }
-
-    console.log(`[CDSS] Initializing typing listeners for form: ${form.id || '(unnamed)'}`);
 
     const inputs = form.querySelectorAll('.cdss-input');
     inputs.forEach((input) => {
-        if (input.dataset.alertListenerAttached) return; // Prevent duplicate listeners
+        if (input.dataset.alertListenerAttached) return;
 
-        const handleInput = (e) => {
-            // Update button state on every input
+        input.addEventListener('input', (e) => {
             updateCdssButtonState(form);
-
-            clearTimeout(debounceTimer);
-            const fieldName = e.target.dataset.fieldName;
             const finding = e.target.value.trim();
-            const time = e.target.dataset.time;
             const alertCell = findAlertCellForInput(e.target);
 
-            if (alertCell && finding === '') {
+            if (!alertCell) return;
+
+            // 1. Instant Reset if field is cleared
+            if (finding === '') {
                 showDefaultNoAlerts(alertCell);
-                delete alertCell.dataset.startTime;
                 return;
             }
 
+            // 2. INSTANT LOADING: Trigger the bubble immediately on typing
+            if (!alertCell.querySelector('.glass-spinner')) {
+                showAlertLoading(alertCell);
+            }
+
+            clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
-                if ((fieldName || time) && alertCell) {
-                    console.log(`Input → Field: ${fieldName} | Value: ${finding}`);
-
-                    if (alertCell) {
-                        showAlertLoading(alertCell);
-                        alertCell.dataset.startTime = performance.now();
-                    }
-                    analyzeField(fieldName, finding, time, alertCell, analyzeUrl, csrfToken);
-                }
+                analyzeField(e.target.dataset.fieldName, finding, e.target.dataset.time, alertCell, analyzeUrl, csrfToken);
             }, TYPING_DELAY_MS);
-        };
-
-        input.addEventListener('input', handleInput);
+        });
         input.dataset.alertListenerAttached = 'true';
     });
 };
@@ -297,73 +299,83 @@ function getAlertHeightClass(alertCell) {
 }
 
 // Display alert result
-function displayAlert(alertCell, alertData, duration = null) {
-    if (!alertCell) return;
-    const heightClass = getAlertHeightClass(alertCell);
-    let colorClass = 'alert-green';
-    if (alertData.severity === 'CRITICAL') colorClass = 'alert-red';
-    else if (alertData.severity === 'WARNING') colorClass = 'alert-orange';
-
-    let alertContent = '';
-    let hasNoAlerts = false;
-    let isClickable = false;
-
-    if (!alertData.alert || alertData.alert.toLowerCase().includes('no findings')) {
-        hasNoAlerts = true;
-        alertContent = `<span class="text-white text-center uppercase font-semibold opacity-80">NO FINDINGS</span>`;
+function displayAlert(alertCell, alertData) {
+   if (!alertCell) return;
+    stopDotAnimation();
+    
+    let isFindings = alertData.alert && !alertData.alert.toLowerCase().includes('no findings');
+    
+    if (isFindings) {
+        alertCell.innerHTML = `
+            <div class="alert-wrapper">
+                <div class="alert-icon-btn is-active fade-in">
+                    <span class="material-symbols-outlined">add_alert</span>
+                </div>
+                <div class="alert-bubble show-pop hidden md:block">
+                    <span class="font-bold" style="color: #f59e0b;">Alert available!</span>
+                </div>
+            </div>
+        `;
+        alertCell.querySelector('.alert-icon-btn').addEventListener('click', () => openAlertModal(alertData));
     } else {
-        if (alertData.alert.includes(';')) {
-            const items = alertData.alert.split('; ').filter((a) => a.trim() !== '');
-            alertContent = `<ul class="list-disc list-inside text-left">${items
-                .map((a) => `<li>${a}</li>`)
-                .join('')}</ul>`;
-        } else {
-            alertContent = `<span>${alertData.alert}</span>`;
+        alertCell.innerHTML = `
+            <div class="alert-wrapper">
+                <div class="alert-icon-btn">
+                    <span class="material-symbols-outlined">notifications</span>
+                </div>
+                <div class="alert-bubble show-pop hidden md:block">
+                    <span class="text-gray-400">No alerts.</span>
+                </div>
+            </div>
+        `;
+    }
+
+    // Dissolve logic
+    setTimeout(() => {
+        const bubble = alertCell.querySelector('.alert-bubble');
+        const wrapper = alertCell.querySelector('.alert-wrapper');
+        
+        if (bubble) {
+            bubble.style.filter = 'blur(10px)';
+            bubble.style.opacity = '0';
+            bubble.style.transform = 'translateY(-10px)'; 
+            
+            setTimeout(() => {
+                bubble.remove();
+                // Only dim if it's NOT a yellow alert
+                if (!isFindings && wrapper) {
+                    wrapper.classList.add('is-dimmed');
+                }
+            }, 500);
         }
-        isClickable = true;
-    }
-
-    alertCell.innerHTML = `
-      <div class="alert-box fade-in ${heightClass} ${colorClass} ${
-          hasNoAlerts ? 'has-no-alert' : ''
-      }" style="margin:2px;">
-        <div class="alert-message p-1">${alertContent}</div>
-      </div>
-    `;
-
-    if (isClickable) {
-        alertCell.querySelector('.alert-box')?.addEventListener('click', () => openAlertModal(alertData));
-    }
-    delete alertCell.dataset.startTime;
+    }, 3000);
 }
 
-// Show "No Alerts" state
 function showDefaultNoAlerts(alertCell) {
     if (!alertCell) return;
-    const heightClass = getAlertHeightClass(alertCell);
     alertCell.innerHTML = `
-      <div class="alert-box has-no-alert alert-green ${heightClass}" style="margin:2.8px;">
-        <span class="alert-message text-white text-center font-semibold uppercase opacity-80">NO ALERTS</span>
-      </div>
+        <div class="alert-wrapper is-dimmed">
+            <div class="alert-icon-btn">
+                <span class="material-symbols-outlined">notifications</span>
+            </div>
+        </div>
     `;
-    alertCell.onclick = null;
 }
 
-// Show loading spinner
 function showAlertLoading(alertCell) {
     if (!alertCell) return;
-    const heightClass = getAlertHeightClass(alertCell);
     alertCell.innerHTML = `
-      <div class="alert-box alert-green ${heightClass} flex justify-center items-center" style="margin:2px;">
-        <div class="flex items-center gap-2 text-white font-semibold">
-          <div class="loading-spinner"></div>
-          <span>Analyzing...</span>
+        <div class="alert-wrapper">
+            <div class="alert-icon-btn" style="background: rgba(59, 130, 246, 0.1);">
+                <div class="glass-spinner"></div>
+            </div>
+            <div class="alert-bubble show-pop hidden md:block">
+                <span class="text-blue-500 font-medium" id="loading-text">Analyzing</span>
+            </div>
         </div>
-      </div>
     `;
-    alertCell.onclick = null;
+    startDotAnimation(document.getElementById('loading-text'));
 }
-
 // Open modal with alert details
 // alertData → object
 function openAlertModal(alertData) {

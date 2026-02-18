@@ -273,7 +273,9 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
 
         // ★ ADD THIS NEW BATCH ROUTE ★
         Route::post('/analyze-batch-step', [NursingDiagnosisController::class, 'analyzeBatchDiagnosisField'])->name('analyze-batch-field');
-
+        // Add this inside the 'nursing-diagnosis.' prefix group in routes/web.php
+        Route::get('/{component}/process/{id}', [NursingDiagnosisController::class, 'showProcess'])->name('process');
+        // Route::get('/{component}/process/{id}', [NursingDiagnosisController::class, 'showProcess'])->name('nursing-diagnosis.process');
         Route::get('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'startDiagnosis'])->name('start');
         Route::post('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'storeDiagnosis'])->name('storeDiagnosis');
         Route::get('/{component}/planning/{nursingDiagnosisId}', [NursingDiagnosisController::class, 'showPlanning'])->name('showPlanning');

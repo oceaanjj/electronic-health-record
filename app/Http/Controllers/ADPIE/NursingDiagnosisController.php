@@ -88,23 +88,83 @@ class NursingDiagnosisController extends Controller
 
     public function startDiagnosis(string $component, $id)
     {
-        return $this->getComponentService($component)->startDiagnosis($component, $id);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->startDiagnosis($component, $id);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 1);
+        }
+        
+        return $viewData;
     }
 
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showPlanning($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showPlanning($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 2);
+        }
+        
+        return $viewData;
     }
 
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showIntervention($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showIntervention($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 3);
+        }
+        
+        return $viewData;
     }
 
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showEvaluation($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showEvaluation($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 4);
+        }
+        
+        return $viewData;
     }
+    
+    public function showProcess(string $component, $id)
+        {
+            // Fetch the diagnosis record using the helper we created
+            $diagnosis = NursingDiagnosis::where($this->getComponentIdField($component), $id)->first();
+
+            // Get the component service (PhysicalExamComponent, etc.)
+            $service = $this->getComponentService($component);
+            
+            // Get the base data (Patient info, etc.)
+            $viewData = $service->startDiagnosis($component, $id)->getData();
+
+            return view('adpie.process', array_merge($viewData, [
+                'component' => $component,
+                'recordId' => $id,
+                'diagnosis' => $diagnosis, 
+            ]));
+        }
+
+private function getComponentIdField($component) {
+    return [
+        'physical-exam' => 'physical_exam_id',
+        'intake-and-output' => 'intake_and_output_id',
+        'lab-values' => 'lab_values_id',
+        'adl' => 'adl_id',
+        'vital-signs' => 'vital_signs_id',
+    ][$component] ?? 'physical_exam_id';
+}
 
     //==================================================================
     // WIZARD "STORE" METHODS

@@ -36,6 +36,7 @@
 
         @media (min-width: 768px) {
             .web-button-alignment {
+                 margin-right: 17%; 
             }
         }
     </style>
@@ -57,11 +58,12 @@
                 </div>
             @endif
 
-            <div class="mx-auto w-full pt-10">
+            <!-- HEADER SECTION  -->
+            <div class="mx-auto mt-10 mb-5 w-[90%] md:w-full">
                 <div class="ml-4 md:ml-30 flex flex-wrap items-center gap-x-10 gap-y-4">
                     <div class="flex items-center gap-4">
                         <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
-                        <div class="w-[350px]">
+                        <div class="w-full md:w-[350px]">
                             <x-searchable-patient-dropdown :patients="$patients" :selectedPatient="$selectedPatient" :selectRoute="route('vital-signs.select')" :inputValue="$selectedPatient?->patient_id ?? ''" />
                         </div>
                     </div>
@@ -156,12 +158,10 @@
                                 @foreach ($times as $index => $time)
                                     @php $vitalsRecord = $vitalsData->get($time); @endphp
                                     <tr>
-                                        {{-- TIME COLUMN (Uses Color Classes from Snippet 1) --}}
                                         <td class="p-2 font-semibold bg-yellow-light text-brown text-center">
                                             {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
                                         </td>
                                         
-                                        {{-- INPUT CELLS (Uses bg-beige from Snippet 1) --}}
                                         <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
                                             <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
                                                 value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
@@ -211,7 +211,7 @@
                                     $vitalsRecord = $vitalsData->get($time); 
                                     $formattedTime = \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A');
                                 @endphp
-                                <div class="relative mb-6 flex w-full flex-col rounded-[20px] border border-dark-green bg-beige overflow-hidden shadow-lg">
+                                <div class="relative mt-10 mb-6 flex w-full flex-col rounded-[20px] border border-dark-green bg-beige overflow-hidden shadow-lg">
                                     <div class="main-header w-full bg-dark-green p-2 flex justify-between items-center">
                                         <span class="font-alte font-bold text-white text-lg uppercase">TIME: {{ $formattedTime }}</span>
                                         <div class="mobile-alert-clone" data-alert-for-time="{{ $time }}" data-time="{{ $time }}">

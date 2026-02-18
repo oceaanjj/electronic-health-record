@@ -11,12 +11,14 @@
         <div class="banner-icon"><span class="material-symbols-outlined">edit_note</span></div>
         <div class="banner-text">
             <div class="banner-title">No Recommendations Yet</div>
-            <div class="banner-subtitle">Start typing in Step {{ $step }} for clinical support.</div>
+            <div class="banner-subtitle">Type more details in the diagnosis field to receive clinical recommendations
+            </div>
         </div>
     </div>
 </div>
 
-<div id="recommendation-{{ $type }}" class="recommendation-banner {{ $colorClass }} {{ $message ? '' : 'hidden' }}" onclick="openRecommendationModal(this)">
+<div id="recommendation-{{ $type }}" class="recommendation-banner {{ $colorClass }} {{ $message ? '' : 'hidden' }}"
+    onclick="openRecommendationModal(this)">
     <div class="banner-content">
         <div class="banner-icon"><span class="material-symbols-outlined">{{ $levelIcon }}</span></div>
         <div class="banner-text">

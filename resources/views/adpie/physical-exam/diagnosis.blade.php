@@ -38,26 +38,17 @@
             PATIENT NAME :
         </label>
         <div class="relative w-[400px]">
-            <input
-                type="text"
-                id="patient_search_input"
-                value="{{ trim($patient->name ?? '') }}"
-                readonly
-                class="font-creato-bold w-full rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none"
-            />
+            <input type="text" id="patient_search_input" value="{{ trim($patient->name ?? '') }}" readonly
+                class="font-creato-bold w-full rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none" />
         </div>
     </div>
 
     {{-- Main Form --}}
-    <form
-        action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $physicalExamId]) }}"
-        method="POST"
-        class="cdss-form flex h-full flex-col"
+    <form action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $physicalExamId]) }}"
+        method="POST" class="cdss-form flex h-full flex-col"
         data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
         data-batch-analyze-url="{{ route('nursing-diagnosis.analyze-batch-field') }}"
-        data-patient-id="{{ $patient->patient_id }}"
-        data-component="{{ $component }}"
-    >
+        data-patient-id="{{ $patient->patient_id }}" data-component="{{ $component }}">
         @csrf
 
         <fieldset>
@@ -87,10 +78,7 @@
                     @endphp
 
                     {{-- No Recommendation State --}}
-                    <div
-                        id="no-recommendation-banner"
-                        class="recommendation-banner alert-info {{ $message ? 'hidden' : '' }}"
-                    >
+                    <div id="no-recommendation-banner" class="recommendation-banner alert-info {{ $message ? 'hidden' : '' }}">
                         <div class="banner-content">
                             <div class="banner-icon">
                                 <span class="material-symbols-outlined">edit_note</span>
@@ -105,22 +93,16 @@
                     </div>
 
                     {{-- Active Recommendation Banner --}}
-                    <div
-                        id="recommendation-banner"
+                    <div id="recommendation-banner"
                         class="recommendation-banner {{ $colorClass }} {{ $message ? '' : 'hidden' }}"
-                        data-alert-for="diagnosis"
-                        onclick="openRecommendationModal(this)"
-                    >
+                        data-alert-for="diagnosis" onclick="openRecommendationModal(this)">
                         <div class="banner-content">
                             <div class="banner-icon">
                                 <span class="material-symbols-outlined">{{ $levelIcon }}</span>
                             </div>
                             <div class="banner-text">
                                 <div class="banner-title">{{ $levelText }}</div>
-                                <div
-                                    class="banner-subtitle"
-                                    data-full-message="{!! htmlspecialchars($message ?? '') !!}"
-                                >
+                                <div class="banner-subtitle" data-full-message="{!! htmlspecialchars($message ?? '') !!}">
                                     {{ $preview }}
                                 </div>
                             </div>
@@ -142,17 +124,11 @@
                     </div>
 
                     <div class="bg-beige relative">
-                        <textarea
-                            id="diagnosis"
-                            name="diagnosis"
+                        <textarea id="diagnosis" name="diagnosis"
                             class="notepad-lines font-typewriter cdss-input diagnosis-textarea w-full rounded-b-lg shadow-sm"
-                            data-field-name="diagnosis"
-                            style="border-top: none"
-                            placeholder="Enter nursing diagnosis here..."
-                            maxlength="2000"
-                        >
-{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea
-                        >
+                            data-field-name="diagnosis" style="border-top: none"
+                            placeholder="Enter nursing diagnosis here..." maxlength="2000">
+                                {{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea>
 
                         <div class="char-counter" id="char-counter">
                             <span id="char-count">0</span>
@@ -162,8 +138,7 @@
 
                     @error('diagnosis')
                         <div
-                            class="mx-4 mb-3 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600"
-                        >
+                            class="mx-4 mb-3 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
                             <span class="material-symbols-outlined text-red-500">error</span>
                             {{ $message }}
                         </div>
@@ -351,31 +326,31 @@
             const modal = document.createElement('div');
             modal.className = 'alert-modal fade-in';
             modal.innerHTML = `
-                <button class="close-btn" aria-label="Close">×</button>
+                                                <button class="close-btn" aria-label="Close">×</button>
 
-                <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; background: ${levelIconColor}15; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-symbols-outlined" style="color: ${levelIconColor}; font-size: 1.75rem;">${levelIcon}</span>
-                    </div>
-                    <div>
-                        <h2 style="margin: 0; font-size: 1.5rem;">${levelText}</h2>
-                        <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #6b7280;">Recommendation</p>
-                    </div>
-                </div>
+                                                <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                                                    <div style="width: 48px; height: 48px; border-radius: 50%; background: ${levelIconColor}15; display: flex; align-items: center; justify-content: center;">
+                                                        <span class="material-symbols-outlined" style="color: ${levelIconColor}; font-size: 1.75rem;">${levelIcon}</span>
+                                                    </div>
+                                                    <div>
+                                                        <h2 style="margin: 0; font-size: 1.5rem;">${levelText}</h2>
+                                                        <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #6b7280;">Recommendation</p>
+                                                    </div>
+                                                </div>
 
-                <div class="modal-content-scroll" style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem; margin-top: 1.5rem;">
-                    ${formattedMessage}
-                </div>
+                                                <div class="modal-content-scroll" style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem; margin-top: 1.5rem;">
+                                                    ${formattedMessage}
+                                                </div>
 
-                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 0.75rem; color: #6b7280;">
-                        💡 Press <kbd style="padding: 2px 6px; background: #f3f4f6; border-radius: 4px; font-family: monospace;">ESC</kbd> to close
-                    </span>
-                    <button class="close-action-btn" style="padding: 0.625rem 1.5rem; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 0.875rem; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);">
-                        Got it
-                    </button>
-                </div>
-            `;
+                                                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+                                                    <span style="font-size: 0.75rem; color: #6b7280;">
+                                                        💡 Press <kbd style="padding: 2px 6px; background: #f3f4f6; border-radius: 4px; font-family: monospace;">ESC</kbd> to close
+                                                    </span>
+                                                    <button class="close-action-btn" style="padding: 0.625rem 1.5rem; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 0.875rem; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);">
+                                                        Got it
+                                                    </button>
+                                                </div>
+                                            `;
 
             overlay.appendChild(modal);
             document.body.appendChild(overlay);

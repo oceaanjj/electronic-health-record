@@ -12,6 +12,7 @@
             name="evaluation"
             class="notepad-lines font-typewriter cdss-input evaluation-textarea w-full rounded-b-lg shadow-sm adpie-textarea"
             placeholder="Enter nursing evaluation here..."
+            data-field-name="evaluation"
             maxlength="2000"
         >{{ old('evaluation', $diagnosis->evaluation ?? '') }}</textarea>
 

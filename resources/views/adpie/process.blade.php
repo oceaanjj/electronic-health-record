@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <div class="header mx-auto my-6 flex w-[70%] items-center gap-4">
+        <div class="header mx-auto -mt-3 my-6 flex w-[70%] items-center gap-4">
             <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap">
                 PATIENT NAME :
             </label>

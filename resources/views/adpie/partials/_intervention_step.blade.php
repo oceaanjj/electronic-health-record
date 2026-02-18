@@ -12,6 +12,7 @@
             name="intervention"
             class="notepad-lines font-typewriter cdss-input intervention-textarea w-full rounded-b-lg shadow-sm adpie-textarea"
             placeholder="Enter nursing interventions here..."
+            data-field-name="intervention"
             maxlength="2000"
         >{{ old('intervention', $diagnosis->intervention ?? '') }}</textarea>
 

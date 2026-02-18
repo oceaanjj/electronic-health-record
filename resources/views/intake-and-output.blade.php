@@ -73,8 +73,9 @@
                 border: none;
                 background-color: #fcf5e5 !important; 
                 text-align: center;
+                font-family: var(--font-creato-bold, sans-serif) !important;
                 font-size: 1.3rem;
-                font-weight: 600;
+                font-weight: 600 !important;
                 color: #6B4226;
                 outline: none;
             }

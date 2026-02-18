@@ -2,7 +2,7 @@
 @section('title', 'Patient IVs and Lines')
 @section('content')
 
-    <div id="form-content-container">
+    <div id="form-content-container" class="mx-auto max-w-full">
 
         {{-- PATIENT SELECTION --}}
         <div class="mx-auto w-full pt-10 px-4">
@@ -14,8 +14,8 @@
             <div class="flex flex-wrap items-center gap-x-10 gap-y-4 ml-0 md:ml-20 justify-center md:justify-start">
 
                 {{-- PATIENT SECTION --}}
-                <div class="flex items-center gap-4">
-                    <label class="font-alte text-dark-green font-bold whitespace-nowrap shrink-0">
+                <div class="flex items-center gap-4 w-full sm:w-auto justify-center sm:justify-start">
+                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                         PATIENT NAME :
                     </label>
 
@@ -40,7 +40,8 @@
             @csrf
             <input type="hidden" name="patient_id"
                 value="{{ $selectedPatient->patient_id ?? session('selected_patient_id') }}">
-            <fieldset @if (!session('selected_patient_id')) disabled @endif>
+            
+            <fieldset @if (!session('selected_patient_id')) disabled @endif class="w-full">
 
                 <div class="w-[80%] mx-auto flex justify-center items-start gap-1 mt-10">
 
@@ -126,12 +127,13 @@
                 </div>
 
                 {{-- BUTTONS --}}
-                <div class="w-[85%] mx-auto flex justify-center md:justify-end mt-5 mb-20 space-x-4">
+                <div class="mx-auto mt-5 mb-30 flex w-full justify-center space-x-4 responsive-btns md:w-[85%] md:justify-end">
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
 
         </form>
-        </fieldset>
+
+    </div>
 
 @endsection
 

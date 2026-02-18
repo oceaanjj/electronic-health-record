@@ -169,7 +169,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
     //Developmental History
     Route::get('/developmental-history', [MedicalController::class, 'showDevelopmentalHistory'])->name('developmental-history');
-    Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
+    // Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
 
 
 
@@ -240,7 +240,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
     Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
     Route::post('/intake-and-output/cdss', [IntakeAndOutputController::class, 'runCdssAnalysis'])->name('io.cdss');
-    Route::post('/analyze-batch', [IntakeAndOutputController::class, 'runBatchCdssAnalysis'])->name('io.analyze-batch');//new
+    Route::post('/intake-and-output/analyze-batch', [IntakeAndOutputController::class, 'runBatchCdssAnalysis'])->name('io.analyze-batch');//new
 
     //MEDICATION-ADMINISTRATION:
     Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])

@@ -19,7 +19,7 @@ export default defineConfig({
                 'resources/css/search-style.css',
                 'resources/css/show-style.css',
 
-                // JS Files from Image
+                // JS Files
                 'resources/js/app.js',
                 'resources/js/adpie-alert.js',
                 'resources/js/alert.js',

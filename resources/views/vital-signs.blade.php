@@ -2,6 +2,7 @@
 @section('title', 'Patient Vital Signs')
 @section('content')
     <style>
+        /* Layout & Scrolling Logic (No Custom Color CSS) */
         #chart-viewport {
             height: 530px;
             overflow: hidden;
@@ -17,22 +18,10 @@
             margin: 10px 0;
         }
 
-        /* --- COLORS FROM OLD VITAL SIGNS --- */
-        .bg-dark-green { background-color: #006400; }
-        .bg-yellow-light { background-color: #fef08a; }
-        
-        /* Force Beige Background for Inputs */
-        .bg-beige { background-color: #f5f5dc !important; }
-
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .btn-hidden { display: none !important; }
-        
-        :root {
-            --color-beige: #f5f5dc !important;
-            --color-dark-red: #8b0000;
-        }
 
         .vital-input::placeholder {
             color: #d1d5db;
@@ -40,16 +29,12 @@
         }
 
         .vital-input {
-            background-color: #f5f5dc; 
             text-align: center;
-            color: #000000 !important; 
             font-weight: 500;
         }
 
-        /* WEB VIEW BUTTON ALIGNMENT FIX */
         @media (min-width: 768px) {
             .web-button-alignment {
-                /* Inadjust ito para tumapat sa ilalim ng SpO2 (bago ang Alert column) */
                 margin-right: 14%; 
             }
         }
@@ -73,7 +58,7 @@
             @endif
 
             <div class="mx-auto w-full pt-10">
-                <div class="ml-20 flex flex-wrap items-center gap-x-10 gap-y-4">
+                <div class="ml-4 md:ml-30 flex flex-wrap items-center gap-x-10 gap-y-4">
                     <div class="flex items-center gap-4">
                         <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
                         <div class="w-[350px]">
@@ -87,7 +72,7 @@
                 </div>
 
                 @if ($selectedPatient && (!isset($vitalsData) || $vitalsData->count() == 0))
-                    <div class="mt-4 ml-20 flex items-center gap-2 text-xs italic text-gray-500">
+                    <div class="mt-4 ml-2 md:ml-30 flex items-center gap-2 text-xs italic text-gray-500">
                         <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                         Clinical Decision Support System is not yet available (No data recorded for this date).
                     </div>
@@ -111,14 +96,14 @@
                 <input type="hidden" id="hidden_date_for_vitals_form" name="date" value="{{ $currentDate ?? now()->format('Y-m-d') }}" />
                 <input type="hidden" id="hidden_day_no_for_vitals_form" name="day_no" value="{{ $currentDayNo ?? 1 }}" />
 
-                <div class="mx-auto mt-15 flex w-[90%] flex-col md:flex-row items-start justify-between gap-1">
+                <div class="mx-auto mt-5 md:mt-15 flex w-[90%] flex-col md:flex-row items-start justify-between gap-1">
                     
                     {{-- 1. CHARTS COLUMN --}}
                     <div class="relative mr-3 w-full md:w-[30%]">
                         <div class="relative overflow-hidden rounded-[20px]" id="chart-wrapper"></div>
                         <div id="fade-top" class="pointer-events-none absolute top-0 left-0 z-20 hidden h-10 w-full rounded-t-[20px] bg-gradient-to-b from-white/90 to-transparent"></div>
 
-                        <div id="chart-viewport" class="relative h-[530px] overflow-hidden rounded-[25px]">
+                        <div id="chart-viewport" class="ml-0 md:ml-15 relative h-[530px] overflow-hidden rounded-[25px]">
                             <div id="chart-track" class="transition-transform duration-700 ease-out">
                                 <div class="h-[220px] rounded-[24px] border-t-2 border-r border-b border-l border-gray-100/50 border-white bg-gradient-to-br from-white via-[#edecec] to-[#f1f5f9] p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.05),0_6px_6px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-xl">
                                     <h2 class="mb-2 text-center text-sm font-bold tracking-wide text-[#334155] uppercase opacity-80">TEMPERATURE CHART</h2>
@@ -171,37 +156,40 @@
                                 @foreach ($times as $index => $time)
                                     @php $vitalsRecord = $vitalsData->get($time); @endphp
                                     <tr>
+                                        {{-- TIME COLUMN (Uses Color Classes from Snippet 1) --}}
                                         <td class="p-2 font-semibold bg-yellow-light text-brown text-center">
                                             {{ \Carbon\Carbon::createFromFormat('H:i', $time)->format('g:i A') }}
                                         </td>
+                                        
+                                        {{-- INPUT CELLS (Uses bg-beige from Snippet 1) --}}
                                         <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
                                             <input type="text" name="temperature_{{ $time }}" placeholder="temperature"
                                                 value="{{ old('temperature_' . $time, optional($vitalsRecord)->temperature) }}"
-                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center bg-beige" 
+                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
                                                 data-field-name="temperature" data-time="{{ $time }}" autocomplete="off" />
                                         </td>
                                         <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
                                             <input type="text" name="hr_{{ $time }}" placeholder="bpm"
                                                 value="{{ old('hr_' . $time, optional($vitalsRecord)->hr) }}"
-                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center bg-beige" 
+                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
                                                 data-field-name="hr" data-time="{{ $time }}" autocomplete="off" />
                                         </td>
                                         <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
                                             <input type="text" name="rr_{{ $time }}" placeholder="bpm"
                                                 value="{{ old('rr_' . $time, optional($vitalsRecord)->rr) }}"
-                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center bg-beige" 
+                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
                                                 data-field-name="rr" data-time="{{ $time }}" autocomplete="off" />
                                         </td>
                                         <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
                                             <input type="text" name="bp_{{ $time }}" placeholder="mmHg"
                                                 value="{{ old('bp_' . $time, optional($vitalsRecord)->bp) }}"
-                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center bg-beige" 
+                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
                                                 data-field-name="bp" data-time="{{ $time }}" autocomplete="off" />
                                         </td>
                                         <td class="p-2 bg-beige text-center border-b-1 border-line-brown/70">
                                             <input type="text" name="spo2_{{ $time }}" placeholder="%"
                                                 value="{{ old('spo2_' . $time, optional($vitalsRecord)->spo2) }}"
-                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center bg-beige" 
+                                                class="cdss-input vital-input h-[60px] w-full focus:outline-none text-center" 
                                                 data-field-name="spo2" data-time="{{ $time }}" autocomplete="off" />
                                         </td>
                                         <td class="p-2 text-center align-middle border-0 desktop-alert-container" data-alert-for-time="{{ $time }}">
@@ -216,7 +204,7 @@
                             </table>
                         </div>
 
-                        {{-- MOBILE VIEW (NO CHANGES) --}}
+                        {{-- MOBILE VIEW --}}
                         <div class="space-y-4 md:hidden">
                             @foreach ($times as $time)
                                 @php 
@@ -240,7 +228,7 @@
                                                 </div>
                                                 <input type="text" name="{{ $field }}_{{ $time }}" placeholder="{{ $unit }}"
                                                     value="{{ old($field . '_' . $time, optional($vitalsRecord)->$field) }}"
-                                                    class="cdss-input vital-input w-full p-4 bg-beige text-center focus:outline-none h-[60px]"
+                                                    class="cdss-input vital-input w-full p-4 text-center focus:outline-none h-[60px]"
                                                     data-field-name="{{ $field }}" data-time="{{ $time }}" autocomplete="off" />
                                             </div>
                                         @endforeach
@@ -251,7 +239,6 @@
                     </div>
                 </div>
 
-                {{-- WEB VIEW BUTTONS ALIGNED TO SPO2 COLUMN --}}
                 <div class="mx-auto mt-5 mb-20 flex w-[90%] justify-end">
                     <div class="flex gap-4 web-button-alignment">
                         @if (isset($vitalsData) && $vitalsData->count() > 0)
@@ -372,7 +359,7 @@
             updateCarousel();
         });
 
-        // Color Logic
+        // Color Logic (Synchronized with Snippet 1's behavior)
         (function() {
             const vitalRanges = {
                 temperature: { ranges: [{ min: 36.3, max: 37, color: 'var(--color-beige)' }, { min: 37.01, max: Infinity, color: 'var(--color-dark-red)' }] },
@@ -400,8 +387,13 @@
             window.colorizeInput = function(input) {
                 const color = getColorForValue(input.dataset.fieldName, input.value.trim());
                 input.style.backgroundColor = color;
-                // ALWAYS BLACK TEXT regardless of background color
-                input.style.color = '#000000';
+                
+                // RESTORED Logic from Snippet 1: White text on Red, Black text on Beige
+                if (color === 'var(--color-dark-red)') {
+                    input.style.color = '#FFFFFF'; 
+                } else {
+                    input.style.color = '#000000';
+                }
             }
 
             window.colorizeAllVitals = function() {

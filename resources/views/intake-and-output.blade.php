@@ -13,8 +13,8 @@
         }
 
         /* =========================
-                                                                MOBILE (PHONES) <= 768px
-                                                               ========================= */
+                                                                                        MOBILE (PHONES) <= 768px
+                                                                                       ========================= */
         @media screen and (max-width: 768px) {
             body {
                 margin-top: -40px !important;
@@ -117,7 +117,7 @@
         {{-- CDSS ALERT BANNER --}}
         @isset($selectedPatient)
             @if ($ioData)
-                <div id="cdss-alert-wrapper" class="mx-auto w-[85%] overflow-hidden transition-all duration-500">
+                <div id="cdss-alert-wrapper" class="mx-auto w-[95%] overflow-hidden transition-all duration-500">
                     <div id="cdss-alert-content"
                         class="animate-alert-in relative mt-3 flex items-center justify-between rounded-lg border border-amber-400/50 bg-amber-100/70 px-5 py-3 shadow-sm backdrop-blur-md">
                         <div class="flex items-center gap-3">
@@ -179,7 +179,7 @@
                 {{-- PENDING ACTIONS MESSAGE --}}
                 @isset($selectedPatient)
                     @if (!$ioData || $ioData->count() == 0)
-                        <div class="mt-4 mb-4 md:ml-24 flex w-[85%] items-center gap-2 text-xs text-gray-500 italic px-4 md:px-0">
+                        <div class="mt-4 mb-4 md:ml-24 flex w-full items-center gap-2 text-xs text-gray-500 italic px-4 md:px-0">
                             <span class="material-symbols-outlined text-[16px]">pending_actions</span>
                             Clinical Decision Support System is not yet available (No data for this day).
                         </div>

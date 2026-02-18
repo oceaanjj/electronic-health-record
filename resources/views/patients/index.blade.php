@@ -80,11 +80,11 @@
                                     <td class="border-line-brown/30 border-b-2 p-3 text-center whitespace-nowrap">
 
                                         @if ($patient->trashed())
-                                            {{-- Inactive --}}
+                                            {{-- Inactive -> Set to Restore/Red --}}
                                             <button type="button"
-                                                class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600 cursor-pointer"
+                                                class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
                                                 data-patient-id="{{ $patient->patient_id }}" data-action="activate">
-                                                SET ACTIVE
+                                                RESTORE
                                             </button>
                                         @else
                                             {{-- Active --}}

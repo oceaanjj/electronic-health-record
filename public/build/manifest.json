@@ -1,0 +1,201 @@
+{
+  "public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf": {
+    "file": "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
+    "src": "public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf"
+  },
+  "public/font/creato_display/CreatoDisplay-Black.otf": {
+    "file": "assets/CreatoDisplay-Black-05YRyuun.otf",
+    "src": "public/font/creato_display/CreatoDisplay-Black.otf"
+  },
+  "public/font/creato_display/CreatoDisplay-Bold.otf": {
+    "file": "assets/CreatoDisplay-Bold-C-otZvV1.otf",
+    "src": "public/font/creato_display/CreatoDisplay-Bold.otf"
+  },
+  "public/font/jmh_typewriter/JMH Typewriter-Bold.otf": {
+    "file": "assets/JMH Typewriter-Bold-Bi5zYY-d.otf",
+    "src": "public/font/jmh_typewriter/JMH Typewriter-Bold.otf"
+  },
+  "public/font/neometric/Neometric-Regular.otf": {
+    "file": "assets/Neometric-Regular-CDwZRyYG.otf",
+    "src": "public/font/neometric/Neometric-Regular.otf"
+  },
+  "public/font/rubik/Rubik-Regular.ttf": {
+    "file": "assets/Rubik-Regular-CVPqojHn.ttf",
+    "src": "public/font/rubik/Rubik-Regular.ttf"
+  },
+  "public/font/trajan-pro/TrajanPro-Bold.otf": {
+    "file": "assets/TrajanPro-Bold-BqrE6oXJ.otf",
+    "src": "public/font/trajan-pro/TrajanPro-Bold.otf"
+  },
+  "public/img/login-bg.png": {
+    "file": "assets/login-bg-BxlV4FAP.png",
+    "src": "public/img/login-bg.png"
+  },
+  "resources/css/admin-register.css": {
+    "file": "assets/admin-register-B384ATCt.css",
+    "src": "resources/css/admin-register.css",
+    "isEntry": true,
+    "names": [
+      "admin-register.css"
+    ]
+  },
+  "resources/css/admin-users.css": {
+    "file": "assets/admin-users-CBR7yN_D.css",
+    "src": "resources/css/admin-users.css",
+    "isEntry": true,
+    "names": [
+      "admin-users.css"
+    ]
+  },
+  "resources/css/admin.css": {
+    "file": "assets/admin-xRETaHr0.css",
+    "src": "resources/css/admin.css",
+    "isEntry": true,
+    "names": [
+      "admin.css"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-Daivi8WD.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/audit-index.css": {
+    "file": "assets/audit-index-DxYXILd_.css",
+    "src": "resources/css/audit-index.css",
+    "isEntry": true,
+    "names": [
+      "audit-index.css"
+    ]
+  },
+  "resources/css/edit-style.css": {
+    "file": "assets/edit-style-CAcSjER-.css",
+    "src": "resources/css/edit-style.css",
+    "isEntry": true,
+    "names": [
+      "edit-style.css"
+    ]
+  },
+  "resources/css/home-style.css": {
+    "file": "assets/home-style-DWYXeDqz.css",
+    "src": "resources/css/home-style.css",
+    "isEntry": true,
+    "names": [
+      "home-style.css"
+    ]
+  },
+  "resources/css/index-style.css": {
+    "file": "assets/index-style-DA_r8IP9.css",
+    "src": "resources/css/index-style.css",
+    "isEntry": true,
+    "names": [
+      "index-style.css"
+    ]
+  },
+  "resources/css/login-style.css": {
+    "file": "assets/login-style-C5JSdaIe.css",
+    "src": "resources/css/login-style.css",
+    "isEntry": true,
+    "names": [
+      "login-style.css"
+    ]
+  },
+  "resources/css/search-style.css": {
+    "file": "assets/search-style-CX8zl9Xr.css",
+    "src": "resources/css/search-style.css",
+    "isEntry": true,
+    "names": [
+      "search-style.css"
+    ]
+  },
+  "resources/css/show-style.css": {
+    "file": "assets/show-style-BWX7oZQN.css",
+    "src": "resources/css/show-style.css",
+    "isEntry": true,
+    "names": [
+      "show-style.css"
+    ]
+  },
+  "resources/js/alert.js": {
+    "file": "assets/alert-CgRoiDDs.js",
+    "name": "alert",
+    "src": "resources/js/alert.js",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-D9zCuz64.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/patient-search.js",
+      "resources/js/patient-loader.js",
+      "resources/js/searchable-dropdown.js",
+      "resources/js/date-day-loader.js",
+      "resources/js/init-searchable-dropdown.js"
+    ],
+    "css": [
+      "assets/app-Daivi8WD.css"
+    ],
+    "assets": [
+      "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
+      "assets/CreatoDisplay-Bold-C-otZvV1.otf",
+      "assets/CreatoDisplay-Black-05YRyuun.otf",
+      "assets/TrajanPro-Bold-BqrE6oXJ.otf",
+      "assets/JMH Typewriter-Bold-Bi5zYY-d.otf",
+      "assets/Neometric-Regular-CDwZRyYG.otf",
+      "assets/Rubik-Regular-CVPqojHn.ttf"
+    ]
+  },
+  "resources/js/close-cdss-alert.js": {
+    "file": "assets/close-cdss-alert-B9TMbxeu.js",
+    "name": "close-cdss-alert",
+    "src": "resources/js/close-cdss-alert.js",
+    "isEntry": true
+  },
+  "resources/js/date-day-loader.js": {
+    "file": "assets/date-day-loader-BhEt3zKG.js",
+    "name": "date-day-loader",
+    "src": "resources/js/date-day-loader.js",
+    "isEntry": true
+  },
+  "resources/js/date-day-sync.js": {
+    "file": "assets/date-day-sync-_rmZiDQc.js",
+    "name": "date-day-sync",
+    "src": "resources/js/date-day-sync.js",
+    "isEntry": true
+  },
+  "resources/js/init-searchable-dropdown.js": {
+    "file": "assets/init-searchable-dropdown-B8slLM9U.js",
+    "name": "init-searchable-dropdown",
+    "src": "resources/js/init-searchable-dropdown.js",
+    "isEntry": true
+  },
+  "resources/js/patient-loader.js": {
+    "file": "assets/patient-loader-Mnjb5Sqo.js",
+    "name": "patient-loader",
+    "src": "resources/js/patient-loader.js",
+    "isEntry": true
+  },
+  "resources/js/patient-search.js": {
+    "file": "assets/patient-search-O7-bk_CJ.js",
+    "name": "patient-search",
+    "src": "resources/js/patient-search.js",
+    "isEntry": true
+  },
+  "resources/js/searchable-dropdown.js": {
+    "file": "assets/searchable-dropdown-DXe9q0aL.js",
+    "name": "searchable-dropdown",
+    "src": "resources/js/searchable-dropdown.js",
+    "isEntry": true
+  },
+  "resources/js/vital-signs-charts.js": {
+    "file": "assets/vital-signs-charts-Bg3Pnnfm.js",
+    "name": "vital-signs-charts",
+    "src": "resources/js/vital-signs-charts.js",
+    "isEntry": true
+  }
+}

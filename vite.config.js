@@ -24,6 +24,10 @@ export default defineConfig({
                 'resources/js/init-searchable-dropdown.js',
                 'resources/js/patient-search.js',
                 'resources/js/close-cdss-alert.js',
+
+                'resources/js/searchable-dropdown.js',
+                'resources/js/date-day-sync.js',
+                'resources/js/vital-signs-charts.js',
             ],
 
             refresh: true,

@@ -115,10 +115,10 @@
                                 <td class="text-center align-middle responsive-table-data" data-label="ORAL INTAKE (mL)">
                                     <input type="text" name="oral_intake" placeholder="Enter Oral Intake"
                                         value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}" oninput="
-                                                this.value = this.value
-                                                    .replace(/[^0-9.]/g, '')
-                                                    .replace(/(\..*?)\..*/g, '$1')
-                                            "
+                                                        this.value = this.value
+                                                            .replace(/[^0-9.]/g, '')
+                                                            .replace(/(\..*?)\..*/g, '$1')
+                                                    "
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
                                         data-field-name="oral_intake" />
                                 </td>
@@ -127,10 +127,10 @@
                                 <td class="text-center align-middle responsive-table-data" data-label="IV FLUIDS (mL)">
                                     <input type="text" name="iv_fluids_volume" placeholder="Enter IV Fluids"
                                         value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}" oninput="
-                                                this.value = this.value
-                                                    .replace(/[^0-9.]/g, '')
-                                                    .replace(/(\..*?)\..*/g, '$1')
-                                            "
+                                                        this.value = this.value
+                                                            .replace(/[^0-9.]/g, '')
+                                                            .replace(/(\..*?)\..*/g, '$1')
+                                                    "
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
                                         data-field-name="iv_fluids_volume" />
                                 </td>
@@ -139,10 +139,10 @@
                                 <td class="text-center align-middle responsive-table-data" data-label="URINE OUTPUT (mL)">
                                     <input type="text" name="urine_output" placeholder="Enter Urine Output"
                                         value="{{ old('urine_output', $ioData->urine_output ?? '') }}" oninput="
-                                                this.value = this.value
-                                                    .replace(/[^0-9.]/g, '')
-                                                    .replace(/(\..*?)\..*/g, '$1')
-                                            "
+                                                        this.value = this.value
+                                                            .replace(/[^0-9.]/g, '')
+                                                            .replace(/(\..*?)\..*/g, '$1')
+                                                    "
                                         class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
                                         data-field-name="urine_output" />
                                 </td>
@@ -192,26 +192,26 @@
 
     {{-- Define the specific initializers for this page --}}
     <!--
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    window.pageInitializers = [
-                        window.initializeSearchableDropdown,
-                        window.initializeDateDayLoader,
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            window.pageInitializers = [
+                                window.initializeSearchableDropdown,
+                                window.initializeDateDayLoader,
 
-                        // Assuming intakeOutputCdss has an init method or is directly callable
-                        () => {
-                            if (typeof window.intakeOutputCdss === 'function') {
-                                window.intakeOutputCdss();
-                            } else if (
-                                typeof window.intakeOutputCdss?.init === 'function'
-                            ) {
-                                window.intakeOutputCdss.init();
-                            }
-                        }
-                    ];
-                });
-            </script>
-            -->
+                                // Assuming intakeOutputCdss has an init method or is directly callable
+                                () => {
+                                    if (typeof window.intakeOutputCdss === 'function') {
+                                        window.intakeOutputCdss();
+                                    } else if (
+                                        typeof window.intakeOutputCdss?.init === 'function'
+                                    ) {
+                                        window.intakeOutputCdss.init();
+                                    }
+                                }
+                            ];
+                        });
+                    </script>
+                    -->
 @endpush
 
 <style>

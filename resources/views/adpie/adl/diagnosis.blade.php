@@ -1,186 +1,186 @@
 @extends('layouts.app')
 @section('title', 'Step 1: Nursing Diagnosis')
 @section('content')
-    @php
-        // Determine current step based on route or pass it as a variable
-        $currentStep = 1; // Default to step 1 (Diagnosis page)
-    @endphp
+        @php
+            // Determine current step based on route or pass it as a variable
+            $currentStep = 1; // Default to step 1 (Diagnosis page)
+        @endphp
 
-    <div class="mx-auto w-[85%] pt-8 pb-4">
-        <div class="progress-stepper">
-            {{-- Background track --}}
-            <div class="progress-track"></div>
-            {{-- Animated progress fill - dynamically set step class --}}
-            <div class="progress-fill step-{{ $currentStep }}"></div>
+        <div class="mx-auto w-[85%] pt-8 pb-4">
+            <div class="progress-stepper">
+                {{-- Background track --}}
+                <div class="progress-track"></div>
+                {{-- Animated progress fill - dynamically set step class --}}
+                <div class="progress-fill step-{{ $currentStep }}"></div>
 
-            <div class="step-item {{ $currentStep >= 1 ? ($currentStep == 1 ? 'active' : 'completed') : '' }}">
-                <div class="step-circle">1</div>
-                <div class="step-label">Diagnosis</div>
-            </div>
-            <div class="step-item {{ $currentStep >= 2 ? ($currentStep == 2 ? 'active' : 'completed') : '' }}">
-                <div class="step-circle">2</div>
-                <div class="step-label">Planning</div>
-            </div>
-            <div class="step-item {{ $currentStep >= 3 ? ($currentStep == 3 ? 'active' : 'completed') : '' }}">
-                <div class="step-circle">3</div>
-                <div class="step-label">Intervention</div>
-            </div>
-            <div class="step-item {{ $currentStep >= 4 ? ($currentStep == 4 ? 'active' : 'completed') : '' }}">
-                <div class="step-circle">4</div>
-                <div class="step-label">Evaluation</div>
+                <div class="step-item {{ $currentStep >= 1 ? ($currentStep == 1 ? 'active' : 'completed') : '' }}">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Diagnosis</div>
+                </div>
+                <div class="step-item {{ $currentStep >= 2 ? ($currentStep == 2 ? 'active' : 'completed') : '' }}">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Planning</div>
+                </div>
+                <div class="step-item {{ $currentStep >= 3 ? ($currentStep == 3 ? 'active' : 'completed') : '' }}">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Intervention</div>
+                </div>
+                <div class="step-item {{ $currentStep >= 4 ? ($currentStep == 4 ? 'active' : 'completed') : '' }}">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Evaluation</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    {{-- Patient Header --}}
-    <div class="header mx-auto my-6 flex w-[70%] items-center gap-4">
-        <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap">
-            PATIENT NAME :
-        </label>
-        <div class="relative w-[400px]">
-            <input
-                type="text"
-                id="patient_search_input"
-                value="{{ trim($patient->name ?? '') }}"
-                readonly
-                class="font-creato-bold w-full rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none"
-            />
+        {{-- Patient Header --}}
+        <div class="header mx-auto my-6 flex w-[70%] items-center gap-4">
+            <label for="patient_search_input" class="font-alte text-dark-green font-bold whitespace-nowrap">
+                PATIENT NAME :
+            </label>
+            <div class="relative w-[400px]">
+                <input
+                    type="text"
+                    id="patient_search_input"
+                    value="{{ trim($patient->name ?? '') }}"
+                    readonly
+                    class="font-creato-bold w-full rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm outline-none"
+                />
+            </div>
         </div>
-    </div>
 
-    {{-- Main Form --}}
-    <form
-        action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $adlData->id]) }}"
-        method="POST"
-        class="cdss-form flex h-full flex-col"
-        data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
-        data-batch-analyze-url="{{ route('nursing-diagnosis.analyze-batch-field') }}"
-        data-patient-id="{{ $patient->patient_id }}"
-        data-component="{{ $component }}"
-    >
-        @csrf
+        {{-- Main Form --}}
+        <form
+            action="{{ route('nursing-diagnosis.storeDiagnosis', ['component' => $component, 'id' => $adlData->id]) }}"
+            method="POST"
+            class="cdss-form flex h-full flex-col"
+            data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
+            data-batch-analyze-url="{{ route('nursing-diagnosis.analyze-batch-field') }}"
+            data-patient-id="{{ $patient->patient_id }}"
+            data-component="{{ $component }}"
+        >
+            @csrf
 
-        <fieldset>
-            <div class="mx-auto mt-2 w-[70%]">
-                {{-- RECOMMENDATION BANNERS --}}
-                @php
-                    $alert = session('act-of-daily-living-alerts')['diagnosis'] ?? null;
-                    $level = $alert->level ?? 'INFO';
-                    $message = $alert->message ?? null;
+            <fieldset>
+                <div class="mx-auto mt-2 w-[70%]">
+                    {{-- RECOMMENDATION BANNERS --}}
+                    @php
+                        $alert = session('act-of-daily-living-alerts')['diagnosis'] ?? null;
+                        $level = $alert->level ?? 'INFO';
+                        $message = $alert->message ?? null;
 
-                    $colorClass = 'alert-green';
-                    $levelIcon = 'info';
-                    $levelText = 'Clinical Decision Support';
+                        $colorClass = 'alert-green';
+                        $levelIcon = 'info';
+                        $levelText = 'Clinical Decision Support';
 
-                    if ($level === 'CRITICAL') {
-                        $colorClass = 'alert-red';
-                        $levelIcon = 'error';
-                        $levelText = 'Critical Alert';
-                    } elseif ($level === 'WARNING') {
-                        $colorClass = 'alert-orange';
-                        $levelIcon = 'warning';
-                        $levelText = 'Warning';
-                    }
+                        if ($level === 'CRITICAL') {
+                            $colorClass = 'alert-red';
+                            $levelIcon = 'error';
+                            $levelText = 'Critical Alert';
+                        } elseif ($level === 'WARNING') {
+                            $colorClass = 'alert-orange';
+                            $levelIcon = 'warning';
+                            $levelText = 'Warning';
+                        }
 
-                    $preview = $message ? Str::limit(strip_tags($message), 60) : '';
-                @endphp
+                        $preview = $message ? Str::limit(strip_tags($message), 60) : '';
+                    @endphp
 
-                {{-- No Recommendation State --}}
-                <div
-                    id="no-recommendation-banner"
-                    class="recommendation-banner alert-info {{ $message ? 'hidden' : '' }}"
-                >
-                    <div class="banner-content">
-                        <div class="banner-icon">
-                            <span class="material-symbols-outlined">edit_note</span>
-                        </div>
-                        <div class="banner-text">
-                            <div class="banner-title">No Recommendations Yet</div>
-                            <div class="banner-subtitle">
-                                Type more details in the diagnosis field to receive clinical recommendations
+                    {{-- No Recommendation State --}}
+                    <div
+                        id="no-recommendation-banner"
+                        class="recommendation-banner alert-info {{ $message ? 'hidden' : '' }}"
+                    >
+                        <div class="banner-content">
+                            <div class="banner-icon">
+                                <span class="material-symbols-outlined">edit_note</span>
+                            </div>
+                            <div class="banner-text">
+                                <div class="banner-title">No Recommendations Yet</div>
+                                <div class="banner-subtitle">
+                                    Type more details in the diagnosis field to receive clinical recommendations
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {{-- Active Recommendation Banner --}}
-                <div
-                    id="recommendation-banner"
-                    class="recommendation-banner {{ $colorClass }} {{ $message ? '' : 'hidden' }}"
-                    data-alert-for="diagnosis"
-                    onclick="openRecommendationModal(this)"
-                >
-                    <div class="banner-content">
-                        <div class="banner-icon">
-                            <span class="material-symbols-outlined">{{ $levelIcon }}</span>
-                        </div>
-                        <div class="banner-text">
-                            <div class="banner-title">{{ $levelText }}</div>
-                            <div class="banner-subtitle" data-full-message="{!! htmlspecialchars($message ?? '') !!}">
-                                {{ $preview }}
+                    {{-- Active Recommendation Banner --}}
+                    <div
+                        id="recommendation-banner"
+                        class="recommendation-banner {{ $colorClass }} {{ $message ? '' : 'hidden' }}"
+                        data-alert-for="diagnosis"
+                        onclick="openRecommendationModal(this)"
+                    >
+                        <div class="banner-content">
+                            <div class="banner-icon">
+                                <span class="material-symbols-outlined">{{ $levelIcon }}</span>
+                            </div>
+                            <div class="banner-text">
+                                <div class="banner-title">{{ $levelText }}</div>
+                                <div class="banner-subtitle" data-full-message="{!! htmlspecialchars($message ?? '') !!}">
+                                    {{ $preview }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="banner-action">
-                        <span>View Details</span>
-                        <span class="material-symbols-outlined">arrow_forward</span>
-                    </div>
-                </div>
-
-                {{-- Diagnosis Input --}}
-                <div class="w-full overflow-hidden rounded-[15px] shadow-md">
-                    <div class="main-header flex items-center justify-between rounded-t-lg px-6 py-3 text-white">
-                        <span class="font-bold">DIAGNOSIS</span>
-                        <span class="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
-                            STEP 1 of 4
-                        </span>
-                    </div>
-
-                    <div class="bg-beige relative">
-                        <textarea
-                            id="diagnosis"
-                            name="diagnosis"
-                            class="notepad-lines font-typewriter cdss-input diagnosis-textarea w-full rounded-b-lg shadow-sm"
-                            data-field-name="diagnosis"
-                            style="border-top: none"
-                            placeholder="Enter nursing diagnosis here..."
-                            maxlength="2000"
-                        >
-{{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea
-                        >
-
-                        <div class="char-counter" id="char-counter">
-                            <span id="char-count">0</span>
-                            / 2000
+                        <div class="banner-action">
+                            <span>View Details</span>
+                            <span class="material-symbols-outlined">arrow_forward</span>
                         </div>
                     </div>
 
-                    @error('diagnosis')
-                        <div
-                            class="mx-4 mb-3 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600"
-                        >
-                            <span class="material-symbols-outlined text-red-500">error</span>
-                            {{ $message }}
+                    {{-- Diagnosis Input --}}
+                    <div class="w-full overflow-hidden rounded-[15px] shadow-md">
+                        <div class="main-header flex items-center justify-between rounded-t-lg px-6 py-3 text-white">
+                            <span class="font-bold">DIAGNOSIS</span>
+                            <span class="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
+                                STEP 1 of 4
+                            </span>
                         </div>
-                    @enderror
-                </div>
-            </div>
 
-            {{-- Action Buttons --}}
-            <div class="mx-auto mt-8 mb-12 flex w-[70%] items-center justify-between">
-                <div class="flex flex-col items-start">
-                    <a href="{{ route('adl.show') }}" class="button-default text-center">GO BACK</a>
+                        <div class="bg-beige relative">
+                            <textarea
+                                id="diagnosis"
+                                name="diagnosis"
+                                class="notepad-lines font-typewriter cdss-input diagnosis-textarea w-full rounded-b-lg shadow-sm"
+                                data-field-name="diagnosis"
+                                style="border-top: none"
+                                placeholder="Enter nursing diagnosis here..."
+                                maxlength="2000"
+                            >
+    {{ old('diagnosis', $diagnosis->diagnosis ?? '') }}</textarea
+                            >
+
+                            <div class="char-counter" id="char-counter">
+                                <span id="char-count">0</span>
+                                / 2000
+                            </div>
+                        </div>
+
+                        @error('diagnosis')
+                            <div
+                                class="mx-4 mb-3 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600"
+                            >
+                                <span class="material-symbols-outlined text-red-500">error</span>
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="flex flex-row items-center justify-end space-x-3">
-                    <button type="submit" name="action" value="save_and_exit" class="button-default">SUBMIT</button>
-                    <button type="submit" name="action" value="save_and_proceed" class="button-default">
-                        PLANNING
-                    </button>
+                {{-- Action Buttons --}}
+                <div class="mx-auto mt-8 mb-12 flex w-[70%] items-center justify-between">
+                    <div class="flex flex-col items-start">
+                        <a href="{{ route('adl.show') }}" class="button-default text-center">GO BACK</a>
+                    </div>
+
+                    <div class="flex flex-row items-center justify-end space-x-3">
+                        <button type="submit" name="action" value="save_and_exit" class="button-default">SUBMIT</button>
+                        <button type="submit" name="action" value="save_and_proceed" class="button-default">
+                            PLANNING
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
 @endsection
 
 @push('scripts')

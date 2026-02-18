@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="mx-auto w-full px-10 py-10 sm:w-[95%] md:w-[95%]">
+    <div class="mx-auto w-full px-25 py-10 sm:w-[95%] md:w-[95%]">
         <div class="mx-auto mt-4 max-w-[1382px] px-4 sm:px-6 md:px-6 lg:px-20">
 
             {{-- Header Section --}}
@@ -17,13 +17,8 @@
                 <div class="flex w-full flex-col gap-3 lg:w-auto lg:flex-row lg:items-center">
 
                     {{-- Search Input --}}
-                    <input type="text" id="patient-search" placeholder="Search patients..." class="w-full lg:w-64 rounded-full border border-dark-green bg-white px-4 py-2 text-black shadow-sm
-                                       outline-none
-                                       focus:bg-white
-                                       focus:border-blue-500
-                                       focus:ring-2
-                                       focus:ring-blue-500
-                                       focus:ring-offset-0" />
+                    <input type="text" id="patient-search" placeholder="Search patients..."
+                        class="w-full lg:w-64 rounded-full border border-dark-green bg-white px-4 py-2 text-black shadow-sm  outline-none focus:bg-white focus:border-blue-500  focus:ring-2 focus:ring-blue-500 focus:ring-offset-0" />
 
                     {{-- Add Button --}}
                     <a href="{{ route('patients.create') }}" class="button-default w-full text-center lg:w-[200px]">
@@ -59,7 +54,7 @@
                             @forelse ($patients as $patient)
 
                                 <tr class="{{ $patient->trashed() ? 'bg-red-100 text-red-700' : 'bg-beige' }}
-                                                               transition-all duration-300 hover:bg-white hover:bg-opacity-50"
+                                                                                                                                               transition-all duration-300 hover:bg-white hover:bg-opacity-50"
                                     data-id="{{ $patient->patient_id }}">
                                     <td
                                         class="border-line-brown/30 border-b-2 p-3 text-center text-[13px] font-creato-black font-bold text-brown">

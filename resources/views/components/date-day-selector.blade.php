@@ -20,7 +20,7 @@
                 form="{{ $formId }}"
                 value="{{ $currentDate ?? now()->format('Y-m-d') }}"
                 disabled
-                class="pointer-events-none font-creato-bold w-[220px] rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm opacity-80 outline-none"
+                class="pointer-events-none font-creato-bold w-[150px] rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm opacity-80 outline-none"
             />
         </div>
     </div>

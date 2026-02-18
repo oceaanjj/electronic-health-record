@@ -142,12 +142,9 @@ class PhysicalExamComponent implements AdpieComponentInterface
 
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('physicalExam.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.physical-exam.intervention', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->physicalExam->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->physical_exam_id])
+            ->with('current_step', 3);
     }
 
     public function storeIntervention(Request $request, string $component, $nursingDiagnosisId)
@@ -182,12 +179,9 @@ class PhysicalExamComponent implements AdpieComponentInterface
 
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('physicalExam.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.physical-exam.evaluation', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->physicalExam->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->physical_exam_id])
+            ->with('current_step', 4);
     }
 
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)

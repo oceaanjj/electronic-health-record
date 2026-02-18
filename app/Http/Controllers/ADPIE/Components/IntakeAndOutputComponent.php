@@ -110,12 +110,9 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
      */
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.intake-and-output.planning', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->intakeAndOutput->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->intake_and_output_id])
+            ->with('current_step', 2);
     }
 
     /**
@@ -153,12 +150,9 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
      */
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.intake-and-output.intervention', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->intakeAndOutput->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->intake_and_output_id])
+            ->with('current_step', 3);
     }
 
     /**
@@ -196,12 +190,9 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
      */
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.intake-and-output.evaluation', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->intakeAndOutput->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->intake_and_output_id])
+            ->with('current_step', 4);
     }
 
     /**

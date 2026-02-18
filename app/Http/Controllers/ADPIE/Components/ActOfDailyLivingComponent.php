@@ -110,17 +110,11 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Diagnosis saved.');
     }
 
-    /**
-     * Show Planning (STEP 2)
-     */
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.planning', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->adl_id])
+            ->with('current_step', 2);
     }
 
     /**
@@ -149,17 +143,11 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Plan saved.');
     }
 
-    /**
-     * Show Intervention (STEP 3)
-     */
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.interventions', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->adl_id])
+            ->with('current_step', 3);
     }
 
     /**
@@ -188,17 +176,11 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Intervention saved.');
     }
 
-    /**
-     * Show Evaluation (STEP 4)
-     */
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.evaluation', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->adl_id])
+            ->with('current_step', 4);
     }
 
     /**

@@ -119,12 +119,9 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.lab-values.planning', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->lab_values_id])
+            ->with('current_step', 2);
     }
 
     public function storePlanning(Request $request, string $component, $nursingDiagnosisId)
@@ -163,12 +160,9 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.lab-values.intervention', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->lab_values_id])
+            ->with('current_step', 3);
     }
 
     public function storeIntervention(Request $request, string $component, $nursingDiagnosisId)
@@ -207,12 +201,9 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.lab-values.evaluation', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->lab_values_id])
+            ->with('current_step', 4);
     }
 
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)

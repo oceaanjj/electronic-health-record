@@ -29,6 +29,9 @@ export default defineConfig({
                 'resources/js/searchable-dropdown.js',
                 'resources/js/date-day-sync.js',
                 'resources/js/vital-signs-charts.js',
+                'resources/js/medication-administration-loader.js',
+                'resources/js/medication-form-validation.js',
+                
             ],
 
             refresh: true,

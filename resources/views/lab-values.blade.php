@@ -182,10 +182,6 @@
 
 @endsection
 
-@push('styles')
-    @vite(['resources/css/lab-values.css'])
-@endpush
-
 @push('scripts')
     @vite([
         'resources/js/alert.js',

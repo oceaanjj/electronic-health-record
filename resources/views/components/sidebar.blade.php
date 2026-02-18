@@ -52,7 +52,7 @@
     (request()->routeIs('physical-exam.index') || (request()->routeIs('nursing-diagnosis.process') && request()->route('component') == 'physical-exam'))
     ? 'bg-dark-green font-bold text-white'
     : 'hover:bg-hover hover:font-bold'
-        }} flex items-center gap-3 rounded-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
+        }} flex items-center gap-3 rounded-l-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
                 <span class="material-symbols-outlined">physical_therapy</span>
                 <span>Physical Exam</span>
             </a>

@@ -1,0 +1,1 @@
+function i(){window.pageInitializers&&Array.isArray(window.pageInitializers)&&window.pageInitializers.forEach(n=>{if(typeof n=="function")try{n()}catch(r){console.error("Error running initializer:",n.name,r)}})}document.addEventListener("DOMContentLoaded",function(){i()});

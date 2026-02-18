@@ -12,6 +12,7 @@
             name="planning"
             class="notepad-lines font-typewriter cdss-input planning-textarea w-full rounded-b-lg shadow-sm adpie-textarea"
             placeholder="Enter nursing goals and planning here..."
+            data-field-name="planning"
             maxlength="2000"
         >{{ old('planning', $diagnosis->planning ?? '') }}</textarea>
 

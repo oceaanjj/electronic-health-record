@@ -485,23 +485,18 @@
         data-delete-all-url-template="{{ route('diagnostics.destroy-all', ['type' => '__TYPE__', 'patient_id' => '__PATIENT_ID__']) }}"
     >
         {{-- DIAGNOSTICS PATIENT SELECTION --}}
-        <div class="mx-auto w-full px-4">
-            <div class="ml-5 flex flex-wrap items-center gap-x-10 gap-y-4">
-                {{-- 1. PATIENT SECTION --}}
-                <div class="flex items-center gap-4">
-                    <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
+        <div class="mx-auto mt-10 mb-5 flex w-full flex-col items-start gap-4 md:flex-row md:items-center md:ml-5">
+            <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">PATIENT NAME :</label>
 
-                    <div class="w-[350px]">
-                        <x-searchable-patient-dropdown
-                            :patients="$patients"
-                            :selectedPatient="$selectedPatient"
-                            :selectRoute="route('diagnostics.select')"
-                            :inputValue="$selectedPatient?->patient_id ?? ''"
-                            inputPlaceholder="Search or type Patient Name..."
-                            inputName="patient_id"
-                        />
-                    </div>
-                </div>
+            <div class="w-full md:w-[350px]">
+                <x-searchable-patient-dropdown
+                    :patients="$patients"
+                    :selectedPatient="$selectedPatient"
+                    :selectRoute="route('diagnostics.select')"
+                    :inputValue="$selectedPatient?->patient_id ?? ''"
+                    inputPlaceholder="Search or type Patient Name..."
+                    inputName="patient_id"
+                />
             </div>
         </div>
 

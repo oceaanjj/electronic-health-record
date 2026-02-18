@@ -240,7 +240,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/intake-and-output/store', [IntakeAndOutputController::class, 'store'])->name('io.store');
     Route::post('/intake-and-output/check', [IntakeAndOutputController::class, 'checkIntakeOutput'])->name('io.check');
     Route::post('/intake-and-output/cdss', [IntakeAndOutputController::class, 'runCdssAnalysis'])->name('io.cdss');
-    Route::post('/analyze-batch', [IntakeAndOutputController::class, 'runBatchCdssAnalysis'])->name('io.analyze-batch');//new
+    Route::post('/intake-and-output/analyze-batch', [IntakeAndOutputController::class, 'runBatchCdssAnalysis'])->name('io.analyze-batch');//new
 
     //MEDICATION-ADMINISTRATION:
     Route::get('/medication-administration', [MedicationAdministrationController::class, 'show'])
@@ -271,10 +271,12 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::prefix('adpie')->name('nursing-diagnosis.')->group(function () {
         Route::post('/analyze-step', [NursingDiagnosisController::class, 'analyzeDiagnosisField'])->name('analyze-field');
 
-        // ★ ADD THIS NEW BATCH ROUTE ★
         Route::post('/analyze-batch-step', [NursingDiagnosisController::class, 'analyzeBatchDiagnosisField'])->name('analyze-batch-field');
+
         // Add this inside the 'nursing-diagnosis.' prefix group in routes/web.php
         Route::get('/{component}/process/{id}', [NursingDiagnosisController::class, 'showProcess'])->name('process');
+        Route::post('/{component}/process/{id}', [NursingDiagnosisController::class, 'storeFullProcess'])->name('storeFullProcess');
+
         // Route::get('/{component}/process/{id}', [NursingDiagnosisController::class, 'showProcess'])->name('nursing-diagnosis.process');
         Route::get('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'startDiagnosis'])->name('start');
         Route::post('/{component}/diagnosis/{id}', [NursingDiagnosisController::class, 'storeDiagnosis'])->name('storeDiagnosis');

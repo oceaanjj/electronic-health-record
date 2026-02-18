@@ -263,7 +263,7 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/patient-loader.js', 'resources/js/alert.js', 'resources/js/init.searchable-dropdown.js', 'resources/js/date-day-sync.js', 'resources/js/searchable-dropdown.js', 'resources/js/vital-signs-charts.js', 'resources/js/close-cdss-alert.js'])
+    @vite(['resources/js/patient-loader.js', 'resources/js/alert.js',  'resources/js/date-day-sync.js', 'resources/js/searchable-dropdown.js', 'resources/js/vital-signs-charts.js', 'resources/js/close-cdss-alert.js'])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>

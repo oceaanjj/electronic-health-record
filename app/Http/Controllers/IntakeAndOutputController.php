@@ -231,9 +231,12 @@ class IntakeAndOutputController extends Controller
 
     public function checkIntakeOutput(Request $request)
     {
-        $oralIntake = $request->input('oral_intake');
-        $ivFluidsVolume = $request->input('iv_fluids_volume');
-        $urineOutput = $request->input('urine_output');
+        // Handle both direct input and the 'vitals' array from alert.js
+        $vitals = $request->input('vitals', []);
+        
+        $oralIntake = $vitals['oral_intake'] ?? $request->input('oral_intake');
+        $ivFluidsVolume = $vitals['iv_fluids_volume'] ?? $request->input('iv_fluids_volume');
+        $urineOutput = $vitals['urine_output'] ?? $request->input('urine_output');
 
         $data = [
             'oral_intake' => $oralIntake,

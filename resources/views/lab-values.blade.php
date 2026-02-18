@@ -169,10 +169,10 @@
                 {{-- BUTTONS --}}
                 <div class="mx-auto mt-5 mb-20 md:mb-30 flex w-[90%] md:w-[80%] flex-row justify-end gap-4">
                     @if (isset($labValue))
-                        <a href="{{ route('nursing-diagnosis.start', ['component' => 'lab-values', 'id' => $labValue->id]) }}"
+                        <button type="submit" name="action" value="cdss"
                             class="button-default cdss-btn inline-block text-center">
                             CDSS
-                        </a>
+                        </button>
                     @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>

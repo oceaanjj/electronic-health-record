@@ -31,7 +31,7 @@
             <div class="flex flex-wrap items-center justify-start gap-x-10 gap-y-4">
 
                 {{-- PATIENT NAME --}}
-                <div class="flex items-center gap-4 -mb-1">
+                <div class="flex items-center gap-4 -mb-1 md:mb-1">
                     <label class="font-alte text-dark-green shrink-0 font-bold whitespace-nowrap">
                         PATIENT NAME :
                     </label>
@@ -142,10 +142,10 @@
                 {{-- BUTTONS --}}
                 <div class="mx-auto mt-5 mb-20 flex w-[90%] flex-row justify-end gap-4 md:mb-30 md:w-[80%]">
                     @if (isset($adlData))
-                        <a href="{{ route('nursing-diagnosis.start', ['component' => 'adl', 'id' => $adlData->id]) }}"
+                        <button type="submit" name="action" value="cdss"
                             class="button-default cdss-btn inline-block text-center">
                             CDSS
-                        </a>
+                        </button>
                     @endif
 
                     <button type="submit" class="button-default">SUBMIT</button>

@@ -24,6 +24,12 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
      */
     public function startDiagnosis(string $component, $id)
     {
+        $this->getProcessData($component, $id);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $id]);
+    }
+
+    public function getProcessData(string $component, $id)
+    {
         $intakeAndOutput = IntakeAndOutput::with('patient')->findOrFail($id);
 
         // Find the most recent diagnosis for this specific intake/output record
@@ -42,29 +48,22 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         ];
 
         // Check if the alert object AND its message exist before stripping html tags
-        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
-            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
-        }
-        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
-            $alerts['planning']->message = strip_tags($alerts['planning']->message);
-        }
-        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
-            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
-        }
-        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
-            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        foreach ($alerts as $key => $alert) {
+            if ($alert && property_exists($alert, 'message')) {
+                $alert->message = strip_tags($alert->message);
+            }
         }
 
         // Put them in the session to persist across all pages
         session()->put('intake-and-output-alerts', $alerts);
 
-        return view('adpie.intake-and-output.diagnosis', [
+        return [
             'intakeAndOutputId' => $intakeAndOutput->id,
             'patient' => $intakeAndOutput->patient,
             'component' => $component,
             'diagnosis' => $diagnosis,
             'findings' => $findings
-        ]);
+        ];
     }
 
     /**
@@ -111,12 +110,9 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
      */
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.intake-and-output.planning', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->intakeAndOutput->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->intake_and_output_id])
+            ->with('current_step', 2);
     }
 
     /**
@@ -154,12 +150,9 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
      */
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.intake-and-output.intervention', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->intakeAndOutput->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->intake_and_output_id])
+            ->with('current_step', 3);
     }
 
     /**
@@ -197,12 +190,9 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
      */
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('intakeAndOutput.patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.intake-and-output.evaluation', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->intakeAndOutput->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->intake_and_output_id])
+            ->with('current_step', 4);
     }
 
     /**
@@ -236,5 +226,52 @@ class IntakeAndOutputComponent implements AdpieComponentInterface
         // 'SUBMIT' button was clicked (or default 'save_and_exit')
         return redirect()->back()
             ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
+    }
+
+    public function storeProcess(Request $request, string $component, $id)
+    {
+        $intakeAndOutput = IntakeAndOutput::with('patient')->findOrFail($id);
+        $patient = $intakeAndOutput->patient;
+
+        $data = $request->validate([
+            'diagnosis' => 'nullable|string|max:2000',
+            'planning' => 'nullable|string|max:2000',
+            'intervention' => 'nullable|string|max:2000',
+            'evaluation' => 'nullable|string|max:2000',
+        ]);
+
+        $updateData = [
+            'patient_id' => $patient->patient_id,
+            'intake_and_output_id' => $id,
+        ];
+
+        foreach (['diagnosis', 'planning', 'intervention', 'evaluation'] as $step) {
+            if ($request->has($step)) {
+                $text = $request->input($step);
+                $updateData[$step] = $text;
+
+                $method = 'analyze' . ucfirst($step);
+                $alertObject = $this->nursingDiagnosisCdssService->$method($component, $text ?? '');
+                
+                if ($alertObject && property_exists($alertObject, 'message')) {
+                    $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+                    $updateData[$step . '_alert'] = strip_tags($message);
+                }
+            }
+        }
+
+        NursingDiagnosis::updateOrCreate(
+            ['intake_and_output_id' => $id],
+            $updateData
+        );
+
+        if ($request->input('action') === 'save_and_proceed') {
+             return redirect()->route('io.show')
+                ->with('success', 'ADPIE process completed and saved!');
+        }
+
+        return redirect()->back()
+            ->with('success', 'ADPIE process progress saved.')
+            ->with('current_step', $request->input('current_step', 1));
     }
 }

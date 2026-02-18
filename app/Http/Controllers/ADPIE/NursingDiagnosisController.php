@@ -140,21 +140,28 @@ class NursingDiagnosisController extends Controller
     
     public function showProcess(string $component, $id)
         {
-            // Fetch the diagnosis record using the helper we created
-            $diagnosis = NursingDiagnosis::where($this->getComponentIdField($component), $id)->first();
-
             // Get the component service (PhysicalExamComponent, etc.)
             $service = $this->getComponentService($component);
             
-            // Get the base data (Patient info, etc.)
-            $viewData = $service->startDiagnosis($component, $id)->getData();
+            // Get the base data (Patient info, etc.) and populate session alerts
+            $viewData = $service->getProcessData($component, $id);
 
             return view('adpie.process', array_merge($viewData, [
                 'component' => $component,
                 'recordId' => $id,
-                'diagnosis' => $diagnosis, 
+                'indexRoute' => $this->getComponentIndexRoute($component),
             ]));
         }
+
+private function getComponentIndexRoute($component) {
+    return [
+        'physical-exam' => 'physical-exam.index',
+        'intake-and-output' => 'io.show',
+        'lab-values' => 'lab-values.index',
+        'adl' => 'adl.show',
+        'vital-signs' => 'vital-signs.show',
+    ][$component] ?? 'nurse-home';
+}
 
 private function getComponentIdField($component) {
     return [
@@ -188,6 +195,11 @@ private function getComponentIdField($component) {
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)
     {
         return $this->getComponentService($component)->storeEvaluation($request, $component, $nursingDiagnosisId);
+    }
+
+    public function storeFullProcess(Request $request, string $component, $id)
+    {
+        return $this->getComponentService($component)->storeProcess($request, $component, $id);
     }
 
 

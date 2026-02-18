@@ -156,25 +156,45 @@
                                     <th class="main-header w-[33%] rounded-tr-lg py-2 text-center">URINE OUTPUT (mL)</th>
                                 </tr>
 
-                                <tr class="bg-beige text-brown responsive-table-data-row">
-                                    <td class="text-center align-middle responsive-table-data" data-label="ORAL INTAKE">
-                                        <input type="text" name="oral_intake" value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}" 
-                                            class="bg-transparent cdss-input vital-input h-[100px] w-full border-none text-center font-semibold focus:ring-0" 
-                                            data-field-name="oral_intake" data-time="io" placeholder="Enter mL" autocomplete="off" />
-                                    </td>
-                                    <td class="text-center align-middle responsive-table-data" data-label="IV FLUIDS">
-                                        <input type="text" name="iv_fluids_volume" value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}" 
-                                            class="bg-transparent cdss-input vital-input h-[100px] w-full border-none text-center font-semibold focus:ring-0" 
-                                            data-field-name="iv_fluids_volume" data-time="io" placeholder="Enter mL" autocomplete="off" />
-                                    </td>
-                                    <td class="text-center align-middle responsive-table-data" data-label="URINE OUTPUT">
-                                        <input type="text" name="urine_output" value="{{ old('urine_output', $ioData->urine_output ?? '') }}" 
-                                            class="bg-transparent cdss-input vital-input h-[100px] w-full border-none text-center font-semibold focus:ring-0" 
-                                            data-field-name="urine_output" data-time="io" placeholder="Enter mL" autocomplete="off" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                            <tr class="bg-beige text-brown responsive-table-data-row">
+                                {{-- ORAL INTAKE --}}
+                                <td class="text-center align-middle responsive-table-data" data-label="ORAL INTAKE (mL)">
+                                    <input type="text" name="oral_intake" placeholder="Enter Oral Intake"
+                                        value="{{ old('oral_intake', $ioData->oral_intake ?? '') }}" oninput="
+                                                        this.value = this.value
+                                                            .replace(/[^0-9.]/g, '')
+                                                            .replace(/(\..*?)\..*/g, '$1')
+                                                    "
+                                        class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
+                                        data-field-name="oral_intake" />
+                                </td>
+
+                                {{-- IV FLUIDS --}}
+                                <td class="text-center align-middle responsive-table-data" data-label="IV FLUIDS (mL)">
+                                    <input type="text" name="iv_fluids_volume" placeholder="Enter IV Fluids"
+                                        value="{{ old('iv_fluids_volume', $ioData->iv_fluids_volume ?? '') }}" oninput="
+                                                        this.value = this.value
+                                                            .replace(/[^0-9.]/g, '')
+                                                            .replace(/(\..*?)\..*/g, '$1')
+                                                    "
+                                        class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
+                                        data-field-name="iv_fluids_volume" />
+                                </td>
+
+                                {{-- URINE OUTPUT --}}
+                                <td class="text-center align-middle responsive-table-data" data-label="URINE OUTPUT (mL)">
+                                    <input type="text" name="urine_output" placeholder="Enter Urine Output"
+                                        value="{{ old('urine_output', $ioData->urine_output ?? '') }}" oninput="
+                                                        this.value = this.value
+                                                            .replace(/[^0-9.]/g, '')
+                                                            .replace(/(\..*?)\..*/g, '$1')
+                                                    "
+                                        class="bg-beige text-brown cdss-input vital-input h-[100px] w-[80%] rounded-[10px] px-3 text-center font-semibold focus:outline-none"
+                                        data-field-name="urine_output" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
                         <div class="unified-bell-container flex items-center justify-center md:static md:pl-8" data-alert-for-time="io">
                             <div class="alert-icon-btn is-empty">
@@ -187,7 +207,9 @@
 
                 <div class="mx-auto mt-5 mb-30 flex w-full justify-center space-x-4 responsive-btns md:ml-24 md:w-[85%] md:justify-end">
                     @if ($ioData)
-                        <button type="submit" formaction="{{ route('io.cdss') }}" class="button-default cdss-btn">CDSS</button>
+                        <button type="submit" name="action" value="cdss" class="button-default cdss-btn">
+                            CDSS
+                        </button>
                     @endif
                     <button type="submit" class="button-default">SUBMIT</button>
                 </div>
@@ -197,5 +219,35 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/alert.js', 'resources/js/searchable-dropdown.js', 'resources/js/close-cdss-alert.js'])
+    @vite([
+        'resources/js/alert.js',
+        'resources/js/intake-output-patient-loader.js',
+        'resources/js/intake-output-cdss.js',
+        'resources/js/searchable-dropdown.js',
+        'resources/js/intake-output-data-loader.js',
+        'resources/js/close-cdss-alert.js',
+    ])
+
+    {{-- Define the specific initializers for this page --}}
+    <!--
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            window.pageInitializers = [
+                                window.initializeSearchableDropdown,
+                                window.initializeDateDayLoader,
+
+                                // Assuming intakeOutputCdss has an init method or is directly callable
+                                () => {
+                                    if (typeof window.intakeOutputCdss === 'function') {
+                                        window.intakeOutputCdss();
+                                    } else if (
+                                        typeof window.intakeOutputCdss?.init === 'function'
+                                    ) {
+                                        window.intakeOutputCdss.init();
+                                    }
+                                }
+                            ];
+                        });
+                    </script>
+                    -->
 @endpush

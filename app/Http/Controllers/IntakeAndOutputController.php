@@ -214,6 +214,16 @@ class IntakeAndOutputController extends Controller
 
         $request->session()->put('selected_day_no', $validatedData['day_no']);
 
+        if ($request->input('action') === 'cdss') {
+            $io = IntakeAndOutput::where('patient_id', $validatedData['patient_id'])
+                ->where('day_no', $validatedData['day_no'])
+                ->first();
+            return redirect()->route('nursing-diagnosis.process', [
+                'component' => 'intake-and-output',
+                'id' => $io->id
+            ]);
+        }
+
         return redirect()->route('io.show')
             ->with('success', $message);
     }

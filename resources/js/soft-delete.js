@@ -1,58 +1,53 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const ehrTable = document.querySelector('.ehr-table');
-    if (!ehrTable) return; // Exit if table doesn't exist on this page
+    // Using event delegation on the document to ensure buttons are captured even if the DOM changes.
+    document.addEventListener('click', function (e) {
+        // Use closest() to find the button, handles clicks on the button or its children (like the <span>)
+        const button = e.target.closest('.js-toggle-patient-status');
 
-    ehrTable.addEventListener('click', function (e) {
-        if (e.target.classList.contains('btn-delete') || e.target.classList.contains('btn-recover')) {
-            e.preventDefault();
-
-            const button = e.target;
-            const form = button.closest('form');
-            const row = button.closest('tr');
-            const isDelete = button.classList.contains('btn-delete');
-            const url = form.action;
-            const token = form.querySelector('input[name="_token"]').value;
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': token,
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({
-                    _method: isDelete ? 'DELETE' : 'POST',
-                }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        const actionsCell = row.querySelector('td:last-child');
-                        const patientId = row.dataset.id;
-                        if (isDelete) {
-                            row.style.backgroundColor = '#ffdddd';
-                            row.style.color = 'red';
-                            actionsCell.innerHTML = `
-                            <form action="/patients/${patientId}/recover" method="POST" style="display:inline;">
-                                <input type="hidden" name="_token" value="${token}">
-                                <button type="submit" class="btn-recover">Recover</button>
-                            </form>
-                        `;
-                        } else {
-                            row.style.backgroundColor = '';
-                            row.style.color = '';
-                            actionsCell.innerHTML = `
-                            <a href="/patients/${patientId}/edit" class="btn-edit">Edit</a>
-                            <form action="/patients/${patientId}" method="POST" style="display:inline;">
-                                <input type="hidden" name="_token" value="${token}">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn-delete">Delete</button>
-                            </form>
-                        `;
-                        }
-                    }
-                })
-                .catch((error) => console.error('Error:', error));
+        // If a button with the correct class was not clicked, do nothing.
+        if (!button) {
+            return;
         }
+
+        e.preventDefault();
+
+        const patientId = button.dataset.patientId;
+        const action = button.dataset.action;
+        const isActivating = action === 'activate';
+        const url = isActivating ? `/patients/${patientId}/recover` : `/patients/${patientId}`;
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        console.log(`Button clicked! Action: ${action}, Patient ID: ${patientId}`);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': token,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify({
+                _method: isActivating ? 'POST' : 'DELETE',
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Response from server:', data);
+                if (data.success) {
+                    console.log('Action successful, reloading page to reflect changes.');
+                    // Reloading the page is the simplest way to ensure the UI is in a consistent state.
+                    window.location.reload();
+                } else {
+                    console.error('Action failed:', data.message || 'No error message provided.');
+                }
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
     });
 });

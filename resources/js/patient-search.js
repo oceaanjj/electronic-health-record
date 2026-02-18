@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         ${
                             patient.deleted_at
                                 ? `<button type="button"
-                                    class="inline-block bg-green-500 cursor-pointer hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
-                                    data-patient-id="${patient.patient_id}" data-action="activate">SET ACTIVE</button>`
+                                    class="inline-block bg-red-50 border border-red-600 text-red-600 cursor-pointer hover:bg-red-100 text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
+                                    data-patient-id="${patient.patient_id}" data-action="activate">RESTORE</button>`
                                 : `<a href="/patients/${patient.patient_id}/edit"
                                     class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
                                     <button type="button"
@@ -71,18 +71,14 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
         }
 
-        // ✅ Only re-render if content changed (prevents double blinking)
+        // ✅ Only re-render if content changed
         if (newHTML === lastRenderedHTML) return;
         lastRenderedHTML = newHTML;
 
-        // Fade out existing rows first
         patientTableBody.querySelectorAll('tr').forEach((tr) => fadeOut(tr));
 
-        // Wait for fade-out transition (200ms)
         setTimeout(() => {
             patientTableBody.innerHTML = newHTML;
-
-            // Fade-in each row
             patientTableBody.querySelectorAll('tr').forEach((tr) => {
                 setTimeout(() => fadeIn(tr), 50);
             });
@@ -148,8 +144,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (actionsCell) {
                         actionsCell.innerHTML = data.patient.deleted_at
                             ? `<button type="button"
-                                class="inline-block bg-green-500 cursor-pointer hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
-                                data-patient-id="${data.patient.patient_id}" data-action="activate">SET ACTIVE</button>`
+                                class="inline-block bg-red-50 border border-red-600 text-red-600 cursor-pointer hover:bg-red-100 text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
+                                data-patient-id="${data.patient.patient_id}" data-action="activate">RESTORE</button>`
                             : `<a href="/patients/${data.patient.patient_id}/edit"
                                 class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
                                 <button type="button"

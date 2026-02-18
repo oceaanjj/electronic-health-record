@@ -53,8 +53,7 @@
                         <tbody>
                             @forelse ($patients as $patient)
 
-                                <tr class="{{ $patient->trashed() ? 'bg-red-100 text-red-700' : 'bg-beige' }}
-                                                                                                                                                                       transition-all duration-300 hover:bg-white hover:bg-opacity-50"
+                                <tr class="{{ $patient->trashed() ? 'bg-red-100 text-red-700' : 'bg-beige' }} transition-all duration-300 hover:bg-white hover:bg-opacity-50"
                                     data-id="{{ $patient->patient_id }}">
                                     <td
                                         class="border-line-brown/30 border-b-2 p-3 text-center text-[13px] font-creato-black font-bold text-brown">
@@ -81,23 +80,23 @@
                                     <td class="border-line-brown/30 border-b-2 p-3 text-center whitespace-nowrap">
 
                                         @if ($patient->trashed())
-                                            {{-- Inactive --}}
+                                            {{-- Inactive -> Set to Restore/Red --}}
                                             <button type="button"
-                                                class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600"
+                                                class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
                                                 data-patient-id="{{ $patient->patient_id }}" data-action="activate">
-                                                <span>SET ACTIVE</span>
+                                                RESTORE
                                             </button>
                                         @else
                                             {{-- Active --}}
                                             <div class="flex justify-center gap-2">
 
                                                 <a href="{{ route('patients.edit', $patient->patient_id) }}"
-                                                    class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600">
+                                                    class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600 cursor-pointer">
                                                     EDIT
                                                 </a>
 
                                                 <button type="button"
-                                                    class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red"
+                                                    class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red cursor-pointer"
                                                     data-patient-id="{{ $patient->patient_id }}" data-action="deactivate">
                                                     SET INACTIVE
                                                 </button>

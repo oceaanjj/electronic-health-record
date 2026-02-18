@@ -169,7 +169,7 @@ Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::post('/medical-history/select', [MedicalController::class, 'selectPatient'])->name('medical-history.select');
     //Developmental History
     Route::get('/developmental-history', [MedicalController::class, 'showDevelopmentalHistory'])->name('developmental-history');
-    Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
+    // Route::post('/developmental-history', [MedicalController::class, 'storeDevelopmentalHistory'])->name('developmental.store');
 
 
 

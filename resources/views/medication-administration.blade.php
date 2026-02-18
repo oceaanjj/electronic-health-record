@@ -296,10 +296,6 @@
     </div>
 @endsection
 
-@push('styles')
-    @vite(['resources/css/medication-administration.css'])
-@endpush
-
 @push('scripts')
     @vite([
         'resources/js/date-day-loader.js',

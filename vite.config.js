@@ -17,6 +17,8 @@ export default defineConfig({
                 'resources/css/index-style.css',
                 'resources/css/search-style.css',
                 'resources/css/show-style.css',
+
+
                 'resources/js/app.js',
                 'resources/js/alert.js',
                 'resources/js/date-day-loader.js',
@@ -24,7 +26,6 @@ export default defineConfig({
                 'resources/js/init-searchable-dropdown.js',
                 'resources/js/patient-search.js',
                 'resources/js/close-cdss-alert.js',
-
                 'resources/js/searchable-dropdown.js',
                 'resources/js/date-day-sync.js',
                 'resources/js/vital-signs-charts.js',

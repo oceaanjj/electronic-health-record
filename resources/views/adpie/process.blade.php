@@ -69,12 +69,14 @@
     </div>
 
     <form id="master-adpie-form"
-        action="{{ route('nursing-diagnosis.storeEvaluation', ['component' => $component, 'nursingDiagnosisId' => $diagnosis->id ?? 0]) }}"
+        action="{{ route('nursing-diagnosis.storeFullProcess', ['component' => $component, 'id' => $recordId]) }}"
         method="POST" data-analyze-url="{{ route('nursing-diagnosis.analyze-field') }}"
         data-patient-id="{{ $patient->patient_id }}" data-component="{{ $component }}"
         class="cdss-form flex h-full flex-col">
 
         @csrf
+        <input type="hidden" name="current_step" id="current_step_input" value="1">
+
         <div class="adpie-slider-container">
             <div id="slider-wrapper" class="adpie-slider-wrapper">
 
@@ -86,7 +88,7 @@
 
                     <div class="mx-auto mt-8 mb-12 flex w-[70%] items-center justify-between">
                         <div class="flex flex-col items-start">
-                            <a href="{{ route($component . '.index') }}" class="button-default text-center">GO BACK</a>
+                            <a href="{{ route($indexRoute) }}" class="button-default text-center">GO BACK</a>
                         </div>
                         <div class="flex flex-row items-center justify-end space-x-3">
                             <button type="submit" name="action" value="save_and_exit" class="button-default">SUBMIT</button>
@@ -154,6 +156,7 @@
     @vite(['resources/js/adpie-alert.js'])
     <script>
         function goToStep(step) {
+            document.getElementById('current_step_input').value = step;
             const wrapper = document.getElementById('slider-wrapper');
             const fill = document.getElementById('js-progress-fill');
             const translateX = (step - 1) * -25;
@@ -172,7 +175,22 @@
                     if (i === step) item.classList.add('active');
                 }
             }
+
+            // Notify the CDSS system that the step has changed
+            document.dispatchEvent(new CustomEvent('cdss:step-changed', {
+                detail: { step: step, form: document.getElementById('master-adpie-form') }
+            }));
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Initialize to saved step if available
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedStep = {{ session('current_step', 1) }};
+            if (savedStep > 1) {
+                // Use a slight timeout to ensure transitions are ready if needed
+                setTimeout(() => goToStep(savedStep), 100);
+            }
+        });
     </script>
 @endpush

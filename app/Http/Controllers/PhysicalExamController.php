@@ -135,6 +135,14 @@ class PhysicalExamController extends Controller
             );
         }
 
+        if ($request->input('action') === 'cdss') {
+            $exam = PhysicalExam::where('patient_id', $data['patient_id'])->first();
+            return redirect()->route('nursing-diagnosis.process', [
+                'component' => 'physical-exam',
+                'id' => $exam->id
+            ]);
+        }
+
         // Run CDSS analysis after storing
         $cdssService = new PhysicalExamCdssService();
         $alerts = $cdssService->analyzeFindings($data);

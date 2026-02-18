@@ -21,6 +21,12 @@ class PhysicalExamComponent implements AdpieComponentInterface
 
     public function startDiagnosis(string $component, $id)
     {
+        $this->getProcessData($component, $id);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $id]);
+    }
+
+    public function getProcessData(string $component, $id)
+    {
         $physicalExam = PhysicalExam::with('patient')->findOrFail($id);
         $diagnosis = NursingDiagnosis::where('physical_exam_id', $id)
             ->latest()
@@ -35,28 +41,21 @@ class PhysicalExamComponent implements AdpieComponentInterface
         ];
 
         // Check if the alert object AND its message exist before stripping html tags
-        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
-            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
-        }
-        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
-            $alerts['planning']->message = strip_tags($alerts['planning']->message);
-        }
-        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
-            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
-        }
-        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
-            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        foreach ($alerts as $key => $alert) {
+            if ($alert && property_exists($alert, 'message')) {
+                $alert->message = strip_tags($alert->message);
+            }
         }
 
         // Put them in the session to persist across all pages
         session()->put('physical-exam-alerts', $alerts);
 
-        return view('adpie.physical-exam.diagnosis', [
+        return [
             'physicalExamId' => $physicalExam->id,
             'patient' => $physicalExam->patient,
             'component' => $component,
             'diagnosis' => $diagnosis
-        ]);
+        ];
     }
 
     /**
@@ -220,5 +219,53 @@ class PhysicalExamComponent implements AdpieComponentInterface
 
         return redirect()->back()
             ->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
+    }
+
+    public function storeProcess(Request $request, string $component, $id)
+    {
+        $physicalExam = PhysicalExam::with('patient')->findOrFail($id);
+        $patient = $physicalExam->patient;
+
+        $data = $request->validate([
+            'diagnosis' => 'nullable|string|max:2000',
+            'planning' => 'nullable|string|max:2000',
+            'intervention' => 'nullable|string|max:2000',
+            'evaluation' => 'nullable|string|max:2000',
+        ]);
+
+        $updateData = [
+            'patient_id' => $patient->patient_id,
+            'physical_exam_id' => $id,
+        ];
+
+        foreach (['diagnosis', 'planning', 'intervention', 'evaluation'] as $step) {
+            if ($request->has($step)) {
+                $text = $request->input($step);
+                $updateData[$step] = $text;
+
+                // Analyze for alert
+                $method = 'analyze' . ucfirst($step);
+                $alertObject = $this->nursingDiagnosisCdssService->$method($component, $text ?? '');
+                
+                if ($alertObject && property_exists($alertObject, 'message')) {
+                    $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+                    $updateData[$step . '_alert'] = strip_tags($message);
+                }
+            }
+        }
+
+        $nursingDiagnosis = NursingDiagnosis::updateOrCreate(
+            ['physical_exam_id' => $id],
+            $updateData
+        );
+
+        if ($request->input('action') === 'save_and_proceed') {
+             return redirect()->route('physical-exam.index')
+                ->with('success', 'ADPIE process completed and saved!');
+        }
+
+        return redirect()->back()
+            ->with('success', 'ADPIE process progress saved.')
+            ->with('current_step', $request->input('current_step', 1));
     }
 }

@@ -88,7 +88,7 @@
                                                 MEDICATION</div>
                                             <div class="p-2 md:p-0">
                                                 <textarea name="medication[]" placeholder="Medication" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -97,7 +97,7 @@
                                                 class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
                                                 DOSE</div>
                                             <div class="p-2 md:p-0"><textarea name="dose[]" placeholder="Dose" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -106,7 +106,7 @@
                                                 class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
                                                 ROUTE</div>
                                             <div class="p-2 md:p-0"><textarea name="route[]" placeholder="Route" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -116,7 +116,7 @@
                                                 FREQUENCY</div>
                                             <div class="p-2 md:p-0"><textarea name="frequency[]" placeholder="Frequency"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -126,7 +126,7 @@
                                                 COMMENTS</div>
                                             <div class="p-2 md:p-0"><textarea name="comments[]" placeholder="Comments"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -148,7 +148,7 @@
                                                 MEDICATION</div>
                                             <div class="p-2 md:p-0"><textarea name="medication[]" placeholder="Medication"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -157,7 +157,7 @@
                                                 class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
                                                 DOSE</div>
                                             <div class="p-2 md:p-0"><textarea name="dose[]" placeholder="Dose" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -166,7 +166,7 @@
                                                 class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
                                                 ROUTE</div>
                                             <div class="p-2 md:p-0"><textarea name="route[]" placeholder="Route" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -176,7 +176,7 @@
                                                 FREQUENCY</div>
                                             <div class="p-2 md:p-0"><textarea name="frequency[]" placeholder="Frequency"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -186,7 +186,7 @@
                                                 COMMENTS</div>
                                             <div class="p-2 md:p-0"><textarea name="comments[]" placeholder="Comments"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -208,7 +208,7 @@
                                                 MEDICATION</div>
                                             <div class="p-2 md:p-0"><textarea name="medication[]" placeholder="Medication"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -217,7 +217,7 @@
                                                 class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
                                                 DOSE</div>
                                             <div class="p-2 md:p-0"><textarea name="dose[]" placeholder="Dose" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -226,7 +226,7 @@
                                                 class="md:hidden w-full bg-yellow-light text-brown text-[13px] font-bold p-2 border-b border-line-brown text-left">
                                                 ROUTE</div>
                                             <div class="p-2 md:p-0"><textarea name="route[]" placeholder="Route" rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -236,7 +236,7 @@
                                                 FREQUENCY</div>
                                             <div class="p-2 md:p-0"><textarea name="frequency[]" placeholder="Frequency"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -246,7 +246,7 @@
                                                 COMMENTS</div>
                                             <div class="p-2 md:p-0"><textarea name="comments[]" placeholder="Comments"
                                                     rows="1"
-                                                    class="w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
+                                                    class="medication-input w-full bg-beige focus:outline-none notepad-lines h-[100px] text-left p-2 md:h-[45px] md:text-center md:p-3 md:bg-none md:resize-none"></textarea>
                                             </div>
                                         </td>
                                         <td
@@ -261,7 +261,6 @@
                             </table>
                         </div>
 
-                        {{-- 4. BUTTON SECTION --}}
                         <div class="w-[80%] mx-auto flex justify-end md:mx-0 mt-5 mb-30 space-x-4">
                             <button class="button-default" type="submit" id="submit_button">SUBMIT</button>
                         </div>

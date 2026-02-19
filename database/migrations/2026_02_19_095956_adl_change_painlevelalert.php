@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('act_of_daily_living', function (Blueprint $table) {
-            $table->text('pain_level_alert')->change();
+            $table->text('pain_level_alert')->nullable()->change();
         });
     }
 

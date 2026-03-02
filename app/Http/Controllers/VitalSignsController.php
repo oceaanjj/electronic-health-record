@@ -278,6 +278,13 @@ class VitalSignsController extends Controller
         $message = $anyCreated ? 'Vital Signs data saved successfully.'
             : ($anyUpdated ? 'Vital Signs data updated successfully.' : 'No changes made.');
 
+        if ($request->input('action') === 'cdss') {
+            return redirect()->route('nursing-diagnosis.process', [
+                'component' => 'vital-signs',
+                'id' => $validatedData['patient_id']
+            ]);
+        }
+
         return redirect()->route('vital-signs.show', [
             'date' => $validatedData['date'],
             'day_no' => $validatedData['day_no'],

@@ -184,13 +184,113 @@
                 }
             }
 
-            /* ─── Labels ─── */
             .input-group label {
                 display: block;
                 margin-bottom: 6px;
                 font-weight: 600;
                 color: #1f2937;
                 font-size: 0.9rem;
+            }
+            
+            .role {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+                color: #111827;
+            }
+
+            @media screen and (max-width: 821px) {
+                
+                body.login-page {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 100vh;
+                    margin: 0;
+                    padding: 20px;
+                    box-sizing: border-box;
+                }
+
+                .input-group, .btn-login {
+                    width: 230px;
+                }
+                
+                .error-box {
+                    width: 200px;
+                    box-sizing: border-box;
+                }
+
+                .login-container {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    max-width: 400px;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    margin-top: -50px;
+                    align-items: center; 
+                }
+
+                .logo-section {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 10px 0 10px 0;
+                    width: 100%;
+                }
+
+                .logo {
+                    width: 120px;
+                    height: auto;
+                    display: block;
+                    margin: 0 auto; 
+                }
+
+                .form-section {
+                    margin: -20px;
+                    margin-top: 10px;
+                    padding: 10px 30px 40px 30px;
+                    width: 120%;
+                    box-sizing: border-box;
+                    display: flex; 
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                #form-container {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                #loginForm {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .role, .role strong {
+                   margin-top: -20px;
+                    padding-bottom: 40px;
+                    font-size: 40px !important;
+                    text-align: center;
+                    margin-bottom: 20px;
+                    
+                    width: 150%;
+                    margin-left: -25%;
+                }
+
+                #upper-line {
+                    margin-top: -10px;
+                    width: calc(100% + 60px); 
+                    height: 7px;
+                    background: #edb62c;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                    margin-bottom: 20px;
+                }
             }
         </style>
     </head>
@@ -257,7 +357,7 @@
                                     @error('username')
                                         {{ $message }}
                                     @else
-                                            The username field is required.
+                                        The username field is required.
                                     @enderror
                                 </span>
                             </div>
@@ -304,7 +404,7 @@
                                     @error('password')
                                         {{ $message }}
                                     @else
-                                            The password field is required.
+                                        The password field is required.
                                     @enderror
                                 </span>
                             </div>

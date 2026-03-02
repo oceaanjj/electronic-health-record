@@ -9,10 +9,63 @@ let debounceTimer;
 
 // Find banner elements for alerts
 function findBannersForInput(input) {
+    const type = input.dataset.fieldName; // diagnosis, planning, etc.
     return {
-        recommendation: document.getElementById('recommendation-banner'),
-        noRecommendation: document.getElementById('no-recommendation-banner')
+        recommendation: document.getElementById(`recommendation-${type}`),
+        noRecommendation: document.getElementById(`no-recommendation-${type}`),
     };
+}
+
+// Helper function to format message content consistently
+function formatMessageForBanner(message) {
+    if (!message) return '';
+
+    // If message already contains HTML list tags, return as is
+    if (message.includes('<ul>') || message.includes('<ol>') || message.includes('<li>')) {
+        return message;
+    }
+
+    // Clean the message and split into sentences
+    let sentences = [];
+
+    // Check if it looks like a numbered/bulleted list (has multiple lines)
+    const lines = message
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0);
+
+    if (lines.length > 1) {
+        // It's a multi-line format, treat each line as a separate item
+        sentences = lines
+            .map((line) => {
+                // Remove leading numbers, bullets, or dashes
+                return line.replace(/^[\d\-\*\•]+[\.\):\s]*/, '').trim();
+            })
+            .filter((s) => s.length > 0);
+    } else {
+        // Single paragraph - split by periods
+        sentences = message
+            .split(/\.\s+/)
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0);
+    }
+
+    // If we have multiple sentences, format as bullet list
+    if (sentences.length > 1) {
+        const listItems = sentences
+            .map((sentence) => {
+                // Add period back if it doesn't end with punctuation
+                const formatted = sentence.match(/[.!?]$/) ? sentence : sentence + '.';
+                return `<li style="margin-bottom: 0.5rem; line-height: 1.6;">${formatted}</li>`;
+            })
+            .join('');
+
+        return `<ul style="margin: 0; padding-left: 1.5rem; list-style-type: disc;">${listItems}</ul>`;
+    }
+
+    // Single sentence - return as paragraph
+    const formatted = message.match(/[.!?]$/) ? message : message + '.';
+    return `<p style="margin: 0; line-height: 1.6;">${formatted}</p>`;
 }
 
 // =======================================================
@@ -110,8 +163,8 @@ function displayBannerAlert(banners, alertData) {
 
     let colorClass = 'alert-green';
     let levelIcon = 'info';
-    let levelText = 'Information';
-    
+    let levelText = 'Clinical Decision Support';
+
     if (alertData.level === 'CRITICAL') {
         colorClass = 'alert-red';
         levelIcon = 'error';
@@ -134,9 +187,11 @@ function displayBannerAlert(banners, alertData) {
         return;
     }
 
-    // Create short preview (first 60 chars)
-    const preview = stripHtml(alertData.message).substring(0, 60) + '...';
-    const fullMessage = alertData.message;
+    // Format the message consistently
+    const formattedMessage = formatMessageForBanner(alertData.message);
+
+    // Create short preview (strip HTML and limit to 60 chars)
+    const preview = stripHtml(formattedMessage).substring(0, 60) + '...';
 
     // Hide "no recommendation" banner
     if (banners.noRecommendation) {
@@ -147,7 +202,10 @@ function displayBannerAlert(banners, alertData) {
     const banner = banners.recommendation;
     banner.className = `recommendation-banner ${colorClass}`;
     banner.classList.remove('hidden');
-    
+
+    // Extract the type from the banner ID (e.g., recommendation-diagnosis -> diagnosis)
+    const type = banner.id.replace('recommendation-', '');
+
     banner.innerHTML = `
         <div class="banner-content">
             <div class="banner-icon">
@@ -166,14 +224,14 @@ function displayBannerAlert(banners, alertData) {
         </div>
     `;
 
-    // Store the full message and level text directly on the banner element for the modal
-    banner.dataset.fullMessage = fullMessage;
+    // Store the formatted message and level text directly on the banner element for the modal
+    banner.dataset.fullMessage = formattedMessage;
     banner.dataset.levelText = levelText;
     banner.dataset.levelIcon = levelIcon;
     banner.dataset.levelIconColor = getLevelIconColor(alertData.level);
 
     // Re-attach click handler
-    banner.onclick = function() {
+    banner.onclick = function () {
         window.openRecommendationModal(this);
     };
 }
@@ -187,13 +245,11 @@ function getLevelIconColor(level) {
 
 // Show "no recommendation" banner and hide recommendation banner
 function showNoRecommendationBanner(banners) {
-    console.log('[ADPIE] Showing "No Recommendations Yet" banner');
-    
     // Hide recommendation banner
     if (banners.recommendation) {
         banners.recommendation.classList.add('hidden');
     }
-    
+
     // Show no recommendation banner
     if (banners.noRecommendation) {
         banners.noRecommendation.classList.remove('hidden');
@@ -204,17 +260,15 @@ function showNoRecommendationBanner(banners) {
 function showBannerLoading(banners) {
     const banner = banners.recommendation;
     if (!banner) return;
-    
-    console.log('[ADPIE] Analyzing... showing banner loader');
-    
+
     // Hide "no recommendation" banner during loading
     if (banners.noRecommendation) {
         banners.noRecommendation.classList.add('hidden');
     }
-    
+
     banner.className = 'recommendation-banner alert-green';
     banner.classList.remove('hidden');
-    
+
     banner.innerHTML = `
         <div class="banner-content">
             <div class="banner-icon">
@@ -229,7 +283,7 @@ function showBannerLoading(banners) {
             <div class="banner-loading-spinner" style="width: 16px; height: 16px;"></div>
         </div>
     `;
-    
+
     banner.onclick = null;
 }
 
@@ -243,6 +297,117 @@ function stripHtml(html) {
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || '';
 }
+
+// Modal function
+window.openRecommendationModal = function (bannerElement) {
+    let fullMessage = bannerElement.dataset.fullMessage;
+    let levelText = bannerElement.dataset.levelText;
+    let levelIcon = bannerElement.dataset.levelIcon;
+    let levelIconColor = bannerElement.dataset.levelIconColor;
+
+    if (!fullMessage) {
+        const subtitleElement = bannerElement.querySelector('.banner-subtitle');
+        fullMessage = subtitleElement?.dataset.fullMessage;
+    }
+
+    if (!levelText) {
+        const titleElement = bannerElement.querySelector('.banner-title');
+        levelText = titleElement?.textContent || 'Recommendation';
+    }
+
+    if (!levelIcon || !levelIconColor) {
+        if (levelText.toLowerCase().includes('critical')) {
+            levelIcon = 'error';
+            levelIconColor = '#ef4444';
+        } else if (levelText.toLowerCase().includes('warning')) {
+            levelIcon = 'warning';
+            levelIconColor = '#f59e0b';
+        } else {
+            levelIcon = 'info';
+            levelIconColor = '#10b981';
+        }
+    }
+
+    if (!fullMessage) {
+        console.error('No message available');
+        return;
+    }
+
+    const formattedMessage = formatMessageForBanner(fullMessage);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'alert-modal-overlay fade-in';
+
+    const modal = document.createElement('div');
+    modal.className = 'alert-modal fade-in';
+    modal.innerHTML = `
+        <button class="close-btn" aria-label="Close">×</button>
+
+        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: ${levelIconColor}15; display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="color: ${levelIconColor}; font-size: 1.75rem;">${levelIcon}</span>
+            </div>
+            <div>
+                <h2 style="margin: 0; font-size: 1.5rem;">${levelText}</h2>
+                <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #6b7280;">Recommendation</p>
+            </div>
+        </div>
+
+        <div class="modal-content-scroll" style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem; margin-top: 1.5rem;">
+            ${formattedMessage}
+        </div>
+
+        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.75rem; color: #6b7280;">
+                💡 Press <kbd style="padding: 2px 6px; background: #f3f4f6; border-radius: 4px; font-family: monospace;">ESC</kbd> to close
+            </span>
+            <button class="close-action-btn" style="padding: 0.625rem 1.5rem; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 0.875rem; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);">
+                Got it
+            </button>
+        </div>
+    `;
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    const close = () => {
+        overlay.remove();
+        document.removeEventListener('keydown', escHandler);
+    };
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+    });
+
+    modal.querySelector('.close-btn').addEventListener('click', close);
+    modal.querySelector('.close-action-btn').addEventListener('click', close);
+
+    const escHandler = (e) => {
+        if (e.key === 'Escape') close();
+    };
+    document.addEventListener('keydown', escHandler);
+
+    const closeBtn = modal.querySelector('.close-btn');
+    if (closeBtn) closeBtn.focus();
+
+    const actionBtn = modal.querySelector('.close-action-btn');
+    actionBtn.addEventListener('mouseenter', () => {
+        actionBtn.style.transform = 'translateY(-2px)';
+        actionBtn.style.boxShadow = '0 4px 16px rgba(16, 185, 129, 0.4)';
+        actionBtn.style.filter = 'brightness(1.1)';
+    });
+    actionBtn.addEventListener('mouseleave', () => {
+        actionBtn.style.transform = 'translateY(0)';
+        actionBtn.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.25)';
+        actionBtn.style.filter = 'brightness(1)';
+    });
+    actionBtn.addEventListener('mousedown', () => {
+        actionBtn.style.transform = 'translateY(0) scale(0.95)';
+    });
+    actionBtn.addEventListener('mouseup', () => {
+        actionBtn.style.transform = 'translateY(-2px) scale(1)';
+    });
+};
 
 // Escape HTML for data attributes
 function escapeHtml(text) {
@@ -422,6 +587,18 @@ if (!window.adpieCdssFormReloadListenerAttached) {
         if (cdssForm && cdssForm.dataset.component) {
             console.log('[ADPIE] Form reloaded — reinitializing banner listeners');
             window.initializeAdpieCdssForForm(cdssForm);
+        }
+    });
+}
+
+// Step change listener
+if (!window.adpieCdssStepChangeListenerAttached) {
+    window.adpieCdssStepChangeListenerAttached = true;
+    document.addEventListener('cdss:step-changed', (event) => {
+        const form = event.detail.form;
+        if (form && form.dataset.component) {
+            console.log(`[ADPIE] Step changed to ${event.detail.step} — reinitializing banner listeners`);
+            window.initializeAdpieCdssForForm(form);
         }
     });
 }

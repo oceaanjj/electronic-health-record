@@ -342,6 +342,17 @@ class ActOfDailyLivingController extends Controller
         $request->session()->put('selected_date', $validatedData['date']);
         $request->session()->put('selected_day_no', $validatedData['day_no']);
 
+        if ($request->input('action') === 'cdss') {
+            $adl = ActOfDailyLiving::where('patient_id', $validatedData['patient_id'])
+                ->where('date', $validatedData['date'])
+                ->where('day_no', $validatedData['day_no'])
+                ->first();
+            return redirect()->route('nursing-diagnosis.process', [
+                'component' => 'adl',
+                'id' => $adl->id
+            ]);
+        }
+
         return redirect()->route('adl.show')
             ->with('success', $message);
     }

@@ -33,7 +33,13 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
     /**
      * Show the Diagnosis form. $id is patient id for ADL component.
      */
-   public function startDiagnosis(string $component, $adlId)
+    public function startDiagnosis(string $component, $adlId)
+    {
+        $this->getProcessData($component, $adlId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $adlId]);
+    }
+
+    public function getProcessData(string $component, $adlId)
     {
         $adlData = ActOfDailyLiving::findOrFail($adlId); // Find ADL record by its ID
         $patient = Patient::findOrFail($adlData->patient_id); // Get patient from ADL record
@@ -53,29 +59,22 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         ];
 
         // Check if the alert object AND its message exist before stripping html tags
-        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
-            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
-        }
-        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
-            $alerts['planning']->message = strip_tags($alerts['planning']->message);
-        }
-        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
-            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
-        }
-        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
-            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        foreach ($alerts as $key => $alert) {
+            if ($alert && property_exists($alert, 'message')) {
+                $alert->message = strip_tags($alert->message);
+            }
         }
 
         // Put them in the session to persist across all pages
         session()->put('act-of-daily-living-alerts', $alerts);
 
-        return view('adpie.adl.diagnosis', [
+        return [
             'patient' => $patient,
             'adlData' => $adlData,
             'component' => $component,
             'diagnosis' => $diagnosis,
             'findings' => $findings
-        ]);
+        ];
     }
 
     public function storeDiagnosis(Request $request, string $component, $id)
@@ -111,17 +110,11 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Diagnosis saved.');
     }
 
-    /**
-     * Show Planning (STEP 2)
-     */
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.planning', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->adl_id])
+            ->with('current_step', 2);
     }
 
     /**
@@ -150,17 +143,11 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Plan saved.');
     }
 
-    /**
-     * Show Intervention (STEP 3)
-     */
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.interventions', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->adl_id])
+            ->with('current_step', 3);
     }
 
     /**
@@ -189,17 +176,11 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         return redirect()->back()->with('success', 'Intervention saved.');
     }
 
-    /**
-     * Show Evaluation (STEP 4)
-     */
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.adl.evaluation', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->adl_id])
+            ->with('current_step', 4);
     }
 
     /**
@@ -226,5 +207,52 @@ class ActOfDailyLivingComponent implements AdpieComponentInterface
         }
 
         return redirect()->back()->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
+    }
+
+    public function storeProcess(Request $request, string $component, $id)
+    {
+        $adl = ActOfDailyLiving::findOrFail($id);
+        $patient = $adl->patient;
+
+        $data = $request->validate([
+            'diagnosis' => 'nullable|string|max:2000',
+            'planning' => 'nullable|string|max:2000',
+            'intervention' => 'nullable|string|max:2000',
+            'evaluation' => 'nullable|string|max:2000',
+        ]);
+
+        $updateData = [
+            'patient_id' => $patient->patient_id,
+            'adl_id' => $id,
+        ];
+
+        foreach (['diagnosis', 'planning', 'intervention', 'evaluation'] as $step) {
+            if ($request->has($step)) {
+                $text = $request->input($step);
+                $updateData[$step] = $text;
+
+                $method = 'analyze' . ucfirst($step);
+                $alertObject = $this->nursingDiagnosisCdssService->$method($component, $text ?? '');
+                
+                if ($alertObject && property_exists($alertObject, 'message')) {
+                    $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+                    $updateData[$step . '_alert'] = strip_tags($message);
+                }
+            }
+        }
+
+        NursingDiagnosis::updateOrCreate(
+            ['adl_id' => $id],
+            $updateData
+        );
+
+        if ($request->input('action') === 'save_and_proceed') {
+             return redirect()->route('adl.show')
+                ->with('success', 'ADPIE process completed and saved!');
+        }
+
+        return redirect()->back()
+            ->with('success', 'ADPIE process progress saved.')
+            ->with('current_step', $request->input('current_step', 1));
     }
 }

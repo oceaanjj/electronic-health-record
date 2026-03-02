@@ -39,7 +39,7 @@ if (!window.patientSelectedListenerAttached) {
             const htmlText = await response.text();
             const parser = new DOMParser();
             const newDoc = parser.parseFromString(htmlText, 'text/html');
-            
+
             // FIX: Guard against undefined/null content
             const newContainer = newDoc.getElementById('form-content-container');
             const newContentHTML = newContainer ? newContainer.innerHTML : null;
@@ -50,8 +50,9 @@ if (!window.patientSelectedListenerAttached) {
 
             // Extract Vitals Data
             const vitalsForm = newDoc.querySelector('#vitals-form');
-            let timePoints = [], vitalsData = {};
-            
+            let timePoints = [],
+                vitalsData = {};
+
             if (vitalsForm) {
                 try {
                     timePoints = JSON.parse(vitalsForm.dataset.times || '[]');
@@ -81,33 +82,32 @@ if (!window.patientSelectedListenerAttached) {
             formContainer.style.opacity = '0';
 
             setTimeout(() => {
-
                 cuteLoader.style.transition = 'opacity 0.3s ease';
                 cuteLoader.style.opacity = '0';
 
                 setTimeout(() => {
-                cuteLoader.remove();
-        document.body.classList.remove('is-loading');
-        
-        formContainer.innerHTML = newContentHTML;
-        
-        requestAnimationFrame(() => {
-            // 3. Fade the new content back in slowly
-            formContainer.style.opacity = '1';
-            
-            // 4. Sequence the UI initialization
-                    initializeUI(timePoints, vitalsData, selectUrl);
-                });
-            }, 300); // Wait for loader to fade out
-        }, 100);
-                } catch (error) {
-                    console.error('Patient loading failed:', error);
-                    if (cuteLoader) cuteLoader.remove();
+                    cuteLoader.remove();
                     document.body.classList.remove('is-loading');
-                    formContainer.style.opacity = '1';
-                }
-            });
+
+                    formContainer.innerHTML = newContentHTML;
+
+                    requestAnimationFrame(() => {
+                        // 3. Fade the new content back in slowly
+                        formContainer.style.opacity = '1';
+
+                        // 4. Sequence the UI initialization
+                        initializeUI(timePoints, vitalsData, selectUrl);
+                    });
+                }, 300); // Wait for loader to fade out
+            }, 100);
+        } catch (error) {
+            console.error('Patient loading failed:', error);
+            if (cuteLoader) cuteLoader.remove();
+            document.body.classList.remove('is-loading');
+            formContainer.style.opacity = '1';
         }
+    });
+}
 
 function initializeUI(timePoints, vitalsData, selectUrl) {
     const formContainer = document.getElementById('form-content-container');
@@ -139,3 +139,65 @@ function initializeUI(timePoints, vitalsData, selectUrl) {
         }),
     );
 }
+
+// Reusable page loading function
+window.showPageLoader = function() {
+    const cuteLoader = document.createElement('div');
+    cuteLoader.className = 'cute-loader-wrapper';
+    cuteLoader.innerHTML = `
+        <div class="loader-card">
+            <div class="logo-container">
+                <img src="/img/loading.png" alt="Logo" class="shining-logo">
+            </div>
+            <span class="loading-text">One moment please...</span>
+        </div>
+    `;
+    
+    document.body.classList.add('is-loading');
+    document.body.appendChild(cuteLoader);
+    return cuteLoader;
+};
+
+window.hidePageLoader = function(loader) {
+    return new Promise((resolve) => {
+        loader.style.transition = 'opacity 0.3s ease';
+        loader.style.opacity = '0';
+        
+        setTimeout(() => {
+            loader.remove();
+            document.body.classList.remove('is-loading');
+            resolve();
+        }, 300);
+    });
+};
+
+// Intercept sidebar navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarLinks = document.querySelectorAll('#mySidenav a[href]:not(#logout-btn)');
+    
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Skip if it's the current page
+            if (this.classList.contains('bg-dark-green')) {
+                return;
+            }
+            
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            
+            // Show loader
+            const loader = window.showPageLoader();
+            
+            // Save scroll position
+            const sidebarScroll = document.getElementById('sidebarScroll');
+            if (sidebarScroll) {
+                sessionStorage.setItem('sidebar-scroll-pos', sidebarScroll.scrollTop);
+            }
+            
+            // Navigate after a short delay (for smooth animation)
+            setTimeout(() => {
+                window.location.href = href;
+            }, 100);
+        });
+    });
+});

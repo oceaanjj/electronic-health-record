@@ -74,6 +74,12 @@
                 // Dispatch a custom event to notify other scripts (e.g., CDSS) that data has been loaded
                 const event = new CustomEvent('io:data-loaded', { detail: { ioData: data.ioData } });
                 document.dispatchEvent(event);
+
+                // Also notify alert.js standard listener
+                document.dispatchEvent(new CustomEvent('cdss:form-reloaded', {
+                    bubbles: true,
+                    detail: { formContainer: document.getElementById('form-content-container') }
+                }));
             } catch (error) {
                 console.error('Error fetching intake and output data:', error);
                 // Optionally, clear fields or show an error message
@@ -88,6 +94,12 @@
                 // Also dispatch event to clear CDSS alerts
                 const event = new CustomEvent('io:data-loaded', { detail: { ioData: null } });
                 document.dispatchEvent(event);
+
+                // Clear alerts in standard system
+                document.dispatchEvent(new CustomEvent('cdss:form-reloaded', {
+                    bubbles: true,
+                    detail: { formContainer: document.getElementById('form-content-container') }
+                }));
             }
         };
 

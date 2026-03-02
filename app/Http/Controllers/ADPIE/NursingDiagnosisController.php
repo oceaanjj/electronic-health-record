@@ -88,23 +88,90 @@ class NursingDiagnosisController extends Controller
 
     public function startDiagnosis(string $component, $id)
     {
-        return $this->getComponentService($component)->startDiagnosis($component, $id);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->startDiagnosis($component, $id);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 1);
+        }
+        
+        return $viewData;
     }
 
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showPlanning($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showPlanning($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 2);
+        }
+        
+        return $viewData;
     }
 
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showIntervention($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showIntervention($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 3);
+        }
+        
+        return $viewData;
     }
 
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        return $this->getComponentService($component)->showEvaluation($component, $nursingDiagnosisId);
+        // Get the view data from the component
+        $viewData = $this->getComponentService($component)->showEvaluation($component, $nursingDiagnosisId);
+        
+        // If it's a view, add the step number
+        if ($viewData instanceof \Illuminate\View\View) {
+            return $viewData->with('step', 4);
+        }
+        
+        return $viewData;
     }
+    
+    public function showProcess(string $component, $id)
+        {
+            // Get the component service (PhysicalExamComponent, etc.)
+            $service = $this->getComponentService($component);
+            
+            // Get the base data (Patient info, etc.) and populate session alerts
+            $viewData = $service->getProcessData($component, $id);
+
+            return view('adpie.process', array_merge($viewData, [
+                'component' => $component,
+                'recordId' => $id,
+                'indexRoute' => $this->getComponentIndexRoute($component),
+            ]));
+        }
+
+private function getComponentIndexRoute($component) {
+    return [
+        'physical-exam' => 'physical-exam.index',
+        'intake-and-output' => 'io.show',
+        'lab-values' => 'lab-values.index',
+        'adl' => 'adl.show',
+        'vital-signs' => 'vital-signs.show',
+    ][$component] ?? 'nurse-home';
+}
+
+private function getComponentIdField($component) {
+    return [
+        'physical-exam' => 'physical_exam_id',
+        'intake-and-output' => 'intake_and_output_id',
+        'lab-values' => 'lab_values_id',
+        'adl' => 'adl_id',
+        'vital-signs' => 'vital_signs_id',
+    ][$component] ?? 'physical_exam_id';
+}
 
     //==================================================================
     // WIZARD "STORE" METHODS
@@ -128,6 +195,11 @@ class NursingDiagnosisController extends Controller
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)
     {
         return $this->getComponentService($component)->storeEvaluation($request, $component, $nursingDiagnosisId);
+    }
+
+    public function storeFullProcess(Request $request, string $component, $id)
+    {
+        return $this->getComponentService($component)->storeProcess($request, $component, $id);
     }
 
 

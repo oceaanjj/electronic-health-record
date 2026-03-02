@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('medication-administration-form');
     if (!form) {
@@ -12,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!submitButton) return;
 
         let hasData = false;
-        inputs.forEach(input => {
+        inputs.forEach((input) => {
             if (input.value.trim() !== '') {
                 hasData = true;
             }
@@ -35,18 +34,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Re-initialize when the form content is reloaded (e.g., after patient selection)
     const observer = new MutationObserver((mutationsList, observer) => {
-        for(const mutation of mutationsList) {
+        for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
                 // When the form is reloaded, re-run the logic
                 const newForm = document.getElementById('medication-administration-form');
-                if(newForm) {
+                if (newForm) {
                     const newSubmitButton = newForm.querySelector('button[type="submit"]');
                     const newInputs = newForm.querySelectorAll('.medication-input');
 
-                     const newCheckFormState = () => {
+                    const newCheckFormState = () => {
                         if (!newSubmitButton) return;
                         let hasData = false;
-                        newInputs.forEach(input => {
+                        newInputs.forEach((input) => {
                             if (input.value.trim() !== '') {
                                 hasData = true;
                             }

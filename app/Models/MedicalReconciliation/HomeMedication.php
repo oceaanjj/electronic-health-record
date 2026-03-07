@@ -13,6 +13,13 @@ class HomeMedication extends Model
 
     protected $fillable = [
         'patient_id',
+        'home_med',
+        'home_dose',
+        'home_route',
+        'home_frequency',
+        'home_indication',
+        'home_text',
+        // Support original names too
         'medication',
         'dosage',
         'frequency',

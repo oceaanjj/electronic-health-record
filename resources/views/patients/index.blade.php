@@ -53,7 +53,7 @@
                         <tbody>
                             @forelse ($patients as $patient)
 
-                                <tr class="{{ $patient->trashed() ? 'bg-red-100 text-red-700' : 'bg-beige' }} transition-all duration-300 hover:bg-white hover:bg-opacity-50"
+                                <tr class="{{ !$patient->is_active ? 'bg-red-100 text-red-700' : 'bg-beige' }} transition-all duration-300 hover:bg-white hover:bg-opacity-50"
                                     data-id="{{ $patient->patient_id }}">
                                     <td
                                         class="border-line-brown/30 border-b-2 p-3 text-center text-[13px] font-creato-black font-bold text-brown">
@@ -79,7 +79,7 @@
 
                                     <td class="border-line-brown/30 border-b-2 p-3 text-center whitespace-nowrap">
 
-                                        @if ($patient->trashed())
+                                        @if (!$patient->is_active)
                                             {{-- Inactive -> Set to Restore/Red --}}
                                             <button type="button"
                                                 class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
@@ -128,4 +128,62 @@
 @push('scripts')
     @vite(['resources/js/soft-delete.js'])
     @vite(['resources/js/patient-search.js'])
+
+    <script>
+        /**
+         * AUTO-SYNC SCRIPT
+         * Polls the server every 3 seconds to check for patient status changes 
+         * made via the mobile app and updates the UI without a full reload.
+         */
+        function syncPatientStatus() {
+            fetch('{{ route('patients.live-search') }}?input=')
+                .then(response => response.json())
+                .then(patients => {
+                    patients.forEach(patient => {
+                        const row = document.querySelector(`tr[data-id="${patient.patient_id}"]`);
+                        if (!row) return;
+
+                        const isActive = patient.is_active;
+                        const actionsCell = row.querySelector('td:last-child');
+
+                        // 1. Update Row Styling
+                        if (!isActive) {
+                            row.classList.remove('bg-beige');
+                            row.classList.add('bg-red-100', 'text-red-700');
+                        } else {
+                            row.classList.remove('bg-red-100', 'text-red-700');
+                            row.classList.add('bg-beige');
+                        }
+
+                        // 2. Update Action Buttons
+                        if (!isActive && !actionsCell.querySelector('[data-action="activate"]')) {
+                            actionsCell.innerHTML = `
+                                    <button type="button"
+                                        class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
+                                        data-patient-id="${patient.patient_id}" data-action="activate">
+                                        RESTORE
+                                    </button>
+                                `;
+                        } else if (isActive && !actionsCell.querySelector('[data-action="deactivate"]')) {
+                            actionsCell.innerHTML = `
+                                    <div class="flex justify-center gap-2">
+                                        <a href="/patients/${patient.patient_id}/edit"
+                                            class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600 cursor-pointer">
+                                            EDIT
+                                        </a>
+                                        <button type="button"
+                                            class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red cursor-pointer"
+                                            data-patient-id="${patient.patient_id}" data-action="deactivate">
+                                            SET INACTIVE
+                                        </button>
+                                    </div>
+                                `;
+                        }
+                    });
+                })
+                .catch(error => console.error('Auto-sync error:', error));
+        }
+
+        setInterval(syncPatientStatus, 3000);
+    </script>
 @endpush

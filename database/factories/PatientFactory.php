@@ -59,6 +59,7 @@ class PatientFactory extends Factory
             'contact_name' => $this->faker->name(),
             'contact_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Spouse', 'Child', 'Friend']),
             'contact_number' => $this->faker->phoneNumber(),
+            'is_active' => true,
 
         ];
     }

@@ -14,21 +14,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const patientId = button.dataset.patientId;
         const action = button.dataset.action;
         const isActivating = action === 'activate';
-        const url = isActivating ? `/patients/${patientId}/recover` : `/patients/${patientId}`;
+        
+        // Match the routes in web.php
+        const url = isActivating ? `/patients/${patientId}/activate` : `/patients/${patientId}/deactivate`;
         const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         console.log(`Button clicked! Action: ${action}, Patient ID: ${patientId}`);
 
         fetch(url, {
-            method: 'POST',
+            method: isActivating ? 'POST' : 'DELETE',
             headers: {
                 'X-CSRF-TOKEN': token,
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-            },
-            body: JSON.stringify({
-                _method: isActivating ? 'POST' : 'DELETE',
-            }),
+            }
         })
             .then((response) => {
                 if (!response.ok) {

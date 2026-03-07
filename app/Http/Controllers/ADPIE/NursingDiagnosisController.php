@@ -228,7 +228,7 @@ private function getComponentIdField($component) {
         if ($recommendation === null) {
             return [
                 'level' => 'INFO',
-                'message' => `<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>`
+                'message' => 'NO RECOMMENDATIONS'
             ];
         }
 
@@ -250,35 +250,14 @@ private function getComponentIdField($component) {
                 'component' => 'required|string',
             ]);
 
-            $recommendation = null;
-            $finding = $data['finding'] ?? '';
-            $patientId = $data['patient_id'] ?? null;
-            $component = $data['component'];
+            $alert = $this->getAlertForField(
+                $data['fieldName'],
+                $data['finding'] ?? '',
+                $data['patient_id'] ?? null,
+                $data['component']
+            );
 
-            // Route the analysis based on the field name
-            switch ($data['fieldName']) {
-                case 'diagnosis':
-                    $recommendation = $this->nursingDiagnosisCdssService->analyzeDiagnosis($component, $finding);
-                    break;
-                case 'planning':
-                    $recommendation = $this->nursingDiagnosisCdssService->analyzePlanning($component, $finding);
-                    break;
-                case 'intervention':
-                    $recommendation = $this->nursingDiagnosisCdssService->analyzeIntervention($component, $finding);
-                    break;
-                case 'evaluation':
-                    $recommendation = $this->nursingDiagnosisCdssService->analyzeEvaluation($component, $finding);
-                    break;
-            }
-
-            if ($recommendation === null) {
-                return response()->json([
-                    'level' => 'INFO',
-                    'message' => '<span class="text-white text-center uppercase font-semibold opacity-80">NO RECOMMENDATIONS</span>'
-                ]);
-            }
-
-            return response()->json($recommendation);
+            return response()->json($alert);
 
         } catch (\Exception $e) {
             Log::error("Error in analyzeDiagnosisField: " . $e->getMessage(), ['exception' => $e]);

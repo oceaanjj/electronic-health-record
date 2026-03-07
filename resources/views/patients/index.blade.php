@@ -126,9 +126,6 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/soft-delete.js'])
-    @vite(['resources/js/patient-search.js'])
-
     <script>
         /**
          * AUTO-SYNC SCRIPT
@@ -156,28 +153,31 @@
                         }
 
                         // 2. Update Action Buttons
-                        if (!isActive && !actionsCell.querySelector('[data-action="activate"]')) {
+                        const currentButton = actionsCell.querySelector('.js-toggle-patient-status');
+                        const currentAction = currentButton ? currentButton.dataset.action : null;
+
+                        if (!isActive && currentAction !== 'activate') {
                             actionsCell.innerHTML = `
+                                <button type="button"
+                                    class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
+                                    data-patient-id="${patient.patient_id}" data-action="activate">
+                                    RESTORE
+                                </button>
+                            `;
+                        } else if (isActive && currentAction !== 'deactivate') {
+                            actionsCell.innerHTML = `
+                                <div class="flex justify-center gap-2">
+                                    <a href="/patients/${patient.patient_id}/edit"
+                                        class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600 cursor-pointer">
+                                        EDIT
+                                    </a>
                                     <button type="button"
-                                        class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
-                                        data-patient-id="${patient.patient_id}" data-action="activate">
-                                        RESTORE
+                                        class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red cursor-pointer"
+                                        data-patient-id="${patient.patient_id}" data-action="deactivate">
+                                        SET INACTIVE
                                     </button>
-                                `;
-                        } else if (isActive && !actionsCell.querySelector('[data-action="deactivate"]')) {
-                            actionsCell.innerHTML = `
-                                    <div class="flex justify-center gap-2">
-                                        <a href="/patients/${patient.patient_id}/edit"
-                                            class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600 cursor-pointer">
-                                            EDIT
-                                        </a>
-                                        <button type="button"
-                                            class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red cursor-pointer"
-                                            data-patient-id="${patient.patient_id}" data-action="deactivate">
-                                            SET INACTIVE
-                                        </button>
-                                    </div>
-                                `;
+                                </div>
+                            `;
                         }
                     });
                 })

@@ -28,6 +28,7 @@
             <div
                 class="option cursor-pointer px-4 py-2 transition duration-150 hover:bg-blue-100 text-left"
                 data-value="{{ $patient->patient_id }}"
+                data-is-active="{{ $patient->is_active ? '1' : '0' }}"
             >
                 {{ trim($patient->name) }}
             </div>

@@ -60,7 +60,11 @@ const initSearchableDropdown = () => {
 
         currentOptions.forEach((option) => {
             const text = (option.textContent || option.innerText).toLowerCase();
-            const shouldShow = text.includes(filter);
+            const isActive = option.getAttribute('data-is-active') === '1';
+            
+            // Only show if it matches the filter AND is active
+            const shouldShow = text.includes(filter) && isActive;
+            
             option.style.display = shouldShow ? 'block' : 'none';
             if (shouldShow) {
                 visibleCount++;

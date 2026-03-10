@@ -137,7 +137,7 @@ class ReportController extends Controller
             'today-updates'   => ['label' => "Today's Updates", 'url' => route('doctor.stats.today-updates')],
             'total-patients'  => ['label' => 'Total Patients',  'url' => route('doctor.stats.total-patients')],
             'active-patients' => ['label' => 'Active Patients', 'url' => route('doctor.stats.active-patients')],
-            'patient-details' => ['label' => $patient->name,    'url' => route('doctor.patient-details', ['patient_id' => $patient_id, 'from' => $request->query('prev', 'total-patients')])],
+            'patient-details' => ['label' => 'Patient Details', 'url' => route('doctor.patient-details', ['patient_id' => $patient_id, 'from' => $request->query('prev', 'total-patients')])],
         ];
         $fromKey  = $request->query('from', 'recent-forms');
         $fromCrumb = $fromMap[$fromKey] ?? $fromMap['recent-forms'];
@@ -152,11 +152,31 @@ class ReportController extends Controller
         $patient = Patient::findOrFail($patient_id);
 
         $fromKey = $request->query('from', 'total-patients');
-        $fromMap = [
-            'total-patients'  => ['label' => 'Total Patients',  'url' => route('doctor.stats.total-patients')],
-            'active-patients' => ['label' => 'Active Patients', 'url' => route('doctor.stats.active-patients')],
+
+        $typeLabels = [
+            'vital-signs'   => 'Vital Signs',
+            'physical-exam' => 'Physical Exam',
+            'adl'           => 'Activities of Daily Living',
+            'intake-output' => 'Intake & Output',
+            'lab-values'    => 'Lab Values',
+            'medication'    => 'Medication Administration',
+            'ivs-lines'     => 'IVs & Lines',
         ];
-        $fromCrumb = $fromMap[$fromKey] ?? $fromMap['total-patients'];
+
+        if ($fromKey === 'form-detail') {
+            $type      = $request->query('type', '');
+            $typeLabel = $typeLabels[$type] ?? 'Form Detail';
+            $fromCrumb = [
+                'label' => $typeLabel,
+                'url'   => route('doctor.form-detail', ['type' => $type, 'patient_id' => $patient_id]),
+            ];
+        } else {
+            $fromMap = [
+                'total-patients'  => ['label' => 'Total Patients',  'url' => route('doctor.stats.total-patients')],
+                'active-patients' => ['label' => 'Active Patients', 'url' => route('doctor.stats.active-patients')],
+            ];
+            $fromCrumb = $fromMap[$fromKey] ?? $fromMap['total-patients'];
+        }
 
         return view('doctor.patient-details', compact('patient', 'fromCrumb', 'fromKey'));
     }

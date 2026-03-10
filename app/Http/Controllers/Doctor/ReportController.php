@@ -287,11 +287,14 @@ class ReportController extends Controller
 
         ];
 
+        ini_set('memory_limit', '512M');
+
         $pdf = Pdf::loadView('doctor.reports.patient-report-pdf', $data);
 
         $pdf->setPaper('folio', 'portrait'); //pdf paper size
 
         $pdf->setOption('isPhpEnabled', true);
+        $pdf->setOption('isRemoteEnabled', false);
         return $pdf->download($patient->name . '_Results.pdf');
     }
 }

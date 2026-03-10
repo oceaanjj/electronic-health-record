@@ -232,8 +232,6 @@ class ReportController extends Controller
         $patient = Patient::findOrFail($patient_id);
 
         $data = [
-
-            //NON-CDSS:
             'patient' => $patient,
             'presentIllness' => PresentIllness::where('patient_id', $patient_id)->get(),
             'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->get(),
@@ -247,8 +245,6 @@ class ReportController extends Controller
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
-
-            //COMPONENTS with CDSS (ADPIE):
             'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'vitals' => Vitals::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
@@ -277,21 +273,18 @@ class ReportController extends Controller
             'homeMedication' => HomeMedication::where('patient_id', $patient_id)->get(),
             'changesInMedication' => ChangesInMedication::where('patient_id', $patient_id)->get(),
             'dischargePlanning' => DischargePlan::where('patient_id', $patient_id)->get(),
-
-            //COMPONENTS with CDSS (ADPIE):
             'physicalExam' => PhysicalExam::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'intakeAndOutput' => IntakeAndOutput::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'vitals' => Vitals::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'actOfDailyLiving' => ActOfDailyLiving::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
             'labValues' => LabValues::with('nursingDiagnoses')->where('patient_id', $patient_id)->get(),
-
         ];
 
         ini_set('memory_limit', '512M');
 
         $pdf = Pdf::loadView('doctor.reports.patient-report-pdf', $data);
 
-        $pdf->setPaper('folio', 'portrait'); //pdf paper size
+        $pdf->setPaper('folio', 'portrait');
 
         $pdf->setOption('isPhpEnabled', true);
         $pdf->setOption('isRemoteEnabled', false);

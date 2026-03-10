@@ -39,9 +39,6 @@
 @section('content')
 <div class="-mx-6 min-h-screen bg-[#f0f8f0] font-rubik">
 
-    {{-- ═══════════════════════════════════════════
-         HEADER BAND
-    ════════════════════════════════════════════ --}}
     <div class="bg-white border-b border-gray-200">
         <div class="max-w-screen-xl mx-auto px-4 sm:px-8 py-4 sm:py-5">
 
@@ -100,9 +97,6 @@
         </div>
     </div>
 
-    {{-- ═══════════════════════════════════════════
-         CONTENT
-    ════════════════════════════════════════════ --}}
     <div class="max-w-screen-xl mx-auto px-4 sm:px-8 py-6">
 
         @if ($records->isEmpty())
@@ -113,9 +107,6 @@
             </div>
 
         @elseif ($type === 'vital-signs')
-            {{-- ══════════════════════════════════════════
-                 VITAL SIGNS
-            ══════════════════════════════════════════ --}}
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 bg-gray-50/60 flex items-center gap-2">
                     <span class="material-symbols-outlined" style="font-size:18px; color:#EF4444">monitor_heart</span>
@@ -177,9 +168,6 @@
             </div>
 
         @elseif ($type === 'physical-exam')
-            {{-- ══════════════════════════════════════════
-                 PHYSICAL EXAM
-            ══════════════════════════════════════════ --}}
             @php
                 $systems = [
                     ['General Appearance', 'general_appearance', 'general_appearance_alert'],
@@ -243,9 +231,6 @@
             @endforeach
 
         @elseif ($type === 'adl')
-            {{-- ══════════════════════════════════════════
-                 ACTIVITIES OF DAILY LIVING
-            ══════════════════════════════════════════ --}}
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 bg-gray-50/60 flex items-center gap-2">
                     <span class="material-symbols-outlined" style="font-size:18px; color:#F97316">self_improvement</span>
@@ -330,9 +315,6 @@
             </div>
 
         @elseif ($type === 'intake-output')
-            {{-- ══════════════════════════════════════════
-                 INTAKE & OUTPUT
-            ══════════════════════════════════════════ --}}
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 bg-gray-50/60 flex items-center gap-2">
                     <span class="material-symbols-outlined" style="font-size:18px; color:#3B82F6">water_drop</span>
@@ -388,9 +370,6 @@
             </div>
 
         @elseif ($type === 'lab-values')
-            {{-- ══════════════════════════════════════════
-                 LAB VALUES
-            ══════════════════════════════════════════ --}}
             @php
                 $labTests = [
                     ['WBC',         'wbc'],
@@ -463,9 +442,6 @@
             @endforeach
 
         @elseif ($type === 'medication')
-            {{-- ══════════════════════════════════════════
-                 MEDICATION ADMINISTRATION
-            ══════════════════════════════════════════ --}}
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 bg-gray-50/60 flex items-center gap-2">
                     <span class="material-symbols-outlined" style="font-size:18px; color:#10B981">medication</span>
@@ -508,9 +484,6 @@
             </div>
 
         @elseif ($type === 'ivs-lines')
-            {{-- ══════════════════════════════════════════
-                 IVs & LINES
-            ══════════════════════════════════════════ --}}
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 bg-gray-50/60 flex items-center gap-2">
                     <span class="material-symbols-outlined" style="font-size:18px; color:#6366F1">vaccines</span>
@@ -576,9 +549,6 @@
     </div>{{-- /content --}}
 </div>{{-- /wrapper --}}
 
-{{-- ═══════════════════════════════════════════
-     ALERT MODAL (shared, populated by JS)
-════════════════════════════════════════════ --}}
 <div id="alert-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="absolute inset-0 bg-black/40 backdrop-blur-[1px]" onclick="closeAlertModal()"></div>

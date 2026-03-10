@@ -60,9 +60,6 @@
 
     <div class="max-w-screen-xl mx-auto px-4 sm:px-8 py-6 space-y-5">
 
-        {{-- ═══════════════════════════════════════════════════════
-             PATIENT CARD — Avatar + Core Info
-        ═══════════════════════════════════════════════════════ --}}
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <div style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:stretch; gap:2.5rem;">
 
@@ -120,9 +117,6 @@
             </div>
         </div>
 
-        {{-- ═══════════════════════════════════════════════════════
-             DETAILS GRID — Two columns
-        ═══════════════════════════════════════════════════════ --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
             {{-- Personal Information --}}
@@ -279,9 +273,6 @@
         </div>
         @endif
 
-        {{-- ═══════════════════════════════════════════════════════
-             FORM RECORDS — Quick links to each form type
-        ═══════════════════════════════════════════════════════ --}}
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <p class="section-title mb-4">Patient Form Records</p>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">

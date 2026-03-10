@@ -88,9 +88,6 @@
     {{-- Stretch to fill, cancel the layout's px-6 --}}
     <div class="-mx-6 min-h-screen bg-[#f0f8f0] font-rubik">
 
-        {{-- ═══════════════════════════════════════════════
-             TOP HEADER BAND
-        ════════════════════════════════════════════════ --}}
         <div class="bg-white border-b border-gray-200">
             <div class="max-w-screen-xl mx-auto px-4 sm:px-8 py-4 sm:py-5
                         flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
@@ -114,14 +111,9 @@
             </div>
         </div>
 
-        {{-- ═══════════════════════════════════════════════
-             MAIN PAGE CONTENT
-        ════════════════════════════════════════════════ --}}
         <div class="max-w-screen-xl mx-auto px-4 sm:px-8 py-5 sm:py-7 space-y-6">
 
-            {{-- ─────────────────────────────────────────
-                 STATS ROW — always 3 cards side by side
-            ────────────────────────────────────────── --}}
+            {{-- Stats row: always 3 cards side by side --}}
             <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(0.75rem,2vw,1.25rem)">
                 @foreach ($statsData as $stat)
                     <a href="{{ $stat['href'] }}"
@@ -161,16 +153,10 @@
                 @endforeach
             </div>
 
-            {{-- ─────────────────────────────────────────
-                 MAIN CONTENT GRID
-                 • Mobile / tablet : stacked
-                 • lg (1024px+)    : 2-col (40 / 60 split)
-            ────────────────────────────────────────── --}}
+            {{-- Main content grid: stacked on mobile, 2-col (40/60) on lg+ --}}
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 items-start">
 
-                {{-- ╔══════════════════════════╗
-                     ║  LEFT — Quick Actions    ║  2/5
-                     ╚══════════════════════════╝ --}}
+                {{-- Quick Actions — left col (2/5) --}}
                 <div class="lg:col-span-2 flex flex-col gap-4">
 
                     {{-- Section label --}}
@@ -232,9 +218,7 @@
 
                 </div>{{-- /left col --}}
 
-                {{-- ╔══════════════════════════╗
-                     ║  RIGHT — Recent Forms    ║  3/5
-                     ╚══════════════════════════╝ --}}
+                {{-- Recent Forms — right col (3/5) --}}
                 <div class="lg:col-span-3 flex flex-col gap-4">
 
                     {{-- Section label — matches height of "Quick Actions" on the left --}}

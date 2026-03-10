@@ -19,7 +19,6 @@
                 margin-bottom: 28px;
             }
 
-            /* ─── LETTERHEAD ──────────────────────────────────────────── */
             .letterhead {
                 width: 100%;
                 padding-bottom: 8px;
@@ -32,7 +31,7 @@
                 border-collapse: collapse;
             }
 
-            /* remove borders/backgrounds from letterhead cells so the global td rule doesn't bleed in */
+            /* override global td rule — letterhead cells should have no borders */
             .lh-table td {
                 border: none;
                 background-color: transparent;
@@ -82,7 +81,6 @@
                 margin-top: 3px;
             }
 
-            /* ─── DOCUMENT TITLE ──────────────────────────────────────── */
             .doc-title {
                 text-align: center;
                 font-size: 11.5pt;
@@ -96,7 +94,6 @@
                 border-bottom: 1px solid #b7dfb9;
             }
 
-            /* ─── PATIENT INFO BLOCK ──────────────────────────────────── */
             .patient-info-block {
                 width: 100%;
                 border: 1.5px solid #1a6a24;
@@ -143,7 +140,6 @@
                 color: #1C2833;
             }
 
-            /* ─── SECTION BLOCK ───────────────────────────────────────── */
             .section {
                 margin-bottom: 12px;
                 border: 1px solid #b7dfb9;
@@ -172,7 +168,6 @@
                 margin-top: 6px;
             }
 
-            /* ─── TABLES ──────────────────────────────────────────────── */
             .table-responsive {
                 overflow-x: auto;
             }
@@ -219,7 +214,6 @@
                 font-size: 8pt;
             }
 
-            /* ─── MISC ────────────────────────────────────────────────── */
             .pdf-hr {
                 border: none;
                 border-top: 1px solid #b7dfb9;
@@ -259,7 +253,7 @@
             ul { margin: 0; padding-left: 14px; }
             li { margin-bottom: 1px; }
 
-            /* ─── FOOTER (fixed, every page) ──────────────────────────── */
+            /* Fixed footer — rendered on every page */
             .pdf-footer {
                 position: fixed;
                 bottom: 0;
@@ -298,22 +292,18 @@
             $generatedAt = now()->format('F j, Y  \a\t  H:i');
         @endphp
 
-        {{-- ── LETTERHEAD ── --}}
         <div class="letterhead">
             <table class="lh-table">
                 <tr>
-                    {{-- Left: hospital name & subtitle --}}
                     <td class="lh-name-cell">
                         <div class="hospital-name">Electronic Health Record System</div>
                         <div class="hospital-subtitle">Patient Health Management &amp; Nursing Documentation</div>
                     </td>
-                    {{-- Middle: logo --}}
                     @if ($logoData)
                         <td class="lh-logo-cell">
                             <img src="{{ $logoData }}" alt="EHR Logo">
                         </td>
                     @endif
-                    {{-- Right: date + confidential --}}
                     <td class="lh-meta-cell">
                         <div>Generated: {{ $generatedAt }}</div>
                         <div class="confidential">&#x1F512; CONFIDENTIAL</div>
@@ -322,10 +312,8 @@
             </table>
         </div>
 
-        {{-- ── DOCUMENT TITLE ── --}}
         <div class="doc-title">Patient Medical Record</div>
 
-        {{-- ── DEMOGRAPHICS (inlined for PDF-only formal layout) ── --}}
         <div class="patient-info-block">
             <div class="patient-info-header">Patient Demographics</div>
             <div class="patient-info-body">
@@ -413,9 +401,9 @@
             'changesInMedication'   => $changesInMedication,
         ])
 
+        {{-- discharge planning currently excluded --}}
         {{-- @include('doctor.reports.partials._discharge_planning', ['dischargePlanning' => $dischargePlanning]) --}}
 
-        {{-- ── FIXED FOOTER (every page) ── --}}
         <div class="pdf-footer">
             <span class="pdf-footer-left">Electronic Health Record System &mdash; Patient Medical Record</span>
             <span class="pdf-footer-right">CONFIDENTIAL</span>

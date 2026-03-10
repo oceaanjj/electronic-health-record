@@ -15,7 +15,7 @@ planning:
     - keywords: ['lethargic', 'obtunded', 'stuporous', 'comatose']
       alert: 'Plan: (EMERGENCY) Secure airway (prepare for intubation); initiate continuous neurological checks (q15 min) and notify senior clinician/code team immediately.'
       severity: 'critical'
-    - keywords: ['clutchching chest', 'labored breathing', 'wheezing']
+    - keywords: ['clutching chest', 'labored breathing', 'wheezing']
       alert: 'Plan: (EMERGENCY) Apply supplemental oxygen (non-rebreather mask), place on cardiac/pulse-ox monitor, and prepare for immediate respiratory intervention (e.g., nebulizer, assisted ventilation).'
       severity: 'critical'
     - keywords: ['wincing', 'sweating', 'protecting painful area', 'fidgety']

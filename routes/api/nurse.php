@@ -47,6 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("$uri/patient/{patient_id}", [$controller, 'index']);
     }
 
+    // Physical exam alerts only (no ADPIE / nursing diagnosis data)
+    Route::get('physical-exam/patient/{patient_id}/alerts', [PhysicalExamApiController::class, 'alerts']);
+
     // ── 2.1 DATA ALERTS ──────────────────────────────────────────────────
     Route::get('data-alert/patient/{patient_id}', [DataAlertApiController::class, 'show']);
     Route::get('{component}/data-alert/patient/{patient_id}', [DataAlertApiController::class, 'showByComponent'])

@@ -48,6 +48,20 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Alte Haas Grotesk';
+    src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Alte Haas Grotesk Bold';
+    src: url('/public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @theme {
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -71,6 +85,7 @@
     --color-neon-green: #39ff14;
 
     --font-alte: 'Alte Haas Grotesk Bold', arial;
+    --font-alte-regular: 'Alte Haas Grotesk', arial;
     --font-creato-bold: 'Creato Display Bold', arial;
     --font-creato-black: 'Creato Display Black', arial;
     --font-trajan-bold: 'Trajan Pro', serif;

@@ -35,6 +35,18 @@
             </a>
         </li>
 
+        <li>
+            <a href="{{ route('doctor.recent-forms') }}"
+                class="group hover:bg-dark-green {{
+    request()->routeIs('doctor.recent-forms')
+    ? 'bg-dark-green font-bold text-white'
+    : 'hover:bg-hover'
+                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
+                <span class="material-symbols-outlined">fact_check</span>
+                <span>Recent Forms</span>
+            </a>
+        </li>
+
     </ul>
 
     <div class="text-dark-green font-creato-black text-[13px] pr-[10px] pl-[10px] pb-5">

@@ -26,10 +26,8 @@ class Vitals extends Model
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
     }
-
-    // FOR ADPIE:
     public function nursingDiagnoses()
     {
         return $this->hasOne(NursingDiagnosis::class, 'vital_signs_id');

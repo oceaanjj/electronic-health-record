@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preload" as="image" href="img/ehr-logo.png" />
     <link rel="preload" as="image" href="img/loading.png" />
-    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
 
     {{-- **google icons library nyhahhahaha** --}}

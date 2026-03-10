@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\Vitals;
+use App\Models\PhysicalExam;
+use App\Models\ActOfDailyLiving;
+use App\Models\IntakeAndOutput;
+use App\Models\LabValues;
+use App\Models\MedicationAdministration;
+use App\Models\IvsAndLine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,7 +75,72 @@ class HomeController extends Controller
 
     public function doctorHome()
     {
-        return view('doctor.home');
+        $totalPatients  = Patient::count();
+        $activePatients = Patient::where('is_active', true)->count();
+
+        $assessmentModels = [
+            Vitals::class, PhysicalExam::class, ActOfDailyLiving::class,
+            IntakeAndOutput::class, LabValues::class,
+            MedicationAdministration::class, IvsAndLine::class,
+        ];
+        $todayForms = collect($assessmentModels)
+            ->sum(fn($m) => $m::whereDate('updated_at', today())->count());
+
+        $recentForms = $this->getRecentFormSubmissions(6);
+
+        return view('doctor.home', compact(
+            'totalPatients',
+            'activePatients',
+            'todayForms',
+            'recentForms'
+        ));
+    }
+
+    private function getRecentFormSubmissions(int $perModel = 5): \Illuminate\Support\Collection
+    {
+        $modelMap = [
+            [Vitals::class,                  'Vital Signs',                 'monitor_heart',    '#EF4444', 'vital-signs'],
+            [PhysicalExam::class,            'Physical Exam',               'person_search',    '#8B5CF6', 'physical-exam'],
+            [ActOfDailyLiving::class,        'Activities of Daily Living',  'self_improvement', '#F97316', 'adl'],
+            [IntakeAndOutput::class,         'Intake & Output',             'water_drop',       '#3B82F6', 'intake-output'],
+            [LabValues::class,               'Lab Values',                  'biotech',          '#0D9488', 'lab-values'],
+            [MedicationAdministration::class,'Medication Administration',   'medication',       '#10B981', 'medication'],
+            [IvsAndLine::class,              'IVs & Lines',                 'vaccines',         '#6366F1', 'ivs-lines'],
+        ];
+
+        // Step 1: Gather raw records (no relationship eager-load)
+        $raw = [];
+        foreach ($modelMap as [$modelClass, $label, $icon, $color, $slug]) {
+            try {
+                $records = $modelClass::latest()->take($perModel)->get();
+                foreach ($records as $record) {
+                    $raw[] = [
+                        'type'       => $label,
+                        'slug'       => $slug,
+                        'icon'       => $icon,
+                        'color'      => $color,
+                        'patient_id' => $record->patient_id,
+                        'time'       => $record->updated_at,
+                    ];
+                }
+            } catch (\Exception $e) {
+                // Skip unavailable models gracefully
+            }
+        }
+
+        // Step 2: Batch-load patient names in ONE query (bypasses relationship issues)
+        $patientIds = array_values(array_unique(array_filter(array_column($raw, 'patient_id'))));
+        $patients   = Patient::whereIn('patient_id', $patientIds)
+                              ->get()
+                              ->keyBy('patient_id');
+
+        // Step 3: Attach names and sort
+        $feeds = collect($raw)->map(function ($item) use ($patients) {
+            $item['patient_name'] = $patients->get($item['patient_id'])?->name ?? 'Unknown Patient';
+            return $item;
+        });
+
+        return $feeds->sortByDesc('time')->take(20)->values();
     }
 
     public function adminHome()

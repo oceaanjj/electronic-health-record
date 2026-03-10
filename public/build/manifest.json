@@ -3,6 +3,10 @@
     "file": "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
     "src": "public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf"
   },
+  "public/font/alte_haas_grotesk/AlteHaasGroteskRegular.ttf": {
+    "file": "assets/AlteHaasGroteskRegular-B25r_GJK.ttf",
+    "src": "public/font/alte_haas_grotesk/AlteHaasGroteskRegular.ttf"
+  },
   "public/font/creato_display/CreatoDisplay-Black.otf": {
     "file": "assets/CreatoDisplay-Black-05YRyuun.otf",
     "src": "public/font/creato_display/CreatoDisplay-Black.otf"
@@ -56,7 +60,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-BxTyewnV.css",
+    "file": "assets/app-CvMnV2kF.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -132,7 +136,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-uxaLjTAQ.js",
+    "file": "assets/app-DfYFelyX.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -151,7 +155,7 @@
       "resources/js/form-saver.js"
     ],
     "css": [
-      "assets/app-BxTyewnV.css"
+      "assets/app-CvMnV2kF.css"
     ],
     "assets": [
       "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
@@ -160,7 +164,8 @@
       "assets/TrajanPro-Bold-BqrE6oXJ.otf",
       "assets/JMH Typewriter-Bold-Bi5zYY-d.otf",
       "assets/Neometric-Regular-CDwZRyYG.otf",
-      "assets/Rubik-Regular-CVPqojHn.ttf"
+      "assets/Rubik-Regular-CVPqojHn.ttf",
+      "assets/AlteHaasGroteskRegular-B25r_GJK.ttf"
     ]
   },
   "resources/js/audit-search.js": {
@@ -278,7 +283,7 @@
     "isEntry": true
   },
   "resources/js/patient-search.js": {
-    "file": "assets/patient-search-97QkJ6xg.js",
+    "file": "assets/patient-search-BcUgiwJV.js",
     "name": "patient-search",
     "src": "resources/js/patient-search.js",
     "isEntry": true
@@ -290,13 +295,13 @@
     "isEntry": true
   },
   "resources/js/searchable-dropdown.js": {
-    "file": "assets/searchable-dropdown-DXe9q0aL.js",
+    "file": "assets/searchable-dropdown-BzyDsUir.js",
     "name": "searchable-dropdown",
     "src": "resources/js/searchable-dropdown.js",
     "isEntry": true
   },
   "resources/js/soft-delete.js": {
-    "file": "assets/soft-delete-BVbLLVnm.js",
+    "file": "assets/soft-delete-CZBCgaqM.js",
     "name": "soft-delete",
     "src": "resources/js/soft-delete.js",
     "isEntry": true

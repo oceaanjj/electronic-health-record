@@ -66,7 +66,7 @@
                             {{ $label }}
                         </h1>
                         <p class="text-sm font-alte-regular text-gray-500 mt-0.5 truncate">
-                            Patient: <span class="font-alte text-gray-700">{{ $patient->name }}</span>
+                            Patient: <a href="{{ route('doctor.patient-details', $patient->patient_id) }}" class="font-alte text-gray-700 hover:underline hover:text-green-700 transition-colors">{{ $patient->name }}</a>
                             @if($patient->patient_id)
                                 &nbsp;·&nbsp; ID: <span class="font-mono text-gray-600">{{ $patient->patient_id }}</span>
                             @endif

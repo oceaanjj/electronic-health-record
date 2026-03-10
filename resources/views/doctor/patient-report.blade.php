@@ -28,7 +28,8 @@
                         class="absolute z-10 mt-2 hidden max-h-56 w-full overflow-y-auto rounded-[20px] border border-gray-200 bg-white shadow-lg transition-all duration-300 ease-in-out">
                         @foreach ($patients as $patient)
                             <div class="option cursor-pointer px-4 py-2 transition-colors duration-200 hover:bg-green-50"
-                                data-value="{{ $patient->patient_id }}">
+                                data-value="{{ $patient->patient_id }}"
+                                data-is-active="1">
                                 {{ trim($patient->name) }}
                             </div>
                         @endforeach

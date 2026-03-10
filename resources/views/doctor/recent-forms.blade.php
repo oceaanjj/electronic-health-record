@@ -167,7 +167,7 @@
                                 @foreach ($items as $i => $form)
                                     @php $rowUrl = $form['patient_id'] ? route('doctor.form-detail', ['type' => $form['type_key'], 'patient_id' => $form['patient_id']]) . '?from=recent-forms' : null; @endphp
                                     <tr class="border-b border-gray-50 transition-colors {{ $rowUrl ? 'cursor-pointer hover:bg-green-50/50' : 'hover:bg-gray-50' }}"
-                                        {{ $rowUrl ? "onclick=\"window.location.href='{$rowUrl}'\"" : '' }}>
+                                        {!! $rowUrl ? "onclick=\"window.location.href='{$rowUrl}'\"" : '' !!}>
                                         {{-- # --}}
                                         <td class="px-4 py-3.5 text-center">
                                             <span class="text-sm text-gray-400 font-mono">{{ ($page - 1) * $perPage + $i + 1 }}</span>
@@ -225,7 +225,7 @@
                         @foreach ($items as $i => $form)
                             @php $cardUrl = $form['patient_id'] ? route('doctor.form-detail', ['type' => $form['type_key'], 'patient_id' => $form['patient_id']]) . '?from=recent-forms' : null; @endphp
                             <div class="px-4 py-4 transition-colors {{ $cardUrl ? 'cursor-pointer hover:bg-green-50/50' : 'hover:bg-gray-50' }}"
-                                 {{ $cardUrl ? "onclick=\"window.location.href='{$cardUrl}'\"" : '' }}>
+                                 {!! $cardUrl ? "onclick=\"window.location.href='{$cardUrl}'\"" : '' !!}>
                                 <div class="flex items-start gap-3">
                                     {{-- Icon --}}
                                     <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"

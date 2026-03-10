@@ -44,10 +44,9 @@ class PhysicalExam extends Model
         return $this->belongsTo(Patient::class, 'patient_id');
     }
 
-    // You should also have this one
     public function nursingDiagnoses()
     {
-        return $this->hasOne(NursingDiagnosis::class);
+        return $this->hasOne(NursingDiagnosis::class, 'physical_exam_id');
     }
 }
 

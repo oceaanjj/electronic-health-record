@@ -162,16 +162,14 @@
                                         @endif
                                     </td>
                                 </tr>
-                                @if($r->nursingDiagnoses)
-                                    <tr>
-                                        <td colspan="9" class="py-0 border-0 bg-indigo-50/40">
-                                            <div class="px-5 py-3">
-                                                <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2.5">Nursing Diagnosis</p>
-                                                @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses, 'index' => 0])
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
+                                <tr>
+                                    <td colspan="9" class="py-0 border-0 bg-indigo-50/30">
+                                        <div class="px-5 py-3">
+                                            <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2">Nursing Diagnosis (ADPIE)</p>
+                                            @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses])
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -237,12 +235,10 @@
                             </tbody>
                         </table>
                     </div>
-                    @if($r->nursingDiagnoses)
-                        <div class="px-5 py-4 border-t border-indigo-100 bg-indigo-50/40">
-                            <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2.5">Nursing Diagnosis</p>
-                            @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses, 'index' => 0])
-                        </div>
-                    @endif
+                    <div class="px-5 py-4 border-t border-indigo-100 bg-indigo-50/30">
+                        <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2">Nursing Diagnosis (ADPIE)</p>
+                        @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses])
+                    </div>
                 </div>
             @endforeach
 
@@ -319,16 +315,14 @@
                                         @endif
                                     </td>
                                 </tr>
-                                @if($r->nursingDiagnoses)
-                                    <tr>
-                                        <td colspan="9" class="py-0 border-0 bg-indigo-50/40">
-                                            <div class="px-5 py-3">
-                                                <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2.5">Nursing Diagnosis</p>
-                                                @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses, 'index' => 0])
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
+                                <tr>
+                                    <td colspan="9" class="py-0 border-0 bg-indigo-50/30">
+                                        <div class="px-5 py-3">
+                                            <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2">Nursing Diagnosis (ADPIE)</p>
+                                            @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses])
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -379,16 +373,14 @@
                                         @endif
                                     </td>
                                 </tr>
-                                @if($r->nursingDiagnoses)
-                                    <tr>
-                                        <td colspan="6" class="py-0 border-0 bg-indigo-50/40">
-                                            <div class="px-5 py-3">
-                                                <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2.5">Nursing Diagnosis</p>
-                                                @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses, 'index' => 0])
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
+                                <tr>
+                                    <td colspan="6" class="py-0 border-0 bg-indigo-50/30">
+                                        <div class="px-5 py-3">
+                                            <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2">Nursing Diagnosis (ADPIE)</p>
+                                            @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses])
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -463,12 +455,10 @@
                             </tbody>
                         </table>
                     </div>
-                    @if($r->nursingDiagnoses)
-                        <div class="px-5 py-4 border-t border-indigo-100 bg-indigo-50/40">
-                            <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2.5">Nursing Diagnosis</p>
-                            @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses, 'index' => 0])
-                        </div>
-                    @endif
+                    <div class="px-5 py-4 border-t border-indigo-100 bg-indigo-50/30">
+                        <p class="text-[10px] font-alte text-indigo-400 uppercase tracking-wider mb-2">Nursing Diagnosis (ADPIE)</p>
+                        @include('doctor.partials.nd-block', ['nd' => $r->nursingDiagnoses])
+                    </div>
                 </div>
             @endforeach
 

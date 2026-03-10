@@ -24,7 +24,15 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     setTimeout(function () {
                         const opts = @json(session('sweetalert'));
-                        if (typeof Swal === 'function') {
+                        if (typeof showSuccess === 'function' && opts.type === 'success') {
+                            showSuccess(opts.text || opts.title, opts.title || 'Success!', opts.timer);
+                        } else if (typeof showError === 'function' && opts.type === 'error') {
+                            showError(opts.text || opts.title, opts.title || 'Error!', opts.timer);
+                        } else if (typeof showWarning === 'function' && opts.type === 'warning') {
+                            showWarning(opts.text || opts.title, opts.title || 'Warning!', opts.timer);
+                        } else if (typeof showInfo === 'function' && opts.type === 'info') {
+                            showInfo(opts.text || opts.title, opts.title || 'Info', opts.timer);
+                        } else if (typeof Swal !== 'undefined') {
                             Swal.fire({ icon: opts.type || 'info', title: opts.title || '', text: opts.text || '', timer: opts.timer || 2000 });
                         }
                     }, 100);

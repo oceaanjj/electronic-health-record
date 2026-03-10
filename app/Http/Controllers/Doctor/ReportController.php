@@ -134,6 +134,7 @@ class ReportController extends Controller
             'today-updates'   => ['label' => "Today's Updates", 'url' => route('doctor.stats.today-updates')],
             'total-patients'  => ['label' => 'Total Patients',  'url' => route('doctor.stats.total-patients')],
             'active-patients' => ['label' => 'Active Patients', 'url' => route('doctor.stats.active-patients')],
+            'patient-details' => ['label' => $patient->name,    'url' => route('doctor.patient-details', ['patient_id' => $patient_id, 'from' => $request->query('prev', 'total-patients')])],
         ];
         $fromKey  = $request->query('from', 'recent-forms');
         $fromCrumb = $fromMap[$fromKey] ?? $fromMap['recent-forms'];
@@ -141,6 +142,20 @@ class ReportController extends Controller
         return view('doctor.patient-form-detail', compact(
             'patient', 'records', 'label', 'icon', 'color', 'type', 'fromCrumb'
         ));
+    }
+
+    public function patientDetails(Request $request, $patient_id)
+    {
+        $patient = Patient::findOrFail($patient_id);
+
+        $fromKey = $request->query('from', 'total-patients');
+        $fromMap = [
+            'total-patients'  => ['label' => 'Total Patients',  'url' => route('doctor.stats.total-patients')],
+            'active-patients' => ['label' => 'Active Patients', 'url' => route('doctor.stats.active-patients')],
+        ];
+        $fromCrumb = $fromMap[$fromKey] ?? $fromMap['total-patients'];
+
+        return view('doctor.patient-details', compact('patient', 'fromCrumb', 'fromKey'));
     }
 
     public function totalPatients()

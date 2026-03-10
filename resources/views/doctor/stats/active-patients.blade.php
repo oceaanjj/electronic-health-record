@@ -82,7 +82,8 @@
                                 : null;
                         @endphp
                         <tr class="cursor-pointer"
-                            onclick="window.location.href='{{ route('doctor.form-detail', ['type' => 'vital-signs', 'patient_id' => $p->patient_id]) }}?from=active-patients'">                            <td class="text-gray-400 text-sm">{{ $i + 1 }}</td>
+                            onclick="window.location.href='{{ route('doctor.patient-details', ['patient_id' => $p->patient_id]) }}?from=active-patients'">
+                            <td class="text-gray-400 text-sm">{{ $i + 1 }}</td>
                             <td>
                                 <p class="font-alte-regular text-gray-800">{{ $p->name }}</p>
                             </td>
@@ -128,7 +129,8 @@
                 @endphp
                 <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 cursor-pointer
                              active:bg-green-50/40 transition-colors"
-                     onclick="window.location.href='{{ route('doctor.form-detail', ['type' => 'vital-signs', 'patient_id' => $p->patient_id]) }}?from=active-patients'">                    <div class="flex items-start justify-between gap-3">
+                     onclick="window.location.href='{{ route('doctor.patient-details', ['patient_id' => $p->patient_id]) }}?from=active-patients'">
+                    <div class="flex items-start justify-between gap-3">
                         <div class="min-w-0">
                             <p class="font-alte text-gray-800 text-base leading-tight truncate">{{ $p->name }}</p>
                             <p class="text-sm font-alte-regular text-gray-500 mt-0.5">

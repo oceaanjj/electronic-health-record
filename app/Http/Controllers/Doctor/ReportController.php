@@ -98,11 +98,14 @@ class ReportController extends Controller
 
         $formTypes = array_combine(array_keys($modelMap), array_column(array_values($modelMap), 1));
 
-        return view('doctor.recent-forms', compact(
-            'items', 'page', 'perPage', 'total', 'lastPage',
-            'filterType', 'filterPatient', 'filterDate',
-            'formTypes'
-        ));
+        $viewData = compact('items', 'page', 'perPage', 'total', 'lastPage', 'filterType', 'filterPatient', 'filterDate', 'formTypes');
+
+        // AJAX: return only the results partial (no layout)
+        if ($request->ajax()) {
+            return view('doctor.partials.recent-forms-results', $viewData);
+        }
+
+        return view('doctor.recent-forms', $viewData);
     }
     public function showPatientForm(Request $request, $type, $patient_id)
     {

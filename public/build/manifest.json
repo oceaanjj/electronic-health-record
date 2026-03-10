@@ -60,7 +60,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-CvMnV2kF.css",
+    "file": "assets/app-Dnk0QiIH.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -136,7 +136,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DfYFelyX.js",
+    "file": "assets/app-X3-yeape.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -155,7 +155,7 @@
       "resources/js/form-saver.js"
     ],
     "css": [
-      "assets/app-CvMnV2kF.css"
+      "assets/app-Dnk0QiIH.css"
     ],
     "assets": [
       "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
@@ -208,6 +208,12 @@
     "file": "assets/discharge-planning-loader-mTGpV_PR.js",
     "name": "discharge-planning-loader",
     "src": "resources/js/discharge-planning-loader.js",
+    "isEntry": true
+  },
+  "resources/js/doctor/recent-forms.js": {
+    "file": "assets/recent-forms-BF05A_P6.js",
+    "name": "recent-forms",
+    "src": "resources/js/doctor/recent-forms.js",
     "isEntry": true
   },
   "resources/js/form-disable-alert.js": {

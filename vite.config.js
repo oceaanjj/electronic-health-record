@@ -49,6 +49,9 @@ export default defineConfig({
                 'resources/js/sweetalert.js',
                 'resources/js/vital-signs-chart-updater.js',
                 'resources/js/vital-signs-charts.js',
+
+                // Doctor-specific JS
+                'resources/js/doctor/recent-forms.js',
             ],
             refresh: true,
         }),

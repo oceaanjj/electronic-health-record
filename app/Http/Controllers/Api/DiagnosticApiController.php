@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Diagnostic;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Patient;
 
 class DiagnosticApiController extends Controller
 {
@@ -18,7 +18,7 @@ class DiagnosticApiController extends Controller
         $records = Diagnostic::where('patient_id', $patient_id)->latest()->get();
         
         $records->transform(function($record) {
-            $record->image_url = url(Storage::url($record->path));
+            $record->image_url = url('storage/' . $record->path);
             return $record;
         });
 
@@ -31,7 +31,7 @@ class DiagnosticApiController extends Controller
     public function storeDiagnostic(Request $request) {
         $request->validate([
             'patient_id' => 'required|exists:patients,patient_id',
-            'type' => 'required|string', // xray, ultrasound, ct_scan, echocardiogram
+            'type' => 'required|string',
             'images' => 'required|array',
             'images.*' => 'image|max:8192'
         ]);
@@ -39,22 +39,29 @@ class DiagnosticApiController extends Controller
         $savedFiles = [];
         $patientId = $request->patient_id;
 
+        $patient = Patient::where('patient_id', $patientId)->firstOrFail();
+        $lastName = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($patient->last_name));
+        $typeSlug = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($request->type));
+        $date = now()->format('Ymd');
+        $counter = 1;
+
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
                 if ($file->isValid()) {
-                    $filename = time() . '_' . $file->getClientOriginalName();
-                    
-                    // Store in the exact same location as the website
+                    $extension = $file->getClientOriginalExtension() ?: 'jpg';
+                    $filename = "{$typeSlug}_{$lastName}_{$date}_{$counter}.{$extension}";
+                    $counter++;
+
                     $path = $file->storeAs('diagnostics', $filename, 'public');
 
                     $record = Diagnostic::create([
                         'patient_id' => $patientId,
                         'type' => $request->type,
                         'path' => $path,
-                        'original_name' => $file->getClientOriginalName(),
+                        'original_name' => $filename,
                     ]);
 
-                    $record->image_url = url(Storage::url($path));
+                    $record->image_url = url('storage/' . $path);
                     $savedFiles[] = $record;
                 }
             }

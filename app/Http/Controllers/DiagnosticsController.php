@@ -72,25 +72,29 @@ class DiagnosticsController extends Controller
             return redirect()->back()->with('error', 'ERROR: Unauthorized access.');
         }
 
+        $lastName = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($patient->last_name));
         $filesSaved = 0;
-
-        try {
+        $date = now()->format('Ymd');
             foreach ((array) $request->file('images') as $type => $files) {
                 if (!is_array($files))
                     continue;
 
+                $typeSlug = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($type));
+                $counter = 1;
+
                 foreach ($files as $file) {
                     if ($file && $file->isValid()) {
-                        $filename = time() . '_' . $file->getClientOriginalName();
+                        $extension = $file->getClientOriginalExtension() ?: 'jpg';
+                        $filename = "{$typeSlug}_{$lastName}_{$date}_{$counter}.{$extension}";
+                        $counter++;
 
-                        // Store in public disk (storage/app/public/diagnostics)
                         $path = $file->storeAs('diagnostics', $filename, 'public');
 
                         Diagnostic::create([
                             'patient_id' => $patientId,
                             'type' => $type,
                             'path' => $path,
-                            'original_name' => $file->getClientOriginalName(),
+                            'original_name' => $filename,
                         ]);
 
                         $filesSaved++;

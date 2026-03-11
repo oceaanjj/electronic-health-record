@@ -104,4 +104,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // ── 7. DIAGNOSTICS ───────────────────────────────────────────────────
     Route::get('diagnostics/patient/{patient_id}', [DiagnosticApiController::class, 'getDiagnostics']);
     Route::post('diagnostics', [DiagnosticApiController::class, 'storeDiagnostic']);
+    Route::delete('diagnostics/{id}', [DiagnosticApiController::class, 'destroy']);
 });

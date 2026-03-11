@@ -560,7 +560,7 @@
                                             @foreach ($images[$key] as $image)
                                                 <div class="preview-item">
                                                     <img
-                                                        src="{{ Storage::url($image->path) }}"
+                                                        src="{{ asset('storage/' . $image->path) }}"
                                                         alt="{{ $image->original_name }}"
                                                     />
                                                     <button

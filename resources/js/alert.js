@@ -120,7 +120,13 @@ async function analyzeField(fieldName, finding, time, alertCell, url, token, vit
             const vitalInputs = form?.querySelectorAll(`.cdss-input[data-time="${time}"]`);
             vitalInputs?.forEach((input) => {
                 const name = input.dataset.fieldName;
-                vitalsToSend[name] = input.value.trim();
+                const val = input.value.trim();
+                // Prefer non-empty values — desktop and mobile share the same
+                // data-field-name/data-time, so the hidden counterpart (not yet
+                // synced) must not overwrite a value the user just typed.
+                if (!(name in vitalsToSend) || val !== '') {
+                    vitalsToSend[name] = val;
+                }
             });
         }
         bodyData = { time, vitals: vitalsToSend };

@@ -314,6 +314,41 @@
             }
             syncAlerts();
 
+            // RESTRICT VITAL INPUTS TO NUMERIC ONLY
+            // temperature, hr, rr, spo2 → digits + one decimal point
+            // bp → digits + slash + space (e.g. "120/80")
+            document.querySelectorAll('.vital-input').forEach(function (input) {
+                const field = input.dataset.fieldName;
+                const isBp = field === 'bp';
+
+                // Set mobile-friendly keyboard
+                input.setAttribute('inputmode', isBp ? 'numeric' : 'decimal');
+
+                // Block invalid characters before they're inserted (handles typing + paste)
+                input.addEventListener('beforeinput', function (e) {
+                    if (!e.inputType.startsWith('insert')) return;
+                    const incoming = e.data || '';
+                    const allowed = isBp ? /^[0-9\/\s]*$/ : /^[0-9.]*$/;
+                    if (!allowed.test(incoming)) e.preventDefault();
+                });
+
+                // Fallback oninput cleanup (handles autofill / older browsers)
+                input.addEventListener('input', function () {
+                    let val = this.value;
+                    if (isBp) {
+                        val = val.replace(/[^0-9\/\s]/g, '');
+                    } else {
+                        val = val.replace(/[^0-9.]/g, '');
+                        // Allow only one decimal point
+                        const dotIdx = val.indexOf('.');
+                        if (dotIdx !== -1) {
+                            val = val.slice(0, dotIdx + 1) + val.slice(dotIdx + 1).replace(/\./g, '');
+                        }
+                    }
+                    if (this.value !== val) this.value = val;
+                });
+            });
+
             document.addEventListener('click', function(e) {
                 const mobileClone = e.target.closest('.mobile-alert-clone');
                 if (mobileClone) {

@@ -21,7 +21,7 @@ skin_condition:
       alert: 'A macule or patch is a flat spot with a change in color. Document size, color, and location. If new or changing, consider dermatology referral.'
       severity: 'info'
     - keywords: ['papule', 'plaque']
-      alert: 'A papule or plaque is a raised, solid bump. Psoriasis often presents as plaques. Document characteristics.'
+      alert: 'A papule or plaque is a raised, solid bump. Psoriasis often presents as plaques. Document characteristics.' 
       severity: 'info'
     - keywords: ['vesicle', 'bulla']
       alert: 'Vesicles or bullae are fluid-filled blisters. May indicate herpes simplex/zoster, insect bites, or other bullous diseases.'

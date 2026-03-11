@@ -50,22 +50,29 @@
 
 ## 🩺 Assessment Forms (ADPIE)
 
-All 5 assessment types follow the same pattern:
+Each clinical component has its own dedicated documentation with complete endpoint, field, CDSS alert, and ADPIE/Nursing Diagnosis instructions:
 
-| Type | URI Prefix |
-|------|-----------|
-| Vital Signs | `vital-signs` |
-| Physical Exam | `physical-exam` |
-| ADL | `adl` |
-| Intake & Output | `intake-and-output` |
-| Lab Values | `lab-values` |
+| Component | Documentation File | DB Table | API Prefix |
+|-----------|-------------------|----------|------------|
+| 🫀 Vital Signs | `API_DOCS_NURSE_VITAL_SIGNS.md` | `vital_signs` | `/api/vital-signs` |
+| 🩻 Physical Exam | See section below ↓ | `physical_exams` | `/api/physical-exam` |
+| 🧍 ADL (Activities of Daily Living) | `API_DOCS_NURSE_ADL.md` | `act_of_daily_living` | `/api/adl` |
+| 💧 Intake & Output | `API_DOCS_NURSE_INTAKE_OUTPUT.md` | `intake_and_outputs` | `/api/intake-and-output` |
+| 🔬 Lab Values | `API_DOCS_NURSE_LAB_VALUES.md` | `lab_values` | `/api/lab-values` |
+
+All components share the same endpoint pattern:
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST/PUT | `/api/{type}` | Save/update record (runs CDSS automatically) |
-| GET | `/api/{type}/patient/{patient_id}` | Get all records for patient |
-| GET | `/api/{type}/{id}/assessment` | Get single record by ID |
-| PUT | `/api/{type}/{id}/assessment` | Update record by ID |
+| POST | `/api/{component}` | Save/update record (runs CDSS automatically) |
+| GET | `/api/{component}/patient/{patient_id}` | Get all records for patient |
+| GET | `/api/{component}/{id}/assessment` | Get single record by ID |
+| PUT | `/api/{component}/{id}/assessment` | Update record by ID (re-runs CDSS) |
+| GET | `/api/{component}/data-alert/patient/{patient_id}` | Get latest CDSS alert for patient |
+| GET | `/api/adpie/{component}/{id}` | Initialize ADPIE/Nursing Diagnosis record |
+| POST | `/api/adpie/analyze` | Analyze a single ADPIE field via CDSS |
+| POST | `/api/adpie/analyze-batch` | Analyze multiple ADPIE fields at once |
+| PUT | `/api/adpie/{id}/{step}` | Save an ADPIE step (`diagnosis\|planning\|intervention\|evaluation`) |
 
 ---
 
@@ -200,23 +207,46 @@ The CDSS internally uses `_condition_alert` keys; the API correctly maps them to
 
 ## 🚨 Data Alerts
 
+Returns the latest CDSS alert(s) for a patient across all components or for a specific one.
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/data-alert/patient/{patient_id}` | All alerts for a patient |
-| GET | `/api/{component}/data-alert/patient/{patient_id}` | Alerts by component type |
+| GET | `/api/data-alert/patient/{patient_id}` | All alerts for a patient (all components) |
+| GET | `/api/{component}/data-alert/patient/{patient_id}` | Alert for a specific component |
 
 Valid `{component}` values: `vital-signs` · `physical-exam` · `adl` · `intake-and-output` · `lab-values`
+
+**GET all alerts response:**
+```json
+{
+  "vital_signs": "⚠️ WARNING: Low-grade fever detected.",
+  "physical_exam": "Jaundice — Suggests liver disease or hemolysis.",
+  "adl": "Risk for falls related to impaired physical mobility.",
+  "intake_and_output": "🚨 CRITICAL: Severe oliguria. Immediate renal assessment required.",
+  "lab_values": "Leukopenia — Significant risk of infection."
+}
+```
+
+Fields with no alerts return `"No findings."`.
+
+> For full details on component-specific data alerts, see the dedicated documentation files.
 
 ---
 
 ## 🧠 ADPIE / CDSS
 
+The ADPIE (Nursing Diagnosis) workflow applies to all assessment components. It follows 4 steps: **Diagnosis → Planning → Intervention → Evaluation**. CDSS recommendations are generated automatically when each step is saved.
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/adpie/{component}/{id}` | Initialize ADPIE for a record |
-| POST | `/api/adpie/analyze` | Analyze a single field |
-| POST | `/api/adpie/analyze-batch` | Analyze multiple fields |
+| POST | `/api/adpie/analyze` | Analyze a single ADPIE field via CDSS |
+| POST | `/api/adpie/analyze-batch` | Analyze multiple ADPIE fields at once |
 | PUT | `/api/adpie/{id}/{step}` | Save a step (`diagnosis\|planning\|intervention\|evaluation`) |
+
+Valid `{component}` values: `vital-signs` · `physical-exam` · `adl` · `intake-and-output` · `lab-values`
+
+> For full ADPIE request/response details, CDSS alert fields (`diagnosis_alert`, `planning_alert`, `intervention_alert`, `evaluation_alert`), and the `nursing_diagnoses` table schema, see the dedicated documentation files for each component.
 
 ---
 

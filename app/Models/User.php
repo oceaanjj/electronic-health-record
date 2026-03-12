@@ -40,4 +40,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Patient::class, 'user_id', 'id');
     }
+
+    public function setRoleAttribute($value): void
+    {
+        $this->attributes['role'] = strtolower((string) $value);
+    }
 }

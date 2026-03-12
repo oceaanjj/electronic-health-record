@@ -21,9 +21,9 @@ class AdminApiController extends Controller
     {
         return response()->json([
             'total_users'    => User::count(),
-            'total_nurses'   => User::where('role', 'nurse')->count(),
-            'total_doctors'  => User::where('role', 'doctor')->count(),
-            'total_admins'   => User::where('role', 'admin')->count(),
+            'total_nurses'   => User::whereRaw('LOWER(role) = ?', ['nurse'])->count(),
+            'total_doctors'  => User::whereRaw('LOWER(role) = ?', ['doctor'])->count(),
+            'total_admins'   => User::whereRaw('LOWER(role) = ?', ['admin'])->count(),
             'total_patients' => Patient::count(),
             'active_patients'=> Patient::where('is_active', true)->count(),
             'audit_logs_today' => AuditLog::whereDate('created_at', today())->count(),
@@ -39,7 +39,7 @@ class AdminApiController extends Controller
         $query = User::query();
 
         if ($request->query('role')) {
-            $query->where('role', $request->query('role'));
+            $query->whereRaw('LOWER(role) = ?', [strtolower((string) $request->query('role'))]);
         }
 
         if ($request->query('search')) {
@@ -54,7 +54,7 @@ class AdminApiController extends Controller
             'id'         => $u->id,
             'username'   => $u->username,
             'email'      => $u->email,
-            'role'       => $u->role,
+            'role'       => strtolower((string) $u->role),
             'created_at' => (string) $u->created_at,
         ]);
 
@@ -72,7 +72,7 @@ class AdminApiController extends Controller
             'id'         => $user->id,
             'username'   => $user->username,
             'email'      => $user->email,
-            'role'       => $user->role,
+            'role'       => strtolower((string) $user->role),
             'created_at' => (string) $user->created_at,
         ]);
     }
@@ -95,7 +95,7 @@ class AdminApiController extends Controller
             'username' => $validated['username'],
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role'     => $validated['role'],
+            'role'     => strtolower($validated['role']),
         ]);
 
         AuditLogController::log(
@@ -106,7 +106,7 @@ class AdminApiController extends Controller
 
         return response()->json([
             'message' => 'User registered successfully.',
-            'user'    => ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'role' => $user->role],
+            'user'    => ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'role' => strtolower((string) $user->role)],
         ], 201);
     }
 
@@ -123,7 +123,7 @@ class AdminApiController extends Controller
 
         $user = User::findOrFail($id);
         $oldRole = $user->role;
-        $user->update(['role' => $validated['role']]);
+        $user->update(['role' => strtolower($validated['role'])]);
 
         AuditLogController::log(
             'User Role Updated (API)',
@@ -133,7 +133,7 @@ class AdminApiController extends Controller
 
         return response()->json([
             'message' => 'Role updated successfully.',
-            'user'    => ['id' => $user->id, 'username' => $user->username, 'role' => $user->role],
+            'user'    => ['id' => $user->id, 'username' => $user->username, 'role' => strtolower((string) $user->role)],
         ]);
     }
 

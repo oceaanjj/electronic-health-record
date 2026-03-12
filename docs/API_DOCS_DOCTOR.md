@@ -11,11 +11,30 @@
 ### Login
 `POST /api/auth/login`
 ```json
+{ "username": "doctor_username", "password": "password" }
+```
+Send the credentials in the **JSON request body**. Do **not** put the password in the URL query string.
+
+You may send either:
+```json
+{ "username": "doctor_username", "password": "password" }
+```
+or
+```json
 { "email": "doctor@example.com", "password": "password" }
 ```
+
+The login identifier must match either the exact value in `users.username` or `users.email`.
+
 **Response:**
 ```json
-{ "access_token": "...", "role": "doctor", "full_name": "dr_username", "user_id": 2 }
+{
+  "access_token": "...",
+  "role": "doctor",
+  "full_name": "dr_username",
+  "email": "doctor@example.com",
+  "user_id": 2
+}
 ```
 
 ---
@@ -301,6 +320,59 @@ GET /api/doctor/patient/7/forms/medication
     }
   }
 ]
+```
+
+---
+
+## 📄 Patient PDF Report
+
+### Download Patient PDF
+`GET /api/doctor/patient/{patient_id}/pdf`
+
+Downloads a complete patient report as a **PDF file** (`application/pdf`). The PDF includes all patient data: vitals, physical exam, ADL, intake & output, lab values, IVs & lines, medication administration, medical history, diagnostics, discharge planning, and nursing diagnoses.
+
+**Response:** Binary PDF file stream with headers:
+```
+Content-Type: application/pdf
+Content-Disposition: attachment; filename="{patient_name}_Results.pdf"
+```
+
+> **Note:** If the patient is not found, returns `404`.
+
+**React Native example (save to device):**
+```js
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
+
+const downloadPatientPDF = async (patientId, patientName) => {
+  const url = `${BASE_URL}/api/doctor/patient/${patientId}/pdf`;
+  const fileUri = FileSystem.documentDirectory + `${patientName}_Results.pdf`;
+
+  const { uri } = await FileSystem.downloadAsync(url, fileUri, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  await Sharing.shareAsync(uri, { mimeType: 'application/pdf' });
+};
+```
+
+**Flutter example:**
+```dart
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+
+Future<void> downloadPatientPDF(int patientId, String patientName) async {
+  final dir = await getApplicationDocumentsDirectory();
+  final filePath = '${dir.path}/${patientName}_Results.pdf';
+
+  await Dio().download(
+    '$baseUrl/api/doctor/patient/$patientId/pdf',
+    filePath,
+    options: Options(headers: {'Authorization': 'Bearer $token'}),
+  );
+}
 ```
 
 ---

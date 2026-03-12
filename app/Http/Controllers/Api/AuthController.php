@@ -12,14 +12,16 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $loginInput = $request->query('email') ?? $request->input('email');
-        $password = $request->query('password') ?? $request->input('password');
+        $loginInput = $request->input('email') ?? $request->input('username');
+        $password = $request->input('password');
 
         if (!$loginInput || !$password) {
-            return response()->json(['detail' => 'Login and password are required'], 400);
+            return response()->json(['detail' => 'Email or username, plus password, are required in the request body.'], 400);
         }
 
-        $user = User::where('email', $loginInput)->orWhere('username', $loginInput)->first();
+        $user = User::where('email', $loginInput)
+            ->orWhere('username', $loginInput)
+            ->first();
 
         if (!$user || !Hash::check($password, $user->password)) {
             return response()->json(['detail' => 'Invalid credentials.'], 401);
@@ -29,8 +31,9 @@ class AuthController extends Controller
 
         return response()->json([
             'access_token' => $token,
-            'role' => $user->role,
+            'role' => strtolower((string) $user->role),
             'full_name' => $user->username,
+            'email' => $user->email,
             'user_id' => $user->id,
         ]);
     }

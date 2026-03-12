@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Doctor\DoctorApiController;
+use App\Http\Controllers\Doctor\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,8 @@ Route::middleware(['auth:sanctum', 'role:doctor'])->prefix('doctor')->group(func
     // GET /api/doctor/patient/{id}/forms/{type}
     // type: vital-signs | physical-exam | adl | intake-output | lab-values | medication | ivs-lines
     Route::get('patient/{patient_id}/forms/{type}', [DoctorApiController::class, 'patientForms']);
+
+    // ── PATIENT PDF REPORT ───────────────────────────────────────────────
+    // GET /api/doctor/patient/{patient_id}/pdf
+    Route::get('patient/{patient_id}/pdf', [ReportController::class, 'downloadPDF']);
 });

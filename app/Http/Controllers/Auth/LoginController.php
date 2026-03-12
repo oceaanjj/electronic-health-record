@@ -20,12 +20,12 @@ class LoginController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
 
-            switch ($user->role) {
-                case 'Nurse':
+            switch (strtolower((string) $user->role)) {
+                case 'nurse':
                     return redirect()->route('nurse-home');
-                case 'Doctor':
+                case 'doctor':
                     return redirect()->route('doctor-home');
-                case 'Admin':
+                case 'admin':
                     return redirect()->route('admin-home');
             }
         }
@@ -92,22 +92,22 @@ class LoginController extends Controller
             ]);
 
             // Redirect based on actual role (Admins always go to admin-home)
-            switch ($user->role) {
-                case 'Nurse':
+            switch (strtolower((string) $user->role)) {
+                case 'nurse':
                     return redirect()->route('nurse-home')->with('sweetalert', [
                         'type' => 'success',
                         'title' => 'Welcome Nurse!',
                         'text' => 'Login successful.',
                         'timer' => 2000
                     ]);
-                case 'Doctor':
+                case 'doctor':
                     return redirect()->route('doctor-home')->with('sweetalert', [
                         'type' => 'success',
                         'title' => 'Welcome Doctor!',
                         'text' => 'Login successful.',
                         'timer' => 2000
                     ]);
-                case 'Admin':
+                case 'admin':
                     return redirect()->route('admin-home')->with('sweetalert', [
                         'type' => 'success',
                         'title' => 'Welcome Admin!',

@@ -50,12 +50,12 @@ class HomeController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
 
-            switch ($user->role) {
-                case 'Nurse':
+            switch (strtolower((string) $user->role)) {
+                case 'nurse':
                     return redirect()->route('nurse-home');
-                case 'Doctor':
+                case 'doctor':
                     return redirect()->route('doctor-home');
-                case 'Admin':
+                case 'admin':
                     return redirect()->route('admin-home');
                 default:
                     Auth::logout();

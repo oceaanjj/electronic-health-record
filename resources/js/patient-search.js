@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         ${
                             !patient.is_active
                                 ? `<button type="button"
-                                    class="inline-block bg-red-50 border border-red-600 text-red-600 cursor-pointer hover:bg-red-100 text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
+                                    class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
                                     data-patient-id="${patient.patient_id}" data-action="activate">RESTORE</button>`
                                 : `<div class="flex justify-center gap-2">
                                     <a href="/patients/${patient.patient_id}/edit"
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                         EDIT
                                     </a>
                                     <button type="button"
-                                        class="inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red cursor-pointer js-toggle-patient-status"
+                                        class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red cursor-pointer"
                                         data-patient-id="${patient.patient_id}" data-action="deactivate">SET INACTIVE</button>
                                    </div>`
                         }

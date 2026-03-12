@@ -32,18 +32,178 @@
 | POST | `/api/patient` | Register new patient |
 | GET | `/api/patient/{id}` | Get patient by ID |
 | PUT | `/api/patient/{id}` | Update patient |
-| POST | `/api/patient/{id}/toggle-status` | Activate/deactivate (`{ "is_active": true }`) |
+| POST | `/api/patient/{id}/toggle-status` | Activate/deactivate patient |
 
-**Create Patient Body:**
+---
+
+### Register a New Patient
+
+`POST /api/patient`
+
+#### Required Fields
+
+| DB Column | Type | Validation | Notes |
+|---|---|---|---|
+| `first_name` | string | required, max 255 | Auto-capitalized (e.g. `"maria"` → `"Maria"`) |
+| `last_name` | string | required, max 255 | Auto-capitalized |
+| `age` | number | required, min 0 | Decimals allowed — e.g. `0.5` = 6 months old |
+| `birthdate` | date string | required, `YYYY-MM-DD` | e.g. `"1990-03-15"` |
+| `sex` | string | required | Must be exactly `"Male"`, `"Female"`, or `"Other"` |
+| `admission_date` | date string | required, `YYYY-MM-DD` | e.g. `"2026-03-12"` |
+
+#### Optional Fields
+
+| DB Column | Type | Validation | Notes |
+|---|---|---|---|
+| `middle_name` | string | nullable, max 255 | Auto-capitalized |
+| `address` | string | nullable, max 500 | Full home address |
+| `birthplace` | string | nullable, max 255 | City/town of birth |
+| `religion` | string | nullable, max 255 | e.g. `"Catholic"` |
+| `ethnicity` | string | nullable, max 255 | e.g. `"Filipino"` |
+| `chief_complaints` | string | nullable | Free-text chief complaints on admission |
+| `room_no` | string | nullable, max 50 | e.g. `"101"` |
+| `bed_no` | string | nullable, max 50 | e.g. `"A"` |
+| `contact_name` | array of strings | nullable | e.g. `["Juan Santos"]` |
+| `contact_relationship` | array of strings | nullable | e.g. `["Spouse"]` |
+| `contact_number` | array of strings | nullable | e.g. `["09171234567"]` |
+
+> ⚠️ `contact_name`, `contact_relationship`, and `contact_number` are stored as JSON arrays in the database. Always send them as arrays, even with a single contact.
+
+#### Minimum Request Body
 ```json
 {
-  "first_name": "Juan", "last_name": "Dela Cruz",
-  "age": 30, "birthdate": "1994-01-15",
-  "sex": "Male", "admission_date": "2025-01-01",
-  "room_no": "101", "bed_no": "A",
-  "address": "Manila", "religion": "Catholic",
-  "chief_complaints": "Fever, cough"
+  "first_name": "Juan",
+  "last_name": "Dela Cruz",
+  "age": 30,
+  "birthdate": "1994-01-15",
+  "sex": "Male",
+  "admission_date": "2026-03-12"
 }
+```
+
+#### Full Request Body (all fields)
+```json
+{
+  "first_name": "Juan",
+  "last_name": "Dela Cruz",
+  "middle_name": "Reyes",
+  "age": 30,
+  "birthdate": "1994-01-15",
+  "sex": "Male",
+  "admission_date": "2026-03-12",
+  "address": "123 Rizal St., Quezon City",
+  "birthplace": "Manila",
+  "religion": "Catholic",
+  "ethnicity": "Filipino",
+  "chief_complaints": "Fever, cough, shortness of breath",
+  "room_no": "101",
+  "bed_no": "A",
+  "contact_name": ["Maria Dela Cruz"],
+  "contact_relationship": ["Spouse"],
+  "contact_number": ["09171234567"]
+}
+```
+
+#### Success Response (201)
+```json
+{
+  "message": "Patient registered successfully",
+  "patient": {
+    "id": "P-2026-0042",
+    "patient_id": "P-2026-0042",
+    "first_name": "Juan",
+    "last_name": "Dela Cruz",
+    "middle_name": "Reyes",
+    "age": 30,
+    "birthdate": "1994-01-15",
+    "sex": "Male",
+    "admission_date": "2026-03-12T00:00:00.000000Z",
+    "address": "123 Rizal St., Quezon City",
+    "birthplace": "Manila",
+    "religion": "Catholic",
+    "ethnicity": "Filipino",
+    "chief_complaints": "Fever, cough, shortness of breath",
+    "room_no": "101",
+    "bed_no": "A",
+    "contact_name": ["Maria Dela Cruz"],
+    "contact_relationship": ["Spouse"],
+    "contact_number": ["09171234567"],
+    "is_active": true,
+    "user_id": 5,
+    "created_at": "2026-03-12T14:00:00.000000Z",
+    "updated_at": "2026-03-12T14:00:00.000000Z"
+  }
+}
+```
+
+#### Validation Error Response (422)
+```json
+{
+  "message": "The sex field must be one of: Male, Female, Other.",
+  "errors": {
+    "sex": ["The sex field must be one of: Male, Female, Other."]
+  }
+}
+```
+
+---
+
+### List Patients
+
+`GET /api/patient`
+
+| Query Param | Description |
+|---|---|
+| `search` | Filter by `first_name`, `last_name`, or `patient_id` |
+| `all` | Include deactivated patients — e.g. `?all=1` |
+
+---
+
+### Get a Single Patient
+
+`GET /api/patient/{patient_id}`
+
+Returns the full patient object with all DB columns.
+
+---
+
+### Update a Patient
+
+`PUT /api/patient/{patient_id}`
+
+Send only the fields you want to change. Uses the same DB column names as the create endpoint. All fields are optional (partial update).
+
+```json
+{
+  "room_no": "205",
+  "bed_no": "B",
+  "chief_complaints": "Updated: fever and chills"
+}
+```
+
+**Success Response (200):**
+```json
+{
+  "message": "Patient updated successfully",
+  "patient": { "...all patient fields..." }
+}
+```
+
+---
+
+### Activate / Deactivate a Patient
+
+`POST /api/patient/{patient_id}/toggle-status`
+
+```json
+{ "is_active": true }
+```
+
+Use `true` to activate, `false` to deactivate (soft-delete).
+
+**Success Response (200):**
+```json
+{ "message": "Patient Activated successfully" }
 ```
 
 ---

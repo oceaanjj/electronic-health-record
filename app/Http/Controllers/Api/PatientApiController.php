@@ -39,21 +39,50 @@ class PatientApiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'age' => 'required|integer',
-            'birthdate' => 'required|date',
-            'sex' => 'required|string',
-            'admission_date' => 'required|date',
+            // Required fields
+            'first_name'            => 'required|string|max:255',
+            'last_name'             => 'required|string|max:255',
+            'age'                   => 'required|numeric|min:0',
+            'birthdate'             => 'required|date',
+            'sex'                   => 'required|string|in:Male,Female,Other',
+            'admission_date'        => 'required|date',
+
+            // Optional demographic fields
+            'middle_name'           => 'nullable|string|max:255',
+            'address'               => 'nullable|string|max:500',
+            'birthplace'            => 'nullable|string|max:255',
+            'religion'              => 'nullable|string|max:255',
+            'ethnicity'             => 'nullable|string|max:255',
+
+            // Optional clinical fields
+            'chief_complaints'      => 'nullable|string',
+            'room_no'               => 'nullable|string|max:50',
+            'bed_no'                => 'nullable|string|max:50',
+
+            // Optional contact fields (stored as arrays)
+            'contact_name'          => 'nullable|array',
+            'contact_name.*'        => 'nullable|string|max:255',
+            'contact_relationship'  => 'nullable|array',
+            'contact_relationship.*'=> 'nullable|string|max:255',
+            'contact_number'        => 'nullable|array',
+            'contact_number.*'      => 'nullable|string|max:50',
         ]);
 
         try {
-            $validated['user_id'] = Auth::id();
+            $validated['user_id']   = Auth::id();
             $validated['is_active'] = true;
             $patient = Patient::create($validated);
-            AuditLogController::log('Patient Created (Mobile)', 'User ' . Auth::user()->username . ' registered a patient via mobile.', ['patient_id' => $patient->patient_id]);
-            return response()->json(['message' => 'Patient registered successfully', 'patient' => $this->transformPatient($patient)], 201);
+            AuditLogController::log(
+                'Patient Created (Mobile)',
+                'User ' . Auth::user()->username . ' registered a patient via mobile.',
+                ['patient_id' => $patient->patient_id]
+            );
+            return response()->json([
+                'message' => 'Patient registered successfully',
+                'patient' => $this->transformPatient($patient),
+            ], 201);
         } catch (\Exception $e) {
+            Log::error('Patient store failed', ['error' => $e->getMessage()]);
             return response()->json(['message' => 'Error creating patient', 'error' => $e->getMessage()], 500);
         }
     }
@@ -67,9 +96,40 @@ class PatientApiController extends Controller
     public function update(Request $request, $id)
     {
         $patient = Patient::where('patient_id', $id)->firstOrFail();
-        $patient->update($request->all());
-        AuditLogController::log('Patient Updated (Mobile)', 'User ' . Auth::user()->username . ' updated patient details via mobile.', ['patient_id' => $patient->patient_id]);
-        return response()->json(['message' => 'Patient updated successfully', 'patient' => $this->transformPatient($patient)]);
+
+        $validated = $request->validate([
+            'first_name'            => 'sometimes|string|max:255',
+            'last_name'             => 'sometimes|string|max:255',
+            'middle_name'           => 'nullable|string|max:255',
+            'age'                   => 'sometimes|numeric|min:0',
+            'birthdate'             => 'sometimes|date',
+            'sex'                   => 'sometimes|string|in:Male,Female,Other',
+            'admission_date'        => 'sometimes|date',
+            'address'               => 'nullable|string|max:500',
+            'birthplace'            => 'nullable|string|max:255',
+            'religion'              => 'nullable|string|max:255',
+            'ethnicity'             => 'nullable|string|max:255',
+            'chief_complaints'      => 'nullable|string',
+            'room_no'               => 'nullable|string|max:50',
+            'bed_no'                => 'nullable|string|max:50',
+            'contact_name'          => 'nullable|array',
+            'contact_name.*'        => 'nullable|string|max:255',
+            'contact_relationship'  => 'nullable|array',
+            'contact_relationship.*'=> 'nullable|string|max:255',
+            'contact_number'        => 'nullable|array',
+            'contact_number.*'      => 'nullable|string|max:50',
+        ]);
+
+        $patient->update($validated);
+        AuditLogController::log(
+            'Patient Updated (Mobile)',
+            'User ' . Auth::user()->username . ' updated patient details via mobile.',
+            ['patient_id' => $patient->patient_id]
+        );
+        return response()->json([
+            'message' => 'Patient updated successfully',
+            'patient' => $this->transformPatient($patient),
+        ]);
     }
 
     public function toggleStatus(Request $request, $id)

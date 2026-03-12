@@ -24,6 +24,9 @@ Route::middleware(['auth:sanctum', 'role:doctor'])->prefix('doctor')->group(func
     // GET /api/doctor/today-updates
     Route::get('today-updates', [DoctorApiController::class, 'todayUpdates']);
 
+    // POST /api/doctor/mark-read
+    Route::post('mark-read', [DoctorApiController::class, 'markFormRead']);
+
     // ── PATIENTS ─────────────────────────────────────────────────────────
     // GET /api/doctor/patients?search=
     Route::get('patients', [DoctorApiController::class, 'allPatients']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Doctor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\Patient;
 use App\Models\Vitals;
 use App\Models\PhysicalExam;
@@ -13,9 +14,21 @@ use App\Models\LabValues;
 use App\Models\IvsAndLine;
 use App\Models\MedicationAdministration;
 use App\Models\NursingDiagnosis;
+use App\Models\FormRead;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorApiController extends Controller
 {
+    private const MODEL_MAP = [
+        'vital-signs'   => [Vitals::class,                  'Vital Signs'],
+        'physical-exam' => [PhysicalExam::class,            'Physical Exam'],
+        'adl'           => [ActOfDailyLiving::class,        'Activities of Daily Living'],
+        'intake-output' => [IntakeAndOutput::class,         'Intake & Output'],
+        'lab-values'    => [LabValues::class,               'Lab Values'],
+        'medication'    => [MedicationAdministration::class, 'Medication Administration'],
+        'ivs-lines'     => [IvsAndLine::class,              'IVs & Lines'],
+    ];
+
     // ─────────────────────────────────────────────
     // Dashboard Stats
     // GET /api/doctor/stats
@@ -25,53 +38,62 @@ class DoctorApiController extends Controller
         $total   = Patient::count();
         $active  = Patient::where('is_active', true)->count();
         $today   = $this->getTodayUpdatesCount();
+        $unread  = $this->getUnreadCount();
 
         return response()->json([
-            'total_patients'   => $total,
-            'active_patients'  => $active,
-            'today_updates'    => $today,
+            'total_patients'  => $total,
+            'active_patients' => $active,
+            'today_updates'   => $today,
+            'unread_count'    => $unread,
         ]);
     }
 
     private function getTodayUpdatesCount(): int
     {
-        $models = [
-            Vitals::class, PhysicalExam::class, ActOfDailyLiving::class,
-            IntakeAndOutput::class, LabValues::class,
-            IvsAndLine::class, MedicationAdministration::class,
-        ];
         $count = 0;
-        foreach ($models as $model) {
+        foreach (array_column(self::MODEL_MAP, 0) as $model) {
             try { $count += $model::whereDate('updated_at', today())->count(); } catch (\Exception $e) {}
         }
         return $count;
     }
 
+    private function getUnreadCount(): int
+    {
+        $raw = [];
+        foreach (self::MODEL_MAP as [$modelClass]) {
+            try {
+                foreach ($modelClass::latest()->take(6)->get() as $r) {
+                    $raw[] = ['model_class' => $modelClass, 'record_id' => $r->getKey()];
+                }
+            } catch (\Exception $e) {}
+        }
+        if (empty($raw)) return 0;
+
+        $readMap = FormRead::where('user_id', Auth::id())->get()
+            ->mapWithKeys(fn($r) => [$r->model_type . ':' . $r->model_id => true]);
+
+        return collect($raw)
+            ->filter(fn($item) => !$readMap->has($item['model_class'] . ':' . $item['record_id']))
+            ->count();
+    }
+
     // ─────────────────────────────────────────────
     // Recent Forms Feed
-    // GET /api/doctor/recent-forms?type=all&patient=&date=&page=1&per_page=20
+    // GET /api/doctor/recent-forms
+    //   ?type=all&read=all&patient=&date=&page=1&per_page=20
     // ─────────────────────────────────────────────
     public function recentForms(Request $request)
     {
         $filterType    = $request->query('type', 'all');
+        $filterRead    = $request->query('read', 'all');   // all | unread | read
         $filterPatient = $request->query('patient', '');
         $filterDate    = $request->query('date', '');
         $page          = max(1, (int) $request->query('page', 1));
         $perPage       = min(50, max(1, (int) $request->query('per_page', 20)));
 
-        $modelMap = [
-            'vital-signs'   => [Vitals::class,                 'Vital Signs'],
-            'physical-exam' => [PhysicalExam::class,           'Physical Exam'],
-            'adl'           => [ActOfDailyLiving::class,       'Activities of Daily Living'],
-            'intake-output' => [IntakeAndOutput::class,        'Intake & Output'],
-            'lab-values'    => [LabValues::class,              'Lab Values'],
-            'medication'    => [MedicationAdministration::class,'Medication Administration'],
-            'ivs-lines'     => [IvsAndLine::class,             'IVs & Lines'],
-        ];
-
-        $modelsToQuery = ($filterType !== 'all' && isset($modelMap[$filterType]))
-            ? [$filterType => $modelMap[$filterType]]
-            : $modelMap;
+        $modelsToQuery = ($filterType !== 'all' && isset(self::MODEL_MAP[$filterType]))
+            ? [$filterType => self::MODEL_MAP[$filterType]]
+            : self::MODEL_MAP;
 
         $rawFeeds = [];
         foreach ($modelsToQuery as $key => [$modelClass, $label]) {
@@ -80,33 +102,46 @@ class DoctorApiController extends Controller
                 if ($filterDate) $query->whereDate('updated_at', $filterDate);
                 foreach ($query->take(50)->get() as $record) {
                     $rawFeeds[] = [
-                        'type'       => $label,
-                        'type_key'   => $key,
-                        'patient_id' => $record->patient_id ?? null,
-                        'time'       => $record->updated_at,
-                        'record_id'  => $record->getKey(),
+                        'type'        => $label,
+                        'type_key'    => $key,
+                        'patient_id'  => $record->patient_id ?? null,
+                        'time'        => $record->updated_at,
+                        'record_id'   => $record->getKey(),
+                        'model_class' => $modelClass,
                     ];
                 }
             } catch (\Exception $e) {}
         }
 
+        // Batch-load patients and read status
         $patientIds = array_values(array_unique(array_filter(array_column($rawFeeds, 'patient_id'))));
         $patients   = Patient::whereIn('patient_id', $patientIds)->get()->keyBy('patient_id');
 
+        $readMap = !empty($rawFeeds)
+            ? FormRead::where('user_id', Auth::id())->get()
+                ->mapWithKeys(fn($r) => [$r->model_type . ':' . $r->model_id => true])
+            : collect();
+
         $feeds = collect($rawFeeds)
-            ->map(fn($item) => array_merge($item, [
-                'patient_name' => $patients->get($item['patient_id'])?->name ?? 'Unknown Patient',
-                'time'         => (string) $item['time'],
-            ]))
+            ->map(function ($item) use ($patients, $readMap) {
+                $item['patient_name'] = $patients->get($item['patient_id'])?->name ?? 'Unknown Patient';
+                $item['is_read']      = $readMap->has($item['model_class'] . ':' . $item['record_id']);
+                $item['is_today']     = \Carbon\Carbon::parse($item['time'])->isToday();
+                $item['time']         = (string) $item['time'];
+                unset($item['model_class']); // internal only
+                return $item;
+            })
             ->when($filterPatient, fn($c) => $c->filter(
                 fn($item) => stripos($item['patient_name'], $filterPatient) !== false
             ))
+            ->when($filterRead === 'unread', fn($c) => $c->filter(fn($item) => !$item['is_read']))
+            ->when($filterRead === 'read',   fn($c) => $c->filter(fn($item) =>  $item['is_read']))
             ->sortByDesc('time')
             ->values();
 
         $total    = $feeds->count();
         $items    = $feeds->slice(($page - 1) * $perPage, $perPage)->values();
-        $lastPage = (int) ceil($total / $perPage);
+        $lastPage = max(1, (int) ceil($total / $perPage));
 
         return response()->json([
             'data'      => $items,
@@ -123,26 +158,17 @@ class DoctorApiController extends Controller
     // ─────────────────────────────────────────────
     public function todayUpdates()
     {
-        $modelMap = [
-            'vital-signs'   => [Vitals::class,                 'Vital Signs'],
-            'physical-exam' => [PhysicalExam::class,           'Physical Exam'],
-            'adl'           => [ActOfDailyLiving::class,       'Activities of Daily Living'],
-            'intake-output' => [IntakeAndOutput::class,        'Intake & Output'],
-            'lab-values'    => [LabValues::class,              'Lab Values'],
-            'medication'    => [MedicationAdministration::class,'Medication Administration'],
-            'ivs-lines'     => [IvsAndLine::class,             'IVs & Lines'],
-        ];
-
         $rawFeeds = [];
-        foreach ($modelMap as $key => [$modelClass, $label]) {
+        foreach (self::MODEL_MAP as $key => [$modelClass, $label]) {
             try {
                 foreach ($modelClass::whereDate('updated_at', today())->latest()->get() as $record) {
                     $rawFeeds[] = [
-                        'type'       => $label,
-                        'type_key'   => $key,
-                        'patient_id' => $record->patient_id ?? null,
-                        'time'       => (string) $record->updated_at,
-                        'record_id'  => $record->getKey(),
+                        'type'        => $label,
+                        'type_key'    => $key,
+                        'patient_id'  => $record->patient_id ?? null,
+                        'time'        => (string) $record->updated_at,
+                        'record_id'   => $record->getKey(),
+                        'model_class' => $modelClass,
                     ];
                 }
             } catch (\Exception $e) {}
@@ -151,14 +177,48 @@ class DoctorApiController extends Controller
         $patientIds = array_values(array_unique(array_filter(array_column($rawFeeds, 'patient_id'))));
         $patients   = Patient::whereIn('patient_id', $patientIds)->get()->keyBy('patient_id');
 
+        $readMap = !empty($rawFeeds)
+            ? FormRead::where('user_id', Auth::id())->get()
+                ->mapWithKeys(fn($r) => [$r->model_type . ':' . $r->model_id => true])
+            : collect();
+
         $items = collect($rawFeeds)
-            ->map(fn($item) => array_merge($item, [
-                'patient_name' => $patients->get($item['patient_id'])?->name ?? 'Unknown Patient',
-            ]))
+            ->map(function ($item) use ($patients, $readMap) {
+                $item['patient_name'] = $patients->get($item['patient_id'])?->name ?? 'Unknown Patient';
+                $item['is_read']      = $readMap->has($item['model_class'] . ':' . $item['record_id']);
+                unset($item['model_class']);
+                return $item;
+            })
             ->sortByDesc('time')
             ->values();
 
         return response()->json(['data' => $items, 'total' => $items->count()]);
+    }
+
+    // ─────────────────────────────────────────────
+    // Mark Form as Read
+    // POST /api/doctor/mark-read
+    // Body: { "model_type": "App\\Models\\Vitals", "model_id": 42 }
+    // ─────────────────────────────────────────────
+    public function markFormRead(Request $request)
+    {
+        $allowed = array_column(self::MODEL_MAP, 0);
+
+        $validated = $request->validate([
+            'model_type' => ['required', 'string', Rule::in($allowed)],
+            'model_id'   => 'required|integer|min:1',
+        ]);
+
+        FormRead::updateOrCreate(
+            [
+                'user_id'    => Auth::id(),
+                'model_type' => $validated['model_type'],
+                'model_id'   => $validated['model_id'],
+            ],
+            ['read_at' => now()]
+        );
+
+        return response()->json(['success' => true, 'message' => 'Marked as read.']);
     }
 
     // ─────────────────────────────────────────────
@@ -218,15 +278,7 @@ class DoctorApiController extends Controller
     {
         Patient::where('patient_id', $patient_id)->firstOrFail();
 
-        $typeMap = [
-            'vital-signs'   => Vitals::class,
-            'physical-exam' => PhysicalExam::class,
-            'adl'           => ActOfDailyLiving::class,
-            'intake-output' => IntakeAndOutput::class,
-            'lab-values'    => LabValues::class,
-            'medication'    => MedicationAdministration::class,
-            'ivs-lines'     => IvsAndLine::class,
-        ];
+        $typeMap = array_map(fn($v) => $v[0], self::MODEL_MAP);
 
         abort_unless(isset($typeMap[$type]), 422, 'Invalid form type. Valid: ' . implode(', ', array_keys($typeMap)));
 

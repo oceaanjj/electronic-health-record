@@ -60,7 +60,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-DBa9lNE0.css",
+    "file": "assets/app-CaHrX12J.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -136,7 +136,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-qPNkUs31.js",
+    "file": "assets/app-B44v7T5l.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -155,7 +155,7 @@
       "resources/js/form-saver.js"
     ],
     "css": [
-      "assets/app-DBa9lNE0.css"
+      "assets/app-CaHrX12J.css"
     ],
     "assets": [
       "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",

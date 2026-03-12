@@ -17,5 +17,6 @@ Route::middleware(['auth', 'can:is-doctor'])->group(function () {
     Route::get('/doctor/stats/total-patients', [ReportController::class, 'totalPatients'])->name('doctor.stats.total-patients');
     Route::get('/doctor/stats/active-patients', [ReportController::class, 'activePatients'])->name('doctor.stats.active-patients');
     Route::get('/doctor/stats/today-updates', [ReportController::class, 'todayUpdates'])->name('doctor.stats.today-updates');
+    Route::post('/doctor/mark-read', [HomeController::class, 'markFormRead'])->name('doctor.mark-read');
     Route::get('/doctor/patient/{patient_id}', [ReportController::class, 'patientDetails'])->name('doctor.patient-details');
 });

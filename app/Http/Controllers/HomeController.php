@@ -11,6 +11,7 @@ use App\Models\IntakeAndOutput;
 use App\Models\LabValues;
 use App\Models\MedicationAdministration;
 use App\Models\IvsAndLine;
+use App\Models\FormRead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,14 +87,42 @@ class HomeController extends Controller
         $todayForms = collect($assessmentModels)
             ->sum(fn($m) => $m::whereDate('updated_at', today())->count());
 
-        $recentForms = $this->getRecentFormSubmissions(6);
+        $recentForms  = $this->getRecentFormSubmissions(6);
+        $unreadCount  = $recentForms->where('is_read', false)->count();
 
         return view('doctor.home', compact(
             'totalPatients',
             'activePatients',
             'todayForms',
-            'recentForms'
+            'recentForms',
+            'unreadCount'
         ));
+    }
+
+    public function markFormRead(Request $request)
+    {
+        $allowed = [
+            'App\\Models\\Vitals', 'App\\Models\\PhysicalExam',
+            'App\\Models\\ActOfDailyLiving', 'App\\Models\\IntakeAndOutput',
+            'App\\Models\\LabValues', 'App\\Models\\MedicationAdministration',
+            'App\\Models\\IvsAndLine',
+        ];
+
+        $validated = $request->validate([
+            'model_type' => ['required', 'string', \Illuminate\Validation\Rule::in($allowed)],
+            'model_id'   => 'required|integer|min:1',
+        ]);
+
+        FormRead::updateOrCreate(
+            [
+                'user_id'    => Auth::id(),
+                'model_type' => $validated['model_type'],
+                'model_id'   => $validated['model_id'],
+            ],
+            ['read_at' => now()]
+        );
+
+        return response()->json(['success' => true]);
     }
 
     private function getRecentFormSubmissions(int $perModel = 5): \Illuminate\Support\Collection
@@ -115,12 +144,14 @@ class HomeController extends Controller
                 $records = $modelClass::latest()->take($perModel)->get();
                 foreach ($records as $record) {
                     $raw[] = [
-                        'type'       => $label,
-                        'slug'       => $slug,
-                        'icon'       => $icon,
-                        'color'      => $color,
-                        'patient_id' => $record->patient_id,
-                        'time'       => $record->updated_at,
+                        'type'        => $label,
+                        'slug'        => $slug,
+                        'icon'        => $icon,
+                        'color'       => $color,
+                        'patient_id'  => $record->patient_id,
+                        'time'        => $record->updated_at,
+                        'record_id'   => $record->id,
+                        'model_class' => $modelClass,
                     ];
                 }
             } catch (\Exception $e) {
@@ -134,9 +165,20 @@ class HomeController extends Controller
                               ->get()
                               ->keyBy('patient_id');
 
-        // Step 3: Attach names and sort
-        $feeds = collect($raw)->map(function ($item) use ($patients) {
+        // Step 3: Load read records for current doctor in one query
+        $userId = Auth::id();
+        $readMap = collect();
+        if (!empty($raw)) {
+            $readMap = FormRead::where('user_id', $userId)
+                ->get()
+                ->mapWithKeys(fn($r) => [$r->model_type . ':' . $r->model_id => true]);
+        }
+
+        // Step 4: Attach names, read status, and today flag then sort
+        $feeds = collect($raw)->map(function ($item) use ($patients, $readMap) {
             $item['patient_name'] = $patients->get($item['patient_id'])?->name ?? 'Unknown Patient';
+            $item['is_read']      = $readMap->has($item['model_class'] . ':' . $item['record_id']);
+            $item['is_today']     = \Carbon\Carbon::parse($item['time'])->isToday();
             return $item;
         });
 

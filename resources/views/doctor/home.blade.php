@@ -40,6 +40,58 @@
             background: #d1d5db;
             border-radius: 4px;
         }
+
+        /* Pill filter styles */
+        .filter-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 9999px;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background-color 0.15s, color 0.15s;
+            white-space: nowrap;
+            border: none;
+            outline: none;
+        }
+
+        .filter-pill:not(.active) {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .filter-pill:not(.active):hover {
+            background-color: #e5e7eb;
+        }
+
+        .filter-pill.active {
+            background-color: #15803d;
+            color: #ffffff;
+        }
+
+        .filter-pill .pill-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 17px;
+            height: 15px;
+            border-radius: 9999px;
+            padding: 0 4px;
+            font-size: 0.65rem;
+            line-height: 1;
+        }
+
+        .filter-pill:not(.active) .pill-count {
+            background-color: rgba(209, 213, 219, 0.8);
+            color: #374151;
+        }
+
+        .filter-pill.active .pill-count {
+            background-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
     </style>
 @endpush
 
@@ -255,6 +307,11 @@
                                 <h2 class="font-alte text-gray-800 text-base uppercase tracking-wide truncate">
                                     Recent Patient Forms
                                 </h2>
+                                {{-- Unread count badge --}}
+                                <span id="unread-header-badge"
+                                    class="{{ $unreadCount > 0 ? '' : 'hidden' }} flex-shrink-0 inline-flex items-center justify-center min-w-[20px] h-5 rounded-full bg-red-500 text-white text-[10px] font-alte leading-none px-1">
+                                    {{ $unreadCount }}
+                                </span>
                             </div>
                             <a href="{{ route('doctor.recent-forms') }}"
                                 class="flex-shrink-0 ml-4 text-sm font-alte text-green-700 hover:text-green-900
@@ -262,6 +319,22 @@
                                 View All
                                 <span class="material-symbols-outlined" style="font-size:14px">chevron_right</span>
                             </a>
+                        </div>
+
+                        {{-- Pill filters --}}
+                        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-gray-100 bg-white flex-shrink-0 overflow-x-auto">
+                            <button class="filter-pill active font-alte" data-filter="all">
+                                All <span class="pill-count">0</span>
+                            </button>
+                            <button class="filter-pill font-alte" data-filter="today">
+                                Updates Today <span class="pill-count">0</span>
+                            </button>
+                            <button class="filter-pill font-alte" data-filter="unread">
+                                Unread <span class="pill-count">0</span>
+                            </button>
+                            <button class="filter-pill font-alte" data-filter="read">
+                                Read <span class="pill-count">0</span>
+                            </button>
                         </div>
 
                         {{-- Feed --}}
@@ -272,11 +345,18 @@
                                 <p class="text-sm font-alte-regular">Patient assessment records will appear here.</p>
                             </div>
                         @else
-                            <ul class="forms-feed divide-y divide-gray-50">
+                            <ul class="forms-feed divide-y divide-gray-50" id="forms-feed-list">
                                 @foreach ($recentForms as $form)
-                                    <li>
+                                    <li class="form-item"
+                                        data-read="{{ $form['is_read'] ? '1' : '0' }}"
+                                        data-today="{{ $form['is_today'] ? '1' : '0' }}"
+                                        data-model-type="{{ $form['model_class'] }}"
+                                        data-model-id="{{ $form['record_id'] }}">
                                         <a href="{{ $form['patient_id'] ? route('doctor.form-detail', ['type' => $form['slug'], 'patient_id' => $form['patient_id']]) . '?from=recent-forms' : '#' }}"
                                             class="group flex items-center gap-3 px-4 sm:px-5 py-3.5 hover:bg-blue-50/40 transition-colors block">
+
+                                            {{-- Unread dot --}}
+                                            <div class="flex-shrink-0 w-2 h-2 rounded-full unread-dot transition-opacity {{ $form['is_read'] ? 'opacity-0' : 'bg-blue-500' }}"></div>
 
                                             {{-- Icon bubble --}}
                                             <div class="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
@@ -287,8 +367,7 @@
 
                                             {{-- Patient + type --}}
                                             <div class="flex-1 min-w-0">
-                                                <p
-                                                    class="text-base font-alte text-gray-800 truncate leading-tight group-hover:text-blue-700 transition-colors">
+                                                <p class="text-base font-alte truncate leading-tight transition-colors {{ $form['is_read'] ? 'text-gray-600' : 'text-gray-900' }} group-hover:text-blue-700">
                                                     {{ $form['patient_name'] }}
                                                 </p>
                                                 <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
@@ -297,13 +376,16 @@
                                                         style="background-color: {{ $form['color'] }}">
                                                         {{ $form['type'] }}
                                                     </span>
-                                                    <span class="text-sm font-alte-regular text-gray-400">updated</span>
+                                                    <span class="text-xs font-alte-regular text-gray-400">updated</span>
+                                                    @if ($form['is_today'])
+                                                        <span class="rounded-full px-2 py-0.5 bg-amber-100 text-amber-700 font-alte text-[10px] leading-none">Today</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
                                             {{-- Time + arrow --}}
                                             <div class="flex-shrink-0 flex flex-col items-end gap-1">
-                                                <span class="text-sm font-alte-regular text-gray-400 whitespace-nowrap">
+                                                <span class="text-xs font-alte-regular text-gray-400 whitespace-nowrap">
                                                     {{ \Carbon\Carbon::parse($form['time'])->diffForHumans() }}
                                                 </span>
                                                 <span
@@ -314,6 +396,12 @@
                                         </a>
                                     </li>
                                 @endforeach
+
+                                {{-- Empty state when filter has no matches --}}
+                                <li id="empty-filtered" class="hidden py-10 text-center">
+                                    <span class="material-symbols-outlined text-gray-300" style="font-size:36px">filter_list_off</span>
+                                    <p class="text-sm font-alte text-gray-400 mt-1">No forms match this filter.</p>
+                                </li>
                             </ul>
 
                             {{-- Footer --}}
@@ -335,5 +423,95 @@
         </div>{{-- /page body --}}
 
     </div>{{-- /full-width wrapper --}}
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const pills   = document.querySelectorAll('.filter-pill');
+    const items   = document.querySelectorAll('.form-item');
+    const badge   = document.getElementById('unread-header-badge');
+    const emptyEl = document.getElementById('empty-filtered');
+
+    // ── Count & update pill badges ────────────────────────────────────────
+    function updateCounts() {
+        let all = 0, today = 0, unread = 0, read = 0;
+        items.forEach(function (item) {
+            all++;
+            if (item.dataset.today === '1') today++;
+            if (item.dataset.read  === '0') unread++;
+            if (item.dataset.read  === '1') read++;
+        });
+
+        document.querySelector('[data-filter="all"]    .pill-count').textContent = all;
+        document.querySelector('[data-filter="today"]  .pill-count').textContent = today;
+        document.querySelector('[data-filter="unread"] .pill-count').textContent = unread;
+        document.querySelector('[data-filter="read"]   .pill-count').textContent = read;
+
+        if (badge) {
+            badge.textContent = unread;
+            badge.classList.toggle('hidden', unread === 0);
+        }
+    }
+
+    // ── Apply filter ──────────────────────────────────────────────────────
+    function applyFilter(filter) {
+        let visible = 0;
+        items.forEach(function (item) {
+            let show = false;
+            if      (filter === 'all')    show = true;
+            else if (filter === 'today')  show = item.dataset.today === '1';
+            else if (filter === 'unread') show = item.dataset.read  === '0';
+            else if (filter === 'read')   show = item.dataset.read  === '1';
+            item.classList.toggle('hidden', !show);
+            if (show) visible++;
+        });
+        if (emptyEl) emptyEl.classList.toggle('hidden', visible > 0);
+    }
+
+    // ── Pill click ────────────────────────────────────────────────────────
+    pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+            pills.forEach(function (p) { p.classList.remove('active'); });
+            this.classList.add('active');
+            applyFilter(this.dataset.filter);
+        });
+    });
+
+    // ── Mark as read on click (optimistic) ───────────────────────────────
+    items.forEach(function (item) {
+        var link = item.querySelector('a');
+        if (!link) return;
+        link.addEventListener('click', function () {
+            if (item.dataset.read === '0') {
+                fetch('{{ route("doctor.mark-read") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                    body: JSON.stringify({
+                        model_type: item.dataset.modelType,
+                        model_id:   parseInt(item.dataset.modelId),
+                    }),
+                });
+                item.dataset.read = '1';
+                var dot = item.querySelector('.unread-dot');
+                if (dot) dot.classList.add('opacity-0');
+                var name = item.querySelector('p.font-alte');
+                if (name) { name.classList.remove('text-gray-900'); name.classList.add('text-gray-600'); }
+                updateCounts();
+                // Re-apply current filter so counts stay correct
+                var active = document.querySelector('.filter-pill.active');
+                if (active) applyFilter(active.dataset.filter);
+            }
+        });
+    });
+
+    // ── Init ──────────────────────────────────────────────────────────────
+    updateCounts();
+    applyFilter('all');
+});
+</script>
+@endpush
 
 @endsection

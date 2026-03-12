@@ -75,6 +75,7 @@ class DiagnosticsController extends Controller
         $lastName = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($patient->last_name));
         $filesSaved = 0;
         $date = now()->format('Ymd');
+        try {
             foreach ((array) $request->file('images') as $type => $files) {
                 if (!is_array($files))
                     continue;

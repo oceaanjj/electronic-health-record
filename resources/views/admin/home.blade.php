@@ -97,7 +97,7 @@
                     <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
                         @foreach (\App\Models\AuditLog::latest()->take(5)->get() as $log)
                             @php
-                                $details = json_decode($log->details, true);
+                                $details = is_string($log->details) ? json_decode($log->details, true) : $log->details;
                             @endphp
 
                             <tr class="transition hover:bg-gray-50">

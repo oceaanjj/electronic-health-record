@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisterController;
 //-------------------------------------------------------------
 Route::middleware(['auth', 'can:is-admin'])->group(function () {
     Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin-home');
+    Route::get('/admin/data', [HomeController::class, 'adminData'])->name('admin.data');
 
     Route::get('/users', [UserController::class, 'index'])->name('users');
 

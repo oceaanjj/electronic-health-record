@@ -191,6 +191,33 @@ class HomeController extends Controller
         return view('admin.home', compact('users'));
     }
 
+    public function adminData()
+    {
+        $stats = [
+            'total_users'   => User::whereRaw('LOWER(role) != ?', ['admin'])->count(),
+            'total_doctors' => User::whereRaw('LOWER(role) = ?', ['doctor'])->count(),
+            'total_nurses'  => User::whereRaw('LOWER(role) = ?', ['nurse'])->count(),
+        ];
+
+        $logs = AuditLog::with('user')->latest()->take(5)->get()->map(function($log) {
+            $details = is_string($log->details) ? json_decode($log->details, true) : $log->details;
+            $sentence = $details['details'] ?? 'No details provided.';
+            
+            return [
+                'id'         => $log->id,
+                'username'   => $log->user->username ?? 'System',
+                'action'     => $log->action,
+                'sentence'   => $sentence,
+                'created_at' => $log->created_at->format('M d, Y h:i A'),
+            ];
+        });
+
+        return response()->json([
+            'stats' => $stats,
+            'logs'  => $logs,
+        ]);
+    }
+
 
     //    * The function clears specific session keys based on a given form name and then redirects to the nurse home route.
 //    * @param Request request The `` parameter in the `clearSessionAndRedirect` function is an

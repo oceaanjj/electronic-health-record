@@ -220,7 +220,7 @@
                                 for="sex_input"
                                 class="mb-1 block text-sm font-semibold text-gray-700"
                             >
-                                Sex
+                                Gender
                                 <span class="text-red-500">*</span>
                             </label>
 

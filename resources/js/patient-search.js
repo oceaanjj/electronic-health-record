@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 .map(
                     (patient) => `
                 <tr class="${
-                    patient.deleted_at ? 'bg-red-100 text-red-700' : 'bg-beige'
+                    !patient.is_active ? 'bg-red-100 text-red-700' : 'bg-beige'
                 } hover:bg-white hover:bg-opacity-50 transition-all duration-300 opacity-0 translate-y-2" data-id="${patient.patient_id}">
                     <td class="p-3 border-b-2 border-line-brown/30 font-creato-black font-bold text-brown text-[13px] text-center">
                         ${patient.patient_id}
                     </td>
                     <td class="p-3 border-b-2 border-line-brown/30">
-                        <a href="/patients/${patient.patient_id}"
+                        <a href="/patients/${patient.patient_id}/edit"
                             class="p-3 font-creato-black font-bold text-brown text-[13px] hover:underline hover:text-brown transition-colors duration-150">
                             ${patient.name}
                         </a>
@@ -48,15 +48,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     </td>
                     <td class="p-3 border-b-2 border-line-brown/30 whitespace-nowrap text-center">
                         ${
-                            patient.deleted_at
+                            !patient.is_active
                                 ? `<button type="button"
-                                    class="inline-block bg-green-500 cursor-pointer hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
-                                    data-patient-id="${patient.patient_id}" data-action="activate">SET ACTIVE</button>`
-                                : `<a href="/patients/${patient.patient_id}/edit"
-                                    class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
+                                    class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-50 border border-red-600 px-3 py-1 text-xs font-bold text-red-600 shadow-sm transition hover:bg-red-100 cursor-pointer"
+                                    data-patient-id="${patient.patient_id}" data-action="activate">RESTORE</button>`
+                                : `<div class="flex justify-center gap-2">
+                                    <a href="/patients/${patient.patient_id}/edit"
+                                        class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-green-600 cursor-pointer">
+                                        EDIT
+                                    </a>
                                     <button type="button"
-                                        class="inline-block bg-red-600 cursor-pointer hover:bg-dark-red text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
-                                        data-patient-id="${patient.patient_id}" data-action="deactivate">SET INACTIVE</button>`
+                                        class="js-toggle-patient-status inline-flex items-center justify-center rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-sm transition hover:bg-dark-red cursor-pointer"
+                                        data-patient-id="${patient.patient_id}" data-action="deactivate">SET INACTIVE</button>
+                                   </div>`
                         }
                     </td>
                 </tr>
@@ -71,18 +75,14 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
         }
 
-        // ✅ Only re-render if content changed (prevents double blinking)
+        // ✅ Only re-render if content changed
         if (newHTML === lastRenderedHTML) return;
         lastRenderedHTML = newHTML;
 
-        // Fade out existing rows first
         patientTableBody.querySelectorAll('tr').forEach((tr) => fadeOut(tr));
 
-        // Wait for fade-out transition (200ms)
         setTimeout(() => {
             patientTableBody.innerHTML = newHTML;
-
-            // Fade-in each row
             patientTableBody.querySelectorAll('tr').forEach((tr) => {
                 setTimeout(() => fadeIn(tr), 50);
             });
@@ -106,58 +106,4 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 250);
         });
     }
-
-    // Activate/Deactivate functionality
-    patientTableBody.addEventListener('click', function (event) {
-        const target = event.target;
-        if (!target.classList.contains('js-toggle-patient-status')) return;
-
-        event.preventDefault();
-
-        const patientId = target.dataset.patientId;
-        const action = target.dataset.action;
-        const url = `/patients/${patientId}/${action}`;
-        const method = action === 'deactivate' ? 'DELETE' : 'POST';
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken,
-                'X-HTTP-Method-Override': method,
-            },
-            body: JSON.stringify({}),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success && data.patient) {
-                    const row = target.closest('tr');
-                    if (!row) return;
-
-                    row.classList.add('transition-all', 'duration-300', 'ease-in-out');
-
-                    if (data.patient.deleted_at) {
-                        row.classList.remove('bg-beige');
-                        row.classList.add('bg-red-100', 'text-red-700');
-                    } else {
-                        row.classList.remove('bg-red-100', 'text-red-700');
-                        row.classList.add('bg-beige');
-                    }
-
-                    const actionsCell = row.querySelector('td:last-child');
-                    if (actionsCell) {
-                        actionsCell.innerHTML = data.patient.deleted_at
-                            ? `<button type="button"
-                                class="inline-block bg-green-500 cursor-pointer hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
-                                data-patient-id="${data.patient.patient_id}" data-action="activate">SET ACTIVE</button>`
-                            : `<a href="/patients/${data.patient.patient_id}/edit"
-                                class="inline-block bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold">EDIT</a>
-                                <button type="button"
-                                class="inline-block bg-red-600 cursor-pointer hover:bg-dark-red text-white text-xs px-3 py-1 rounded-full shadow-sm transition duration-150 font-creato-black font-bold js-toggle-patient-status"
-                                data-patient-id="${data.patient.patient_id}" data-action="deactivate">SET INACTIVE</button>`;
-                    }
-                }
-            })
-            .catch((error) => console.error('Error toggling patient status:', error));
-    });
 });

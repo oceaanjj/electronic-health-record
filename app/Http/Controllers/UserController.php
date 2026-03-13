@@ -11,12 +11,12 @@ class UserController extends Controller
     public function updateRole(Request $request, $id)
     {
         $request->validate([
-            'role' => 'required|in:Doctor,Nurse',
+            'role' => 'required|in:Doctor,Nurse,doctor,nurse',
         ]);
 
         $user = User::findOrFail($id);
         $oldRole = $user->role;
-        $user->role = $request->role;
+        $user->role = strtolower($request->role);
         $user->save();
 
         // ✅ Log into audit_logs
@@ -34,7 +34,7 @@ class UserController extends Controller
     public function index()
     {
         // Fetch all users except admin
-        $users = User::where('role', '!=', 'Admin')->get();
+        $users = User::whereRaw('LOWER(role) != ?', ['admin'])->get();
 
         return view('admin.users', compact('users'));
     }

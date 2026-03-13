@@ -1,0 +1,333 @@
+{
+  "public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf": {
+    "file": "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
+    "src": "public/font/alte_haas_grotesk/AlteHaasGroteskBold.ttf"
+  },
+  "public/font/alte_haas_grotesk/AlteHaasGroteskRegular.ttf": {
+    "file": "assets/AlteHaasGroteskRegular-B25r_GJK.ttf",
+    "src": "public/font/alte_haas_grotesk/AlteHaasGroteskRegular.ttf"
+  },
+  "public/font/creato_display/CreatoDisplay-Black.otf": {
+    "file": "assets/CreatoDisplay-Black-05YRyuun.otf",
+    "src": "public/font/creato_display/CreatoDisplay-Black.otf"
+  },
+  "public/font/creato_display/CreatoDisplay-Bold.otf": {
+    "file": "assets/CreatoDisplay-Bold-C-otZvV1.otf",
+    "src": "public/font/creato_display/CreatoDisplay-Bold.otf"
+  },
+  "public/font/jmh_typewriter/JMH Typewriter-Bold.otf": {
+    "file": "assets/JMH Typewriter-Bold-Bi5zYY-d.otf",
+    "src": "public/font/jmh_typewriter/JMH Typewriter-Bold.otf"
+  },
+  "public/font/neometric/Neometric-Regular.otf": {
+    "file": "assets/Neometric-Regular-CDwZRyYG.otf",
+    "src": "public/font/neometric/Neometric-Regular.otf"
+  },
+  "public/font/rubik/Rubik-Regular.ttf": {
+    "file": "assets/Rubik-Regular-CVPqojHn.ttf",
+    "src": "public/font/rubik/Rubik-Regular.ttf"
+  },
+  "public/font/trajan-pro/TrajanPro-Bold.otf": {
+    "file": "assets/TrajanPro-Bold-BqrE6oXJ.otf",
+    "src": "public/font/trajan-pro/TrajanPro-Bold.otf"
+  },
+  "public/img/login-bg.png": {
+    "file": "assets/login-bg-BxlV4FAP.png",
+    "src": "public/img/login-bg.png"
+  },
+  "resources/css/admin-register.css": {
+    "file": "assets/admin-register-B384ATCt.css",
+    "src": "resources/css/admin-register.css",
+    "isEntry": true,
+    "names": [
+      "admin-register.css"
+    ]
+  },
+  "resources/css/admin-users.css": {
+    "file": "assets/admin-users-CBR7yN_D.css",
+    "src": "resources/css/admin-users.css",
+    "isEntry": true,
+    "names": [
+      "admin-users.css"
+    ]
+  },
+  "resources/css/admin.css": {
+    "file": "assets/admin-xRETaHr0.css",
+    "src": "resources/css/admin.css",
+    "isEntry": true,
+    "names": [
+      "admin.css"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CaHrX12J.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/audit-index.css": {
+    "file": "assets/audit-index-DxYXILd_.css",
+    "src": "resources/css/audit-index.css",
+    "isEntry": true,
+    "names": [
+      "audit-index.css"
+    ]
+  },
+  "resources/css/edit-style.css": {
+    "file": "assets/edit-style-CAcSjER-.css",
+    "src": "resources/css/edit-style.css",
+    "isEntry": true,
+    "names": [
+      "edit-style.css"
+    ]
+  },
+  "resources/css/home-style.css": {
+    "file": "assets/home-style-DWYXeDqz.css",
+    "src": "resources/css/home-style.css",
+    "isEntry": true,
+    "names": [
+      "home-style.css"
+    ]
+  },
+  "resources/css/index-style.css": {
+    "file": "assets/index-style-DA_r8IP9.css",
+    "src": "resources/css/index-style.css",
+    "isEntry": true,
+    "names": [
+      "index-style.css"
+    ]
+  },
+  "resources/css/login-style.css": {
+    "file": "assets/login-style-C5JSdaIe.css",
+    "src": "resources/css/login-style.css",
+    "isEntry": true,
+    "names": [
+      "login-style.css"
+    ]
+  },
+  "resources/css/search-style.css": {
+    "file": "assets/search-style-CX8zl9Xr.css",
+    "src": "resources/css/search-style.css",
+    "isEntry": true,
+    "names": [
+      "search-style.css"
+    ]
+  },
+  "resources/css/show-style.css": {
+    "file": "assets/show-style-BWX7oZQN.css",
+    "src": "resources/css/show-style.css",
+    "isEntry": true,
+    "names": [
+      "show-style.css"
+    ]
+  },
+  "resources/js/adpie-alert.js": {
+    "file": "assets/adpie-alert-B4PShMiQ.js",
+    "name": "adpie-alert",
+    "src": "resources/js/adpie-alert.js",
+    "isEntry": true
+  },
+  "resources/js/alert.js": {
+    "file": "assets/alert-Cs9deDbI.js",
+    "name": "alert",
+    "src": "resources/js/alert.js",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DwWYj0iF.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/sweetalert.js",
+      "resources/js/soft-delete.js",
+      "resources/js/patient-search.js",
+      "resources/js/patient-loader.js",
+      "resources/js/searchable-dropdown.js",
+      "resources/js/date-day-loader.js",
+      "resources/js/compute-age.js",
+      "resources/js/init-searchable-dropdown.js",
+      "resources/js/page-initializer.js",
+      "resources/js/intake-output-patient-loader.js",
+      "resources/js/form-disable-alert.js",
+      "resources/js/form-saver.js"
+    ],
+    "css": [
+      "assets/app-CaHrX12J.css"
+    ],
+    "assets": [
+      "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
+      "assets/CreatoDisplay-Bold-C-otZvV1.otf",
+      "assets/CreatoDisplay-Black-05YRyuun.otf",
+      "assets/TrajanPro-Bold-BqrE6oXJ.otf",
+      "assets/JMH Typewriter-Bold-Bi5zYY-d.otf",
+      "assets/Neometric-Regular-CDwZRyYG.otf",
+      "assets/Rubik-Regular-CVPqojHn.ttf",
+      "assets/AlteHaasGroteskRegular-B25r_GJK.ttf"
+    ]
+  },
+  "resources/js/audit-search.js": {
+    "file": "assets/audit-search-DMV3Mr8b.js",
+    "name": "audit-search",
+    "src": "resources/js/audit-search.js",
+    "isEntry": true
+  },
+  "resources/js/close-cdss-alert.js": {
+    "file": "assets/close-cdss-alert-B9TMbxeu.js",
+    "name": "close-cdss-alert",
+    "src": "resources/js/close-cdss-alert.js",
+    "isEntry": true
+  },
+  "resources/js/compute-age.js": {
+    "file": "assets/compute-age-BjvIbngy.js",
+    "name": "compute-age",
+    "src": "resources/js/compute-age.js",
+    "isEntry": true
+  },
+  "resources/js/date-day-loader.js": {
+    "file": "assets/date-day-loader-BhEt3zKG.js",
+    "name": "date-day-loader",
+    "src": "resources/js/date-day-loader.js",
+    "isEntry": true
+  },
+  "resources/js/date-day-sync.js": {
+    "file": "assets/date-day-sync-BqR5MFWd.js",
+    "name": "date-day-sync",
+    "src": "resources/js/date-day-sync.js",
+    "isEntry": true
+  },
+  "resources/js/diagnostics.js": {
+    "file": "assets/diagnostics-dcGeoRzU.js",
+    "name": "diagnostics",
+    "src": "resources/js/diagnostics.js",
+    "isEntry": true
+  },
+  "resources/js/discharge-planning-loader.js": {
+    "file": "assets/discharge-planning-loader-mTGpV_PR.js",
+    "name": "discharge-planning-loader",
+    "src": "resources/js/discharge-planning-loader.js",
+    "isEntry": true
+  },
+  "resources/js/doctor/recent-forms.js": {
+    "file": "assets/recent-forms-BF05A_P6.js",
+    "name": "recent-forms",
+    "src": "resources/js/doctor/recent-forms.js",
+    "isEntry": true
+  },
+  "resources/js/form-disable-alert.js": {
+    "file": "assets/form-disable-alert-d9sOMQie.js",
+    "name": "form-disable-alert",
+    "src": "resources/js/form-disable-alert.js",
+    "isEntry": true
+  },
+  "resources/js/form-saver.js": {
+    "file": "assets/form-saver-DgaE_O-h.js",
+    "name": "form-saver",
+    "src": "resources/js/form-saver.js",
+    "isEntry": true
+  },
+  "resources/js/init-searchable-dropdown.js": {
+    "file": "assets/init-searchable-dropdown-B8slLM9U.js",
+    "name": "init-searchable-dropdown",
+    "src": "resources/js/init-searchable-dropdown.js",
+    "isEntry": true
+  },
+  "resources/js/intake-and-output-date-sync.js": {
+    "file": "assets/intake-and-output-date-sync-DMVVgjft.js",
+    "name": "intake-and-output-date-sync",
+    "src": "resources/js/intake-and-output-date-sync.js",
+    "isEntry": true
+  },
+  "resources/js/intake-output-cdss.js": {
+    "file": "assets/intake-output-cdss-Dc5mMA7S.js",
+    "name": "intake-output-cdss",
+    "src": "resources/js/intake-output-cdss.js",
+    "isEntry": true
+  },
+  "resources/js/intake-output-data-loader.js": {
+    "file": "assets/intake-output-data-loader-BhuSNhNr.js",
+    "name": "intake-output-data-loader",
+    "src": "resources/js/intake-output-data-loader.js",
+    "isEntry": true
+  },
+  "resources/js/intake-output-patient-loader.js": {
+    "file": "assets/intake-output-patient-loader-SM8HAzwA.js",
+    "name": "intake-output-patient-loader",
+    "src": "resources/js/intake-output-patient-loader.js",
+    "isEntry": true
+  },
+  "resources/js/medication-administration-loader.js": {
+    "file": "assets/medication-administration-loader-BW44A0PX.js",
+    "name": "medication-administration-loader",
+    "src": "resources/js/medication-administration-loader.js",
+    "isEntry": true
+  },
+  "resources/js/medication-form-validation.js": {
+    "file": "assets/medication-form-validation-B6LF6_Jz.js",
+    "name": "medication-form-validation",
+    "src": "resources/js/medication-form-validation.js",
+    "isEntry": true
+  },
+  "resources/js/page-initializer.js": {
+    "file": "assets/page-initializer-KfSGop35.js",
+    "name": "page-initializer",
+    "src": "resources/js/page-initializer.js",
+    "isEntry": true
+  },
+  "resources/js/patient-loader.js": {
+    "file": "assets/patient-loader-Mnjb5Sqo.js",
+    "name": "patient-loader",
+    "src": "resources/js/patient-loader.js",
+    "isEntry": true
+  },
+  "resources/js/patient-report.js": {
+    "file": "assets/patient-report-CDZmXhAq.js",
+    "name": "patient-report",
+    "src": "resources/js/patient-report.js",
+    "isEntry": true
+  },
+  "resources/js/patient-search.js": {
+    "file": "assets/patient-search-bnyfYJ50.js",
+    "name": "patient-search",
+    "src": "resources/js/patient-search.js",
+    "isEntry": true
+  },
+  "resources/js/search.js": {
+    "file": "assets/search-DUtK4nRW.js",
+    "name": "search",
+    "src": "resources/js/search.js",
+    "isEntry": true
+  },
+  "resources/js/searchable-dropdown.js": {
+    "file": "assets/searchable-dropdown-BzyDsUir.js",
+    "name": "searchable-dropdown",
+    "src": "resources/js/searchable-dropdown.js",
+    "isEntry": true
+  },
+  "resources/js/soft-delete.js": {
+    "file": "assets/soft-delete-D0DcJoH6.js",
+    "name": "soft-delete",
+    "src": "resources/js/soft-delete.js",
+    "isEntry": true
+  },
+  "resources/js/sweetalert.js": {
+    "file": "assets/sweetalert-skzdVPbu.js",
+    "name": "sweetalert",
+    "src": "resources/js/sweetalert.js",
+    "isEntry": true
+  },
+  "resources/js/vital-signs-chart-updater.js": {
+    "file": "assets/vital-signs-chart-updater-BC86yjNo.js",
+    "name": "vital-signs-chart-updater",
+    "src": "resources/js/vital-signs-chart-updater.js",
+    "isEntry": true
+  },
+  "resources/js/vital-signs-charts.js": {
+    "file": "assets/vital-signs-charts-Bg3Pnnfm.js",
+    "name": "vital-signs-charts",
+    "src": "resources/js/vital-signs-charts.js",
+    "isEntry": true
+  }
+}

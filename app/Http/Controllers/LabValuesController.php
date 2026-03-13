@@ -133,6 +133,13 @@ class LabValuesController extends Controller
 
         $request->session()->put('selected_patient_id', $data['patient_id']);
 
+        if ($request->input('action') === 'cdss') {
+            return redirect()->route('nursing-diagnosis.process', [
+                'component' => 'lab-values',
+                'id' => $labValue->id
+            ]);
+        }
+
         if ($request->input('action') == 'save_and_diagnose') {
             return redirect()->route('nursing-diagnosis.start', [
                 'component' => 'lab-values',

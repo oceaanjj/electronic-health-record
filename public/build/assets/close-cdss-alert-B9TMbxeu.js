@@ -1,0 +1,1 @@
+window.closeCdssAlert=function(){const e=document.getElementById("cdss-alert-wrapper"),t=document.getElementById("cdss-alert-content");e&&t&&(e.classList.add("alert-exit"),t.classList.add("alert-exit"),setTimeout(()=>{e.remove()},500))};

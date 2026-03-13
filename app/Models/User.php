@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     // ✅ Fields that can be mass assigned
     protected $fillable = [
@@ -38,5 +39,10 @@ class User extends Authenticatable
     public function patients()
     {
         return $this->hasMany(Patient::class, 'user_id', 'id');
+    }
+
+    public function setRoleAttribute($value): void
+    {
+        $this->attributes['role'] = strtolower((string) $value);
     }
 }

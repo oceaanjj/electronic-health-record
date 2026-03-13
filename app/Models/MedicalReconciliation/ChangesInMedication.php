@@ -13,6 +13,12 @@ class ChangesInMedication extends Model
 
     protected $fillable = [
         'patient_id',
+        'change_med',
+        'change_dose',
+        'change_route',
+        'change_frequency',
+        'change_text',
+        // Support original names too
         'medication',
         'change',
         'reason',

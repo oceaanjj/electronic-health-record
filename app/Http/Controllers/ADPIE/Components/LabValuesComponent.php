@@ -31,25 +31,25 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function startDiagnosis(string $component, $id)
     {
-        Log::info('LabValuesComponent@startDiagnosis: Starting diagnosis for id: ' . $id);
+        $this->getProcessData($component, $id);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $id]);
+    }
+
+    public function getProcessData(string $component, $id)
+    {
         $labValues = LabValues::with('patient')->find($id); 
 
-        // Temporarily dump $labValues to inspect its content
-        // dd($labValues); 
-
         if (!$labValues) {
-            Log::error('LabValuesComponent@startDiagnosis: LabValues record not found for id: ' . $id);
+            Log::error('LabValuesComponent@getProcessData: LabValues record not found for id: ' . $id);
             abort(404, 'LabValues record not found.');
         }
-        Log::info('LabValuesComponent@startDiagnosis: Found lab values record.', ['lab_values_id' => $id]);
 
         $patient = $labValues->patient;
 
         if (!$patient) {
-            Log::error('LabValuesComponent@startDiagnosis: Patient not found for lab_values_id: ' . $id);
+            Log::error('LabValuesComponent@getProcessData: Patient not found for lab_values_id: ' . $id);
             abort(404, 'Patient not found for the given lab values.');
         }
-        Log::info('LabValuesComponent@startDiagnosis: Found patient.', ['patient_id' => $patient->patient_id]);
 
         $diagnosis = NursingDiagnosis::where('lab_values_id', $id)
             ->latest()
@@ -66,29 +66,22 @@ class LabValuesComponent implements AdpieComponentInterface
         ];
 
         // Check if the alert object AND its message exist before stripping html tags
-        if ($alerts['diagnosis'] && property_exists($alerts['diagnosis'], 'message')) {
-            $alerts['diagnosis']->message = strip_tags($alerts['diagnosis']->message);
-        }
-        if ($alerts['planning'] && property_exists($alerts['planning'], 'message')) {
-            $alerts['planning']->message = strip_tags($alerts['planning']->message);
-        }
-        if ($alerts['intervention'] && property_exists($alerts['intervention'], 'message')) {
-            $alerts['intervention']->message = strip_tags($alerts['intervention']->message);
-        }
-        if ($alerts['evaluation'] && property_exists($alerts['evaluation'], 'message')) {
-            $alerts['evaluation']->message = strip_tags($alerts['evaluation']->message);
+        foreach ($alerts as $key => $alert) {
+            if ($alert && property_exists($alert, 'message')) {
+                $alert->message = strip_tags($alert->message);
+            }
         }
 
         // Put them in the session to persist across all pages
         session()->put('lab-values-alerts', $alerts);
 
-        return view('adpie.lab-values.diagnosis', [
+        return [
             'patient' => $patient,
             'labValues' => $labValues,
             'component' => $component,
             'diagnosis' => $diagnosis,
             'findings' => $findings
-        ]);
+        ];
     }
 
     public function storeDiagnosis(Request $request, string $component, $id)
@@ -126,12 +119,9 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function showPlanning(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.lab-values.planning', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->lab_values_id])
+            ->with('current_step', 2);
     }
 
     public function storePlanning(Request $request, string $component, $nursingDiagnosisId)
@@ -170,12 +160,9 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function showIntervention(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.lab-values.intervention', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->lab_values_id])
+            ->with('current_step', 3);
     }
 
     public function storeIntervention(Request $request, string $component, $nursingDiagnosisId)
@@ -214,12 +201,9 @@ class LabValuesComponent implements AdpieComponentInterface
 
     public function showEvaluation(string $component, $nursingDiagnosisId)
     {
-        $diagnosis = NursingDiagnosis::with('patient')->findOrFail($nursingDiagnosisId);
-        return view('adpie.lab-values.evaluation', [
-            'diagnosis' => $diagnosis,
-            'patient' => $diagnosis->patient,
-            'component' => $component
-        ]);
+        $diagnosis = NursingDiagnosis::findOrFail($nursingDiagnosisId);
+        return redirect()->route('nursing-diagnosis.process', ['component' => $component, 'id' => $diagnosis->lab_values_id])
+            ->with('current_step', 4);
     }
 
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId)
@@ -254,5 +238,52 @@ class LabValuesComponent implements AdpieComponentInterface
         }
 
         return redirect()->back()->with('success', 'Evaluation saved. Nursing Diagnosis complete!');
+    }
+
+    public function storeProcess(Request $request, string $component, $id)
+    {
+        $labValues = LabValues::findOrFail($id);
+        $patient = $labValues->patient;
+
+        $data = $request->validate([
+            'diagnosis' => 'nullable|string|max:2000',
+            'planning' => 'nullable|string|max:2000',
+            'intervention' => 'nullable|string|max:2000',
+            'evaluation' => 'nullable|string|max:2000',
+        ]);
+
+        $updateData = [
+            'patient_id' => $patient->patient_id,
+            'lab_values_id' => $id,
+        ];
+
+        foreach (['diagnosis', 'planning', 'intervention', 'evaluation'] as $step) {
+            if ($request->has($step)) {
+                $text = $request->input($step);
+                $updateData[$step] = $text;
+
+                $method = 'analyze' . ucfirst($step);
+                $alertObject = $this->nursingDiagnosisCdssService->$method($component, $text ?? '');
+                
+                if ($alertObject && property_exists($alertObject, 'message')) {
+                    $message = str_replace(['<li>', '</li>'], ['— ', "\n"], $alertObject->message);
+                    $updateData[$step . '_alert'] = strip_tags($message);
+                }
+            }
+        }
+
+        NursingDiagnosis::updateOrCreate(
+            ['lab_values_id' => $id],
+            $updateData
+        );
+
+        if ($request->input('action') === 'save_and_proceed') {
+             return redirect()->route('lab-values.index')
+                ->with('success', 'ADPIE process completed and saved!');
+        }
+
+        return redirect()->back()
+            ->with('success', 'ADPIE process progress saved.')
+            ->with('current_step', $request->input('current_step', 1));
     }
 }

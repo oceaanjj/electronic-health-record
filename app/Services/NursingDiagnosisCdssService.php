@@ -107,17 +107,12 @@ class NursingDiagnosisCdssService
             return null;
         }
 
-        $messageHtml = '<ul class="list-disc list-inside text-left">';
-        foreach ($recommendations as $rec) {
-            $messageHtml .= '<li>' . htmlspecialchars((string) $rec) . '</li>';
-        }
-        $messageHtml .= '</ul>';
-
-        $plainTextMessage = implode('. ', $recommendations);
+        // Join multiple recommendations with newlines for plain text
+        $plainTextMessage = implode("\n", $recommendations);
 
         return (object) [
             'level' => strtolower($highestSeverity),
-            'message' => $messageHtml,
+            'message' => $plainTextMessage,
             'raw_message' => $plainTextMessage
         ];
     }

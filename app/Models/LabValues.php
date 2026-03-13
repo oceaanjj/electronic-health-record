@@ -72,9 +72,8 @@ class LabValues extends Model
         return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
     }
 
-    // for ADPIE Table
     public function nursingDiagnoses()
     {
-        return $this->hasOne(NursingDiagnosis::class);
+        return $this->hasOne(NursingDiagnosis::class, 'lab_values_id');
     }
 }

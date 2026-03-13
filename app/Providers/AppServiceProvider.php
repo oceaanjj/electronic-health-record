@@ -33,17 +33,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('is-admin', function (User $user) {
-            return $user->role === 'Admin';
+            return strtolower((string) $user->role) === 'admin';
         });
 
         // Define the Gate for doctor access (for consistency)
         Gate::define('is-doctor', function (User $user) {
-            return $user->role === 'Doctor';
+            return strtolower((string) $user->role) === 'doctor';
         });
 
         // Define the Gate for nurse access
         Gate::define('is-nurse', function (User $user) {
-            return $user->role === 'Nurse';
+            return strtolower((string) $user->role) === 'nurse';
         });
 
         //AUTO LOGIN

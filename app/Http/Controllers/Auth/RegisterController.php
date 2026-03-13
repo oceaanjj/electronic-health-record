@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => strtolower($request->role),
         ]);
 
         return redirect()->route('admin-home')->with('success', 'User successfully registered!');

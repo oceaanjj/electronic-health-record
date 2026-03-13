@@ -12,7 +12,8 @@
         }
 
         .section-title {
-            background-color: #ffe070ff;
+            background: linear-gradient(180deg, #006400, #004d00);
+            color:white;
             padding: 5px;
             margin-top: 10px;
             margin-bottom: -10px;
@@ -81,7 +82,7 @@
 
                 <a
                     href="{{ route('doctor.report.pdf', ['patient_id' => $patient->patient_id]) }}"
-                    class="rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
+                    class="rounded bg-green-700 px-4 py-2 font-bold text-white hover:bg-green-800"
                 >
                     Download PDF
                 </a>

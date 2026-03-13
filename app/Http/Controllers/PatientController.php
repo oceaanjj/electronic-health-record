@@ -244,12 +244,18 @@ class PatientController extends Controller
     {
         try {
             $patient = Patient::findOrFail($id);
+            
+            // Set is_active to false
+            $patient->is_active = false;
+            $patient->save();
+
+            // Soft delete the record
             $patient->delete();
 
 
             AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
-            return response()->json(['success' => true, 'message' => 'Patient set to inactive successfully', 'patient' => $patient->fresh()]);
+            return response()->json(['success' => true, 'message' => 'Patient set to inactive successfully', 'patient' => $patient]);
 
         } catch (ModelNotFoundException $e) {
             return response()->json(['success' => false, 'message' => 'Patient not found or already inactive'], 404);
@@ -264,12 +270,18 @@ class PatientController extends Controller
     {
         try {
             $patient = Patient::withTrashed()->findOrFail($id);
-            $patient->restore(); // This restores the soft-deleted record
+            
+            // Set is_active to true
+            $patient->is_active = true;
+            $patient->save();
+
+            // Restore the soft-deleted record
+            $patient->restore();
 
             // Log patient activation
             AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
 
-            return response()->json(['success' => true, 'message' => 'Patient set to active successfully', 'patient' => $patient->fresh()]);
+            return response()->json(['success' => true, 'message' => 'Patient set to active successfully', 'patient' => $patient]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['success' => false, 'message' => 'Patient not found'], 404);
         } catch (\Exception $e) {

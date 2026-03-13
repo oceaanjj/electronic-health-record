@@ -1,5 +1,4 @@
 eye_condition:
-    # Category: Vision & Visual Fields
     - keywords: ['sudden visual loss', 'sudden vision loss', 'acute vision loss']
       alert: 'Sudden visual loss is a medical emergency. May indicate retinal detachment, vitreous hemorrhage, or central retinal artery occlusion. Requires immediate ophthalmology consultation.'
       severity: 'critical'

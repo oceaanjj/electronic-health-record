@@ -262,6 +262,10 @@ class LabValuesCdssService
 
     public function checkLabResult($param, $value, $ageGroup)
     {
+        if ($value === null || $value === '' || $value === 'N/A' || !is_numeric($value)) {
+            return ['alert' => 'No findings.', 'severity' => self::NONE];
+        }
+
         $rules = match ($param) {
             'wbc' => $this->wbcRules,
             'rbc' => $this->rbcRules,
@@ -322,19 +326,21 @@ class LabValuesCdssService
         ];
 
         foreach ($lab as $param => $field) {
-            if (property_exists($labValue, $field) && $labValue->$field !== null) {
-                 $result = $this->checkLabResult($param, $labValue->$field, $ageGroup);
-                 if ($result['severity'] !== LabValuesCdssService::NONE) {
-                    $alerts[$param . '_alerts'][] = [
-                        'text' => $result['alert'],
-                        'severity' => $result['severity'],
-                    ];
-                 } else {
-                     $alerts[$param . '_alerts'][] = [
-                        'text' => $result['alert'], 
-                        'severity' => $result['severity'], 
-                    ];
-                 }
+            $val = property_exists($labValue, $field) ? $labValue->$field : null;
+            if ($val === null || $val === '' || $val === 'N/A' || !is_numeric($val)) {
+                continue;
+            }
+            $result = $this->checkLabResult($param, $val, $ageGroup);
+            if ($result['severity'] !== LabValuesCdssService::NONE) {
+                $alerts[$param . '_alerts'][] = [
+                    'text' => $result['alert'],
+                    'severity' => $result['severity'],
+                ];
+            } else {
+                $alerts[$param . '_alerts'][] = [
+                    'text' => $result['alert'],
+                    'severity' => $result['severity'],
+                ];
             }
         }
         return $alerts;

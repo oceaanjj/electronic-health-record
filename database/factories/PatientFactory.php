@@ -53,12 +53,13 @@ class PatientFactory extends Factory
             'religion' => $this->faker->randomElement(['Catholic', 'Iglesia ni Cristo', 'Christian']),
             'ethnicity' => $this->faker->randomElement(['Filipino', 'Foreign']),
             'chief_complaints' => $this->faker->randomElement($complaints),
-            'admission_date' => $this->faker->date('Y-m-d'),
+            'admission_date' => $this->faker->dateTimeBetween('2026-01-01', 'now')->format('Y-m-d'),
             'room_no' => $this->faker->buildingNumber(),
             'bed_no' => $this->faker->bothify('##?'),
             'contact_name' => $this->faker->name(),
             'contact_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Spouse', 'Child', 'Friend']),
             'contact_number' => $this->faker->phoneNumber(),
+            'is_active' => true,
 
         ];
     }

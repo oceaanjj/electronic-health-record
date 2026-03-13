@@ -78,4 +78,22 @@ interface AdpieComponentInterface
      * @return \Illuminate\Http\RedirectResponse
      */
     public function storeEvaluation(Request $request, string $component, $nursingDiagnosisId);
+
+    /**
+     * Store the entire ADPIE process from a single form.
+     * @param Request $request
+     * @param string $component The component name
+     * @param mixed $id The ID (e.g., physicalExamId or patientId)
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeProcess(Request $request, string $component, $id);
+
+    /**
+     * Get the data needed for the ADPIE process view.
+     * This should also handle populating CDSS alerts in the session.
+     * @param string $component
+     * @param mixed $id
+     * @return array
+     */
+    public function getProcessData(string $component, $id);
 }

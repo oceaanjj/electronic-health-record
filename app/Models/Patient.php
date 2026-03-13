@@ -46,6 +46,7 @@ class Patient extends Model
         'contact_name',
         'contact_relationship',
         'contact_number',
+        'is_active',
 
         'user_id',
     ];

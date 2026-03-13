@@ -7,6 +7,8 @@ use App\Models\Vitals;
 use App\Services\VitalCdssService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class VitalSignsApiController extends Controller
 {
@@ -59,6 +61,12 @@ class VitalSignsApiController extends Controller
             $data
         );
 
+        AuditLogController::log(
+            'VITAL SIGNS RECORDED',
+            "Nurse " . Auth::user()->username . " recorded new vital signs for patient ID: {$patientId} at {$time} on {$date}.",
+            ['patient_id' => $patientId, 'record_id' => $record->id]
+        );
+
         return response()->json(['message' => 'Vitals saved', 'data' => $record], 201);
     }
 
@@ -73,6 +81,13 @@ class VitalSignsApiController extends Controller
         $data['alerts'] = $cdss['alert'];
 
         $record->update($data);
+
+        AuditLogController::log(
+            'VITAL SIGNS UPDATED',
+            "Nurse " . Auth::user()->username . " updated vital signs record (ID: {$id}) for patient ID: " . $record->patient_id . ".",
+            ['patient_id' => $record->patient_id, 'record_id' => $id]
+        );
+
         return response()->json(['message' => 'Vitals updated', 'data' => $record]);
     }
 }

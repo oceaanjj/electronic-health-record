@@ -82,7 +82,11 @@ class MedicationAdministrationApiController extends Controller
             $updateData
         );
 
-        AuditLogController::log('Medication Saved (Mobile)', "User " . Auth::user()->username . " recorded med for time $time", ['patient_id' => $patientId]);
+        AuditLogController::log(
+            'MEDICATION ADMINISTRATION RECORDED',
+            "Nurse " . Auth::user()->username . " recorded medication administration for patient ID: {$patientId} at {$time} on {$date}.",
+            ['patient_id' => $patientId, 'record_id' => $record->id]
+        );
 
         return response()->json([
             'message' => 'Medication administration saved!',
@@ -97,6 +101,13 @@ class MedicationAdministrationApiController extends Controller
     {
         $record = MedicationAdministration::findOrFail($id);
         $record->update($request->all());
+
+        AuditLogController::log(
+            'MEDICATION ADMINISTRATION UPDATED',
+            "Nurse " . Auth::user()->username . " updated medication administration record (ID: {$id}) for patient ID: " . $record->patient_id . ".",
+            ['patient_id' => $record->patient_id, 'record_id' => $id]
+        );
+
         return response()->json(['message' => 'Record updated', 'data' => $record]);
     }
 }

@@ -27,6 +27,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     // POST /api/admin/users  — register new user
     Route::post('users', [AdminApiController::class, 'createUser']);
 
+    // PUT /api/admin/users/{id} — update user details
+    Route::put('users/{id}', [AdminApiController::class, 'updateUser']);
+
     // PATCH /api/admin/users/{id}/role
     Route::patch('users/{id}/role', [AdminApiController::class, 'updateRole']);
 

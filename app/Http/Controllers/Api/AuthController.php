@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\AuditLogController;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,14 @@ class AuthController extends Controller
             return response()->json(['detail' => 'Invalid credentials.'], 401);
         }
 
+        Auth::login($user); // Set current user for AuditLogController
         $token = $user->createToken('mobile-app')->plainTextToken;
+
+        AuditLogController::log(
+            'LOGIN SUCCESSFUL',
+            "User {$user->username} successfully logged in via API.",
+            ['ip_address' => $request->ip()]
+        );
 
         return response()->json([
             'access_token' => $token,
@@ -41,7 +49,12 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         if ($request->user()) {
-            $request->user()->currentAccessToken()->delete();
+            $user = $request->user();
+            AuditLogController::log(
+                'LOGOUT SUCCESSFUL',
+                "User {$user->username} successfully logged out via API."
+            );
+            $user->currentAccessToken()->delete();
         }
         return response()->json(['detail' => 'Logged out successfully']);
     }

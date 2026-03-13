@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Diagnostic;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Patient;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class DiagnosticApiController extends Controller
 {
@@ -67,6 +69,12 @@ class DiagnosticApiController extends Controller
             }
         }
 
+        AuditLogController::log(
+            'DIAGNOSTIC IMAGES UPLOADED',
+            "Nurse " . Auth::user()->username . " uploaded " . count($savedFiles) . " " . $request->type . " images for patient ID: " . $patientId . ".",
+            ['patient_id' => $patientId, 'count' => count($savedFiles)]
+        );
+
         return response()->json([
             'message' => count($savedFiles) . ' images uploaded and synced to website.',
             'data' => $savedFiles
@@ -78,12 +86,21 @@ class DiagnosticApiController extends Controller
      */
     public function destroy($id) {
         $record = Diagnostic::findOrFail($id);
+        $patientId = $record->patient_id;
+        $type = $record->type;
         
         if (Storage::disk('public')->exists($record->path)) {
             Storage::disk('public')->delete($record->path);
         }
         
         $record->delete();
+
+        AuditLogController::log(
+            'DIAGNOSTIC IMAGE DELETED',
+            "Nurse " . Auth::user()->username . " deleted a " . $type . " image (ID: {$id}) for patient ID: " . $patientId . ".",
+            ['patient_id' => $patientId, 'record_id' => $id]
+        );
+
         return response()->json(['message' => 'Image deleted from database and server.']);
     }
 }

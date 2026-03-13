@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\IntakeAndOutput;
 use App\Services\IntakeAndOutputCdssService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class IntakeOutputApiController extends Controller
 {
@@ -44,6 +46,12 @@ class IntakeOutputApiController extends Controller
             $data
         );
 
+        AuditLogController::log(
+            'INTAKE & OUTPUT RECORDED',
+            "Nurse " . Auth::user()->username . " recorded intake and output for patient ID: {$patientId} (Day No: {$dayNo}).",
+            ['patient_id' => $patientId, 'record_id' => $record->id]
+        );
+
         return response()->json(['message' => 'Intake and Output saved', 'data' => $record], 201);
     }
 
@@ -56,6 +64,13 @@ class IntakeOutputApiController extends Controller
         $data['alert'] = $cdss['alert'];
 
         $record->update($data);
+
+        AuditLogController::log(
+            'INTAKE & OUTPUT UPDATED',
+            "Nurse " . Auth::user()->username . " updated intake and output record (ID: {$id}) for patient ID: " . $record->patient_id . ".",
+            ['patient_id' => $record->patient_id, 'record_id' => $id]
+        );
+
         return response()->json(['message' => 'Intake and Output updated', 'data' => $record]);
     }
 }

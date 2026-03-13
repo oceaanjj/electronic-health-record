@@ -7,6 +7,9 @@ use App\Models\PhysicalExam;
 use App\Services\PhysicalExamCdssService;
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
+
 class PhysicalExamApiController extends Controller
 {
     protected $cdssService;
@@ -70,6 +73,12 @@ class PhysicalExamApiController extends Controller
             array_merge($data, $alerts)
         );
 
+        AuditLogController::log(
+            'PHYSICAL EXAM RECORD CREATED',
+            "Nurse " . Auth::user()->username . " recorded a new physical examination for patient ID: " . $data['patient_id'] . ".",
+            ['patient_id' => $data['patient_id'], 'record_id' => $record->id]
+        );
+
         return response()->json([
             'message' => 'Physical exam saved',
             'data'    => $record,
@@ -99,6 +108,12 @@ class PhysicalExamApiController extends Controller
         }
 
         $record->update(array_merge($data, $alerts));
+
+        AuditLogController::log(
+            'PHYSICAL EXAM RECORD UPDATED',
+            "Nurse " . Auth::user()->username . " updated the physical examination record (ID: {$id}) for patient ID: " . $record->patient_id . ".",
+            ['patient_id' => $record->patient_id, 'record_id' => $id]
+        );
 
         return response()->json([
             'message' => 'Physical exam updated',

@@ -36,7 +36,11 @@ class MedicationReconciliationApiController extends Controller
             ['patient_id' => $request->patient_id], 
             $this->sanitize($request->all())
         );
-        AuditLogController::log('Current Meds Saved (Mobile)', 'User ' . Auth::user()->username . ' updated current meds.', ['patient_id' => $request->patient_id]);
+        AuditLogController::log(
+            'MEDICATION RECONCILIATION UPDATED',
+            "Nurse " . Auth::user()->username . " updated the current medications list for patient ID: " . $request->patient_id . ".",
+            ['patient_id' => $request->patient_id, 'category' => 'current']
+        );
         return response()->json($record);
     }
 
@@ -48,7 +52,11 @@ class MedicationReconciliationApiController extends Controller
             ['patient_id' => $request->patient_id], 
             $this->sanitize($request->all())
         );
-        AuditLogController::log('Home Meds Saved (Mobile)', 'User ' . Auth::user()->username . ' updated home meds.', ['patient_id' => $request->patient_id]);
+        AuditLogController::log(
+            'MEDICATION RECONCILIATION UPDATED',
+            "Nurse " . Auth::user()->username . " updated the home medications list for patient ID: " . $request->patient_id . ".",
+            ['patient_id' => $request->patient_id, 'category' => 'home']
+        );
         return response()->json($record);
     }
 
@@ -60,7 +68,11 @@ class MedicationReconciliationApiController extends Controller
             ['patient_id' => $request->patient_id], 
             $this->sanitize($request->all())
         );
-        AuditLogController::log('Med Changes Saved (Mobile)', 'User ' . Auth::user()->username . ' updated med changes.', ['patient_id' => $request->patient_id]);
+        AuditLogController::log(
+            'MEDICATION RECONCILIATION UPDATED',
+            "Nurse " . Auth::user()->username . " updated the medication changes list for patient ID: " . $request->patient_id . ".",
+            ['patient_id' => $request->patient_id, 'category' => 'changes']
+        );
         return response()->json($record);
     }
 }

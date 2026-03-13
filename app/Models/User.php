@@ -17,6 +17,12 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'full_name',
+        'birthdate',
+        'age',
+        'sex',
+        'address',
+        'birthplace',
     ];
 
     // ✅ Hide sensitive fields (important for API / JSON responses)

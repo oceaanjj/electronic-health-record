@@ -40,9 +40,15 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'role' => strtolower((string) $user->role),
-            'full_name' => $user->username,
-            'email' => $user->email,
             'user_id' => $user->id,
+            'username' => $user->username,
+            'email' => $user->email,
+            'full_name' => $user->full_name,
+            'birthdate' => $user->birthdate,
+            'age' => $user->age,
+            'sex' => $user->sex,
+            'address' => $user->address,
+            'birthplace' => $user->birthplace,
         ]);
     }
 

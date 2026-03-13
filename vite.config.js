@@ -21,6 +21,7 @@ export default defineConfig({
 
                 // JS Files
                 'resources/js/app.js',
+                'resources/js/admin-dashboard.js',
                 'resources/js/adpie-alert.js',
                 'resources/js/alert.js',
                 'resources/js/audit-search.js',

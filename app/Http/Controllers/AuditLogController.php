@@ -44,7 +44,7 @@ class AuditLogController extends Controller
             'user_name' => $user->username ?? 'System',
             'user_role' => $user->role ?? 'Guest',
             'action' => $action,
-            'details' => json_encode(array_merge(['details' => $details], $extra_data)),
+            'details' => array_merge(['details' => $details], $extra_data),
             // 'ip_address' => request()->ip(),
         ]);
     }

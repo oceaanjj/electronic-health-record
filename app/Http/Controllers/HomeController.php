@@ -11,9 +11,11 @@ use App\Models\IntakeAndOutput;
 use App\Models\LabValues;
 use App\Models\MedicationAdministration;
 use App\Models\IvsAndLine;
+use App\Models\AuditLog;
 use App\Models\FormRead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -189,6 +191,38 @@ class HomeController extends Controller
     {
         $users = User::all();
         return view('admin.home', compact('users'));
+    }
+
+    public function adminData()
+    {
+        try {
+            $stats = [
+                'total_users'   => User::whereRaw('LOWER(role) != ?', ['admin'])->count(),
+                'total_doctors' => User::whereRaw('LOWER(role) = ?', ['doctor'])->count(),
+                'total_nurses'  => User::whereRaw('LOWER(role) = ?', ['nurse'])->count(),
+            ];
+
+            $logs = AuditLog::with('user')->latest()->take(5)->get()->map(function($log) {
+                $details = is_string($log->details) ? json_decode($log->details, true) : $log->details;
+                $sentence = is_array($details) ? ($details['details'] ?? 'Activity recorded.') : 'Activity recorded.';
+                
+                return [
+                    'id'         => $log->id,
+                    'username'   => $log->user->username ?? $log->user_name ?? 'System',
+                    'action'     => $log->action,
+                    'sentence'   => $sentence,
+                    'created_at' => $log->created_at->format('M d, Y h:i A'),
+                ];
+            });
+
+            return response()->json([
+                'stats' => $stats,
+                'logs'  => $logs,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Admin Dashboard Polling Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
 

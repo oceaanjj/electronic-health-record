@@ -34,47 +34,50 @@ class RegisterController extends Controller
     {
         //  Validation Rules
         $request->validate([
-            'username' => 'required|string|max:255|unique:users,username',
-            'email' => 'required|email|max:255|unique:users,email',
-            // Regex explanation:
-            // ^: start of string
-            // (?=.*[a-z]): must contain at least one lowercase letter
-            // (?=.*[A-Z]): must contain at least one uppercase letter
-            // (?=.*\d): must contain at least one digit (number)
-            // (?=.*[@$!%*?&]): must contain at least one special character from the list
-            // [A-Za-z\d@$!%*?&]{8,}: must be at least 8 characters long (including all required types)
-            // $: end of string
-            'password' => [
+            'username'   => 'required|string|max:255|unique:users,username',
+            'email'      => 'required|email|max:255|unique:users,email',
+            'password'   => [
                 'required',
                 'string',
                 'min:8',
                 'confirmed',
                 'regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d\x\W]).*$/'
             ],
-            'role' => 'required|in:doctor,nurse',
+            'role'       => 'required|in:doctor,nurse',
+            'full_name'  => 'nullable|string|max:255',
+            'birthdate'  => 'nullable|date',
+            'age'        => 'nullable|integer',
+            'sex'        => 'nullable|string',
+            'address'    => 'nullable|string',
+            'birthplace' => 'nullable|string',
         ], [
             //  Custom error messages
-            'username.required' => 'Username is required.',
-            'username.unique' => 'This username is already taken.',
-            'email.required' => 'Email is required.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.unique' => 'This email is already registered.',
-            'password.required' => 'Password is required.',
-            'password.min' => 'Password must be at least 8 characters.',
+            'username.required'  => 'Username is required.',
+            'username.unique'    => 'This username is already taken.',
+            'email.required'     => 'Email is required.',
+            'email.email'        => 'Please provide a valid email address.',
+            'email.unique'       => 'This email is already registered.',
+            'password.required'  => 'Password is required.',
+            'password.min'       => 'Password must be at least 8 characters.',
             'password.confirmed' => 'Password and Confirm Password do not match.',
-            'password.regex' => 'Password must contain at least one uppercase letter, one number, and one special character.',
-            'role.required' => 'Please select a role.',
+            'password.regex'     => 'Password must contain at least one uppercase letter, one number, and one special character.',
+            'role.required'      => 'Please select a role.',
         ]);
 
         // ✅ Create user
         $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => strtolower($request->role),
+            'username'   => $request->username,
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
+            'role'       => strtolower($request->role),
+            'full_name'  => $request->full_name,
+            'birthdate'  => $request->birthdate,
+            'age'        => $request->age,
+            'sex'        => $request->sex,
+            'address'    => $request->address,
+            'birthplace' => $request->birthplace,
         ]);
 
         return redirect()->route('admin-home')->with('success', 'User successfully registered!');
-
     }
 }

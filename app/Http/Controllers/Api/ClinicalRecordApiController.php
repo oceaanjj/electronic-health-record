@@ -29,7 +29,11 @@ class ClinicalRecordApiController extends Controller
         $data = $this->sanitize($request->all());
         $record = IvsAndLine::create($data);
         
-        AuditLogController::log('IV Record Created (Mobile)', 'User ' . Auth::user()->username . ' added IV details.', ['patient_id' => $record->patient_id]);
+        AuditLogController::log(
+            'IVS AND LINES RECORDED',
+            "Nurse " . Auth::user()->username . " recorded new IV/Line details for patient ID: " . $record->patient_id . ".",
+            ['patient_id' => $record->patient_id, 'record_id' => $record->id]
+        );
         
         return response()->json($record, 201);
     }
@@ -38,7 +42,11 @@ class ClinicalRecordApiController extends Controller
         $record = IvsAndLine::findOrFail($id);
         $record->update($this->sanitize($request->all()));
         
-        AuditLogController::log('IV Record Updated (Mobile)', 'User ' . Auth::user()->username . ' updated IV details.', ['patient_id' => $record->patient_id]);
+        AuditLogController::log(
+            'IVS AND LINES UPDATED',
+            "Nurse " . Auth::user()->username . " updated IV/Line record (ID: {$id}) for patient ID: " . $record->patient_id . ".",
+            ['patient_id' => $record->patient_id, 'record_id' => $id]
+        );
         
         return response()->json($record);
     }
@@ -50,6 +58,13 @@ class ClinicalRecordApiController extends Controller
 
     public function storeDischargePlanning(Request $request) {
         $record = DischargePlan::updateOrCreate(['patient_id' => $request->patient_id], $this->sanitize($request->all()));
+
+        AuditLogController::log(
+            'DISCHARGE PLANNING UPDATED',
+            "Nurse " . Auth::user()->username . " updated discharge planning for patient ID: " . $request->patient_id . ".",
+            ['patient_id' => $request->patient_id, 'record_id' => $record->id]
+        );
+
         return response()->json($record);
     }
 }

@@ -20,12 +20,12 @@ class AdminApiController extends Controller
     public function stats()
     {
         return response()->json([
-            'total_users'    => User::count(),
-            'total_nurses'   => User::whereRaw('LOWER(role) = ?', ['nurse'])->count(),
-            'total_doctors'  => User::whereRaw('LOWER(role) = ?', ['doctor'])->count(),
-            'total_admins'   => User::whereRaw('LOWER(role) = ?', ['admin'])->count(),
-            'total_patients' => Patient::count(),
-            'active_patients'=> Patient::where('is_active', true)->count(),
+            'total_users'      => User::count(),
+            'total_nurses'     => User::whereRaw('LOWER(role) = ?', ['nurse'])->count(),
+            'total_doctors'    => User::whereRaw('LOWER(role) = ?', ['doctor'])->count(),
+            'total_admins'     => User::whereRaw('LOWER(role) = ?', ['admin'])->count(),
+            'total_patients'   => Patient::count(),
+            'active_patients'  => Patient::where('is_active', true)->count(),
             'audit_logs_today' => AuditLog::whereDate('created_at', today())->count(),
         ]);
     }
@@ -47,6 +47,7 @@ class AdminApiController extends Controller
             $query->where(fn($q) => $q
                 ->where('username', 'like', "%$s%")
                 ->orWhere('email', 'like', "%$s%")
+                ->orWhere('full_name', 'like', "%$s%")
             );
         }
 
@@ -55,7 +56,8 @@ class AdminApiController extends Controller
             'username'   => $u->username,
             'email'      => $u->email,
             'role'       => strtolower((string) $u->role),
-            'created_at' => (string) $u->created_at,
+            'full_name'  => $u->full_name,
+            'created_at' => $u->created_at->format('Y-m-d H:i:s'),
         ]);
 
         return response()->json($users);
@@ -67,53 +69,110 @@ class AdminApiController extends Controller
     // ─────────────────────────────────────────────
     public function showUser($id)
     {
-        $user = User::findOrFail($id);
+        $u = User::findOrFail($id);
         return response()->json([
-            'id'         => $user->id,
-            'username'   => $user->username,
-            'email'      => $user->email,
-            'role'       => strtolower((string) $user->role),
-            'created_at' => (string) $user->created_at,
+            'id'          => $u->id,
+            'username'    => $u->username,
+            'email'       => $u->email,
+            'role'        => strtolower((string) $u->role),
+            'full_name'   => $u->full_name,
+            'birthdate'   => $u->birthdate,
+            'age'         => $u->age,
+            'sex'         => $u->sex,
+            'address'     => $u->address,
+            'birthplace'  => $u->birthplace,
+            'created_at'  => $u->created_at->format('Y-m-d H:i:s'),
         ]);
     }
 
     // ─────────────────────────────────────────────
     // Register New User
     // POST /api/admin/users
-    // Body: username, email, password, role (nurse|doctor|admin)
     // ─────────────────────────────────────────────
     public function createUser(Request $request)
     {
         $validated = $request->validate([
-            'username' => 'required|string|unique:users,username',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-            'role'     => 'required|in:nurse,doctor,admin',
+            'username'   => 'required|string|unique:users,username',
+            'email'      => 'required|email|unique:users,email',
+            'password'   => 'required|string|min:8',
+            'role'       => 'required|in:nurse,doctor,admin',
+            'full_name'  => 'nullable|string',
+            'birthdate'  => 'nullable|date',
+            'age'        => 'nullable|integer',
+            'sex'        => 'nullable|string',
+            'address'    => 'nullable|string',
+            'birthplace' => 'nullable|string',
         ]);
 
         $user = User::create([
-            'username' => $validated['username'],
-            'email'    => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role'     => strtolower($validated['role']),
+            'username'   => $validated['username'],
+            'email'      => $validated['email'],
+            'password'   => Hash::make($validated['password']),
+            'role'       => strtolower($validated['role']),
+            'full_name'  => $validated['full_name'] ?? null,
+            'birthdate'  => $validated['birthdate'] ?? null,
+            'age'        => $validated['age'] ?? null,
+            'sex'        => $validated['sex'] ?? null,
+            'address'    => $validated['address'] ?? null,
+            'birthplace' => $validated['birthplace'] ?? null,
         ]);
 
         AuditLogController::log(
-            'User Registered (API)',
-            'Admin ' . Auth::user()->username . ' registered new user via API.',
-            ['new_user_id' => $user->id, 'role' => $user->role]
+            'USER REGISTRATION',
+            "Administrator " . Auth::user()->username . " successfully registered a new user: {$user->username} with role " . strtoupper($user->role) . ".",
+            ['new_user_id' => $user->id]
         );
 
         return response()->json([
             'message' => 'User registered successfully.',
-            'user'    => ['id' => $user->id, 'username' => $user->username, 'email' => $user->email, 'role' => strtolower((string) $user->role)],
+            'user'    => $user,
         ], 201);
     }
 
     // ─────────────────────────────────────────────
-    // Update User Role
+    // Update User Details
+    // PUT /api/admin/users/{id}
+    // ─────────────────────────────────────────────
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validate([
+            'username'   => 'sometimes|string|unique:users,username,' . $id,
+            'email'      => 'sometimes|email|unique:users,email,' . $id,
+            'password'   => 'sometimes|string|min:8|nullable',
+            'role'       => 'sometimes|in:nurse,doctor,admin',
+            'full_name'  => 'nullable|string',
+            'birthdate'  => 'nullable|date',
+            'age'        => 'nullable|integer',
+            'sex'        => 'nullable|string',
+            'address'    => 'nullable|string',
+            'birthplace' => 'nullable|string',
+        ]);
+
+        if (!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+
+        AuditLogController::log(
+            'USER UPDATED',
+            "Administrator " . Auth::user()->username . " updated the profile of user: {$user->username}.",
+            ['updated_user_id' => $user->id]
+        );
+
+        return response()->json([
+            'message' => 'User updated successfully.',
+            'user'    => $user,
+        ]);
+    }
+
+    // ─────────────────────────────────────────────
+    // Update User Role Only
     // PATCH /api/admin/users/{id}/role
-    // Body: role (nurse|doctor|admin)
     // ─────────────────────────────────────────────
     public function updateRole(Request $request, $id)
     {
@@ -126,8 +185,8 @@ class AdminApiController extends Controller
         $user->update(['role' => strtolower($validated['role'])]);
 
         AuditLogController::log(
-            'User Role Updated (API)',
-            'Admin ' . Auth::user()->username . " changed user {$user->username} role from {$oldRole} to {$validated['role']} via API.",
+            'ROLE CHANGED',
+            "Administrator " . Auth::user()->username . " changed role of {$user->username} from " . strtoupper($oldRole) . " to " . strtoupper($validated['role']) . ".",
             ['user_id' => $user->id]
         );
 
@@ -139,7 +198,7 @@ class AdminApiController extends Controller
 
     // ─────────────────────────────────────────────
     // Audit Logs
-    // GET /api/admin/audit-logs?search=&sort=desc&page=1&per_page=20
+    // GET /api/admin/audit-logs
     // ─────────────────────────────────────────────
     public function auditLogs(Request $request)
     {
@@ -150,6 +209,7 @@ class AdminApiController extends Controller
             $query->where(fn($q) => $q
                 ->where('user_name', 'like', "%$s%")
                 ->orWhere('action', 'like', "%$s%")
+                ->orWhere('details', 'like', "%$s%")
             );
         }
 
@@ -159,8 +219,24 @@ class AdminApiController extends Controller
         $perPage = min(100, max(1, (int) $request->query('per_page', 20)));
         $paginated = $query->paginate($perPage);
 
+        $items = collect($paginated->items())->map(function($log) {
+            $details = is_string($log->details) ? json_decode($log->details, true) : $log->details;
+            $sentence = $details['details'] ?? 'No details provided.';
+
+            return [
+                'id'           => $log->id,
+                'user_name'    => $log->user_name,
+                'user_role'    => strtoupper((string) $log->user_role),
+                'action'       => $log->action,
+                'sentence'     => $sentence,
+                'date'         => $log->created_at->format('Y-m-d'),
+                'time'         => $log->created_at->format('H:i:s'),
+                'created_at'   => $log->created_at->format('Y-m-d H:i:s'),
+            ];
+        });
+
         return response()->json([
-            'data'      => $paginated->items(),
+            'data'      => $items,
             'total'     => $paginated->total(),
             'page'      => $paginated->currentPage(),
             'per_page'  => $paginated->perPage(),

@@ -7,6 +7,8 @@ use App\Models\LabValues;
 use App\Models\Patient;
 use App\Services\LabValuesCdssService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\Auth;
 
 class LabValuesApiController extends Controller
 {
@@ -47,6 +49,12 @@ class LabValuesApiController extends Controller
             $data
         );
 
+        AuditLogController::log(
+            'LAB VALUES RECORDED',
+            "Nurse " . Auth::user()->username . " recorded new lab values for patient ID: " . $data['patient_id'] . ".",
+            ['patient_id' => $data['patient_id'], 'record_id' => $record->id]
+        );
+
         return response()->json(['message' => 'Lab Values saved', 'data' => $record], 201);
     }
 
@@ -64,6 +72,13 @@ class LabValuesApiController extends Controller
         }
 
         $record->update($data);
+
+        AuditLogController::log(
+            'LAB VALUES UPDATED',
+            "Nurse " . Auth::user()->username . " updated lab values record (ID: {$id}) for patient ID: " . $record->patient_id . ".",
+            ['patient_id' => $record->patient_id, 'record_id' => $id]
+        );
+
         return response()->json(['message' => 'Lab Values updated', 'data' => $record]);
     }
 }

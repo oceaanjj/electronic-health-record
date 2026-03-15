@@ -44,7 +44,7 @@
                         <br />
                         <span class="text-dark-green/80 font-creato-bold text-[20px] font-black">USERS</span>
                     </h3>
-                    <p class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
+                    <p id="stat-total-users" class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
                         {{ \App\Models\User::where('role', '!=', 'admin')->count() }}
                     </p>
                 </div>
@@ -57,7 +57,7 @@
                         <br />
                         <span class="text-dark-green/80 font-creato-bold text-[20px] font-black">DOCTORS</span>
                     </h3>
-                    <p class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
+                    <p id="stat-total-doctors" class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
                         {{ \App\Models\User::where('role', 'doctor')->count() }}
                     </p>
                 </div>
@@ -70,7 +70,7 @@
                         <br />
                         <span class="text-dark-green/80 font-creato-bold text-[20px] font-black">NURSES</span>
                     </h3>
-                    <p class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
+                    <p id="stat-total-nurses" class="text-dark-green/70 p-0 text-center text-[70px] font-extrabold">
                         {{ \App\Models\User::where('role', 'nurse')->count() }}
                     </p>
                 </div>
@@ -94,10 +94,10 @@
                             <th class="w-1/6 border-b border-gray-200 px-4 py-3 text-left">Date</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
+                    <tbody id="admin-audit-logs" data-url="{{ route('admin.data') }}" class="divide-y divide-gray-200 text-sm text-gray-700">
                         @foreach (\App\Models\AuditLog::latest()->take(5)->get() as $log)
                             @php
-                                $details = json_decode($log->details, true);
+                                $details = is_string($log->details) ? json_decode($log->details, true) : $log->details;
                             @endphp
 
                             <tr class="transition hover:bg-gray-50">
@@ -155,16 +155,5 @@
 @endpush
 
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const msg = document.getElementById('success-message');
-            if (msg) {
-                setTimeout(() => {
-                    msg.style.transition = 'opacity 0.6s ease';
-                    msg.style.opacity = 0;
-                    setTimeout(() => msg.remove(), 600);
-                }, 4000); // 4 seconds
-            }
-        });
-    </script>
+    @vite(['resources/js/admin-dashboard.js'])
 @endpush

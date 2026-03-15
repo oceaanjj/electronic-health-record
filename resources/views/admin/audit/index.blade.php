@@ -77,7 +77,7 @@
                     <tbody id="audit-table-body" class="divide-y divide-gray-200 text-sm text-gray-700">
                         @forelse ($logs as $log)
                             @php
-                                $details = json_decode($log->details, true);
+                                $details = is_string($log->details) ? json_decode($log->details, true) : $log->details;
                             @endphp
 
                             <tr class="transition duration-300 hover:bg-gray-50">

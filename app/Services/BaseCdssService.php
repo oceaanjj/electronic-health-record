@@ -148,7 +148,7 @@ class BaseCdssService
         if (isset(self::$translationCache[$cacheKey])) return self::$translationCache[$cacheKey];
 
         try {
-            $response = Http::timeout(10)->get('https://translate.googleapis.com/translate_a/single', [
+            $response = Http::timeout(15)->get('https://translate.googleapis.com/translate_a/single', [
                 'client' => 'gtx', 'sl' => 'en', 'tl' => self::$lastDetectedLang, 'dt' => 't', 'q' => $text
             ]);
 

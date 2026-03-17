@@ -2,21 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Log;
-
-class VitalCdssService
+class VitalCdssService extends BaseCdssService
 {
-    const CRITICAL = 'CRITICAL';
-    const WARNING = 'WARNING';
-    const INFO = 'INFO';
-    const NONE = 'NONE';
-
-    /**
-     * -----------------------------
-     * EXPANDED RULES FOR EACH VITAL
-     * -----------------------------
-     */
-
     private $temperatureRules = [
         ['min' => null, 'max' => 34.9, 'alert' => 'Severe Hypothermia (Risk of metabolic failure)', 'severity' => self::CRITICAL],
         ['min' => 35.0, 'max' => 35.5, 'alert' => 'Mild Hypothermia (Rewarm gradually)', 'severity' => self::WARNING],
@@ -61,26 +48,22 @@ class VitalCdssService
         ['min' => 95, 'max' => 100, 'alert' => 'Normal Oxygen Saturation', 'severity' => self::NONE],
     ];
 
-    private $severityMap = [
-        self::CRITICAL => 1,
-        self::WARNING => 2,
-        self::INFO => 3,
-        self::NONE => 4,
-    ];
-
-    private function parseBp($value)
-    {
-        if (is_numeric($value))
-            return (float) $value;
-        if (is_string($value) && preg_match('/(\d{2,3})[\/, \-]?(\d{2,3})?/', $value, $matches)) {
-            return (float) $matches[1];
-        }
+    private function parseBp($value) {
+        if (is_numeric($value)) return (float) $value;
+        if (is_string($value) && preg_match('/(\d{2,3})[\/, \-]?(\d{2,3})?/', $value, $matches)) return (float) $matches[1];
         return null;
     }
 
-    private function getRulesForType($type)
+    public function getAlertForVital($param, $value)
     {
-        return match ($type) {
+        if ($value === null || $value === '' || $value === 'N/A') return ['alert' => '', 'severity' => self::NONE];
+
+        if (!is_numeric($value) && $param !== 'bp') {
+            return $this->runAnalysis($value, $this->rules[$param] ?? []);
+        }
+
+        $numericValue = null;
+        $rules = match ($param) {
             'temperature' => $this->temperatureRules,
             'hr' => $this->hrRules,
             'rr' => $this->rrRules,
@@ -88,98 +71,36 @@ class VitalCdssService
             'spo2' => $this->spo2Rules,
             default => [],
         };
-    }
 
-    public function getAlertForVital($param, $value)
-    {
-        if ($value === null || $value === '' || $value === 'N/A') {
-            return ['alert' => '', 'severity' => self::NONE];
-        }
-
-        // Skip non-numeric values (text-only input) — valid for all fields.
-        // BP is allowed to contain a slash (e.g. "120/80"); anything else that
-        // is not numeric and not a recognisable BP pattern is discarded.
         if ($param === 'bp') {
-            if ($this->parseBp($value) === null) {
-                return ['alert' => '', 'severity' => self::NONE];
-            }
-        } elseif (!is_numeric($value)) {
-            return ['alert' => '', 'severity' => self::NONE];
-        }
-
-        $numericValue = null;
-        $rules = [];
-
-        switch ($param) {
-            case 'temperature':
-            case 'hr':
-            case 'rr':
-            case 'spo2':
-                $rules = $this->getRulesForType($param);
-                $numericValue = (float) $value;
-                break;
-            case 'bp':
-                $rules = $this->bpRules;
-                $numericValue = $this->parseBp($value);
-                if ($numericValue === null && $value !== '') {
-                    return ['alert' => 'Invalid BP', 'severity' => self::WARNING];
-                }
-                break;
-            default:
-                return ['alert' => '', 'severity' => self::NONE];
+            $numericValue = $this->parseBp($value);
+            if ($numericValue === null) return ['alert' => '', 'severity' => self::NONE];
+        } else {
+            $numericValue = (float) $value;
         }
 
         foreach ($rules as $rule) {
             $minOk = is_null($rule['min']) || $numericValue >= $rule['min'];
             $maxOk = is_null($rule['max']) || $numericValue <= $rule['max'];
-            if ($minOk && $maxOk) {
-                return ['alert' => $rule['alert'], 'severity' => $rule['severity']];
-            }
+            if ($minOk && $maxOk) return ['alert' => $rule['alert'], 'severity' => strtoupper($rule['severity'])];
         }
-
         return ['alert' => 'Out of range', 'severity' => self::WARNING];
     }
 
-    /**
-     * ----------------------------------------
-     * COMBINED VITALS ANALYSIS (SMART LOGIC)
-     * ----------------------------------------
-     */
     private function detectCombinedAlerts($vitals)
     {
         $alerts = [];
-
         $isValid = fn($v) => $v !== null && $v !== '' && $v !== 'N/A';
-
         $temp = $isValid($vitals['temperature'] ?? null) && is_numeric($vitals['temperature'] ?? null) ? (float) $vitals['temperature'] : null;
         $hr = $isValid($vitals['hr'] ?? null) && is_numeric($vitals['hr'] ?? null) ? (float) $vitals['hr'] : null;
         $bp = $isValid($vitals['bp'] ?? null) ? $this->parseBp($vitals['bp']) : null;
         $rr = $isValid($vitals['rr'] ?? null) && is_numeric($vitals['rr'] ?? null) ? (float) $vitals['rr'] : null;
         $spo2 = $isValid($vitals['spo2'] ?? null) && is_numeric($vitals['spo2'] ?? null) ? (float) $vitals['spo2'] : null;
 
-        if ($temp !== null && $hr !== null && $temp > 38 && $hr > 120) {
-            $alerts[] = ['alert' => 'Fever with tachycardia — Possible infection or dehydration.', 'severity' => self::WARNING];
-        }
-
-        if ($hr !== null && $bp !== null && $hr > 150 && $bp < 90) {
-            $alerts[] = ['alert' => 'Tachycardia with hypotension — Possible early shock.', 'severity' => self::CRITICAL];
-        }
-
-        if ($spo2 !== null && $rr !== null && $spo2 < 92 && $rr > 30) {
-            $alerts[] = ['alert' => 'Low SpO₂ with tachypnea — Possible respiratory distress.', 'severity' => self::CRITICAL];
-        }
-
-        if ($temp !== null && $rr !== null && $temp > 39 && $rr > 30) {
-            $alerts[] = ['alert' => 'High fever with rapid breathing — Risk of sepsis.', 'severity' => self::CRITICAL];
-        }
-
-        if ($spo2 !== null && $hr !== null && $spo2 < 94 && $hr > 130) {
-            $alerts[] = ['alert' => 'Desaturation with tachycardia — Possible hypoxia or anemia.', 'severity' => self::WARNING];
-        }
-
-        if ($bp !== null && $spo2 !== null && $bp < 90 && $spo2 < 90) {
-            $alerts[] = ['alert' => 'Hypotension and hypoxia — Critical instability.', 'severity' => self::CRITICAL];
-        }
+        if ($temp > 38 && $hr > 120) $alerts[] = ['alert' => 'Fever with tachycardia — Possible infection or dehydration.', 'severity' => self::WARNING];
+        if ($hr > 150 && $bp < 90) $alerts[] = ['alert' => 'Tachycardia with hypotension — Possible early shock.', 'severity' => self::CRITICAL];
+        if ($spo2 < 92 && $rr > 30) $alerts[] = ['alert' => 'Low SpO₂ with tachypnea — Possible respiratory distress.', 'severity' => self::CRITICAL];
+        if ($temp > 39 && $rr > 30) $alerts[] = ['alert' => 'High fever with rapid breathing — Risk of sepsis.', 'severity' => self::CRITICAL];
 
         return $alerts;
     }
@@ -187,31 +108,25 @@ class VitalCdssService
     public function analyzeVitalsForAlerts(array $vitals)
     {
         $allAlerts = [];
-
         foreach ($vitals as $type => $value) {
-            if ($value === null || $value === '' || $value === 'N/A')
-                continue;
             $result = $this->getAlertForVital($type, $value);
-            if ($result['severity'] !== self::NONE) {
+            if ($result && $result['severity'] !== self::NONE && !empty($result['alert'])) {
                 $allAlerts[] = $result;
             }
         }
 
-        // Add smart combined alerts
-        $combinedAlerts = $this->detectCombinedAlerts($vitals);
-        $allAlerts = array_merge($allAlerts, $combinedAlerts);
+        $allAlerts = array_merge($allAlerts, $this->detectCombinedAlerts($vitals));
+        if (empty($allAlerts)) return ['alert' => $this->translateFinalAlert('No Findings.'), 'severity' => self::NONE];
 
-        if (empty($allAlerts)) {
-            return ['alert' => 'No Findings.', 'severity' => self::NONE];
-        }
-
-        usort($allAlerts, fn($a, $b) => $this->severityMap[$a['severity']] <=> $this->severityMap[$b['severity']]);
-        $highestSeverity = $allAlerts[0]['severity'];
+        usort($allAlerts, fn($a, $b) => $this->getSeverityValue($b['severity']) <=> $this->getSeverityValue($a['severity']));
+        
+        // --- TRANSLATE THE ENTIRE SUMMARY STRING ---
         $summary = implode('; ', array_column($allAlerts, 'alert'));
+        $translatedSummary = $this->translateFinalAlert($summary);
 
         return [
-            'alert' => $summary,
-            'severity' => $highestSeverity,
+            'alert' => $translatedSummary,
+            'severity' => $allAlerts[0]['severity'],
         ];
     }
 }

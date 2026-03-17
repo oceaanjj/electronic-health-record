@@ -1,24 +1,17 @@
-
-
-/* ── RESET & TOKENS ─────────────────────────────────── */
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --green-dark: #035022; --green-mid: #4a7c40; --green-light: #C8FFCF;
-  --green-accent: #5cb85c; --gold: #EDB62C;
+  --green-dark: #035022; --green-mid: #4a7c40; --green-light: #C8FFCF; --gren-lighter: #E5FFE8;
+  --green-accent: #29A539; --gold: #EDB62C; --gold-light: #FFF7E3;
   --text-dark: #1a1a1a; --text-muted: #6D6C6C;
   --bg: #fdfdfd; --white: #fdfdfd; --border: #fdfdfd;
 
 }
-/* body {
-  font-family: 'CreatoDisplay', 'DM Sans', sans-serif;
-  background: var(--bg); color: var(--text-dark); min-height: 100vh;
-} */
 
-/* ── DREAMY GRADIENT BLOBS ──────────────────────────── */
+
 body { position: relative; overflow-x: hidden; }
 
 .blob {
-  position: fixed;        /* fixed so they stay as you scroll */
+  position: fixed;       
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.35;
@@ -107,13 +100,13 @@ nav.scrolled {
 .btn {
   padding: 10px 28px; border-radius: 999px;
   font-family: 'CreatoDisplay', sans-serif;
-  font-size: 15px; font-weight: 500;
-  cursor: pointer; border: 2px solid transparent; transition: all .22s;
+  font-size: 15px; font-weight: 200;
+  cursor: pointer; border: 1.8px solid transparent; transition: all .22s;
 }
 .btn-outline { border-color: var(--gold); background: transparent; color: var(--gold); }
 .btn-outline:hover { background: var(--gold); color: #fff; }
-.btn-solid { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
-.btn-solid:hover { background: var(--green-mid); }
+.btn-solid { background: var(--green-lighter); color: var(--green-accent); border-color: var(--green-accent); }
+.btn-solid:hover { background: var(--green-accent); color: #fff; }
 
 /* ── HERO ───────────────────────────────────────────── */
 
@@ -372,6 +365,7 @@ nav.scrolled {
   display: flex; flex-direction: column;
   align-items: center; text-align: center;
   gap: 16px;
+  margin-bottom: 70px;
 }
 
 .team-eyebrow {
@@ -410,7 +404,7 @@ nav.scrolled {
   border-radius: 24px;
   padding: 70px 60px;
   margin-top: 50px;
-  margin-bottom: 140px;
+  margin-bottom: 10px;
   box-shadow: 0 4px 24px rgba(0,0,0,.05);
   width: 100%;
   max-width: 57%;
@@ -550,4 +544,114 @@ nav.scrolled {
 @media (max-width: 960px) {
   .footer { padding: 32px 20px; }
   .back-to-top { bottom: 20px; right: 20px; }
+}
+
+
+/* ── CTA SECTION ────────────────────────────────────── */
+.cta {
+  padding: 100px 60px 80px;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  gap: 20px;
+  margin-bottom: 90px;
+}
+
+.cta-icon {
+  width: 80px; height: 80px;
+  border-radius: 22px;
+  border: 1.5px solid rgba(92,184,92,.25);
+  display: flex; align-items: center; justify-content: center;
+  padding: 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 20px rgba(92,184,92,.15);
+}
+.cta-icon img {
+  width: 100%; height: 100%; object-fit: contain;
+}
+
+.cta-heading {
+  font-family: 'CreatoDisplay', sans-serif;
+  font-size: clamp(32px, 4.5vw, 58px); font-weight: 800;
+  line-height: 1.15; color: var(--text-dark);
+}
+
+.cta-sub {
+  font-family: 'CreatoDisplay', sans-serif;
+  font-size: 17px; color: var(--text-muted);
+  line-height: 1.6; max-width: 480px;
+}
+
+/* ── BUTTONS ────────────────────────────────────────── */
+.cta-buttons {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  justify-content: center; margin-top: 4px;
+}
+.cta-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 32px; border-radius: 999px;
+  font-family: 'CreatoDisplay', sans-serif;
+  font-size: 15px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  border: 2px solid transparent;
+  transition: all .25s ease;
+}
+.cta-btn--dark {
+  background: transparent; color: var(--green-accent);
+  border-color: var(--green-accent);
+}
+.cta-btn--dark:hover { background: var(--green-accent); color: #fff;}
+
+.cta-btn--light {
+  background: transparent; color: var(--text-dark);
+  border-color: #ddd;
+}
+.cta-btn--light:hover {
+  border-color: var(--green-accent);
+  color: var(--green-dark);
+  background: rgba(200,255,207,.3);
+}
+
+/* ── FREE NOTE ──────────────────────────────────────── */
+.cta-note {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13.5px; color: var(--text-muted);
+  font-family: 'CreatoDisplay', sans-serif;
+}
+.cta-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green-accent); flex-shrink: 0;
+  display: inline-block;
+}
+
+/* ── BADGES BAR ─────────────────────────────────────── */
+.cta-badges {
+  display: flex; align-items: center; gap: 0;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #ebebeb;
+  border-radius: 16px;
+  padding: 14px 32px;
+  margin-top: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.cta-badge {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 28px;
+  font-family: 'CreatoDisplay', sans-serif;
+  font-size: 14px; color: var(--text-dark);
+}
+.cta-badge:first-child { padding-left: 0; }
+.cta-badge:last-child  { padding-right: 0; }
+
+.cta-divider {
+  width: 1px; height: 24px;
+  background: #e0e0e0; flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+  .cta { padding: 60px 20px; }
+  .cta-badges { flex-direction: column; gap: 12px; padding: 20px; }
+  .cta-divider { width: 60px; height: 1px; }
+  .cta-badge { padding: 0; }
 }

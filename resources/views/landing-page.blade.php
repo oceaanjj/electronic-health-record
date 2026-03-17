@@ -42,7 +42,7 @@
 </head>
 <body>
 
-    {{-- Dreamy gradient blobs --}}
+{{-- Dreamy gradient blobs --}}
 <div class="blob blob--1"></div>
 <div class="blob blob--2"></div>
 <div class="blob blob--3"></div>
@@ -223,6 +223,51 @@
         <h4>Bryan</h4>
         <p>Developer</p>
       </div>
+    </div>
+  </div>
+</section>
+
+{{-- CTA SECTION --}}
+<section class="cta reveal">
+  <div class="cta-icon">
+    <img src="{{ asset('img/ehr-logo.png') }}" alt="EHR">
+  </div>
+
+  <h2 class="cta-heading">Ready to transform<br>patient care?</h2>
+
+  <p class="cta-sub">
+    Deliver smarter, faster care.
+  </p>
+
+  <div class="cta-buttons">
+    <a href="{{ route('login') }}" class="cta-btn cta-btn--light">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+      Get Started
+    </a>
+
+
+    <!-- keith dito yung button na mag ddownload-->
+    <a href="#" class="cta-btn cta-btn--light">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+      </svg>
+      Download App
+    </a>
+  </div>
+
+  <p class="cta-note">
+    <span class="cta-dot"></span>
+    100% free for BSN students.
+  </p>
+
+  <div class="cta-badges">
+    <div class="cta-badge">
+      <span class="cta-dot" style="background:#0075C3;"></span>
+      <span>Web & Mobile</span>
     </div>
   </div>
 </section>

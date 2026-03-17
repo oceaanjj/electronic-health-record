@@ -65,7 +65,9 @@ class HomeController extends Controller
             }
         }
 
-        return view('login.login');
+        // Show the landing page if not logged in
+        return view('landing-page'); // Display the landing page if user is not authenticated
+        // return view('login.login');
         // return view('home');
     }
 

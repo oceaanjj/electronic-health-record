@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/css/login-style.css',
                 'resources/css/search-style.css',
                 'resources/css/show-style.css',
+                'resources/css/landing-page.css',
 
                 // JS Files
                 'resources/js/app.js',

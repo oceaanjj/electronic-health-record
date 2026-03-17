@@ -58,8 +58,15 @@
     </div>
   </div>
   <div class="nav-actions">
-    <button class="btn btn-outline">Login</button>
-    <button class="btn btn-solid">Download App</button>
+    <a href="{{ route('login') }}"> 
+        <button class="btn btn-outline">Login</button>
+    </a>
+    
+
+    <!-- keith dito yung button na mag ddownload-->
+    <a href="https://drive.google.com/file/d/1zqnhP7Rc_Lz0h--Q7QkU8yXLD5UJlPTE/view?fbclid=IwY2xjawQmi65leHRuA2FlbQIxMABicmlkETEyM2lxMFRlZExMeWtaUlZxc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHrkoR7l76sIcf9l1tBK-gRgiI1md8QYcEsgR1-QbSKcDSsTuS_5iGvmOLh02_aem_ettYlph_udoW4FoLbRl0oQ" target="_blank"> 
+        <button class="btn btn-solid">Download App</button>
+    </a>
   </div>
 </nav>
 
@@ -250,7 +257,7 @@
 
 
     <!-- keith dito yung button na mag ddownload-->
-    <a href="#" class="cta-btn cta-btn--light">
+    <a href="https://drive.google.com/file/d/1zqnhP7Rc_Lz0h--Q7QkU8yXLD5UJlPTE/view?fbclid=IwY2xjawQmi65leHRuA2FlbQIxMABicmlkETEyM2lxMFRlZExMeWtaUlZxc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHrkoR7l76sIcf9l1tBK-gRgiI1md8QYcEsgR1-QbSKcDSsTuS_5iGvmOLh02_aem_ettYlph_udoW4FoLbRl0oQ" target="_blank" class="cta-btn cta-btn--light">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>

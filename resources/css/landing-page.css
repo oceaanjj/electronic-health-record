@@ -291,6 +291,7 @@ nav.scrolled {
 }
 .feat-card-text p {
   font-size: 13px; color: var(--text-muted); line-height: 1.4;
+  font-family: 'CreatoDisplay', sans-serif;
 }
 
 /* ── BOTTOM BLOCKS ──────────────────────────────────── */
@@ -347,6 +348,27 @@ nav.scrolled {
   display: block;
   /* no background, no shadow — transparent PNG */
   filter: drop-shadow(0 16px 32px rgba(0,0,0,.12));
+}
+
+/* ── PHONE IMAGE HOVER — tilt effect ────────────────── */
+.feat-block-img img {
+  width: 220px;
+  object-fit: contain; object-position: bottom;
+  display: block;
+  filter: drop-shadow(0 16px 32px rgba(0,0,0,.12));
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1), 
+              filter .4s ease;
+  transform: rotate(0deg) translateY(0px);
+}
+
+.feat-block--green .feat-block-img img:hover {
+  transform: rotate(6deg) translateY(-12px) scale(1.05);
+  filter: drop-shadow(0 28px 40px rgba(0,0,0,.20));
+}
+
+.feat-block--gold .feat-block-img img:hover {
+  transform: rotate(-6deg) translateY(-12px) scale(1.05);
+  filter: drop-shadow(0 28px 40px rgba(0,0,0,.20));
 }
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
@@ -455,7 +477,7 @@ nav.scrolled {
 .team-member p {
   font-size: 13px; color: var(--text-muted);
   font-weight: 400; margin-top: -6px;
-  /* no font-size transition */
+  font-family: 'CreatoDisplay', sans-serif;
 }
 
 /* ── RESPONSIVE ─────────────────────────────────────── */

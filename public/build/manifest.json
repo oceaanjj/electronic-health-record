@@ -99,6 +99,14 @@
       "index-style.css"
     ]
   },
+  "resources/css/landing-page.css": {
+    "file": "assets/landing-page-B35y1ksn.css",
+    "src": "resources/css/landing-page.css",
+    "isEntry": true,
+    "names": [
+      "landing-page.css"
+    ]
+  },
   "resources/css/login-style.css": {
     "file": "assets/login-style-C5JSdaIe.css",
     "src": "resources/css/login-style.css",

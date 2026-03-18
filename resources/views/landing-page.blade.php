@@ -53,16 +53,18 @@
 
     /* Custom Glassmorphism SweetAlert Styles */
     .swal-glass-popup {
-        background: rgba(255, 255, 255, 0.85) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        border-radius: 28px !important;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
-        font-family: 'CreatoDisplay', sans-serif !important;
-        padding: 40px 20px !important;
-        width: 450px !important; /* Adjust this value (e.g., 500px, 30rem) to change the size */
-        max-width: 95% !important; /* Ensures it stays within screen on mobile */
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      border-radius: 28px !important;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+      font-family: 'CreatoDisplay', sans-serif !important;
+      padding: 40px 20px !important;
+      width: 450px !important;
+      /* Adjust this value (e.g., 500px, 30rem) to change the size */
+      max-width: 95% !important;
+      /* Ensures it stays within screen on mobile */
     }
 
     .swal-glass-title {
@@ -75,7 +77,6 @@
 
     .swal-glass-content {
       color: #1a1a1a !important;
-      /* var(--text-dark) */
       font-size: 16px !important;
       line-height: 1.6 !important;
       font-weight: 400 !important;
@@ -83,7 +84,6 @@
 
     .swal-glass-confirm {
       background: #29A539 !important;
-      /* var(--green-accent) */
       color: #fff !important;
       border-radius: 999px !important;
       padding: 14px 40px !important;

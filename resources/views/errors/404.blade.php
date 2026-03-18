@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>403 Forbidden</title>
+    <title>404 Not Found</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @vite(['resources/css/app.css'])
 </head>
 
 <body class="flex-1 bg-white">
     <div class="flex min-h-screen flex-row items-center justify-center gap-30 space-y-6">
         <div>
-            <img class="h-auto w-150" src="img/others/404error.png" alt="404 Not Found" />
+            <img class="h-auto w-150" src="{{ asset('img/others/404error.png') }}" alt="404 Not Found" />
         </div>
 
         <div>
@@ -27,7 +28,7 @@
             </p>
 
             <div class="mt-4 flex justify-center">
-                <a href="{{ route('home') }}" class="button-default mt-5 w-[270px] text-center">
+                <a href="{{ route('landing') }}" class="button-default mt-5 w-[270px] text-center">
                     RETURN TO HOME PAGE
                 </a>
             </div>

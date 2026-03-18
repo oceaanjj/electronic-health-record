@@ -254,6 +254,17 @@ nav.scrolled {
   nav { padding: 12px 20px; }
 }
 
+@media (max-width: 600px) {
+  nav { flex-direction: column; gap: 20px; text-align: center; padding: 25px 15px !important; }
+  .nav-brand { flex-direction: column; gap: 10px; }
+  .nav-logo { width: 65px !important; height: 65px !important; }
+  .nav-title h1 { font-size: 20px !important; }
+  .nav-title p { font-size: 14px !important; margin-top: -2px; }
+  .nav-actions { width: 100%; justify-content: center; gap: 10px; display: flex !important; }
+  .nav-actions a { flex: 1; max-width: 140px; text-decoration: none; }
+  .btn { width: 100%; padding: 12px 5px !important; font-size: 12px !important; white-space: nowrap; display: block; }
+}
+
 
 /* ── FEATURES SECTION ───────────────────────────────── */
 .features {

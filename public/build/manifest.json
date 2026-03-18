@@ -60,7 +60,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-Bwxca8Mu.css",
+    "file": "assets/app-C03UdOka.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -97,6 +97,14 @@
     "isEntry": true,
     "names": [
       "index-style.css"
+    ]
+  },
+  "resources/css/landing-page.css": {
+    "file": "assets/landing-page-BAmo9qxr.css",
+    "src": "resources/css/landing-page.css",
+    "isEntry": true,
+    "names": [
+      "landing-page.css"
     ]
   },
   "resources/css/login-style.css": {
@@ -142,7 +150,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-4PO_wNtV.js",
+    "file": "assets/app-DSmCQhZY.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -161,7 +169,7 @@
       "resources/js/form-saver.js"
     ],
     "css": [
-      "assets/app-Bwxca8Mu.css"
+      "assets/app-C03UdOka.css"
     ],
     "assets": [
       "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",

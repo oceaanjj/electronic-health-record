@@ -4,6 +4,12 @@ namespace App\Services;
 
 class VitalCdssService extends BaseCdssService
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->shouldTranslate = false;
+    }
+
     private $temperatureRules = [
         ['min' => null, 'max' => 34.9, 'alert' => 'Severe Hypothermia (Risk of metabolic failure)', 'severity' => self::CRITICAL],
         ['min' => 35.0, 'max' => 35.5, 'alert' => 'Mild Hypothermia (Rewarm gradually)', 'severity' => self::WARNING],
@@ -116,16 +122,15 @@ class VitalCdssService extends BaseCdssService
         }
 
         $allAlerts = array_merge($allAlerts, $this->detectCombinedAlerts($vitals));
-        if (empty($allAlerts)) return ['alert' => $this->translateFinalAlert('No Findings.'), 'severity' => self::NONE];
+        if (empty($allAlerts)) return ['alert' => 'No Findings.', 'severity' => self::NONE];
 
         usort($allAlerts, fn($a, $b) => $this->getSeverityValue($b['severity']) <=> $this->getSeverityValue($a['severity']));
         
-        // --- TRANSLATE THE ENTIRE SUMMARY STRING ---
+        // --- NO LONGER TRANSLATING ---
         $summary = implode('; ', array_column($allAlerts, 'alert'));
-        $translatedSummary = $this->translateFinalAlert($summary);
 
         return [
-            'alert' => $translatedSummary,
+            'alert' => $summary,
             'severity' => $allAlerts[0]['severity'],
         ];
     }

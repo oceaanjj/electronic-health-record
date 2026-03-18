@@ -95,8 +95,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ── 6. CLINICAL RECORDS & IMAGING ───────────────────────────────────
     Route::get('ivs-and-lines/patient/{patient_id}', [ClinicalRecordApiController::class, 'getIvsAndLinesByPatient']);
-    Route::match(['post', 'put'], 'ivs-and-lines', [ClinicalRecordApiController::class, 'storeIvsAndLines']);
-    Route::match(['get', 'put'], 'ivs-and-lines/{id}', [ClinicalRecordApiController::class, 'getIvsAndLine']);
+    Route::post('ivs-and-lines', [ClinicalRecordApiController::class, 'storeIvsAndLines']);
+    Route::get('ivs-and-lines/{id}', [ClinicalRecordApiController::class, 'getIvsAndLine']);
+    Route::put('ivs-and-lines/{id}', [ClinicalRecordApiController::class, 'updateIvsAndLine']);
 
     Route::get('discharge-planning/patient/{patient_id}', [ClinicalRecordApiController::class, 'getDischargePlanning']);
     Route::match(['post', 'put'], 'discharge-planning', [ClinicalRecordApiController::class, 'storeDischargePlanning']);

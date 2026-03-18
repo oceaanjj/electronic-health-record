@@ -36,8 +36,15 @@ class IntakeOutputApiController extends Controller
         $patientId = $data['patient_id'];
         $dayNo = $data['day_no'] ?? 1;
 
-        // Run CDSS
-        $cdss = $this->cdssService->analyzeIntakeOutput($data);
+        // Fetch existing record to merge data for accurate CDSS
+        $existingRecord = IntakeAndOutput::where('patient_id', $patientId)
+            ->where('day_no', $dayNo)
+            ->first();
+
+        $mergedData = $existingRecord ? array_merge($existingRecord->toArray(), $data) : $data;
+
+        // Run CDSS on merged data
+        $cdss = $this->cdssService->analyzeIntakeOutput($mergedData);
         $data['alert'] = $cdss['alert'];
 
         // Prevent duplicates for the same patient and day
@@ -60,7 +67,10 @@ class IntakeOutputApiController extends Controller
         $record = IntakeAndOutput::findOrFail($id);
         $data = $request->all();
         
-        $cdss = $this->cdssService->analyzeIntakeOutput($data);
+        // Merge with existing record data for accurate CDSS
+        $mergedData = array_merge($record->toArray(), $data);
+
+        $cdss = $this->cdssService->analyzeIntakeOutput($mergedData);
         $data['alert'] = $cdss['alert'];
 
         $record->update($data);

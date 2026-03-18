@@ -11,6 +11,7 @@ class CdssService extends BaseCdssService
     public function __construct(string $rulesDirectoryName)
     {
         parent::__construct($rulesDirectoryName);
+        $this->shouldTranslate = false;
     }
 
     /**

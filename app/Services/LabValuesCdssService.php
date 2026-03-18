@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Log;
 
 class LabValuesCdssService extends BaseCdssService
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->shouldTranslate = false;
+    }
+
     /**
      * HUMAN PLAUSIBILITY LIMITS (Sanity Checks)
      * Values beyond these are likely typos/data entry errors.
@@ -119,7 +125,7 @@ class LabValuesCdssService extends BaseCdssService
             $result = $this->checkLabResult($param, $val, $ageGroup);
             if ($result['severity'] !== self::NONE) {
                 $finalAlerts[$param . '_alerts'][] = [
-                    'text' => $this->translateFinalAlert($result['alert']),
+                    'text' => $result['alert'],
                     'severity' => $result['severity'],
                 ];
             }
@@ -131,7 +137,7 @@ class LabValuesCdssService extends BaseCdssService
             $correlated = $this->detectCorrelatedAlerts($labValue);
             foreach ($correlated as $c) {
                 $finalAlerts['correlation_alerts'][] = [
-                    'text' => $this->translateFinalAlert($c['text']),
+                    'text' => $c['text'],
                     'severity' => $c['severity'],
                 ];
             }

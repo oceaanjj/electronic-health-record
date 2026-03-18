@@ -35,7 +35,8 @@ class DiagnosticsController extends Controller
             if ($selectedPatient) {
                 // Fetch diagnostics and group by type
                 $diagnostics = Diagnostic::where('patient_id', $patientId)
-                    ->orderBy('created_at', 'desc')
+                    ->where('original_name', 'not like', 'deleted-%')
+                    ->orderBy('created_at', 'asc')
                     ->get()
                     ->groupBy('type');
 
@@ -81,7 +82,20 @@ class DiagnosticsController extends Controller
                     continue;
 
                 $typeSlug = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($type));
-                $counter = 1;
+                
+                // Find the current max counter for this patient, type and date to avoid overwriting
+                $existingNames = Diagnostic::where('patient_id', $patientId)
+                    ->where('type', $type)
+                    ->where('original_name', 'like', "{$typeSlug}_{$lastName}_{$date}_%")
+                    ->pluck('original_name');
+
+                $maxCounter = 0;
+                foreach ($existingNames as $name) {
+                    if (preg_match('/_(\d+)\.\w+$/', $name, $matches)) {
+                        $maxCounter = max($maxCounter, intval($matches[1]));
+                    }
+                }
+                $counter = $maxCounter + 1;
 
                 foreach ($files as $file) {
                     if ($file && $file->isValid()) {
@@ -126,12 +140,19 @@ class DiagnosticsController extends Controller
             }
 
             if ($record->path && Storage::disk('public')->exists($record->path)) {
-                Storage::disk('public')->delete($record->path);
+                $oldPath = $record->path;
+                $newFilename = 'deleted-' . basename($oldPath);
+                $newPath = 'diagnostics/' . $newFilename;
+                
+                Storage::disk('public')->move($oldPath, $newPath);
+                
+                $record->update([
+                    'path' => $newPath,
+                    'original_name' => 'deleted-' . ($record->original_name ?: basename($oldPath))
+                ]);
             }
 
-            $record->delete();
-
-            return redirect()->back()->with('success', 'Image deleted successfully.');
+            return redirect()->back()->with('success', 'Image marked as deleted.');
         } catch (Throwable $e) {
             return redirect()->back()->with('error', 'Failed to delete image: ' . $e->getMessage());
         }
@@ -153,6 +174,7 @@ class DiagnosticsController extends Controller
             // Fetch all diagnostic records for the given type and patient
             $records = Diagnostic::where('patient_id', $patient_id)
                 ->where('type', $type)
+                ->where('original_name', 'not like', 'deleted-%')
                 ->get();
 
             if ($records->isEmpty()) {
@@ -163,14 +185,22 @@ class DiagnosticsController extends Controller
 
             foreach ($records as $record) {
                 if ($record->path && Storage::disk('public')->exists($record->path)) {
-                    Storage::disk('public')->delete($record->path);
+                    $oldPath = $record->path;
+                    $newFilename = 'deleted-' . basename($oldPath);
+                    $newPath = 'diagnostics/' . $newFilename;
+                    
+                    Storage::disk('public')->move($oldPath, $newPath);
+                    
+                    $record->update([
+                        'path' => $newPath,
+                        'original_name' => 'deleted-' . ($record->original_name ?: basename($oldPath))
+                    ]);
                 }
-                $record->delete();
             }
 
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => 'All images for ' . $type . ' deleted successfully.'], 200);
+            return response()->json(['success' => true, 'message' => 'All images for ' . $type . ' marked as deleted.'], 200);
 
         } catch (Throwable $e) {
             DB::rollBack();

@@ -16,6 +16,7 @@ class BaseCdssService
 
     protected $rules = [];
     protected $rulesDirectoryName;
+    protected $shouldTranslate = true;
     
     // FAST PATH: Static cache and request-scoped language detection
     protected static $translationCache = [];
@@ -98,6 +99,8 @@ class BaseCdssService
      */
     public function translateAndDetect($text)
     {
+        if (!$this->shouldTranslate) return $text;
+
         $text = trim($text);
         if (empty($text)) return $text;
         
@@ -142,7 +145,7 @@ class BaseCdssService
      */
     public function translateFinalAlert($text)
     {
-        if (self::$lastDetectedLang === 'en' || empty($text) || $text === 'No Findings') return $text;
+        if (!$this->shouldTranslate || self::$lastDetectedLang === 'en' || empty($text) || $text === 'No Findings') return $text;
 
         $cacheKey = self::$lastDetectedLang . '_' . md5($text);
         if (isset(self::$translationCache[$cacheKey])) return self::$translationCache[$cacheKey];

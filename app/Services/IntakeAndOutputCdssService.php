@@ -4,6 +4,12 @@ namespace App\Services;
 
 class IntakeAndOutputCdssService extends BaseCdssService
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->shouldTranslate = false;
+    }
+
     private $oralIntakeRules = [
         ['condition' => 'low', 'threshold' => 1000, 'alert' => 'WARNING: Low oral intake detected. Patient may be at risk for dehydration.', 'severity' => self::WARNING],
         ['condition' => 'very_low', 'threshold' => 500, 'alert' => 'CRITICAL: Very low oral intake. Immediate assessment required for dehydration.', 'severity' => self::CRITICAL],
@@ -63,14 +69,14 @@ class IntakeAndOutputCdssService extends BaseCdssService
         $balanceAlert = $this->analyzeFluidBalance($intakeData);
         if ($balanceAlert) $allAlerts[] = $balanceAlert;
 
-        if (empty($allAlerts)) return ['alert' => $this->translateFinalAlert('No Findings'), 'severity' => self::NONE];
+        if (empty($allAlerts)) return ['alert' => 'No Findings', 'severity' => self::NONE];
 
         // Sort and translate the summary
         usort($allAlerts, fn($a, $b) => $this->getSeverityValue($b['severity']) <=> $this->getSeverityValue($a['severity']));
         
         $summary = implode('; ', array_unique(array_column($allAlerts, 'alert')));
         return [
-            'alert' => $this->translateFinalAlert($summary),
+            'alert' => $summary,
             'severity' => $allAlerts[0]['severity']
         ];
     }

@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Auth;
 
 class MedicalHistoryApiController extends Controller
 {
-    private function sanitize($data) {
-        foreach ($data as $k => $v) { if ($v === '' || $v === null) $data[$k] = 'N/A'; }
+    private function sanitize($data)
+    {
+        foreach ($data as $k => $v) {
+            if ($v === '' || $v === null)
+                $data[$k] = 'N/A';
+        }
         return $data;
     }
 
@@ -34,19 +38,24 @@ class MedicalHistoryApiController extends Controller
     }
 
     // --- PRESENT ILLNESS ---
-    public function getPresentIllness($id) { return response()->json(PresentIllness::findOrFail($id)); }
-    public function storePresentIllness(Request $request) {
+    public function getPresentIllness($id)
+    {
+        return response()->json(PresentIllness::findOrFail($id));
+    }
+    public function storePresentIllness(Request $request)
+    {
         $record = PresentIllness::updateOrCreate(['patient_id' => $request->patient_id], $this->sanitize($request->all()));
-        
+
         AuditLogController::log(
             'MEDICAL HISTORY UPDATED',
             "Nurse " . Auth::user()->username . " updated the medical history (Present Illness) for patient ID: " . $request->patient_id . ".",
             ['patient_id' => $request->patient_id]
         );
-        
+
         return response()->json($record);
     }
-    public function updatePresentIllness(Request $request, $id) {
+    public function updatePresentIllness(Request $request, $id)
+    {
         $record = PresentIllness::findOrFail($id);
         $record->update($this->sanitize($request->all()));
 
@@ -60,10 +69,14 @@ class MedicalHistoryApiController extends Controller
     }
 
     // --- PAST HISTORY ---
-    public function getPastHistory($id) { return response()->json(PastMedicalSurgical::findOrFail($id)); }
-    public function storePastHistory(Request $request) {
+    public function getPastHistory($id)
+    {
+        return response()->json(PastMedicalSurgical::findOrFail($id));
+    }
+    public function storePastHistory(Request $request)
+    {
         $record = PastMedicalSurgical::updateOrCreate(['patient_id' => $request->patient_id], $this->sanitize($request->all()));
-        
+
         AuditLogController::log(
             'MEDICAL HISTORY UPDATED',
             "Nurse " . Auth::user()->username . " updated the medical history (Past History) for patient ID: " . $request->patient_id . ".",
@@ -72,7 +85,8 @@ class MedicalHistoryApiController extends Controller
 
         return response()->json($record);
     }
-    public function updatePastHistory(Request $request, $id) {
+    public function updatePastHistory(Request $request, $id)
+    {
         $record = PastMedicalSurgical::findOrFail($id);
         $record->update($this->sanitize($request->all()));
 
@@ -86,10 +100,14 @@ class MedicalHistoryApiController extends Controller
     }
 
     // --- ALLERGIES ---
-    public function getAllergy($id) { return response()->json(Allergy::findOrFail($id)); }
-    public function storeAllergy(Request $request) {
+    public function getAllergies($id)
+    {
+        return response()->json(Allergy::findOrFail($id));
+    }
+    public function storeAllergies(Request $request)
+    {
         $record = Allergy::updateOrCreate(['patient_id' => $request->patient_id], $this->sanitize($request->all()));
-        
+
         AuditLogController::log(
             'MEDICAL HISTORY UPDATED',
             "Nurse " . Auth::user()->username . " updated the medical history (Allergies) for patient ID: " . $request->patient_id . ".",
@@ -98,7 +116,8 @@ class MedicalHistoryApiController extends Controller
 
         return response()->json($record);
     }
-    public function updateAllergy(Request $request, $id) {
+    public function updateAllergies(Request $request, $id)
+    {
         $record = Allergy::findOrFail($id);
         $record->update($this->sanitize($request->all()));
 
@@ -112,10 +131,14 @@ class MedicalHistoryApiController extends Controller
     }
 
     // --- VACCINATION ---
-    public function getVaccination($id) { return response()->json(Vaccination::findOrFail($id)); }
-    public function storeVaccination(Request $request) {
+    public function getVaccination($id)
+    {
+        return response()->json(Vaccination::findOrFail($id));
+    }
+    public function storeVaccination(Request $request)
+    {
         $record = Vaccination::updateOrCreate(['patient_id' => $request->patient_id], $this->sanitize($request->all()));
-        
+
         AuditLogController::log(
             'MEDICAL HISTORY UPDATED',
             "Nurse " . Auth::user()->username . " updated the medical history (Vaccination) for patient ID: " . $request->patient_id . ".",
@@ -124,7 +147,8 @@ class MedicalHistoryApiController extends Controller
 
         return response()->json($record);
     }
-    public function updateVaccination(Request $request, $id) {
+    public function updateVaccination(Request $request, $id)
+    {
         $record = Vaccination::findOrFail($id);
         $record->update($this->sanitize($request->all()));
 
@@ -138,10 +162,14 @@ class MedicalHistoryApiController extends Controller
     }
 
     // --- DEVELOPMENTAL ---
-    public function getDevelopmental($id) { return response()->json(DevelopmentalHistory::findOrFail($id)); }
-    public function storeDevelopmental(Request $request) {
+    public function getDevelopmental($id)
+    {
+        return response()->json(DevelopmentalHistory::findOrFail($id));
+    }
+    public function storeDevelopmental(Request $request)
+    {
         $record = DevelopmentalHistory::updateOrCreate(['patient_id' => $request->patient_id], $this->sanitize($request->all()));
-        
+
         AuditLogController::log(
             'MEDICAL HISTORY UPDATED',
             "Nurse " . Auth::user()->username . " updated the medical history (Developmental) for patient ID: " . $request->patient_id . ".",
@@ -150,7 +178,8 @@ class MedicalHistoryApiController extends Controller
 
         return response()->json($record);
     }
-    public function updateDevelopmental(Request $request, $id) {
+    public function updateDevelopmental(Request $request, $id)
+    {
         $record = DevelopmentalHistory::findOrFail($id);
         $record->update($this->sanitize($request->all()));
 

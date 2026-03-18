@@ -17,7 +17,10 @@ class DiagnosticApiController extends Controller
      * Returns absolute URLs for easy mobile display.
      */
     public function getDiagnostics($patient_id) {
-        $records = Diagnostic::where('patient_id', $patient_id)->latest()->get();
+        $records = Diagnostic::where('patient_id', $patient_id)
+            ->where('original_name', 'not like', 'deleted-%')
+            ->orderBy('created_at', 'asc')
+            ->get();
         
         $records->transform(function($record) {
             $record->image_url = url('storage/' . $record->path);
@@ -45,7 +48,20 @@ class DiagnosticApiController extends Controller
         $lastName = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($patient->last_name));
         $typeSlug = preg_replace('/[^a-zA-Z0-9]/', '_', strtolower($request->type));
         $date = now()->format('Ymd');
-        $counter = 1;
+        
+        // Find the current max counter for this patient, type and date to avoid overwriting
+        $existingNames = Diagnostic::where('patient_id', $patientId)
+            ->where('type', $request->type)
+            ->where('original_name', 'like', "{$typeSlug}_{$lastName}_{$date}_%")
+            ->pluck('original_name');
+
+        $maxCounter = 0;
+        foreach ($existingNames as $name) {
+            if (preg_match('/_(\d+)\.\w+$/', $name, $matches)) {
+                $maxCounter = max($maxCounter, intval($matches[1]));
+            }
+        }
+        $counter = $maxCounter + 1;
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
@@ -90,17 +106,24 @@ class DiagnosticApiController extends Controller
         $type = $record->type;
         
         if (Storage::disk('public')->exists($record->path)) {
-            Storage::disk('public')->delete($record->path);
+            $oldPath = $record->path;
+            $newFilename = 'deleted-' . basename($oldPath);
+            $newPath = 'diagnostics/' . $newFilename;
+            
+            Storage::disk('public')->move($oldPath, $newPath);
+            
+            $record->update([
+                'path' => $newPath,
+                'original_name' => 'deleted-' . ($record->original_name ?: basename($oldPath))
+            ]);
         }
-        
-        $record->delete();
 
         AuditLogController::log(
-            'DIAGNOSTIC IMAGE DELETED',
-            "Nurse " . Auth::user()->username . " deleted a " . $type . " image (ID: {$id}) for patient ID: " . $patientId . ".",
+            'DIAGNOSTIC IMAGE MARKED AS DELETED',
+            "Nurse " . Auth::user()->username . " marked a " . $type . " image (ID: {$id}) as deleted for patient ID: " . $patientId . ".",
             ['patient_id' => $patientId, 'record_id' => $id]
         );
 
-        return response()->json(['message' => 'Image deleted from database and server.']);
+        return response()->json(['message' => 'Image marked as deleted and renamed on server.']);
     }
 }

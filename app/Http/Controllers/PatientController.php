@@ -158,6 +158,7 @@ class PatientController extends Controller
     // UPDATE
     public function update(Request $request, $id)
     {
+        // ... (rules and messages same)
         $rules = [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -223,7 +224,7 @@ class PatientController extends Controller
             }
 
             // Find patient, even if inactive
-            $patient = Patient::withTrashed()->findOrFail($id);
+            $patient = Patient::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
             $patient->update($data);
 
             // Log patient update
@@ -243,7 +244,7 @@ class PatientController extends Controller
     public function deactivate($id)
     {
         try {
-            $patient = Patient::findOrFail($id);
+            $patient = Patient::where('user_id', Auth::id())->findOrFail($id);
             
             // Set is_active to false
             $patient->is_active = false;
@@ -269,7 +270,7 @@ class PatientController extends Controller
     public function activate($id)
     {
         try {
-            $patient = Patient::withTrashed()->findOrFail($id);
+            $patient = Patient::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
             
             // Set is_active to true
             $patient->is_active = true;

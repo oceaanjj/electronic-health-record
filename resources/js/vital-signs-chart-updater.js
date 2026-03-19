@@ -14,7 +14,7 @@
         '#006064', // deep cyan
         '#512DA8', // indigo
     ];
-    const timePoints = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+    const timePoints = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00'];
     const labels = ['TEMP', 'HR (bpm)', 'RR (bpm)', 'BP (mmHg)', 'SpO₂ (%)'];
 
     function initializeChart(initialVitalsData) {

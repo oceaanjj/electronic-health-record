@@ -48,7 +48,7 @@ class VitalSignsController extends Controller
         // Default values
         $currentDate = now()->format('Y-m-d');
         $currentDayNo = 1;
-        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00'];
 
         $patientId = $request->input('patient_id') ?? $request->session()->get('selected_patient_id');
 
@@ -212,7 +212,7 @@ class VitalSignsController extends Controller
         }
 
 
-        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00'];
         $anyCreated = false;
         $anyUpdated = false;
         $cdssService = new VitalCdssService();
@@ -350,7 +350,7 @@ class VitalSignsController extends Controller
             'day_no' => 'required|integer|min:1', // Changed from between:1,30
         ]);
 
-        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00', '02:00'];
+        $times = ['06:00', '08:00', '12:00', '14:00', '18:00', '20:00', '00:00'];
         $cdssService = new VitalCdssService();
         $allFindings = [];
 

@@ -41,7 +41,7 @@ All vital fields are **optional strings/numbers**. Empty or null values are stor
 |-------|------|----------|-------------|
 | `patient_id` | integer | ✅ Yes | Must exist in `patients` table |
 | `date` | string (Y-m-d) | No | Defaults to today's date |
-| `time` | string (HH:MM) | No | Defaults to `"08:00"`. Common slots: `06:00`, `08:00`, `12:00`, `14:00`, `18:00`, `20:00`, `00:00`, `02:00` |
+| `time` | string (HH:MM) | No | Defaults to `"08:00"`. Common slots: `06:00`, `08:00`, `12:00`, `14:00`, `18:00`, `20:00`, `00:00` |
 | `day_no` | integer | No | Hospital day number (starts at 1) |
 | `temperature` | numeric | No | Body temperature in °C |
 | `hr` | numeric | No | Heart rate in bpm |

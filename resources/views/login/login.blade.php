@@ -299,7 +299,9 @@
     <body class="login-page">
         <div class="login-container">
             <div class="logo-section">
-                <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo" />
+                <a href="{{ url('/') }}">
+                    <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo" />
+                </a>
             </div>
 
             <div class="form-section">

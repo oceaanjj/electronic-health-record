@@ -144,7 +144,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('sweetalert', [
+        return redirect('/login')->with('sweetalert', [
             'type' => 'success',
             'title' => 'Logged Out',
             'text' => 'You have been logged out successfully.',

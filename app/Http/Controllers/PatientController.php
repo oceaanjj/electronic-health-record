@@ -23,7 +23,12 @@ class PatientController extends Controller
     // Show lahat ng patient
     public function index()
     {
-        $patients = Auth::user()->patients()->withTrashed()->get();
+        $user = Auth::user();
+        if (strtolower($user->role) === 'nurse') {
+            $patients = $user->patients()->withTrashed()->get();
+        } else {
+            $patients = Patient::withTrashed()->get();
+        }
         return view('patients.index', compact('patients'));
     }
 
@@ -31,18 +36,20 @@ class PatientController extends Controller
     public function show($id)
     {
         try {
-            // Find a single patient, even if they are inactive
-            $patient = Auth::user()->patients()->withTrashed()->findOrFail($id);
+            $user = Auth::user();
+            if (strtolower($user->role) === 'nurse') {
+                $patient = $user->patients()->withTrashed()->findOrFail($id);
+            } else {
+                $patient = Patient::withTrashed()->findOrFail($id);
+            }
 
             // Log patient viewing
-            AuditLogController::log('Patient Viewed', 'User ' . Auth::user()->username . ' viewed patient record.', ['patient_id' => $patient->patient_id]);
+            AuditLogController::log('Patient Viewed', 'User ' . $user->username . ' viewed patient record.', ['patient_id' => $patient->patient_id]);
             return view('patients.show', compact('patient'));
 
         } catch (ModelNotFoundException $e) {
-            // If patient ID doesn't exist or doesn't belong to this user
             abort(404, 'Patient not found');
         } catch (\Exception $e) {
-            // Catch any other unexpected errors
             Log::error('Error in PatientController@show: ' . $e->getMessage());
             return redirect()->route('patients.index')->with('error', 'An error occurred while trying to view the patient.');
         }
@@ -142,12 +149,15 @@ class PatientController extends Controller
     public function edit($id)
     {
         try {
-            // Find patient, even if inactive
-            $patient = Patient::withTrashed()->findOrFail($id);
+            $user = Auth::user();
+            if (strtolower($user->role) === 'nurse') {
+                $patient = Patient::withTrashed()->where('user_id', $user->id)->findOrFail($id);
+            } else {
+                $patient = Patient::withTrashed()->findOrFail($id);
+            }
             return view('patients.edit', compact('patient'));
 
         } catch (ModelNotFoundException $e) {
-            // If patient ID doesn't exist
             abort(404, 'Patient not found');
         } catch (\Exception $e) {
             Log::error('Error in PatientController@edit: ' . $e->getMessage());
@@ -224,11 +234,16 @@ class PatientController extends Controller
             }
 
             // Find patient, even if inactive
-            $patient = Patient::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
+            $user = Auth::user();
+            if (strtolower($user->role) === 'nurse') {
+                $patient = Patient::withTrashed()->where('user_id', $user->id)->findOrFail($id);
+            } else {
+                $patient = Patient::withTrashed()->findOrFail($id);
+            }
             $patient->update($data);
 
             // Log patient update
-            AuditLogController::log('Patient Updated', 'User ' . Auth::user()->username . ' updated patient record.', ['patient_id' => $patient->patient_id]);
+            AuditLogController::log('Patient Updated', 'User ' . $user->username . ' updated patient record.', ['patient_id' => $patient->patient_id]);
 
             return redirect()->route('patients.index')->with('success', 'Patient updated successfully');
 
@@ -244,7 +259,12 @@ class PatientController extends Controller
     public function deactivate($id)
     {
         try {
-            $patient = Patient::where('user_id', Auth::id())->findOrFail($id);
+            $user = Auth::user();
+            if (strtolower($user->role) === 'nurse') {
+                $patient = Patient::where('user_id', $user->id)->findOrFail($id);
+            } else {
+                $patient = Patient::findOrFail($id);
+            }
             
             // Set is_active to false
             $patient->is_active = false;
@@ -254,7 +274,7 @@ class PatientController extends Controller
             $patient->delete();
 
 
-            AuditLogController::log('Patient Deactivated', 'User ' . Auth::user()->username . ' set patient record to inactive.', ['patient_id' => $id]);
+            AuditLogController::log('Patient Deactivated', 'User ' . $user->username . ' set patient record to inactive.', ['patient_id' => $id]);
 
             return response()->json(['success' => true, 'message' => 'Patient set to inactive successfully', 'patient' => $patient]);
 
@@ -270,7 +290,12 @@ class PatientController extends Controller
     public function activate($id)
     {
         try {
-            $patient = Patient::withTrashed()->where('user_id', Auth::id())->findOrFail($id);
+            $user = Auth::user();
+            if (strtolower($user->role) === 'nurse') {
+                $patient = Patient::withTrashed()->where('user_id', $user->id)->findOrFail($id);
+            } else {
+                $patient = Patient::withTrashed()->findOrFail($id);
+            }
             
             // Set is_active to true
             $patient->is_active = true;
@@ -280,7 +305,7 @@ class PatientController extends Controller
             $patient->restore();
 
             // Log patient activation
-            AuditLogController::log('Patient Activated', 'User ' . Auth::user()->username . ' set patient record to active.', ['patient_id' => $id]);
+            AuditLogController::log('Patient Activated', 'User ' . $user->username . ' set patient record to active.', ['patient_id' => $id]);
 
             return response()->json(['success' => true, 'message' => 'Patient set to active successfully', 'patient' => $patient]);
         } catch (ModelNotFoundException $e) {
@@ -298,7 +323,12 @@ class PatientController extends Controller
     {
         // Retrieve the input and trim any whitespace
         $search_term = trim($request->input('input'));
-        $patients_query = Auth::user()->patients()->withTrashed();
+        $user = Auth::user();
+        if (strtolower($user->role) === 'nurse') {
+            $patients_query = $user->patients()->withTrashed();
+        } else {
+            $patients_query = Patient::withTrashed();
+        }
 
         if (!empty($search_term)) {
             $patients_query->where(function ($query) use ($search_term) {
@@ -319,7 +349,12 @@ class PatientController extends Controller
     public function liveSearch(Request $request)
     {
         $search_term = trim($request->input('input'));
-        $patients_query = Auth::user()->patients()->withTrashed();
+        $user = Auth::user();
+        if (strtolower($user->role) === 'nurse') {
+            $patients_query = $user->patients()->withTrashed();
+        } else {
+            $patients_query = Patient::withTrashed();
+        }
 
         if (!empty($search_term)) {
             $patients_query->where(function ($query) use ($search_term) {

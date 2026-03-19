@@ -227,7 +227,7 @@ class DoctorApiController extends Controller
     // ─────────────────────────────────────────────
     public function allPatients(Request $request)
     {
-        $query = Patient::where('user_id', Auth::id())->orderBy('last_name')->orderBy('first_name');
+        $query = Patient::orderBy('last_name')->orderBy('first_name');
 
         if ($request->query('search')) {
             $s = $request->query('search');
@@ -246,8 +246,7 @@ class DoctorApiController extends Controller
     // ─────────────────────────────────────────────
     public function activePatients()
     {
-        $patients = Patient::where('user_id', Auth::id())
-            ->where('is_active', true)
+        $patients = Patient::where('is_active', true)
             ->orderByDesc('admission_date')
             ->orderBy('last_name')
             ->get()
@@ -266,7 +265,7 @@ class DoctorApiController extends Controller
     // ─────────────────────────────────────────────
     public function patientDetails($id)
     {
-        $patient = Patient::where('patient_id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $patient = Patient::where('patient_id', $id)->firstOrFail();
         return response()->json($this->transformPatient($patient));
     }
 

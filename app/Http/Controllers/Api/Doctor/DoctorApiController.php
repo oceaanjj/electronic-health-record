@@ -227,7 +227,7 @@ class DoctorApiController extends Controller
     // ─────────────────────────────────────────────
     public function allPatients(Request $request)
     {
-        $query = Patient::where('user_id', Auth::id())->orderBy('last_name')->orderBy('first_name');
+        $query = Patient::orderBy('last_name')->orderBy('first_name');
 
         if ($request->query('search')) {
             $s = $request->query('search');
@@ -246,8 +246,7 @@ class DoctorApiController extends Controller
     // ─────────────────────────────────────────────
     public function activePatients()
     {
-        $patients = Patient::where('user_id', Auth::id())
-            ->where('is_active', true)
+        $patients = Patient::where('is_active', true)
             ->orderByDesc('admission_date')
             ->orderBy('last_name')
             ->get()
@@ -266,8 +265,57 @@ class DoctorApiController extends Controller
     // ─────────────────────────────────────────────
     public function patientDetails($id)
     {
-        $patient = Patient::where('patient_id', $id)->where('user_id', Auth::id())->firstOrFail();
-        return response()->json($this->transformPatient($patient));
+        $patient = Patient::where('patient_id', $id)->firstOrFail();
+        $data = $this->transformPatient($patient);
+        $data['record_stats'] = $this->getPatientRecordStats($id);
+        return response()->json($data);
+    }
+
+    private function getPatientRecordStats($patient_id)
+    {
+        $sections = [
+            'Medical History' => [
+                \App\Models\MedicalHistory\PresentIllness::class,
+                \App\Models\MedicalHistory\PastMedicalSurgical::class,
+                \App\Models\MedicalHistory\Allergy::class,
+                \App\Models\MedicalHistory\Vaccination::class,
+                \App\Models\MedicalHistory\DevelopmentalHistory::class,
+            ],
+            'Physical Exam' => \App\Models\PhysicalExam::class,
+            'Vital Signs' => \App\Models\Vitals::class,
+            'Intake and Output' => \App\Models\IntakeAndOutput::class,
+            'Lab Values' => \App\Models\LabValues::class,
+            'Diagnostics' => \App\Models\Diagnostic::class,
+            'IVs & Lines' => \App\Models\IvsAndLine::class,
+            'Activities of Daily Living' => \App\Models\ActOfDailyLiving::class,
+            'Medical Administration' => \App\Models\MedicationAdministration::class,
+            'Medical Reconciliation' => [
+                \App\Models\MedicalReconciliation\CurrentMedication::class,
+                \App\Models\MedicalReconciliation\HomeMedication::class,
+                \App\Models\MedicalReconciliation\ChangesInMedication::class,
+            ],
+        ];
+
+        $stats = [];
+        foreach ($sections as $name => $models) {
+            $lastUpdate = null;
+            if (is_array($models)) {
+                foreach ($models as $model) {
+                    try {
+                        $updated = $model::where('patient_id', $patient_id)->max('updated_at');
+                        if ($updated && (!$lastUpdate || $updated > $lastUpdate)) {
+                            $lastUpdate = $updated;
+                        }
+                    } catch (\Exception $e) {}
+                }
+            } else {
+                try {
+                    $lastUpdate = $models::where('patient_id', $patient_id)->max('updated_at');
+                } catch (\Exception $e) {}
+            }
+            $stats[$name] = $lastUpdate;
+        }
+        return $stats;
     }
 
     // ─────────────────────────────────────────────

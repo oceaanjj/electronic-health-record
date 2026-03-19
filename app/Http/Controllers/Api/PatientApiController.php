@@ -20,9 +20,11 @@ class PatientApiController extends Controller
 
     public function index(Request $request)
     {
-        $query = Patient::query();
+        $query = Patient::where('user_id', Auth::id());
         if (!$request->has('all')) {
             $query->where('is_active', true);
+        } else {
+            $query->withTrashed();
         }
         if ($request->has('search')) {
             $search = $request->query('search');
@@ -89,13 +91,13 @@ class PatientApiController extends Controller
 
     public function show($id)
     {
-        $patient = Patient::where('patient_id', $id)->firstOrFail();
+        $patient = Patient::where('patient_id', $id)->where('user_id', Auth::id())->firstOrFail();
         return response()->json($this->transformPatient($patient));
     }
 
     public function update(Request $request, $id)
     {
-        $patient = Patient::where('patient_id', $id)->firstOrFail();
+        $patient = Patient::where('patient_id', $id)->where('user_id', Auth::id())->firstOrFail();
 
         $validated = $request->validate([
             'first_name'            => 'sometimes|string|max:255',
@@ -134,7 +136,10 @@ class PatientApiController extends Controller
 
     public function toggleStatus(Request $request, $id)
     {
-        $patient = Patient::withTrashed()->where('patient_id', $id)->firstOrFail();
+        $patient = Patient::withTrashed()
+            ->where('patient_id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
         $isActive = $request->input('is_active', false);
         if ($isActive) {
             $patient->restore();

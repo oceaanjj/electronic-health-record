@@ -388,6 +388,12 @@
                                 </span>
                             </div>
 
+                            <div class="flex justify-end mt-1">
+                                <a href="{{ route('password.request') }}" class="text-sm font-semibold text-green-700 hover:text-green-800 transition-colors">
+                                    Forgot Password?
+                                </a>
+                            </div>
+
                             <div
                                 class="validation-error {{ $errors->has('password') ? 'visible' : '' }}"
                                 id="password-error"

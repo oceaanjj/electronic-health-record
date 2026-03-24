@@ -64,4 +64,20 @@ class AuthController extends Controller
         }
         return response()->json(['detail' => 'Logged out successfully']);
     }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $response = \Illuminate\Support\Facades\Password::broker()->sendResetLink(
+            $request->only('email')
+        );
+
+        if ($response == \Illuminate\Support\Facades\Password::RESET_LINK_SENT) {
+            AuditLogController::log('Password Reset Requested', "Password reset link requested via API for email: {$request->email}");
+            return response()->json(['message' => trans($response)]);
+        }
+
+        return response()->json(['error' => trans($response)], 400);
+    }
 }

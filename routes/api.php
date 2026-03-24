@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\AuthController;
 
 // ── PUBLIC ────────────────────────────────────────────────────────────────
 Route::post('/auth/login',  [AuthController::class, 'login']);
+Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // ── ROLE-SPECIFIC ─────────────────────────────────────────────────────────

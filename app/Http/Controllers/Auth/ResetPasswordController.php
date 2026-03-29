@@ -46,7 +46,7 @@ class ResetPasswordController extends Controller
                 'regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d\x\W]).*$/'
             ],
         ], [
-            'password.regex' => 'Password must contain at least one uppercase letter, one number, and one special character.',
+            'password.regex' => 'For better security, your password must include at least one uppercase letter, one number, and one special character.',
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -64,8 +64,8 @@ class ResetPasswordController extends Controller
         return $status === Password::PASSWORD_RESET
             ? back()->with('status', trans($status))->with('sweetalert', [
                 'type' => 'success',
-                'title' => 'Password Reset!',
-                'text' => trans($status),
+                'title' => 'Password Updated!',
+                'text' => 'Your password has been successfully reset. You can now sign in with your new credentials.',
                 'timer' => 3000
             ])
             : back()->withInput($request->only('email'))
@@ -73,7 +73,7 @@ class ResetPasswordController extends Controller
                 ->with('sweetalert', [
                     'type' => 'error',
                     'title' => 'Reset Failed',
-                    'text' => trans($status),
+                    'text' => 'Unable to reset password. The link may have expired or is no longer valid.',
                     'timer' => 3000
                 ]);
     }

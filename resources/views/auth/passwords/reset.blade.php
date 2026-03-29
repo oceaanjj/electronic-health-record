@@ -207,8 +207,8 @@
                                 </svg>
                             </div>
                             <div style="margin-top: 5px;">
-                                <h3 class="text-xl font-bold text-green-800">Updated!</h3>
-                                <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">{{ session('status') }}</p>
+                                <h3 class="text-xl font-bold text-green-800">Success!</h3>
+                                <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Your password has been updated. Please use your new password to sign in.</p>
                             </div>
 
                             <div class="mt-6 w-full flex justify-center">
@@ -362,10 +362,10 @@
                     passwordStatus.innerHTML = "";
                     resetBtn.disabled = true;
                 } else if (!isValid) {
-                    passwordStatus.innerHTML = `<span style="color: #dc2626">Error:</span><br><span style="color: #dc2626">${message}</span>`;
+                    passwordStatus.innerHTML = `<span style="color: #dc2626">Validation Errors:</span><br><span style="color: #dc2626">${message}</span>`;
                     resetBtn.disabled = true;
                 } else {
-                    passwordStatus.innerHTML = `<span style="color: #1a6b3c">✅Password is strong and matches!</span>`;
+                    passwordStatus.innerHTML = `<span style="color: #1a6b3c">✅ Password meets all security requirements and matches!</span>`;
                     resetBtn.disabled = false;
                 }
             }

@@ -42,15 +42,15 @@ class ForgotPasswordController extends Controller
             ? redirect()->route('password.request')->with('status', trans($status))->with('sweetalert', [
                 'type' => 'success',
                 'title' => 'Link Sent!',
-                'text' => trans($status),
+                'text' => "Check your inbox! We've sent a password reset link to your email.",
                 'timer' => 3000
             ])
             : back()->withInput($request->only('email'))
                 ->withErrors(['email' => trans($status)])
                 ->with('sweetalert', [
                     'type' => 'error',
-                    'title' => 'Failed',
-                    'text' => trans($status),
+                    'title' => 'Email Failed',
+                    'text' => "We couldn't find an account with that email address. Please verify and try again.",
                     'timer' => 3000
                 ]);
     }

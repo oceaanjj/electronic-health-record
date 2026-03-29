@@ -96,22 +96,22 @@ class LoginController extends Controller
                 case 'nurse':
                     return redirect()->route('nurse-home')->with('sweetalert', [
                         'type' => 'success',
-                        'title' => 'Welcome Nurse!',
-                        'text' => 'Login successful.',
+                        'title' => 'Welcome Back!',
+                        'text' => 'You have successfully signed in.',
                         'timer' => 2000
                     ]);
                 case 'doctor':
                     return redirect()->route('doctor-home')->with('sweetalert', [
                         'type' => 'success',
-                        'title' => 'Welcome Doctor!',
-                        'text' => 'Login successful.',
+                        'title' => 'Welcome back, Doctor!',
+                        'text' => 'Your session is now active.',
                         'timer' => 2000
                     ]);
                 case 'admin':
                     return redirect()->route('admin-home')->with('sweetalert', [
                         'type' => 'success',
-                        'title' => 'Welcome Admin!',
-                        'text' => 'Login successful.',
+                        'title' => 'Administrator Access Granted',
+                        'text' => 'Welcome back to the dashboard.',
                         'timer' => 2000
                     ]);
                 default:
@@ -119,7 +119,7 @@ class LoginController extends Controller
                     return back()->with('sweetalert', [
                         'type' => 'error',
                         'title' => 'Access Denied',
-                        'text' => 'You do not have permission to access this account.',
+                        'text' => 'This account does not have the required permissions to access this area.',
                         'timer' => 2500
                     ])->onlyInput('username');
             }
@@ -127,8 +127,8 @@ class LoginController extends Controller
 
         return back()->with('sweetalert', [
             'type' => 'error',
-            'title' => 'Login Failed',
-            'text' => 'Invalid login details.',
+            'title' => 'Sign In Failed',
+            'text' => 'Invalid credentials. Please verify your username and password.',
             'timer' => 2500
         ])->onlyInput('username');
     }
@@ -146,8 +146,8 @@ class LoginController extends Controller
 
         return redirect('/login')->with('sweetalert', [
             'type' => 'success',
-            'title' => 'Logged Out',
-            'text' => 'You have been logged out successfully.',
+            'title' => 'Signed Out',
+            'text' => 'You have been securely signed out.',
             'timer' => 2000
         ]);
     }

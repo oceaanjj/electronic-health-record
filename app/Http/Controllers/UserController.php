@@ -102,7 +102,7 @@ class UserController extends Controller
             'created_at'=> now(),
         ]);
 
-        return redirect()->route('users')->with('success', "User {$user->username} updated successfully!");
+        return redirect()->route('users')->with('success', "Profile for {$user->username} has been successfully updated.");
     }
 
     public function destroy($id)

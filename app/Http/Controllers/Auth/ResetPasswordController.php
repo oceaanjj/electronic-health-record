@@ -22,8 +22,17 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
+        $email = $request->email;
+        $user = \App\Models\User::where('email', $email)->first();
+        
+        // Check if token is valid for this user
+        $isValid = false;
+        if ($user && Password::broker()->tokenExists($user, $token)) {
+            $isValid = true;
+        }
+
         return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
+            ['token' => $token, 'email' => $email, 'isValid' => $isValid]
         );
     }
 

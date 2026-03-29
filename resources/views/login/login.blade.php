@@ -324,6 +324,13 @@
                 <div id="form-container">
                     <p class="role"><strong>LOG IN</strong></p>
 
+                    @if (session('throttle_error') && session('throttle_error')['source'] === 'login')
+                        <div class="error-box" id="throttle-box" style="color: #dc2626;">
+                            <i data-lucide="circle-x"></i>
+                            <span>Too many attempts. Please wait <span id="throttle-timer"></span> before trying again.</span>
+                        </div>
+                    @endif
+
                     @if (session('error'))
                         <div class="error-box">
                             <svg
@@ -592,6 +599,30 @@
                 }
                 if (passwordInput.classList.contains('input-error')) {
                     passwordError.classList.add('visible');
+                }
+            })();
+
+            (function() {
+                let throttleSeconds = {{ (session('throttle_error') && session('throttle_error')['source'] === 'login') ? session('throttle_error')['seconds'] : 0 }};
+                const timerDisplay = document.getElementById('throttle-timer');
+                const throttleBox = document.getElementById('throttle-box');
+
+                if (throttleSeconds > 0 && timerDisplay) {
+                    function updateTimer() {
+                        if (throttleSeconds <= 0) {
+                            if (throttleBox) {
+                                throttleBox.querySelector('span').textContent = 'You can now try again.';
+                            }
+                            return;
+                        }
+
+                        const minutes = Math.floor(throttleSeconds / 60);
+                        const seconds = throttleSeconds % 60;
+                        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                        throttleSeconds--;
+                        setTimeout(updateTimer, 1000);
+                    }
+                    updateTimer();
                 }
             })();
         </script>

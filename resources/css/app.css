@@ -1621,6 +1621,7 @@ body.is-loading > *:not(.cute-loader-wrapper):not(header):not(.main-header) {
     background-color: var(--color-white) !important;
     /* border: 3px solid var(--color-brown) !important; */
     box-shadow: 0 10px 40px rgba(116, 75, 19, 0.3) !important;
+    overflow: hidden !important;
 }
 
 .swal-ehr-title {
@@ -1628,8 +1629,16 @@ body.is-loading > *:not(.cute-loader-wrapper):not(header):not(.main-header) {
     color: var(--color-dark-green) !important;
     font-weight: 700 !important;
     font-size: 1.75rem !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.5rem !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.swal-ehr-content {
+    font-family: var(--font-alte-regular) !important;
+    color: #4b5563 !important;
+    font-size: 1.05rem !important;
+    line-height: 1.6 !important;
+    font-weight: 500 !important;
 }
 
 .swal-ehr-button {
@@ -1686,7 +1695,9 @@ body.is-loading > *:not(.cute-loader-wrapper):not(header):not(.main-header) {
 }
 
 .swal2-timer-progress-bar {
-    background: linear-gradient(to right, var(--color-yellow), var(--color-yellow-light)) !important;
+    background: var(--color-yellow) !important;
+    border-bottom-left-radius: 1.5rem !important;
+    height: 0.35rem !important;
 }
 
 .swal2-icon {

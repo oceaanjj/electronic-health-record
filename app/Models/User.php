@@ -21,7 +21,8 @@ class User extends Authenticatable
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPasswordNotification($token));
+        $source = request()->input('source', 'web');
+        $this->notify(new ResetPasswordNotification($token, $source));
     }
 
     //  Fields that can be mass assigned

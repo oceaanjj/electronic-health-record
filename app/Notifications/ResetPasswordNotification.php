@@ -12,10 +12,12 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     use Queueable;
 
     public $token;
+    public $source;
 
-    public function __construct($token)
+    public function __construct($token, $source = 'web')
     {
         $this->token = $token;
+        $this->source = $source;
     }
 
     public function via($notifiable)
@@ -29,7 +31,8 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
         // This prevents issues when the email is sent via a background queue.
         $url = url(route('password.reset', [
             'token' => $this->token,
-            'email' => $notifiable->getEmailForPasswordReset()
+            'email' => $notifiable->getEmailForPasswordReset(),
+            'source' => $this->source,
         ], false));
 
         return (new MailMessage)

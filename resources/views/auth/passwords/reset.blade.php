@@ -325,10 +325,17 @@
                         </div>
 
                         <div class="mt-6 w-full flex justify-center">
-                            <a href="{{ route('login') }}"
-                                class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 no-underline w-full max-w-[230px]">
-                                <span class="btn-text">Proceed to Login</span>
-                            </a>
+                            @if(request()->input('source') === 'mobile')
+                                <a href="ehr://login"
+                                    class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 no-underline w-full max-w-[230px]">
+                                    <span class="btn-text">Back to App</span>
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 no-underline w-full max-w-[230px]">
+                                    <span class="btn-text">Proceed to Login</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @elseif (isset($isValid) && !$isValid)
@@ -349,9 +356,11 @@
                             </a>
                         </div>
                     </div>
-                @else                    <form action="{{ route('password.update') }}" method="POST" id="resetForm" novalidate>
+                @else
+                    <form action="{{ route('password.update') }}" method="POST" id="resetForm" novalidate>
                         @csrf
                         <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="hidden" name="source" value="{{ request()->input('source', 'web') }}">
 
                         <div class="input-group">
                             <label for="email">Email Address</label>

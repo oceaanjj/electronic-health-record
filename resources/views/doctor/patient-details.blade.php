@@ -17,12 +17,18 @@
             font-size: 15px;
             color: #1f2937;
         }
+        .dark .detail-value {
+            color: #e2e8f0;
+        }
         .section-title {
             font-family: 'Alte Haas Grotesk Bold', arial;
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: #6b7280;
+        }
+        .dark .section-title {
+            color: #94a3b8;
         }
         .form-badge {
             font-family: 'Alte Haas Grotesk', arial;
@@ -32,27 +38,27 @@
 @endpush
 
 @section('content')
-<div class="-mx-6 min-h-screen bg-[#f0f8f0]">
+<div class="-mx-6 min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
 
     {{-- Header / Breadcrumb --}}
-    <div class="bg-white border-b border-gray-200">
+    <div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div class="max-w-screen-xl mx-auto px-4 sm:px-8 py-4 sm:py-5">
             <div class="flex items-center gap-2 mb-1 flex-wrap">
                 <a href="{{ route('doctor-home') }}"
-                   class="text-sm font-alte-regular text-gray-400 hover:text-green-700 transition-colors flex items-center gap-1">
+                   class="text-sm font-alte-regular text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1">
                     <span class="material-symbols-outlined" style="font-size:15px">arrow_back_ios</span>
                     Dashboard
                 </a>
-                <span class="text-gray-300 text-sm">/</span>
+                <span class="text-slate-300 dark:text-slate-700 text-sm">/</span>
                 <a href="{{ $fromCrumb['url'] }}"
-                   class="text-sm font-alte-regular text-gray-400 hover:text-green-700 transition-colors">
+                   class="text-sm font-alte-regular text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                     {{ $fromCrumb['label'] }}
                 </a>
-                <span class="text-gray-300 text-sm">/</span>
-                <span class="text-sm font-alte-regular text-gray-500 truncate max-w-[200px]">{{ $patient->name }}</span>
+                <span class="text-slate-300 dark:text-slate-700 text-sm">/</span>
+                <span class="text-sm font-alte-regular text-slate-500 dark:text-slate-400 truncate max-w-[200px]">{{ $patient->name }}</span>
             </div>
-            <h1 class="text-xl sm:text-2xl font-alte text-[#2D6A4F] leading-tight flex items-center gap-2">
-                <span class="material-symbols-outlined" style="font-size:24px; color:#2D6A4F">person</span>
+            <h1 class="text-xl sm:text-2xl font-alte text-emerald-700 dark:text-emerald-500 leading-tight flex items-center gap-2">
+                <span class="material-symbols-outlined" style="font-size:24px">person</span>
                 Patient Details
             </h1>
         </div>
@@ -60,55 +66,54 @@
 
     <div class="max-w-screen-xl mx-auto px-4 sm:px-8 py-6 space-y-5">
 
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-            <div style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:stretch; gap:2.5rem;">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
+            <div class="flex flex-col sm:flex-row items-stretch gap-6 sm:gap-10">
 
                 {{-- Avatar --}}
-                <div style="flex-shrink:0; width:160px; min-height:180px; border-radius:1rem; background:#e5e7eb;
-                            display:flex; align-items:center; justify-content:center; box-shadow:inset 0 2px 6px rgba(0,0,0,0.08);">
-                    <span class="font-alte" style="font-size:2rem; color:#9ca3af; line-height:1; user-select:none; letter-spacing:0.1em;">
+                <div class="shrink-0 w-32 h-32 sm:w-40 sm:h-48 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center shadow-inner transition-colors duration-300">
+                    <span class="font-alte text-4xl sm:text-5xl text-slate-300 dark:text-slate-600 select-none tracking-widest">
                         {{ strtoupper(substr($patient->first_name, 0, 1)) }}
                     </span>
                 </div>
 
                 {{-- Name + Status + Quick Pills --}}
-                <div style="flex:1; min-width:0; overflow:hidden; padding-top:4px;">
-                    <div class="flex flex-wrap items-center gap-2 mb-3">
-                        <h2 class="font-alte text-2xl sm:text-3xl text-gray-900 leading-tight">
+                <div class="flex-1 min-w-0 pt-1">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <h2 class="font-alte text-2xl sm:text-3xl text-slate-900 dark:text-white leading-tight">
                             {{ $patient->name }}
                         </h2>
                         @if ($patient->is_active)
-                            <span class="inline-flex items-center gap-1 bg-green-100 text-green-700
-                                         text-xs font-alte px-2.5 py-1 rounded-full border border-green-200">
-                                <span class="material-symbols-outlined" style="font-size:11px">circle</span>
+                            <span class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400
+                                         text-xs font-alte px-3 py-1 rounded-full border border-emerald-100 dark:border-emerald-800/50">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                 Active
                             </span>
                         @else
-                            <span class="inline-flex items-center gap-1 bg-gray-100 text-gray-500
-                                         text-xs font-alte px-2.5 py-1 rounded-full border border-gray-200">
-                                <span class="material-symbols-outlined" style="font-size:11px">circle</span>
+                            <span class="inline-flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400
+                                         text-xs font-alte px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700">
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                                 Inactive
                             </span>
                         @endif
                     </div>
-                    <div style="display:flex; flex-direction:column; gap:0.85rem;" class="text-sm font-alte-regular text-gray-500">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm font-alte-regular text-slate-500 dark:text-slate-400">
                         <span class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-gray-400" style="font-size:16px">cake</span>
+                            <span class="material-symbols-outlined text-slate-400 dark:text-slate-600" style="font-size:18px">cake</span>
                             Age {{ $patient->age ?? '—' }}
                         </span>
                         <span class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-gray-400" style="font-size:16px">wc</span>
+                            <span class="material-symbols-outlined text-slate-400 dark:text-slate-600" style="font-size:18px">wc</span>
                             {{ $patient->sex ?? '—' }}
                         </span>
                         @if ($patient->room_no)
                         <span class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-gray-400" style="font-size:16px">door_front</span>
+                            <span class="material-symbols-outlined text-slate-400 dark:text-slate-600" style="font-size:18px">door_front</span>
                             Rm {{ $patient->room_no }}{{ $patient->bed_no ? ' / Bed '.$patient->bed_no : '' }}
                         </span>
                         @endif
                         @if ($patient->admission_date)
                         <span class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-gray-400" style="font-size:16px">calendar_today</span>
+                            <span class="material-symbols-outlined text-slate-400 dark:text-slate-600" style="font-size:18px">calendar_today</span>
                             Admitted {{ $patient->admission_date->format('M d, Y') }}
                         </span>
                         @endif
@@ -120,7 +125,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
             {{-- Personal Information --}}
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
                 <p class="section-title mb-4">Personal Information</p>
                 <div class="space-y-4">
                     <div class="grid grid-cols-2 gap-4">
@@ -178,7 +183,7 @@
 
             {{-- Admission & Room --}}
             <div class="space-y-5">
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
                     <p class="section-title mb-4">Admission Details</p>
                     <div class="space-y-4">
                         <div class="grid grid-cols-2 gap-4">
@@ -195,7 +200,7 @@
                                         ? (int) $patient->admission_date->diffInDays(now())
                                         : null;
                                 @endphp
-                                <p class="detail-value {{ $days !== null && $days > 7 ? 'text-amber-600' : '' }}">
+                                <p class="detail-value {{ $days !== null && $days > 7 ? 'text-amber-600 dark:text-amber-500' : '' }}">
                                     {{ $days !== null ? $days.' day'.($days === 1 ? '' : 's') : '—' }}
                                     @if ($days !== null && $days > 7)
                                         <span class="material-symbols-outlined text-amber-500 align-middle" style="font-size:14px">warning</span>
@@ -217,15 +222,15 @@
                             <p class="detail-label">Status</p>
                             <div class="mt-1">
                                 @if ($patient->is_active)
-                                    <span class="inline-flex items-center gap-1 bg-green-100 text-green-700
-                                                 text-sm font-alte px-3 py-1 rounded-full border border-green-200">
-                                        <span class="material-symbols-outlined" style="font-size:12px">check_circle</span>
+                                    <span class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400
+                                                 text-sm font-alte px-3.5 py-1.5 rounded-full border border-emerald-100 dark:border-emerald-800/50">
+                                        <span class="material-symbols-outlined" style="font-size:16px">check_circle</span>
                                         Active / Currently Admitted
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1 bg-gray-100 text-gray-500
-                                                 text-sm font-alte px-3 py-1 rounded-full border border-gray-200">
-                                        <span class="material-symbols-outlined" style="font-size:12px">cancel</span>
+                                    <span class="inline-flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400
+                                                 text-sm font-alte px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-slate-700">
+                                        <span class="material-symbols-outlined" style="font-size:16px">cancel</span>
                                         Inactive / Discharged
                                     </span>
                                 @endif
@@ -241,15 +246,15 @@
                     $contactNums  = is_array($patient->contact_number) ? $patient->contact_number : [];
                     $hasContacts  = count($contactNames) > 0;
                 @endphp
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
                     <p class="section-title mb-4">Emergency Contact</p>
                     @if ($hasContacts)
                         <div class="space-y-4">
                             @foreach ($contactNames as $ci => $cname)
-                            <div class="flex flex-col gap-0.5 {{ $ci > 0 ? 'pt-4 border-t border-gray-100' : '' }}">
+                            <div class="flex flex-col gap-0.5 {{ $ci > 0 ? 'pt-4 border-t border-slate-100 dark:border-slate-800' : '' }}">
                                 <p class="detail-label">Contact {{ $ci + 1 }}</p>
                                 <p class="detail-value">{{ $cname ?? '—' }}</p>
-                                <p class="font-alte-regular text-sm text-gray-500">
+                                <p class="font-alte-regular text-sm text-slate-500 dark:text-slate-400">
                                     {{ $contactRels[$ci] ?? '—' }}
                                     @if (!empty($contactNums[$ci]))
                                         &bull; {{ $contactNums[$ci] }}
@@ -259,7 +264,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="font-alte-regular text-sm text-gray-400">No emergency contact on file.</p>
+                        <p class="font-alte-regular text-sm text-slate-400 dark:text-slate-600">No emergency contact on file.</p>
                     @endif
                 </div>
             </div>
@@ -267,33 +272,33 @@
 
         {{-- Chief Complaints --}}
         @if ($patient->chief_complaints)
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
             <p class="section-title mb-3">Chief Complaints</p>
-            <p class="font-alte-regular text-gray-700 text-[15px] leading-relaxed whitespace-pre-line">{{ $patient->chief_complaints }}</p>
+            <p class="font-alte-regular text-slate-700 dark:text-slate-300 text-[15px] leading-relaxed whitespace-pre-line">{{ $patient->chief_complaints }}</p>
         </div>
         @endif
 
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
             <p class="section-title mb-4">Patient Form Records</p>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 @php
                     $formLinks = [
-                        ['type' => 'vital-signs',   'label' => 'Vital Signs',              'icon' => 'monitor_heart',    'color' => '#EF4444', 'bg' => 'bg-red-50',    'border' => 'border-red-200',    'text' => 'text-red-700'],
-                        ['type' => 'physical-exam', 'label' => 'Physical Exam',            'icon' => 'person_search',    'color' => '#8B5CF6', 'bg' => 'bg-purple-50', 'border' => 'border-purple-200', 'text' => 'text-purple-700'],
-                        ['type' => 'adl',           'label' => 'Activities of Daily Living','icon' => 'self_improvement', 'color' => '#F97316', 'bg' => 'bg-orange-50', 'border' => 'border-orange-200', 'text' => 'text-orange-700'],
-                        ['type' => 'intake-output', 'label' => 'Intake & Output',          'icon' => 'water_drop',       'color' => '#3B82F6', 'bg' => 'bg-blue-50',   'border' => 'border-blue-200',   'text' => 'text-blue-700'],
-                        ['type' => 'lab-values',    'label' => 'Lab Values',               'icon' => 'biotech',          'color' => '#0D9488', 'bg' => 'bg-teal-50',   'border' => 'border-teal-200',   'text' => 'text-teal-700'],
-                        ['type' => 'medication',    'label' => 'Medication Admin.',        'icon' => 'medication',       'color' => '#10B981', 'bg' => 'bg-emerald-50','border' => 'border-emerald-200','text' => 'text-emerald-700'],
-                        ['type' => 'ivs-lines',     'label' => 'IVs & Lines',              'icon' => 'vaccines',         'color' => '#6366F1', 'bg' => 'bg-indigo-50', 'border' => 'border-indigo-200', 'text' => 'text-indigo-700'],
+                        ['type' => 'vital-signs',   'label' => 'Vital Signs',              'icon' => 'monitor_heart',    'color_light' => 'bg-red-50 text-red-700 border-red-200', 'color_dark' => 'dark:bg-red-900/20 dark:text-red-400 dark:border-red-900/30'],
+                        ['type' => 'physical-exam', 'label' => 'Physical Exam',            'icon' => 'person_search',    'color_light' => 'bg-purple-50 text-purple-700 border-purple-200', 'color_dark' => 'dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-900/30'],
+                        ['type' => 'adl',           'label' => 'Activities of Daily Living','icon' => 'self_improvement', 'color_light' => 'bg-orange-50 text-orange-700 border-orange-200', 'color_dark' => 'dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-900/30'],
+                        ['type' => 'intake-output', 'label' => 'Intake & Output',          'icon' => 'water_drop',       'color_light' => 'bg-blue-50 text-blue-700 border-blue-200', 'color_dark' => 'dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-900/30'],
+                        ['type' => 'lab-values',    'label' => 'Lab Values',               'icon' => 'biotech',          'color_light' => 'bg-teal-50 text-teal-700 border-teal-200', 'color_dark' => 'dark:bg-teal-900/20 dark:text-teal-400 dark:border-teal-900/30'],
+                        ['type' => 'medication',    'label' => 'Medication Admin.',        'icon' => 'medication',       'color_light' => 'bg-emerald-50 text-emerald-700 border-emerald-200', 'color_dark' => 'dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30'],
+                        ['type' => 'ivs-lines',     'label' => 'IVs & Lines',              'icon' => 'vaccines',         'color_light' => 'bg-indigo-50 text-indigo-700 border-indigo-200', 'color_dark' => 'dark:bg-indigo-900/20 dark:text-indigo-400 dark:border-indigo-900/30'],
                     ];
                 @endphp
                 @foreach ($formLinks as $fl)
                 <a href="{{ route('doctor.form-detail', ['type' => $fl['type'], 'patient_id' => $patient->patient_id]) }}?from=patient-details&prev={{ $fromKey }}"
-                   class="flex items-center gap-3 p-3.5 rounded-xl border {{ $fl['border'] }} {{ $fl['bg'] }}
-                          hover:shadow-md transition-all group">
-                    <span class="material-symbols-outlined {{ $fl['text'] }}" style="font-size:20px">{{ $fl['icon'] }}</span>
-                    <span class="form-badge {{ $fl['text'] }} leading-tight">{{ $fl['label'] }}</span>
-                    <span class="material-symbols-outlined text-gray-300 group-hover:text-gray-500 ml-auto transition-colors" style="font-size:16px">chevron_right</span>
+                   class="flex items-center gap-3 p-3.5 rounded-xl border {{ $fl['color_light'] }} {{ $fl['color_dark'] }}
+                          hover:shadow-md dark:hover:shadow-slate-900/50 transition-all group">
+                    <span class="material-symbols-outlined" style="font-size:20px">{{ $fl['icon'] }}</span>
+                    <span class="form-badge leading-tight">{{ $fl['label'] }}</span>
+                    <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:text-slate-500 dark:group-hover:text-slate-400 ml-auto transition-colors" style="font-size:16px">chevron_right</span>
                 </a>
                 @endforeach
             </div>

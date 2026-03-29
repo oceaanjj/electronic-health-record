@@ -16,9 +16,17 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- !important for instant alerts-->
+
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
 
-<body class="overflow-x-hidden bg-white">
+<body class="overflow-x-hidden bg-white dark:bg-slate-950 transition-colors duration-300">
     {{-- Sidebar --}}
     @include('components.doctor.sidebar')
 
@@ -29,7 +37,7 @@
     <x-sweetalert-messages />
 
     {{-- Main Content --}}
-    <div id="main" class="relative min-h-screen overflow-x-hidden bg-white transition-all duration-300 ease-in-out">
+    <div id="main" class="relative min-h-screen overflow-x-hidden bg-white dark:bg-slate-950 transition-all duration-300 ease-in-out">
         <!-- <img
                 src="{{ asset('img/bg-design-right.png') }}"
                 alt="Top right design"

@@ -1,388 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Reset Password</title>
-        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-        @vite(['resources/css/login-style.css'])
-        @vite(['resources/css/app.css'])
-        @vite(['resources/js/app.js'])
-        <script src="https://unpkg.com/lucide@latest"></script>
-        <style>
-            .input-group {
-                position: relative;
-                margin-bottom: 4px;
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reset Password</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    @vite(['resources/css/login-style.css'])
+    @vite(['resources/css/app.css'])
+    @vite(['resources/js/app.js'])
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .input-group {
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .input-group input {
+            width: 100%;
+            box-sizing: border-box;
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+            border: 1.5px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #1a6b3c;
+            box-shadow: 0 0 0 3px rgba(26, 107, 60, 0.15);
+        }
+
+        .validation-error {
+            display: flex;
+            align-items: flex-start;
+            gap: 2px;
+            color: #dc2626;
+            font-size: 0.82rem;
+            font-weight: 500;
+            margin-top: 2px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition:
+                max-height 100px 0.3s ease,
+                opacity 0.25s ease,
+                margin 0.3s ease;
+        }
+
+        .validation-error i, .validation-error svg {
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .validation-error.visible {
+            max-height: 100px;
+            opacity: 1;
+            margin-top: 2px;
+        }
+
+        .password-wrapper {
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .password-wrapper input {
+            padding-right: 42px !important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-password:hover {
+            color: #1a6b3c;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .btn-login {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition:
+                opacity 0.2s ease,
+                transform 0.1s ease;
+        }
+
+        .btn-login:active {
+            transform: scale(0.97);
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.9rem;
+        }
+
+        .role {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #111827;
+        }
+
+        /* Perfect SVG Checkmark Animation */
+        .checkmark-container {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 4;
+            stroke: #4CAF50;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px #4CAF50;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+        }
+
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 4;
+            stroke-miterlimit: 10;
+            stroke: #4CAF50;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes scale {
+
+            0%,
+            100% {
+                transform: none;
             }
 
-            .input-group input {
-                width: 100%;
+            50% {
+                transform: scale3d(1.1, 1.1, 1);
+            }
+        }
+
+        @keyframes fill {
+            100% {
+                box-shadow: inset 0px 0px 0px 40px #fff;
+            }
+        }
+
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.55s linear infinite;
+        }
+
+        .loading .spinner {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media screen and (max-width: 821px) {
+            body.login-page {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                margin: 0;
+                padding: 20px;
                 box-sizing: border-box;
-                transition:
-                    border-color 0.25s ease,
-                    box-shadow 0.25s ease;
-                border: 1.5px solid #ccc;
-                border-radius: 8px;
-                outline: none;
             }
 
-            .input-group input:focus {
-                border-color: #1a6b3c;
-                box-shadow: 0 0 0 3px rgba(26, 107, 60, 0.15);
-            }
-
-            .validation-error {
-                display: flex;
-                align-items: center;
-                gap: 2px;
-                color: #dc2626;
-                font-size: 0.82rem;
-                font-weight: 500;
-                margin-top: 2px;
-                max-height: 0;
-                overflow: hidden;
-                opacity: 0;
-                transition:
-                    max-height 100px 0.3s ease,
-                    opacity 0.25s ease,
-                    margin 0.3s ease;
-            }
-
-            .validation-error.visible {
-                max-height: 100px;
-                opacity: 1;
-                margin-top: 2px;
-            }
-
-            .password-wrapper {
-                position: relative;
-                margin-bottom: 0;
-            }
-
-            .password-wrapper input {
-                padding-right: 42px !important;
-            }
-
-            .toggle-password {
-                position: absolute;
-                right: 14px;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                color: #9ca3af;
-                transition: color 0.2s ease, transform 0.2s ease;
-                display: flex;
-                align-items: center;
-            }
-
-            .toggle-password:hover {
-                color: #1a6b3c;
-                transform: translateY(-50%) scale(1.1);
-            }
-
+            .input-group,
             .btn-login {
-                position: relative;
+                width: 230px;
+            }
+
+            .login-container {
                 display: flex;
+                flex-direction: column;
+                width: 100%;
+                max-width: 400px;
+                border-radius: 12px;
+                overflow: hidden;
+                margin-top: -50px;
                 align-items: center;
+            }
+
+            .logo-section {
+                display: flex;
                 justify-content: center;
-                gap: 8px;
-                cursor: pointer;
-                transition:
-                    opacity 0.2s ease,
-                    transform 0.1s ease;
+                align-items: center;
+                padding: 10px 0 10px 0;
+                width: 100%;
             }
 
-            .btn-login:active {
-                transform: scale(0.97);
-            }
-
-            .input-group label {
+            .logo {
+                width: 120px;
+                height: auto;
                 display: block;
-                margin-bottom: 6px;
-                font-weight: 600;
-                color: #1f2937;
-                font-size: 0.9rem;
-            }
-            
-            .role {
-                text-align: center;
-                font-size: 1.5rem;
-                margin-bottom: 1.5rem;
-                color: #111827;
-            }
-
-            /* Perfect SVG Checkmark Animation */
-            .checkmark-container {
-                width: 100px;
-                height: 100px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
                 margin: 0 auto;
             }
-            .checkmark {
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                display: block;
-                stroke-width: 4;
-                stroke: #4CAF50;
-                stroke-miterlimit: 10;
-                box-shadow: inset 0px 0px 0px #4CAF50;
-                animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+
+            .form-section {
+                margin: -20px;
+                margin-top: 10px;
+                padding: 10px 30px 40px 30px;
+                width: 120%;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
-            .checkmark__circle {
-                stroke-dasharray: 166;
-                stroke-dashoffset: 166;
-                stroke-width: 4;
-                stroke-miterlimit: 10;
-                stroke: #4CAF50;
-                fill: none;
-                animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+
+            #form-container {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
-            .checkmark__check {
-                transform-origin: 50% 50%;
-                stroke-dasharray: 48;
-                stroke-dashoffset: 48;
-                animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+
+            #resetForm {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
-            @keyframes stroke { 100% { stroke-dashoffset: 0; } }
-            @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
-            @keyframes fill { 100% { box-shadow: inset 0px 0px 0px 40px #fff; } }
 
-            .spinner {
-                display: none;
-                width: 18px;
-                height: 18px;
-                border: 2.5px solid rgba(255, 255, 255, 0.35);
-                border-top-color: #fff;
-                border-radius: 50%;
-                animation: spin 0.55s linear infinite;
+            .role,
+            .role strong {
+                margin-top: -20px;
+                padding-bottom: 40px;
+                font-size: 40px !important;
+                text-align: center;
+                margin-bottom: 20px;
+                width: 150%;
+                margin-left: -25%;
             }
-            .loading .spinner { display: inline-block; }
-            @keyframes spin { to { transform: rotate(360deg); } }
 
-            @media screen and (max-width: 821px) {
-                body.login-page {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    min-height: 100vh;
-                    margin: 0;
-                    padding: 20px;
-                    box-sizing: border-box;
-                }
-                .input-group, .btn-login { width: 230px; }
-                .login-container { display: flex; flex-direction: column; width: 100%; max-width: 400px; border-radius: 12px; overflow: hidden; margin-top: -50px; align-items: center; }
-                .logo-section { display: flex; justify-content: center; align-items: center; padding: 10px 0 10px 0; width: 100%; }
-                .logo { width: 120px; height: auto; display: block; margin: 0 auto; }
-                .form-section { margin: -20px; margin-top: 10px; padding: 10px 30px 40px 30px; width: 120%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
-                #form-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
-                #resetForm { width: 100%; display: flex; flex-direction: column; align-items: center; }
-                .role, .role strong { margin-top: -20px; padding-bottom: 40px; font-size: 40px !important; text-align: center; margin-bottom: 20px; width: 150%; margin-left: -25%; }
-                #upper-line { margin-top: -10px; width: calc(100% + 60px); height: 7px; background: #edb62c; border-top-left-radius: 5px; border-top-right-radius: 5px; margin-bottom: 20px; }
+            #upper-line {
+                margin-top: -10px;
+                width: calc(100% + 60px);
+                height: 7px;
+                background: #edb62c;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                margin-bottom: 20px;
             }
-        </style>
-    </head>
+        }
+    </style>
+</head>
 
-    <body class="login-page">
-        <div class="login-container">
-            <div class="logo-section">
-                <a href="{{ url('/') }}">
-                    <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo" />
-                </a>
-            </div>
-
-            <div class="form-section">
-                <p id="upper-line"></p>
-                <div id="form-container">
-                    <p class="role"><strong>RESET PASSWORD</strong></p>
-
-                    @if (session('status'))
-                        <div class="flex flex-col items-center text-center animate-slide-down">
-                            <div class="checkmark-container">
-                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                                </svg>
-                            </div>
-                            <div style="margin-top: 5px;">
-                                <h3 class="text-xl font-bold text-green-800">Success!</h3>
-                                <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Your password has been updated. Please use your new password to sign in.</p>
-                            </div>
-
-                            <div class="mt-6 w-full flex justify-center">
-                                <a href="{{ route('login') }}" class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 no-underline w-full max-w-[230px]">
-                                    <span class="btn-text">Proceed to Login</span>
-                                </a>
-                            </div>
-                        </div>
-                    @else
-                        <form action="{{ route('password.update') }}" method="POST" id="resetForm" novalidate>
-                            @csrf
-                            <input type="hidden" name="token" value="{{ $token }}">
-
-                            <div class="input-group">
-                                <label for="email">Email Address</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Enter your email"
-                                    class="{{ $errors->has('email') ? 'input-error' : '' }} h-[50px] p-3 bg-gray-100 cursor-not-allowed"
-                                    value="{{ $email ?? old('email') }}"
-                                    readonly
-                                    required
-                                />
-                                @error('email')
-                                <div class="validation-error visible">
-                                    <i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>
-                                    <span>{{ $message }}</span>
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="input-group mt-4">
-                                <label for="password">New Password</label>
-                                <div class="password-wrapper">
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        placeholder="Enter new password"
-                                        class="{{ $errors->has('password') ? 'input-error' : '' }} h-[50px] p-3"
-                                        required
-                                    />
-                                    <span class="toggle-password" onclick="togglePassword('password')">
-                                        <i data-lucide="eye-off" id="password-eye"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="input-group mt-4">
-                                <label for="password_confirmation">Confirm Password</label>
-                                <div class="password-wrapper">
-                                    <input
-                                        type="password"
-                                        name="password_confirmation"
-                                        id="password_confirmation"
-                                        placeholder="Confirm new password"
-                                        class="h-[50px] p-3"
-                                        required
-                                    />
-                                    <span class="toggle-password" onclick="togglePassword('password_confirmation')">
-                                        <i data-lucide="eye-off" id="password_confirmation-eye"></i>
-                                    </span>
-                                </div>
-                                
-                                <div id="password-status" class="text-[0.8rem] mt-2 leading-relaxed"></div>
-                                
-                                @error('password')
-                                <div class="validation-error visible mt-2">
-                                    <i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>
-                                    <span>{{ $message }}</span>
-                                </div>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn-login mt-8 h-[52px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all disabled:opacity-50 w-full" id="resetBtn">
-                                <span class="spinner"></span>
-                                <span class="btn-text">Update Password</span>
-                            </button>
-                        </form>
-                    @endif
-                </div>
-            </div>
+<body class="login-page">
+    <div class="login-container">
+        <div class="logo-section">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr Logo" class="logo" />
+            </a>
         </div>
 
-        @if (session('sweetalert'))
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    setTimeout(function() {
-                        const opts = @json(session('sweetalert'));
-                        if (typeof Swal !== 'undefined') {
-                            Swal.fire({
-                                icon: opts.type || 'info',
-                                title: opts.title || '',
-                                text: opts.text || '',
-                                timer: opts.timer || 3000,
-                            });
-                        }
-                    }, 100);
-                });
-            </script>
-        @endif
+        <div class="form-section">
+            <p id="upper-line"></p>
+            <div id="form-container">
+                <p class="role"><strong>RESET PASSWORD</strong></p>
 
+                @if (session('throttle_error') && session('throttle_error')['source'] === 'reset')
+                    <div id="throttle-box" class="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm mb-4" style="color: #dc2626;">
+                        <i data-lucide="circle-x" class="w-5 h-5 mt-0.5 shrink-0"></i>
+                        <span>Too many attempts. Please wait <strong id="throttle-timer">--:--</strong> before trying again.</span>
+                    </div>
+                @endif
+
+                @if (session('status'))
+                    <div class="flex flex-col items-center text-center animate-slide-down">
+                        <div class="checkmark-container">
+                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                            </svg>
+                        </div>
+                        <div style="margin-top: 5px;">
+                            <h3 class="text-xl font-bold text-green-800">Success!</h3>
+                            <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Your password has been
+                                updated. Please use your new password to sign in.</p>
+                        </div>
+
+                        <div class="mt-6 w-full flex justify-center">
+                            <a href="{{ route('login') }}"
+                                class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 no-underline w-full max-w-[230px]">
+                                <span class="btn-text">Proceed to Login</span>
+                            </a>
+                        </div>
+                    </div>
+                @elseif (isset($isValid) && !$isValid)
+                    <div class="flex flex-col items-center text-center animate-slide-down">
+                        <img class="h-auto w-[150px] mb-6" src="{{ asset('img/others/403error.png') }}" alt="Link Expired" />
+                        <h3 class="text-2xl font-black text-dark-red uppercase leading-none">Link Expired</h3>
+                        <p class="text-sm font-medium leading-relaxed text-gray-700 mt-4 px-4">
+                            This password reset link is invalid or has already expired. 
+                            For your security, please request a new one.
+                        </p>
+
+                        <div class="mt-8 w-full flex flex-col items-center gap-4">
+                            <a href="{{ route('password.request') }}" class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center no-underline w-full max-w-[230px]">
+                                Request New Link
+                            </a>
+                            <a href="{{ route('login') }}" class="text-sm font-bold text-gray-500 hover:text-green-700 transition-all no-underline">
+                                Return to Login
+                            </a>
+                        </div>
+                    </div>
+                @else                    <form action="{{ route('password.update') }}" method="POST" id="resetForm" novalidate>
+                        @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
+
+                        <div class="input-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" name="email" id="email" placeholder="Enter your email"
+                                class="{{ $errors->has('email') ? 'input-error' : '' }} h-[50px] p-3 bg-gray-100 cursor-not-allowed"
+                                value="{{ $email ?? old('email') }}" readonly required />
+                            @error('email')
+                                <div class="validation-error visible">
+                                    <i data-lucide="circle-x" class="w-4 h-4 mr-1"></i>
+                                    <span>{{ $message }}</span>
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="input-group mt-4">
+                            <label for="password">New Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" name="password" id="password" placeholder="Enter new password"
+                                    class="{{ $errors->has('password') ? 'input-error' : '' }} h-[50px] p-3" required />
+                                <span class="toggle-password" onclick="togglePassword('password')">
+                                    <i data-lucide="eye-off" id="password-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="input-group mt-4">
+                            <label for="password_confirmation">Confirm Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    placeholder="Confirm new password" class="h-[50px] p-3" required />
+                                <span class="toggle-password" onclick="togglePassword('password_confirmation')">
+                                    <i data-lucide="eye-off" id="password_confirmation-eye"></i>
+                                </span>
+                            </div>
+
+                            <div id="password-status" class="text-[0.8rem] mt-2 leading-relaxed"></div>
+
+                            @error('password')
+                                <div class="validation-error visible mt-2">
+                                    <i data-lucide="circle-x" class="w-4 h-4 mr-1"></i>
+                                    <span>{{ $message }}</span>
+                                </div>
+                            @enderror
+                        </div>
+
+                        <button type="submit"
+                            class="btn-login mt-8 h-[52px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all disabled:opacity-50 w-full"
+                            id="resetBtn">
+                            <span class="spinner"></span>
+                            <span class="btn-text">Update Password</span>
+                        </button>
+                    </form>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    @if (session('sweetalert'))
         <script>
-            lucide.createIcons();
-
-            function togglePassword(id) {
-                const input = document.getElementById(id);
-                const eyeIcon = document.getElementById(id + '-eye');
-                
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    eyeIcon.setAttribute('data-lucide', 'eye');
-                } else {
-                    input.type = 'password';
-                    eyeIcon.setAttribute('data-lucide', 'eye-off');
-                }
-                lucide.createIcons();
-            }
-
-            const passwordInput = document.getElementById('password');
-            const confirmPasswordInput = document.getElementById('password_confirmation');
-            const passwordStatus = document.getElementById('password-status');
-            const resetBtn = document.getElementById('resetBtn');
-
-            function checkPasswords() {
-                const password = passwordInput.value;
-                const confirmPassword = confirmPasswordInput.value;
-
-                const minLength = password.length >= 8;
-                const hasUpper = /[A-Z]/.test(password);
-                const hasLower = /[a-z]/.test(password);
-                const hasNumber = /[0-9]/.test(password);
-                const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-
-                let message = "";
-                let isValid = true;
-
-                if (!minLength) { message += "• Must be at least 8 characters.<br>"; isValid = false; }
-                if (!hasUpper) { message += "• Must contain an uppercase letter.<br>"; isValid = false; }
-                if (!hasNumber) { message += "• Must contain a number.<br>"; isValid = false; }
-                if (!hasSpecial) { message += "• Must contain a special character.<br>"; isValid = false; }
-
-                if (password !== confirmPassword && password.length > 0 && confirmPassword.length > 0) {
-                    message += "• Passwords do not match.<br>";
-                    isValid = false;
-                }
-
-                if (password.length === 0) {
-                    passwordStatus.innerHTML = "";
-                    resetBtn.disabled = true;
-                } else if (!isValid) {
-                    passwordStatus.innerHTML = `<span style="color: #dc2626">Validation Errors:</span><br><span style="color: #dc2626">${message}</span>`;
-                    resetBtn.disabled = true;
-                } else {
-                    passwordStatus.innerHTML = `<span style="color: #1a6b3c">✅ Password meets all security requirements and matches!</span>`;
-                    resetBtn.disabled = false;
-                }
-            }
-
-            if (passwordInput && confirmPasswordInput) {
-                passwordInput.addEventListener('input', checkPasswords);
-                confirmPasswordInput.addEventListener('input', checkPasswords);
-            }
-
-            const resetForm = document.getElementById('resetForm');
-            if (resetForm) {
-                resetForm.addEventListener('submit', function() {
-                    const btn = document.getElementById('resetBtn');
-                    btn.classList.add('loading');
-                    btn.disabled = true;
-                });
-            }
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    const opts = @json(session('sweetalert'));
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            icon: opts.type || 'info',
+                            title: opts.title || '',
+                            text: opts.text || '',
+                            timer: opts.timer || 3000,
+                        });
+                    }
+                }, 100);
+            });
         </script>
-    </body>
+    @endif
+
+    <script>
+        lucide.createIcons();
+
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const eyeIcon = document.getElementById(id + '-eye');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            } else {
+                input.type = 'password';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            }
+            lucide.createIcons();
+        }
+
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('password_confirmation');
+        const passwordStatus = document.getElementById('password-status');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function checkPasswords() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            const minLength = password.length >= 8;
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+            let message = "";
+            let isValid = true;
+
+            if (!minLength) { message += "• Must be at least 8 characters.<br>"; isValid = false; }
+            if (!hasUpper) { message += "• Must contain an uppercase letter.<br>"; isValid = false; }
+            if (!hasNumber) { message += "• Must contain a number.<br>"; isValid = false; }
+            if (!hasSpecial) { message += "• Must contain a special character.<br>"; isValid = false; }
+
+            if (password !== confirmPassword && password.length > 0 && confirmPassword.length > 0) {
+                message += "• Passwords do not match.<br>";
+                isValid = false;
+            }
+
+            if (password.length === 0) {
+                passwordStatus.innerHTML = "";
+                return false;
+            } else if (!isValid) {
+                if (message.endsWith('<br>')) {
+                    message = message.slice(0, -4);
+                }
+                passwordStatus.innerHTML = `
+                    <div class="flex items-start gap-1" style="color: #dc2626">
+                        <i data-lucide="circle-x" class="w-4 h-4 mt-1 shrink-0"></i>
+                        <div class="leading-tight">${message}</div>
+                    </div>`;
+                lucide.createIcons();
+                return false;
+            } else {
+                passwordStatus.innerHTML = `<div class="flex items-start gap-1" style="color: #1a6b3c"><i data-lucide="check" class="w-4 h-4 mt-1 shrink-0"></i><span class="leading-tight">Password meets all security requirements and matches!</span></div>`;
+                lucide.createIcons();
+                return true;
+            }
+        }
+
+        if (passwordInput && confirmPasswordInput) {
+            passwordInput.addEventListener('input', checkPasswords);
+            confirmPasswordInput.addEventListener('input', checkPasswords);
+        }
+
+        const resetForm = document.getElementById('resetForm');
+        if (resetForm) {
+            resetForm.addEventListener('submit', function (e) {
+                const isValid = checkPasswords();
+                
+                if (!isValid) {
+                    e.preventDefault();
+                    return;
+                }
+
+                const btn = document.getElementById('resetBtn');
+                btn.classList.add('loading');
+                btn.disabled = true;
+            });
+        }
+
+        (function() {
+            let throttleSeconds = {{ (session('throttle_error') && session('throttle_error')['source'] === 'reset') ? session('throttle_error')['seconds'] : 0 }};
+            const timerDisplay = document.getElementById('throttle-timer');
+            const throttleBox = document.getElementById('throttle-box');
+
+            if (throttleSeconds > 0 && timerDisplay) {
+                function updateTimer() {
+                    if (throttleSeconds <= 0) {
+                        if (throttleBox) {
+                            throttleBox.querySelector('span').textContent = 'You can now try again.';
+                        }
+                        return;
+                    }
+
+                    const minutes = Math.floor(throttleSeconds / 60);
+                    const seconds = throttleSeconds % 60;
+                    timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    throttleSeconds--;
+                    setTimeout(updateTimer, 1000);
+                }
+                updateTimer();
+            }
+        })();
+    </script>
+</body>
+
 </html>

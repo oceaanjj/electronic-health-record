@@ -32,7 +32,7 @@
 
         .validation-error {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 2px;
             color: #dc2626;
             font-size: 0.82rem;
@@ -41,11 +41,16 @@
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: max-height 40px 0.3s ease, opacity 0.25s ease, margin 0.3s ease;
+            transition: max-height 100px 0.3s ease, opacity 0.25s ease, margin 0.3s ease;
+        }
+
+        .validation-error i, .validation-error svg {
+            margin-top: 2px;
+            flex-shrink: 0;
         }
 
         .validation-error.visible {
-            max-height: 40px;
+            max-height: 100px;
             opacity: 1;
             margin-top: 2px;
         }
@@ -265,6 +270,13 @@
             <div id="form-container">
                 <p class="role"><strong>FORGOT PASSWORD</strong></p>
 
+                @if (session('throttle_error') && session('throttle_error')['source'] === 'email')
+                    <div id="throttle-box" class="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm mb-4" style="color: #dc2626;">
+                        <i data-lucide="circle-x" class="w-5 h-5 mt-0.5 shrink-0"></i>
+                        <span>Too many attempts. Please wait <strong id="throttle-timer">--:--</strong> before trying again.</span>
+                    </div>
+                @endif
+
                 @if (session('status'))
                     <div class="flex flex-col items-center text-center animate-slide-down -mt-5">
                         <div class="checkmark-container">
@@ -275,7 +287,8 @@
                         </div>
                         <div style="margin-top: 5px;">
                             <h3 class="text-xl font-bold text-green-800">Email Sent!</h3>
-                            <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Check your inbox for a link to reset your password. If you don't see it, please check your spam folder.</p>
+                            <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Check your inbox for a link to
+                                reset your password. If you don't see it, please check your spam folder.</p>
                         </div>
 
                         <div class="mt-6 w-full flex justify-center">
@@ -295,9 +308,14 @@
                                 class="{{ $errors->has('email') ? 'input-error' : '' }} h-[50px] p-3"
                                 value="{{ old('email') }}" required />
 
+                            <div id="email-validation-error" class="validation-error">
+                                <i data-lucide="circle-x" class="w-4 h-4 mr-1"></i>
+                                <span id="email-error-text"></span>
+                            </div>
+
                             @error('email')
                                 <div class="validation-error visible">
-                                    <i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>
+                                    <i data-lucide="circle-x" class="w-4 h-4 mr-1"></i>
                                     <span>{{ $message }}</span>
                                 </div>
                             @enderror
@@ -342,14 +360,77 @@
 
     <script>
         lucide.createIcons();
+
+        const emailInput = document.getElementById('email');
+        const emailErrorDiv = document.getElementById('email-validation-error');
+        const emailErrorText = document.getElementById('email-error-text');
+
+        function validateEmail(isSubmit = false) {
+            const email = emailInput.value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email === "") {
+                if (isSubmit) {
+                    emailErrorText.textContent = "Please enter your registered email.";
+                    emailErrorDiv.classList.add('visible');
+                } else {
+                    emailErrorDiv.classList.remove('visible');
+                }
+                return false;
+            } else if (!emailPattern.test(email)) {
+                emailErrorText.textContent = "Please enter a valid email address (e.g., user@example.com).";
+                emailErrorDiv.classList.add('visible');
+                return false;
+            } else {
+                emailErrorDiv.classList.remove('visible');
+                return true;
+            }
+        }
+
+        if (emailInput) {
+            emailInput.addEventListener('input', () => validateEmail(false));
+            emailInput.addEventListener('blur', () => validateEmail(false));
+        }
+
         const resetForm = document.getElementById('resetForm');
         if (resetForm) {
-            resetForm.addEventListener('submit', function () {
+            resetForm.addEventListener('submit', function (e) {
+                const isValid = validateEmail(true);
+                
+                if (!isValid) {
+                    e.preventDefault();
+                    return;
+                }
+
                 const btn = document.getElementById('resetBtn');
                 btn.classList.add('loading');
                 btn.disabled = true;
             });
         }
+
+        (function() {
+            let throttleSeconds = {{ (session('throttle_error') && session('throttle_error')['source'] === 'email') ? session('throttle_error')['seconds'] : 0 }};
+            const timerDisplay = document.getElementById('throttle-timer');
+            const throttleBox = document.getElementById('throttle-box');
+
+            if (throttleSeconds > 0 && timerDisplay) {
+                function updateTimer() {
+                    if (throttleSeconds <= 0) {
+                        if (throttleBox) {
+                            throttleBox.querySelector('span').textContent = 'You can now try again.';
+                        }
+                        return;
+                    }
+
+                    const minutes = Math.floor(throttleSeconds / 60);
+                    const seconds = throttleSeconds % 60;
+                    timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    throttleSeconds--;
+                    setTimeout(updateTimer, 1000);
+                }
+                updateTimer();
+            }
+        })();
     </script>
 </body>
 

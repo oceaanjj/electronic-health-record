@@ -24,6 +24,25 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('diagnostics:cleanup')->daily();
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->render(function (\Illuminate\Http\Exceptions\ThrottleRequestsException $e, Request $request) {
+            if (!$request->expectsJson()) {
+                $source = 'login';
+                if ($request->is('password/email')) {
+                    $source = 'email';
+                } elseif ($request->is('password/reset')) {
+                    $source = 'reset';
+                }
+
+                session()->flash('throttle_error', [
+                    'seconds' => $e->getHeaders()['Retry-After'] ?? 60,
+                    'source' => $source,
+                ]);
+                return response()->view('errors.429', [
+                    'exception' => $e,
+                ], 429);
+            }
+        });
+
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             // If the request is for the API, return a proper 401 JSON response
             if ($request->is('api/*')) {

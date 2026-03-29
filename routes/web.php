@@ -17,9 +17,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Password Reset Routes
 Route::get('password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::get('password/email', function() { return redirect()->route('password.request'); });
 Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email')->middleware('throttle:forgot-password');
 Route::get('password/reset/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
+Route::post('password/reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update')->middleware('throttle:password-reset');
 
 // Role-specific routes (admin, doctor, nurse, etc.)
 require __DIR__.'/admin.php';

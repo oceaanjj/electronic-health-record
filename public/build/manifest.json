@@ -60,7 +60,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-Bwxca8Mu.css",
+    "file": "assets/app-DNrazbTi.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -150,7 +150,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-4PO_wNtV.js",
+    "file": "assets/app-BGzUrZzb.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -169,7 +169,7 @@
       "resources/js/form-saver.js"
     ],
     "css": [
-      "assets/app-Bwxca8Mu.css"
+      "assets/app-DNrazbTi.css"
     ],
     "assets": [
       "assets/AlteHaasGroteskBold-DCuBJgsO.ttf",
@@ -333,7 +333,7 @@
     "isEntry": true
   },
   "resources/js/vital-signs-chart-updater.js": {
-    "file": "assets/vital-signs-chart-updater-BC86yjNo.js",
+    "file": "assets/vital-signs-chart-updater-CZbf7oi9.js",
     "name": "vital-signs-chart-updater",
     "src": "resources/js/vital-signs-chart-updater.js",
     "isEntry": true

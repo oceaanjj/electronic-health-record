@@ -96,25 +96,33 @@ class AdminApiController extends Controller
             'email'      => 'required|email|unique:users,email',
             'password'   => 'required|string|min:8',
             'role'       => 'required|in:nurse,doctor,admin',
-            'full_name'  => 'nullable|string',
-            'birthdate'  => 'nullable|date',
-            'age'        => 'nullable|integer',
-            'sex'        => 'nullable|string',
-            'address'    => 'nullable|string',
-            'birthplace' => 'nullable|string',
+            'first_name' => 'required|string',
+            'last_name'  => 'required|string',
+            'birthdate'  => 'required|date',
+            'sex'        => 'required|in:Male,Female,Other',
+            'address'    => 'required|string',
+            'birthplace' => 'required|string',
         ]);
+
+        // Calculate Age
+        $birthDate = new \DateTime($validated['birthdate']);
+        $today = new \DateTime();
+        $age = $today->diff($birthDate)->y;
+
+        // Combine Names
+        $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
 
         $user = User::create([
             'username'   => $validated['username'],
             'email'      => $validated['email'],
             'password'   => Hash::make($validated['password']),
             'role'       => strtolower($validated['role']),
-            'full_name'  => $validated['full_name'] ?? null,
-            'birthdate'  => $validated['birthdate'] ?? null,
-            'age'        => $validated['age'] ?? null,
-            'sex'        => $validated['sex'] ?? null,
-            'address'    => $validated['address'] ?? null,
-            'birthplace' => $validated['birthplace'] ?? null,
+            'full_name'  => $fullName,
+            'birthdate'  => $validated['birthdate'],
+            'age'        => $age,
+            'sex'        => $validated['sex'],
+            'address'    => $validated['address'],
+            'birthplace' => $validated['birthplace'],
         ]);
 
         AuditLogController::log(
@@ -142,10 +150,10 @@ class AdminApiController extends Controller
             'email'      => 'sometimes|email|unique:users,email,' . $id,
             'password'   => 'sometimes|string|min:8|nullable',
             'role'       => 'sometimes|in:nurse,doctor,admin',
-            'full_name'  => 'nullable|string',
+            'first_name' => 'nullable|string',
+            'last_name'  => 'nullable|string',
             'birthdate'  => 'nullable|date',
-            'age'        => 'nullable|integer',
-            'sex'        => 'nullable|string',
+            'sex'        => 'nullable|in:Male,Female,Other',
             'address'    => 'nullable|string',
             'birthplace' => 'nullable|string',
         ]);
@@ -154,6 +162,20 @@ class AdminApiController extends Controller
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
+        }
+
+        // Handle Names
+        if (isset($validated['first_name']) || isset($validated['last_name'])) {
+            $firstName = $validated['first_name'] ?? explode(' ', $user->full_name ?? '')[0];
+            $lastName = $validated['last_name'] ?? (count(explode(' ', $user->full_name ?? '')) > 1 ? explode(' ', $user->full_name ?? '')[1] : '');
+            $validated['full_name'] = trim($firstName . ' ' . $lastName);
+        }
+
+        // Handle Age
+        if (!empty($validated['birthdate'])) {
+            $birthDate = new \DateTime($validated['birthdate']);
+            $today = new \DateTime();
+            $validated['age'] = $today->diff($birthDate)->y;
         }
 
         $user->update($validated);

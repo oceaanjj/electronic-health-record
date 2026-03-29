@@ -17,6 +17,7 @@
                             <th class="w-[25%] border-b border-gray-200 px-6 py-3 text-center">EMAIL</th>
                             <th class="w-[20%] border-b border-gray-200 px-6 py-3 text-center">ROLE</th>
                             <th class="w-[30%] border-b border-gray-200 px-6 py-3 text-center">CHANGE ROLE</th>
+                            <th class="w-[10%] border-b border-gray-200 px-6 py-3 text-center">ACTION</th>
                         </tr>
                     </thead>
 
@@ -61,6 +62,21 @@
                                         </button>
                                     </form>
                                 </td>
+                                <td class="px-6 py-3 text-center">
+                                    <div class="flex items-center justify-center gap-4">
+                                        <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500 hover:text-blue-700 transition-all duration-300 transform hover:scale-110" title="Edit User">
+                                            <span class="material-symbols-outlined text-[28px]">edit</span>
+                                        </a>
+
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="delete-user-form inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="delete-btn cursor-pointer text-red-500 hover:text-red-700 transition-all duration-300 transform hover:scale-110" title="Archive User">
+                                                <span class="material-symbols-outlined pointer-events-none text-[28px]">delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -70,13 +86,17 @@
 
         <div class="mt-12 flex flex-col items-center justify-center gap-6 md:flex-row">
             <a href="{{ route('register') }}" class="button-default w-[230px] text-center">REGISTER NEW USER</a>
-
             <a href="{{ route('home') }}" class="button-default w-[230px] text-center">BACK TO DASHBOARD</a>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Lucide icons initialization
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
             const forms = document.querySelectorAll('.role-form');
 
             forms.forEach((form) => {
@@ -95,6 +115,37 @@
                         button.classList.add('bg-dark-green', 'hover:bg-green-800', 'cursor-pointer');
                     }
                 });
+            });
+
+            // Delete User Confirmation
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    const form = this.closest('form');
+                    
+                    if (typeof window.showConfirm === 'function') {
+                        window.showConfirm("This user will be archived and won't be able to log in.", 'Are you sure?', 'Yes, archive', 'Cancel').then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
+                    } else if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "This user will be archived and won't be able to log in.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#1a6a24',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, archive!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
+                    }
+                };
             });
         });
     </script>

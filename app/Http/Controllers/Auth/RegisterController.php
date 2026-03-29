@@ -44,12 +44,12 @@ class RegisterController extends Controller
                 'regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d\x\W]).*$/'
             ],
             'role'       => 'required|in:doctor,nurse',
-            'full_name'  => 'nullable|string|max:255',
-            'birthdate'  => 'nullable|date',
-            'age'        => 'nullable|integer',
-            'sex'        => 'nullable|string',
-            'address'    => 'nullable|string',
-            'birthplace' => 'nullable|string',
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'birthdate'  => 'required|date',
+            'sex'        => 'required|in:Male,Female,Other',
+            'address'    => 'required|string|max:500',
+            'birthplace' => 'required|string|max:255',
         ], [
             //  Custom error messages
             'username.required'  => 'Username is required.',
@@ -62,7 +62,21 @@ class RegisterController extends Controller
             'password.confirmed' => 'Password and Confirm Password do not match.',
             'password.regex'     => 'Password must contain at least one uppercase letter, one number, and one special character.',
             'role.required'      => 'Please select a role.',
+            'first_name.required' => 'First name is required.',
+            'last_name.required'  => 'Last name is required.',
+            'birthdate.required'  => 'Birthdate is required.',
+            'sex.required'        => 'Sex is required.',
+            'address.required'    => 'Address is required.',
+            'birthplace.required' => 'Birthplace is required.',
         ]);
+
+        // Calculate Age from Birthdate
+        $birthDate = new \DateTime($request->birthdate);
+        $today = new \DateTime();
+        $age = $today->diff($birthDate)->y;
+
+        // Combine First and Last Name
+        $fullName = trim($request->first_name . ' ' . $request->last_name);
 
         // ✅ Create user
         $user = User::create([
@@ -70,9 +84,9 @@ class RegisterController extends Controller
             'email'      => $request->email,
             'password'   => Hash::make($request->password),
             'role'       => strtolower($request->role),
-            'full_name'  => $request->full_name,
+            'full_name'  => $fullName,
             'birthdate'  => $request->birthdate,
-            'age'        => $request->age,
+            'age'        => $age,
             'sex'        => $request->sex,
             'address'    => $request->address,
             'birthplace' => $request->birthplace,

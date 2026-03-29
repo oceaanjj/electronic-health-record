@@ -140,6 +140,21 @@
                 transform: translateY(-50%) scale(1.1);
             }
 
+            .forgot-password-link {
+                color: #1a6a24;
+                transition: color 0.2s ease, transform 0.1s ease;
+            }
+
+            .forgot-password-link:hover {
+                color: #e6a502;
+            }
+
+            .forgot-password-link:active {
+                transform: scale(0.95);
+              color: #e6a502;
+
+            }
+
             .btn-login {
                 position: relative;
                 display: flex;
@@ -410,6 +425,12 @@
                                         The password field is required.
                                     @enderror
                                 </span>
+                            </div>
+
+                            <div class="flex justify-end mt-1">
+                                <a href="{{ route('password.request') }}" class="forgot-password-link text-sm font-semibold">
+                                    Forgot Password?
+                                </a>
                             </div>
                         </div>
 

@@ -14,6 +14,11 @@ Route::middleware(['auth', 'can:is-admin'])->group(function () {
     Route::get('/admin/data', [HomeController::class, 'adminData'])->name('admin.data');
 
     Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::get('/users/archived', [UserController::class, 'archived'])->name('users.archived');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
     // Register users (doctor/nurse only)
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');

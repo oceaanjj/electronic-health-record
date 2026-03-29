@@ -47,6 +47,18 @@
             </a>
         </li>
 
+        <li>
+            <a href="{{ route('users.archived') }}"
+                class="group hover:bg-dark-green {{
+    request()->routeIs('users.archived')
+    ? 'bg-dark-green font-bold text-white'
+    : 'hover:bg-hover'
+                }} flex items-center gap-3 rounded-l-[10px] rounded-r-[10px] pt-2 pb-2 pl-5 transition-all duration-200">
+                <span class="material-symbols-outlined">delete_sweep</span>
+                <span>Archived Users</span>
+            </a>
+        </li>
+
     </ul>
 
     <div class="text-dark-green font-creato-black text-[13px] pr-[10px] pl-[10px] pb-5">

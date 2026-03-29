@@ -24,7 +24,7 @@
 
         .forms-feed {
             overflow-y: auto;
-            max-height: 500px;
+            max-height: 570px;
         }
 
         .forms-feed::-webkit-scrollbar {
@@ -114,6 +114,9 @@
             ['Lab Values', 'biotech', '#0D9488'],
             ['Medication Administration', 'medication', '#10B981'],
             ['IVs & Lines', 'vaccines', '#6366F1'],
+            ['Medical History', 'history_edu', '#6366F1'],
+            ['Diagnostics', 'biotech', '#0D9488'],
+            ['Medication Reconciliation', 'rebase_edit', '#10B981'],
         ];
     @endphp
 
@@ -178,59 +181,78 @@
                 @endforeach
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
                 {{-- Quick Controls --}}
-                <div class="lg:col-span-4 space-y-6">
-                    <h3 class="text-xs font-alte tracking-[0.2em] text-slate-400 uppercase px-1 flex items-center gap-2">
-                        <span class="w-2 h-px bg-slate-300 dark:bg-slate-700"></span>
-                        Quick Controls
-                    </h3>
+                <div class="lg:col-span-4 flex flex-col space-y-6">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xs font-alte tracking-[0.2em] text-slate-400 uppercase px-1 flex items-center gap-2 mb-6">
+                                <span class="w-2 h-px bg-slate-300 dark:bg-slate-700"></span>
+                                Quick Controls
+                            </h3>
 
-                    <div class="grid grid-cols-1 gap-4">
-                        <a href="{{ route('doctor.patient-report') }}"
-                            class="action-card group flex items-center gap-4 bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-emerald-400 dark:hover:border-emerald-500 transition-all">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined" style="font-size:26px">analytics</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-creato-bold text-slate-800 dark:text-slate-200">Patient Report</p>
-                                <p class="text-xs text-slate-400 font-alte-regular mt-0.5 truncate">Export detailed PDF records</p>
-                            </div>
-                            <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:text-emerald-500 transition-colors" style="font-size:20px">chevron_right</span>
-                        </a>
-
-                        <a href="{{ route('doctor.recent-forms') }}"
-                            class="action-card group flex items-center gap-4 bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-indigo-400 dark:hover:border-indigo-500 transition-all">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined" style="font-size:26px">fact_check</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-creato-bold text-slate-800 dark:text-slate-200">Browse Records</p>
-                                <p class="text-xs text-slate-400 font-alte-regular mt-0.5 truncate">Search all assessment forms</p>
-                            </div>
-                            <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:text-indigo-500 transition-colors" style="font-size:20px">chevron_right</span>
-                        </a>
-                    </div>
-
-                    {{-- Assessment Legend --}}
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm">
-                        <p class="text-[10px] font-alte tracking-[0.2em] text-slate-400 uppercase mb-5">Clinical Domain Legend</p>
-                        <div class="space-y-4">
-                            @foreach ($formTypes as [$label, $icon, $color])
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background-color: {{ $color }}15">
-                                        <span class="material-symbols-outlined" style="font-size:16px; color:{{ $color }}">{{ $icon }}</span>
+                            <div class="grid grid-cols-1 gap-4">
+                                <a href="{{ route('doctor.patient-report') }}"
+                                    class="action-card group flex items-center gap-4 bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-emerald-400 dark:hover:border-emerald-500 transition-all">
+                                    <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                                        <span class="material-symbols-outlined" style="font-size:26px">analytics</span>
                                     </div>
-                                    <span class="text-sm font-alte-regular text-slate-600 dark:text-slate-400">{{ $label }}</span>
-                                </div>
-                            @endforeach
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-creato-bold text-slate-800 dark:text-slate-200">Patient Report</p>
+                                        <p class="text-xs text-slate-400 font-alte-regular mt-0.5 truncate">Export detailed PDF records</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:text-emerald-500 transition-colors" style="font-size:20px">chevron_right</span>
+                                </a>
+
+                                <a href="{{ route('doctor.recent-forms') }}"
+                                    class="action-card group flex items-center gap-4 bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-indigo-400 dark:hover:border-indigo-500 transition-all">
+                                    <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                                        <span class="material-symbols-outlined" style="font-size:26px">fact_check</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-creato-bold text-slate-800 dark:text-slate-200">Browse Records</p>
+                                        <p class="text-xs text-slate-400 font-alte-regular mt-0.5 truncate">Search all assessment forms</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:text-indigo-500 transition-colors" style="font-size:20px">chevron_right</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Assessment Legend --}}
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm">
+                            <p class="text-[10px] font-alte tracking-[0.2em] text-slate-400 uppercase mb-5">Clinical Domain Legend</p>
+                            <div class="space-y-4">
+                                @foreach ($formTypes as [$label, $icon, $color])
+                                    @php
+                                        $typeSlug = [
+                                            'Vital Signs' => 'vital-signs',
+                                            'Physical Exam' => 'physical-exam',
+                                            'Activities of Daily Living' => 'adl',
+                                            'Intake & Output' => 'intake-output',
+                                            'Lab Values' => 'lab-values',
+                                            'Medication Administration' => 'medication',
+                                            'IVs & Lines' => 'ivs-lines',
+                                            'Medical History' => 'medical-history',
+                                            'Diagnostics' => 'diagnostics',
+                                            'Medication Reconciliation' => 'med-reconciliation'
+                                        ][$label] ?? 'all';
+                                    @endphp
+                                    <button onclick="document.querySelector('[data-filter=\'{{ $typeSlug }}\']').click()" 
+                                            class="flex items-center gap-3 w-full text-left group hover:bg-slate-50 dark:hover:bg-slate-800/50 p-2 -m-2 rounded-xl transition-all">
+                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110" style="background-color: {{ $color }}15">
+                                            <span class="material-symbols-outlined" style="font-size:16px; color:{{ $color }}">{{ $icon }}</span>
+                                        </div>
+                                        <span class="text-sm font-alte-regular text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{{ $label }}</span>
+                                    </button>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {{-- Activity Feed --}}
-                <div class="lg:col-span-8 space-y-6">
+                <div class="lg:col-span-8 flex flex-col space-y-6">
                     <div class="flex items-center justify-between px-1">
                         <h3 class="text-xs font-alte tracking-[0.2em] text-slate-400 uppercase flex items-center gap-2">
                             <span class="w-2 h-px bg-slate-300 dark:bg-slate-700"></span>
@@ -242,6 +264,7 @@
                     </div>
 
                     <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+
 
                         {{-- Filters --}}
                         <div class="flex items-center gap-2 px-6 py-4 border-b border-slate-50 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 overflow-x-auto no-scrollbar">
@@ -258,7 +281,7 @@
 
                         {{-- Feed --}}
                         @if ($recentForms->isEmpty())
-                            <div class="py-24 text-center flex flex-col items-center gap-4 text-slate-300 dark:text-slate-700">
+                            <div class="py-24 text-center flex flex-col items-center gap-4 text-slate-300 dark:text-slate-700 flex-1">
                                 <span class="material-symbols-outlined" style="font-size:64px">order_approve</span>
                                 <div>
                                     <p class="text-lg font-creato-bold text-slate-400 dark:text-slate-500">All caught up</p>
@@ -266,56 +289,61 @@
                                 </div>
                             </div>
                         @else
-                            <ul class="forms-feed divide-y divide-slate-50 dark:divide-slate-800" id="forms-feed-list">
-                                @foreach ($recentForms as $form)
-                                    <li class="form-item group"
-                                        data-read="{{ $form['is_read'] ? '1' : '0' }}"
-                                        data-today="{{ $form['is_today'] ? '1' : '0' }}"
-                                        data-model-type="{{ $form['model_class'] }}"
-                                        data-model-id="{{ $form['record_id'] }}">
-                                        <a href="{{ $form['patient_id'] ? route('doctor.form-detail', ['type' => $form['slug'], 'patient_id' => $form['patient_id']]) . '?from=recent-forms' : '#' }}"
-                                            class="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all block">
+                            <div class="relative flex-1 flex flex-col overflow-hidden group/feed">
+                                <ul class="forms-feed divide-y divide-slate-50 dark:divide-slate-800 overflow-y-auto no-scrollbar" id="forms-feed-list">
+                                    @foreach ($recentForms as $form)
+                                        <li class="form-item group"
+                                            data-read="{{ $form['is_read'] ? '1' : '0' }}"
+                                            data-today="{{ $form['is_today'] ? '1' : '0' }}"
+                                            data-type-key="{{ $form['slug'] }}"
+                                            data-model-type="{{ $form['model_class'] }}"
+                                            data-model-id="{{ $form['record_id'] }}">
+                                            <a href="{{ $form['patient_id'] ? route('doctor.form-detail', ['type' => $form['slug'], 'patient_id' => $form['patient_id']]) . '?from=recent-forms' : '#' }}"
+                                                class="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all block">
 
-                                            {{-- Status Indicator --}}
-                                            <div class="flex-shrink-0 relative">
-                                                <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
-                                                    style="border-bottom: 2px solid {{ $form['color'] }}">
-                                                    <span class="material-symbols-outlined"
-                                                        style="font-size:20px; color:{{ $form['color'] }}">{{ $form['icon'] }}</span>
+                                                {{-- Status Indicator --}}
+                                                <div class="flex-shrink-0 relative">
+                                                    <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
+                                                        style="border-bottom: 2px solid {{ $form['color'] }}">
+                                                        <span class="material-symbols-outlined"
+                                                            style="font-size:20px; color:{{ $form['color'] }}">{{ $form['icon'] }}</span>
+                                                    </div>
+                                                    <div class="unread-indicator absolute -top-1 -right-1 w-3 h-3 rounded-full bg-indigo-500 border-2 border-white dark:border-slate-900 {{ $form['is_read'] ? 'hidden' : '' }}"></div>
                                                 </div>
-                                                <div class="unread-indicator absolute -top-1 -right-1 w-3 h-3 rounded-full bg-indigo-500 border-2 border-white dark:border-slate-900 {{ $form['is_read'] ? 'hidden' : '' }}"></div>
-                                            </div>
 
-                                            {{-- Content --}}
-                                            <div class="flex-1 min-w-0">
-                                                <div class="flex items-center justify-between mb-0.5">
-                                                    <p class="text-sm font-creato-bold truncate {{ $form['is_read'] ? 'text-slate-500' : 'text-slate-900 dark:text-white' }}">
-                                                        {{ $form['patient_name'] }}
-                                                    </p>
-                                                    <span class="text-[10px] font-alte-regular text-slate-400 whitespace-nowrap ml-4 uppercase tracking-tighter">
-                                                        {{ \Carbon\Carbon::parse($form['time'])->diffForHumans() }}
-                                                    </span>
+                                                {{-- Content --}}
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between mb-0.5">
+                                                        <p class="text-sm font-creato-bold truncate {{ $form['is_read'] ? 'text-slate-500' : 'text-slate-900 dark:text-white' }}">
+                                                            {{ $form['patient_name'] }}
+                                                        </p>
+                                                        <span class="text-[10px] font-alte-regular text-slate-400 whitespace-nowrap ml-4 uppercase tracking-tighter">
+                                                            {{ \Carbon\Carbon::parse($form['time'])->diffForHumans() }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="text-[10px] font-alte tracking-wider uppercase px-2 py-0.5 rounded-md text-white shadow-sm" style="background-color: {{ $form['color'] }}">
+                                                            {{ $form['type'] }}
+                                                        </span>
+                                                        <span class="text-[10px] font-alte-regular text-slate-400">Submission</span>
+                                                    </div>
                                                 </div>
-                                                <div class="flex items-center gap-2">
-                                                    <span class="text-[10px] font-alte tracking-wider uppercase px-2 py-0.5 rounded-md text-white shadow-sm" style="background-color: {{ $form['color'] }}">
-                                                        {{ $form['type'] }}
-                                                    </span>
-                                                    <span class="text-[10px] font-alte-regular text-slate-400">Submission</span>
-                                                </div>
-                                            </div>
 
-                                            <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" style="font-size:18px">arrow_forward</span>
-                                        </a>
+                                                <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" style="font-size:18px">arrow_forward</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
+
+                                    <li id="empty-filtered" class="hidden py-16 text-center">
+                                        <span class="material-symbols-outlined text-slate-300 dark:text-slate-700" style="font-size:48px">filter_list_off</span>
+                                        <p class="text-sm font-creato-bold text-slate-400 mt-2">No records match this filter</p>
                                     </li>
-                                @endforeach
+                                </ul>
+                                {{-- Bottom Fade --}}
+                                <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none z-10"></div>
+                            </div>
 
-                                <li id="empty-filtered" class="hidden py-16 text-center">
-                                    <span class="material-symbols-outlined text-slate-300 dark:text-slate-700" style="font-size:48px">filter_list_off</span>
-                                    <p class="text-sm font-creato-bold text-slate-400 mt-2">No records match this filter</p>
-                                </li>
-                            </ul>
-
-                            <div class="bg-slate-50/50 dark:bg-slate-900/50 px-6 py-4 flex justify-center">
+                            <div class="mt-auto bg-slate-50/50 dark:bg-slate-900/50 px-6 py-4 flex justify-center border-t border-slate-50 dark:border-slate-800">
                                 <a href="{{ route('doctor.recent-forms') }}"
                                     class="text-xs font-creato-black text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 flex items-center gap-1 transition-colors uppercase font-bold pt-2 tracking-widest">
                                     Explore all historical records
@@ -343,15 +371,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateCounts() {
         let all = 0, today = 0, unread = 0;
+        let typeCounts = {};
+        
         items.forEach(function (item) {
             all++;
             if (item.dataset.today === '1') today++;
             if (item.dataset.read  === '0') unread++;
+            
+            let type = item.dataset.typeKey;
+            typeCounts[type] = (typeCounts[type] || 0) + 1;
         });
 
         document.querySelector('[data-filter="all"]    .pill-count').textContent = all;
         document.querySelector('[data-filter="today"]  .pill-count').textContent = today;
         document.querySelector('[data-filter="unread"] .pill-count').textContent = unread;
+
+        document.querySelectorAll('.filter-pill[data-filter]').forEach(function(pill) {
+            let filter = pill.dataset.filter;
+            if (filter !== 'all' && filter !== 'today' && filter !== 'unread') {
+                pill.querySelector('.pill-count').textContent = typeCounts[filter] || 0;
+            }
+        });
 
         if (badge) {
             badge.textContent = unread + ' NEW';
@@ -366,6 +406,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if      (filter === 'all')    show = true;
             else if (filter === 'today')  show = item.dataset.today === '1';
             else if (filter === 'unread') show = item.dataset.read  === '0';
+            else                          show = item.dataset.typeKey === filter;
+            
             item.classList.toggle('hidden', !show);
             if (show) visible++;
         });

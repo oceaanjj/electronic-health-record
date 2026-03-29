@@ -537,6 +537,97 @@
                 </div>
             </div>
 
+        @elseif ($type === 'medical-history')
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors duration-300">
+                <div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 flex items-center gap-2">
+                    <span class="material-symbols-outlined" style="font-size:18px; color:#6366F1">history_edu</span>
+                    <h2 class="font-alte text-slate-800 dark:text-slate-200 text-base">Medical History Logs</h2>
+                    <span class="ml-auto text-sm font-alte-regular text-slate-400 dark:text-slate-500">{{ $records->count() }} record(s)</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="tbl w-full border-collapse">
+                        <thead class="bg-emerald-50/60 dark:bg-emerald-900/20 border-b border-emerald-100 dark:border-emerald-900/30">
+                            <tr>
+                                <th class="text-left">Date</th>
+                                <th class="text-left">Findings / Summary</th>
+                                <th class="text-left">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                            @foreach ($records as $r)
+                                <tr>
+                                    <td>{{ $r->updated_at->format('M j, Y g:i A') }}</td>
+                                    <td class="font-alte-regular text-slate-700 dark:text-slate-300">{{ $r->present_illness ?? $r->past_medical_surgical ?? '—' }}</td>
+                                    <td>
+                                        <span class="alert-badge info">History Entry</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        @elseif ($type === 'diagnostics')
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors duration-300">
+                <div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 flex items-center gap-2">
+                    <span class="material-symbols-outlined" style="font-size:18px; color:#0D9488">biotech</span>
+                    <h2 class="font-alte text-slate-800 dark:text-slate-200 text-base">Diagnostic Reports Log</h2>
+                    <span class="ml-auto text-sm font-alte-regular text-slate-400 dark:text-slate-500">{{ $records->count() }} record(s)</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="tbl w-full border-collapse">
+                        <thead class="bg-emerald-50/60 dark:bg-emerald-900/20 border-b border-emerald-100 dark:border-emerald-900/30">
+                            <tr>
+                                <th class="text-left">Date</th>
+                                <th class="text-left">Diagnostic Test</th>
+                                <th class="text-left">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                            @foreach ($records as $r)
+                                <tr>
+                                    <td>{{ $r->updated_at->format('M j, Y') }}</td>
+                                    <td class="font-bold text-slate-900 dark:text-white">{{ $r->diagnostic_name ?? '—' }}</td>
+                                    <td class="text-slate-500 text-sm">{{ $r->details ?? '—' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        @elseif ($type === 'med-reconciliation')
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors duration-300">
+                <div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 flex items-center gap-2">
+                    <span class="material-symbols-outlined" style="font-size:18px; color:#10B981">rebase_edit</span>
+                    <h2 class="font-alte text-slate-800 dark:text-slate-200 text-base">Medical Reconciliation Log</h2>
+                    <span class="ml-auto text-sm font-alte-regular text-slate-400 dark:text-slate-500">{{ $records->count() }} record(s)</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="tbl w-full border-collapse">
+                        <thead class="bg-emerald-50/60 dark:bg-emerald-900/20 border-b border-emerald-100 dark:border-emerald-900/30">
+                            <tr>
+                                <th class="text-left">Date</th>
+                                <th class="text-left">Medication</th>
+                                <th class="text-left">Dosage</th>
+                                <th class="text-left">Frequency</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                            @foreach ($records as $r)
+                                <tr>
+                                    <td>{{ $r->updated_at->format('M j, Y') }}</td>
+                                    <td class="font-bold text-slate-900 dark:text-white">{{ $r->current_medication ?? $r->home_medication ?? '—' }}</td>
+                                    <td>{{ $r->dosage ?? '—' }}</td>
+                                    <td>{{ $r->frequency ?? '—' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         @endif
 
         {{-- ─ Bottom action bar ─ --}}

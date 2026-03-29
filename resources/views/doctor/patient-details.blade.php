@@ -126,7 +126,7 @@
 
             {{-- Personal Information --}}
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
-                <p class="section-title mb-4">Personal Information</p>
+                <p class="section-title mb-4">Demographic Profile & Personal Information</p>
                 <div class="space-y-4">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -278,6 +278,232 @@
         </div>
         @endif
 
+        {{-- Medical History --}}
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
+            <p class="section-title mb-4">Medical History</p>
+            <div class="space-y-6">
+                {{-- Present Illness --}}
+                @if($medicalHistory['presentIllness']->isNotEmpty())
+                <div>
+                    <p class="detail-label mb-2">Present Illness</p>
+                    <div class="space-y-3">
+                        @foreach($medicalHistory['presentIllness'] as $pi)
+                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <p class="text-xs text-slate-400 mb-1">{{ \Carbon\Carbon::parse($pi->updated_at)->format('M d, Y') }}</p>
+                            <p class="detail-value text-sm">{{ $pi->present_illness }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                {{-- Past Medical/Surgical --}}
+                @if($medicalHistory['pastMedicalSurgical']->isNotEmpty())
+                <div>
+                    <p class="detail-label mb-2">Past Medical / Surgical History</p>
+                    <div class="space-y-3">
+                        @foreach($medicalHistory['pastMedicalSurgical'] as $pms)
+                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <p class="text-xs text-slate-400 mb-1">{{ \Carbon\Carbon::parse($pms->updated_at)->format('M d, Y') }}</p>
+                            <p class="detail-value text-sm">{{ $pms->past_medical_surgical }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {{-- Allergies --}}
+                    <div>
+                        <p class="detail-label mb-2">Allergies</p>
+                        @if($medicalHistory['allergies']->isNotEmpty())
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach($medicalHistory['allergies'] as $allergy)
+                            <li class="text-sm text-rose-600 dark:text-rose-400 font-alte-regular">{{ $allergy->allergy }}</li>
+                            @endforeach
+                        </ul>
+                        @else
+                        <p class="text-sm text-slate-400 dark:text-slate-600 font-alte-regular">No known allergies.</p>
+                        @endif
+                    </div>
+                    {{-- Vaccinations --}}
+                    <div>
+                        <p class="detail-label mb-2">Vaccinations</p>
+                        @if($medicalHistory['vaccinations']->isNotEmpty())
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach($medicalHistory['vaccinations'] as $vacc)
+                            <li class="text-sm text-slate-600 dark:text-slate-400 font-alte-regular">{{ $vacc->vaccination }}</li>
+                            @endforeach
+                        </ul>
+                        @else
+                        <p class="text-sm text-slate-400 dark:text-slate-600 font-alte-regular">No vaccination records.</p>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- Developmental History --}}
+                @if($medicalHistory['developmental'])
+                <div>
+                    <p class="detail-label mb-2">Developmental History</p>
+                    <div class="p-4 bg-indigo-50/30 dark:bg-indigo-900/10 rounded-xl border border-indigo-100 dark:border-indigo-900/20">
+                        <p class="detail-value text-sm leading-relaxed">{{ $medicalHistory['developmental']->developmental_history }}</p>
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- Medical Reconciliation --}}
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
+            <p class="section-title mb-4">Medical Reconciliation</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {{-- Home Meds --}}
+                <div class="space-y-3">
+                    <p class="detail-label text-blue-600 dark:text-blue-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined" style="font-size:16px">home</span>
+                        Home Medications
+                    </p>
+                    @if($medReconciliation['home']->isNotEmpty())
+                    <div class="space-y-2">
+                        @foreach($medReconciliation['home'] as $med)
+                        <div class="p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-lg border border-blue-100 dark:border-blue-900/20">
+                            <p class="text-sm font-alte-bold text-slate-800 dark:text-slate-200">{{ $med->home_medication }}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">{{ $med->dosage }} &bull; {{ $med->frequency }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <p class="text-xs text-slate-400 dark:text-slate-600">None on file.</p>
+                    @endif
+                </div>
+                {{-- Current Meds --}}
+                <div class="space-y-3">
+                    <p class="detail-label text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined" style="font-size:16px">medication</span>
+                        Current Medications
+                    </p>
+                    @if($medReconciliation['current']->isNotEmpty())
+                    <div class="space-y-2">
+                        @foreach($medReconciliation['current'] as $med)
+                        <div class="p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-lg border border-emerald-100 dark:border-emerald-900/20">
+                            <p class="text-sm font-alte-bold text-slate-800 dark:text-slate-200">{{ $med->current_medication }}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">{{ $med->dosage }} &bull; {{ $med->frequency }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <p class="text-xs text-slate-400 dark:text-slate-600">None on file.</p>
+                    @endif
+                </div>
+                {{-- Changes --}}
+                <div class="space-y-3">
+                    <p class="detail-label text-amber-600 dark:text-amber-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined" style="font-size:16px">swap_horiz</span>
+                        Medication Changes
+                    </p>
+                    @if($medReconciliation['changes']->isNotEmpty())
+                    <div class="space-y-2">
+                        @foreach($medReconciliation['changes'] as $change)
+                        <div class="p-3 bg-amber-50/50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-amber-900/20">
+                            <p class="text-sm font-alte-bold text-slate-800 dark:text-slate-200">{{ $change->changes_in_medication }}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Changed on: {{ \Carbon\Carbon::parse($change->updated_at)->format('M d, Y') }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <p class="text-xs text-slate-400 dark:text-slate-600">No changes recorded.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        {{-- Diagnostics & Vital Signs --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {{-- Diagnostics (Images) --}}
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
+                <p class="section-title mb-4">Diagnostics & Imaging</p>
+                <div class="space-y-4">
+                    @if($diagnosticImages->isNotEmpty())
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        @foreach($diagnosticImages as $image)
+                        <a href="{{ asset('storage/' . $image->image_path) }}" target="_blank" class="group relative aspect-square rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                            <img src="{{ asset('storage/' . $image->image_path) }}" class="w-full h-full object-cover transition-transform group-hover:scale-110" alt="Diagnostic Image">
+                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                <span class="material-symbols-outlined text-white opacity-0 group-hover:opacity-100 transition-opacity" style="font-size:24px">zoom_in</span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-1.5 bg-black/60 backdrop-blur-sm">
+                                <p class="text-[10px] text-white truncate text-center">{{ $image->image_type }}</p>
+                            </div>
+                        </a>
+                        @endforeach
+                    </div>
+                    @else
+                    <p class="text-sm text-slate-400 dark:text-slate-600 font-alte-regular">No diagnostic images uploaded.</p>
+                    @endif
+
+                    @if($diagnostics->isNotEmpty())
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p class="detail-label mb-2">Diagnostic Reports</p>
+                        <ul class="space-y-2">
+                            @foreach($diagnostics as $diag)
+                            <li class="flex items-center gap-2 text-sm font-alte-regular text-slate-600 dark:text-slate-400">
+                                <span class="material-symbols-outlined text-slate-400" style="font-size:16px">description</span>
+                                {{ $diag->diagnostic_name }}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Vital Signs Summary --}}
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="section-title">Latest Vital Signs</p>
+                    <a href="{{ route('doctor.form-detail', ['type' => 'vital-signs', 'patient_id' => $patient->patient_id]) }}?from=patient-details&prev={{ $fromKey }}" 
+                       class="text-xs font-alte text-emerald-600 hover:underline">View All</a>
+                </div>
+                @if($vitalsSummary->isNotEmpty())
+                <div class="space-y-3">
+                    @foreach($vitalsSummary as $vs)
+                    <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">{{ \Carbon\Carbon::parse($vs->date)->format('M d, Y') }} &bull; {{ $vs->time }}</p>
+                            @if($vs->alerts)
+                                <span class="material-symbols-outlined text-amber-500" style="font-size:14px">warning</span>
+                            @endif
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase">Temp</p>
+                                <p class="text-sm font-alte-bold text-slate-800 dark:text-slate-200">{{ $vs->temperature }}°C</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase">BP</p>
+                                <p class="text-sm font-alte-bold text-slate-800 dark:text-slate-200">{{ $vs->bp }}</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase">HR</p>
+                                <p class="text-sm font-alte-bold text-slate-800 dark:text-slate-200">{{ $vs->hr }}</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase">SpO2</p>
+                                <p class="text-sm font-alte-bold text-slate-800 dark:text-slate-200">{{ $vs->spo2 }}%</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @else
+                <div class="py-10 text-center">
+                    <span class="material-symbols-outlined text-slate-300 dark:text-slate-700" style="font-size:48px">monitor_heart</span>
+                    <p class="text-sm text-slate-400 dark:text-slate-600 mt-2">No vital signs recorded.</p>
+                </div>
+                @endif
+            </div>
+        </div>
+
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 transition-colors duration-300">
             <p class="section-title mb-4">Patient Form Records</p>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -290,6 +516,9 @@
                         ['type' => 'lab-values',    'label' => 'Lab Values',               'icon' => 'biotech',          'color_light' => 'bg-teal-50 text-teal-700 border-teal-200', 'color_dark' => 'dark:bg-teal-900/20 dark:text-teal-400 dark:border-teal-900/30'],
                         ['type' => 'medication',    'label' => 'Medication Admin.',        'icon' => 'medication',       'color_light' => 'bg-emerald-50 text-emerald-700 border-emerald-200', 'color_dark' => 'dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30'],
                         ['type' => 'ivs-lines',     'label' => 'IVs & Lines',              'icon' => 'vaccines',         'color_light' => 'bg-indigo-50 text-indigo-700 border-indigo-200', 'color_dark' => 'dark:bg-indigo-900/20 dark:text-indigo-400 dark:border-indigo-900/30'],
+                        ['type' => 'medical-history','label' => 'Medical History',         'icon' => 'history_edu',      'color_light' => 'bg-slate-50 text-slate-700 border-slate-200', 'color_dark' => 'dark:bg-slate-900/20 dark:text-slate-400 dark:border-slate-900/30'],
+                        ['type' => 'diagnostics',    'label' => 'Diagnostics',             'icon' => 'biotech',          'color_light' => 'bg-teal-50 text-teal-700 border-teal-200', 'color_dark' => 'dark:bg-teal-900/20 dark:text-teal-400 dark:border-teal-900/30'],
+                        ['type' => 'med-reconciliation','label' => 'Med. Reconciliation', 'icon' => 'rebase_edit',      'color_light' => 'bg-emerald-50 text-emerald-700 border-emerald-200', 'color_dark' => 'dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30'],
                     ];
                 @endphp
                 @foreach ($formLinks as $fl)

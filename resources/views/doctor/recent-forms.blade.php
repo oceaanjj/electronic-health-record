@@ -105,14 +105,18 @@
                 <div class="flex items-center gap-2 w-max">
                     @php
                         $pillMap = [
-                            'all'           => ['All',             '#10b981'],
-                            'vital-signs'   => ['Vital Signs',     '#EF4444'],
-                            'physical-exam' => ['Physical Exam',   '#8B5CF6'],
-                            'adl'           => ['Daily Living',    '#F97316'],
-                            'intake-output' => ['Intake & Output', '#3B82F6'],
-                            'lab-values'    => ['Lab Values',      '#0D9488'],
-                            'medication'    => ['Medication',      '#10B981'],
-                            'ivs-lines'     => ['IVs & Lines',     '#6366F1'],
+                            'all'                => ['All',             '#10b981'],
+                            'vital-signs'        => ['Vital Signs',     '#EF4444'],
+                            'physical-exam'      => ['Physical Exam',   '#8B5CF6'],
+                            'adl'                => ['Daily Living',    '#F97316'],
+                            'intake-output'      => ['Intake & Output', '#3B82F6'],
+                            'lab-values'         => ['Lab Values',      '#0D9488'],
+                            'medication'         => ['Medication',      '#10B981'],
+                            'ivs-lines'          => ['IVs & Lines',     '#6366F1'],
+                            'medical-history'    => ['Med. History',    '#6366F1'],
+                            'diagnostics'        => ['Diagnostics',     '#0D9488'],
+                            'med-reconciliation' => ['Med. Recon.',    '#10B981'],
+                            'discharge-plan'     => ['Discharge',       '#f59e0b'],
                         ];
                     @endphp
                     @foreach ($pillMap as $key => $pill)

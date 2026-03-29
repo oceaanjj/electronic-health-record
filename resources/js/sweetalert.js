@@ -1,8 +1,8 @@
 import Swal from 'sweetalert2';
 
 /**
- * SweettttAlerts <33
- *
+ * Modern SweetAlerts for 2025/2026 EHR System
+ * Optimized for readability and professional aesthetics
  */
 const theme = {
     yellow: '#F4CE14',
@@ -27,6 +27,7 @@ export const showSuccess = (message, title = 'Success!', timer = 3000) => {
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
             confirmButton: 'swal-ehr-button',
         },
     });
@@ -44,6 +45,7 @@ export const showError = (message, title = 'Error!') => {
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
             confirmButton: 'swal-ehr-button',
         },
     });
@@ -61,6 +63,7 @@ export const showWarning = (message, title = 'Warning!') => {
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
             confirmButton: 'swal-ehr-button',
         },
     });
@@ -78,6 +81,7 @@ export const showInfo = (message, title = 'Info') => {
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
             confirmButton: 'swal-ehr-button',
         },
     });
@@ -98,6 +102,7 @@ export const showConfirm = (message, title = 'Are you sure?', confirmText = 'Yes
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
             confirmButton: 'swal-ehr-button',
             cancelButton: 'swal-ehr-cancel-button',
         },
@@ -119,6 +124,7 @@ export const showDeleteConfirm = (itemName = 'this item') => {
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
             confirmButton: 'swal-ehr-button',
             cancelButton: 'swal-ehr-cancel-button',
         },
@@ -140,6 +146,7 @@ export const showLoading = (title = 'Loading...', text = 'Please wait') => {
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
         },
     });
 };
@@ -163,6 +170,7 @@ export const showLoginRequired = () => {
         customClass: {
             popup: 'swal-ehr-popup',
             title: 'swal-ehr-title',
+            htmlContainer: 'swal-ehr-content',
             confirmButton: 'swal-ehr-button',
             cancelButton: 'swal-ehr-cancel-button',
         },

@@ -6,16 +6,6 @@
 
 <div class="w-[100%] md:w-[80%] lg:w-[60%] mx-auto my-12">
 
-    @if ($errors->any())
-        <div class="bg-red-50 border border-red-300 text-red-700 rounded-xl p-4 mb-6">
-            <ul class="list-disc pl-6">
-                @foreach ($errors->all() as $error)
-                    <li class="text-sm">{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form method="POST" action="{{ route('users.update', $user->id) }}" 
           class="bg-white shadow-2xl rounded-[20px] border border-gray-100 p-10 space-y-6">
         @csrf
@@ -27,6 +17,9 @@
                 <label for="first_name" class="font-semibold text-gray-700">First Name</label>
                 <input type="text" name="first_name" id="first_name" required value="{{ old('first_name', $firstName) }}"
                        class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full hover:border-dark-green/30">
+                @error('first_name')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Last Name -->
@@ -34,6 +27,9 @@
                 <label for="last_name" class="font-semibold text-gray-700">Last Name</label>
                 <input type="text" name="last_name" id="last_name" required value="{{ old('last_name', $lastName) }}"
                        class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full hover:border-dark-green/30">
+                @error('last_name')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Username -->
@@ -42,6 +38,9 @@
                 <input type="text" name="username" id="username" required value="{{ old('username', $user->username) }}"
                        class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full hover:border-dark-green/30">
                 <span id="username-status" class="text-sm"></span>
+                @error('username')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Email -->
@@ -50,6 +49,9 @@
                 <input type="email" name="email" id="email" required value="{{ old('email', $user->email) }}"
                        class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full hover:border-dark-green/30">
                 <span id="email-status" class="text-sm"></span>
+                @error('email')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Password -->
@@ -83,6 +85,9 @@
                 <label for="age" class="font-semibold text-gray-700">Age</label>
                 <input type="number" name="age" id="age" required value="{{ old('age', $user->age) }}"
                        class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full hover:border-dark-green/30">
+                @error('age')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Birthdate -->
@@ -90,6 +95,9 @@
                 <label for="birthdate" class="font-semibold text-gray-700">Birthdate (Auto-calculated)</label>
                 <input type="date" name="birthdate" id="birthdate" required readonly value="{{ old('birthdate', $user->birthdate) }}"
                        class="px-4 py-2 border-2 border-gray-200 bg-gray-50 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full cursor-not-allowed">
+                @error('birthdate')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Birthplace -->
@@ -97,6 +105,9 @@
                 <label for="birthplace" class="font-semibold text-gray-700">Birthplace</label>
                 <input type="text" name="birthplace" id="birthplace" required value="{{ old('birthplace', $user->birthplace) }}"
                        class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full hover:border-dark-green/30">
+                @error('birthplace')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Sex -->
@@ -108,6 +119,9 @@
                     <option value="Female" {{ old('sex', $user->sex) == 'Female' ? 'selected' : '' }}>Female</option>
                     <option value="Other" {{ old('sex', $user->sex) == 'Other' ? 'selected' : '' }}>Other</option>
                 </select>
+                @error('sex')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
         </div>
 
@@ -120,6 +134,9 @@
                     <option value="{{ $role }}" {{ old('role', $user->role) == $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
                 @endforeach
             </select>
+            @error('role')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Address -->
@@ -127,6 +144,9 @@
             <label for="address" class="font-semibold text-gray-700">Address</label>
             <textarea name="address" id="address" required rows="2"
                       class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-dark-green focus:border-dark-green outline-none transition duration-300 w-full hover:border-dark-green/30">{{ old('address', $user->address) }}</textarea>
+            @error('address')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="flex justify-center mt-8">
@@ -298,10 +318,10 @@
             }
 
             if (!isValid) {
-                passwordStatus.innerHTML = `<span class="text-red-600 font-bold">❌ Weak Password:</span><br>${message}`;
+                passwordStatus.innerHTML = `<span class="text-red-600 font-bold">❌ Validation Errors:</span><br>${message}`;
                 passwordValid = false;
             } else {
-                passwordStatus.innerHTML = `<span class="text-green-600 font-bold">✅ Strong Password!</span><br>Passwords match and meet requirements.`;
+                passwordStatus.innerHTML = `<span class="text-green-600 font-bold">✅ Security requirements met!</span><br>The new password is strong and matches.`;
                 passwordValid = true;
             }
 

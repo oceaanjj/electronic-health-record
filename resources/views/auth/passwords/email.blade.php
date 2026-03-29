@@ -274,8 +274,8 @@
                             </svg>
                         </div>
                         <div style="margin-top: 5px;">
-                            <h3 class="text-xl font-bold text-green-800">Success!</h3>
-                            <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">{{ session('status') }}</p>
+                            <h3 class="text-xl font-bold text-green-800">Email Sent!</h3>
+                            <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Check your inbox for a link to reset your password. If you don't see it, please check your spam folder.</p>
                         </div>
 
                         <div class="mt-6 w-full flex justify-center">

@@ -35,13 +35,16 @@ class ReportController extends Controller
         $filterDate    = $request->input('date', '');
 
         $modelMap = [
-            'vital-signs'     => [Vitals::class,                 'Vital Signs',                 'monitor_heart',    '#EF4444'],
-            'physical-exam'   => [PhysicalExam::class,           'Physical Exam',               'person_search',    '#8B5CF6'],
-            'adl'             => [ActOfDailyLiving::class,        'Activities of Daily Living',  'self_improvement', '#F97316'],
-            'intake-output'   => [IntakeAndOutput::class,         'Intake & Output',             'water_drop',       '#3B82F6'],
-            'lab-values'      => [LabValues::class,               'Lab Values',                  'biotech',          '#0D9488'],
-            'medication'      => [MedicationAdministration::class,'Medication Administration',   'medication',       '#10B981'],
-            'ivs-lines'       => [IvsAndLine::class,              'IVs & Lines',                 'vaccines',         '#6366F1'],
+            'vital-signs'        => [Vitals::class,                 'Vital Signs',                 'monitor_heart',    '#EF4444'],
+            'physical-exam'      => [PhysicalExam::class,           'Physical Exam',               'person_search',    '#8B5CF6'],
+            'adl'                => [ActOfDailyLiving::class,        'Activities of Daily Living',  'self_improvement', '#F97316'],
+            'intake-output'      => [IntakeAndOutput::class,         'Intake & Output',             'water_drop',       '#3B82F6'],
+            'lab-values'         => [LabValues::class,               'Lab Values',                  'biotech',          '#0D9488'],
+            'medication'         => [MedicationAdministration::class,'Medication Administration',   'medication',       '#10B981'],
+            'ivs-lines'          => [IvsAndLine::class,              'IVs & Lines',                 'vaccines',         '#6366F1'],
+            'medical-history'    => [\App\Models\MedicalHistory\PresentIllness::class, 'Medical History', 'history_edu', '#6366F1'],
+            'diagnostics'        => [\App\Models\Diagnostic::class, 'Diagnostics', 'biotech', '#0D9488'],
+            'med-reconciliation' => [\App\Models\MedicalReconciliation\CurrentMedication::class, 'Medication Reconciliation', 'rebase_edit', '#10B981'],
         ];
 
         $modelsToQuery = ($filterType !== 'all' && isset($modelMap[$filterType]))
@@ -112,13 +115,16 @@ class ReportController extends Controller
         $patient = Patient::findOrFail($patient_id);
 
         $typeMap = [
-            'vital-signs'   => [Vitals::class,                  'Vital Signs',                'monitor_heart',    '#EF4444', true],
-            'physical-exam' => [PhysicalExam::class,            'Physical Exam',              'person_search',    '#8B5CF6', true],
-            'adl'           => [ActOfDailyLiving::class,        'Activities of Daily Living', 'self_improvement', '#F97316', true],
-            'intake-output' => [IntakeAndOutput::class,         'Intake & Output',            'water_drop',       '#3B82F6', true],
-            'lab-values'    => [LabValues::class,               'Lab Values',                 'biotech',          '#0D9488', true],
-            'medication'    => [MedicationAdministration::class,'Medication Administration',  'medication',       '#10B981', false],
-            'ivs-lines'     => [IvsAndLine::class,              'IVs & Lines',                'vaccines',         '#6366F1', false],
+            'vital-signs'        => [Vitals::class,                  'Vital Signs',                'monitor_heart',    '#EF4444', true],
+            'physical-exam'      => [PhysicalExam::class,            'Physical Exam',              'person_search',    '#8B5CF6', true],
+            'adl'                => [ActOfDailyLiving::class,        'Activities of Daily Living', 'self_improvement', '#F97316', true],
+            'intake-output'      => [IntakeAndOutput::class,         'Intake & Output',            'water_drop',       '#3B82F6', true],
+            'lab-values'         => [LabValues::class,               'Lab Values',                 'biotech',          '#0D9488', true],
+            'medication'         => [MedicationAdministration::class,'Medication Administration',  'medication',       '#10B981', false],
+            'ivs-lines'          => [IvsAndLine::class,              'IVs & Lines',                'vaccines',         '#6366F1', false],
+            'medical-history'    => [PresentIllness::class,          'Medical History',            'history_edu',      '#6366F1', false],
+            'diagnostics'        => [Diagnostic::class,              'Diagnostics',                'biotech',          '#0D9488', false],
+            'med-reconciliation' => [CurrentMedication::class,       'Medical Reconciliation',     'rebase_edit',      '#10B981', false],
         ];
 
         abort_unless(isset($typeMap[$type]), 404);
@@ -178,7 +184,29 @@ class ReportController extends Controller
             $fromCrumb = $fromMap[$fromKey] ?? $fromMap['total-patients'];
         }
 
-        return view('doctor.patient-details', compact('patient', 'fromCrumb', 'fromKey'));
+        // Additional data for patient details
+        $medicalHistory = [
+            'presentIllness'       => PresentIllness::where('patient_id', $patient_id)->latest()->get(),
+            'pastMedicalSurgical' => PastMedicalSurgical::where('patient_id', $patient_id)->latest()->get(),
+            'allergies'            => Allergy::where('patient_id', $patient_id)->latest()->get(),
+            'vaccinations'         => Vaccination::where('patient_id', $patient_id)->latest()->get(),
+            'developmental'        => DevelopmentalHistory::where('patient_id', $patient_id)->first(),
+        ];
+
+        $vitalsSummary = Vitals::where('patient_id', $patient_id)->latest()->take(5)->get();
+        $diagnostics   = Diagnostic::where('patient_id', $patient_id)->latest()->get();
+        $diagnosticImages = \App\Models\DiagnosticImage::where('patient_id', $patient_id)->latest()->get();
+
+        $medReconciliation = [
+            'current' => CurrentMedication::where('patient_id', $patient_id)->latest()->get(),
+            'home'    => HomeMedication::where('patient_id', $patient_id)->latest()->get(),
+            'changes' => ChangesInMedication::where('patient_id', $patient_id)->latest()->get(),
+        ];
+
+        return view('doctor.patient-details', compact(
+            'patient', 'fromCrumb', 'fromKey', 
+            'medicalHistory', 'vitalsSummary', 'diagnostics', 'diagnosticImages', 'medReconciliation'
+        ));
     }
 
     public function totalPatients()
@@ -199,13 +227,17 @@ class ReportController extends Controller
     public function todayUpdates()
     {
         $modelMap = [
-            'vital-signs'   => [Vitals::class,                 'Vital Signs',                'monitor_heart',    '#EF4444'],
-            'physical-exam' => [PhysicalExam::class,           'Physical Exam',              'person_search',    '#8B5CF6'],
-            'adl'           => [ActOfDailyLiving::class,       'Activities of Daily Living', 'self_improvement', '#F97316'],
-            'intake-output' => [IntakeAndOutput::class,        'Intake & Output',            'water_drop',       '#3B82F6'],
-            'lab-values'    => [LabValues::class,              'Lab Values',                 'biotech',          '#0D9488'],
-            'medication'    => [MedicationAdministration::class,'Medication Administration', 'medication',       '#10B981'],
-            'ivs-lines'     => [IvsAndLine::class,             'IVs & Lines',                'vaccines',         '#6366F1'],
+            'vital-signs'        => [Vitals::class,                 'Vital Signs',                'monitor_heart',    '#EF4444'],
+            'physical-exam'      => [PhysicalExam::class,           'Physical Exam',              'person_search',    '#8B5CF6'],
+            'adl'                => [ActOfDailyLiving::class,       'Activities of Daily Living', 'self_improvement', '#F97316'],
+            'intake-output'      => [IntakeAndOutput::class,        'Intake & Output',            'water_drop',       '#3B82F6'],
+            'lab-values'         => [LabValues::class,              'Lab Values',                 'biotech',          '#0D9488'],
+            'medication'         => [MedicationAdministration::class,'Medication Administration', 'medication',       '#10B981'],
+            'ivs-lines'          => [IvsAndLine::class,             'IVs & Lines',                'vaccines',         '#6366F1'],
+            'medical-history'    => [\App\Models\MedicalHistory\PresentIllness::class, 'Medical History', 'history_edu', '#6366F1'],
+            'diagnostics'        => [\App\Models\Diagnostic::class, 'Diagnostics', 'biotech', '#0D9488'],
+            'med-reconciliation' => [\App\Models\MedicalReconciliation\CurrentMedication::class, 'Medication Reconciliation', 'rebase_edit', '#10B981'],
+            'discharge-plan'     => [\App\Models\DischargePlan::class, 'Discharge Planning', 'exit_to_app', '#f59e0b'],
         ];
 
         $rawFeeds = [];

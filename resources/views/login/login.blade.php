@@ -375,7 +375,7 @@
                                     @error('username')
                                         {{ $message }}
                                     @else
-                                        The username field is required.
+                                        Please enter your username.
                                     @enderror
                                 </span>
                             </div>
@@ -422,7 +422,7 @@
                                     @error('password')
                                         {{ $message }}
                                     @else
-                                        The password field is required.
+                                        Please enter your password.
                                     @enderror
                                 </span>
                             </div>
@@ -516,7 +516,7 @@
 
             usernameInput.addEventListener('blur', function () {
                 if (this.value.trim() === '') {
-                    loginMarkError(this, usernameError, 'The username field is required.');
+                    loginMarkError(this, usernameError, 'Please enter your username.');
                 } else {
                     loginClearError(this, usernameError);
                     loginMarkValid(this);
@@ -538,7 +538,7 @@
 
             passwordInput.addEventListener('blur', function () {
                 if (this.value === '') {
-                    loginMarkError(this, passwordError, 'The password field is required.');
+                    loginMarkError(this, passwordError, 'Please enter your password.');
                 } else {
                     loginClearError(this, passwordError);
                     loginMarkValid(this);
@@ -559,7 +559,7 @@
                 let valid = true;
 
                 if (usernameInput.value.trim() === '') {
-                    loginMarkError(usernameInput, usernameError, 'The username field is required.');
+                    loginMarkError(usernameInput, usernameError, 'Please enter your username.');
                     valid = false;
                 } else {
                     loginClearError(usernameInput, usernameError);
@@ -567,7 +567,7 @@
                 }
 
                 if (passwordInput.value === '') {
-                    loginMarkError(passwordInput, passwordError, 'The password field is required.');
+                    loginMarkError(passwordInput, passwordError, 'Please enter your password.');
                     valid = false;
                 } else {
                     loginClearError(passwordInput, passwordError);

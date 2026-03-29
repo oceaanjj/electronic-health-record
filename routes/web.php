@@ -12,12 +12,12 @@ Route::get('/home', [HomeController::class, 'handleHomeRedirect'])->name('home')
 
 // Authentication
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest'); // Only show login if the user is not authenticated
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate')->middleware('throttle:login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Password Reset Routes
 Route::get('password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email')->middleware('throttle:forgot-password');
 Route::get('password/reset/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
 

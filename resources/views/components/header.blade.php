@@ -53,16 +53,16 @@
         @endphp
 
         <a href="{{ route($homeRoute) }}" class="flex items-center gap-2 md:gap-6 lg:gap-10">
-            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-10 w-auto sm:h-14 md:h-20" />
+            <img src="{{ asset('img/ehr-logo.png') }}" alt="ehr logo" class="h-8 w-auto min-[400px]:h-10 sm:h-14 md:h-20" />
 
             <div class="flex flex-col leading-tight">
                 <span
-                    class="font-trajan-bold text-[14px] font-black whitespace-nowrap text-black sm:text-[18px] sm:whitespace-normal md:text-[24px] lg:text-[30px]"
+                    class="font-trajan-bold text-[10px] font-black whitespace-nowrap text-black min-[400px]:text-[13px] sm:text-[18px] sm:whitespace-normal md:text-[24px] lg:text-[30px]"
                 >
                     ELECTRONIC HEALTH RECORD
                 </span>
                 <span
-                    class="font-creato-black text-yellow text-[10px] font-bold sm:text-[14px] md:text-[18px] lg:text-[20px]"
+                    class="font-creato-black text-yellow text-[7px] font-bold min-[400px]:text-[10px] sm:text-[14px] md:text-[18px] lg:text-[20px]"
                 >
                     Bachelor of Science in Nursing
                 </span>

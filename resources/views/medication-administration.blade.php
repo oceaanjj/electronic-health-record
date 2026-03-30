@@ -18,36 +18,24 @@
                             PATIENT NAME :
                         </label>
 
-                        <div class="searchable-dropdown relative w-full md:w-[350px]"
-                            data-select-url="{{ route('medication-administration.select-patient') }}">
-                            <input type="text" id="patient_search_input" placeholder="Select or type Patient Name..."
-                                value="{{ trim($selectedPatient->name ?? '') }}" autocomplete="off"
-                                class="font-creato-bold w-full rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm transition-all outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none" />
-
-                            <div id="patient_options_container"
-                                class="absolute z-50 mt-2 hidden max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
-                                @foreach ($patients as $patient)
-                                    <div class="option cursor-pointer px-4 py-2 transition duration-150 hover:bg-blue-100"
-                                        data-value="{{ $patient->patient_id }}">
-                                        {{ trim($patient->name) }}
-                                    </div>
-                                @endforeach
-                            </div>
+                        <div class="w-full md:w-[350px]">
+                            <x-searchable-patient-dropdown 
+                                :patients="$patients" 
+                                :selectedPatient="$selectedPatient" 
+                                :selectRoute="route('medication-administration.select-patient')" 
+                                :inputValue="$selectedPatient?->patient_id ?? ''" 
+                            />
                         </div>
-
-                        <input type="hidden" name="patient_id" id="patient_id_for_form"
-                            value="{{ $selectedPatient->patient_id ?? '' }}" />
-                        <input type="hidden" id="patient_id_hidden" value="{{ $selectedPatient->patient_id ?? '' }}" />
                     </div>
 
                     {{-- DATE SELECTOR --}}
-                    <div class="flex items-center gap-4 md:pl-12 lg:pl-0 cursor-not-allowed ">
+                    <div class="flex items-center gap-4 md:pl-12 lg:pl-0 @if(!$selectedPatient) cursor-not-allowed @endif">
                         <label for="date_selector" class="font-alte text-dark-green font-bold whitespace-nowrap">
                             DATE :
                         </label>
                         <input type="date" id="date_selector" name="date"
                             value="{{ $selectedDate ?? now()->format('Y-m-d') }}"
-                            class="pointer-events-none font-creato-bold w-[150px] rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-[15px] shadow-sm opacity-80 outline-none"
+                            class="@if(!$selectedPatient) pointer-events-none bg-gray-100 @endif font-creato-bold w-[150px] rounded-full border border-gray-300 px-4 py-2 text-[15px] shadow-sm opacity-80 outline-none"
                             @if(!$selectedPatient) disabled @endif />
                     </div>
                 </div>

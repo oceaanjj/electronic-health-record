@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\AuditLogController;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Notifications\ResetPasswordNotification;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -70,35 +74,78 @@ class AuthController extends Controller
         $request->validate(['email' => 'required|email']);
 
         $user = User::where('email', $request->email)->first();
+
         if (!$user) {
-            return response()->json(['error' => "We couldn't find an account with that email address."], 400);
+            return response()->json(['error' => "We couldn't find an account with that email address."], 404);
         }
 
-        // Generate a 6-digit code
-        $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+        // Generate 6-digit OTP
+        $otp = sprintf("%06d", mt_rand(1, 999999));
 
-        // Store the code in password_reset_tokens table
-        \DB::table('password_reset_tokens')->updateOrInsert(
+        // Store OTP in database
+        DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $request->email],
             [
-                'token' => \Hash::make($code),
-                'created_at' => now(),
+                'token' => $otp,
+                'created_at' => Carbon::now(),
+                'expires_at' => Carbon::now()->addMinutes(60),
+                'attempts' => 0
             ]
         );
 
-        AuditLogController::log('Password Reset Requested', "6-digit reset code generated via API for email: {$request->email}");
+        AuditLogController::log('Password Reset Requested', "Password reset OTP requested via API for email: {$request->email}");
 
-        // Send the notification
-        $user->notify(new \App\Notifications\ResetPasswordNotification($code, 'mobile'));
+        // Send Notification
+        $user->notify(new ResetPasswordNotification($otp, 'mobile'));
 
-        return response()->json(['message' => '6-digit reset code sent to your email.']);
+        return response()->json(['message' => 'Verification code sent to your email.']);
+    }
+
+    public function verifyCode(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'code' => 'required|digits:6',
+        ]);
+
+        $resetToken = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$resetToken) {
+            return response()->json(['error' => 'Invalid request.'], 400);
+        }
+
+        // Check attempts
+        if ($resetToken->attempts >= 5) {
+            return response()->json(['error' => 'Too many failed attempts. Please request a new code.'], 403);
+        }
+
+        // Check expiration
+        if (Carbon::parse($resetToken->expires_at)->isPast()) {
+            return response()->json(['error' => 'Verification code has expired.'], 400);
+        }
+
+        // Verify code
+        if ($resetToken->token !== $request->code) {
+            DB::table('password_reset_tokens')
+                ->where('email', $request->email)
+                ->increment('attempts');
+
+            $remaining = 4 - $resetToken->attempts;
+            return response()->json([
+                'error' => "Invalid verification code. {$remaining} attempts remaining."
+            ], 400);
+        }
+
+        return response()->json(['message' => 'Code verified successfully.']);
     }
 
     public function resetPassword(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-            'token' => 'required|string|size:6', // Using 'token' as the field name for consistency with Laravel expectations
+            'code' => 'required|digits:6',
             'password' => [
                 'required',
                 'string',
@@ -108,35 +155,46 @@ class AuthController extends Controller
             ],
         ], [
             'password.regex' => 'For better security, your password must include at least one uppercase letter, one number, and one special character.',
+            'code.digits' => 'The verification code must be 6 digits.',
         ]);
 
+        $resetToken = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$resetToken) {
+            return response()->json(['error' => 'Invalid reset request.'], 400);
+        }
+
+        // Final security checks even during reset
+        if ($resetToken->attempts >= 5) {
+            return response()->json(['error' => 'Too many failed attempts.'], 403);
+        }
+
+        if (Carbon::parse($resetToken->expires_at)->isPast()) {
+            return response()->json(['error' => 'Verification code has expired.'], 400);
+        }
+
+        if ($resetToken->token !== $request->code) {
+            return response()->json(['error' => 'Invalid verification code.'], 400);
+        }
+
+        // Success - Reset password
         $user = User::where('email', $request->email)->first();
         if (!$user) {
-            return response()->json(['error' => "User not found."], 400);
+            return response()->json(['error' => 'User not found.'], 404);
         }
 
-        // Verify the 6-digit code
-        $record = \DB::table('password_reset_tokens')->where('email', $request->email)->first();
-
-        if (!$record || !\Hash::check($request->token, $record->token)) {
-            return response()->json(['error' => 'Invalid or expired reset code.'], 400);
-        }
-
-        // Check if code is older than 60 minutes
-        if (now()->parse($record->created_at)->addMinutes(60)->isPast()) {
-            return response()->json(['error' => 'Reset code has expired.'], 400);
-        }
-
-        // Update the password
         $user->password = Hash::make($request->password);
-        $user->setRememberToken(\Illuminate\Support\Str::random(60));
+        $user->setRememberToken(Str::random(60));
         $user->save();
 
-        // Delete the token
-        \DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+        // Log success
+        AuditLogController::log('Password Reset Successful', "User {$user->username} successfully reset their password via API.", ['user_id' => $user->id]);
 
-        AuditLogController::log('Password Reset Successful', "User {$user->username} reset their password via API.", ['user_id' => $user->id]);
+        // Delete token
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
 
-        return response()->json(['message' => 'Password reset successful.']);
+        return response()->json(['message' => 'Password reset successfully.']);
     }
 }

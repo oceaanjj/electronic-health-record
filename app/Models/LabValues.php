@@ -65,6 +65,7 @@ class LabValues extends Model
         'monocytes_alert',
         'eosinophils_alert',
         'basophils_alert',
+        'correlation_alert',
     ];
 
     public function patient()

@@ -90,7 +90,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::match(['get', 'post', 'put'], 'medication-administration', [MedicationAdministrationApiController::class, 'store']);
     Route::get('medication-administration/patient/{patient_id}', [MedicationAdministrationApiController::class, 'index']);
     Route::get('medication-administration/patient/{patient_id}/time/{time}', [MedicationAdministrationApiController::class, 'getByTime']);
-    Route::match(['get', 'put'], 'medication-administration/{id}', [MedicationAdministrationApiController::class, 'show']);
+    Route::get('medication-administration/{id}', [MedicationAdministrationApiController::class, 'show']);
     Route::put('medication-administration/{id}', [MedicationAdministrationApiController::class, 'update']);
 
     // ── 6. CLINICAL RECORDS & IMAGING ───────────────────────────────────

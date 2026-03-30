@@ -35,11 +35,10 @@ class LabValuesController extends Controller
                 $cdssService = new LabValuesCdssService();
                 $ageGroup = $cdssService->getAgeGroup($selectedPatient);
 
-                                                  if ($labValue) {
-
-                                                     $alerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
-
-                                                  }            } else {
+                if ($labValue) {
+                    $alerts = $cdssService->runLabCdss($labValue, $ageGroup);
+                }
+            } else {
                  $request->session()->forget('selected_patient_id');
                  return redirect()->route('lab-values.index')->with('error', 'Selected patient not found or not authorized.');
             }
@@ -105,15 +104,16 @@ class LabValuesController extends Controller
         ]);
 
         $cdssService = new LabValuesCdssService();
-        $ageGroup = $this->getAgeGroup($patient);
-        $alerts = $this->runLabCdss((object) $data, $cdssService, $ageGroup);
+        $ageGroup = $cdssService->getAgeGroup($patient);
+        $alerts = $cdssService->runLabCdss((object) $data, $ageGroup);
 
         // Add alerts to the data array
         foreach ($alerts as $key => $alertInfo) {
-            // Assuming $key is like 'wbc_alerts' and we want to store the text in 'wbc_alert'
             $fieldName = str_replace('_alerts', '_alert', $key);
             if (isset($alertInfo[0]['text'])) {
-                $data[$fieldName] = $alertInfo[0]['text'];
+                // If there are multiple alerts for one field (e.g. correlations), join them
+                $texts = array_column($alertInfo, 'text');
+                $data[$fieldName] = implode(' | ', $texts);
             }
         }
 
@@ -148,7 +148,7 @@ class LabValuesController extends Controller
         }
 
         // Re-run CDSS to get severity for the view
-        $viewAlerts = $this->runLabCdss($labValue, $cdssService, $ageGroup);
+        $viewAlerts = $cdssService->runLabCdss($labValue, $ageGroup);
 
         return redirect()->route('lab-values.index')
             ->with('alerts', $viewAlerts)
@@ -261,104 +261,31 @@ class LabValuesController extends Controller
         return response()->json($results);
     }
 
-    private function runLabCdss($labValue, $cdssService, $ageGroup)
+    public function runCorrelationAnalysis(Request $request)
     {
-        $alerts = [];
-        $lab = [
-            'wbc' => 'wbc_result',
-            'rbc' => 'rbc_result',
-            'hgb' => 'hgb_result',
-            'hct' => 'hct_result',
-            'platelets' => 'platelets_result',
-            'mcv' => 'mcv_result',
-            'mch' => 'mch_result',
-            'mchc' => 'mchc_result',
-            'rdw' => 'rdw_result',
-            'neutrophils' => 'neutrophils_result',
-            'lymphocytes' => 'lymphocytes_result',
-            'monocytes' => 'monocytes_result',
-            'eosinophils' => 'eosinophils_result',
-            'basophils' => 'basophils_result',
-        ];
+        $batchData = $request->input('batch');
+        if (!$batchData) return response()->json(['correlations' => []]);
 
-        foreach ($lab as $param => $field) {
-            if (property_exists($labValue, $field) && $labValue->$field !== null) {
-                 $result = $cdssService->checkLabResult($param, $labValue->$field, $ageGroup);
-                 if ($result['severity'] !== LabValuesCdssService::NONE) {
-                    $alerts[$param . '_alerts'][] = [
-                        'text' => $result['alert'],
-                        'severity' => $result['severity'],
-                    ];
-                 } else {
-                     $alerts[$param . '_alerts'][] = [
-                        'text' => $result['alert'], 
-                        'severity' => $result['severity'], 
-                    ];
-                 }
+        $patientId = $request->session()->get('selected_patient_id');
+        if (!$patientId) return response()->json(['correlations' => []]);
+
+        $patient = Auth::user()->patients()->find($patientId);
+        if (!$patient) return response()->json(['correlations' => []]);
+
+        $cdssService = new LabValuesCdssService();
+        $ageGroup = $cdssService->getAgeGroup($patient);
+
+        $tempLabValue = new \stdClass();
+        foreach ($batchData as $item) {
+            $field = $item['fieldName'] ?? null;
+            $val = $item['finding'] ?? null;
+            if ($field && $val !== null) {
+                $tempLabValue->$field = $val;
             }
         }
-        return $alerts;
-    }
 
-    /**
-     * Converts a patient's date_of_birth into the correct age group string.
-     * Ito ang mas preferred na method.
-     *
-     * @param \App\Models\Patient $patient
-     * @return string
-     */
-    private function getAgeGroup(Patient $patient): string
-    {
-        if (empty($patient->date_of_birth)) {
-            return $this->getAgeGroupFromInteger($patient->age ?? 0);
-        }
+        $correlations = $cdssService->runLabCdss($tempLabValue, $ageGroup)['correlation_alerts'] ?? [];
 
-        try {
-            $dob = Carbon::parse($patient->date_of_birth);
-            $now = Carbon::now();
-
-            $ageInDays = $dob->diffInDays($now);
-            $ageInMonths = $dob->diffInMonths($now);
-            $ageInYears = $dob->diffInYears($now);
-
-            if ($ageInDays <= 30) {
-                return 'neonate';
-            }
-            if ($ageInMonths < 24) {
-                return 'infant';
-            }
-            if ($ageInYears < 12) {
-                return 'child';
-            }
-            if ($ageInYears <= 18) {
-                return 'adolescent';
-            }
-            return 'adult'; 
-
-        } catch (\Exception $e) {
-            Log::error("Error parsing date_of_birth for patient ID {$patient->patient_id}: " . $e->getMessage());
-            return $this->getAgeGroupFromInteger($patient->age ?? 0);
-        }
-    }
-
-    /**
-     * Fallback function using an integer 'age' column (less accurate).
-     */
-    private function getAgeGroupFromInteger(int $ageInYears): string
-    {
-         if ($ageInYears === 0) {
-             Log::warning("Cannot accurately determine age group for patient with age 0 years. Assuming 'infant'.");
-             return 'infant';
-         }
-        if ($ageInYears < 2) {
-            return 'infant';
-        }
-        if ($ageInYears < 12) { 
-            return 'child';
-        }
-        if ($ageInYears <= 18) { 
-            return 'adolescent';
-        }
-        return 'adult'; 
+        return response()->json(['correlations' => $correlations]);
     }
 }

@@ -1,8 +1,62 @@
 @extends('layouts.app')
 @section('title', 'Patient Lab Values')
 @section('content')
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(251, 191, 36, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(251, 191, 36, 0.4);
+            border-radius: 10px;
+        }
+    </style>
 
-    <div id="form-content-container" class="w-full overflow-x-hidden">
+    <div id="form-content-container" class="w-full overflow-x-hidden relative">
+
+        {{-- FLOATING CORRELATION ALERTS (Patterns) --}}
+        <div id="correlation-overlay" class="fixed bottom-10 right-5 z-[1000] w-[90%] md:w-[320px] pointer-events-none hidden">
+            <div class="pointer-events-auto bg-white/95 backdrop-blur-lg border-l-4 border-amber-500 rounded-xl shadow-2xl p-5 overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2.5 text-amber-700">
+                        <div class="bg-amber-100 p-1.5 rounded-lg">
+                            <span class="material-symbols-outlined text-[20px] animate-pulse">psychology</span>
+                        </div>
+                        <h3 class="font-alte font-bold text-[11px] uppercase tracking-widest">CDSS Lab Pattern Correlation</h3>
+                    </div>
+                    <button type="button" onclick="document.getElementById('correlation-overlay').classList.add('hidden')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-full p-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">close</span>
+                    </button>
+                </div>
+
+                <div id="correlation-list-container" class="max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+                    <ul id="correlation-list" class="space-y-3.5">
+                        {{-- Populated by JS --}}
+                    </ul>
+                </div>
+                
+                <div class="mt-5 pt-4 border-t border-amber-100/50 flex items-center justify-between opacity-70">
+                    <div class="flex items-center gap-1.5">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                        </span>
+                        <span class="text-[9px] font-bold text-amber-800 uppercase tracking-tighter">Clinical Correlation Analysis</span>
+                    </div>
+                    <span class="material-symbols-outlined text-[16px] text-amber-600">verified_user</span>
+                </div>
+            </div>
+        </div>
+
         {{-- CDSS ALERT BANNER --}}
         @if (session('selected_patient_id') && isset($labValue))
             <div id="cdss-alert-wrapper" class="w-full px-5 overflow-hidden transition-all duration-500">
@@ -49,7 +103,9 @@
         {{-- FORM --}}
         <form action="{{ route('lab-values.store') }}" method="POST" class="cdss-form"
             data-analyze-url="{{ route('lab-values.run-cdss-field') }}"
-            data-batch-analyze-url="{{ route('lab-values.analyze-batch') }}" data-alert-height-class="h-[49.5px]">
+            data-batch-analyze-url="{{ route('lab-values.analyze-batch') }}" 
+            data-correlations-url="{{ route('lab-values.analyze-correlations') }}"
+            data-alert-height-class="h-[49.5px]">
             @csrf
             <input type="hidden" name="patient_id" value="{{ session('selected_patient_id') }}">
 
@@ -189,4 +245,85 @@
         'resources/js/searchable-dropdown.js',
         'resources/js/close-cdss-alert.js'
     ])
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.cdss-form');
+            if (!form) return;
+
+            const overlay = document.getElementById('correlation-overlay');
+            const list = document.getElementById('correlation-list');
+            const correlationUrl = form.dataset.correlationsUrl;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+            // Function to update the correlation overlay
+            async function updateCorrelations() {
+                const inputs = form.querySelectorAll('.cdss-input');
+                const batchPayload = [];
+                
+                inputs.forEach(input => {
+                    const finding = input.value.trim();
+                    if (finding !== '') {
+                        batchPayload.push({
+                            fieldName: input.dataset.fieldName,
+                            finding: finding
+                        });
+                    }
+                });
+
+                if (batchPayload.length === 0) {
+                    overlay.classList.add('hidden');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(correlationUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                        body: JSON.stringify({ batch: batchPayload }),
+                    });
+
+                    if (!response.ok) return;
+                    const data = await response.json();
+                    
+                    // The updated controller now returns { results: [], correlations: [] }
+                    const correlations = data.correlations || [];
+
+                    if (correlations.length > 0) {
+                        list.innerHTML = '';
+                        correlations.forEach(c => {
+                            const li = document.createElement('li');
+                            li.className = 'group flex items-start gap-3 p-2 rounded-lg hover:bg-amber-50 transition-colors';
+                            li.innerHTML = `
+                                <div class="mt-1 w-2 h-2 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-200"></div>
+                                <span class="text-[12.5px] font-semibold text-amber-900 leading-snug">${c.text}</span>
+                            `;
+                            list.appendChild(li);
+                        });
+                        overlay.classList.remove('hidden');
+                        overlay.classList.add('animate-fade-in');
+                    } else {
+                        overlay.classList.add('hidden');
+                    }
+                } catch (error) {
+                    console.error('Correlation analysis failed:', error);
+                }
+            }
+
+            // Listen for input changes with a small delay
+            let debounceTimer;
+            form.addEventListener('input', (e) => {
+                if (e.target.classList.contains('cdss-input')) {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(updateCorrelations, 600);
+                }
+            });
+
+            // Initial check
+            setTimeout(updateCorrelations, 1000);
+        });
+    </script>
 @endpush

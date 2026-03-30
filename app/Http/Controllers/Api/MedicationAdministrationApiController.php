@@ -69,8 +69,8 @@ class MedicationAdministrationApiController extends Controller
 
         // Auto-sanitize empty to N/A
         $updateData = [
-            'medication' => $data['medication'] ?? $data['MEDICATION'] ?? 'N/A',
-            'dose' => $data['dose'] ?? $data['DOSE'] ?? 'N/A',
+            'medication' => $request->input('medication') ?? $request->input('MEDICATION') ?? 'N/A',
+            'dose' => $request->input('dose') ?? $request->input('DOSE') ?? 'N/A',
             'route' => $request->input('route') ?? $request->input('ROUTE') ?? 'N/A',
             'frequency' => $request->input('frequency') ?? $request->input('FREQUENCY') ?? 'N/A',
             'comments' => $request->input('comments') ?? $request->input('COMMENTS') ?? 'N/A',
@@ -100,7 +100,14 @@ class MedicationAdministrationApiController extends Controller
     public function update(Request $request, $id)
     {
         $record = MedicationAdministration::findOrFail($id);
-        $record->update($request->all());
+        $data = $request->all();
+
+        // Simple sanitization for update
+        foreach ($data as $k => $v) {
+            if ($v === '' || $v === null) $data[$k] = 'N/A';
+        }
+
+        $record->update($data);
 
         AuditLogController::log(
             'MEDICATION ADMINISTRATION UPDATED',

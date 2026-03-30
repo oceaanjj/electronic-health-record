@@ -27,19 +27,11 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        // Safely generate the reset URL using the notifiable user's email.
-        // This prevents issues when the email is sent via a background queue.
-        $url = url(route('password.reset', [
-            'token' => $this->token,
-            'email' => $notifiable->getEmailForPasswordReset(),
-            'source' => $this->source,
-        ], false));
-
         return (new MailMessage)
             ->subject('Reset Your EHR Password')
             ->view('emails.password-reset', [
                 'user' => $notifiable,
-                'url' => $url,
+                'code' => $this->token,
             ]);
     }
 }

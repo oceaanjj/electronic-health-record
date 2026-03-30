@@ -136,14 +136,14 @@
                         <p class="body-text">
                             Hello {{ $user->full_name }},<br /><br />
                             A password reset was requested for your EHR account. To maintain the security of your
-                            clinical data, please use the button below to establish a new password. This secure link is
+                            clinical data, please use the 6-digit code below to establish a new password. This secure code is
                             active for <strong>60 minutes</strong>.
                         </p>
-                        <table border="0" cellspacing="0" cellpadding="0" role="presentation">
-                            <tr>
-                                <td><a href="{{ $url }}" class="btn">Reset Secure Password</a></td>
-                            </tr>
-                        </table>
+                        <div style="background-color: #f3f4f6; padding: 24px; border-radius: 8px; text-align: center; margin-bottom: 30px;">
+                            <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: 0.2em; color: #035022;">
+                                {{ $code }}
+                            </span>
+                        </div>
                         <p class="body-text" style="margin-top: 40px; font-size: 14px; color: #6b7280;">If you did not
                             initiate this request, no action is required. Your account remains secure and your current
                             password will not be changed.</p>
@@ -169,10 +169,7 @@
                         </table>
                     </div>
                 </div>
-                <p
-                    style="font-family: 'Inter', sans-serif; font-size: 11px; color: #9ca3af; max-width: 600px; margin-top: 24px;">
-                    Button not appearing? Copy and paste this URL into your browser: <br /><a href="{{ $url }}"
-                        style="color: #035022;">{{ $url }}</a></p>
+
             </td>
         </tr>
     </table>

@@ -310,7 +310,11 @@
                     </div>
                 @endif
 
-                @if (session('status'))
+                @php
+                    $isResetSuccessful = session('status') && !str_contains(strtolower(session('status')), 'code') && !str_contains(strtolower(session('status')), 'email');
+                @endphp
+
+                @if ($isResetSuccessful)
                     <div class="flex flex-col items-center text-center animate-slide-down">
                         <div class="checkmark-container">
                             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -340,16 +344,16 @@
                     </div>
                 @elseif (isset($isValid) && !$isValid)
                     <div class="flex flex-col items-center text-center animate-slide-down">
-                        <img class="h-auto w-[150px] mb-6" src="{{ asset('img/others/403error.png') }}" alt="Link Expired" />
-                        <h3 class="text-2xl font-black text-dark-red uppercase leading-none">Link Expired</h3>
+                        <img class="h-auto w-[150px] mb-6" src="{{ asset('img/others/403error.png') }}" alt="Invalid Code" />
+                        <h3 class="text-2xl font-black text-dark-red uppercase leading-none">Invalid Code</h3>
                         <p class="text-sm font-medium leading-relaxed text-gray-700 mt-4 px-4">
-                            This password reset link is invalid or has already expired. 
+                            This password reset code is invalid or has already expired. 
                             For your security, please request a new one.
                         </p>
 
                         <div class="mt-8 w-full flex flex-col items-center gap-4">
                             <a href="{{ route('password.request') }}" class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center no-underline w-full max-w-[230px]">
-                                Request New Link
+                                Request New Code
                             </a>
                             <a href="{{ route('login') }}" class="text-sm font-bold text-gray-500 hover:text-green-700 transition-all no-underline">
                                 Return to Login
@@ -357,6 +361,13 @@
                         </div>
                     </div>
                 @else
+                    @if (session('status'))
+                        <div class="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm mb-6" style="color: #1a6b3c; border-color: #d1fae5; background-color: #f0fdf4;">
+                            <i data-lucide="check-circle" class="w-5 h-5 mt-0.5 shrink-0"></i>
+                            <span>{{ session('status') }}</span>
+                        </div>
+                    @endif
+
                     <form action="{{ route('password.update') }}" method="POST" id="resetForm" novalidate>
                         @csrf
                         <input type="hidden" name="token" value="{{ $token }}">
@@ -458,7 +469,7 @@
         const passwordStatus = document.getElementById('password-status');
         const resetBtn = document.getElementById('resetBtn');
 
-        function checkPasswords() {
+        function checkForm() {
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
 
@@ -483,8 +494,7 @@
 
             if (password.length === 0) {
                 passwordStatus.innerHTML = "";
-                return false;
-            } else if (!isValid) {
+            } else if (!isValid && (minLength || hasUpper || hasNumber || hasSpecial)) {
                 if (message.endsWith('<br>')) {
                     message = message.slice(0, -4);
                 }
@@ -494,23 +504,23 @@
                         <div class="leading-tight">${message}</div>
                     </div>`;
                 lucide.createIcons();
-                return false;
-            } else {
+            } else if (isValid && password.length > 0) {
                 passwordStatus.innerHTML = `<div class="flex items-start gap-1" style="color: #1a6b3c"><i data-lucide="check" class="w-4 h-4 mt-1 shrink-0"></i><span class="leading-tight">Password meets all security requirements and matches!</span></div>`;
                 lucide.createIcons();
-                return true;
             }
+
+            return isValid;
         }
 
         if (passwordInput && confirmPasswordInput) {
-            passwordInput.addEventListener('input', checkPasswords);
-            confirmPasswordInput.addEventListener('input', checkPasswords);
+            passwordInput.addEventListener('input', checkForm);
+            confirmPasswordInput.addEventListener('input', checkForm);
         }
 
         const resetForm = document.getElementById('resetForm');
         if (resetForm) {
             resetForm.addEventListener('submit', function (e) {
-                const isValid = checkPasswords();
+                const isValid = checkForm();
                 
                 if (!isValid) {
                     e.preventDefault();

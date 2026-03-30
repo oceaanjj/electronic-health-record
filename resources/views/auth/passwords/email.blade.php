@@ -44,7 +44,8 @@
             transition: max-height 100px 0.3s ease, opacity 0.25s ease, margin 0.3s ease;
         }
 
-        .validation-error i, .validation-error svg {
+        .validation-error i,
+        .validation-error svg {
             margin-top: 2px;
             flex-shrink: 0;
         }
@@ -271,31 +272,87 @@
                 <p class="role"><strong>FORGOT PASSWORD</strong></p>
 
                 @if (session('throttle_error') && session('throttle_error')['source'] === 'email')
-                    <div id="throttle-box" class="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm mb-4" style="color: #dc2626;">
+                    <div id="throttle-box"
+                        class="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm mb-4"
+                        style="color: #dc2626;">
                         <i data-lucide="circle-x" class="w-5 h-5 mt-0.5 shrink-0"></i>
-                        <span>Too many attempts. Please wait <strong id="throttle-timer">--:--</strong> before trying again.</span>
+                        <span>Too many attempts. Please wait <strong id="throttle-timer">--:--</strong> before trying
+                            again.</span>
                     </div>
                 @endif
 
                 @if (session('status'))
                     <div class="flex flex-col items-center text-center animate-slide-down -mt-5">
-                        <div class="checkmark-container">
-                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
-                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                            </svg>
-                        </div>
-                        <div style="margin-top: 5px;">
-                            <h3 class="text-xl font-bold text-green-800">Email Sent!</h3>
-                            <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Check your inbox for a link to
-                                reset your password. If you don't see it, please check your spam folder.</p>
+                        <div id="code-sent-header">
+                            <div class="checkmark-container">
+                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                </svg>
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <h3 class="text-xl font-bold text-green-800">Code Sent!</h3>
+                                <p class="text-sm font-medium leading-relaxed text-gray-700 mt-1">Check your inbox for a 6-digit
+                                    code to
+                                    reset your password. If you don't see it, please check your spam folder.</p>
+                            </div>
                         </div>
 
-                        <div class="mt-6 w-full flex justify-center">
-                            <a href="{{ route('login') }}"
-                                class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 no-underline w-full max-w-[230px]">
-                                <span class="btn-text">Proceed to Login</span>
-                            </a>
+                        <div id="verify-container" class="w-full">
+                            <form id="verifyCodeForm" class="w-full mt-6 flex flex-col items-center">
+                                <label class="block mb-4 font-semibold text-gray-700 text-sm">Enter the 6-Digit Reset
+                                    Code</label>
+                                <div class="flex gap-2 mb-2 justify-center" id="otp-inputs">
+                                    <input type="text" maxlength="1"
+                                        class="otp-box w-10 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all" />
+                                    <input type="text" maxlength="1"
+                                        class="otp-box w-10 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all" />
+                                    <input type="text" maxlength="1"
+                                        class="otp-box w-10 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all" />
+                                    <input type="text" maxlength="1"
+                                        class="otp-box w-10 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all" />
+                                    <input type="text" maxlength="1"
+                                        class="otp-box w-10 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all" />
+                                    <input type="text" maxlength="1"
+                                        class="otp-box w-10 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all" />
+                                </div>
+                                <input type="hidden" id="code_input" name="code" />
+
+                                <div id="code-error" class="validation-error mb-4">
+                                    <i data-lucide="circle-x" class="w-4 h-4 mr-1"></i>
+                                    <span id="code-error-text">Invalid code. You have <span id="attempts-left">4</span>
+                                        tries remaining.</span>
+                                </div>
+
+                                <button type="submit"
+                                    class="btn-login mt-2 h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all w-full max-w-[230px]"
+                                    id="verifyBtn">
+                                    <span class="spinner"></span>
+                                    <span class="btn-text">Verify Code</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div id="invalid-code-screen"
+                            class="hidden w-full flex flex-col items-center text-center">
+                            <img class="h-auto w-[150px] mb-6" src="{{ asset('img/others/403error.png') }}"
+                                alt="Invalid Code" />
+                            <h3 class="text-2xl font-black text-dark-red uppercase leading-none">Invalid Code</h3>
+                            <p class="text-sm font-medium leading-relaxed text-gray-700 mt-4 px-4">
+                                This password reset code is invalid or has already expired.
+                                For your security, please request a new one.
+                            </p>
+
+                            <div class="mt-8 w-full flex flex-col items-center gap-4">
+                                <a href="{{ route('password.request') }}"
+                                    class="btn-login h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center justify-center no-underline w-full max-w-[230px]">
+                                    Request New Code
+                                </a>
+                                <a href="{{ route('login') }}"
+                                    class="text-sm font-bold text-gray-500 hover:text-green-700 transition-all no-underline">
+                                    Return to Login
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @else
@@ -325,7 +382,7 @@
                             class="btn-login mt-6 h-[50px] bg-green-700 hover:bg-green-800 text-white font-bold rounded-lg shadow-sm transition-all"
                             id="resetBtn">
                             <span class="spinner"></span>
-                            <span class="btn-text">Send Reset Link</span>
+                            <span class="btn-text">Send Reset Code</span>
                         </button>
 
                         <div class="mt-8 text-center">
@@ -368,7 +425,7 @@
         function validateEmail(isSubmit = false) {
             const email = emailInput.value.trim();
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
+
             if (email === "") {
                 if (isSubmit) {
                     emailErrorText.textContent = "Please enter your registered email.";
@@ -396,7 +453,7 @@
         if (resetForm) {
             resetForm.addEventListener('submit', function (e) {
                 const isValid = validateEmail(true);
-                
+
                 if (!isValid) {
                     e.preventDefault();
                     return;
@@ -408,7 +465,130 @@
             });
         }
 
-        (function() {
+        const verifyCodeForm = document.getElementById('verifyCodeForm');
+        if (verifyCodeForm) {
+            const inputs = document.querySelectorAll('.otp-box');
+            const hiddenInput = document.getElementById('code_input');
+
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value.length > 1) {
+                        e.target.value = e.target.value.slice(0, 1);
+                    }
+                    if (e.target.value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                    updateHiddenInput();
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+
+                // Handle paste
+                input.addEventListener('paste', (e) => {
+                    const data = e.clipboardData.getData('text').slice(0, 6);
+                    if (/^\d+$/.test(data)) {
+                        data.split('').forEach((char, i) => {
+                            if (inputs[i]) inputs[i].value = char;
+                        });
+                        inputs[Math.min(data.length, inputs.length - 1)].focus();
+                        updateHiddenInput();
+                    }
+                    e.preventDefault();
+                });
+            });
+
+            function updateHiddenInput() {
+                const code = Array.from(inputs).map(i => i.value).join('');
+                hiddenInput.value = code;
+            }
+
+            let attempts = {{ session('reset_attempts_count', 0) }};
+            const maxAttempts = 4;
+
+            // Check on load if already exceeded
+            if (attempts >= maxAttempts) {
+                const verifyContainer = document.getElementById('verify-container');
+                const codeSentHeader = document.getElementById('code-sent-header');
+                const invalidScreen = document.getElementById('invalid-code-screen');
+                if (verifyContainer) verifyContainer.classList.add('hidden');
+                if (codeSentHeader) codeSentHeader.classList.add('hidden');
+                if (invalidScreen) invalidScreen.classList.remove('hidden');
+            }
+
+            verifyCodeForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const code = hiddenInput.value;
+                const codeError = document.getElementById('code-error');
+                const verifyBtn = document.getElementById('verifyBtn');
+
+                if (!/^\d{6}$/.test(code)) {
+                    document.getElementById('code-error-text').textContent = "Please enter the complete 6-digit code.";
+                    codeError.classList.add('visible');
+                    return;
+                }
+
+                verifyBtn.classList.add('loading');
+                verifyBtn.disabled = true;
+
+                const email = "{{ old('email', request()->input('email')) }}";
+
+                fetch("{{ route('password.verify') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ email, code })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        verifyBtn.classList.remove('loading');
+                        verifyBtn.disabled = false;
+
+                        if (data.valid) {
+                            if (typeof showSuccess === 'function') {
+                                showSuccess('Your code is correct. You can now reset your password.', 'Code Verified!').then(() => {
+                                    const source = "{{ request()->input('source', 'web') }}";
+                                    const baseUrl = "{{ route('password.reset', ['token' => 'TOKEN_PLACEHOLDER']) }}";
+                                    const finalUrl = baseUrl.replace('TOKEN_PLACEHOLDER', code) + "?email=" + encodeURIComponent(email) + "&source=" + encodeURIComponent(source);
+                                    window.location.href = finalUrl;
+                                });
+                            } else {
+                                // Fallback
+                                const source = "{{ request()->input('source', 'web') }}";
+                                const baseUrl = "{{ route('password.reset', ['token' => 'TOKEN_PLACEHOLDER']) }}";
+                                const finalUrl = baseUrl.replace('TOKEN_PLACEHOLDER', code) + "?email=" + encodeURIComponent(email) + "&source=" + encodeURIComponent(source);
+                                window.location.href = finalUrl;
+                            }
+                        } else {
+                            attempts = data.attempts || attempts + 1;
+                            if (data.exceeded || attempts >= maxAttempts) {
+                                document.getElementById('verify-container').classList.add('hidden');
+                                document.getElementById('code-sent-header').classList.add('hidden');
+                                document.getElementById('invalid-code-screen').classList.remove('hidden');
+                            } else {
+                                document.getElementById('code-error-text').innerHTML = `Invalid code. You have <strong>${maxAttempts - attempts}</strong> tries remaining.`;
+                                codeError.classList.add('visible');
+                                // Clear inputs on failure
+                                inputs.forEach(i => i.value = '');
+                                inputs[0].focus();
+                                updateHiddenInput();
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        verifyBtn.classList.remove('loading');
+                        verifyBtn.disabled = false;
+                        console.error('Error:', error);
+                    });
+            });
+        }
+
+        (function () {
             let throttleSeconds = {{ (session('throttle_error') && session('throttle_error')['source'] === 'email') ? session('throttle_error')['seconds'] : 0 }};
             const timerDisplay = document.getElementById('throttle-timer');
             const throttleBox = document.getElementById('throttle-box');

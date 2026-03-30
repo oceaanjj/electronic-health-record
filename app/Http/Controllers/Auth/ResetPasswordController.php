@@ -23,12 +23,13 @@ class ResetPasswordController extends Controller
     public function showResetForm(Request $request, $token = null)
     {
         $email = $request->email;
-        $user = \App\Models\User::where('email', $email)->first();
+        $user = $email ? \App\Models\User::where('email', $email)->first() : null;
         
-        // Check if token is valid for this user
+        // If token is provided, check if it's valid
+        // If no token is provided, the user must go through the forgot password page first
         $isValid = false;
-        if ($user && Password::broker()->tokenExists($user, $token)) {
-            $isValid = true;
+        if ($token && $user) {
+            $isValid = Password::broker()->tokenExists($user, $token);
         }
 
         return view('auth.passwords.reset')->with(
@@ -82,7 +83,7 @@ class ResetPasswordController extends Controller
                 ->with('sweetalert', [
                     'type' => 'error',
                     'title' => 'Reset Failed',
-                    'text' => 'Unable to reset password. The link may have expired or is no longer valid.',
+                    'text' => 'Unable to reset password. The code may have expired or is no longer valid.',
                     'timer' => 3000
                 ]);
     }

@@ -88,9 +88,6 @@ class AuthController extends Controller
 
         AuditLogController::log('Password Reset Requested', "6-digit reset code generated via API for email: {$request->email}");
 
-        // Reset the attempts counter in session
-        session(['reset_attempts_count' => 0]);
-
         // Send the notification
         $user->notify(new \App\Notifications\ResetPasswordNotification($code, 'mobile'));
 
@@ -101,7 +98,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'token' => 'required|string|size:6',
+            'token' => 'required|string|size:6', // Using 'token' as the field name for consistency with Laravel expectations
             'password' => [
                 'required',
                 'string',
@@ -118,24 +115,11 @@ class AuthController extends Controller
             return response()->json(['error' => "User not found."], 400);
         }
 
-        // Track attempts in session
-        $attempts = session('reset_attempts_count', 0) + 1;
-        session(['reset_attempts_count' => $attempts]);
-
-        if ($attempts > 4) {
-            return response()->json(['error' => 'Maximum attempts reached. Please request a new code.'], 400);
-        }
-
         // Verify the 6-digit code
         $record = \DB::table('password_reset_tokens')->where('email', $request->email)->first();
 
         if (!$record || !\Hash::check($request->token, $record->token)) {
-            $remaining = 4 - $attempts;
-            $msg = 'Invalid or expired reset code.';
-            if ($remaining > 0) {
-                $msg .= " You have {$remaining} attempts remaining.";
-            }
-            return response()->json(['error' => $msg], 400);
+            return response()->json(['error' => 'Invalid or expired reset code.'], 400);
         }
 
         // Check if code is older than 60 minutes
@@ -148,9 +132,8 @@ class AuthController extends Controller
         $user->setRememberToken(\Illuminate\Support\Str::random(60));
         $user->save();
 
-        // Delete the token and clear attempts
+        // Delete the token
         \DB::table('password_reset_tokens')->where('email', $request->email)->delete();
-        session()->forget('reset_attempts_count');
 
         AuditLogController::log('Password Reset Successful', "User {$user->username} reset their password via API.", ['user_id' => $user->id]);
 

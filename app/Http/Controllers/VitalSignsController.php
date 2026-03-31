@@ -286,6 +286,7 @@ class VitalSignsController extends Controller
         }
 
         return redirect()->route('vital-signs.show', [
+            'patient_id' => $validatedData['patient_id'],
             'date' => $validatedData['date'],
             'day_no' => $validatedData['day_no'],
         ])->with('success', $message);

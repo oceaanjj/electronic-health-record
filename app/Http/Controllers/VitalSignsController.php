@@ -285,11 +285,11 @@ class VitalSignsController extends Controller
             ]);
         }
 
-        return redirect()->route('vital-signs.show', [
-            'patient_id' => $validatedData['patient_id'],
-            'date' => $validatedData['date'],
-            'day_no' => $validatedData['day_no'],
-        ])->with('success', $message);
+        $request->session()->put('selected_patient_id', $validatedData['patient_id']);
+        $request->session()->put('selected_date', $validatedData['date']);
+        $request->session()->put('selected_day_no', $validatedData['day_no']);
+
+        return redirect()->route('vital-signs.show')->with('success', $message);
     }
 
 

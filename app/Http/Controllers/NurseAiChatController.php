@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use App\Models\Patient;
 
@@ -117,8 +118,8 @@ class NurseAiChatController extends Controller
         $model = (string) config('services.gemini.model', 'gemini-2.0-flash');
         $offline = $this->offlineResponse($message);
 
-        // Prioritize app-navigation intents and typo-confirm flows even when Gemini is enabled.
-        if (!empty($offline['actions']) || !empty($offline['confirm_action'])) {
+        // Prioritize offline intents even when Gemini is enabled.
+        if (!empty($offline['actions']) || !empty($offline['confirm_action']) || !empty($offline['force_offline'])) {
             return response()->json($offline);
         }
 
@@ -136,22 +137,42 @@ class NurseAiChatController extends Controller
         }
 
         $prompt = $this->buildPrompt($message);
+        $cacheKey = $this->aiCacheKey($message, $model);
+        $cachedAnswer = Cache::get($cacheKey);
+        if (is_string($cachedAnswer) && trim($cachedAnswer) !== '') {
+            return response()->json([
+                'reply' => $cachedAnswer,
+                'actions' => [],
+                'confirm_action' => null,
+                'is_ai' => true,
+                'from_cache' => true,
+            ]);
+        }
 
-        $response = Http::timeout(25)
-            ->acceptJson()
-            ->post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}", [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt],
+        try {
+            $response = Http::timeout(25)
+                ->acceptJson()
+                ->post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}", [
+                    'contents' => [
+                        [
+                            'parts' => [
+                                ['text' => $prompt],
+                            ],
                         ],
                     ],
-                ],
-                'generationConfig' => [
-                    'maxOutputTokens' => 300,
-                    'temperature' => 0.7,
-                ],
+                    'generationConfig' => [
+                        'maxOutputTokens' => 800,
+                        'temperature' => 0.7,
+                    ],
+                ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'reply' => 'Internet connection failed. Please try again.',
+                'actions' => [],
+                'confirm_action' => null,
+                'is_ai' => false,
             ]);
+        }
 
         if (!$response->successful()) {
             return response()->json($offline);
@@ -163,9 +184,51 @@ class NurseAiChatController extends Controller
             ->filter(fn ($text) => is_string($text) && trim($text) !== '')
             ->implode("\n");
 
+        $finishReason = (string) data_get($response->json(), 'candidates.0.finishReason', '');
+        if ($finishReason === 'MAX_TOKENS' && $answer !== '') {
+            $continuationPrompt = $prompt
+                . "\n\nPartial answer already shown:\n"
+                . $answer
+                . "\n\nContinue exactly where it stopped. Do not repeat earlier text. Finish the answer completely.";
+
+            try {
+                $continuationResponse = Http::timeout(25)
+                    ->acceptJson()
+                    ->post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}", [
+                        'contents' => [
+                            [
+                                'parts' => [
+                                    ['text' => $continuationPrompt],
+                                ],
+                            ],
+                        ],
+                        'generationConfig' => [
+                            'maxOutputTokens' => 500,
+                            'temperature' => 0.7,
+                        ],
+                    ]);
+            } catch (\Throwable $e) {
+                $continuationResponse = null;
+            }
+
+            if ($continuationResponse && $continuationResponse->successful()) {
+                $continuationParts = data_get($continuationResponse->json(), 'candidates.0.content.parts', []);
+                $continuationAnswer = collect($continuationParts)
+                    ->pluck('text')
+                    ->filter(fn ($text) => is_string($text) && trim($text) !== '')
+                    ->implode("\n");
+
+                if ($continuationAnswer !== '') {
+                    $answer .= "\n" . $continuationAnswer;
+                }
+            }
+        }
+
         if ($answer === '') {
             return response()->json($offline);
         }
+
+        Cache::put($cacheKey, $answer, now()->addHours(24));
 
         return response()->json([
             'reply' => $answer,
@@ -173,6 +236,51 @@ class NurseAiChatController extends Controller
             'confirm_action' => null,
             'is_ai' => true,
         ]);
+    }
+
+    private function aiCacheKey(string $message, string $model): string
+    {
+        $normalized = $this->normalizeAiQuestion($message);
+        return 'nurse_ai_answer:' . md5(strtolower($model) . '|' . $normalized);
+    }
+
+    private function normalizeAiQuestion(string $message): string
+    {
+        $text = strtolower($message);
+        $text = preg_replace('/[^a-z0-9\s]/', ' ', $text) ?? '';
+        $text = preg_replace('/\s+/', ' ', trim($text)) ?? '';
+
+        // remove filler words so similar questions can reuse cached answers
+        $tokens = explode(' ', $text);
+        $stopwords = [
+            'what', 'is', 'are', 'the', 'a', 'an', 'please', 'can', 'you', 'tell', 'me',
+            'about', 'of', 'for', 'to', 'in', 'on', 'at', 'do', 'does', 'how', 'i', 'need',
+        ];
+
+        $tokens = array_values(array_filter($tokens, function ($token) use ($stopwords) {
+            return $token !== '' && !in_array($token, $stopwords, true);
+        }));
+
+        $synonyms = [
+            'teenager' => 'teen',
+            'teenagers' => 'teen',
+            'adolescent' => 'teen',
+            'adolescents' => 'teen',
+            'bp' => 'blood pressure',
+            'hr' => 'heart rate',
+            'yrs' => 'years',
+            'yr' => 'year',
+        ];
+
+        foreach ($tokens as &$token) {
+            if (isset($synonyms[$token])) {
+                $token = $synonyms[$token];
+            }
+        }
+        unset($token);
+
+        sort($tokens);
+        return implode(' ', $tokens);
     }
 
     private function isRelevantTopic(string $message): bool
@@ -265,6 +373,30 @@ class NurseAiChatController extends Controller
     private function offlineResponse(string $message): array
     {
         $normalized = strtolower($message);
+
+        // Treat direct name searches like "search for rex" as patient lookup.
+        $implicitPatientName = $this->extractImplicitPatientSearchName($message);
+        if ($implicitPatientName !== null && $implicitPatientName !== '') {
+            return $this->searchPatientRecord($implicitPatientName);
+        }
+
+        if ($this->isPatientOfflineIntent($normalized)) {
+            $patientName = $this->extractPatientName($message);
+
+            if ($patientName !== null && $patientName !== '') {
+                return $this->searchPatientRecord($patientName);
+            }
+
+            return [
+                'reply' => 'Patient requests are handled offline using your database. Please include a patient name (example: "is there a record for Juan Dela Cruz").',
+                'actions' => [[
+                    'label' => 'View Patient List',
+                    'url' => '/patients',
+                ]],
+                'confirm_action' => null,
+                'force_offline' => true,
+            ];
+        }
         
         // Check for patient record queries
         if (preg_match('/\b(is there|find|search|show|get|lookup|check)\s+(a\s+)?(record|patient|data)\s+(for|of|named|about)\s+(.+)/i', $message, $matches)) {
@@ -518,6 +650,7 @@ class NurseAiChatController extends Controller
                     ],
                 ],
                 'confirm_action' => null,
+                'force_offline' => true,
             ];
         }
 
@@ -534,6 +667,7 @@ class NurseAiChatController extends Controller
                     'url' => route('patients.show', $patient->patient_id),
                 ]],
                 'confirm_action' => null,
+                'force_offline' => true,
             ];
         }
 
@@ -552,7 +686,77 @@ class NurseAiChatController extends Controller
             'reply' => "Found {$patients->count()} patients matching \"{$name}\". Select one below:",
             'actions' => $actions,
             'confirm_action' => null,
+            'force_offline' => true,
         ];
+    }
+
+    private function isPatientOfflineIntent(string $normalized): bool
+    {
+        return str_contains($normalized, 'patient')
+            || str_contains($normalized, 'patients')
+            || str_contains($normalized, 'record')
+            || str_contains($normalized, 'records')
+            || str_contains($normalized, 'chart')
+            || str_contains($normalized, 'demographic profile');
+    }
+
+    private function extractPatientName(string $message): ?string
+    {
+        $patterns = [
+            '/\b(?:record|records)\s+(?:for|of|about)\s+(.+)$/i',
+            '/\b(?:patient|patients)\s+(?:named|name is|name|for)\s+(.+)$/i',
+            '/\b(?:search|find|lookup|check|show|get)\s+(?:for\s+)?(?:patient|record|records)\s+(.+)$/i',
+            '/\bis there\s+(?:a\s+)?(?:patient\s+)?(?:record|records)\s+(?:for|of)\s+(.+)$/i',
+            '/\bpatient\s+(.+?)\s+(?:record|records|data|information|details|history)\b/i',
+        ];
+
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $message, $matches)) {
+                $name = trim((string) ($matches[1] ?? ''));
+                $name = preg_replace('/\?+$/', '', $name);
+                $name = trim((string) $name);
+                if ($name !== '') {
+                    return $name;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function extractImplicitPatientSearchName(string $message): ?string
+    {
+        $patterns = [
+            '/^\s*(?:search|find|lookup|check|show|get)\s+for\s+([a-z][a-z\-\'.\s]{1,60})\s*$/i',
+            '/^\s*(?:search|find|lookup|check|show|get)\s+([a-z][a-z\-\'.\s]{1,60})\s*$/i',
+        ];
+
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $message, $matches)) {
+                $candidate = trim((string) ($matches[1] ?? ''));
+                $candidate = preg_replace('/\?+$/', '', $candidate);
+                $candidate = trim((string) $candidate);
+                if ($candidate === '') {
+                    continue;
+                }
+
+                // Ignore obvious non-name search terms.
+                $blocked = [
+                    'diagnostics', 'diagnostic', 'labs', 'lab', 'vitals', 'vital signs',
+                    'medical history', 'intake and output', 'adl', 'home', 'dashboard',
+                    'page', 'route', 'feature', 'patient', 'record', 'records',
+                ];
+
+                $candidateLower = strtolower($candidate);
+                if (in_array($candidateLower, $blocked, true)) {
+                    return null;
+                }
+
+                return $candidate;
+            }
+        }
+
+        return null;
     }
 
     private function featureHelpResponse(string $normalized): ?array

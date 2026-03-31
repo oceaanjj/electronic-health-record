@@ -86,10 +86,8 @@ class AuthController extends Controller
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $request->email],
             [
-                'token' => $otp,
+                'token' => Hash::make($otp),
                 'created_at' => Carbon::now(),
-                'expires_at' => Carbon::now()->addMinutes(60),
-                'attempts' => 0
             ]
         );
 
@@ -116,26 +114,12 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
-        // Check attempts
-        if ($resetToken->attempts >= 5) {
-            return response()->json(['error' => 'Too many failed attempts. Please request a new code.'], 403);
-        }
-
-        // Check expiration
-        if (Carbon::parse($resetToken->expires_at)->isPast()) {
+        if (Carbon::parse($resetToken->created_at)->addMinutes(60)->isPast()) {
             return response()->json(['error' => 'Verification code has expired.'], 400);
         }
 
-        // Verify code
-        if ($resetToken->token !== $request->code) {
-            DB::table('password_reset_tokens')
-                ->where('email', $request->email)
-                ->increment('attempts');
-
-            $remaining = 4 - $resetToken->attempts;
-            return response()->json([
-                'error' => "Invalid verification code. {$remaining} attempts remaining."
-            ], 400);
+        if (!Hash::check($request->code, $resetToken->token)) {
+            return response()->json(['error' => 'Invalid verification code.'], 400);
         }
 
         return response()->json(['message' => 'Code verified successfully.']);
@@ -166,16 +150,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid reset request.'], 400);
         }
 
-        // Final security checks even during reset
-        if ($resetToken->attempts >= 5) {
-            return response()->json(['error' => 'Too many failed attempts.'], 403);
-        }
-
-        if (Carbon::parse($resetToken->expires_at)->isPast()) {
+        if (Carbon::parse($resetToken->created_at)->addMinutes(60)->isPast()) {
             return response()->json(['error' => 'Verification code has expired.'], 400);
         }
 
-        if ($resetToken->token !== $request->code) {
+        if (!Hash::check($request->code, $resetToken->token)) {
             return response()->json(['error' => 'Invalid verification code.'], 400);
         }
 

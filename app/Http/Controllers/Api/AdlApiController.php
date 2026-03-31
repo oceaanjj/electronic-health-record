@@ -32,7 +32,10 @@ class AdlApiController extends Controller
         $data = $request->all();
         $cdssAlerts = $this->cdssService->analyzeFindings($data);
         foreach ($cdssAlerts as $f => $r) { $data[str_replace('_assessment', '_alert', $f)] = $r['alert']; }
-        foreach ($data as $k => $v) { if ($v === '' || $v === null) $data[$k] = 'N/A'; }
+        foreach ($data as $k => $v) {
+            if (in_array($k, ['day_no', 'patient_id', 'date', 'id', 'created_at', 'updated_at'])) continue;
+            if ($v === '' || $v === null) $data[$k] = 'N/A';
+        }
 
         $record = ActOfDailyLiving::updateOrCreate(
             ['patient_id' => $data['patient_id'], 'date' => $data['date'] ?? now()->toDateString()],
@@ -55,7 +58,10 @@ class AdlApiController extends Controller
         
         $cdssAlerts = $this->cdssService->analyzeFindings($data);
         foreach ($cdssAlerts as $f => $r) { $data[str_replace('_assessment', '_alert', $f)] = $r['alert']; }
-        foreach ($data as $k => $v) { if ($v === '' || $v === null) $data[$k] = 'N/A'; }
+        foreach ($data as $k => $v) {
+            if (in_array($k, ['day_no', 'patient_id', 'date', 'id', 'created_at', 'updated_at'])) continue;
+            if ($v === '' || $v === null) $data[$k] = 'N/A';
+        }
 
         $record->update($data);
 

@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
 
         //send reset 6-digit code:
         RateLimiter::for('forgot-password', function (Request $request) {
-            return Limit::perMinutes(15, 3)->by($request->input('email') . $request->ip());
+            return Limit::perMinutes(15, 5)->by($request->input('email') . $request->ip());
         });
         //password reset:
         RateLimiter::for('password-reset', function (Request $request) {

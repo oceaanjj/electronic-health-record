@@ -270,27 +270,30 @@
     <script>
         const vitalsData = @json($vitalsData);
 
+        function initializeVitalInputs() {
+            console.log('[VitalSigns] Initializing Vital Inputs listeners');
+            
+            // 1. SYNC MOBILE AND DESKTOP INPUTS
+            // Use event delegation on the document to handle AJAX-reloaded content
+            // (We'll attach once, but it will handle all current and future .vital-input elements)
+            
+            // 2. RESTRICT VITAL INPUTS TO NUMERIC ONLY
+            document.querySelectorAll('.vital-input').forEach(function (input) {
+                const field = input.dataset.fieldName;
+                const isBp = field === 'bp';
+
+                // Set mobile-friendly keyboard
+                input.setAttribute('inputmode', isBp ? 'numeric' : 'decimal');
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const timePoints = @json($times);
             if (window.initializeVitalSignsCharts) window.initializeVitalSignsCharts(timePoints, vitalsData);
             if (window.initializeChartScrolling) window.initializeChartScrolling();
             if (window.initSearchableDropdown) window.initSearchableDropdown();
 
-            // SYNC MOBILE AND DESKTOP INPUTS
-            const allVitalInputs = document.querySelectorAll('.vital-input');
-            allVitalInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    const field = this.dataset.fieldName;
-                    const time = this.dataset.time;
-                    const val = this.value;
-                    document.querySelectorAll(`.vital-input[data-field-name="${field}"][data-time="${time}"]`).forEach(el => {
-                        if (el !== this) {
-                            el.value = val;
-                            if (typeof colorizeInput === 'function') colorizeInput(el);
-                        }
-                    });
-                });
-            });
+            initializeVitalInputs();
 
             // SYNC ALERTS
             function syncAlerts() {
@@ -313,50 +316,69 @@
                 });
             }
             syncAlerts();
+        });
 
-            // RESTRICT VITAL INPUTS TO NUMERIC ONLY
-            // temperature, hr, rr, spo2 → digits + one decimal point
-            // bp → digits + slash + space (e.g. "120/80")
-            document.querySelectorAll('.vital-input').forEach(function (input) {
-                const field = input.dataset.fieldName;
-                const isBp = field === 'bp';
+        // Use Event Delegation for Syncing and Numeric Restriction
+        // This ensures listeners work even after AJAX form reloads
+        document.addEventListener('input', function(e) {
+            const input = e.target;
+            if (!input.classList.contains('vital-input')) return;
 
-                // Set mobile-friendly keyboard
-                input.setAttribute('inputmode', isBp ? 'numeric' : 'decimal');
-
-                // Block invalid characters before they're inserted (handles typing + paste)
-                input.addEventListener('beforeinput', function (e) {
-                    if (!e.inputType.startsWith('insert')) return;
-                    const incoming = e.data || '';
-                    const allowed = isBp ? /^[0-9\/\s]*$/ : /^[0-9.]*$/;
-                    if (!allowed.test(incoming)) e.preventDefault();
-                });
-
-                // Fallback oninput cleanup (handles autofill / older browsers)
-                input.addEventListener('input', function () {
-                    let val = this.value;
-                    if (isBp) {
-                        val = val.replace(/[^0-9\/\s]/g, '');
-                    } else {
-                        val = val.replace(/[^0-9.]/g, '');
-                        // Allow only one decimal point
-                        const dotIdx = val.indexOf('.');
-                        if (dotIdx !== -1) {
-                            val = val.slice(0, dotIdx + 1) + val.slice(dotIdx + 1).replace(/\./g, '');
-                        }
-                    }
-                    if (this.value !== val) this.value = val;
-                });
-            });
-
-            document.addEventListener('click', function(e) {
-                const mobileClone = e.target.closest('.mobile-alert-clone');
-                if (mobileClone) {
-                    const time = mobileClone.getAttribute('data-alert-for-time');
-                    const desktopOriginal = document.querySelector(`.desktop-alert-container[data-alert-for-time="${time}"] .alert-icon-btn`);
-                    if (desktopOriginal) desktopOriginal.click();
+            // A. SYNC LOGIC
+            const field = input.dataset.fieldName;
+            const time = input.dataset.time;
+            const val = input.value;
+            
+            document.querySelectorAll(`.vital-input[data-field-name="${field}"][data-time="${time}"]`).forEach(el => {
+                if (el !== input) {
+                    el.value = val;
+                    if (typeof colorizeInput === 'function') colorizeInput(el);
                 }
             });
+
+            if (typeof colorizeInput === 'function') colorizeInput(input);
+
+            // B. NUMERIC RESTRICTION LOGIC (Cleanup)
+            const isBp = field === 'bp';
+            let cleanedVal = val;
+            if (isBp) {
+                cleanedVal = val.replace(/[^0-9\/\s]/g, '');
+            } else {
+                cleanedVal = val.replace(/[^0-9.]/g, '');
+                const dotIdx = cleanedVal.indexOf('.');
+                if (dotIdx !== -1) {
+                    cleanedVal = cleanedVal.slice(0, dotIdx + 1) + cleanedVal.slice(dotIdx + 1).replace(/\./g, '');
+                }
+            }
+            if (val !== cleanedVal) {
+                input.value = cleanedVal;
+            }
+        });
+
+        document.addEventListener('beforeinput', function (e) {
+            const input = e.target;
+            if (!input.classList.contains('vital-input')) return;
+            if (!e.inputType.startsWith('insert')) return;
+
+            const field = input.dataset.fieldName;
+            const isBp = field === 'bp';
+            const incoming = e.data || '';
+            const allowed = isBp ? /^[0-9\/\s]*$/ : /^[0-9.]*$/;
+            if (!allowed.test(incoming)) e.preventDefault();
+        });
+
+        // Re-initialize numeric inputs when form is reloaded via AJAX
+        document.addEventListener('cdss:form-reloaded', function() {
+            initializeVitalInputs();
+        });
+
+        document.addEventListener('click', function(e) {
+            const mobileClone = e.target.closest('.mobile-alert-clone');
+            if (mobileClone) {
+                const time = mobileClone.getAttribute('data-alert-for-time');
+                const desktopOriginal = document.querySelector(`.desktop-alert-container[data-alert-for-time="${time}"] .alert-icon-btn`);
+                if (desktopOriginal) desktopOriginal.click();
+            }
         });
 
         window.closeChartModal = function () {

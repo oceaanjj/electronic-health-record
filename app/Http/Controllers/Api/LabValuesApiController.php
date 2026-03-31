@@ -40,7 +40,9 @@ class LabValuesApiController extends Controller
         // Run CDSS
         $cdssAlerts = $this->cdssService->runLabCdss((object)$data, $ageGroup);
         foreach ($cdssAlerts as $p => $a) {
-            $data[str_replace('_alerts', '_alert', $p)] = $a[0]['text'] ?? 'No findings.';
+            $fieldName = str_replace('_alerts', '_alert', $p);
+            $texts = array_column($a, 'text');
+            $data[$fieldName] = implode(' | ', $texts);
         }
 
         // Prevent duplicates (assuming one lab record per patient for now, matching web logic)
@@ -68,7 +70,9 @@ class LabValuesApiController extends Controller
         
         $cdssAlerts = $this->cdssService->runLabCdss((object)$data, $ageGroup);
         foreach ($cdssAlerts as $p => $a) {
-            $data[str_replace('_alerts', '_alert', $p)] = $a[0]['text'] ?? 'No findings.';
+            $fieldName = str_replace('_alerts', '_alert', $p);
+            $texts = array_column($a, 'text');
+            $data[$fieldName] = implode(' | ', $texts);
         }
 
         $record->update($data);

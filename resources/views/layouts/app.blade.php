@@ -124,6 +124,8 @@
         </div>
     </div>
 
+    @include('components.nurse-ai-chatbot')
+
     <script>
         function openNav() {
             const sidebar = document.getElementById('mySidenav');

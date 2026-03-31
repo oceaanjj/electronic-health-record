@@ -15,12 +15,14 @@ use App\Http\Controllers\VitalSignsController;
 use App\Http\Controllers\IntakeAndOutputController;
 use App\Http\Controllers\MedicationAdministrationController;
 use App\Http\Controllers\ADPIE\NursingDiagnosisController;
+use App\Http\Controllers\NurseAiChatController;
 
 //-------------------------------------------------------------
 // Protected Routes for Nurse
 //-------------------------------------------------------------
 Route::middleware(['auth', 'can:is-nurse'])->group(function () {
     Route::get('/nurse', [HomeController::class, 'nurseHome'])->name('nurse-home');
+    Route::post('/nurse-ai-chat/ask', [NurseAiChatController::class, 'ask'])->name('nurse-ai-chat.ask');
 
     // Simple nurse-accessible views
     $nurseViews = [

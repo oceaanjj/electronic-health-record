@@ -145,7 +145,7 @@
 
 
       <!-- keith dito yung button na mag ddownload-->
-      <a href="{{ asset('mobile-app/ehr-v1.1.apk') }}" download onclick="showDownloadAlert()">
+      <a href="{{ asset('mobile-app/ehr-v1.2.apk') }}" download onclick="showDownloadAlert()">
         <button class="btn btn-solid">Download App</button>
       </a>
     </div>

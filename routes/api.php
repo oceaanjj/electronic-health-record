@@ -19,6 +19,6 @@ Route::post('/auth/reset-password', [AuthController::class, 'resetPassword'])->m
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // ── ROLE-SPECIFIC ─────────────────────────────────────────────────────────
-require __DIR__.'/api/nurse.php';
-require __DIR__.'/api/doctor.php';
-require __DIR__.'/api/admin.php';
+require __DIR__ . '/api/nurse.php';
+require __DIR__ . '/api/doctor.php';
+require __DIR__ . '/api/admin.php';
